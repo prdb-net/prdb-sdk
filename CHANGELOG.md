@@ -12,7 +12,9 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
-Nothing is published yet — this section becomes 0.1.0 at the first release.
+## [0.1.0] - 2026-08-07
+
+First release.
 
 ### Added
 
