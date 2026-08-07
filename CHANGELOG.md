@@ -12,7 +12,15 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-08-07
+## [0.1.1] - 2026-08-07
+
+No functional change. The four packages are identical to 0.1.0 apart from
+their version number.
+
+Released to exercise the automated publishing path end to end. The npm package
+in 0.1.0 was published by hand, because npm will only accept a trusted
+publisher for a package that already exists, so the workflow's npm job had
+never actually run.
 
 First release.
 
