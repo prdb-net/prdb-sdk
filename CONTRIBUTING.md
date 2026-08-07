@@ -122,15 +122,62 @@ does not build is a bug report waiting to happen.
 
 ## Releasing
 
-For maintainers. Publishing to PyPI, npm and NuGet is not automated yet.
+For maintainers.
 
 The four packages share one version number, set in `python/pyproject.toml`,
-`typescript/package.json` and `csharp/src/Prdb.Sdk/Prdb.Sdk.csproj`. Keep them
-in step, and add the release section to `CHANGELOG.md` in the same commit.
+`typescript/package.json` and `csharp/src/Prdb.Sdk/Prdb.Sdk.csproj`.
+`scripts/check-version.sh` checks they agree; the release workflow runs it
+against the tag and refuses to publish a mismatch.
 
-Go is the exception: it takes its version from a git tag, and because the module
-lives in a subdirectory its tags carry that prefix — `go/v0.1.0`, not `v0.1.0`.
-A tag without the prefix will not be found by `go get`.
+```bash
+# 1. Bump the three manifests and move CHANGELOG's Unreleased section
+#    under the new version. One commit.
+scripts/check-version.sh 0.1.0
+
+# 2. Tag and push. This starts the release workflow.
+git tag v0.1.0 && git push origin v0.1.0
+
+# 3. Approve the deployment in the Actions tab. Nothing is published before
+#    that: the publish jobs run in the `release` environment, which requires
+#    a review.
+
+# 4. Release the Go module, which has no registry to publish to.
+git tag go/v0.1.0 && git push origin go/v0.1.0
+```
+
+The `go/` prefix is not decoration. Go derives a module's tags from its
+directory, and this module lives in `go/` rather than at the repository root,
+so a bare `v0.1.0` tag will not be found by `go get`.
+
+### How publishing authenticates
+
+No registry token is stored in this repository. Each publish job requests a
+short-lived OIDC token from GitHub, and PyPI, npm and NuGet each exchange it
+for a credential that expires within the hour, after checking it came from this
+repository and from `release.yml` running in the `release` environment.
+
+That has one consequence worth remembering: **the workflow filename is part of
+the configuration.** Renaming `.github/workflows/release.yml` invalidates the
+PyPI and NuGet policies until they are updated to match.
+
+### The first npm release needs a hand
+
+PyPI and NuGet can be configured to trust this repository before the package
+exists — PyPI through a pending publisher, NuGet because the policy belongs to
+the account rather than to a package. npm cannot: its trusted publisher lives
+on the package's settings page, so the package has to exist first.
+
+So the very first publish of a new npm package is manual:
+
+```bash
+cd typescript && npm run build && npm login && npm publish
+```
+
+Then add the trusted publisher at
+`npmjs.com/package/@prdb/sdk/access` (GitHub Actions, this repository,
+`release.yml`, environment `release`) and every later release goes through the
+workflow. Until that is done, expect the `npm` job to fail on authentication
+while the other two succeed.
 
 ## License
 

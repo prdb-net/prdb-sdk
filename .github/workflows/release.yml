@@ -1,0 +1,163 @@
+# Publishes the four SDKs when a version tag is pushed.
+#
+# The filename is part of the configuration: PyPI and NuGet both pin their
+# trusted publishing policies to "release.yml". Renaming this file breaks
+# publishing until the policies are updated to match.
+#
+#   git tag v0.1.0 && git push origin v0.1.0      # publishes to the registries
+#   git tag go/v0.1.0 && git push origin go/v0.1.0 # makes the Go module resolvable
+#
+# Go has no registry: `go get` reads the repository directly, so the module is
+# released by tagging it. The tag needs the `go/` prefix because the module
+# lives in a subdirectory rather than at the repository root.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+# No token is stored anywhere. Each publish job proves its identity to the
+# registry with a short-lived OIDC token, which is what `id-token: write`
+# grants, and receives a credential that expires within the hour.
+permissions: {}
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read the version from the tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      # A tag that disagrees with the manifests would publish the wrong version
+      # under the right name, which cannot be undone on any of these registries.
+      - name: Check the manifests agree with the tag
+        run: scripts/check-version.sh "${{ steps.version.outputs.version }}"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache-dependency-path: go/go.sum
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Test all four SDKs
+        run: |
+          (cd python     && pip install -e '.[dev]' && python -m pytest)
+          (cd typescript && npm install && npm run typecheck && npm test)
+          (cd go         && go vet ./... && go test ./...)
+          (cd csharp     && dotnet test Prdb.Sdk.slnx --nologo)
+
+  pypi:
+    name: Publish to PyPI
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build
+        working-directory: python
+        run: |
+          pip install --upgrade build
+          python -m build
+
+      # No `password:` — the action exchanges the OIDC token for an upload
+      # credential. The trusted publisher on PyPI is still pending until this
+      # succeeds once, which is what creates the project.
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: python/dist
+
+  npm:
+    name: Publish to npm
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      # Deliberately no NODE_AUTH_TOKEN anywhere below: the npm CLI falls
+      # through to trusted publishing when it finds no token, and setting an
+      # empty one would look like a failed login instead.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs npm 11.5.1 or newer. Node 24 ships something
+      # recent enough today, but the bundled version moves with the runner
+      # image, so pin the floor rather than trusting it.
+      - name: Ensure npm supports trusted publishing
+        run: npm install -g npm@latest
+
+      - name: Build
+        working-directory: typescript
+        run: |
+          npm install
+          npm run build
+
+      # --provenance records where the package was built. The docs say trusted
+      # publishing implies it; in practice it has to be asked for.
+      - name: Publish
+        working-directory: typescript
+        run: npm publish --provenance
+
+  nuget:
+    name: Publish to NuGet
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Pack
+        working-directory: csharp
+        run: |
+          dotnet build src/Prdb.Sdk/Prdb.Sdk.csproj -c Release --nologo
+          dotnet pack src/Prdb.Sdk/Prdb.Sdk.csproj -c Release --no-build --nologo
+
+      # The key this returns is valid for an hour and can be issued only once
+      # per token, so it is requested immediately before the push.
+      - name: Exchange the OIDC token for a NuGet key
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: prdb
+
+      - name: Push
+        working-directory: csharp
+        run: |
+          dotnet nuget push 'src/Prdb.Sdk/bin/Release/*.nupkg' \
+            --api-key '${{ steps.login.outputs.NUGET_API_KEY }}' \
+            --source https://api.nuget.org/v3/index.json

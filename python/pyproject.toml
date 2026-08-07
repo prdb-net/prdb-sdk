@@ -44,7 +44,9 @@ Issues = "https://github.com/prdb-net/prdb-sdk/issues"
 packages = ["src/prdb_sdk"]
 
 [tool.hatch.build.targets.sdist]
-include = ["src/prdb_sdk", "README.md"]
+# LICENSE is a copy of the repository's, so the published artifact carries its
+# own licence rather than pointing at a file the consumer does not have.
+include = ["src/prdb_sdk", "README.md", "LICENSE"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
