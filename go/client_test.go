@@ -68,9 +68,22 @@ func TestNewAnonymousClientSendsNoAPIKey(t *testing.T) {
 	}
 }
 
-// An API key is never attached over plain HTTP. Worth pinning: it means a local
-// staging deployment must terminate TLS for an authenticated client to work.
+// An API key must not travel in cleartext. Kiota refuses to attach one to an
+// http:// URL at request time; the wrapper rejects it at construction instead,
+// which is the earlier and clearer failure and matches the other three SDKs.
+// Worth pinning either way: a staging deployment has to terminate TLS.
 func TestAPIKeyRequiresHTTPS(t *testing.T) {
+	_, err := NewClient("secret-key", Options{BaseURL: "http://localhost:8080"})
+	if err == nil {
+		t.Fatal("expected a plain HTTP base URL to be refused")
+	}
+	if !strings.Contains(err.Error(), "https") {
+		t.Errorf("error should say why: %v", err)
+	}
+}
+
+// With no credential to protect, plain HTTP is the caller's business.
+func TestAnonymousClientAllowsHTTP(t *testing.T) {
 	var seen http.Header
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		seen = r.Header.Clone()
@@ -79,20 +92,19 @@ func TestAPIKeyRequiresHTTPS(t *testing.T) {
 	}))
 	t.Cleanup(server.Close)
 
-	client, err := NewClient("secret-key", Options{
+	client, err := NewAnonymousClient(Options{
 		BaseURL:    server.URL,
 		HTTPClient: server.Client(),
 	})
 	if err != nil {
-		t.Fatalf("NewClient: %v", err)
+		t.Fatalf("NewAnonymousClient: %v", err)
 	}
 
-	_, err = client.Health().Get(context.Background(), nil)
-	if err == nil {
-		t.Fatal("expected the request over plain HTTP to be refused")
+	if _, err := client.Health().Get(context.Background(), nil); err != nil {
+		t.Fatalf("Health().Get: %v", err)
 	}
 	if seen.Get(APIKeyHeader) != "" {
-		t.Error("the api key reached the wire over plain HTTP")
+		t.Errorf("%s = %q, want it absent", APIKeyHeader, seen.Get(APIKeyHeader))
 	}
 }
 
@@ -134,6 +146,46 @@ func TestRedirectToAnotherHostDoesNotLeakTheAPIKey(t *testing.T) {
 
 	if got := elsewhereSaw.Get(APIKeyHeader); got != "" {
 		t.Errorf("the api key leaked to the redirect target: %s = %q", APIKeyHeader, got)
+	}
+}
+
+// Refusing cross-host redirects must not refuse ordinary ones.
+func TestSameHostRedirectIsFollowed(t *testing.T) {
+	var paths []string
+	var keys []string
+
+	server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		paths = append(paths, r.URL.Path)
+		keys = append(keys, r.Header.Get(APIKeyHeader))
+
+		if r.URL.Path == "/health" {
+			http.Redirect(w, r, "/healthz", http.StatusTemporaryRedirect)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"status":"healthy","timestamp":"2026-08-07T12:00:00Z"}`))
+	}))
+	t.Cleanup(server.Close)
+
+	client, err := NewClient("secret-key", Options{
+		BaseURL:    server.URL,
+		HTTPClient: server.Client(),
+	})
+	if err != nil {
+		t.Fatalf("NewClient: %v", err)
+	}
+
+	if _, err := client.Health().Get(context.Background(), nil); err != nil {
+		t.Fatalf("Health().Get: %v", err)
+	}
+
+	if len(paths) != 2 || paths[0] != "/health" || paths[1] != "/healthz" {
+		t.Errorf("paths = %v, want [/health /healthz]", paths)
+	}
+	for i, key := range keys {
+		if key != "secret-key" {
+			t.Errorf("request %d: %s = %q, want %q", i, APIKeyHeader, key, "secret-key")
+		}
 	}
 }
 

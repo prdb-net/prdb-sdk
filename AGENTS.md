@@ -67,26 +67,47 @@ mixed into an API change.
 Each language has a small hand-written wrapper that wires up API-key
 authentication and the base URL. They are deliberately the same shape:
 
-- a constructor taking the API key, with optional base URL and HTTP client
+- a constructor taking the API key, with optional base URL and transport
 - an anonymous variant, because `GET /health` is the only endpoint that works
   without a key
-- the key bound to the API host, so a redirect elsewhere cannot carry the
-  credential off-site
-- validation that rejects an empty key and a non-absolute base URL
+- a redirect to a different origin refused rather than followed, so the key
+  cannot travel off the API host
+- validation that rejects an empty key, a non-absolute base URL, and — for the
+  authenticated constructor only — a base URL that is not `https`
 
 Adding a capability to one wrapper means adding it to all four. A user who
 learns one SDK should recognise the others.
+
+## The redirect rule is ours to enforce
+
+The API key travels in `X-Api-Key`, a custom header. Every layer underneath
+strips only `Authorization` (and sometimes `Cookie`) when a redirect leaves the
+origin — Kiota's redirect handlers in all four languages, `net/http`, `httpx`,
+`fetch` and `HttpClient` alike. A custom header is carried straight through.
+
+So each wrapper installs its own rule, and each has a test that drives a real
+redirect to a second host and asserts the key did not arrive. If you touch
+client construction, run those tests: this is the one place where a plausible
+refactor silently gives the credential away.
+
+The corollary is that a caller-supplied transport must still run through our
+middleware. Python, TypeScript and C# take the innermost transport and build the
+pipeline around it; Go copies the client and sets `CheckRedirect`, because its
+Kiota middleware lives in the `Transport` the caller owns.
 
 ## Verifying a change
 
 Run the check for whatever you touched; CI runs all of them.
 
 ```bash
-cd python     && pip install -e . && python -c "import prdb_sdk"
-cd typescript && npm install && npm run typecheck
-cd go         && go build ./... && go vet ./...
-cd csharp     && dotnet build Prdb.Sdk.slnx -c Release
+cd python     && pip install -e '.[dev]' && python -m pytest
+cd typescript && npm install && npm run typecheck && npm test
+cd go         && go build ./... && go vet ./... && go test ./...
+cd csharp     && dotnet build Prdb.Sdk.slnx -c Release && dotnet test Prdb.Sdk.slnx
 ```
+
+The C# tests target `net8.0` and `net10.0`. With only one runtime installed,
+add `-f net10.0` (or whichever you have) to `dotnet test`.
 
 Examples in a README are code. When you change one, compile it — a snippet that
 does not build is a bug report waiting to happen.

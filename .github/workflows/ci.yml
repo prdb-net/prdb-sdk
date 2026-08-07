@@ -50,8 +50,9 @@ jobs:
       - run: pip install --upgrade build
       - working-directory: python
         run: |
-          pip install -e .
+          pip install -e '.[dev]'
           python -c "import prdb_sdk; print(prdb_sdk.DEFAULT_BASE_URL)"
+          python -m pytest
           python -m build
 
   typescript:
@@ -66,6 +67,7 @@ jobs:
         run: |
           npm install
           npm run typecheck
+          npm test
           npm run build
 
   go:
@@ -88,10 +90,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # Both runtimes: the library targets net8.0, and the test project also
+      # targets net10.0 so it runs on a machine that has only the current one.
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: |
+            8.0.x
+            10.0.x
       - working-directory: csharp
         run: |
           dotnet build Prdb.Sdk.slnx -c Release --nologo
+          dotnet test Prdb.Sdk.slnx -c Release --no-build --nologo
           dotnet pack src/Prdb.Sdk/Prdb.Sdk.csproj -c Release --no-build --nologo

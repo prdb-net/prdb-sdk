@@ -1,0 +1,13 @@
+// Tests are compiled to a throwaway directory rather than to dist/, so the
+// published package stays limited to the library itself.
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": ".test-dist",
+    "declaration": false,
+    "declarationMap": false
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "exclude": ["node_modules", "dist", ".test-dist"]
+}

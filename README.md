@@ -18,8 +18,14 @@ read it here on GitHub and build the SDKs without installing a generator.
 ## Authentication
 
 Every endpoint except `GET /health` requires an API key, sent in the
-`X-Api-Key` header. The SDKs bind the key to the API host, so a redirect
-elsewhere cannot carry your credential off-site.
+`X-Api-Key` header. All four SDKs keep the key on the API host: a redirect to a
+different origin is refused rather than followed, so your credential is never
+handed to whoever answers there. They also require an `https` base URL, so it is
+never sent in cleartext.
+
+Neither the HTTP stacks nor Kiota do this for us — they strip only
+`Authorization` across origins, and `X-Api-Key` is a custom header. It is the
+wrappers' own rule, and each SDK has a test for it.
 
 Requests are rate limited per key. `GET /rate-limit` reports the remaining
 budget, and a `429` response carries a `Retry-After` header.

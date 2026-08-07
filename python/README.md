@@ -52,11 +52,16 @@ is `client.videos.by_id(video_id).filehashes.get()`.
 
 ## Authentication
 
-`create_client` sends the key in the `X-Api-Key` header and binds it to the API
-host, so a redirect elsewhere cannot carry the credential off-site.
+`create_client` sends the key in the `X-Api-Key` header, and keeps it on the API
+host: a redirect to a different origin raises `CrossOriginRedirectError` rather
+than handing your credential to whoever answers there. Redirects that stay on
+the same origin are followed normally.
+
+`base_url` must use `https`, so the key is never sent in cleartext.
 
 `GET /health` is the only endpoint that works without a key; use
-`create_anonymous_client()` for health probes.
+`create_anonymous_client()` for health probes. That one has no credential to
+protect, so it accepts a plain `http` base URL.
 
 ## Options
 
@@ -64,9 +69,12 @@ host, so a redirect elsewhere cannot carry the credential off-site.
 client = create_client(
     api_key="...",
     base_url="https://api.prdb.net",   # override for a staging deployment
-    http_client=my_httpx_async_client, # control timeouts, proxies, retries
+    http_client=my_httpx_async_client, # control timeouts, proxies, connection limits
 )
 ```
+
+The client you pass in is configured with the SDK's middleware in place, so it
+behaves like the one built for you — same redirect rule, same retry handling.
 
 ## Generated code
 

@@ -37,11 +37,16 @@ is `client.videos.byId(videoId).filehashes.get()`.
 
 ## Authentication
 
-`createClient` sends the key in the `X-Api-Key` header and binds it to the API
-host, so a redirect elsewhere cannot carry the credential off-site.
+`createClient` sends the key in the `X-Api-Key` header, and keeps it on the API
+host: a redirect to a different origin throws `CrossOriginRedirectError` rather
+than handing your credential to whoever answers there. Redirects that stay on
+the same origin are followed normally.
+
+`baseUrl` must use `https`, so the key is never sent in cleartext.
 
 `GET /health` is the only endpoint that works without a key; use
-`createAnonymousClient()` for health probes.
+`createAnonymousClient()` for health probes. That one has no credential to
+protect, so it accepts a plain `http` base URL.
 
 ## Options
 
@@ -49,9 +54,12 @@ host, so a redirect elsewhere cannot carry the credential off-site.
 const client = createClient({
   apiKey: "...",
   baseUrl: "https://api.prdb.net", // override for a staging deployment
-  httpClient: myHttpClient,        // control timeouts, proxies, retries
+  customFetch: myFetch,            // control timeouts, proxies, agents
 });
 ```
+
+`customFetch` is wrapped in the SDK's middleware, so the redirect rule above
+applies to it too.
 
 ## Generated code
 

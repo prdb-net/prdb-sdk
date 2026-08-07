@@ -15,6 +15,7 @@ dist/
 # TypeScript
 node_modules/
 typescript/dist/
+typescript/.test-dist/
 *.tsbuildinfo
 
 # .NET

@@ -57,11 +57,16 @@ is `client.Videos().ById(videoID).Filehashes().Get(ctx, nil)`.
 
 ## Authentication
 
-`NewClient` sends the key in the `X-Api-Key` header and binds it to the API
-host, so a redirect elsewhere cannot carry the credential off-site.
+`NewClient` sends the key in the `X-Api-Key` header, and keeps it on the API
+host: a redirect to a different host is refused with an error rather than
+handing your credential to whoever answers there. Redirects that stay on the
+same host are followed normally.
+
+`BaseURL` must use `https`, so the key is never sent in cleartext.
 
 `GET /health` is the only endpoint that works without a key; use
-`NewAnonymousClient()` for health probes.
+`NewAnonymousClient()` for health probes. That one has no credential to
+protect, so it accepts a plain `http` base URL.
 
 ## Options
 
@@ -71,6 +76,9 @@ client, err := prdb.NewClient("...", prdb.Options{
 	HTTPClient: myHTTPClient,           // control timeouts, proxies, retries
 })
 ```
+
+Supplying an `*http.Client` leaves it untouched: the redirect rule is applied to
+a copy, unless you have set `CheckRedirect` yourself.
 
 ## Generated code
 

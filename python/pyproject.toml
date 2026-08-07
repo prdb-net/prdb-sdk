@@ -27,6 +27,12 @@ dependencies = [
     "microsoft-kiota-bundle>=1.11.7,<2.0.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+]
+
 [project.urls]
 Homepage = "https://github.com/prdb-net/prdb-sdk"
 Repository = "https://github.com/prdb-net/prdb-sdk"
@@ -39,3 +45,8 @@ packages = ["src/prdb_sdk"]
 
 [tool.hatch.build.targets.sdist]
 include = ["src/prdb_sdk", "README.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Every wrapper test drives an async client, so async tests need no marker.
+asyncio_mode = "auto"

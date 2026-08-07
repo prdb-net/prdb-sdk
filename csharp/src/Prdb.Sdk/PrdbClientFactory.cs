@@ -1,5 +1,7 @@
 using Microsoft.Kiota.Abstractions.Authentication;
 using Microsoft.Kiota.Bundle;
+using Microsoft.Kiota.Http.HttpClientLibrary;
+using Microsoft.Kiota.Http.HttpClientLibrary.Middleware.Options;
 using Prdb.Sdk.Generated;
 
 namespace Prdb.Sdk;
@@ -27,35 +29,38 @@ public static class PrdbClientFactory
     /// Creates a client authenticated with an API key.
     /// </summary>
     /// <param name="apiKey">The API key, sent in the <c>X-Api-Key</c> header on every request.</param>
-    /// <param name="baseUrl">Override the API root. Useful for a staging deployment.</param>
-    /// <param name="httpClient">
-    /// Supply your own <see cref="HttpClient"/> to control timeouts, proxies or retries.
-    /// One is created for you when omitted.
+    /// <param name="baseUrl">
+    /// Override the API root. Useful for a staging deployment. Must use <c>https</c>,
+    /// so the key is never sent in cleartext.
+    /// </param>
+    /// <param name="transport">
+    /// Supply your own innermost <see cref="HttpMessageHandler"/> to control timeouts,
+    /// proxies or connection pooling. The SDK's middleware is layered on top of it either
+    /// way, so the redirect rule below always applies.
     /// </param>
     /// <exception cref="ArgumentException">
-    /// <paramref name="apiKey"/> is empty, or <paramref name="baseUrl"/> is not an absolute URL.
+    /// <paramref name="apiKey"/> is empty, or <paramref name="baseUrl"/> is not an
+    /// absolute <c>https</c> URL.
     /// </exception>
     public static PrdbClient Create(
         string apiKey,
         string baseUrl = DefaultBaseUrl,
-        HttpClient? httpClient = null)
+        HttpMessageHandler? transport = null)
     {
         if (string.IsNullOrWhiteSpace(apiKey))
         {
             throw new ArgumentException("API key must not be empty.", nameof(apiKey));
         }
 
-        var host = HostOf(baseUrl, nameof(baseUrl));
+        var host = HostOf(baseUrl, nameof(baseUrl), requireHttps: true);
 
-        // Restricting the key to the API host means a redirect to somewhere else
-        // cannot carry the credential off-site.
         var authProvider = new ApiKeyAuthenticationProvider(
             apiKey,
             ApiKeyHeader,
             ApiKeyAuthenticationProvider.KeyLocation.Header,
             host);
 
-        return Build(authProvider, baseUrl, httpClient);
+        return Build(authProvider, baseUrl, transport);
     }
 
     /// <summary>
@@ -64,35 +69,96 @@ public static class PrdbClientFactory
     /// <remarks>
     /// Only <c>GET /health</c> is reachable this way; every other endpoint answers 401.
     /// Provided so health probes do not need an API key.
+    /// <para>
+    /// With no credential to protect, <paramref name="baseUrl"/> may use plain <c>http</c>.
+    /// </para>
     /// </remarks>
+    /// <exception cref="ArgumentException">
+    /// <paramref name="baseUrl"/> is not an absolute URL.
+    /// </exception>
     public static PrdbClient CreateAnonymous(
         string baseUrl = DefaultBaseUrl,
-        HttpClient? httpClient = null)
+        HttpMessageHandler? transport = null)
     {
-        HostOf(baseUrl, nameof(baseUrl));
+        HostOf(baseUrl, nameof(baseUrl), requireHttps: false);
 
-        return Build(new AnonymousAuthenticationProvider(), baseUrl, httpClient);
+        return Build(new AnonymousAuthenticationProvider(), baseUrl, transport);
     }
 
     private static PrdbClient Build(
         IAuthenticationProvider authProvider,
         string baseUrl,
-        HttpClient? httpClient)
+        HttpMessageHandler? transport)
     {
-        var adapter = httpClient is null
-            ? new DefaultRequestAdapter(authProvider)
-            : new DefaultRequestAdapter(authProvider, httpClient: httpClient);
+        var handlers = KiotaClientFactory.CreateDefaultHandlers([RedirectOption()]);
+        var httpClient = KiotaClientFactory.Create(handlers, transport);
 
-        adapter.BaseUrl = baseUrl;
+        var adapter = new DefaultRequestAdapter(authProvider, httpClient: httpClient)
+        {
+            BaseUrl = baseUrl,
+        };
 
         return new PrdbClient(adapter);
     }
 
-    private static string HostOf(string baseUrl, string paramName)
+    /// <summary>
+    /// Kiota's default redirect behaviour with one change: a redirect to a different
+    /// origin is refused instead of followed.
+    /// </summary>
+    /// <remarks>
+    /// The API key travels in a custom header, and nothing below this point strips it.
+    /// Kiota's default scrubbing removes only <c>Authorization</c>, and
+    /// <see cref="HttpClient"/>'s own redirect handling does not touch custom headers
+    /// either, so a redirect off the API host would hand the credential to whoever
+    /// answered. Redirects that stay on the same origin are followed normally.
+    /// </remarks>
+    private static RedirectHandlerOption RedirectOption() => new()
     {
-        if (!Uri.TryCreate(baseUrl, UriKind.Absolute, out var uri) || string.IsNullOrEmpty(uri.Host))
+        ScrubSensitiveHeaders = RefuseCrossOriginRedirect,
+    };
+
+    /// <param name="request">The redirect request, already pointing at the new location.</param>
+    /// <param name="originalUri">Where the request that got redirected was sent.</param>
+    /// <param name="resolver">Kiota's URI resolver; unused here.</param>
+    private static void RefuseCrossOriginRedirect(
+        HttpRequestMessage request,
+        Uri originalUri,
+        Func<Uri, Uri?>? resolver)
+    {
+        var newUri = request.RequestUri;
+        if (newUri is null || IsSameOrigin(originalUri, newUri))
+        {
+            return;
+        }
+
+        // Removed before throwing as well, so the key is gone even if a caller
+        // catches the exception and reuses the request.
+        request.Headers.Remove(ApiKeyHeader);
+        request.Headers.Authorization = null;
+        request.Headers.Remove("Cookie");
+
+        throw new CrossOriginRedirectException(originalUri, newUri);
+    }
+
+    private static bool IsSameOrigin(Uri left, Uri right) =>
+        string.Equals(left.Scheme, right.Scheme, StringComparison.OrdinalIgnoreCase)
+        && string.Equals(left.Host, right.Host, StringComparison.OrdinalIgnoreCase)
+        && left.Port == right.Port;
+
+    private static string HostOf(string baseUrl, string paramName, bool requireHttps)
+    {
+        if (!Uri.TryCreate(baseUrl, UriKind.Absolute, out var uri)
+            || string.IsNullOrEmpty(uri.Host)
+            || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
         {
             throw new ArgumentException($"Base URL must be an absolute URL, got '{baseUrl}'.", paramName);
+        }
+
+        if (requireHttps && uri.Scheme != Uri.UriSchemeHttps)
+        {
+            throw new ArgumentException(
+                $"Base URL must use https so the API key is not sent in cleartext, got '{baseUrl}'.",
+                paramName);
         }
 
         return uri.Host;

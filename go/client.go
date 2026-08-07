@@ -50,20 +50,24 @@ type Options struct {
 // NewClient creates a client authenticated with an API key, which is sent in
 // the X-Api-Key header on every request.
 //
-// It returns an error if apiKey is empty or opts.BaseURL is not absolute.
+// It returns an error if apiKey is empty, or opts.BaseURL is not an absolute
+// https URL. The https requirement keeps the key out of cleartext; it also
+// matches Kiota's own refusal to attach a key over plain http, but fails here
+// at construction rather than on the first request.
 func NewClient(apiKey string, opts ...Options) (*generated.PrdbClient, error) {
 	if apiKey == "" {
 		return nil, errors.New("prdb: api key must not be empty")
 	}
 
 	options := firstOrZero(opts)
-	baseURL, host, err := resolveBaseURL(options.BaseURL)
+	baseURL, host, err := resolveBaseURL(options.BaseURL, true)
 	if err != nil {
 		return nil, err
 	}
 
-	// Restricting the key to the API host means a redirect to somewhere else
-	// cannot carry the credential off-site.
+	// Restricting the key to the API host means Kiota will not attach it to a
+	// URL it builds for another host. It says nothing about redirects, which
+	// happen a layer below; buildClient handles those.
 	authProvider, err := auth.NewApiKeyAuthenticationProviderWithValidHosts(
 		apiKey,
 		APIKeyHeader,
@@ -81,9 +85,11 @@ func NewClient(apiKey string, opts ...Options) (*generated.PrdbClient, error) {
 //
 // Only GET /health is reachable this way; every other endpoint answers 401.
 // Provided so health probes do not need an API key.
+//
+// With no credential to protect, opts.BaseURL may use plain http.
 func NewAnonymousClient(opts ...Options) (*generated.PrdbClient, error) {
 	options := firstOrZero(opts)
-	baseURL, _, err := resolveBaseURL(options.BaseURL)
+	baseURL, _, err := resolveBaseURL(options.BaseURL, false)
 	if err != nil {
 		return nil, err
 	}
@@ -192,14 +198,20 @@ func sameHostOnly(req *nethttp.Request, res *nethttp.Response) bool {
 	return strings.EqualFold(target.Host, req.URL.Host)
 }
 
-func resolveBaseURL(baseURL string) (resolved string, host string, err error) {
+func resolveBaseURL(baseURL string, requireHTTPS bool) (resolved string, host string, err error) {
 	if baseURL == "" {
 		baseURL = DefaultBaseURL
 	}
 
 	parsed, parseErr := url.Parse(baseURL)
-	if parseErr != nil || !parsed.IsAbs() || parsed.Host == "" {
+	if parseErr != nil || !parsed.IsAbs() || parsed.Host == "" ||
+		(parsed.Scheme != "http" && parsed.Scheme != "https") {
 		return "", "", fmt.Errorf("prdb: base URL must be an absolute URL, got %q", baseURL)
+	}
+
+	if requireHTTPS && parsed.Scheme != "https" {
+		return "", "", fmt.Errorf(
+			"prdb: base URL must use https so the api key is not sent in cleartext, got %q", baseURL)
 	}
 
 	return baseURL, parsed.Hostname(), nil

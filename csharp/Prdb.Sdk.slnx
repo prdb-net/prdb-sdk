@@ -5,4 +5,7 @@
   <Folder Name="/src/">
     <Project Path="src/Prdb.Sdk/Prdb.Sdk.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Prdb.Sdk.Tests/Prdb.Sdk.Tests.csproj" />
+  </Folder>
 </Solution>

@@ -15,6 +15,7 @@ Everything under ``prdb_sdk.generated`` is produced by Kiota from
 from .client import (
     API_KEY_HEADER,
     DEFAULT_BASE_URL,
+    CrossOriginRedirectError,
     PrdbClient,
     create_anonymous_client,
     create_client,
@@ -23,6 +24,7 @@ from .client import (
 __all__ = [
     "API_KEY_HEADER",
     "DEFAULT_BASE_URL",
+    "CrossOriginRedirectError",
     "PrdbClient",
     "create_anonymous_client",
     "create_client",
