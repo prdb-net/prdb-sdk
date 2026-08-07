@@ -15,12 +15,15 @@ expected="${1:-}"
 
 pyproject="$repo_root/python/pyproject.toml"
 package_json="$repo_root/typescript/package.json"
+package_lock="$repo_root/typescript/package-lock.json"
 csproj="$repo_root/csharp/src/Prdb.Sdk/Prdb.Sdk.csproj"
 
 # Only the [project] version, not a dependency pin that happens to precede it.
 python_version="$(sed -n '/^\[project\]/,/^\[/p' "$pyproject" \
     | sed -n 's/^version[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' | head -1)"
 typescript_version="$(jq -r '.version' "$package_json")"
+# npm only rewrites this on the next install, so a bump leaves it behind.
+lock_version="$(jq -r '.version' "$package_lock")"
 csharp_version="$(sed -n 's|.*<Version>\([^<]*\)</Version>.*|\1|p' "$csproj" | head -1)"
 
 status=0
@@ -37,9 +40,16 @@ report() {
 
 report "python"     "$python_version"     "python/pyproject.toml"
 report "typescript" "$typescript_version" "typescript/package.json"
+report "lockfile"   "$lock_version"       "typescript/package-lock.json"
 report "csharp"     "$csharp_version"     "csharp/src/Prdb.Sdk/Prdb.Sdk.csproj"
 
 [[ $status -eq 0 ]] || exit 1
+
+if [[ "$typescript_version" != "$lock_version" ]]; then
+    echo >&2
+    echo "error: package-lock.json is still at $lock_version; run npm install in typescript/" >&2
+    exit 1
+fi
 
 if [[ "$python_version" != "$typescript_version" || "$python_version" != "$csharp_version" ]]; then
     echo >&2

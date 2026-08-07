@@ -41,7 +41,7 @@ You only need the toolchain for the language you are touching. CI runs all four.
 
 ```bash
 cd python     && pip install -e '.[dev]'   # Python 3.10+
-cd typescript && npm install               # Node 20+
+cd typescript && npm install               # Node 22+
 cd go         && go build ./...            # Go 1.23+
 cd csharp     && dotnet restore            # .NET 10 SDK
 ```

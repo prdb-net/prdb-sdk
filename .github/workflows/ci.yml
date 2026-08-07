@@ -56,13 +56,19 @@ jobs:
           python -m build
 
   typescript:
-    name: TypeScript
+    name: TypeScript (Node ${{ matrix.node }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # 22 is the floor package.json declares, and the floor is the version
+      # that actually breaks first. 24 is what most users will be on.
+      matrix:
+        node: ['22', '24']
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: ${{ matrix.node }}
       - working-directory: typescript
         run: |
           npm install

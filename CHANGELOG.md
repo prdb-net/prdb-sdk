@@ -12,6 +12,14 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Changed
+
+- **TypeScript: the minimum supported Node version is now 22.** Node 20 reached
+  end of life in April 2026, and continuing to advertise support for a release
+  line that no longer receives security fixes would be misleading. Nothing in
+  the SDK requires 22; installing on 20 warns rather than fails, and the code
+  still runs. Consider it a statement about what is tested and supported.
+
 ## [0.1.1] - 2026-08-07
 
 No functional change. The four packages are identical to 0.1.0 apart from
