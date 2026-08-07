@@ -87,9 +87,14 @@ jobs:
       # No `password:` — the action exchanges the OIDC token for an upload
       # credential. The trusted publisher on PyPI is still pending until this
       # succeeds once, which is what creates the project.
+      #
+      # skip-existing makes a re-run safe. If one of the three registries fails
+      # and the run is retried, the two that already succeeded must not turn
+      # the retry red.
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: python/dist
+          skip-existing: true
 
   npm:
     name: Publish to npm
@@ -123,9 +128,21 @@ jobs:
 
       # --provenance records where the package was built. The docs say trusted
       # publishing implies it; in practice it has to be asked for.
+      #
+      # The existence check is npm's equivalent of the other two registries'
+      # skip flags, which it has no option for. It matters twice: a retried run
+      # must not fail on the version it already published, and the very first
+      # release of a package is published by hand, because npm can only be told
+      # to trust this workflow once the package exists.
       - name: Publish
         working-directory: typescript
-        run: npm publish --provenance
+        run: |
+          version="$(node -p 'require("./package.json").version')"
+          if npm view "@prdb/sdk@${version}" version >/dev/null 2>&1; then
+            echo "@prdb/sdk@${version} is already on the registry; nothing to do."
+          else
+            npm publish --provenance
+          fi
 
   nuget:
     name: Publish to NuGet
@@ -160,4 +177,5 @@ jobs:
         run: |
           dotnet nuget push 'src/Prdb.Sdk/bin/Release/*.nupkg' \
             --api-key '${{ steps.login.outputs.NUGET_API_KEY }}' \
-            --source https://api.nuget.org/v3/index.json
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate

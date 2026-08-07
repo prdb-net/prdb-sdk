@@ -176,8 +176,12 @@ cd typescript && npm run build && npm login && npm publish
 Then add the trusted publisher at
 `npmjs.com/package/@prdb/sdk/access` (GitHub Actions, this repository,
 `release.yml`, environment `release`) and every later release goes through the
-workflow. Until that is done, expect the `npm` job to fail on authentication
-while the other two succeed.
+workflow.
+
+Publishing that version by hand does not put the release out of step: each
+publish job skips a version the registry already has, so the tag for that same
+version still runs green. That guard is also what makes a re-run safe after one
+registry fails and the other two have already succeeded.
 
 ## License
 
