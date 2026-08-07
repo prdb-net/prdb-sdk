@@ -111,14 +111,15 @@ so the checked-in code cannot silently drift from the spec.
 
 ## Contributing
 
-Bug reports and pull requests are welcome.
+Bug reports and pull requests are welcome — see
+[CONTRIBUTING.md](CONTRIBUTING.md) for how to set up, run the tests and report
+a bug against the right layer.
 
-Note that the `generated/` directories are not editable by hand: a fix there
-will be overwritten on the next run. If the generated output is wrong, the cause
-is either the spec (upstream, in the API itself) or the generator version — say
-which in the issue and we will trace it.
+Two things worth knowing before you start: the `generated/` directories are not
+editable by hand, because the next run overwrites them, and everything in this
+repository is in English, including commit messages.
 
-Everything in this repository is in English, including commit messages.
+Released changes are listed in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
