@@ -1,0 +1,27 @@
+# Local, machine-specific agent instructions — never committed
+CLAUDE.local.md
+
+# Kiota writes a generation log next to the output; it is noise, not source.
+.kiota.log
+
+# Python
+__pycache__/
+*.py[cod]
+build/
+dist/
+*.egg-info/
+.venv/
+
+# TypeScript
+node_modules/
+typescript/dist/
+*.tsbuildinfo
+
+# .NET
+bin/
+obj/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Prdb.Sdk</PackageId>
+    <Version>0.1.0</Version>
+    <Description>C# SDK for the prdb Public API.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/prdb-net/prdb-sdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/prdb-net/prdb-sdk</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>prdb;sdk;api;client</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Pulls in Kiota abstractions, HTTP and the four serializers the
+         generated code uses (json, text, form, multipart). -->
+    <PackageReference Include="Microsoft.Kiota.Bundle" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <!-- The generated tree produces documentation warnings that are not ours to
+       fix; they are regenerated from the spec on every run. -->
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+</Project>

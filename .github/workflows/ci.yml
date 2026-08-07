@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  generated-code-is-current:
+    name: Generated code matches the spec
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Regenerate all SDKs
+        run: scripts/generate.sh
+
+      # The generated code is committed. If regeneration moves anything, the
+      # commit is out of step with spec/openapi.json and must be redone.
+      - name: Check for drift
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::Generated code differs from the committed output."
+            echo "Run scripts/generate.sh and commit the result."
+            git diff --stat
+            exit 1
+          fi
+
+  python:
+    name: Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install --upgrade build
+      - working-directory: python
+        run: |
+          pip install -e .
+          python -c "import prdb_sdk; print(prdb_sdk.DEFAULT_BASE_URL)"
+          python -m build
+
+  typescript:
+    name: TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - working-directory: typescript
+        run: |
+          npm install
+          npm run typecheck
+          npm run build
+
+  go:
+    name: Go
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache-dependency-path: go/go.sum
+      - working-directory: go
+        run: |
+          go build ./...
+          go vet ./...
+
+  csharp:
+    name: C#
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - working-directory: csharp
+        run: |
+          dotnet build Prdb.Sdk.slnx -c Release --nologo
+          dotnet pack src/Prdb.Sdk/Prdb.Sdk.csproj -c Release --no-build --nologo

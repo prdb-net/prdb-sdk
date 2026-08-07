@@ -1,2 +1,119 @@
-# prdb-sdk
-SDK in Python/TS/Go/C# for prdb
+# prdb SDKs
+
+Official client libraries for the [prdb Public API](https://apidocs.prdb.net/),
+in Python, TypeScript, Go and C#.
+
+All four are generated with [Kiota](https://learn.microsoft.com/openapi/kiota/)
+from the API's own OpenAPI document, so every language exposes the same 49
+operations with the same shapes. The generated code is committed, so you can
+read it here on GitHub and build the SDKs without installing a generator.
+
+| Language | Package | Directory |
+|---|---|---|
+| Python | `prdb-sdk` | [`python/`](python/) |
+| TypeScript | `@prdb/sdk` | [`typescript/`](typescript/) |
+| Go | `github.com/prdb-net/prdb-sdk/go` | [`go/`](go/) |
+| C# | `Prdb.Sdk` | [`csharp/`](csharp/) |
+
+## Authentication
+
+Every endpoint except `GET /health` requires an API key, sent in the
+`X-Api-Key` header. The SDKs bind the key to the API host, so a redirect
+elsewhere cannot carry your credential off-site.
+
+Requests are rate limited per key. `GET /rate-limit` reports the remaining
+budget, and a `429` response carries a `Retry-After` header.
+
+## Quickstart
+
+The request builders mirror the API's URL structure, so `GET /videos/{id}` reads
+the same way in all four languages.
+
+**Python**
+
+```python
+from prdb_sdk import create_client
+
+client = create_client(api_key="...")
+page = await client.videos.get()
+video = await client.videos.by_id(video_id).get()
+```
+
+**TypeScript**
+
+```ts
+import { createClient } from "@prdb/sdk";
+
+const client = createClient({ apiKey: "..." });
+const page = await client.videos.get();
+const video = await client.videos.byId(videoId).get();
+```
+
+**Go**
+
+```go
+client, err := prdb.NewClient("...")
+if err != nil {
+    return err
+}
+page, err := client.Videos().Get(ctx, nil)
+video, err := client.Videos().ById(videoID).Get(ctx, nil)
+```
+
+**C#**
+
+```csharp
+var client = PrdbClientFactory.Create("...");
+var page = await client.Videos.GetAsync();
+var video = await client.Videos[videoId].GetAsync();
+```
+
+Each directory has its own README with installation instructions and the
+details for that language.
+
+## What the API offers
+
+Videos, actors and sites with their metadata; the scene pre-database; file
+hashes for videos and indexers; user-submitted preview images; and the per-user
+lists built on top of all of it — favourite actors and sites, wanted videos,
+and downloads recorded from indexers.
+
+Endpoints named `/{resource}/changes` are delta feeds. They return the current
+state of rows changed since a cursor, including soft-deleted rows as tombstones,
+rather than a full history of every mutation — which makes them the right tool
+for keeping a local copy in sync.
+
+Full reference: <https://apidocs.prdb.net/>
+
+## Regenerating
+
+The spec is pinned at [`spec/openapi.json`](spec/openapi.json) and the generated
+code is committed alongside it. The two are always updated together.
+
+```bash
+scripts/update-spec.sh   # refresh spec/openapi.json from apidocs.prdb.net
+scripts/generate.sh      # regenerate all four SDKs
+```
+
+`scripts/generate.sh` only rewrites the `generated/` directories. The
+hand-written wrapper next to each one — the few dozen lines that wire up
+authentication and the base URL — is never touched.
+
+The Kiota version is pinned in [`scripts/config.sh`](scripts/config.sh). CI
+re-runs the generation and fails if the result differs from what is committed,
+so the checked-in code cannot silently drift from the spec.
+
+## Contributing
+
+Bug reports and pull requests are welcome.
+
+Note that the `generated/` directories are not editable by hand: a fix there
+will be overwritten on the next run. If the generated output is wrong, the cause
+is either the spec (upstream, in the API itself) or the generator version — say
+which in the issue and we will trace it.
+
+Everything in this repository is in English, including commit messages.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
