@@ -30,7 +30,7 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Read the version from the tag
         id: version
@@ -41,17 +41,17 @@ jobs:
       - name: Check the manifests agree with the tag
         run: scripts/check-version.sh "${{ steps.version.outputs.version }}"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version: '1.23'
           cache-dependency-path: go/go.sum
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: |
             8.0.x
@@ -73,8 +73,8 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
@@ -105,11 +105,14 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       # Deliberately no NODE_AUTH_TOKEN anywhere below: the npm CLI falls
-      # through to trusted publishing when it finds no token, and setting an
-      # empty one would look like a failed login instead.
-      - uses: actions/setup-node@v4
+      # through to trusted publishing when it finds no token.
+      #
+      # setup-node must stay at v7 or newer for that. Earlier versions wrote a
+      # placeholder token into .npmrc when none was given, which they removed
+      # in v7 precisely because it confused OIDC publishing.
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           registry-url: https://registry.npmjs.org
@@ -153,8 +156,8 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '10.0.x'
 
