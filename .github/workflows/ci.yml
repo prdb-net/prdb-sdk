@@ -24,12 +24,18 @@ jobs:
 
       # The generated code is committed. If regeneration moves anything, the
       # commit is out of step with spec/openapi.json and must be redone.
+      #
+      # Checked with `git status --porcelain`, not `git diff`: a new endpoint
+      # adds new files, and those stay untracked, which `git diff` does not
+      # report. That is the most common kind of change, so `git diff` alone
+      # would wave through exactly what this gate exists to catch.
       - name: Check for drift
         run: |
-          if ! git diff --quiet; then
+          drift="$(git status --porcelain)"
+          if [ -n "$drift" ]; then
             echo "::error::Generated code differs from the committed output."
             echo "Run scripts/generate.sh and commit the result."
-            git diff --stat
+            echo "$drift"
             exit 1
           fi
 
@@ -75,6 +81,7 @@ jobs:
         run: |
           go build ./...
           go vet ./...
+          go test ./...
 
   csharp:
     name: C#

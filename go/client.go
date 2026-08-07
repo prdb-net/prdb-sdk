@@ -18,9 +18,11 @@ import (
 	"fmt"
 	nethttp "net/http"
 	"net/url"
+	"strings"
 
 	auth "github.com/microsoft/kiota-abstractions-go/authentication"
 	bundle "github.com/microsoft/kiota-bundle-go"
+	khttp "github.com/microsoft/kiota-http-go"
 
 	"github.com/prdb-net/prdb-sdk/go/generated"
 )
@@ -94,15 +96,24 @@ func buildClient(
 	baseURL string,
 	httpClient *nethttp.Client,
 ) (*generated.PrdbClient, error) {
-	var adapter *bundle.DefaultRequestAdapter
-	var err error
-
 	if httpClient == nil {
-		adapter, err = bundle.NewDefaultRequestAdapter(authProvider)
-	} else {
-		adapter, err = bundle.NewDefaultRequestAdapterWithParseNodeFactoryAndSerializationWriterFactoryAndHttpClient(
-			authProvider, nil, nil, httpClient)
+		var err error
+		httpClient, err = newHTTPClient()
+		if err != nil {
+			return nil, err
+		}
+	} else if httpClient.CheckRedirect == nil {
+		// A caller-supplied client does not run Kiota's middleware, so apply the
+		// same-host redirect rule through net/http instead. Copied rather than
+		// mutated: the caller's client is theirs, not ours. A CheckRedirect they
+		// set themselves is left alone.
+		clone := *httpClient
+		clone.CheckRedirect = refuseCrossHostRedirect
+		httpClient = &clone
 	}
+
+	adapter, err := bundle.NewDefaultRequestAdapterWithParseNodeFactoryAndSerializationWriterFactoryAndHttpClient(
+		authProvider, nil, nil, httpClient)
 	if err != nil {
 		return nil, fmt.Errorf("prdb: building request adapter: %w", err)
 	}
@@ -110,6 +121,75 @@ func buildClient(
 	adapter.SetBaseUrl(baseURL)
 
 	return generated.NewPrdbClient(adapter), nil
+}
+
+// newHTTPClient builds Kiota's default client with one change: a redirect to a
+// different host is refused instead of followed.
+//
+// This is not belt and braces. The API key travels in a custom header, and
+// neither net/http nor Kiota's redirect handler strips it across hosts — both
+// only drop Authorization — so a redirect off api.prdb.net would hand the
+// credential to whoever answered. Same-host redirects are still followed.
+func newHTTPClient() (*nethttp.Client, error) {
+	middlewares, err := khttp.GetDefaultMiddlewaresWithOptions(&khttp.RedirectHandlerOptions{
+		MaxRedirects:   defaultMaxRedirects,
+		ShouldRedirect: sameHostOnly,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("prdb: building http middleware: %w", err)
+	}
+
+	return khttp.GetDefaultClient(middlewares...), nil
+}
+
+const defaultMaxRedirects = 5
+
+// refuseCrossHostRedirect is the net/http equivalent of sameHostOnly, for the
+// path where a caller supplies their own client.
+func refuseCrossHostRedirect(req *nethttp.Request, via []*nethttp.Request) error {
+	if len(via) == 0 {
+		return nil
+	}
+	if len(via) >= defaultMaxRedirects {
+		return fmt.Errorf("prdb: stopped after %d redirects", defaultMaxRedirects)
+	}
+	if !strings.EqualFold(req.URL.Host, via[0].URL.Host) {
+		return fmt.Errorf(
+			"prdb: refusing to follow a redirect from %s to %s; the api key is bound to the first host",
+			via[0].URL.Host, req.URL.Host)
+	}
+	return nil
+}
+
+func sameHostOnly(req *nethttp.Request, res *nethttp.Response) bool {
+	if res == nil || req == nil {
+		return false
+	}
+
+	status := res.StatusCode
+	if status != nethttp.StatusMovedPermanently &&
+		status != nethttp.StatusFound &&
+		status != nethttp.StatusSeeOther &&
+		status != nethttp.StatusTemporaryRedirect &&
+		status != nethttp.StatusPermanentRedirect {
+		return false
+	}
+
+	location := res.Header.Get("Location")
+	if location == "" {
+		return false
+	}
+
+	target, err := url.Parse(location)
+	if err != nil {
+		return false
+	}
+	if !target.IsAbs() {
+		// A relative Location stays on the current host.
+		return true
+	}
+
+	return strings.EqualFold(target.Host, req.URL.Host)
 }
 
 func resolveBaseURL(baseURL string) (resolved string, host string, err error) {
