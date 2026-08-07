@@ -14,99 +14,11 @@ type VideoDetailSiteDto struct {
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The network property
-    network VideoDetailSiteDto_VideoDetailSiteDto_networkable
+    network VideoDetailNetworkDtoable
     // The title property
     title *string
     // The url property
     url *string
-}
-// VideoDetailSiteDto_VideoDetailSiteDto_network composed type wrapper for classes VideoDetailNetworkDtoable, VideoDetailSiteDto_networkMember1able
-type VideoDetailSiteDto_VideoDetailSiteDto_network struct {
-    // Composed type representation for type VideoDetailNetworkDtoable
-    videoDetailNetworkDto VideoDetailNetworkDtoable
-    // Composed type representation for type VideoDetailSiteDto_networkMember1able
-    videoDetailSiteDto_networkMember1 VideoDetailSiteDto_networkMember1able
-}
-// NewVideoDetailSiteDto_VideoDetailSiteDto_network instantiates a new VideoDetailSiteDto_VideoDetailSiteDto_network and sets the default values.
-func NewVideoDetailSiteDto_VideoDetailSiteDto_network()(*VideoDetailSiteDto_VideoDetailSiteDto_network) {
-    m := &VideoDetailSiteDto_VideoDetailSiteDto_network{
-    }
-    return m
-}
-// CreateVideoDetailSiteDto_VideoDetailSiteDto_networkFromDiscriminatorValue creates a new instance of the appropriate class based on discriminator value
-// returns a Parsable when successful
-func CreateVideoDetailSiteDto_VideoDetailSiteDto_networkFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
-    result := NewVideoDetailSiteDto_VideoDetailSiteDto_network()
-    if parseNode != nil {
-        mappingValueNode, err := parseNode.GetChildNode("")
-        if err != nil {
-            return nil, err
-        }
-        if mappingValueNode != nil {
-            mappingValue, err := mappingValueNode.GetStringValue()
-            if err != nil {
-                return nil, err
-            }
-            if mappingValue != nil {
-            }
-        }
-    }
-    return result, nil
-}
-// GetFieldDeserializers the deserialization information for the current model
-// returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
-func (m *VideoDetailSiteDto_VideoDetailSiteDto_network) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
-    if m.GetVideoDetailNetworkDto() != nil {
-        return m.GetVideoDetailNetworkDto().GetFieldDeserializers()
-    } else if m.GetVideoDetailSiteDtoNetworkMember1() != nil {
-        return m.GetVideoDetailSiteDtoNetworkMember1().GetFieldDeserializers()
-    }
-    return make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
-}
-// GetIsComposedType determines if the current object is a wrapper around a composed type
-// returns a bool when successful
-func (m *VideoDetailSiteDto_VideoDetailSiteDto_network) GetIsComposedType()(bool) {
-    return true
-}
-// GetVideoDetailNetworkDto gets the VideoDetailNetworkDto property value. Composed type representation for type VideoDetailNetworkDtoable
-// returns a VideoDetailNetworkDtoable when successful
-func (m *VideoDetailSiteDto_VideoDetailSiteDto_network) GetVideoDetailNetworkDto()(VideoDetailNetworkDtoable) {
-    return m.videoDetailNetworkDto
-}
-// GetVideoDetailSiteDtoNetworkMember1 gets the VideoDetailSiteDto_networkMember1 property value. Composed type representation for type VideoDetailSiteDto_networkMember1able
-// returns a VideoDetailSiteDto_networkMember1able when successful
-func (m *VideoDetailSiteDto_VideoDetailSiteDto_network) GetVideoDetailSiteDtoNetworkMember1()(VideoDetailSiteDto_networkMember1able) {
-    return m.videoDetailSiteDto_networkMember1
-}
-// Serialize serializes information the current object
-func (m *VideoDetailSiteDto_VideoDetailSiteDto_network) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
-    if m.GetVideoDetailNetworkDto() != nil {
-        err := writer.WriteObjectValue("", m.GetVideoDetailNetworkDto())
-        if err != nil {
-            return err
-        }
-    } else if m.GetVideoDetailSiteDtoNetworkMember1() != nil {
-        err := writer.WriteObjectValue("", m.GetVideoDetailSiteDtoNetworkMember1())
-        if err != nil {
-            return err
-        }
-    }
-    return nil
-}
-// SetVideoDetailNetworkDto sets the VideoDetailNetworkDto property value. Composed type representation for type VideoDetailNetworkDtoable
-func (m *VideoDetailSiteDto_VideoDetailSiteDto_network) SetVideoDetailNetworkDto(value VideoDetailNetworkDtoable)() {
-    m.videoDetailNetworkDto = value
-}
-// SetVideoDetailSiteDtoNetworkMember1 sets the VideoDetailSiteDto_networkMember1 property value. Composed type representation for type VideoDetailSiteDto_networkMember1able
-func (m *VideoDetailSiteDto_VideoDetailSiteDto_network) SetVideoDetailSiteDtoNetworkMember1(value VideoDetailSiteDto_networkMember1able)() {
-    m.videoDetailSiteDto_networkMember1 = value
-}
-type VideoDetailSiteDto_VideoDetailSiteDto_networkable interface {
-    i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
-    GetVideoDetailNetworkDto()(VideoDetailNetworkDtoable)
-    GetVideoDetailSiteDtoNetworkMember1()(VideoDetailSiteDto_networkMember1able)
-    SetVideoDetailNetworkDto(value VideoDetailNetworkDtoable)()
-    SetVideoDetailSiteDtoNetworkMember1(value VideoDetailSiteDto_networkMember1able)()
 }
 // NewVideoDetailSiteDto instantiates a new VideoDetailSiteDto and sets the default values.
 func NewVideoDetailSiteDto()(*VideoDetailSiteDto) {
@@ -140,12 +52,12 @@ func (m *VideoDetailSiteDto) GetFieldDeserializers()(map[string]func(i878a80d233
         return nil
     }
     res["network"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetObjectValue(CreateVideoDetailSiteDto_VideoDetailSiteDto_networkFromDiscriminatorValue)
+        val, err := n.GetObjectValue(CreateVideoDetailNetworkDtoFromDiscriminatorValue)
         if err != nil {
             return err
         }
         if val != nil {
-            m.SetNetwork(val.(VideoDetailSiteDto_VideoDetailSiteDto_networkable))
+            m.SetNetwork(val.(VideoDetailNetworkDtoable))
         }
         return nil
     }
@@ -177,8 +89,8 @@ func (m *VideoDetailSiteDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf
     return m.id
 }
 // GetNetwork gets the network property value. The network property
-// returns a VideoDetailSiteDto_VideoDetailSiteDto_networkable when successful
-func (m *VideoDetailSiteDto) GetNetwork()(VideoDetailSiteDto_VideoDetailSiteDto_networkable) {
+// returns a VideoDetailNetworkDtoable when successful
+func (m *VideoDetailSiteDto) GetNetwork()(VideoDetailNetworkDtoable) {
     return m.network
 }
 // GetTitle gets the title property value. The title property
@@ -234,7 +146,7 @@ func (m *VideoDetailSiteDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3
     m.id = value
 }
 // SetNetwork sets the network property value. The network property
-func (m *VideoDetailSiteDto) SetNetwork(value VideoDetailSiteDto_VideoDetailSiteDto_networkable)() {
+func (m *VideoDetailSiteDto) SetNetwork(value VideoDetailNetworkDtoable)() {
     m.network = value
 }
 // SetTitle sets the title property value. The title property
@@ -249,11 +161,11 @@ type VideoDetailSiteDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
-    GetNetwork()(VideoDetailSiteDto_VideoDetailSiteDto_networkable)
+    GetNetwork()(VideoDetailNetworkDtoable)
     GetTitle()(*string)
     GetUrl()(*string)
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
-    SetNetwork(value VideoDetailSiteDto_VideoDetailSiteDto_networkable)()
+    SetNetwork(value VideoDetailNetworkDtoable)()
     SetTitle(value *string)()
     SetUrl(value *string)()
 }

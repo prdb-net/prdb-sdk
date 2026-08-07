@@ -15,97 +15,9 @@ type GetIndexerFilehashChangesResponse struct {
     // The items property
     items []IndexerFilehashChangeDtoable
     // The nextCursor property
-    nextCursor GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorable
+    nextCursor IndexerFilehashChangesCursorDtoable
     // The pageSize property
     pageSize *int32
-}
-// GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor composed type wrapper for classes GetIndexerFilehashChangesResponse_nextCursorMember1able, IndexerFilehashChangesCursorDtoable
-type GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor struct {
-    // Composed type representation for type GetIndexerFilehashChangesResponse_nextCursorMember1able
-    getIndexerFilehashChangesResponse_nextCursorMember1 GetIndexerFilehashChangesResponse_nextCursorMember1able
-    // Composed type representation for type IndexerFilehashChangesCursorDtoable
-    indexerFilehashChangesCursorDto IndexerFilehashChangesCursorDtoable
-}
-// NewGetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor instantiates a new GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor and sets the default values.
-func NewGetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor()(*GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor) {
-    m := &GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor{
-    }
-    return m
-}
-// CreateGetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorFromDiscriminatorValue creates a new instance of the appropriate class based on discriminator value
-// returns a Parsable when successful
-func CreateGetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
-    result := NewGetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor()
-    if parseNode != nil {
-        mappingValueNode, err := parseNode.GetChildNode("")
-        if err != nil {
-            return nil, err
-        }
-        if mappingValueNode != nil {
-            mappingValue, err := mappingValueNode.GetStringValue()
-            if err != nil {
-                return nil, err
-            }
-            if mappingValue != nil {
-            }
-        }
-    }
-    return result, nil
-}
-// GetFieldDeserializers the deserialization information for the current model
-// returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
-func (m *GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
-    if m.GetGetIndexerFilehashChangesResponseNextCursorMember1() != nil {
-        return m.GetGetIndexerFilehashChangesResponseNextCursorMember1().GetFieldDeserializers()
-    } else if m.GetIndexerFilehashChangesCursorDto() != nil {
-        return m.GetIndexerFilehashChangesCursorDto().GetFieldDeserializers()
-    }
-    return make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
-}
-// GetGetIndexerFilehashChangesResponseNextCursorMember1 gets the GetIndexerFilehashChangesResponse_nextCursorMember1 property value. Composed type representation for type GetIndexerFilehashChangesResponse_nextCursorMember1able
-// returns a GetIndexerFilehashChangesResponse_nextCursorMember1able when successful
-func (m *GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor) GetGetIndexerFilehashChangesResponseNextCursorMember1()(GetIndexerFilehashChangesResponse_nextCursorMember1able) {
-    return m.getIndexerFilehashChangesResponse_nextCursorMember1
-}
-// GetIndexerFilehashChangesCursorDto gets the IndexerFilehashChangesCursorDto property value. Composed type representation for type IndexerFilehashChangesCursorDtoable
-// returns a IndexerFilehashChangesCursorDtoable when successful
-func (m *GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor) GetIndexerFilehashChangesCursorDto()(IndexerFilehashChangesCursorDtoable) {
-    return m.indexerFilehashChangesCursorDto
-}
-// GetIsComposedType determines if the current object is a wrapper around a composed type
-// returns a bool when successful
-func (m *GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor) GetIsComposedType()(bool) {
-    return true
-}
-// Serialize serializes information the current object
-func (m *GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
-    if m.GetGetIndexerFilehashChangesResponseNextCursorMember1() != nil {
-        err := writer.WriteObjectValue("", m.GetGetIndexerFilehashChangesResponseNextCursorMember1())
-        if err != nil {
-            return err
-        }
-    } else if m.GetIndexerFilehashChangesCursorDto() != nil {
-        err := writer.WriteObjectValue("", m.GetIndexerFilehashChangesCursorDto())
-        if err != nil {
-            return err
-        }
-    }
-    return nil
-}
-// SetGetIndexerFilehashChangesResponseNextCursorMember1 sets the GetIndexerFilehashChangesResponse_nextCursorMember1 property value. Composed type representation for type GetIndexerFilehashChangesResponse_nextCursorMember1able
-func (m *GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor) SetGetIndexerFilehashChangesResponseNextCursorMember1(value GetIndexerFilehashChangesResponse_nextCursorMember1able)() {
-    m.getIndexerFilehashChangesResponse_nextCursorMember1 = value
-}
-// SetIndexerFilehashChangesCursorDto sets the IndexerFilehashChangesCursorDto property value. Composed type representation for type IndexerFilehashChangesCursorDtoable
-func (m *GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursor) SetIndexerFilehashChangesCursorDto(value IndexerFilehashChangesCursorDtoable)() {
-    m.indexerFilehashChangesCursorDto = value
-}
-type GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorable interface {
-    i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
-    GetGetIndexerFilehashChangesResponseNextCursorMember1()(GetIndexerFilehashChangesResponse_nextCursorMember1able)
-    GetIndexerFilehashChangesCursorDto()(IndexerFilehashChangesCursorDtoable)
-    SetGetIndexerFilehashChangesResponseNextCursorMember1(value GetIndexerFilehashChangesResponse_nextCursorMember1able)()
-    SetIndexerFilehashChangesCursorDto(value IndexerFilehashChangesCursorDtoable)()
 }
 // NewGetIndexerFilehashChangesResponse instantiates a new GetIndexerFilehashChangesResponse and sets the default values.
 func NewGetIndexerFilehashChangesResponse()(*GetIndexerFilehashChangesResponse) {
@@ -155,12 +67,12 @@ func (m *GetIndexerFilehashChangesResponse) GetFieldDeserializers()(map[string]f
         return nil
     }
     res["nextCursor"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetObjectValue(CreateGetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorFromDiscriminatorValue)
+        val, err := n.GetObjectValue(CreateIndexerFilehashChangesCursorDtoFromDiscriminatorValue)
         if err != nil {
             return err
         }
         if val != nil {
-            m.SetNextCursor(val.(GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorable))
+            m.SetNextCursor(val.(IndexerFilehashChangesCursorDtoable))
         }
         return nil
     }
@@ -187,8 +99,8 @@ func (m *GetIndexerFilehashChangesResponse) GetItems()([]IndexerFilehashChangeDt
     return m.items
 }
 // GetNextCursor gets the nextCursor property value. The nextCursor property
-// returns a GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorable when successful
-func (m *GetIndexerFilehashChangesResponse) GetNextCursor()(GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorable) {
+// returns a IndexerFilehashChangesCursorDtoable when successful
+func (m *GetIndexerFilehashChangesResponse) GetNextCursor()(IndexerFilehashChangesCursorDtoable) {
     return m.nextCursor
 }
 // GetPageSize gets the pageSize property value. The pageSize property
@@ -249,7 +161,7 @@ func (m *GetIndexerFilehashChangesResponse) SetItems(value []IndexerFilehashChan
     m.items = value
 }
 // SetNextCursor sets the nextCursor property value. The nextCursor property
-func (m *GetIndexerFilehashChangesResponse) SetNextCursor(value GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorable)() {
+func (m *GetIndexerFilehashChangesResponse) SetNextCursor(value IndexerFilehashChangesCursorDtoable)() {
     m.nextCursor = value
 }
 // SetPageSize sets the pageSize property value. The pageSize property
@@ -261,10 +173,10 @@ type GetIndexerFilehashChangesResponseable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetHasMore()(*bool)
     GetItems()([]IndexerFilehashChangeDtoable)
-    GetNextCursor()(GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorable)
+    GetNextCursor()(IndexerFilehashChangesCursorDtoable)
     GetPageSize()(*int32)
     SetHasMore(value *bool)()
     SetItems(value []IndexerFilehashChangeDtoable)()
-    SetNextCursor(value GetIndexerFilehashChangesResponse_GetIndexerFilehashChangesResponse_nextCursorable)()
+    SetNextCursor(value IndexerFilehashChangesCursorDtoable)()
     SetPageSize(value *int32)()
 }

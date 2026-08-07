@@ -6,10 +6,6 @@ from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, Par
 from typing import Any, Optional, TYPE_CHECKING, Union
 from uuid import UUID
 
-if TYPE_CHECKING:
-    from .wanted_video_change_wanted_video_dto_fulfilled_in_quality import WantedVideoChangeWantedVideoDto_fulfilledInQuality
-    from .wanted_video_change_wanted_video_dto_fulfillment_by_app import WantedVideoChangeWantedVideoDto_fulfillmentByApp
-
 @dataclass
 class WantedVideoChangeWantedVideoDto(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
@@ -21,10 +17,10 @@ class WantedVideoChangeWantedVideoDto(AdditionalDataHolder, Parsable):
     deleted_at_utc: Optional[datetime.datetime] = None
     # The fulfilledAtUtc property
     fulfilled_at_utc: Optional[datetime.datetime] = None
-    # The fulfilledInQuality property
-    fulfilled_in_quality: Optional[WantedVideoChangeWantedVideoDto_fulfilledInQuality] = None
-    # The fulfillmentByApp property
-    fulfillment_by_app: Optional[WantedVideoChangeWantedVideoDto_fulfillmentByApp] = None
+    # Known values: P720 (0), P1080 (1), P2160 (2).
+    fulfilled_in_quality: Optional[int] = None
+    # Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+    fulfillment_by_app: Optional[int] = None
     # The fulfillmentExternalId property
     fulfillment_external_id: Optional[str] = None
     # The imageCdnPath property
@@ -62,18 +58,12 @@ class WantedVideoChangeWantedVideoDto(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
-        from .wanted_video_change_wanted_video_dto_fulfilled_in_quality import WantedVideoChangeWantedVideoDto_fulfilledInQuality
-        from .wanted_video_change_wanted_video_dto_fulfillment_by_app import WantedVideoChangeWantedVideoDto_fulfillmentByApp
-
-        from .wanted_video_change_wanted_video_dto_fulfilled_in_quality import WantedVideoChangeWantedVideoDto_fulfilledInQuality
-        from .wanted_video_change_wanted_video_dto_fulfillment_by_app import WantedVideoChangeWantedVideoDto_fulfillmentByApp
-
         fields: dict[str, Callable[[Any], None]] = {
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
             "deletedAtUtc": lambda n : setattr(self, 'deleted_at_utc', n.get_datetime_value()),
             "fulfilledAtUtc": lambda n : setattr(self, 'fulfilled_at_utc', n.get_datetime_value()),
-            "fulfilledInQuality": lambda n : setattr(self, 'fulfilled_in_quality', n.get_object_value(WantedVideoChangeWantedVideoDto_fulfilledInQuality)),
-            "fulfillmentByApp": lambda n : setattr(self, 'fulfillment_by_app', n.get_object_value(WantedVideoChangeWantedVideoDto_fulfillmentByApp)),
+            "fulfilledInQuality": lambda n : setattr(self, 'fulfilled_in_quality', n.get_int_value()),
+            "fulfillmentByApp": lambda n : setattr(self, 'fulfillment_by_app', n.get_int_value()),
             "fulfillmentExternalId": lambda n : setattr(self, 'fulfillment_external_id', n.get_str_value()),
             "imageCdnPath": lambda n : setattr(self, 'image_cdn_path', n.get_str_value()),
             "isDeleted": lambda n : setattr(self, 'is_deleted', n.get_bool_value()),
@@ -98,8 +88,8 @@ class WantedVideoChangeWantedVideoDto(AdditionalDataHolder, Parsable):
         writer.write_datetime_value("createdAtUtc", self.created_at_utc)
         writer.write_datetime_value("deletedAtUtc", self.deleted_at_utc)
         writer.write_datetime_value("fulfilledAtUtc", self.fulfilled_at_utc)
-        writer.write_object_value("fulfilledInQuality", self.fulfilled_in_quality)
-        writer.write_object_value("fulfillmentByApp", self.fulfillment_by_app)
+        writer.write_int_value("fulfilledInQuality", self.fulfilled_in_quality)
+        writer.write_int_value("fulfillmentByApp", self.fulfillment_by_app)
         writer.write_str_value("fulfillmentExternalId", self.fulfillment_external_id)
         writer.write_str_value("imageCdnPath", self.image_cdn_path)
         writer.write_bool_value("isDeleted", self.is_deleted)

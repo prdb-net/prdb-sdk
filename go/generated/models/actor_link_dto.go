@@ -10,7 +10,7 @@ import (
 type ActorLinkDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The externalSite property
+    // Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5).
     externalSite *int32
     // The externalSiteLabel property
     externalSiteLabel *string
@@ -34,7 +34,7 @@ func CreateActorLinkDtoFromDiscriminatorValue(parseNode i878a80d2330e89d26896388
 func (m *ActorLinkDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetExternalSite gets the externalSite property value. The externalSite property
+// GetExternalSite gets the externalSite property value. Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5).
 // returns a *int32 when successful
 func (m *ActorLinkDto) GetExternalSite()(*int32) {
     return m.externalSite
@@ -117,7 +117,7 @@ func (m *ActorLinkDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e
 func (m *ActorLinkDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetExternalSite sets the externalSite property value. The externalSite property
+// SetExternalSite sets the externalSite property value. Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5).
 func (m *ActorLinkDto) SetExternalSite(value *int32)() {
     m.externalSite = value
 }

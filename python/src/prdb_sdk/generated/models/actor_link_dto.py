@@ -9,7 +9,7 @@ class ActorLinkDto(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The externalSite property
+    # Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5).
     external_site: Optional[int] = None
     # The externalSiteLabel property
     external_site_label: Optional[str] = None

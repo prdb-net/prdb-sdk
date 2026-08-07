@@ -4027,8 +4027,7 @@
             "type": "string"
           },
           "gender": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/ActorGender"
           },
           "genderLabel": {
             "type": "string"
@@ -4041,11 +4040,7 @@
             "format": "date"
           },
           "birthdayType": {
-            "type": [
-              "null",
-              "integer"
-            ],
-            "format": "int32"
+            "$ref": "#/components/schemas/BirthdayType"
           },
           "birthdayTypeLabel": {
             "type": [
@@ -4067,22 +4062,19 @@
             ]
           },
           "haircolor": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Haircolor"
           },
           "haircolorLabel": {
             "type": "string"
           },
           "eyecolor": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Eyecolor"
           },
           "eyecolorLabel": {
             "type": "string"
           },
           "breastType": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/BreastType"
           },
           "breastTypeLabel": {
             "type": "string"
@@ -4122,15 +4114,13 @@
             "format": "int32"
           },
           "nationality": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Nationality"
           },
           "nationalityLabel": {
             "type": "string"
           },
           "ethnicity": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Ethnicity"
           },
           "ethnicityLabel": {
             "type": "string"
@@ -4267,8 +4257,7 @@
             "format": "uuid"
           },
           "imageType": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/ActorImageType"
           },
           "imageTypeLabel": {
             "type": "string"
@@ -4290,8 +4279,7 @@
         "type": "object",
         "properties": {
           "externalSite": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/ExternalSite"
           },
           "externalSiteLabel": {
             "type": "string"
@@ -4334,8 +4322,7 @@
             "type": "string"
           },
           "gender": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/ActorGender"
           },
           "genderLabel": {
             "type": "string"
@@ -4348,11 +4335,7 @@
             "format": "date"
           },
           "birthdayType": {
-            "type": [
-              "null",
-              "integer"
-            ],
-            "format": "int32"
+            "$ref": "#/components/schemas/BirthdayType"
           },
           "birthdayTypeLabel": {
             "type": [
@@ -4374,22 +4357,19 @@
             ]
           },
           "haircolor": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Haircolor"
           },
           "haircolorLabel": {
             "type": "string"
           },
           "eyecolor": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Eyecolor"
           },
           "eyecolorLabel": {
             "type": "string"
           },
           "breastType": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/BreastType"
           },
           "breastTypeLabel": {
             "type": "string"
@@ -4429,15 +4409,13 @@
             "format": "int32"
           },
           "nationality": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Nationality"
           },
           "nationalityLabel": {
             "type": "string"
           },
           "ethnicity": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Ethnicity"
           },
           "ethnicityLabel": {
             "type": "string"
@@ -4528,8 +4506,7 @@
             "format": "uuid"
           },
           "imageType": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/ActorImageType"
           },
           "imageTypeLabel": {
             "type": "string"
@@ -4560,8 +4537,7 @@
         "type": "object",
         "properties": {
           "externalSite": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/ExternalSite"
           },
           "externalSiteLabel": {
             "type": "string"
@@ -4592,22 +4568,19 @@
             "type": "string"
           },
           "gender": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/ActorGender"
           },
           "genderLabel": {
             "type": "string"
           },
           "nationality": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Nationality"
           },
           "nationalityLabel": {
             "type": "string"
           },
           "ethnicity": {
-            "type": "integer",
-            "format": "int32"
+            "$ref": "#/components/schemas/Ethnicity"
           },
           "ethnicityLabel": {
             "type": "string"
@@ -4742,6 +4715,25 @@
           }
         }
       },
+      "BirthdayType": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "description": "Known values: ExactDate (1), MonthYear (2), Year (3)."
+      },
+      "BreastType": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "description": "Known values: Unknown (0), Natural (1), Augmented (2), NotApplicable (3)."
+      },
       "DownloadedFromIndexerFilenameDto": {
         "required": [
           "id",
@@ -4846,6 +4838,45 @@
             "format": "date-time"
           }
         }
+      },
+      "Ethnicity": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "type": "integer",
+        "description": "Known values: Unknown (0), Caucasian (1), Black (2), Asian (3), Indian (4), Latin (5), MiddleEastern (6), Mixed (7), Other (8)."
+      },
+      "ExternalSite": {
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "type": "integer",
+        "description": "Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5)."
+      },
+      "Eyecolor": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "description": "Known values: Unknown (0), Blue (1), Brown (2), Grey (3), Red (4), Green (5), Hazel (6)."
       },
       "FavoriteActorChangeDto": {
         "required": [
@@ -5183,14 +5214,7 @@
             "type": "boolean"
           },
           "nextCursor": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/FavoriteActorChangesCursorDto"
-              }
-            ]
+            "$ref": "#/components/schemas/FavoriteActorChangesCursorDto"
           }
         }
       },
@@ -5216,14 +5240,7 @@
             "type": "boolean"
           },
           "nextCursor": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/FavoriteSiteChangesCursorDto"
-              }
-            ]
+            "$ref": "#/components/schemas/FavoriteSiteChangesCursorDto"
           }
         }
       },
@@ -5265,14 +5282,7 @@
             "type": "boolean"
           },
           "nextCursor": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/IndexerFilehashChangesCursorDto"
-              }
-            ]
+            "$ref": "#/components/schemas/IndexerFilehashChangesCursorDto"
           }
         }
       },
@@ -5317,14 +5327,7 @@
             "type": "boolean"
           },
           "nextCursor": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/VideoFilehashChangesCursorDto"
-              }
-            ]
+            "$ref": "#/components/schemas/VideoFilehashChangesCursorDto"
           }
         }
       },
@@ -5401,14 +5404,7 @@
             "type": "boolean"
           },
           "nextCursor": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/VideoUserImageChangesCursorDto"
-              }
-            ]
+            "$ref": "#/components/schemas/VideoUserImageChangesCursorDto"
           }
         }
       },
@@ -5434,16 +5430,26 @@
             "type": "boolean"
           },
           "nextCursor": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/WantedVideoChangesCursorDto"
-              }
-            ]
+            "$ref": "#/components/schemas/WantedVideoChangesCursorDto"
           }
         }
+      },
+      "Haircolor": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "type": "integer",
+        "description": "Known values: Unknown (0), Blonde (1), Brown (2), Black (3), Red (4), Auburn (5), Grey (6), White (7), Bald (8), Various (9), Other (10)."
       },
       "IFormFile": {
         "type": "string",
@@ -5697,14 +5703,7 @@
             "format": "date-time"
           },
           "video": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/LatestPreDbVideoDto"
-              }
-            ]
+            "$ref": "#/components/schemas/LatestPreDbVideoDto"
           }
         }
       },
@@ -6786,14 +6785,7 @@
             "format": "date-time"
           },
           "fulfilledInQuality": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/VideoQuality"
-              }
-            ]
+            "$ref": "#/components/schemas/VideoQuality"
           },
           "fulfillmentExternalId": {
             "type": [
@@ -6802,14 +6794,7 @@
             ]
           },
           "fulfillmentByApp": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/FulfillmentApp"
-              }
-            ]
+            "$ref": "#/components/schemas/FulfillmentApp"
           }
         }
       },
@@ -6837,14 +6822,7 @@
             "format": "date-time"
           },
           "fulfilledInQuality": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/VideoQuality"
-              }
-            ]
+            "$ref": "#/components/schemas/VideoQuality"
           },
           "fulfillmentExternalId": {
             "type": [
@@ -6853,14 +6831,7 @@
             ]
           },
           "fulfillmentByApp": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/FulfillmentApp"
-              }
-            ]
+            "$ref": "#/components/schemas/FulfillmentApp"
           },
           "createdAtUtc": {
             "type": "string",
@@ -7081,14 +7052,7 @@
             "type": "string"
           },
           "network": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/VideoDetailNetworkDto"
-              }
-            ]
+            "$ref": "#/components/schemas/VideoDetailNetworkDto"
           }
         }
       },
@@ -7575,14 +7539,7 @@
             "format": "date-time"
           },
           "fulfilledInQuality": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/VideoQuality"
-              }
-            ]
+            "$ref": "#/components/schemas/VideoQuality"
           },
           "fulfillmentExternalId": {
             "type": [
@@ -7591,14 +7548,7 @@
             ]
           },
           "fulfillmentByApp": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/FulfillmentApp"
-              }
-            ]
+            "$ref": "#/components/schemas/FulfillmentApp"
           },
           "createdAtUtc": {
             "type": "string",
@@ -7662,14 +7612,7 @@
             "format": "date-time"
           },
           "fulfilledInQuality": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/VideoQuality"
-              }
-            ]
+            "$ref": "#/components/schemas/VideoQuality"
           },
           "fulfillmentExternalId": {
             "type": [
@@ -7678,14 +7621,7 @@
             ]
           },
           "fulfillmentByApp": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/FulfillmentApp"
-              }
-            ]
+            "$ref": "#/components/schemas/FulfillmentApp"
           },
           "createdAtUtc": {
             "type": "string",

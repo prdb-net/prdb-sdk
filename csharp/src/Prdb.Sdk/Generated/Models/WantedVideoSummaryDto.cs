@@ -19,22 +19,10 @@ namespace Prdb.Sdk.Generated.Models
         public DateTimeOffset? CreatedAtUtc { get; set; }
         /// <summary>The fulfilledAtUtc property</summary>
         public DateTimeOffset? FulfilledAtUtc { get; set; }
-        /// <summary>The fulfilledInQuality property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfilledInQuality? FulfilledInQuality { get; set; }
-#nullable restore
-#else
-        public global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfilledInQuality FulfilledInQuality { get; set; }
-#endif
-        /// <summary>The fulfillmentByApp property</summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-        public global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfillmentByApp? FulfillmentByApp { get; set; }
-#nullable restore
-#else
-        public global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfillmentByApp FulfillmentByApp { get; set; }
-#endif
+        /// <summary>Known values: P720 (0), P1080 (1), P2160 (2).</summary>
+        public int? FulfilledInQuality { get; set; }
+        /// <summary>Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).</summary>
+        public int? FulfillmentByApp { get; set; }
         /// <summary>The fulfillmentExternalId property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -104,8 +92,8 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "createdAtUtc", n => { CreatedAtUtc = n.GetDateTimeOffsetValue(); } },
                 { "fulfilledAtUtc", n => { FulfilledAtUtc = n.GetDateTimeOffsetValue(); } },
-                { "fulfilledInQuality", n => { FulfilledInQuality = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfilledInQuality>(global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfilledInQuality.CreateFromDiscriminatorValue); } },
-                { "fulfillmentByApp", n => { FulfillmentByApp = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfillmentByApp>(global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfillmentByApp.CreateFromDiscriminatorValue); } },
+                { "fulfilledInQuality", n => { FulfilledInQuality = n.GetIntValue(); } },
+                { "fulfillmentByApp", n => { FulfillmentByApp = n.GetIntValue(); } },
                 { "fulfillmentExternalId", n => { FulfillmentExternalId = n.GetStringValue(); } },
                 { "imageCdnPath", n => { ImageCdnPath = n.GetStringValue(); } },
                 { "isFulfilled", n => { IsFulfilled = n.GetBoolValue(); } },
@@ -126,8 +114,8 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteDateTimeOffsetValue("createdAtUtc", CreatedAtUtc);
             writer.WriteDateTimeOffsetValue("fulfilledAtUtc", FulfilledAtUtc);
-            writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfilledInQuality>("fulfilledInQuality", FulfilledInQuality);
-            writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfillmentByApp>("fulfillmentByApp", FulfillmentByApp);
+            writer.WriteIntValue("fulfilledInQuality", FulfilledInQuality);
+            writer.WriteIntValue("fulfillmentByApp", FulfillmentByApp);
             writer.WriteStringValue("fulfillmentExternalId", FulfillmentExternalId);
             writer.WriteStringValue("imageCdnPath", ImageCdnPath);
             writer.WriteBoolValue("isFulfilled", IsFulfilled);
@@ -138,140 +126,6 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteDateValue("videoReleaseDate", VideoReleaseDate);
             writer.WriteStringValue("videoTitle", VideoTitle);
             writer.WriteAdditionalData(AdditionalData);
-        }
-        /// <summary>
-        /// Composed type wrapper for classes <see cref="global::Prdb.Sdk.Generated.Models.VideoQuality"/>, <see cref="global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto_fulfilledInQualityMember1"/>
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class WantedVideoSummaryDto_fulfilledInQuality : IComposedTypeWrapper, IParsable
-        {
-            /// <summary>Composed type representation for type <see cref="global::Prdb.Sdk.Generated.Models.VideoQuality"/></summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-            public global::Prdb.Sdk.Generated.Models.VideoQuality? VideoQuality { get; set; }
-#nullable restore
-#else
-            public global::Prdb.Sdk.Generated.Models.VideoQuality VideoQuality { get; set; }
-#endif
-            /// <summary>Composed type representation for type <see cref="global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto_fulfilledInQualityMember1"/></summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-            public global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto_fulfilledInQualityMember1? WantedVideoSummaryDtoFulfilledInQualityMember1 { get; set; }
-#nullable restore
-#else
-            public global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto_fulfilledInQualityMember1 WantedVideoSummaryDtoFulfilledInQualityMember1 { get; set; }
-#endif
-            /// <summary>
-            /// Creates a new instance of the appropriate class based on discriminator value
-            /// </summary>
-            /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfilledInQuality"/></returns>
-            /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-            public static global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfilledInQuality CreateFromDiscriminatorValue(IParseNode parseNode)
-            {
-                if(ReferenceEquals(parseNode, null)) throw new ArgumentNullException(nameof(parseNode));
-                var mappingValue = parseNode.GetChildNode("")?.GetStringValue();
-                var result = new global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfilledInQuality();
-                return result;
-            }
-            /// <summary>
-            /// The deserialization information for the current model
-            /// </summary>
-            /// <returns>A IDictionary&lt;string, Action&lt;IParseNode&gt;&gt;</returns>
-            public virtual IDictionary<string, Action<IParseNode>> GetFieldDeserializers()
-            {
-                if(VideoQuality != null)
-                {
-                    return VideoQuality.GetFieldDeserializers();
-                }
-                else if(WantedVideoSummaryDtoFulfilledInQualityMember1 != null)
-                {
-                    return WantedVideoSummaryDtoFulfilledInQualityMember1.GetFieldDeserializers();
-                }
-                return new Dictionary<string, Action<IParseNode>>();
-            }
-            /// <summary>
-            /// Serializes information the current object
-            /// </summary>
-            /// <param name="writer">Serialization writer to use to serialize this model</param>
-            public virtual void Serialize(ISerializationWriter writer)
-            {
-                if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-                if(VideoQuality != null)
-                {
-                    writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoQuality>(null, VideoQuality);
-                }
-                else if(WantedVideoSummaryDtoFulfilledInQualityMember1 != null)
-                {
-                    writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto_fulfilledInQualityMember1>(null, WantedVideoSummaryDtoFulfilledInQualityMember1);
-                }
-            }
-        }
-        /// <summary>
-        /// Composed type wrapper for classes <see cref="global::Prdb.Sdk.Generated.Models.FulfillmentApp"/>, <see cref="global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto_fulfillmentByAppMember1"/>
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class WantedVideoSummaryDto_fulfillmentByApp : IComposedTypeWrapper, IParsable
-        {
-            /// <summary>Composed type representation for type <see cref="global::Prdb.Sdk.Generated.Models.FulfillmentApp"/></summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-            public global::Prdb.Sdk.Generated.Models.FulfillmentApp? FulfillmentApp { get; set; }
-#nullable restore
-#else
-            public global::Prdb.Sdk.Generated.Models.FulfillmentApp FulfillmentApp { get; set; }
-#endif
-            /// <summary>Composed type representation for type <see cref="global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto_fulfillmentByAppMember1"/></summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-            public global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto_fulfillmentByAppMember1? WantedVideoSummaryDtoFulfillmentByAppMember1 { get; set; }
-#nullable restore
-#else
-            public global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto_fulfillmentByAppMember1 WantedVideoSummaryDtoFulfillmentByAppMember1 { get; set; }
-#endif
-            /// <summary>
-            /// Creates a new instance of the appropriate class based on discriminator value
-            /// </summary>
-            /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfillmentByApp"/></returns>
-            /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-            public static global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfillmentByApp CreateFromDiscriminatorValue(IParseNode parseNode)
-            {
-                if(ReferenceEquals(parseNode, null)) throw new ArgumentNullException(nameof(parseNode));
-                var mappingValue = parseNode.GetChildNode("")?.GetStringValue();
-                var result = new global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto.WantedVideoSummaryDto_fulfillmentByApp();
-                return result;
-            }
-            /// <summary>
-            /// The deserialization information for the current model
-            /// </summary>
-            /// <returns>A IDictionary&lt;string, Action&lt;IParseNode&gt;&gt;</returns>
-            public virtual IDictionary<string, Action<IParseNode>> GetFieldDeserializers()
-            {
-                if(FulfillmentApp != null)
-                {
-                    return FulfillmentApp.GetFieldDeserializers();
-                }
-                else if(WantedVideoSummaryDtoFulfillmentByAppMember1 != null)
-                {
-                    return WantedVideoSummaryDtoFulfillmentByAppMember1.GetFieldDeserializers();
-                }
-                return new Dictionary<string, Action<IParseNode>>();
-            }
-            /// <summary>
-            /// Serializes information the current object
-            /// </summary>
-            /// <param name="writer">Serialization writer to use to serialize this model</param>
-            public virtual void Serialize(ISerializationWriter writer)
-            {
-                if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-                if(FulfillmentApp != null)
-                {
-                    writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.FulfillmentApp>(null, FulfillmentApp);
-                }
-                else if(WantedVideoSummaryDtoFulfillmentByAppMember1 != null)
-                {
-                    writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.WantedVideoSummaryDto_fulfillmentByAppMember1>(null, WantedVideoSummaryDtoFulfillmentByAppMember1);
-                }
-            }
         }
     }
 }

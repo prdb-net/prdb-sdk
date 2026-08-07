@@ -5,8 +5,8 @@ from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, Par
 from typing import Any, Optional, TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
+    from .favorite_actor_changes_cursor_dto import FavoriteActorChangesCursorDto
     from .favorite_actor_change_dto import FavoriteActorChangeDto
-    from .get_favorite_actor_changes_response_next_cursor import GetFavoriteActorChangesResponse_nextCursor
 
 @dataclass
 class GetFavoriteActorChangesResponse(AdditionalDataHolder, Parsable):
@@ -18,7 +18,7 @@ class GetFavoriteActorChangesResponse(AdditionalDataHolder, Parsable):
     # The items property
     items: Optional[list[FavoriteActorChangeDto]] = None
     # The nextCursor property
-    next_cursor: Optional[GetFavoriteActorChangesResponse_nextCursor] = None
+    next_cursor: Optional[FavoriteActorChangesCursorDto] = None
     # The pageSize property
     page_size: Optional[int] = None
     
@@ -38,16 +38,16 @@ class GetFavoriteActorChangesResponse(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
+        from .favorite_actor_changes_cursor_dto import FavoriteActorChangesCursorDto
         from .favorite_actor_change_dto import FavoriteActorChangeDto
-        from .get_favorite_actor_changes_response_next_cursor import GetFavoriteActorChangesResponse_nextCursor
 
+        from .favorite_actor_changes_cursor_dto import FavoriteActorChangesCursorDto
         from .favorite_actor_change_dto import FavoriteActorChangeDto
-        from .get_favorite_actor_changes_response_next_cursor import GetFavoriteActorChangesResponse_nextCursor
 
         fields: dict[str, Callable[[Any], None]] = {
             "hasMore": lambda n : setattr(self, 'has_more', n.get_bool_value()),
             "items": lambda n : setattr(self, 'items', n.get_collection_of_object_values(FavoriteActorChangeDto)),
-            "nextCursor": lambda n : setattr(self, 'next_cursor', n.get_object_value(GetFavoriteActorChangesResponse_nextCursor)),
+            "nextCursor": lambda n : setattr(self, 'next_cursor', n.get_object_value(FavoriteActorChangesCursorDto)),
             "pageSize": lambda n : setattr(self, 'page_size', n.get_int_value()),
         }
         return fields

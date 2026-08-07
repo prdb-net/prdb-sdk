@@ -16,7 +16,7 @@ namespace Prdb.Sdk.Generated.Models
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
-        /// <summary>The imageType property</summary>
+        /// <summary>Known values: Thumbnail (1), Poster (2), Face (3).</summary>
         public int? ImageType { get; set; }
         /// <summary>The imageTypeLabel property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER

@@ -15,97 +15,9 @@ type GetVideoUserImageChangesResponse struct {
     // The items property
     items []VideoUserImageChangeItemDtoable
     // The nextCursor property
-    nextCursor GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorable
+    nextCursor VideoUserImageChangesCursorDtoable
     // The pageSize property
     pageSize *int32
-}
-// GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor composed type wrapper for classes GetVideoUserImageChangesResponse_nextCursorMember1able, VideoUserImageChangesCursorDtoable
-type GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor struct {
-    // Composed type representation for type GetVideoUserImageChangesResponse_nextCursorMember1able
-    getVideoUserImageChangesResponse_nextCursorMember1 GetVideoUserImageChangesResponse_nextCursorMember1able
-    // Composed type representation for type VideoUserImageChangesCursorDtoable
-    videoUserImageChangesCursorDto VideoUserImageChangesCursorDtoable
-}
-// NewGetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor instantiates a new GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor and sets the default values.
-func NewGetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor()(*GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor) {
-    m := &GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor{
-    }
-    return m
-}
-// CreateGetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorFromDiscriminatorValue creates a new instance of the appropriate class based on discriminator value
-// returns a Parsable when successful
-func CreateGetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
-    result := NewGetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor()
-    if parseNode != nil {
-        mappingValueNode, err := parseNode.GetChildNode("")
-        if err != nil {
-            return nil, err
-        }
-        if mappingValueNode != nil {
-            mappingValue, err := mappingValueNode.GetStringValue()
-            if err != nil {
-                return nil, err
-            }
-            if mappingValue != nil {
-            }
-        }
-    }
-    return result, nil
-}
-// GetFieldDeserializers the deserialization information for the current model
-// returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
-func (m *GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
-    if m.GetGetVideoUserImageChangesResponseNextCursorMember1() != nil {
-        return m.GetGetVideoUserImageChangesResponseNextCursorMember1().GetFieldDeserializers()
-    } else if m.GetVideoUserImageChangesCursorDto() != nil {
-        return m.GetVideoUserImageChangesCursorDto().GetFieldDeserializers()
-    }
-    return make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
-}
-// GetGetVideoUserImageChangesResponseNextCursorMember1 gets the GetVideoUserImageChangesResponse_nextCursorMember1 property value. Composed type representation for type GetVideoUserImageChangesResponse_nextCursorMember1able
-// returns a GetVideoUserImageChangesResponse_nextCursorMember1able when successful
-func (m *GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor) GetGetVideoUserImageChangesResponseNextCursorMember1()(GetVideoUserImageChangesResponse_nextCursorMember1able) {
-    return m.getVideoUserImageChangesResponse_nextCursorMember1
-}
-// GetIsComposedType determines if the current object is a wrapper around a composed type
-// returns a bool when successful
-func (m *GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor) GetIsComposedType()(bool) {
-    return true
-}
-// GetVideoUserImageChangesCursorDto gets the VideoUserImageChangesCursorDto property value. Composed type representation for type VideoUserImageChangesCursorDtoable
-// returns a VideoUserImageChangesCursorDtoable when successful
-func (m *GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor) GetVideoUserImageChangesCursorDto()(VideoUserImageChangesCursorDtoable) {
-    return m.videoUserImageChangesCursorDto
-}
-// Serialize serializes information the current object
-func (m *GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
-    if m.GetGetVideoUserImageChangesResponseNextCursorMember1() != nil {
-        err := writer.WriteObjectValue("", m.GetGetVideoUserImageChangesResponseNextCursorMember1())
-        if err != nil {
-            return err
-        }
-    } else if m.GetVideoUserImageChangesCursorDto() != nil {
-        err := writer.WriteObjectValue("", m.GetVideoUserImageChangesCursorDto())
-        if err != nil {
-            return err
-        }
-    }
-    return nil
-}
-// SetGetVideoUserImageChangesResponseNextCursorMember1 sets the GetVideoUserImageChangesResponse_nextCursorMember1 property value. Composed type representation for type GetVideoUserImageChangesResponse_nextCursorMember1able
-func (m *GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor) SetGetVideoUserImageChangesResponseNextCursorMember1(value GetVideoUserImageChangesResponse_nextCursorMember1able)() {
-    m.getVideoUserImageChangesResponse_nextCursorMember1 = value
-}
-// SetVideoUserImageChangesCursorDto sets the VideoUserImageChangesCursorDto property value. Composed type representation for type VideoUserImageChangesCursorDtoable
-func (m *GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursor) SetVideoUserImageChangesCursorDto(value VideoUserImageChangesCursorDtoable)() {
-    m.videoUserImageChangesCursorDto = value
-}
-type GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorable interface {
-    i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
-    GetGetVideoUserImageChangesResponseNextCursorMember1()(GetVideoUserImageChangesResponse_nextCursorMember1able)
-    GetVideoUserImageChangesCursorDto()(VideoUserImageChangesCursorDtoable)
-    SetGetVideoUserImageChangesResponseNextCursorMember1(value GetVideoUserImageChangesResponse_nextCursorMember1able)()
-    SetVideoUserImageChangesCursorDto(value VideoUserImageChangesCursorDtoable)()
 }
 // NewGetVideoUserImageChangesResponse instantiates a new GetVideoUserImageChangesResponse and sets the default values.
 func NewGetVideoUserImageChangesResponse()(*GetVideoUserImageChangesResponse) {
@@ -155,12 +67,12 @@ func (m *GetVideoUserImageChangesResponse) GetFieldDeserializers()(map[string]fu
         return nil
     }
     res["nextCursor"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetObjectValue(CreateGetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorFromDiscriminatorValue)
+        val, err := n.GetObjectValue(CreateVideoUserImageChangesCursorDtoFromDiscriminatorValue)
         if err != nil {
             return err
         }
         if val != nil {
-            m.SetNextCursor(val.(GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorable))
+            m.SetNextCursor(val.(VideoUserImageChangesCursorDtoable))
         }
         return nil
     }
@@ -187,8 +99,8 @@ func (m *GetVideoUserImageChangesResponse) GetItems()([]VideoUserImageChangeItem
     return m.items
 }
 // GetNextCursor gets the nextCursor property value. The nextCursor property
-// returns a GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorable when successful
-func (m *GetVideoUserImageChangesResponse) GetNextCursor()(GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorable) {
+// returns a VideoUserImageChangesCursorDtoable when successful
+func (m *GetVideoUserImageChangesResponse) GetNextCursor()(VideoUserImageChangesCursorDtoable) {
     return m.nextCursor
 }
 // GetPageSize gets the pageSize property value. The pageSize property
@@ -249,7 +161,7 @@ func (m *GetVideoUserImageChangesResponse) SetItems(value []VideoUserImageChange
     m.items = value
 }
 // SetNextCursor sets the nextCursor property value. The nextCursor property
-func (m *GetVideoUserImageChangesResponse) SetNextCursor(value GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorable)() {
+func (m *GetVideoUserImageChangesResponse) SetNextCursor(value VideoUserImageChangesCursorDtoable)() {
     m.nextCursor = value
 }
 // SetPageSize sets the pageSize property value. The pageSize property
@@ -261,10 +173,10 @@ type GetVideoUserImageChangesResponseable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetHasMore()(*bool)
     GetItems()([]VideoUserImageChangeItemDtoable)
-    GetNextCursor()(GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorable)
+    GetNextCursor()(VideoUserImageChangesCursorDtoable)
     GetPageSize()(*int32)
     SetHasMore(value *bool)()
     SetItems(value []VideoUserImageChangeItemDtoable)()
-    SetNextCursor(value GetVideoUserImageChangesResponse_GetVideoUserImageChangesResponse_nextCursorable)()
+    SetNextCursor(value VideoUserImageChangesCursorDtoable)()
     SetPageSize(value *int32)()
 }

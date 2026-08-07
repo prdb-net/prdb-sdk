@@ -13,7 +13,7 @@ type ActorChangeImageDto struct {
     additionalData map[string]any
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The imageType property
+    // Known values: Thumbnail (1), Poster (2), Face (3).
     imageType *int32
     // The imageTypeLabel property
     imageTypeLabel *string
@@ -88,7 +88,7 @@ func (m *ActorChangeImageDto) GetFieldDeserializers()(map[string]func(i878a80d23
 func (m *ActorChangeImageDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetImageType gets the imageType property value. The imageType property
+// GetImageType gets the imageType property value. Known values: Thumbnail (1), Poster (2), Face (3).
 // returns a *int32 when successful
 func (m *ActorChangeImageDto) GetImageType()(*int32) {
     return m.imageType
@@ -145,7 +145,7 @@ func (m *ActorChangeImageDto) SetAdditionalData(value map[string]any)() {
 func (m *ActorChangeImageDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetImageType sets the imageType property value. The imageType property
+// SetImageType sets the imageType property value. Known values: Thumbnail (1), Poster (2), Face (3).
 func (m *ActorChangeImageDto) SetImageType(value *int32)() {
     m.imageType = value
 }

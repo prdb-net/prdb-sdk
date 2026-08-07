@@ -5,8 +5,8 @@ from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, Par
 from typing import Any, Optional, TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
+    from .favorite_site_changes_cursor_dto import FavoriteSiteChangesCursorDto
     from .favorite_site_change_dto import FavoriteSiteChangeDto
-    from .get_favorite_site_changes_response_next_cursor import GetFavoriteSiteChangesResponse_nextCursor
 
 @dataclass
 class GetFavoriteSiteChangesResponse(AdditionalDataHolder, Parsable):
@@ -18,7 +18,7 @@ class GetFavoriteSiteChangesResponse(AdditionalDataHolder, Parsable):
     # The items property
     items: Optional[list[FavoriteSiteChangeDto]] = None
     # The nextCursor property
-    next_cursor: Optional[GetFavoriteSiteChangesResponse_nextCursor] = None
+    next_cursor: Optional[FavoriteSiteChangesCursorDto] = None
     # The pageSize property
     page_size: Optional[int] = None
     
@@ -38,16 +38,16 @@ class GetFavoriteSiteChangesResponse(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
+        from .favorite_site_changes_cursor_dto import FavoriteSiteChangesCursorDto
         from .favorite_site_change_dto import FavoriteSiteChangeDto
-        from .get_favorite_site_changes_response_next_cursor import GetFavoriteSiteChangesResponse_nextCursor
 
+        from .favorite_site_changes_cursor_dto import FavoriteSiteChangesCursorDto
         from .favorite_site_change_dto import FavoriteSiteChangeDto
-        from .get_favorite_site_changes_response_next_cursor import GetFavoriteSiteChangesResponse_nextCursor
 
         fields: dict[str, Callable[[Any], None]] = {
             "hasMore": lambda n : setattr(self, 'has_more', n.get_bool_value()),
             "items": lambda n : setattr(self, 'items', n.get_collection_of_object_values(FavoriteSiteChangeDto)),
-            "nextCursor": lambda n : setattr(self, 'next_cursor', n.get_object_value(GetFavoriteSiteChangesResponse_nextCursor)),
+            "nextCursor": lambda n : setattr(self, 'next_cursor', n.get_object_value(FavoriteSiteChangesCursorDto)),
             "pageSize": lambda n : setattr(self, 'page_size', n.get_int_value()),
         }
         return fields

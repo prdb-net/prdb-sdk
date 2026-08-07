@@ -6,7 +6,7 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 from uuid import UUID
 
 if TYPE_CHECKING:
-    from .video_detail_site_dto_network import VideoDetailSiteDto_network
+    from .video_detail_network_dto import VideoDetailNetworkDto
 
 @dataclass
 class VideoDetailSiteDto(AdditionalDataHolder, Parsable):
@@ -16,7 +16,7 @@ class VideoDetailSiteDto(AdditionalDataHolder, Parsable):
     # The id property
     id: Optional[UUID] = None
     # The network property
-    network: Optional[VideoDetailSiteDto_network] = None
+    network: Optional[VideoDetailNetworkDto] = None
     # The title property
     title: Optional[str] = None
     # The url property
@@ -38,13 +38,13 @@ class VideoDetailSiteDto(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
-        from .video_detail_site_dto_network import VideoDetailSiteDto_network
+        from .video_detail_network_dto import VideoDetailNetworkDto
 
-        from .video_detail_site_dto_network import VideoDetailSiteDto_network
+        from .video_detail_network_dto import VideoDetailNetworkDto
 
         fields: dict[str, Callable[[Any], None]] = {
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
-            "network": lambda n : setattr(self, 'network', n.get_object_value(VideoDetailSiteDto_network)),
+            "network": lambda n : setattr(self, 'network', n.get_object_value(VideoDetailNetworkDto)),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
             "url": lambda n : setattr(self, 'url', n.get_str_value()),
         }

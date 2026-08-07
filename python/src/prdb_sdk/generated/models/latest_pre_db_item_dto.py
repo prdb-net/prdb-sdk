@@ -7,7 +7,7 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 from uuid import UUID
 
 if TYPE_CHECKING:
-    from .latest_pre_db_item_dto_video import LatestPreDbItemDto_video
+    from .latest_pre_db_video_dto import LatestPreDbVideoDto
 
 @dataclass
 class LatestPreDbItemDto(AdditionalDataHolder, Parsable):
@@ -21,7 +21,7 @@ class LatestPreDbItemDto(AdditionalDataHolder, Parsable):
     # The title property
     title: Optional[str] = None
     # The video property
-    video: Optional[LatestPreDbItemDto_video] = None
+    video: Optional[LatestPreDbVideoDto] = None
     
     @staticmethod
     def create_from_discriminator_value(parse_node: ParseNode) -> LatestPreDbItemDto:
@@ -39,15 +39,15 @@ class LatestPreDbItemDto(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
-        from .latest_pre_db_item_dto_video import LatestPreDbItemDto_video
+        from .latest_pre_db_video_dto import LatestPreDbVideoDto
 
-        from .latest_pre_db_item_dto_video import LatestPreDbItemDto_video
+        from .latest_pre_db_video_dto import LatestPreDbVideoDto
 
         fields: dict[str, Callable[[Any], None]] = {
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
-            "video": lambda n : setattr(self, 'video', n.get_object_value(LatestPreDbItemDto_video)),
+            "video": lambda n : setattr(self, 'video', n.get_object_value(LatestPreDbVideoDto)),
         }
         return fields
     

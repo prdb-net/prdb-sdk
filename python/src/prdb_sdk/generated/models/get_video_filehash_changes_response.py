@@ -5,7 +5,7 @@ from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, Par
 from typing import Any, Optional, TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
-    from .get_video_filehash_changes_response_next_cursor import GetVideoFilehashChangesResponse_nextCursor
+    from .video_filehash_changes_cursor_dto import VideoFilehashChangesCursorDto
     from .video_filehash_change_dto import VideoFilehashChangeDto
 
 @dataclass
@@ -18,7 +18,7 @@ class GetVideoFilehashChangesResponse(AdditionalDataHolder, Parsable):
     # The items property
     items: Optional[list[VideoFilehashChangeDto]] = None
     # The nextCursor property
-    next_cursor: Optional[GetVideoFilehashChangesResponse_nextCursor] = None
+    next_cursor: Optional[VideoFilehashChangesCursorDto] = None
     # The pageSize property
     page_size: Optional[int] = None
     
@@ -38,16 +38,16 @@ class GetVideoFilehashChangesResponse(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
-        from .get_video_filehash_changes_response_next_cursor import GetVideoFilehashChangesResponse_nextCursor
+        from .video_filehash_changes_cursor_dto import VideoFilehashChangesCursorDto
         from .video_filehash_change_dto import VideoFilehashChangeDto
 
-        from .get_video_filehash_changes_response_next_cursor import GetVideoFilehashChangesResponse_nextCursor
+        from .video_filehash_changes_cursor_dto import VideoFilehashChangesCursorDto
         from .video_filehash_change_dto import VideoFilehashChangeDto
 
         fields: dict[str, Callable[[Any], None]] = {
             "hasMore": lambda n : setattr(self, 'has_more', n.get_bool_value()),
             "items": lambda n : setattr(self, 'items', n.get_collection_of_object_values(VideoFilehashChangeDto)),
-            "nextCursor": lambda n : setattr(self, 'next_cursor', n.get_object_value(GetVideoFilehashChangesResponse_nextCursor)),
+            "nextCursor": lambda n : setattr(self, 'next_cursor', n.get_object_value(VideoFilehashChangesCursorDto)),
             "pageSize": lambda n : setattr(self, 'page_size', n.get_int_value()),
         }
         return fields

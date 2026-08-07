@@ -12,7 +12,7 @@ class ActorChangeImageDto(AdditionalDataHolder, Parsable):
 
     # The id property
     id: Optional[UUID] = None
-    # The imageType property
+    # Known values: Thumbnail (1), Poster (2), Face (3).
     image_type: Optional[int] = None
     # The imageTypeLabel property
     image_type_label: Optional[str] = None

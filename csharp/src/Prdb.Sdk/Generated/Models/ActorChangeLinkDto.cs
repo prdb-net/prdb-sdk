@@ -14,7 +14,7 @@ namespace Prdb.Sdk.Generated.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The externalSite property</summary>
+        /// <summary>Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5).</summary>
         public int? ExternalSite { get; set; }
         /// <summary>The externalSiteLabel property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER

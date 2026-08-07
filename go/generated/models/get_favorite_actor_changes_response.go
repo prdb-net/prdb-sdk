@@ -15,97 +15,9 @@ type GetFavoriteActorChangesResponse struct {
     // The items property
     items []FavoriteActorChangeDtoable
     // The nextCursor property
-    nextCursor GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorable
+    nextCursor FavoriteActorChangesCursorDtoable
     // The pageSize property
     pageSize *int32
-}
-// GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor composed type wrapper for classes FavoriteActorChangesCursorDtoable, GetFavoriteActorChangesResponse_nextCursorMember1able
-type GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor struct {
-    // Composed type representation for type FavoriteActorChangesCursorDtoable
-    favoriteActorChangesCursorDto FavoriteActorChangesCursorDtoable
-    // Composed type representation for type GetFavoriteActorChangesResponse_nextCursorMember1able
-    getFavoriteActorChangesResponse_nextCursorMember1 GetFavoriteActorChangesResponse_nextCursorMember1able
-}
-// NewGetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor instantiates a new GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor and sets the default values.
-func NewGetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor()(*GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor) {
-    m := &GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor{
-    }
-    return m
-}
-// CreateGetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorFromDiscriminatorValue creates a new instance of the appropriate class based on discriminator value
-// returns a Parsable when successful
-func CreateGetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
-    result := NewGetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor()
-    if parseNode != nil {
-        mappingValueNode, err := parseNode.GetChildNode("")
-        if err != nil {
-            return nil, err
-        }
-        if mappingValueNode != nil {
-            mappingValue, err := mappingValueNode.GetStringValue()
-            if err != nil {
-                return nil, err
-            }
-            if mappingValue != nil {
-            }
-        }
-    }
-    return result, nil
-}
-// GetFavoriteActorChangesCursorDto gets the FavoriteActorChangesCursorDto property value. Composed type representation for type FavoriteActorChangesCursorDtoable
-// returns a FavoriteActorChangesCursorDtoable when successful
-func (m *GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor) GetFavoriteActorChangesCursorDto()(FavoriteActorChangesCursorDtoable) {
-    return m.favoriteActorChangesCursorDto
-}
-// GetFieldDeserializers the deserialization information for the current model
-// returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
-func (m *GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
-    if m.GetFavoriteActorChangesCursorDto() != nil {
-        return m.GetFavoriteActorChangesCursorDto().GetFieldDeserializers()
-    } else if m.GetGetFavoriteActorChangesResponseNextCursorMember1() != nil {
-        return m.GetGetFavoriteActorChangesResponseNextCursorMember1().GetFieldDeserializers()
-    }
-    return make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
-}
-// GetGetFavoriteActorChangesResponseNextCursorMember1 gets the GetFavoriteActorChangesResponse_nextCursorMember1 property value. Composed type representation for type GetFavoriteActorChangesResponse_nextCursorMember1able
-// returns a GetFavoriteActorChangesResponse_nextCursorMember1able when successful
-func (m *GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor) GetGetFavoriteActorChangesResponseNextCursorMember1()(GetFavoriteActorChangesResponse_nextCursorMember1able) {
-    return m.getFavoriteActorChangesResponse_nextCursorMember1
-}
-// GetIsComposedType determines if the current object is a wrapper around a composed type
-// returns a bool when successful
-func (m *GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor) GetIsComposedType()(bool) {
-    return true
-}
-// Serialize serializes information the current object
-func (m *GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
-    if m.GetFavoriteActorChangesCursorDto() != nil {
-        err := writer.WriteObjectValue("", m.GetFavoriteActorChangesCursorDto())
-        if err != nil {
-            return err
-        }
-    } else if m.GetGetFavoriteActorChangesResponseNextCursorMember1() != nil {
-        err := writer.WriteObjectValue("", m.GetGetFavoriteActorChangesResponseNextCursorMember1())
-        if err != nil {
-            return err
-        }
-    }
-    return nil
-}
-// SetFavoriteActorChangesCursorDto sets the FavoriteActorChangesCursorDto property value. Composed type representation for type FavoriteActorChangesCursorDtoable
-func (m *GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor) SetFavoriteActorChangesCursorDto(value FavoriteActorChangesCursorDtoable)() {
-    m.favoriteActorChangesCursorDto = value
-}
-// SetGetFavoriteActorChangesResponseNextCursorMember1 sets the GetFavoriteActorChangesResponse_nextCursorMember1 property value. Composed type representation for type GetFavoriteActorChangesResponse_nextCursorMember1able
-func (m *GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursor) SetGetFavoriteActorChangesResponseNextCursorMember1(value GetFavoriteActorChangesResponse_nextCursorMember1able)() {
-    m.getFavoriteActorChangesResponse_nextCursorMember1 = value
-}
-type GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorable interface {
-    i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
-    GetFavoriteActorChangesCursorDto()(FavoriteActorChangesCursorDtoable)
-    GetGetFavoriteActorChangesResponseNextCursorMember1()(GetFavoriteActorChangesResponse_nextCursorMember1able)
-    SetFavoriteActorChangesCursorDto(value FavoriteActorChangesCursorDtoable)()
-    SetGetFavoriteActorChangesResponseNextCursorMember1(value GetFavoriteActorChangesResponse_nextCursorMember1able)()
 }
 // NewGetFavoriteActorChangesResponse instantiates a new GetFavoriteActorChangesResponse and sets the default values.
 func NewGetFavoriteActorChangesResponse()(*GetFavoriteActorChangesResponse) {
@@ -155,12 +67,12 @@ func (m *GetFavoriteActorChangesResponse) GetFieldDeserializers()(map[string]fun
         return nil
     }
     res["nextCursor"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetObjectValue(CreateGetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorFromDiscriminatorValue)
+        val, err := n.GetObjectValue(CreateFavoriteActorChangesCursorDtoFromDiscriminatorValue)
         if err != nil {
             return err
         }
         if val != nil {
-            m.SetNextCursor(val.(GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorable))
+            m.SetNextCursor(val.(FavoriteActorChangesCursorDtoable))
         }
         return nil
     }
@@ -187,8 +99,8 @@ func (m *GetFavoriteActorChangesResponse) GetItems()([]FavoriteActorChangeDtoabl
     return m.items
 }
 // GetNextCursor gets the nextCursor property value. The nextCursor property
-// returns a GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorable when successful
-func (m *GetFavoriteActorChangesResponse) GetNextCursor()(GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorable) {
+// returns a FavoriteActorChangesCursorDtoable when successful
+func (m *GetFavoriteActorChangesResponse) GetNextCursor()(FavoriteActorChangesCursorDtoable) {
     return m.nextCursor
 }
 // GetPageSize gets the pageSize property value. The pageSize property
@@ -249,7 +161,7 @@ func (m *GetFavoriteActorChangesResponse) SetItems(value []FavoriteActorChangeDt
     m.items = value
 }
 // SetNextCursor sets the nextCursor property value. The nextCursor property
-func (m *GetFavoriteActorChangesResponse) SetNextCursor(value GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorable)() {
+func (m *GetFavoriteActorChangesResponse) SetNextCursor(value FavoriteActorChangesCursorDtoable)() {
     m.nextCursor = value
 }
 // SetPageSize sets the pageSize property value. The pageSize property
@@ -261,10 +173,10 @@ type GetFavoriteActorChangesResponseable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetHasMore()(*bool)
     GetItems()([]FavoriteActorChangeDtoable)
-    GetNextCursor()(GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorable)
+    GetNextCursor()(FavoriteActorChangesCursorDtoable)
     GetPageSize()(*int32)
     SetHasMore(value *bool)()
     SetItems(value []FavoriteActorChangeDtoable)()
-    SetNextCursor(value GetFavoriteActorChangesResponse_GetFavoriteActorChangesResponse_nextCursorable)()
+    SetNextCursor(value FavoriteActorChangesCursorDtoable)()
     SetPageSize(value *int32)()
 }

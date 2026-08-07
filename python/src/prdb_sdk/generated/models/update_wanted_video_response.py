@@ -6,10 +6,6 @@ from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, Par
 from typing import Any, Optional, TYPE_CHECKING, Union
 from uuid import UUID
 
-if TYPE_CHECKING:
-    from .update_wanted_video_response_fulfilled_in_quality import UpdateWantedVideoResponse_fulfilledInQuality
-    from .update_wanted_video_response_fulfillment_by_app import UpdateWantedVideoResponse_fulfillmentByApp
-
 @dataclass
 class UpdateWantedVideoResponse(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
@@ -19,10 +15,10 @@ class UpdateWantedVideoResponse(AdditionalDataHolder, Parsable):
     created_at_utc: Optional[datetime.datetime] = None
     # The fulfilledAtUtc property
     fulfilled_at_utc: Optional[datetime.datetime] = None
-    # The fulfilledInQuality property
-    fulfilled_in_quality: Optional[UpdateWantedVideoResponse_fulfilledInQuality] = None
-    # The fulfillmentByApp property
-    fulfillment_by_app: Optional[UpdateWantedVideoResponse_fulfillmentByApp] = None
+    # Known values: P720 (0), P1080 (1), P2160 (2).
+    fulfilled_in_quality: Optional[int] = None
+    # Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+    fulfillment_by_app: Optional[int] = None
     # The fulfillmentExternalId property
     fulfillment_external_id: Optional[str] = None
     # The isFulfilled property
@@ -48,17 +44,11 @@ class UpdateWantedVideoResponse(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
-        from .update_wanted_video_response_fulfilled_in_quality import UpdateWantedVideoResponse_fulfilledInQuality
-        from .update_wanted_video_response_fulfillment_by_app import UpdateWantedVideoResponse_fulfillmentByApp
-
-        from .update_wanted_video_response_fulfilled_in_quality import UpdateWantedVideoResponse_fulfilledInQuality
-        from .update_wanted_video_response_fulfillment_by_app import UpdateWantedVideoResponse_fulfillmentByApp
-
         fields: dict[str, Callable[[Any], None]] = {
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
             "fulfilledAtUtc": lambda n : setattr(self, 'fulfilled_at_utc', n.get_datetime_value()),
-            "fulfilledInQuality": lambda n : setattr(self, 'fulfilled_in_quality', n.get_object_value(UpdateWantedVideoResponse_fulfilledInQuality)),
-            "fulfillmentByApp": lambda n : setattr(self, 'fulfillment_by_app', n.get_object_value(UpdateWantedVideoResponse_fulfillmentByApp)),
+            "fulfilledInQuality": lambda n : setattr(self, 'fulfilled_in_quality', n.get_int_value()),
+            "fulfillmentByApp": lambda n : setattr(self, 'fulfillment_by_app', n.get_int_value()),
             "fulfillmentExternalId": lambda n : setattr(self, 'fulfillment_external_id', n.get_str_value()),
             "isFulfilled": lambda n : setattr(self, 'is_fulfilled', n.get_bool_value()),
             "updatedAtUtc": lambda n : setattr(self, 'updated_at_utc', n.get_datetime_value()),
@@ -76,8 +66,8 @@ class UpdateWantedVideoResponse(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_datetime_value("createdAtUtc", self.created_at_utc)
         writer.write_datetime_value("fulfilledAtUtc", self.fulfilled_at_utc)
-        writer.write_object_value("fulfilledInQuality", self.fulfilled_in_quality)
-        writer.write_object_value("fulfillmentByApp", self.fulfillment_by_app)
+        writer.write_int_value("fulfilledInQuality", self.fulfilled_in_quality)
+        writer.write_int_value("fulfillmentByApp", self.fulfillment_by_app)
         writer.write_str_value("fulfillmentExternalId", self.fulfillment_external_id)
         writer.write_bool_value("isFulfilled", self.is_fulfilled)
         writer.write_datetime_value("updatedAtUtc", self.updated_at_utc)

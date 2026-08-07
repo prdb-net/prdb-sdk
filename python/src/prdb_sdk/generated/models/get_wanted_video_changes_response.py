@@ -5,7 +5,7 @@ from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, Par
 from typing import Any, Optional, TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
-    from .get_wanted_video_changes_response_next_cursor import GetWantedVideoChangesResponse_nextCursor
+    from .wanted_video_changes_cursor_dto import WantedVideoChangesCursorDto
     from .wanted_video_change_dto import WantedVideoChangeDto
 
 @dataclass
@@ -18,7 +18,7 @@ class GetWantedVideoChangesResponse(AdditionalDataHolder, Parsable):
     # The items property
     items: Optional[list[WantedVideoChangeDto]] = None
     # The nextCursor property
-    next_cursor: Optional[GetWantedVideoChangesResponse_nextCursor] = None
+    next_cursor: Optional[WantedVideoChangesCursorDto] = None
     # The pageSize property
     page_size: Optional[int] = None
     
@@ -38,16 +38,16 @@ class GetWantedVideoChangesResponse(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
-        from .get_wanted_video_changes_response_next_cursor import GetWantedVideoChangesResponse_nextCursor
+        from .wanted_video_changes_cursor_dto import WantedVideoChangesCursorDto
         from .wanted_video_change_dto import WantedVideoChangeDto
 
-        from .get_wanted_video_changes_response_next_cursor import GetWantedVideoChangesResponse_nextCursor
+        from .wanted_video_changes_cursor_dto import WantedVideoChangesCursorDto
         from .wanted_video_change_dto import WantedVideoChangeDto
 
         fields: dict[str, Callable[[Any], None]] = {
             "hasMore": lambda n : setattr(self, 'has_more', n.get_bool_value()),
             "items": lambda n : setattr(self, 'items', n.get_collection_of_object_values(WantedVideoChangeDto)),
-            "nextCursor": lambda n : setattr(self, 'next_cursor', n.get_object_value(GetWantedVideoChangesResponse_nextCursor)),
+            "nextCursor": lambda n : setattr(self, 'next_cursor', n.get_object_value(WantedVideoChangesCursorDto)),
             "pageSize": lambda n : setattr(self, 'page_size', n.get_int_value()),
         }
         return fields

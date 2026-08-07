@@ -19,95 +19,7 @@ type LatestPreDbItemDto struct {
     // The title property
     title *string
     // The video property
-    video LatestPreDbItemDto_LatestPreDbItemDto_videoable
-}
-// LatestPreDbItemDto_LatestPreDbItemDto_video composed type wrapper for classes LatestPreDbItemDto_videoMember1able, LatestPreDbVideoDtoable
-type LatestPreDbItemDto_LatestPreDbItemDto_video struct {
-    // Composed type representation for type LatestPreDbItemDto_videoMember1able
-    latestPreDbItemDto_videoMember1 LatestPreDbItemDto_videoMember1able
-    // Composed type representation for type LatestPreDbVideoDtoable
-    latestPreDbVideoDto LatestPreDbVideoDtoable
-}
-// NewLatestPreDbItemDto_LatestPreDbItemDto_video instantiates a new LatestPreDbItemDto_LatestPreDbItemDto_video and sets the default values.
-func NewLatestPreDbItemDto_LatestPreDbItemDto_video()(*LatestPreDbItemDto_LatestPreDbItemDto_video) {
-    m := &LatestPreDbItemDto_LatestPreDbItemDto_video{
-    }
-    return m
-}
-// CreateLatestPreDbItemDto_LatestPreDbItemDto_videoFromDiscriminatorValue creates a new instance of the appropriate class based on discriminator value
-// returns a Parsable when successful
-func CreateLatestPreDbItemDto_LatestPreDbItemDto_videoFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
-    result := NewLatestPreDbItemDto_LatestPreDbItemDto_video()
-    if parseNode != nil {
-        mappingValueNode, err := parseNode.GetChildNode("")
-        if err != nil {
-            return nil, err
-        }
-        if mappingValueNode != nil {
-            mappingValue, err := mappingValueNode.GetStringValue()
-            if err != nil {
-                return nil, err
-            }
-            if mappingValue != nil {
-            }
-        }
-    }
-    return result, nil
-}
-// GetFieldDeserializers the deserialization information for the current model
-// returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
-func (m *LatestPreDbItemDto_LatestPreDbItemDto_video) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
-    if m.GetLatestPreDbItemDtoVideoMember1() != nil {
-        return m.GetLatestPreDbItemDtoVideoMember1().GetFieldDeserializers()
-    } else if m.GetLatestPreDbVideoDto() != nil {
-        return m.GetLatestPreDbVideoDto().GetFieldDeserializers()
-    }
-    return make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
-}
-// GetIsComposedType determines if the current object is a wrapper around a composed type
-// returns a bool when successful
-func (m *LatestPreDbItemDto_LatestPreDbItemDto_video) GetIsComposedType()(bool) {
-    return true
-}
-// GetLatestPreDbItemDtoVideoMember1 gets the LatestPreDbItemDto_videoMember1 property value. Composed type representation for type LatestPreDbItemDto_videoMember1able
-// returns a LatestPreDbItemDto_videoMember1able when successful
-func (m *LatestPreDbItemDto_LatestPreDbItemDto_video) GetLatestPreDbItemDtoVideoMember1()(LatestPreDbItemDto_videoMember1able) {
-    return m.latestPreDbItemDto_videoMember1
-}
-// GetLatestPreDbVideoDto gets the LatestPreDbVideoDto property value. Composed type representation for type LatestPreDbVideoDtoable
-// returns a LatestPreDbVideoDtoable when successful
-func (m *LatestPreDbItemDto_LatestPreDbItemDto_video) GetLatestPreDbVideoDto()(LatestPreDbVideoDtoable) {
-    return m.latestPreDbVideoDto
-}
-// Serialize serializes information the current object
-func (m *LatestPreDbItemDto_LatestPreDbItemDto_video) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
-    if m.GetLatestPreDbItemDtoVideoMember1() != nil {
-        err := writer.WriteObjectValue("", m.GetLatestPreDbItemDtoVideoMember1())
-        if err != nil {
-            return err
-        }
-    } else if m.GetLatestPreDbVideoDto() != nil {
-        err := writer.WriteObjectValue("", m.GetLatestPreDbVideoDto())
-        if err != nil {
-            return err
-        }
-    }
-    return nil
-}
-// SetLatestPreDbItemDtoVideoMember1 sets the LatestPreDbItemDto_videoMember1 property value. Composed type representation for type LatestPreDbItemDto_videoMember1able
-func (m *LatestPreDbItemDto_LatestPreDbItemDto_video) SetLatestPreDbItemDtoVideoMember1(value LatestPreDbItemDto_videoMember1able)() {
-    m.latestPreDbItemDto_videoMember1 = value
-}
-// SetLatestPreDbVideoDto sets the LatestPreDbVideoDto property value. Composed type representation for type LatestPreDbVideoDtoable
-func (m *LatestPreDbItemDto_LatestPreDbItemDto_video) SetLatestPreDbVideoDto(value LatestPreDbVideoDtoable)() {
-    m.latestPreDbVideoDto = value
-}
-type LatestPreDbItemDto_LatestPreDbItemDto_videoable interface {
-    i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
-    GetLatestPreDbItemDtoVideoMember1()(LatestPreDbItemDto_videoMember1able)
-    GetLatestPreDbVideoDto()(LatestPreDbVideoDtoable)
-    SetLatestPreDbItemDtoVideoMember1(value LatestPreDbItemDto_videoMember1able)()
-    SetLatestPreDbVideoDto(value LatestPreDbVideoDtoable)()
+    video LatestPreDbVideoDtoable
 }
 // NewLatestPreDbItemDto instantiates a new LatestPreDbItemDto and sets the default values.
 func NewLatestPreDbItemDto()(*LatestPreDbItemDto) {
@@ -166,12 +78,12 @@ func (m *LatestPreDbItemDto) GetFieldDeserializers()(map[string]func(i878a80d233
         return nil
     }
     res["video"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetObjectValue(CreateLatestPreDbItemDto_LatestPreDbItemDto_videoFromDiscriminatorValue)
+        val, err := n.GetObjectValue(CreateLatestPreDbVideoDtoFromDiscriminatorValue)
         if err != nil {
             return err
         }
         if val != nil {
-            m.SetVideo(val.(LatestPreDbItemDto_LatestPreDbItemDto_videoable))
+            m.SetVideo(val.(LatestPreDbVideoDtoable))
         }
         return nil
     }
@@ -188,8 +100,8 @@ func (m *LatestPreDbItemDto) GetTitle()(*string) {
     return m.title
 }
 // GetVideo gets the video property value. The video property
-// returns a LatestPreDbItemDto_LatestPreDbItemDto_videoable when successful
-func (m *LatestPreDbItemDto) GetVideo()(LatestPreDbItemDto_LatestPreDbItemDto_videoable) {
+// returns a LatestPreDbVideoDtoable when successful
+func (m *LatestPreDbItemDto) GetVideo()(LatestPreDbVideoDtoable) {
     return m.video
 }
 // Serialize serializes information the current object
@@ -243,7 +155,7 @@ func (m *LatestPreDbItemDto) SetTitle(value *string)() {
     m.title = value
 }
 // SetVideo sets the video property value. The video property
-func (m *LatestPreDbItemDto) SetVideo(value LatestPreDbItemDto_LatestPreDbItemDto_videoable)() {
+func (m *LatestPreDbItemDto) SetVideo(value LatestPreDbVideoDtoable)() {
     m.video = value
 }
 type LatestPreDbItemDtoable interface {
@@ -252,9 +164,9 @@ type LatestPreDbItemDtoable interface {
     GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetTitle()(*string)
-    GetVideo()(LatestPreDbItemDto_LatestPreDbItemDto_videoable)
+    GetVideo()(LatestPreDbVideoDtoable)
     SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetTitle(value *string)()
-    SetVideo(value LatestPreDbItemDto_LatestPreDbItemDto_videoable)()
+    SetVideo(value LatestPreDbVideoDtoable)()
 }

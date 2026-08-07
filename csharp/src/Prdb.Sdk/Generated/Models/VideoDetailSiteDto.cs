@@ -19,10 +19,10 @@ namespace Prdb.Sdk.Generated.Models
         /// <summary>The network property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto.VideoDetailSiteDto_network? Network { get; set; }
+        public global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto? Network { get; set; }
 #nullable restore
 #else
-        public global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto.VideoDetailSiteDto_network Network { get; set; }
+        public global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto Network { get; set; }
 #endif
         /// <summary>The title property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -66,7 +66,7 @@ namespace Prdb.Sdk.Generated.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "id", n => { Id = n.GetGuidValue(); } },
-                { "network", n => { Network = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto.VideoDetailSiteDto_network>(global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto.VideoDetailSiteDto_network.CreateFromDiscriminatorValue); } },
+                { "network", n => { Network = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto>(global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto.CreateFromDiscriminatorValue); } },
                 { "title", n => { Title = n.GetStringValue(); } },
                 { "url", n => { Url = n.GetStringValue(); } },
             };
@@ -79,81 +79,10 @@ namespace Prdb.Sdk.Generated.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteGuidValue("id", Id);
-            writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto.VideoDetailSiteDto_network>("network", Network);
+            writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto>("network", Network);
             writer.WriteStringValue("title", Title);
             writer.WriteStringValue("url", Url);
             writer.WriteAdditionalData(AdditionalData);
-        }
-        /// <summary>
-        /// Composed type wrapper for classes <see cref="global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto"/>, <see cref="global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto_networkMember1"/>
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class VideoDetailSiteDto_network : IComposedTypeWrapper, IParsable
-        {
-            /// <summary>Composed type representation for type <see cref="global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto"/></summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-            public global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto? VideoDetailNetworkDto { get; set; }
-#nullable restore
-#else
-            public global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto VideoDetailNetworkDto { get; set; }
-#endif
-            /// <summary>Composed type representation for type <see cref="global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto_networkMember1"/></summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-            public global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto_networkMember1? VideoDetailSiteDtoNetworkMember1 { get; set; }
-#nullable restore
-#else
-            public global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto_networkMember1 VideoDetailSiteDtoNetworkMember1 { get; set; }
-#endif
-            /// <summary>
-            /// Creates a new instance of the appropriate class based on discriminator value
-            /// </summary>
-            /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto.VideoDetailSiteDto_network"/></returns>
-            /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-            public static global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto.VideoDetailSiteDto_network CreateFromDiscriminatorValue(IParseNode parseNode)
-            {
-                if(ReferenceEquals(parseNode, null)) throw new ArgumentNullException(nameof(parseNode));
-                var mappingValue = parseNode.GetChildNode("")?.GetStringValue();
-                var result = new global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto.VideoDetailSiteDto_network();
-                if("VideoDetailNetworkDto".Equals(mappingValue, StringComparison.OrdinalIgnoreCase))
-                {
-                    result.VideoDetailNetworkDto = new global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto();
-                }
-                return result;
-            }
-            /// <summary>
-            /// The deserialization information for the current model
-            /// </summary>
-            /// <returns>A IDictionary&lt;string, Action&lt;IParseNode&gt;&gt;</returns>
-            public virtual IDictionary<string, Action<IParseNode>> GetFieldDeserializers()
-            {
-                if(VideoDetailNetworkDto != null)
-                {
-                    return VideoDetailNetworkDto.GetFieldDeserializers();
-                }
-                else if(VideoDetailSiteDtoNetworkMember1 != null)
-                {
-                    return VideoDetailSiteDtoNetworkMember1.GetFieldDeserializers();
-                }
-                return new Dictionary<string, Action<IParseNode>>();
-            }
-            /// <summary>
-            /// Serializes information the current object
-            /// </summary>
-            /// <param name="writer">Serialization writer to use to serialize this model</param>
-            public virtual void Serialize(ISerializationWriter writer)
-            {
-                if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-                if(VideoDetailNetworkDto != null)
-                {
-                    writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoDetailNetworkDto>(null, VideoDetailNetworkDto);
-                }
-                else if(VideoDetailSiteDtoNetworkMember1 != null)
-                {
-                    writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto_networkMember1>(null, VideoDetailSiteDtoNetworkMember1);
-                }
-            }
         }
     }
 }

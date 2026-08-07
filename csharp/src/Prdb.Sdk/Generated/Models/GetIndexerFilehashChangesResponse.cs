@@ -27,10 +27,10 @@ namespace Prdb.Sdk.Generated.Models
         /// <summary>The nextCursor property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
-        public global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse.GetIndexerFilehashChangesResponse_nextCursor? NextCursor { get; set; }
+        public global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto? NextCursor { get; set; }
 #nullable restore
 #else
-        public global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse.GetIndexerFilehashChangesResponse_nextCursor NextCursor { get; set; }
+        public global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto NextCursor { get; set; }
 #endif
         /// <summary>The pageSize property</summary>
         public int? PageSize { get; set; }
@@ -61,7 +61,7 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "hasMore", n => { HasMore = n.GetBoolValue(); } },
                 { "items", n => { Items = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.IndexerFilehashChangeDto>(global::Prdb.Sdk.Generated.Models.IndexerFilehashChangeDto.CreateFromDiscriminatorValue)?.AsList(); } },
-                { "nextCursor", n => { NextCursor = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse.GetIndexerFilehashChangesResponse_nextCursor>(global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse.GetIndexerFilehashChangesResponse_nextCursor.CreateFromDiscriminatorValue); } },
+                { "nextCursor", n => { NextCursor = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto>(global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto.CreateFromDiscriminatorValue); } },
                 { "pageSize", n => { PageSize = n.GetIntValue(); } },
             };
         }
@@ -74,80 +74,9 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteBoolValue("hasMore", HasMore);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.IndexerFilehashChangeDto>("items", Items);
-            writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse.GetIndexerFilehashChangesResponse_nextCursor>("nextCursor", NextCursor);
+            writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto>("nextCursor", NextCursor);
             writer.WriteIntValue("pageSize", PageSize);
             writer.WriteAdditionalData(AdditionalData);
-        }
-        /// <summary>
-        /// Composed type wrapper for classes <see cref="global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse_nextCursorMember1"/>, <see cref="global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto"/>
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-        public partial class GetIndexerFilehashChangesResponse_nextCursor : IComposedTypeWrapper, IParsable
-        {
-            /// <summary>Composed type representation for type <see cref="global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse_nextCursorMember1"/></summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-            public global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse_nextCursorMember1? GetIndexerFilehashChangesResponseNextCursorMember1 { get; set; }
-#nullable restore
-#else
-            public global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse_nextCursorMember1 GetIndexerFilehashChangesResponseNextCursorMember1 { get; set; }
-#endif
-            /// <summary>Composed type representation for type <see cref="global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto"/></summary>
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-#nullable enable
-            public global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto? IndexerFilehashChangesCursorDto { get; set; }
-#nullable restore
-#else
-            public global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto IndexerFilehashChangesCursorDto { get; set; }
-#endif
-            /// <summary>
-            /// Creates a new instance of the appropriate class based on discriminator value
-            /// </summary>
-            /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse.GetIndexerFilehashChangesResponse_nextCursor"/></returns>
-            /// <param name="parseNode">The parse node to use to read the discriminator value and create the object</param>
-            public static global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse.GetIndexerFilehashChangesResponse_nextCursor CreateFromDiscriminatorValue(IParseNode parseNode)
-            {
-                if(ReferenceEquals(parseNode, null)) throw new ArgumentNullException(nameof(parseNode));
-                var mappingValue = parseNode.GetChildNode("")?.GetStringValue();
-                var result = new global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse.GetIndexerFilehashChangesResponse_nextCursor();
-                if("IndexerFilehashChangesCursorDto".Equals(mappingValue, StringComparison.OrdinalIgnoreCase))
-                {
-                    result.IndexerFilehashChangesCursorDto = new global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto();
-                }
-                return result;
-            }
-            /// <summary>
-            /// The deserialization information for the current model
-            /// </summary>
-            /// <returns>A IDictionary&lt;string, Action&lt;IParseNode&gt;&gt;</returns>
-            public virtual IDictionary<string, Action<IParseNode>> GetFieldDeserializers()
-            {
-                if(GetIndexerFilehashChangesResponseNextCursorMember1 != null)
-                {
-                    return GetIndexerFilehashChangesResponseNextCursorMember1.GetFieldDeserializers();
-                }
-                else if(IndexerFilehashChangesCursorDto != null)
-                {
-                    return IndexerFilehashChangesCursorDto.GetFieldDeserializers();
-                }
-                return new Dictionary<string, Action<IParseNode>>();
-            }
-            /// <summary>
-            /// Serializes information the current object
-            /// </summary>
-            /// <param name="writer">Serialization writer to use to serialize this model</param>
-            public virtual void Serialize(ISerializationWriter writer)
-            {
-                if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
-                if(GetIndexerFilehashChangesResponseNextCursorMember1 != null)
-                {
-                    writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.GetIndexerFilehashChangesResponse_nextCursorMember1>(null, GetIndexerFilehashChangesResponseNextCursorMember1);
-                }
-                else if(IndexerFilehashChangesCursorDto != null)
-                {
-                    writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.IndexerFilehashChangesCursorDto>(null, IndexerFilehashChangesCursorDto);
-                }
-            }
         }
     }
 }

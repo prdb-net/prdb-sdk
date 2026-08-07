@@ -15,97 +15,9 @@ type GetVideoFilehashChangesResponse struct {
     // The items property
     items []VideoFilehashChangeDtoable
     // The nextCursor property
-    nextCursor GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorable
+    nextCursor VideoFilehashChangesCursorDtoable
     // The pageSize property
     pageSize *int32
-}
-// GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor composed type wrapper for classes GetVideoFilehashChangesResponse_nextCursorMember1able, VideoFilehashChangesCursorDtoable
-type GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor struct {
-    // Composed type representation for type GetVideoFilehashChangesResponse_nextCursorMember1able
-    getVideoFilehashChangesResponse_nextCursorMember1 GetVideoFilehashChangesResponse_nextCursorMember1able
-    // Composed type representation for type VideoFilehashChangesCursorDtoable
-    videoFilehashChangesCursorDto VideoFilehashChangesCursorDtoable
-}
-// NewGetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor instantiates a new GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor and sets the default values.
-func NewGetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor()(*GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor) {
-    m := &GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor{
-    }
-    return m
-}
-// CreateGetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorFromDiscriminatorValue creates a new instance of the appropriate class based on discriminator value
-// returns a Parsable when successful
-func CreateGetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
-    result := NewGetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor()
-    if parseNode != nil {
-        mappingValueNode, err := parseNode.GetChildNode("")
-        if err != nil {
-            return nil, err
-        }
-        if mappingValueNode != nil {
-            mappingValue, err := mappingValueNode.GetStringValue()
-            if err != nil {
-                return nil, err
-            }
-            if mappingValue != nil {
-            }
-        }
-    }
-    return result, nil
-}
-// GetFieldDeserializers the deserialization information for the current model
-// returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
-func (m *GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
-    if m.GetGetVideoFilehashChangesResponseNextCursorMember1() != nil {
-        return m.GetGetVideoFilehashChangesResponseNextCursorMember1().GetFieldDeserializers()
-    } else if m.GetVideoFilehashChangesCursorDto() != nil {
-        return m.GetVideoFilehashChangesCursorDto().GetFieldDeserializers()
-    }
-    return make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
-}
-// GetGetVideoFilehashChangesResponseNextCursorMember1 gets the GetVideoFilehashChangesResponse_nextCursorMember1 property value. Composed type representation for type GetVideoFilehashChangesResponse_nextCursorMember1able
-// returns a GetVideoFilehashChangesResponse_nextCursorMember1able when successful
-func (m *GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor) GetGetVideoFilehashChangesResponseNextCursorMember1()(GetVideoFilehashChangesResponse_nextCursorMember1able) {
-    return m.getVideoFilehashChangesResponse_nextCursorMember1
-}
-// GetIsComposedType determines if the current object is a wrapper around a composed type
-// returns a bool when successful
-func (m *GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor) GetIsComposedType()(bool) {
-    return true
-}
-// GetVideoFilehashChangesCursorDto gets the VideoFilehashChangesCursorDto property value. Composed type representation for type VideoFilehashChangesCursorDtoable
-// returns a VideoFilehashChangesCursorDtoable when successful
-func (m *GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor) GetVideoFilehashChangesCursorDto()(VideoFilehashChangesCursorDtoable) {
-    return m.videoFilehashChangesCursorDto
-}
-// Serialize serializes information the current object
-func (m *GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
-    if m.GetGetVideoFilehashChangesResponseNextCursorMember1() != nil {
-        err := writer.WriteObjectValue("", m.GetGetVideoFilehashChangesResponseNextCursorMember1())
-        if err != nil {
-            return err
-        }
-    } else if m.GetVideoFilehashChangesCursorDto() != nil {
-        err := writer.WriteObjectValue("", m.GetVideoFilehashChangesCursorDto())
-        if err != nil {
-            return err
-        }
-    }
-    return nil
-}
-// SetGetVideoFilehashChangesResponseNextCursorMember1 sets the GetVideoFilehashChangesResponse_nextCursorMember1 property value. Composed type representation for type GetVideoFilehashChangesResponse_nextCursorMember1able
-func (m *GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor) SetGetVideoFilehashChangesResponseNextCursorMember1(value GetVideoFilehashChangesResponse_nextCursorMember1able)() {
-    m.getVideoFilehashChangesResponse_nextCursorMember1 = value
-}
-// SetVideoFilehashChangesCursorDto sets the VideoFilehashChangesCursorDto property value. Composed type representation for type VideoFilehashChangesCursorDtoable
-func (m *GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursor) SetVideoFilehashChangesCursorDto(value VideoFilehashChangesCursorDtoable)() {
-    m.videoFilehashChangesCursorDto = value
-}
-type GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorable interface {
-    i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
-    GetGetVideoFilehashChangesResponseNextCursorMember1()(GetVideoFilehashChangesResponse_nextCursorMember1able)
-    GetVideoFilehashChangesCursorDto()(VideoFilehashChangesCursorDtoable)
-    SetGetVideoFilehashChangesResponseNextCursorMember1(value GetVideoFilehashChangesResponse_nextCursorMember1able)()
-    SetVideoFilehashChangesCursorDto(value VideoFilehashChangesCursorDtoable)()
 }
 // NewGetVideoFilehashChangesResponse instantiates a new GetVideoFilehashChangesResponse and sets the default values.
 func NewGetVideoFilehashChangesResponse()(*GetVideoFilehashChangesResponse) {
@@ -155,12 +67,12 @@ func (m *GetVideoFilehashChangesResponse) GetFieldDeserializers()(map[string]fun
         return nil
     }
     res["nextCursor"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetObjectValue(CreateGetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorFromDiscriminatorValue)
+        val, err := n.GetObjectValue(CreateVideoFilehashChangesCursorDtoFromDiscriminatorValue)
         if err != nil {
             return err
         }
         if val != nil {
-            m.SetNextCursor(val.(GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorable))
+            m.SetNextCursor(val.(VideoFilehashChangesCursorDtoable))
         }
         return nil
     }
@@ -187,8 +99,8 @@ func (m *GetVideoFilehashChangesResponse) GetItems()([]VideoFilehashChangeDtoabl
     return m.items
 }
 // GetNextCursor gets the nextCursor property value. The nextCursor property
-// returns a GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorable when successful
-func (m *GetVideoFilehashChangesResponse) GetNextCursor()(GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorable) {
+// returns a VideoFilehashChangesCursorDtoable when successful
+func (m *GetVideoFilehashChangesResponse) GetNextCursor()(VideoFilehashChangesCursorDtoable) {
     return m.nextCursor
 }
 // GetPageSize gets the pageSize property value. The pageSize property
@@ -249,7 +161,7 @@ func (m *GetVideoFilehashChangesResponse) SetItems(value []VideoFilehashChangeDt
     m.items = value
 }
 // SetNextCursor sets the nextCursor property value. The nextCursor property
-func (m *GetVideoFilehashChangesResponse) SetNextCursor(value GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorable)() {
+func (m *GetVideoFilehashChangesResponse) SetNextCursor(value VideoFilehashChangesCursorDtoable)() {
     m.nextCursor = value
 }
 // SetPageSize sets the pageSize property value. The pageSize property
@@ -261,10 +173,10 @@ type GetVideoFilehashChangesResponseable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetHasMore()(*bool)
     GetItems()([]VideoFilehashChangeDtoable)
-    GetNextCursor()(GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorable)
+    GetNextCursor()(VideoFilehashChangesCursorDtoable)
     GetPageSize()(*int32)
     SetHasMore(value *bool)()
     SetItems(value []VideoFilehashChangeDtoable)()
-    SetNextCursor(value GetVideoFilehashChangesResponse_GetVideoFilehashChangesResponse_nextCursorable)()
+    SetNextCursor(value VideoFilehashChangesCursorDtoable)()
     SetPageSize(value *int32)()
 }

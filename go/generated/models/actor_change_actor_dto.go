@@ -18,7 +18,7 @@ type ActorChangeActorDto struct {
     bios []ActorChangeBioDtoable
     // The birthday property
     birthday *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
-    // The birthdayType property
+    // Known values: ExactDate (1), MonthYear (2), Year (3).
     birthdayType *int32
     // The birthdayTypeLabel property
     birthdayTypeLabel *string
@@ -28,7 +28,7 @@ type ActorChangeActorDto struct {
     braSize *int32
     // The braSizeLabel property
     braSizeLabel *string
-    // The breastType property
+    // Known values: Unknown (0), Natural (1), Augmented (2), NotApplicable (3).
     breastType *int32
     // The breastTypeLabel property
     breastTypeLabel *string
@@ -42,19 +42,19 @@ type ActorChangeActorDto struct {
     deathday *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
     // The deletedAtUtc property
     deletedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The ethnicity property
+    // Known values: Unknown (0), Caucasian (1), Black (2), Asian (3), Indian (4), Latin (5), MiddleEastern (6), Mixed (7), Other (8).
     ethnicity *int32
     // The ethnicityLabel property
     ethnicityLabel *string
-    // The eyecolor property
+    // Known values: Unknown (0), Blue (1), Brown (2), Grey (3), Red (4), Green (5), Hazel (6).
     eyecolor *int32
     // The eyecolorLabel property
     eyecolorLabel *string
-    // The gender property
+    // Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).
     gender *int32
     // The genderLabel property
     genderLabel *string
-    // The haircolor property
+    // Known values: Unknown (0), Blonde (1), Brown (2), Black (3), Red (4), Auburn (5), Grey (6), White (7), Bald (8), Various (9), Other (10).
     haircolor *int32
     // The haircolorLabel property
     haircolorLabel *string
@@ -72,7 +72,7 @@ type ActorChangeActorDto struct {
     links []ActorChangeLinkDtoable
     // The name property
     name *string
-    // The nationality property
+    // Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
     nationality *int32
     // The nationalityLabel property
     nationalityLabel *string
@@ -117,7 +117,7 @@ func (m *ActorChangeActorDto) GetBios()([]ActorChangeBioDtoable) {
 func (m *ActorChangeActorDto) GetBirthday()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly) {
     return m.birthday
 }
-// GetBirthdayType gets the birthdayType property value. The birthdayType property
+// GetBirthdayType gets the birthdayType property value. Known values: ExactDate (1), MonthYear (2), Year (3).
 // returns a *int32 when successful
 func (m *ActorChangeActorDto) GetBirthdayType()(*int32) {
     return m.birthdayType
@@ -142,7 +142,7 @@ func (m *ActorChangeActorDto) GetBraSize()(*int32) {
 func (m *ActorChangeActorDto) GetBraSizeLabel()(*string) {
     return m.braSizeLabel
 }
-// GetBreastType gets the breastType property value. The breastType property
+// GetBreastType gets the breastType property value. Known values: Unknown (0), Natural (1), Augmented (2), NotApplicable (3).
 // returns a *int32 when successful
 func (m *ActorChangeActorDto) GetBreastType()(*int32) {
     return m.breastType
@@ -177,7 +177,7 @@ func (m *ActorChangeActorDto) GetDeathday()(*i878a80d2330e89d26896388a3f487eef27
 func (m *ActorChangeActorDto) GetDeletedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.deletedAtUtc
 }
-// GetEthnicity gets the ethnicity property value. The ethnicity property
+// GetEthnicity gets the ethnicity property value. Known values: Unknown (0), Caucasian (1), Black (2), Asian (3), Indian (4), Latin (5), MiddleEastern (6), Mixed (7), Other (8).
 // returns a *int32 when successful
 func (m *ActorChangeActorDto) GetEthnicity()(*int32) {
     return m.ethnicity
@@ -187,7 +187,7 @@ func (m *ActorChangeActorDto) GetEthnicity()(*int32) {
 func (m *ActorChangeActorDto) GetEthnicityLabel()(*string) {
     return m.ethnicityLabel
 }
-// GetEyecolor gets the eyecolor property value. The eyecolor property
+// GetEyecolor gets the eyecolor property value. Known values: Unknown (0), Blue (1), Brown (2), Grey (3), Red (4), Green (5), Hazel (6).
 // returns a *int32 when successful
 func (m *ActorChangeActorDto) GetEyecolor()(*int32) {
     return m.eyecolor
@@ -587,7 +587,7 @@ func (m *ActorChangeActorDto) GetFieldDeserializers()(map[string]func(i878a80d23
     }
     return res
 }
-// GetGender gets the gender property value. The gender property
+// GetGender gets the gender property value. Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).
 // returns a *int32 when successful
 func (m *ActorChangeActorDto) GetGender()(*int32) {
     return m.gender
@@ -597,7 +597,7 @@ func (m *ActorChangeActorDto) GetGender()(*int32) {
 func (m *ActorChangeActorDto) GetGenderLabel()(*string) {
     return m.genderLabel
 }
-// GetHaircolor gets the haircolor property value. The haircolor property
+// GetHaircolor gets the haircolor property value. Known values: Unknown (0), Blonde (1), Brown (2), Black (3), Red (4), Auburn (5), Grey (6), White (7), Bald (8), Various (9), Other (10).
 // returns a *int32 when successful
 func (m *ActorChangeActorDto) GetHaircolor()(*int32) {
     return m.haircolor
@@ -642,7 +642,7 @@ func (m *ActorChangeActorDto) GetLinks()([]ActorChangeLinkDtoable) {
 func (m *ActorChangeActorDto) GetName()(*string) {
     return m.name
 }
-// GetNationality gets the nationality property value. The nationality property
+// GetNationality gets the nationality property value. Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
 // returns a *int32 when successful
 func (m *ActorChangeActorDto) GetNationality()(*int32) {
     return m.nationality
@@ -938,7 +938,7 @@ func (m *ActorChangeActorDto) SetBios(value []ActorChangeBioDtoable)() {
 func (m *ActorChangeActorDto) SetBirthday(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)() {
     m.birthday = value
 }
-// SetBirthdayType sets the birthdayType property value. The birthdayType property
+// SetBirthdayType sets the birthdayType property value. Known values: ExactDate (1), MonthYear (2), Year (3).
 func (m *ActorChangeActorDto) SetBirthdayType(value *int32)() {
     m.birthdayType = value
 }
@@ -958,7 +958,7 @@ func (m *ActorChangeActorDto) SetBraSize(value *int32)() {
 func (m *ActorChangeActorDto) SetBraSizeLabel(value *string)() {
     m.braSizeLabel = value
 }
-// SetBreastType sets the breastType property value. The breastType property
+// SetBreastType sets the breastType property value. Known values: Unknown (0), Natural (1), Augmented (2), NotApplicable (3).
 func (m *ActorChangeActorDto) SetBreastType(value *int32)() {
     m.breastType = value
 }
@@ -986,7 +986,7 @@ func (m *ActorChangeActorDto) SetDeathday(value *i878a80d2330e89d26896388a3f487e
 func (m *ActorChangeActorDto) SetDeletedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.deletedAtUtc = value
 }
-// SetEthnicity sets the ethnicity property value. The ethnicity property
+// SetEthnicity sets the ethnicity property value. Known values: Unknown (0), Caucasian (1), Black (2), Asian (3), Indian (4), Latin (5), MiddleEastern (6), Mixed (7), Other (8).
 func (m *ActorChangeActorDto) SetEthnicity(value *int32)() {
     m.ethnicity = value
 }
@@ -994,7 +994,7 @@ func (m *ActorChangeActorDto) SetEthnicity(value *int32)() {
 func (m *ActorChangeActorDto) SetEthnicityLabel(value *string)() {
     m.ethnicityLabel = value
 }
-// SetEyecolor sets the eyecolor property value. The eyecolor property
+// SetEyecolor sets the eyecolor property value. Known values: Unknown (0), Blue (1), Brown (2), Grey (3), Red (4), Green (5), Hazel (6).
 func (m *ActorChangeActorDto) SetEyecolor(value *int32)() {
     m.eyecolor = value
 }
@@ -1002,7 +1002,7 @@ func (m *ActorChangeActorDto) SetEyecolor(value *int32)() {
 func (m *ActorChangeActorDto) SetEyecolorLabel(value *string)() {
     m.eyecolorLabel = value
 }
-// SetGender sets the gender property value. The gender property
+// SetGender sets the gender property value. Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).
 func (m *ActorChangeActorDto) SetGender(value *int32)() {
     m.gender = value
 }
@@ -1010,7 +1010,7 @@ func (m *ActorChangeActorDto) SetGender(value *int32)() {
 func (m *ActorChangeActorDto) SetGenderLabel(value *string)() {
     m.genderLabel = value
 }
-// SetHaircolor sets the haircolor property value. The haircolor property
+// SetHaircolor sets the haircolor property value. Known values: Unknown (0), Blonde (1), Brown (2), Black (3), Red (4), Auburn (5), Grey (6), White (7), Bald (8), Various (9), Other (10).
 func (m *ActorChangeActorDto) SetHaircolor(value *int32)() {
     m.haircolor = value
 }
@@ -1046,7 +1046,7 @@ func (m *ActorChangeActorDto) SetLinks(value []ActorChangeLinkDtoable)() {
 func (m *ActorChangeActorDto) SetName(value *string)() {
     m.name = value
 }
-// SetNationality sets the nationality property value. The nationality property
+// SetNationality sets the nationality property value. Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
 func (m *ActorChangeActorDto) SetNationality(value *int32)() {
     m.nationality = value
 }

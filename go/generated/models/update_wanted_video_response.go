@@ -16,10 +16,10 @@ type UpdateWantedVideoResponse struct {
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // The fulfilledAtUtc property
     fulfilledAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The fulfilledInQuality property
-    fulfilledInQuality UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityable
-    // The fulfillmentByApp property
-    fulfillmentByApp UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppable
+    // Known values: P720 (0), P1080 (1), P2160 (2).
+    fulfilledInQuality *int32
+    // Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+    fulfillmentByApp *int32
     // The fulfillmentExternalId property
     fulfillmentExternalId *string
     // The isFulfilled property
@@ -28,182 +28,6 @@ type UpdateWantedVideoResponse struct {
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // The videoId property
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-}
-// UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality composed type wrapper for classes UpdateWantedVideoResponse_fulfilledInQualityMember1able, VideoQualityable
-type UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality struct {
-    // Composed type representation for type UpdateWantedVideoResponse_fulfilledInQualityMember1able
-    updateWantedVideoResponse_fulfilledInQualityMember1 UpdateWantedVideoResponse_fulfilledInQualityMember1able
-    // Composed type representation for type VideoQualityable
-    videoQuality VideoQualityable
-}
-// NewUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality instantiates a new UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality and sets the default values.
-func NewUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality()(*UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality) {
-    m := &UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality{
-    }
-    return m
-}
-// CreateUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityFromDiscriminatorValue creates a new instance of the appropriate class based on discriminator value
-// returns a Parsable when successful
-func CreateUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
-    result := NewUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality()
-    if parseNode != nil {
-        mappingValueNode, err := parseNode.GetChildNode("")
-        if err != nil {
-            return nil, err
-        }
-        if mappingValueNode != nil {
-            mappingValue, err := mappingValueNode.GetStringValue()
-            if err != nil {
-                return nil, err
-            }
-            if mappingValue != nil {
-            }
-        }
-    }
-    return result, nil
-}
-// GetFieldDeserializers the deserialization information for the current model
-// returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
-    if m.GetUpdateWantedVideoResponseFulfilledInQualityMember1() != nil {
-        return m.GetUpdateWantedVideoResponseFulfilledInQualityMember1().GetFieldDeserializers()
-    } else if m.GetVideoQuality() != nil {
-        return m.GetVideoQuality().GetFieldDeserializers()
-    }
-    return make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
-}
-// GetIsComposedType determines if the current object is a wrapper around a composed type
-// returns a bool when successful
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality) GetIsComposedType()(bool) {
-    return true
-}
-// GetUpdateWantedVideoResponseFulfilledInQualityMember1 gets the UpdateWantedVideoResponse_fulfilledInQualityMember1 property value. Composed type representation for type UpdateWantedVideoResponse_fulfilledInQualityMember1able
-// returns a UpdateWantedVideoResponse_fulfilledInQualityMember1able when successful
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality) GetUpdateWantedVideoResponseFulfilledInQualityMember1()(UpdateWantedVideoResponse_fulfilledInQualityMember1able) {
-    return m.updateWantedVideoResponse_fulfilledInQualityMember1
-}
-// GetVideoQuality gets the VideoQuality property value. Composed type representation for type VideoQualityable
-// returns a VideoQualityable when successful
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality) GetVideoQuality()(VideoQualityable) {
-    return m.videoQuality
-}
-// Serialize serializes information the current object
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
-    if m.GetUpdateWantedVideoResponseFulfilledInQualityMember1() != nil {
-        err := writer.WriteObjectValue("", m.GetUpdateWantedVideoResponseFulfilledInQualityMember1())
-        if err != nil {
-            return err
-        }
-    } else if m.GetVideoQuality() != nil {
-        err := writer.WriteObjectValue("", m.GetVideoQuality())
-        if err != nil {
-            return err
-        }
-    }
-    return nil
-}
-// SetUpdateWantedVideoResponseFulfilledInQualityMember1 sets the UpdateWantedVideoResponse_fulfilledInQualityMember1 property value. Composed type representation for type UpdateWantedVideoResponse_fulfilledInQualityMember1able
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality) SetUpdateWantedVideoResponseFulfilledInQualityMember1(value UpdateWantedVideoResponse_fulfilledInQualityMember1able)() {
-    m.updateWantedVideoResponse_fulfilledInQualityMember1 = value
-}
-// SetVideoQuality sets the VideoQuality property value. Composed type representation for type VideoQualityable
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQuality) SetVideoQuality(value VideoQualityable)() {
-    m.videoQuality = value
-}
-// UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp composed type wrapper for classes FulfillmentAppable, UpdateWantedVideoResponse_fulfillmentByAppMember1able
-type UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp struct {
-    // Composed type representation for type FulfillmentAppable
-    fulfillmentApp FulfillmentAppable
-    // Composed type representation for type UpdateWantedVideoResponse_fulfillmentByAppMember1able
-    updateWantedVideoResponse_fulfillmentByAppMember1 UpdateWantedVideoResponse_fulfillmentByAppMember1able
-}
-// NewUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp instantiates a new UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp and sets the default values.
-func NewUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp()(*UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp) {
-    m := &UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp{
-    }
-    return m
-}
-// CreateUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppFromDiscriminatorValue creates a new instance of the appropriate class based on discriminator value
-// returns a Parsable when successful
-func CreateUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
-    result := NewUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp()
-    if parseNode != nil {
-        mappingValueNode, err := parseNode.GetChildNode("")
-        if err != nil {
-            return nil, err
-        }
-        if mappingValueNode != nil {
-            mappingValue, err := mappingValueNode.GetStringValue()
-            if err != nil {
-                return nil, err
-            }
-            if mappingValue != nil {
-            }
-        }
-    }
-    return result, nil
-}
-// GetFieldDeserializers the deserialization information for the current model
-// returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
-    if m.GetFulfillmentApp() != nil {
-        return m.GetFulfillmentApp().GetFieldDeserializers()
-    } else if m.GetUpdateWantedVideoResponseFulfillmentByAppMember1() != nil {
-        return m.GetUpdateWantedVideoResponseFulfillmentByAppMember1().GetFieldDeserializers()
-    }
-    return make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
-}
-// GetFulfillmentApp gets the FulfillmentApp property value. Composed type representation for type FulfillmentAppable
-// returns a FulfillmentAppable when successful
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp) GetFulfillmentApp()(FulfillmentAppable) {
-    return m.fulfillmentApp
-}
-// GetIsComposedType determines if the current object is a wrapper around a composed type
-// returns a bool when successful
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp) GetIsComposedType()(bool) {
-    return true
-}
-// GetUpdateWantedVideoResponseFulfillmentByAppMember1 gets the UpdateWantedVideoResponse_fulfillmentByAppMember1 property value. Composed type representation for type UpdateWantedVideoResponse_fulfillmentByAppMember1able
-// returns a UpdateWantedVideoResponse_fulfillmentByAppMember1able when successful
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp) GetUpdateWantedVideoResponseFulfillmentByAppMember1()(UpdateWantedVideoResponse_fulfillmentByAppMember1able) {
-    return m.updateWantedVideoResponse_fulfillmentByAppMember1
-}
-// Serialize serializes information the current object
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
-    if m.GetFulfillmentApp() != nil {
-        err := writer.WriteObjectValue("", m.GetFulfillmentApp())
-        if err != nil {
-            return err
-        }
-    } else if m.GetUpdateWantedVideoResponseFulfillmentByAppMember1() != nil {
-        err := writer.WriteObjectValue("", m.GetUpdateWantedVideoResponseFulfillmentByAppMember1())
-        if err != nil {
-            return err
-        }
-    }
-    return nil
-}
-// SetFulfillmentApp sets the FulfillmentApp property value. Composed type representation for type FulfillmentAppable
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp) SetFulfillmentApp(value FulfillmentAppable)() {
-    m.fulfillmentApp = value
-}
-// SetUpdateWantedVideoResponseFulfillmentByAppMember1 sets the UpdateWantedVideoResponse_fulfillmentByAppMember1 property value. Composed type representation for type UpdateWantedVideoResponse_fulfillmentByAppMember1able
-func (m *UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByApp) SetUpdateWantedVideoResponseFulfillmentByAppMember1(value UpdateWantedVideoResponse_fulfillmentByAppMember1able)() {
-    m.updateWantedVideoResponse_fulfillmentByAppMember1 = value
-}
-type UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityable interface {
-    i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
-    GetUpdateWantedVideoResponseFulfilledInQualityMember1()(UpdateWantedVideoResponse_fulfilledInQualityMember1able)
-    GetVideoQuality()(VideoQualityable)
-    SetUpdateWantedVideoResponseFulfilledInQualityMember1(value UpdateWantedVideoResponse_fulfilledInQualityMember1able)()
-    SetVideoQuality(value VideoQualityable)()
-}
-type UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppable interface {
-    i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
-    GetFulfillmentApp()(FulfillmentAppable)
-    GetUpdateWantedVideoResponseFulfillmentByAppMember1()(UpdateWantedVideoResponse_fulfillmentByAppMember1able)
-    SetFulfillmentApp(value FulfillmentAppable)()
-    SetUpdateWantedVideoResponseFulfillmentByAppMember1(value UpdateWantedVideoResponse_fulfillmentByAppMember1able)()
 }
 // NewUpdateWantedVideoResponse instantiates a new UpdateWantedVideoResponse and sets the default values.
 func NewUpdateWantedVideoResponse()(*UpdateWantedVideoResponse) {
@@ -252,22 +76,22 @@ func (m *UpdateWantedVideoResponse) GetFieldDeserializers()(map[string]func(i878
         return nil
     }
     res["fulfilledInQuality"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetObjectValue(CreateUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityFromDiscriminatorValue)
+        val, err := n.GetInt32Value()
         if err != nil {
             return err
         }
         if val != nil {
-            m.SetFulfilledInQuality(val.(UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityable))
+            m.SetFulfilledInQuality(val)
         }
         return nil
     }
     res["fulfillmentByApp"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetObjectValue(CreateUpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppFromDiscriminatorValue)
+        val, err := n.GetInt32Value()
         if err != nil {
             return err
         }
         if val != nil {
-            m.SetFulfillmentByApp(val.(UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppable))
+            m.SetFulfillmentByApp(val)
         }
         return nil
     }
@@ -318,14 +142,14 @@ func (m *UpdateWantedVideoResponse) GetFieldDeserializers()(map[string]func(i878
 func (m *UpdateWantedVideoResponse) GetFulfilledAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.fulfilledAtUtc
 }
-// GetFulfilledInQuality gets the fulfilledInQuality property value. The fulfilledInQuality property
-// returns a UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityable when successful
-func (m *UpdateWantedVideoResponse) GetFulfilledInQuality()(UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityable) {
+// GetFulfilledInQuality gets the fulfilledInQuality property value. Known values: P720 (0), P1080 (1), P2160 (2).
+// returns a *int32 when successful
+func (m *UpdateWantedVideoResponse) GetFulfilledInQuality()(*int32) {
     return m.fulfilledInQuality
 }
-// GetFulfillmentByApp gets the fulfillmentByApp property value. The fulfillmentByApp property
-// returns a UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppable when successful
-func (m *UpdateWantedVideoResponse) GetFulfillmentByApp()(UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppable) {
+// GetFulfillmentByApp gets the fulfillmentByApp property value. Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+// returns a *int32 when successful
+func (m *UpdateWantedVideoResponse) GetFulfillmentByApp()(*int32) {
     return m.fulfillmentByApp
 }
 // GetFulfillmentExternalId gets the fulfillmentExternalId property value. The fulfillmentExternalId property
@@ -363,13 +187,13 @@ func (m *UpdateWantedVideoResponse) Serialize(writer i878a80d2330e89d26896388a3f
         }
     }
     {
-        err := writer.WriteObjectValue("fulfilledInQuality", m.GetFulfilledInQuality())
+        err := writer.WriteInt32Value("fulfilledInQuality", m.GetFulfilledInQuality())
         if err != nil {
             return err
         }
     }
     {
-        err := writer.WriteObjectValue("fulfillmentByApp", m.GetFulfillmentByApp())
+        err := writer.WriteInt32Value("fulfillmentByApp", m.GetFulfillmentByApp())
         if err != nil {
             return err
         }
@@ -418,12 +242,12 @@ func (m *UpdateWantedVideoResponse) SetCreatedAtUtc(value *i336074805fc853987abe
 func (m *UpdateWantedVideoResponse) SetFulfilledAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.fulfilledAtUtc = value
 }
-// SetFulfilledInQuality sets the fulfilledInQuality property value. The fulfilledInQuality property
-func (m *UpdateWantedVideoResponse) SetFulfilledInQuality(value UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityable)() {
+// SetFulfilledInQuality sets the fulfilledInQuality property value. Known values: P720 (0), P1080 (1), P2160 (2).
+func (m *UpdateWantedVideoResponse) SetFulfilledInQuality(value *int32)() {
     m.fulfilledInQuality = value
 }
-// SetFulfillmentByApp sets the fulfillmentByApp property value. The fulfillmentByApp property
-func (m *UpdateWantedVideoResponse) SetFulfillmentByApp(value UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppable)() {
+// SetFulfillmentByApp sets the fulfillmentByApp property value. Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+func (m *UpdateWantedVideoResponse) SetFulfillmentByApp(value *int32)() {
     m.fulfillmentByApp = value
 }
 // SetFulfillmentExternalId sets the fulfillmentExternalId property value. The fulfillmentExternalId property
@@ -447,16 +271,16 @@ type UpdateWantedVideoResponseable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetFulfilledAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
-    GetFulfilledInQuality()(UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityable)
-    GetFulfillmentByApp()(UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppable)
+    GetFulfilledInQuality()(*int32)
+    GetFulfillmentByApp()(*int32)
     GetFulfillmentExternalId()(*string)
     GetIsFulfilled()(*bool)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetFulfilledAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
-    SetFulfilledInQuality(value UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfilledInQualityable)()
-    SetFulfillmentByApp(value UpdateWantedVideoResponse_UpdateWantedVideoResponse_fulfillmentByAppable)()
+    SetFulfilledInQuality(value *int32)()
+    SetFulfillmentByApp(value *int32)()
     SetFulfillmentExternalId(value *string)()
     SetIsFulfilled(value *bool)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()

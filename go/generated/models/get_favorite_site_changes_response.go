@@ -15,97 +15,9 @@ type GetFavoriteSiteChangesResponse struct {
     // The items property
     items []FavoriteSiteChangeDtoable
     // The nextCursor property
-    nextCursor GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorable
+    nextCursor FavoriteSiteChangesCursorDtoable
     // The pageSize property
     pageSize *int32
-}
-// GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor composed type wrapper for classes FavoriteSiteChangesCursorDtoable, GetFavoriteSiteChangesResponse_nextCursorMember1able
-type GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor struct {
-    // Composed type representation for type FavoriteSiteChangesCursorDtoable
-    favoriteSiteChangesCursorDto FavoriteSiteChangesCursorDtoable
-    // Composed type representation for type GetFavoriteSiteChangesResponse_nextCursorMember1able
-    getFavoriteSiteChangesResponse_nextCursorMember1 GetFavoriteSiteChangesResponse_nextCursorMember1able
-}
-// NewGetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor instantiates a new GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor and sets the default values.
-func NewGetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor()(*GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor) {
-    m := &GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor{
-    }
-    return m
-}
-// CreateGetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorFromDiscriminatorValue creates a new instance of the appropriate class based on discriminator value
-// returns a Parsable when successful
-func CreateGetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
-    result := NewGetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor()
-    if parseNode != nil {
-        mappingValueNode, err := parseNode.GetChildNode("")
-        if err != nil {
-            return nil, err
-        }
-        if mappingValueNode != nil {
-            mappingValue, err := mappingValueNode.GetStringValue()
-            if err != nil {
-                return nil, err
-            }
-            if mappingValue != nil {
-            }
-        }
-    }
-    return result, nil
-}
-// GetFavoriteSiteChangesCursorDto gets the FavoriteSiteChangesCursorDto property value. Composed type representation for type FavoriteSiteChangesCursorDtoable
-// returns a FavoriteSiteChangesCursorDtoable when successful
-func (m *GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor) GetFavoriteSiteChangesCursorDto()(FavoriteSiteChangesCursorDtoable) {
-    return m.favoriteSiteChangesCursorDto
-}
-// GetFieldDeserializers the deserialization information for the current model
-// returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
-func (m *GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
-    if m.GetFavoriteSiteChangesCursorDto() != nil {
-        return m.GetFavoriteSiteChangesCursorDto().GetFieldDeserializers()
-    } else if m.GetGetFavoriteSiteChangesResponseNextCursorMember1() != nil {
-        return m.GetGetFavoriteSiteChangesResponseNextCursorMember1().GetFieldDeserializers()
-    }
-    return make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
-}
-// GetGetFavoriteSiteChangesResponseNextCursorMember1 gets the GetFavoriteSiteChangesResponse_nextCursorMember1 property value. Composed type representation for type GetFavoriteSiteChangesResponse_nextCursorMember1able
-// returns a GetFavoriteSiteChangesResponse_nextCursorMember1able when successful
-func (m *GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor) GetGetFavoriteSiteChangesResponseNextCursorMember1()(GetFavoriteSiteChangesResponse_nextCursorMember1able) {
-    return m.getFavoriteSiteChangesResponse_nextCursorMember1
-}
-// GetIsComposedType determines if the current object is a wrapper around a composed type
-// returns a bool when successful
-func (m *GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor) GetIsComposedType()(bool) {
-    return true
-}
-// Serialize serializes information the current object
-func (m *GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
-    if m.GetFavoriteSiteChangesCursorDto() != nil {
-        err := writer.WriteObjectValue("", m.GetFavoriteSiteChangesCursorDto())
-        if err != nil {
-            return err
-        }
-    } else if m.GetGetFavoriteSiteChangesResponseNextCursorMember1() != nil {
-        err := writer.WriteObjectValue("", m.GetGetFavoriteSiteChangesResponseNextCursorMember1())
-        if err != nil {
-            return err
-        }
-    }
-    return nil
-}
-// SetFavoriteSiteChangesCursorDto sets the FavoriteSiteChangesCursorDto property value. Composed type representation for type FavoriteSiteChangesCursorDtoable
-func (m *GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor) SetFavoriteSiteChangesCursorDto(value FavoriteSiteChangesCursorDtoable)() {
-    m.favoriteSiteChangesCursorDto = value
-}
-// SetGetFavoriteSiteChangesResponseNextCursorMember1 sets the GetFavoriteSiteChangesResponse_nextCursorMember1 property value. Composed type representation for type GetFavoriteSiteChangesResponse_nextCursorMember1able
-func (m *GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursor) SetGetFavoriteSiteChangesResponseNextCursorMember1(value GetFavoriteSiteChangesResponse_nextCursorMember1able)() {
-    m.getFavoriteSiteChangesResponse_nextCursorMember1 = value
-}
-type GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorable interface {
-    i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
-    GetFavoriteSiteChangesCursorDto()(FavoriteSiteChangesCursorDtoable)
-    GetGetFavoriteSiteChangesResponseNextCursorMember1()(GetFavoriteSiteChangesResponse_nextCursorMember1able)
-    SetFavoriteSiteChangesCursorDto(value FavoriteSiteChangesCursorDtoable)()
-    SetGetFavoriteSiteChangesResponseNextCursorMember1(value GetFavoriteSiteChangesResponse_nextCursorMember1able)()
 }
 // NewGetFavoriteSiteChangesResponse instantiates a new GetFavoriteSiteChangesResponse and sets the default values.
 func NewGetFavoriteSiteChangesResponse()(*GetFavoriteSiteChangesResponse) {
@@ -155,12 +67,12 @@ func (m *GetFavoriteSiteChangesResponse) GetFieldDeserializers()(map[string]func
         return nil
     }
     res["nextCursor"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetObjectValue(CreateGetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorFromDiscriminatorValue)
+        val, err := n.GetObjectValue(CreateFavoriteSiteChangesCursorDtoFromDiscriminatorValue)
         if err != nil {
             return err
         }
         if val != nil {
-            m.SetNextCursor(val.(GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorable))
+            m.SetNextCursor(val.(FavoriteSiteChangesCursorDtoable))
         }
         return nil
     }
@@ -187,8 +99,8 @@ func (m *GetFavoriteSiteChangesResponse) GetItems()([]FavoriteSiteChangeDtoable)
     return m.items
 }
 // GetNextCursor gets the nextCursor property value. The nextCursor property
-// returns a GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorable when successful
-func (m *GetFavoriteSiteChangesResponse) GetNextCursor()(GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorable) {
+// returns a FavoriteSiteChangesCursorDtoable when successful
+func (m *GetFavoriteSiteChangesResponse) GetNextCursor()(FavoriteSiteChangesCursorDtoable) {
     return m.nextCursor
 }
 // GetPageSize gets the pageSize property value. The pageSize property
@@ -249,7 +161,7 @@ func (m *GetFavoriteSiteChangesResponse) SetItems(value []FavoriteSiteChangeDtoa
     m.items = value
 }
 // SetNextCursor sets the nextCursor property value. The nextCursor property
-func (m *GetFavoriteSiteChangesResponse) SetNextCursor(value GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorable)() {
+func (m *GetFavoriteSiteChangesResponse) SetNextCursor(value FavoriteSiteChangesCursorDtoable)() {
     m.nextCursor = value
 }
 // SetPageSize sets the pageSize property value. The pageSize property
@@ -261,10 +173,10 @@ type GetFavoriteSiteChangesResponseable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetHasMore()(*bool)
     GetItems()([]FavoriteSiteChangeDtoable)
-    GetNextCursor()(GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorable)
+    GetNextCursor()(FavoriteSiteChangesCursorDtoable)
     GetPageSize()(*int32)
     SetHasMore(value *bool)()
     SetItems(value []FavoriteSiteChangeDtoable)()
-    SetNextCursor(value GetFavoriteSiteChangesResponse_GetFavoriteSiteChangesResponse_nextCursorable)()
+    SetNextCursor(value FavoriteSiteChangesCursorDtoable)()
     SetPageSize(value *int32)()
 }

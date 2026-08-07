@@ -56,7 +56,7 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     birthday?: DateOnly | null;
     /**
-     * The birthdayType property
+     * Known values: ExactDate (1), MonthYear (2), Year (3).
      */
     birthdayType?: number | null;
     /**
@@ -76,7 +76,7 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     braSizeLabel?: string | null;
     /**
-     * The breastType property
+     * Known values: Unknown (0), Natural (1), Augmented (2), NotApplicable (3).
      */
     breastType?: number | null;
     /**
@@ -104,7 +104,7 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     deletedAtUtc?: Date | null;
     /**
-     * The ethnicity property
+     * Known values: Unknown (0), Caucasian (1), Black (2), Asian (3), Indian (4), Latin (5), MiddleEastern (6), Mixed (7), Other (8).
      */
     ethnicity?: number | null;
     /**
@@ -112,7 +112,7 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     ethnicityLabel?: string | null;
     /**
-     * The eyecolor property
+     * Known values: Unknown (0), Blue (1), Brown (2), Grey (3), Red (4), Green (5), Hazel (6).
      */
     eyecolor?: number | null;
     /**
@@ -120,7 +120,7 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     eyecolorLabel?: string | null;
     /**
-     * The gender property
+     * Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).
      */
     gender?: number | null;
     /**
@@ -128,7 +128,7 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     genderLabel?: string | null;
     /**
-     * The haircolor property
+     * Known values: Unknown (0), Blonde (1), Brown (2), Black (3), Red (4), Auburn (5), Grey (6), White (7), Bald (8), Various (9), Other (10).
      */
     haircolor?: number | null;
     /**
@@ -164,7 +164,7 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     name?: string | null;
     /**
-     * The nationality property
+     * Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
      */
     nationality?: number | null;
     /**
@@ -224,7 +224,7 @@ export interface ActorChangeImageDto extends AdditionalDataHolder, Parsable {
      */
     id?: Guid | null;
     /**
-     * The imageType property
+     * Known values: Thumbnail (1), Poster (2), Face (3).
      */
     imageType?: number | null;
     /**
@@ -238,7 +238,7 @@ export interface ActorChangeImageDto extends AdditionalDataHolder, Parsable {
 }
 export interface ActorChangeLinkDto extends AdditionalDataHolder, Parsable {
     /**
-     * The externalSite property
+     * Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5).
      */
     externalSite?: number | null;
     /**
@@ -264,7 +264,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     birthday?: DateOnly | null;
     /**
-     * The birthdayType property
+     * Known values: ExactDate (1), MonthYear (2), Year (3).
      */
     birthdayType?: number | null;
     /**
@@ -284,7 +284,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     braSizeLabel?: string | null;
     /**
-     * The breastType property
+     * Known values: Unknown (0), Natural (1), Augmented (2), NotApplicable (3).
      */
     breastType?: number | null;
     /**
@@ -308,7 +308,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     deathday?: DateOnly | null;
     /**
-     * The ethnicity property
+     * Known values: Unknown (0), Caucasian (1), Black (2), Asian (3), Indian (4), Latin (5), MiddleEastern (6), Mixed (7), Other (8).
      */
     ethnicity?: number | null;
     /**
@@ -316,7 +316,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     ethnicityLabel?: string | null;
     /**
-     * The eyecolor property
+     * Known values: Unknown (0), Blue (1), Brown (2), Grey (3), Red (4), Green (5), Hazel (6).
      */
     eyecolor?: number | null;
     /**
@@ -324,7 +324,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     eyecolorLabel?: string | null;
     /**
-     * The gender property
+     * Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).
      */
     gender?: number | null;
     /**
@@ -332,7 +332,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     genderLabel?: string | null;
     /**
-     * The haircolor property
+     * Known values: Unknown (0), Blonde (1), Brown (2), Black (3), Red (4), Auburn (5), Grey (6), White (7), Bald (8), Various (9), Other (10).
      */
     haircolor?: number | null;
     /**
@@ -364,7 +364,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     name?: string | null;
     /**
-     * The nationality property
+     * Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
      */
     nationality?: number | null;
     /**
@@ -394,7 +394,7 @@ export interface ActorImageDetailDto extends AdditionalDataHolder, Parsable {
      */
     id?: Guid | null;
     /**
-     * The imageType property
+     * Known values: Thumbnail (1), Poster (2), Face (3).
      */
     imageType?: number | null;
     /**
@@ -408,7 +408,7 @@ export interface ActorImageDetailDto extends AdditionalDataHolder, Parsable {
 }
 export interface ActorLinkDto extends AdditionalDataHolder, Parsable {
     /**
-     * The externalSite property
+     * Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5).
      */
     externalSite?: number | null;
     /**
@@ -426,7 +426,7 @@ export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
      */
     birthday?: DateOnly | null;
     /**
-     * The ethnicity property
+     * Known values: Unknown (0), Caucasian (1), Black (2), Asian (3), Indian (4), Latin (5), MiddleEastern (6), Mixed (7), Other (8).
      */
     ethnicity?: number | null;
     /**
@@ -434,7 +434,7 @@ export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
      */
     ethnicityLabel?: string | null;
     /**
-     * The gender property
+     * Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).
      */
     gender?: number | null;
     /**
@@ -450,7 +450,7 @@ export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
      */
     name?: string | null;
     /**
-     * The nationality property
+     * Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
      */
     nationality?: number | null;
     /**
@@ -776,15 +776,6 @@ export function createFavoriteSiteSummaryDtoFromDiscriminatorValue(parseNode: Pa
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {FulfillmentApp}
- */
-// @ts-ignore
-export function createFulfillmentAppFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoFulfillmentApp;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {GetActorChangesResponse}
  */
 // @ts-ignore
@@ -803,47 +794,11 @@ export function createGetActorsByIdsRequestFromDiscriminatorValue(parseNode: Par
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {FavoriteActorChangesCursorDto | GetFavoriteActorChangesResponse_nextCursorMember1}
- */
-// @ts-ignore
-export function createGetFavoriteActorChangesResponse_nextCursorFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetFavoriteActorChangesResponse_nextCursor;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetFavoriteActorChangesResponse_nextCursorMember1}
- */
-// @ts-ignore
-export function createGetFavoriteActorChangesResponse_nextCursorMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetFavoriteActorChangesResponse_nextCursorMember1;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {GetFavoriteActorChangesResponse}
  */
 // @ts-ignore
 export function createGetFavoriteActorChangesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoGetFavoriteActorChangesResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {FavoriteSiteChangesCursorDto | GetFavoriteSiteChangesResponse_nextCursorMember1}
- */
-// @ts-ignore
-export function createGetFavoriteSiteChangesResponse_nextCursorFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetFavoriteSiteChangesResponse_nextCursor;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetFavoriteSiteChangesResponse_nextCursorMember1}
- */
-// @ts-ignore
-export function createGetFavoriteSiteChangesResponse_nextCursorMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetFavoriteSiteChangesResponse_nextCursorMember1;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -866,24 +821,6 @@ export function createGetHealthResponseFromDiscriminatorValue(parseNode: ParseNo
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetIndexerFilehashChangesResponse_nextCursorMember1 | IndexerFilehashChangesCursorDto}
- */
-// @ts-ignore
-export function createGetIndexerFilehashChangesResponse_nextCursorFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetIndexerFilehashChangesResponse_nextCursor;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetIndexerFilehashChangesResponse_nextCursorMember1}
- */
-// @ts-ignore
-export function createGetIndexerFilehashChangesResponse_nextCursorMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetIndexerFilehashChangesResponse_nextCursorMember1;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {GetIndexerFilehashChangesResponse}
  */
 // @ts-ignore
@@ -898,24 +835,6 @@ export function createGetIndexerFilehashChangesResponseFromDiscriminatorValue(pa
 // @ts-ignore
 export function createGetRateLimitResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoGetRateLimitResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetVideoFilehashChangesResponse_nextCursorMember1 | VideoFilehashChangesCursorDto}
- */
-// @ts-ignore
-export function createGetVideoFilehashChangesResponse_nextCursorFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetVideoFilehashChangesResponse_nextCursor;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetVideoFilehashChangesResponse_nextCursorMember1}
- */
-// @ts-ignore
-export function createGetVideoFilehashChangesResponse_nextCursorMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetVideoFilehashChangesResponse_nextCursorMember1;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -956,47 +875,11 @@ export function createGetVideosByIdsRequestFromDiscriminatorValue(parseNode: Par
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetVideoUserImageChangesResponse_nextCursorMember1 | VideoUserImageChangesCursorDto}
- */
-// @ts-ignore
-export function createGetVideoUserImageChangesResponse_nextCursorFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetVideoUserImageChangesResponse_nextCursor;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetVideoUserImageChangesResponse_nextCursorMember1}
- */
-// @ts-ignore
-export function createGetVideoUserImageChangesResponse_nextCursorMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetVideoUserImageChangesResponse_nextCursorMember1;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {GetVideoUserImageChangesResponse}
  */
 // @ts-ignore
 export function createGetVideoUserImageChangesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoGetVideoUserImageChangesResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetWantedVideoChangesResponse_nextCursorMember1 | WantedVideoChangesCursorDto}
- */
-// @ts-ignore
-export function createGetWantedVideoChangesResponse_nextCursorFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetWantedVideoChangesResponse_nextCursor;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetWantedVideoChangesResponse_nextCursorMember1}
- */
-// @ts-ignore
-export function createGetWantedVideoChangesResponse_nextCursorMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetWantedVideoChangesResponse_nextCursorMember1;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1060,24 +943,6 @@ export function createIndexerFilehashLookupKeyDtoFromDiscriminatorValue(parseNod
 // @ts-ignore
 export function createLatestIndexerFilehashesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoLatestIndexerFilehashesResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {LatestPreDbItemDto_videoMember1 | LatestPreDbVideoDto}
- */
-// @ts-ignore
-export function createLatestPreDbItemDto_videoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoLatestPreDbItemDto_video;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {LatestPreDbItemDto_videoMember1}
- */
-// @ts-ignore
-export function createLatestPreDbItemDto_videoMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoLatestPreDbItemDto_videoMember1;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1343,83 +1208,11 @@ export function createUpdateDownloadedFromIndexerRequestFromDiscriminatorValue(p
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateWantedVideoRequest_fulfilledInQualityMember1 | VideoQuality}
- */
-// @ts-ignore
-export function createUpdateWantedVideoRequest_fulfilledInQualityFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateWantedVideoRequest_fulfilledInQuality;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateWantedVideoRequest_fulfilledInQualityMember1}
- */
-// @ts-ignore
-export function createUpdateWantedVideoRequest_fulfilledInQualityMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateWantedVideoRequest_fulfilledInQualityMember1;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {FulfillmentApp | UpdateWantedVideoRequest_fulfillmentByAppMember1}
- */
-// @ts-ignore
-export function createUpdateWantedVideoRequest_fulfillmentByAppFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateWantedVideoRequest_fulfillmentByApp;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateWantedVideoRequest_fulfillmentByAppMember1}
- */
-// @ts-ignore
-export function createUpdateWantedVideoRequest_fulfillmentByAppMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateWantedVideoRequest_fulfillmentByAppMember1;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {UpdateWantedVideoRequest}
  */
 // @ts-ignore
 export function createUpdateWantedVideoRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoUpdateWantedVideoRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateWantedVideoResponse_fulfilledInQualityMember1 | VideoQuality}
- */
-// @ts-ignore
-export function createUpdateWantedVideoResponse_fulfilledInQualityFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateWantedVideoResponse_fulfilledInQuality;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateWantedVideoResponse_fulfilledInQualityMember1}
- */
-// @ts-ignore
-export function createUpdateWantedVideoResponse_fulfilledInQualityMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateWantedVideoResponse_fulfilledInQualityMember1;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {FulfillmentApp | UpdateWantedVideoResponse_fulfillmentByAppMember1}
- */
-// @ts-ignore
-export function createUpdateWantedVideoResponse_fulfillmentByAppFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateWantedVideoResponse_fulfillmentByApp;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateWantedVideoResponse_fulfillmentByAppMember1}
- */
-// @ts-ignore
-export function createUpdateWantedVideoResponse_fulfillmentByAppMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateWantedVideoResponse_fulfillmentByAppMember1;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1496,24 +1289,6 @@ export function createVideoDetailPreNameDtoFromDiscriminatorValue(parseNode: Par
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {VideoDetailNetworkDto | VideoDetailSiteDto_networkMember1}
- */
-// @ts-ignore
-export function createVideoDetailSiteDto_networkFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoVideoDetailSiteDto_network;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {VideoDetailSiteDto_networkMember1}
- */
-// @ts-ignore
-export function createVideoDetailSiteDto_networkMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoVideoDetailSiteDto_networkMember1;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {VideoDetailSiteDto}
  */
 // @ts-ignore
@@ -1564,15 +1339,6 @@ export function createVideoFilehashDtoFromDiscriminatorValue(parseNode: ParseNod
 // @ts-ignore
 export function createVideoFilehashesByVideoIdDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoVideoFilehashesByVideoIdDto;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {VideoQuality}
- */
-// @ts-ignore
-export function createVideoQualityFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoVideoQuality;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1640,83 +1406,11 @@ export function createWantedVideoChangesCursorDtoFromDiscriminatorValue(parseNod
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {VideoQuality | WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1}
- */
-// @ts-ignore
-export function createWantedVideoChangeWantedVideoDto_fulfilledInQualityFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoWantedVideoChangeWantedVideoDto_fulfilledInQuality;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1}
- */
-// @ts-ignore
-export function createWantedVideoChangeWantedVideoDto_fulfilledInQualityMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoWantedVideoChangeWantedVideoDto_fulfilledInQualityMember1;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {FulfillmentApp | WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1}
- */
-// @ts-ignore
-export function createWantedVideoChangeWantedVideoDto_fulfillmentByAppFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoWantedVideoChangeWantedVideoDto_fulfillmentByApp;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1}
- */
-// @ts-ignore
-export function createWantedVideoChangeWantedVideoDto_fulfillmentByAppMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoWantedVideoChangeWantedVideoDto_fulfillmentByAppMember1;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {WantedVideoChangeWantedVideoDto}
  */
 // @ts-ignore
 export function createWantedVideoChangeWantedVideoDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoWantedVideoChangeWantedVideoDto;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {VideoQuality | WantedVideoSummaryDto_fulfilledInQualityMember1}
- */
-// @ts-ignore
-export function createWantedVideoSummaryDto_fulfilledInQualityFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoWantedVideoSummaryDto_fulfilledInQuality;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {WantedVideoSummaryDto_fulfilledInQualityMember1}
- */
-// @ts-ignore
-export function createWantedVideoSummaryDto_fulfilledInQualityMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoWantedVideoSummaryDto_fulfilledInQualityMember1;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {FulfillmentApp | WantedVideoSummaryDto_fulfillmentByAppMember1}
- */
-// @ts-ignore
-export function createWantedVideoSummaryDto_fulfillmentByAppFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoWantedVideoSummaryDto_fulfillmentByApp;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {WantedVideoSummaryDto_fulfillmentByAppMember1}
- */
-// @ts-ignore
-export function createWantedVideoSummaryDto_fulfillmentByAppMember1FromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoWantedVideoSummaryDto_fulfillmentByAppMember1;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -2180,16 +1874,6 @@ export function deserializeIntoFavoriteSiteSummaryDto(favoriteSiteSummaryDto: Pa
 }
 /**
  * The deserialization information for the current model
- * @param FulfillmentApp The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoFulfillmentApp(fulfillmentApp: Partial<FulfillmentApp> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-    }
-}
-/**
- * The deserialization information for the current model
  * @param GetActorChangesResponse The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2224,30 +1908,8 @@ export function deserializeIntoGetFavoriteActorChangesResponse(getFavoriteActorC
     return {
         "hasMore": n => { getFavoriteActorChangesResponse.hasMore = n.getBooleanValue(); },
         "items": n => { getFavoriteActorChangesResponse.items = n.getCollectionOfObjectValues<FavoriteActorChangeDto>(createFavoriteActorChangeDtoFromDiscriminatorValue); },
-        "nextCursor": n => { getFavoriteActorChangesResponse.nextCursor = n.getObjectValue<FavoriteActorChangesCursorDto>(createFavoriteActorChangesCursorDtoFromDiscriminatorValue) ?? n.getObjectValue<GetFavoriteActorChangesResponse_nextCursorMember1>(createGetFavoriteActorChangesResponse_nextCursorMember1FromDiscriminatorValue); },
+        "nextCursor": n => { getFavoriteActorChangesResponse.nextCursor = n.getObjectValue<FavoriteActorChangesCursorDto>(createFavoriteActorChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getFavoriteActorChangesResponse.pageSize = n.getNumberValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetFavoriteActorChangesResponse_nextCursor The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetFavoriteActorChangesResponse_nextCursor(getFavoriteActorChangesResponse_nextCursor: Partial<FavoriteActorChangesCursorDto | GetFavoriteActorChangesResponse_nextCursorMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoFavoriteActorChangesCursorDto(getFavoriteActorChangesResponse_nextCursor as FavoriteActorChangesCursorDto),
-        ...deserializeIntoGetFavoriteActorChangesResponse_nextCursorMember1(getFavoriteActorChangesResponse_nextCursor as GetFavoriteActorChangesResponse_nextCursorMember1),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetFavoriteActorChangesResponse_nextCursorMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetFavoriteActorChangesResponse_nextCursorMember1(getFavoriteActorChangesResponse_nextCursorMember1: Partial<GetFavoriteActorChangesResponse_nextCursorMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 /**
@@ -2260,30 +1922,8 @@ export function deserializeIntoGetFavoriteSiteChangesResponse(getFavoriteSiteCha
     return {
         "hasMore": n => { getFavoriteSiteChangesResponse.hasMore = n.getBooleanValue(); },
         "items": n => { getFavoriteSiteChangesResponse.items = n.getCollectionOfObjectValues<FavoriteSiteChangeDto>(createFavoriteSiteChangeDtoFromDiscriminatorValue); },
-        "nextCursor": n => { getFavoriteSiteChangesResponse.nextCursor = n.getObjectValue<FavoriteSiteChangesCursorDto>(createFavoriteSiteChangesCursorDtoFromDiscriminatorValue) ?? n.getObjectValue<GetFavoriteSiteChangesResponse_nextCursorMember1>(createGetFavoriteSiteChangesResponse_nextCursorMember1FromDiscriminatorValue); },
+        "nextCursor": n => { getFavoriteSiteChangesResponse.nextCursor = n.getObjectValue<FavoriteSiteChangesCursorDto>(createFavoriteSiteChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getFavoriteSiteChangesResponse.pageSize = n.getNumberValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetFavoriteSiteChangesResponse_nextCursor The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetFavoriteSiteChangesResponse_nextCursor(getFavoriteSiteChangesResponse_nextCursor: Partial<FavoriteSiteChangesCursorDto | GetFavoriteSiteChangesResponse_nextCursorMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoFavoriteSiteChangesCursorDto(getFavoriteSiteChangesResponse_nextCursor as FavoriteSiteChangesCursorDto),
-        ...deserializeIntoGetFavoriteSiteChangesResponse_nextCursorMember1(getFavoriteSiteChangesResponse_nextCursor as GetFavoriteSiteChangesResponse_nextCursorMember1),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetFavoriteSiteChangesResponse_nextCursorMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetFavoriteSiteChangesResponse_nextCursorMember1(getFavoriteSiteChangesResponse_nextCursorMember1: Partial<GetFavoriteSiteChangesResponse_nextCursorMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 /**
@@ -2308,30 +1948,8 @@ export function deserializeIntoGetIndexerFilehashChangesResponse(getIndexerFileh
     return {
         "hasMore": n => { getIndexerFilehashChangesResponse.hasMore = n.getBooleanValue(); },
         "items": n => { getIndexerFilehashChangesResponse.items = n.getCollectionOfObjectValues<IndexerFilehashChangeDto>(createIndexerFilehashChangeDtoFromDiscriminatorValue); },
-        "nextCursor": n => { getIndexerFilehashChangesResponse.nextCursor = n.getObjectValue<GetIndexerFilehashChangesResponse_nextCursorMember1>(createGetIndexerFilehashChangesResponse_nextCursorMember1FromDiscriminatorValue) ?? n.getObjectValue<IndexerFilehashChangesCursorDto>(createIndexerFilehashChangesCursorDtoFromDiscriminatorValue); },
+        "nextCursor": n => { getIndexerFilehashChangesResponse.nextCursor = n.getObjectValue<IndexerFilehashChangesCursorDto>(createIndexerFilehashChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getIndexerFilehashChangesResponse.pageSize = n.getNumberValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetIndexerFilehashChangesResponse_nextCursor The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetIndexerFilehashChangesResponse_nextCursor(getIndexerFilehashChangesResponse_nextCursor: Partial<GetIndexerFilehashChangesResponse_nextCursorMember1 | IndexerFilehashChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoGetIndexerFilehashChangesResponse_nextCursorMember1(getIndexerFilehashChangesResponse_nextCursor as GetIndexerFilehashChangesResponse_nextCursorMember1),
-        ...deserializeIntoIndexerFilehashChangesCursorDto(getIndexerFilehashChangesResponse_nextCursor as IndexerFilehashChangesCursorDto),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetIndexerFilehashChangesResponse_nextCursorMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetIndexerFilehashChangesResponse_nextCursorMember1(getIndexerFilehashChangesResponse_nextCursorMember1: Partial<GetIndexerFilehashChangesResponse_nextCursorMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 /**
@@ -2357,30 +1975,8 @@ export function deserializeIntoGetVideoFilehashChangesResponse(getVideoFilehashC
     return {
         "hasMore": n => { getVideoFilehashChangesResponse.hasMore = n.getBooleanValue(); },
         "items": n => { getVideoFilehashChangesResponse.items = n.getCollectionOfObjectValues<VideoFilehashChangeDto>(createVideoFilehashChangeDtoFromDiscriminatorValue); },
-        "nextCursor": n => { getVideoFilehashChangesResponse.nextCursor = n.getObjectValue<GetVideoFilehashChangesResponse_nextCursorMember1>(createGetVideoFilehashChangesResponse_nextCursorMember1FromDiscriminatorValue) ?? n.getObjectValue<VideoFilehashChangesCursorDto>(createVideoFilehashChangesCursorDtoFromDiscriminatorValue); },
+        "nextCursor": n => { getVideoFilehashChangesResponse.nextCursor = n.getObjectValue<VideoFilehashChangesCursorDto>(createVideoFilehashChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getVideoFilehashChangesResponse.pageSize = n.getNumberValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetVideoFilehashChangesResponse_nextCursor The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetVideoFilehashChangesResponse_nextCursor(getVideoFilehashChangesResponse_nextCursor: Partial<GetVideoFilehashChangesResponse_nextCursorMember1 | VideoFilehashChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoGetVideoFilehashChangesResponse_nextCursorMember1(getVideoFilehashChangesResponse_nextCursor as GetVideoFilehashChangesResponse_nextCursorMember1),
-        ...deserializeIntoVideoFilehashChangesCursorDto(getVideoFilehashChangesResponse_nextCursor as VideoFilehashChangesCursorDto),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetVideoFilehashChangesResponse_nextCursorMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetVideoFilehashChangesResponse_nextCursorMember1(getVideoFilehashChangesResponse_nextCursorMember1: Partial<GetVideoFilehashChangesResponse_nextCursorMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 /**
@@ -2427,30 +2023,8 @@ export function deserializeIntoGetVideoUserImageChangesResponse(getVideoUserImag
     return {
         "hasMore": n => { getVideoUserImageChangesResponse.hasMore = n.getBooleanValue(); },
         "items": n => { getVideoUserImageChangesResponse.items = n.getCollectionOfObjectValues<VideoUserImageChangeItemDto>(createVideoUserImageChangeItemDtoFromDiscriminatorValue); },
-        "nextCursor": n => { getVideoUserImageChangesResponse.nextCursor = n.getObjectValue<GetVideoUserImageChangesResponse_nextCursorMember1>(createGetVideoUserImageChangesResponse_nextCursorMember1FromDiscriminatorValue) ?? n.getObjectValue<VideoUserImageChangesCursorDto>(createVideoUserImageChangesCursorDtoFromDiscriminatorValue); },
+        "nextCursor": n => { getVideoUserImageChangesResponse.nextCursor = n.getObjectValue<VideoUserImageChangesCursorDto>(createVideoUserImageChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getVideoUserImageChangesResponse.pageSize = n.getNumberValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetVideoUserImageChangesResponse_nextCursor The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetVideoUserImageChangesResponse_nextCursor(getVideoUserImageChangesResponse_nextCursor: Partial<GetVideoUserImageChangesResponse_nextCursorMember1 | VideoUserImageChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoGetVideoUserImageChangesResponse_nextCursorMember1(getVideoUserImageChangesResponse_nextCursor as GetVideoUserImageChangesResponse_nextCursorMember1),
-        ...deserializeIntoVideoUserImageChangesCursorDto(getVideoUserImageChangesResponse_nextCursor as VideoUserImageChangesCursorDto),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetVideoUserImageChangesResponse_nextCursorMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetVideoUserImageChangesResponse_nextCursorMember1(getVideoUserImageChangesResponse_nextCursorMember1: Partial<GetVideoUserImageChangesResponse_nextCursorMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 /**
@@ -2463,30 +2037,8 @@ export function deserializeIntoGetWantedVideoChangesResponse(getWantedVideoChang
     return {
         "hasMore": n => { getWantedVideoChangesResponse.hasMore = n.getBooleanValue(); },
         "items": n => { getWantedVideoChangesResponse.items = n.getCollectionOfObjectValues<WantedVideoChangeDto>(createWantedVideoChangeDtoFromDiscriminatorValue); },
-        "nextCursor": n => { getWantedVideoChangesResponse.nextCursor = n.getObjectValue<GetWantedVideoChangesResponse_nextCursorMember1>(createGetWantedVideoChangesResponse_nextCursorMember1FromDiscriminatorValue) ?? n.getObjectValue<WantedVideoChangesCursorDto>(createWantedVideoChangesCursorDtoFromDiscriminatorValue); },
+        "nextCursor": n => { getWantedVideoChangesResponse.nextCursor = n.getObjectValue<WantedVideoChangesCursorDto>(createWantedVideoChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getWantedVideoChangesResponse.pageSize = n.getNumberValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetWantedVideoChangesResponse_nextCursor The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetWantedVideoChangesResponse_nextCursor(getWantedVideoChangesResponse_nextCursor: Partial<GetWantedVideoChangesResponse_nextCursorMember1 | WantedVideoChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoGetWantedVideoChangesResponse_nextCursorMember1(getWantedVideoChangesResponse_nextCursor as GetWantedVideoChangesResponse_nextCursorMember1),
-        ...deserializeIntoWantedVideoChangesCursorDto(getWantedVideoChangesResponse_nextCursor as WantedVideoChangesCursorDto),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param GetWantedVideoChangesResponse_nextCursorMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetWantedVideoChangesResponse_nextCursorMember1(getWantedVideoChangesResponse_nextCursorMember1: Partial<GetWantedVideoChangesResponse_nextCursorMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 /**
@@ -2596,29 +2148,7 @@ export function deserializeIntoLatestPreDbItemDto(latestPreDbItemDto: Partial<La
         "createdAtUtc": n => { latestPreDbItemDto.createdAtUtc = n.getDateValue(); },
         "id": n => { latestPreDbItemDto.id = n.getGuidValue(); },
         "title": n => { latestPreDbItemDto.title = n.getStringValue(); },
-        "video": n => { latestPreDbItemDto.video = n.getObjectValue<LatestPreDbItemDto_videoMember1>(createLatestPreDbItemDto_videoMember1FromDiscriminatorValue) ?? n.getObjectValue<LatestPreDbVideoDto>(createLatestPreDbVideoDtoFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param LatestPreDbItemDto_video The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoLatestPreDbItemDto_video(latestPreDbItemDto_video: Partial<LatestPreDbItemDto_videoMember1 | LatestPreDbVideoDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoLatestPreDbItemDto_videoMember1(latestPreDbItemDto_video as LatestPreDbItemDto_videoMember1),
-        ...deserializeIntoLatestPreDbVideoDto(latestPreDbItemDto_video as LatestPreDbVideoDto),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param LatestPreDbItemDto_videoMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoLatestPreDbItemDto_videoMember1(latestPreDbItemDto_videoMember1: Partial<LatestPreDbItemDto_videoMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
+        "video": n => { latestPreDbItemDto.video = n.getObjectValue<LatestPreDbVideoDto>(createLatestPreDbVideoDtoFromDiscriminatorValue); },
     }
 }
 /**
@@ -3040,54 +2570,10 @@ export function deserializeIntoUpdateDownloadedFromIndexerRequest(updateDownload
 export function deserializeIntoUpdateWantedVideoRequest(updateWantedVideoRequest: Partial<UpdateWantedVideoRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "fulfilledAtUtc": n => { updateWantedVideoRequest.fulfilledAtUtc = n.getDateValue(); },
-        "fulfilledInQuality": n => { updateWantedVideoRequest.fulfilledInQuality = n.getObjectValue<UpdateWantedVideoRequest_fulfilledInQualityMember1>(createUpdateWantedVideoRequest_fulfilledInQualityMember1FromDiscriminatorValue) ?? n.getObjectValue<VideoQuality>(createVideoQualityFromDiscriminatorValue); },
-        "fulfillmentByApp": n => { updateWantedVideoRequest.fulfillmentByApp = n.getObjectValue<FulfillmentApp>(createFulfillmentAppFromDiscriminatorValue) ?? n.getObjectValue<UpdateWantedVideoRequest_fulfillmentByAppMember1>(createUpdateWantedVideoRequest_fulfillmentByAppMember1FromDiscriminatorValue); },
+        "fulfilledInQuality": n => { updateWantedVideoRequest.fulfilledInQuality = n.getNumberValue(); },
+        "fulfillmentByApp": n => { updateWantedVideoRequest.fulfillmentByApp = n.getNumberValue(); },
         "fulfillmentExternalId": n => { updateWantedVideoRequest.fulfillmentExternalId = n.getStringValue(); },
         "isFulfilled": n => { updateWantedVideoRequest.isFulfilled = n.getBooleanValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param UpdateWantedVideoRequest_fulfilledInQuality The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateWantedVideoRequest_fulfilledInQuality(updateWantedVideoRequest_fulfilledInQuality: Partial<UpdateWantedVideoRequest_fulfilledInQualityMember1 | VideoQuality> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoUpdateWantedVideoRequest_fulfilledInQualityMember1(updateWantedVideoRequest_fulfilledInQuality as UpdateWantedVideoRequest_fulfilledInQualityMember1),
-        ...deserializeIntoVideoQuality(updateWantedVideoRequest_fulfilledInQuality as VideoQuality),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param UpdateWantedVideoRequest_fulfilledInQualityMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateWantedVideoRequest_fulfilledInQualityMember1(updateWantedVideoRequest_fulfilledInQualityMember1: Partial<UpdateWantedVideoRequest_fulfilledInQualityMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-    }
-}
-/**
- * The deserialization information for the current model
- * @param UpdateWantedVideoRequest_fulfillmentByApp The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateWantedVideoRequest_fulfillmentByApp(updateWantedVideoRequest_fulfillmentByApp: Partial<FulfillmentApp | UpdateWantedVideoRequest_fulfillmentByAppMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoFulfillmentApp(updateWantedVideoRequest_fulfillmentByApp as FulfillmentApp),
-        ...deserializeIntoUpdateWantedVideoRequest_fulfillmentByAppMember1(updateWantedVideoRequest_fulfillmentByApp as UpdateWantedVideoRequest_fulfillmentByAppMember1),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param UpdateWantedVideoRequest_fulfillmentByAppMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateWantedVideoRequest_fulfillmentByAppMember1(updateWantedVideoRequest_fulfillmentByAppMember1: Partial<UpdateWantedVideoRequest_fulfillmentByAppMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 /**
@@ -3100,56 +2586,12 @@ export function deserializeIntoUpdateWantedVideoResponse(updateWantedVideoRespon
     return {
         "createdAtUtc": n => { updateWantedVideoResponse.createdAtUtc = n.getDateValue(); },
         "fulfilledAtUtc": n => { updateWantedVideoResponse.fulfilledAtUtc = n.getDateValue(); },
-        "fulfilledInQuality": n => { updateWantedVideoResponse.fulfilledInQuality = n.getObjectValue<UpdateWantedVideoResponse_fulfilledInQualityMember1>(createUpdateWantedVideoResponse_fulfilledInQualityMember1FromDiscriminatorValue) ?? n.getObjectValue<VideoQuality>(createVideoQualityFromDiscriminatorValue); },
-        "fulfillmentByApp": n => { updateWantedVideoResponse.fulfillmentByApp = n.getObjectValue<FulfillmentApp>(createFulfillmentAppFromDiscriminatorValue) ?? n.getObjectValue<UpdateWantedVideoResponse_fulfillmentByAppMember1>(createUpdateWantedVideoResponse_fulfillmentByAppMember1FromDiscriminatorValue); },
+        "fulfilledInQuality": n => { updateWantedVideoResponse.fulfilledInQuality = n.getNumberValue(); },
+        "fulfillmentByApp": n => { updateWantedVideoResponse.fulfillmentByApp = n.getNumberValue(); },
         "fulfillmentExternalId": n => { updateWantedVideoResponse.fulfillmentExternalId = n.getStringValue(); },
         "isFulfilled": n => { updateWantedVideoResponse.isFulfilled = n.getBooleanValue(); },
         "updatedAtUtc": n => { updateWantedVideoResponse.updatedAtUtc = n.getDateValue(); },
         "videoId": n => { updateWantedVideoResponse.videoId = n.getGuidValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param UpdateWantedVideoResponse_fulfilledInQuality The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateWantedVideoResponse_fulfilledInQuality(updateWantedVideoResponse_fulfilledInQuality: Partial<UpdateWantedVideoResponse_fulfilledInQualityMember1 | VideoQuality> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoUpdateWantedVideoResponse_fulfilledInQualityMember1(updateWantedVideoResponse_fulfilledInQuality as UpdateWantedVideoResponse_fulfilledInQualityMember1),
-        ...deserializeIntoVideoQuality(updateWantedVideoResponse_fulfilledInQuality as VideoQuality),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param UpdateWantedVideoResponse_fulfilledInQualityMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateWantedVideoResponse_fulfilledInQualityMember1(updateWantedVideoResponse_fulfilledInQualityMember1: Partial<UpdateWantedVideoResponse_fulfilledInQualityMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-    }
-}
-/**
- * The deserialization information for the current model
- * @param UpdateWantedVideoResponse_fulfillmentByApp The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateWantedVideoResponse_fulfillmentByApp(updateWantedVideoResponse_fulfillmentByApp: Partial<FulfillmentApp | UpdateWantedVideoResponse_fulfillmentByAppMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoFulfillmentApp(updateWantedVideoResponse_fulfillmentByApp as FulfillmentApp),
-        ...deserializeIntoUpdateWantedVideoResponse_fulfillmentByAppMember1(updateWantedVideoResponse_fulfillmentByApp as UpdateWantedVideoResponse_fulfillmentByAppMember1),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param UpdateWantedVideoResponse_fulfillmentByAppMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateWantedVideoResponse_fulfillmentByAppMember1(updateWantedVideoResponse_fulfillmentByAppMember1: Partial<UpdateWantedVideoResponse_fulfillmentByAppMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 /**
@@ -3258,31 +2700,9 @@ export function deserializeIntoVideoDetailPreNameDto(videoDetailPreNameDto: Part
 export function deserializeIntoVideoDetailSiteDto(videoDetailSiteDto: Partial<VideoDetailSiteDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "id": n => { videoDetailSiteDto.id = n.getGuidValue(); },
-        "network": n => { videoDetailSiteDto.network = n.getObjectValue<VideoDetailNetworkDto>(createVideoDetailNetworkDtoFromDiscriminatorValue) ?? n.getObjectValue<VideoDetailSiteDto_networkMember1>(createVideoDetailSiteDto_networkMember1FromDiscriminatorValue); },
+        "network": n => { videoDetailSiteDto.network = n.getObjectValue<VideoDetailNetworkDto>(createVideoDetailNetworkDtoFromDiscriminatorValue); },
         "title": n => { videoDetailSiteDto.title = n.getStringValue(); },
         "url": n => { videoDetailSiteDto.url = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param VideoDetailSiteDto_network The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoVideoDetailSiteDto_network(videoDetailSiteDto_network: Partial<VideoDetailNetworkDto | VideoDetailSiteDto_networkMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoVideoDetailNetworkDto(videoDetailSiteDto_network as VideoDetailNetworkDto),
-        ...deserializeIntoVideoDetailSiteDto_networkMember1(videoDetailSiteDto_network as VideoDetailSiteDto_networkMember1),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param VideoDetailSiteDto_networkMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoVideoDetailSiteDto_networkMember1(videoDetailSiteDto_networkMember1: Partial<VideoDetailSiteDto_networkMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 /**
@@ -3361,16 +2781,6 @@ export function deserializeIntoVideoFilehashesByVideoIdDto(videoFilehashesByVide
     return {
         "filehashes": n => { videoFilehashesByVideoIdDto.filehashes = n.getCollectionOfObjectValues<VideoFilehashDto>(createVideoFilehashDtoFromDiscriminatorValue); },
         "videoId": n => { videoFilehashesByVideoIdDto.videoId = n.getGuidValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param VideoQuality The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoVideoQuality(videoQuality: Partial<VideoQuality> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 /**
@@ -3494,8 +2904,8 @@ export function deserializeIntoWantedVideoChangeWantedVideoDto(wantedVideoChange
         "createdAtUtc": n => { wantedVideoChangeWantedVideoDto.createdAtUtc = n.getDateValue(); },
         "deletedAtUtc": n => { wantedVideoChangeWantedVideoDto.deletedAtUtc = n.getDateValue(); },
         "fulfilledAtUtc": n => { wantedVideoChangeWantedVideoDto.fulfilledAtUtc = n.getDateValue(); },
-        "fulfilledInQuality": n => { wantedVideoChangeWantedVideoDto.fulfilledInQuality = n.getObjectValue<VideoQuality>(createVideoQualityFromDiscriminatorValue) ?? n.getObjectValue<WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1>(createWantedVideoChangeWantedVideoDto_fulfilledInQualityMember1FromDiscriminatorValue); },
-        "fulfillmentByApp": n => { wantedVideoChangeWantedVideoDto.fulfillmentByApp = n.getObjectValue<FulfillmentApp>(createFulfillmentAppFromDiscriminatorValue) ?? n.getObjectValue<WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1>(createWantedVideoChangeWantedVideoDto_fulfillmentByAppMember1FromDiscriminatorValue); },
+        "fulfilledInQuality": n => { wantedVideoChangeWantedVideoDto.fulfilledInQuality = n.getNumberValue(); },
+        "fulfillmentByApp": n => { wantedVideoChangeWantedVideoDto.fulfillmentByApp = n.getNumberValue(); },
         "fulfillmentExternalId": n => { wantedVideoChangeWantedVideoDto.fulfillmentExternalId = n.getStringValue(); },
         "imageCdnPath": n => { wantedVideoChangeWantedVideoDto.imageCdnPath = n.getStringValue(); },
         "isDeleted": n => { wantedVideoChangeWantedVideoDto.isDeleted = n.getBooleanValue(); },
@@ -3510,50 +2920,6 @@ export function deserializeIntoWantedVideoChangeWantedVideoDto(wantedVideoChange
 }
 /**
  * The deserialization information for the current model
- * @param WantedVideoChangeWantedVideoDto_fulfilledInQuality The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoWantedVideoChangeWantedVideoDto_fulfilledInQuality(wantedVideoChangeWantedVideoDto_fulfilledInQuality: Partial<VideoQuality | WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoVideoQuality(wantedVideoChangeWantedVideoDto_fulfilledInQuality as VideoQuality),
-        ...deserializeIntoWantedVideoChangeWantedVideoDto_fulfilledInQualityMember1(wantedVideoChangeWantedVideoDto_fulfilledInQuality as WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoWantedVideoChangeWantedVideoDto_fulfilledInQualityMember1(wantedVideoChangeWantedVideoDto_fulfilledInQualityMember1: Partial<WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-    }
-}
-/**
- * The deserialization information for the current model
- * @param WantedVideoChangeWantedVideoDto_fulfillmentByApp The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoWantedVideoChangeWantedVideoDto_fulfillmentByApp(wantedVideoChangeWantedVideoDto_fulfillmentByApp: Partial<FulfillmentApp | WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoFulfillmentApp(wantedVideoChangeWantedVideoDto_fulfillmentByApp as FulfillmentApp),
-        ...deserializeIntoWantedVideoChangeWantedVideoDto_fulfillmentByAppMember1(wantedVideoChangeWantedVideoDto_fulfillmentByApp as WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoWantedVideoChangeWantedVideoDto_fulfillmentByAppMember1(wantedVideoChangeWantedVideoDto_fulfillmentByAppMember1: Partial<WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-    }
-}
-/**
- * The deserialization information for the current model
  * @param WantedVideoSummaryDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3562,8 +2928,8 @@ export function deserializeIntoWantedVideoSummaryDto(wantedVideoSummaryDto: Part
     return {
         "createdAtUtc": n => { wantedVideoSummaryDto.createdAtUtc = n.getDateValue(); },
         "fulfilledAtUtc": n => { wantedVideoSummaryDto.fulfilledAtUtc = n.getDateValue(); },
-        "fulfilledInQuality": n => { wantedVideoSummaryDto.fulfilledInQuality = n.getObjectValue<VideoQuality>(createVideoQualityFromDiscriminatorValue) ?? n.getObjectValue<WantedVideoSummaryDto_fulfilledInQualityMember1>(createWantedVideoSummaryDto_fulfilledInQualityMember1FromDiscriminatorValue); },
-        "fulfillmentByApp": n => { wantedVideoSummaryDto.fulfillmentByApp = n.getObjectValue<FulfillmentApp>(createFulfillmentAppFromDiscriminatorValue) ?? n.getObjectValue<WantedVideoSummaryDto_fulfillmentByAppMember1>(createWantedVideoSummaryDto_fulfillmentByAppMember1FromDiscriminatorValue); },
+        "fulfilledInQuality": n => { wantedVideoSummaryDto.fulfilledInQuality = n.getNumberValue(); },
+        "fulfillmentByApp": n => { wantedVideoSummaryDto.fulfillmentByApp = n.getNumberValue(); },
         "fulfillmentExternalId": n => { wantedVideoSummaryDto.fulfillmentExternalId = n.getStringValue(); },
         "imageCdnPath": n => { wantedVideoSummaryDto.imageCdnPath = n.getStringValue(); },
         "isFulfilled": n => { wantedVideoSummaryDto.isFulfilled = n.getBooleanValue(); },
@@ -3573,50 +2939,6 @@ export function deserializeIntoWantedVideoSummaryDto(wantedVideoSummaryDto: Part
         "videoId": n => { wantedVideoSummaryDto.videoId = n.getGuidValue(); },
         "videoReleaseDate": n => { wantedVideoSummaryDto.videoReleaseDate = n.getDateOnlyValue(); },
         "videoTitle": n => { wantedVideoSummaryDto.videoTitle = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param WantedVideoSummaryDto_fulfilledInQuality The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoWantedVideoSummaryDto_fulfilledInQuality(wantedVideoSummaryDto_fulfilledInQuality: Partial<VideoQuality | WantedVideoSummaryDto_fulfilledInQualityMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoVideoQuality(wantedVideoSummaryDto_fulfilledInQuality as VideoQuality),
-        ...deserializeIntoWantedVideoSummaryDto_fulfilledInQualityMember1(wantedVideoSummaryDto_fulfilledInQuality as WantedVideoSummaryDto_fulfilledInQualityMember1),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param WantedVideoSummaryDto_fulfilledInQualityMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoWantedVideoSummaryDto_fulfilledInQualityMember1(wantedVideoSummaryDto_fulfilledInQualityMember1: Partial<WantedVideoSummaryDto_fulfilledInQualityMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-    }
-}
-/**
- * The deserialization information for the current model
- * @param WantedVideoSummaryDto_fulfillmentByApp The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoWantedVideoSummaryDto_fulfillmentByApp(wantedVideoSummaryDto_fulfillmentByApp: Partial<FulfillmentApp | WantedVideoSummaryDto_fulfillmentByAppMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        ...deserializeIntoFulfillmentApp(wantedVideoSummaryDto_fulfillmentByApp as FulfillmentApp),
-        ...deserializeIntoWantedVideoSummaryDto_fulfillmentByAppMember1(wantedVideoSummaryDto_fulfillmentByApp as WantedVideoSummaryDto_fulfillmentByAppMember1),
-    }
-}
-/**
- * The deserialization information for the current model
- * @param WantedVideoSummaryDto_fulfillmentByAppMember1 The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoWantedVideoSummaryDto_fulfillmentByAppMember1(wantedVideoSummaryDto_fulfillmentByAppMember1: Partial<WantedVideoSummaryDto_fulfillmentByAppMember1> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
     }
 }
 export interface DownloadedFromIndexerFilenameDto extends AdditionalDataHolder, Parsable {
@@ -3871,11 +3193,6 @@ export interface FavoriteSiteSummaryDto extends AdditionalDataHolder, Parsable {
      */
     url?: string | null;
 }
-/**
- * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
- */
-export interface FulfillmentApp extends AdditionalDataHolder, Parsable {
-}
 export interface GetActorChangesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The hasMore property
@@ -3916,14 +3233,11 @@ export interface GetFavoriteActorChangesResponse extends AdditionalDataHolder, P
     /**
      * The nextCursor property
      */
-    nextCursor?: FavoriteActorChangesCursorDto | GetFavoriteActorChangesResponse_nextCursorMember1 | null;
+    nextCursor?: FavoriteActorChangesCursorDto | null;
     /**
      * The pageSize property
      */
     pageSize?: number | null;
-}
-export type GetFavoriteActorChangesResponse_nextCursor = FavoriteActorChangesCursorDto | GetFavoriteActorChangesResponse_nextCursorMember1;
-export interface GetFavoriteActorChangesResponse_nextCursorMember1 extends AdditionalDataHolder, Parsable {
 }
 export interface GetFavoriteSiteChangesResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -3937,14 +3251,11 @@ export interface GetFavoriteSiteChangesResponse extends AdditionalDataHolder, Pa
     /**
      * The nextCursor property
      */
-    nextCursor?: FavoriteSiteChangesCursorDto | GetFavoriteSiteChangesResponse_nextCursorMember1 | null;
+    nextCursor?: FavoriteSiteChangesCursorDto | null;
     /**
      * The pageSize property
      */
     pageSize?: number | null;
-}
-export type GetFavoriteSiteChangesResponse_nextCursor = FavoriteSiteChangesCursorDto | GetFavoriteSiteChangesResponse_nextCursorMember1;
-export interface GetFavoriteSiteChangesResponse_nextCursorMember1 extends AdditionalDataHolder, Parsable {
 }
 export interface GetHealthResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -3968,14 +3279,11 @@ export interface GetIndexerFilehashChangesResponse extends AdditionalDataHolder,
     /**
      * The nextCursor property
      */
-    nextCursor?: GetIndexerFilehashChangesResponse_nextCursorMember1 | IndexerFilehashChangesCursorDto | null;
+    nextCursor?: IndexerFilehashChangesCursorDto | null;
     /**
      * The pageSize property
      */
     pageSize?: number | null;
-}
-export type GetIndexerFilehashChangesResponse_nextCursor = GetIndexerFilehashChangesResponse_nextCursorMember1 | IndexerFilehashChangesCursorDto;
-export interface GetIndexerFilehashChangesResponse_nextCursorMember1 extends AdditionalDataHolder, Parsable {
 }
 export interface GetRateLimitResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -4003,14 +3311,11 @@ export interface GetVideoFilehashChangesResponse extends AdditionalDataHolder, P
     /**
      * The nextCursor property
      */
-    nextCursor?: GetVideoFilehashChangesResponse_nextCursorMember1 | VideoFilehashChangesCursorDto | null;
+    nextCursor?: VideoFilehashChangesCursorDto | null;
     /**
      * The pageSize property
      */
     pageSize?: number | null;
-}
-export type GetVideoFilehashChangesResponse_nextCursor = GetVideoFilehashChangesResponse_nextCursorMember1 | VideoFilehashChangesCursorDto;
-export interface GetVideoFilehashChangesResponse_nextCursorMember1 extends AdditionalDataHolder, Parsable {
 }
 export interface GetVideoFilehashesByVideoIdsRequest extends AdditionalDataHolder, Parsable {
     /**
@@ -4046,14 +3351,11 @@ export interface GetVideoUserImageChangesResponse extends AdditionalDataHolder, 
     /**
      * The nextCursor property
      */
-    nextCursor?: GetVideoUserImageChangesResponse_nextCursorMember1 | VideoUserImageChangesCursorDto | null;
+    nextCursor?: VideoUserImageChangesCursorDto | null;
     /**
      * The pageSize property
      */
     pageSize?: number | null;
-}
-export type GetVideoUserImageChangesResponse_nextCursor = GetVideoUserImageChangesResponse_nextCursorMember1 | VideoUserImageChangesCursorDto;
-export interface GetVideoUserImageChangesResponse_nextCursorMember1 extends AdditionalDataHolder, Parsable {
 }
 export interface GetWantedVideoChangesResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -4067,14 +3369,11 @@ export interface GetWantedVideoChangesResponse extends AdditionalDataHolder, Par
     /**
      * The nextCursor property
      */
-    nextCursor?: GetWantedVideoChangesResponse_nextCursorMember1 | WantedVideoChangesCursorDto | null;
+    nextCursor?: WantedVideoChangesCursorDto | null;
     /**
      * The pageSize property
      */
     pageSize?: number | null;
-}
-export type GetWantedVideoChangesResponse_nextCursor = GetWantedVideoChangesResponse_nextCursorMember1 | WantedVideoChangesCursorDto;
-export interface GetWantedVideoChangesResponse_nextCursorMember1 extends AdditionalDataHolder, Parsable {
 }
 export interface IndexerFilehashChangeDto extends AdditionalDataHolder, Parsable {
     /**
@@ -4249,10 +3548,7 @@ export interface LatestPreDbItemDto extends AdditionalDataHolder, Parsable {
     /**
      * The video property
      */
-    video?: LatestPreDbItemDto_videoMember1 | LatestPreDbVideoDto | null;
-}
-export type LatestPreDbItemDto_video = LatestPreDbItemDto_videoMember1 | LatestPreDbVideoDto;
-export interface LatestPreDbItemDto_videoMember1 extends AdditionalDataHolder, Parsable {
+    video?: LatestPreDbVideoDto | null;
 }
 export interface LatestPreDbResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -5205,17 +4501,6 @@ export function serializeFavoriteSiteSummaryDto(writer: SerializationWriter, fav
 }
 /**
  * Serializes information the current object
- * @param FulfillmentApp The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeFulfillmentApp(writer: SerializationWriter, fulfillmentApp: Partial<FulfillmentApp> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!fulfillmentApp || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(fulfillmentApp.additionalData);
-}
-/**
- * Serializes information the current object
  * @param GetActorChangesResponse The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -5253,31 +4538,9 @@ export function serializeGetFavoriteActorChangesResponse(writer: SerializationWr
     if (!getFavoriteActorChangesResponse || isSerializingDerivedType) { return; }
     writer.writeBooleanValue("hasMore", getFavoriteActorChangesResponse.hasMore);
     writer.writeCollectionOfObjectValues<FavoriteActorChangeDto>("items", getFavoriteActorChangesResponse.items, serializeFavoriteActorChangeDto);
-    writer.writeObjectValue<FavoriteActorChangesCursorDto | GetFavoriteActorChangesResponse_nextCursorMember1>("nextCursor", getFavoriteActorChangesResponse.nextCursor, serializeGetFavoriteActorChangesResponse_nextCursor);
+    writer.writeObjectValue<FavoriteActorChangesCursorDto>("nextCursor", getFavoriteActorChangesResponse.nextCursor, serializeFavoriteActorChangesCursorDto);
     writer.writeNumberValue("pageSize", getFavoriteActorChangesResponse.pageSize);
     writer.writeAdditionalData(getFavoriteActorChangesResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param GetFavoriteActorChangesResponse_nextCursor The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetFavoriteActorChangesResponse_nextCursor(writer: SerializationWriter, getFavoriteActorChangesResponse_nextCursor: Partial<FavoriteActorChangesCursorDto | GetFavoriteActorChangesResponse_nextCursorMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeFavoriteActorChangesCursorDto(writer, getFavoriteActorChangesResponse_nextCursor as FavoriteActorChangesCursorDto);
-    serializeGetFavoriteActorChangesResponse_nextCursorMember1(writer, getFavoriteActorChangesResponse_nextCursor as GetFavoriteActorChangesResponse_nextCursorMember1);
-}
-/**
- * Serializes information the current object
- * @param GetFavoriteActorChangesResponse_nextCursorMember1 The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetFavoriteActorChangesResponse_nextCursorMember1(writer: SerializationWriter, getFavoriteActorChangesResponse_nextCursorMember1: Partial<GetFavoriteActorChangesResponse_nextCursorMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!getFavoriteActorChangesResponse_nextCursorMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(getFavoriteActorChangesResponse_nextCursorMember1.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5290,31 +4553,9 @@ export function serializeGetFavoriteSiteChangesResponse(writer: SerializationWri
     if (!getFavoriteSiteChangesResponse || isSerializingDerivedType) { return; }
     writer.writeBooleanValue("hasMore", getFavoriteSiteChangesResponse.hasMore);
     writer.writeCollectionOfObjectValues<FavoriteSiteChangeDto>("items", getFavoriteSiteChangesResponse.items, serializeFavoriteSiteChangeDto);
-    writer.writeObjectValue<FavoriteSiteChangesCursorDto | GetFavoriteSiteChangesResponse_nextCursorMember1>("nextCursor", getFavoriteSiteChangesResponse.nextCursor, serializeGetFavoriteSiteChangesResponse_nextCursor);
+    writer.writeObjectValue<FavoriteSiteChangesCursorDto>("nextCursor", getFavoriteSiteChangesResponse.nextCursor, serializeFavoriteSiteChangesCursorDto);
     writer.writeNumberValue("pageSize", getFavoriteSiteChangesResponse.pageSize);
     writer.writeAdditionalData(getFavoriteSiteChangesResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param GetFavoriteSiteChangesResponse_nextCursor The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetFavoriteSiteChangesResponse_nextCursor(writer: SerializationWriter, getFavoriteSiteChangesResponse_nextCursor: Partial<FavoriteSiteChangesCursorDto | GetFavoriteSiteChangesResponse_nextCursorMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeFavoriteSiteChangesCursorDto(writer, getFavoriteSiteChangesResponse_nextCursor as FavoriteSiteChangesCursorDto);
-    serializeGetFavoriteSiteChangesResponse_nextCursorMember1(writer, getFavoriteSiteChangesResponse_nextCursor as GetFavoriteSiteChangesResponse_nextCursorMember1);
-}
-/**
- * Serializes information the current object
- * @param GetFavoriteSiteChangesResponse_nextCursorMember1 The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetFavoriteSiteChangesResponse_nextCursorMember1(writer: SerializationWriter, getFavoriteSiteChangesResponse_nextCursorMember1: Partial<GetFavoriteSiteChangesResponse_nextCursorMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!getFavoriteSiteChangesResponse_nextCursorMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(getFavoriteSiteChangesResponse_nextCursorMember1.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5340,31 +4581,9 @@ export function serializeGetIndexerFilehashChangesResponse(writer: Serialization
     if (!getIndexerFilehashChangesResponse || isSerializingDerivedType) { return; }
     writer.writeBooleanValue("hasMore", getIndexerFilehashChangesResponse.hasMore);
     writer.writeCollectionOfObjectValues<IndexerFilehashChangeDto>("items", getIndexerFilehashChangesResponse.items, serializeIndexerFilehashChangeDto);
-    writer.writeObjectValue<GetIndexerFilehashChangesResponse_nextCursorMember1 | IndexerFilehashChangesCursorDto>("nextCursor", getIndexerFilehashChangesResponse.nextCursor, serializeGetIndexerFilehashChangesResponse_nextCursor);
+    writer.writeObjectValue<IndexerFilehashChangesCursorDto>("nextCursor", getIndexerFilehashChangesResponse.nextCursor, serializeIndexerFilehashChangesCursorDto);
     writer.writeNumberValue("pageSize", getIndexerFilehashChangesResponse.pageSize);
     writer.writeAdditionalData(getIndexerFilehashChangesResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param GetIndexerFilehashChangesResponse_nextCursor The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetIndexerFilehashChangesResponse_nextCursor(writer: SerializationWriter, getIndexerFilehashChangesResponse_nextCursor: Partial<GetIndexerFilehashChangesResponse_nextCursorMember1 | IndexerFilehashChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeGetIndexerFilehashChangesResponse_nextCursorMember1(writer, getIndexerFilehashChangesResponse_nextCursor as GetIndexerFilehashChangesResponse_nextCursorMember1);
-    serializeIndexerFilehashChangesCursorDto(writer, getIndexerFilehashChangesResponse_nextCursor as IndexerFilehashChangesCursorDto);
-}
-/**
- * Serializes information the current object
- * @param GetIndexerFilehashChangesResponse_nextCursorMember1 The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetIndexerFilehashChangesResponse_nextCursorMember1(writer: SerializationWriter, getIndexerFilehashChangesResponse_nextCursorMember1: Partial<GetIndexerFilehashChangesResponse_nextCursorMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!getIndexerFilehashChangesResponse_nextCursorMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(getIndexerFilehashChangesResponse_nextCursorMember1.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5391,31 +4610,9 @@ export function serializeGetVideoFilehashChangesResponse(writer: SerializationWr
     if (!getVideoFilehashChangesResponse || isSerializingDerivedType) { return; }
     writer.writeBooleanValue("hasMore", getVideoFilehashChangesResponse.hasMore);
     writer.writeCollectionOfObjectValues<VideoFilehashChangeDto>("items", getVideoFilehashChangesResponse.items, serializeVideoFilehashChangeDto);
-    writer.writeObjectValue<GetVideoFilehashChangesResponse_nextCursorMember1 | VideoFilehashChangesCursorDto>("nextCursor", getVideoFilehashChangesResponse.nextCursor, serializeGetVideoFilehashChangesResponse_nextCursor);
+    writer.writeObjectValue<VideoFilehashChangesCursorDto>("nextCursor", getVideoFilehashChangesResponse.nextCursor, serializeVideoFilehashChangesCursorDto);
     writer.writeNumberValue("pageSize", getVideoFilehashChangesResponse.pageSize);
     writer.writeAdditionalData(getVideoFilehashChangesResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param GetVideoFilehashChangesResponse_nextCursor The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetVideoFilehashChangesResponse_nextCursor(writer: SerializationWriter, getVideoFilehashChangesResponse_nextCursor: Partial<GetVideoFilehashChangesResponse_nextCursorMember1 | VideoFilehashChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeGetVideoFilehashChangesResponse_nextCursorMember1(writer, getVideoFilehashChangesResponse_nextCursor as GetVideoFilehashChangesResponse_nextCursorMember1);
-    serializeVideoFilehashChangesCursorDto(writer, getVideoFilehashChangesResponse_nextCursor as VideoFilehashChangesCursorDto);
-}
-/**
- * Serializes information the current object
- * @param GetVideoFilehashChangesResponse_nextCursorMember1 The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetVideoFilehashChangesResponse_nextCursorMember1(writer: SerializationWriter, getVideoFilehashChangesResponse_nextCursorMember1: Partial<GetVideoFilehashChangesResponse_nextCursorMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!getVideoFilehashChangesResponse_nextCursorMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(getVideoFilehashChangesResponse_nextCursorMember1.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5465,31 +4662,9 @@ export function serializeGetVideoUserImageChangesResponse(writer: SerializationW
     if (!getVideoUserImageChangesResponse || isSerializingDerivedType) { return; }
     writer.writeBooleanValue("hasMore", getVideoUserImageChangesResponse.hasMore);
     writer.writeCollectionOfObjectValues<VideoUserImageChangeItemDto>("items", getVideoUserImageChangesResponse.items, serializeVideoUserImageChangeItemDto);
-    writer.writeObjectValue<GetVideoUserImageChangesResponse_nextCursorMember1 | VideoUserImageChangesCursorDto>("nextCursor", getVideoUserImageChangesResponse.nextCursor, serializeGetVideoUserImageChangesResponse_nextCursor);
+    writer.writeObjectValue<VideoUserImageChangesCursorDto>("nextCursor", getVideoUserImageChangesResponse.nextCursor, serializeVideoUserImageChangesCursorDto);
     writer.writeNumberValue("pageSize", getVideoUserImageChangesResponse.pageSize);
     writer.writeAdditionalData(getVideoUserImageChangesResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param GetVideoUserImageChangesResponse_nextCursor The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetVideoUserImageChangesResponse_nextCursor(writer: SerializationWriter, getVideoUserImageChangesResponse_nextCursor: Partial<GetVideoUserImageChangesResponse_nextCursorMember1 | VideoUserImageChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeGetVideoUserImageChangesResponse_nextCursorMember1(writer, getVideoUserImageChangesResponse_nextCursor as GetVideoUserImageChangesResponse_nextCursorMember1);
-    serializeVideoUserImageChangesCursorDto(writer, getVideoUserImageChangesResponse_nextCursor as VideoUserImageChangesCursorDto);
-}
-/**
- * Serializes information the current object
- * @param GetVideoUserImageChangesResponse_nextCursorMember1 The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetVideoUserImageChangesResponse_nextCursorMember1(writer: SerializationWriter, getVideoUserImageChangesResponse_nextCursorMember1: Partial<GetVideoUserImageChangesResponse_nextCursorMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!getVideoUserImageChangesResponse_nextCursorMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(getVideoUserImageChangesResponse_nextCursorMember1.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5502,31 +4677,9 @@ export function serializeGetWantedVideoChangesResponse(writer: SerializationWrit
     if (!getWantedVideoChangesResponse || isSerializingDerivedType) { return; }
     writer.writeBooleanValue("hasMore", getWantedVideoChangesResponse.hasMore);
     writer.writeCollectionOfObjectValues<WantedVideoChangeDto>("items", getWantedVideoChangesResponse.items, serializeWantedVideoChangeDto);
-    writer.writeObjectValue<GetWantedVideoChangesResponse_nextCursorMember1 | WantedVideoChangesCursorDto>("nextCursor", getWantedVideoChangesResponse.nextCursor, serializeGetWantedVideoChangesResponse_nextCursor);
+    writer.writeObjectValue<WantedVideoChangesCursorDto>("nextCursor", getWantedVideoChangesResponse.nextCursor, serializeWantedVideoChangesCursorDto);
     writer.writeNumberValue("pageSize", getWantedVideoChangesResponse.pageSize);
     writer.writeAdditionalData(getWantedVideoChangesResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param GetWantedVideoChangesResponse_nextCursor The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetWantedVideoChangesResponse_nextCursor(writer: SerializationWriter, getWantedVideoChangesResponse_nextCursor: Partial<GetWantedVideoChangesResponse_nextCursorMember1 | WantedVideoChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeGetWantedVideoChangesResponse_nextCursorMember1(writer, getWantedVideoChangesResponse_nextCursor as GetWantedVideoChangesResponse_nextCursorMember1);
-    serializeWantedVideoChangesCursorDto(writer, getWantedVideoChangesResponse_nextCursor as WantedVideoChangesCursorDto);
-}
-/**
- * Serializes information the current object
- * @param GetWantedVideoChangesResponse_nextCursorMember1 The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetWantedVideoChangesResponse_nextCursorMember1(writer: SerializationWriter, getWantedVideoChangesResponse_nextCursorMember1: Partial<GetWantedVideoChangesResponse_nextCursorMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!getWantedVideoChangesResponse_nextCursorMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(getWantedVideoChangesResponse_nextCursorMember1.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5642,30 +4795,8 @@ export function serializeLatestPreDbItemDto(writer: SerializationWriter, latestP
     writer.writeDateValue("createdAtUtc", latestPreDbItemDto.createdAtUtc);
     writer.writeGuidValue("id", latestPreDbItemDto.id);
     writer.writeStringValue("title", latestPreDbItemDto.title);
-    writer.writeObjectValue<LatestPreDbItemDto_videoMember1 | LatestPreDbVideoDto>("video", latestPreDbItemDto.video, serializeLatestPreDbItemDto_video);
+    writer.writeObjectValue<LatestPreDbVideoDto>("video", latestPreDbItemDto.video, serializeLatestPreDbVideoDto);
     writer.writeAdditionalData(latestPreDbItemDto.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param LatestPreDbItemDto_video The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeLatestPreDbItemDto_video(writer: SerializationWriter, latestPreDbItemDto_video: Partial<LatestPreDbItemDto_videoMember1 | LatestPreDbVideoDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeLatestPreDbItemDto_videoMember1(writer, latestPreDbItemDto_video as LatestPreDbItemDto_videoMember1);
-    serializeLatestPreDbVideoDto(writer, latestPreDbItemDto_video as LatestPreDbVideoDto);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param LatestPreDbItemDto_videoMember1 The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeLatestPreDbItemDto_videoMember1(writer: SerializationWriter, latestPreDbItemDto_videoMember1: Partial<LatestPreDbItemDto_videoMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!latestPreDbItemDto_videoMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(latestPreDbItemDto_videoMember1.additionalData);
 }
 /**
  * Serializes information the current object
@@ -6115,55 +5246,11 @@ export function serializeUpdateDownloadedFromIndexerRequest(writer: Serializatio
 export function serializeUpdateWantedVideoRequest(writer: SerializationWriter, updateWantedVideoRequest: Partial<UpdateWantedVideoRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!updateWantedVideoRequest || isSerializingDerivedType) { return; }
     writer.writeDateValue("fulfilledAtUtc", updateWantedVideoRequest.fulfilledAtUtc);
-    writer.writeObjectValue<UpdateWantedVideoRequest_fulfilledInQualityMember1 | VideoQuality>("fulfilledInQuality", updateWantedVideoRequest.fulfilledInQuality, serializeUpdateWantedVideoRequest_fulfilledInQuality);
-    writer.writeObjectValue<FulfillmentApp | UpdateWantedVideoRequest_fulfillmentByAppMember1>("fulfillmentByApp", updateWantedVideoRequest.fulfillmentByApp, serializeUpdateWantedVideoRequest_fulfillmentByApp);
+    writer.writeNumberValue("fulfilledInQuality", updateWantedVideoRequest.fulfilledInQuality);
+    writer.writeNumberValue("fulfillmentByApp", updateWantedVideoRequest.fulfillmentByApp);
     writer.writeStringValue("fulfillmentExternalId", updateWantedVideoRequest.fulfillmentExternalId);
     writer.writeBooleanValue("isFulfilled", updateWantedVideoRequest.isFulfilled);
     writer.writeAdditionalData(updateWantedVideoRequest.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param UpdateWantedVideoRequest_fulfilledInQuality The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateWantedVideoRequest_fulfilledInQuality(writer: SerializationWriter, updateWantedVideoRequest_fulfilledInQuality: Partial<UpdateWantedVideoRequest_fulfilledInQualityMember1 | VideoQuality> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeUpdateWantedVideoRequest_fulfilledInQualityMember1(writer, updateWantedVideoRequest_fulfilledInQuality as UpdateWantedVideoRequest_fulfilledInQualityMember1);
-    serializeVideoQuality(writer, updateWantedVideoRequest_fulfilledInQuality as VideoQuality);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param UpdateWantedVideoRequest_fulfilledInQualityMember1 The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateWantedVideoRequest_fulfilledInQualityMember1(writer: SerializationWriter, updateWantedVideoRequest_fulfilledInQualityMember1: Partial<UpdateWantedVideoRequest_fulfilledInQualityMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!updateWantedVideoRequest_fulfilledInQualityMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(updateWantedVideoRequest_fulfilledInQualityMember1.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param UpdateWantedVideoRequest_fulfillmentByApp The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateWantedVideoRequest_fulfillmentByApp(writer: SerializationWriter, updateWantedVideoRequest_fulfillmentByApp: Partial<FulfillmentApp | UpdateWantedVideoRequest_fulfillmentByAppMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeFulfillmentApp(writer, updateWantedVideoRequest_fulfillmentByApp as FulfillmentApp);
-    serializeUpdateWantedVideoRequest_fulfillmentByAppMember1(writer, updateWantedVideoRequest_fulfillmentByApp as UpdateWantedVideoRequest_fulfillmentByAppMember1);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param UpdateWantedVideoRequest_fulfillmentByAppMember1 The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateWantedVideoRequest_fulfillmentByAppMember1(writer: SerializationWriter, updateWantedVideoRequest_fulfillmentByAppMember1: Partial<UpdateWantedVideoRequest_fulfillmentByAppMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!updateWantedVideoRequest_fulfillmentByAppMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(updateWantedVideoRequest_fulfillmentByAppMember1.additionalData);
 }
 /**
  * Serializes information the current object
@@ -6176,57 +5263,13 @@ export function serializeUpdateWantedVideoResponse(writer: SerializationWriter, 
     if (!updateWantedVideoResponse || isSerializingDerivedType) { return; }
     writer.writeDateValue("createdAtUtc", updateWantedVideoResponse.createdAtUtc);
     writer.writeDateValue("fulfilledAtUtc", updateWantedVideoResponse.fulfilledAtUtc);
-    writer.writeObjectValue<UpdateWantedVideoResponse_fulfilledInQualityMember1 | VideoQuality>("fulfilledInQuality", updateWantedVideoResponse.fulfilledInQuality, serializeUpdateWantedVideoResponse_fulfilledInQuality);
-    writer.writeObjectValue<FulfillmentApp | UpdateWantedVideoResponse_fulfillmentByAppMember1>("fulfillmentByApp", updateWantedVideoResponse.fulfillmentByApp, serializeUpdateWantedVideoResponse_fulfillmentByApp);
+    writer.writeNumberValue("fulfilledInQuality", updateWantedVideoResponse.fulfilledInQuality);
+    writer.writeNumberValue("fulfillmentByApp", updateWantedVideoResponse.fulfillmentByApp);
     writer.writeStringValue("fulfillmentExternalId", updateWantedVideoResponse.fulfillmentExternalId);
     writer.writeBooleanValue("isFulfilled", updateWantedVideoResponse.isFulfilled);
     writer.writeDateValue("updatedAtUtc", updateWantedVideoResponse.updatedAtUtc);
     writer.writeGuidValue("videoId", updateWantedVideoResponse.videoId);
     writer.writeAdditionalData(updateWantedVideoResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param UpdateWantedVideoResponse_fulfilledInQuality The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateWantedVideoResponse_fulfilledInQuality(writer: SerializationWriter, updateWantedVideoResponse_fulfilledInQuality: Partial<UpdateWantedVideoResponse_fulfilledInQualityMember1 | VideoQuality> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeUpdateWantedVideoResponse_fulfilledInQualityMember1(writer, updateWantedVideoResponse_fulfilledInQuality as UpdateWantedVideoResponse_fulfilledInQualityMember1);
-    serializeVideoQuality(writer, updateWantedVideoResponse_fulfilledInQuality as VideoQuality);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param UpdateWantedVideoResponse_fulfilledInQualityMember1 The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateWantedVideoResponse_fulfilledInQualityMember1(writer: SerializationWriter, updateWantedVideoResponse_fulfilledInQualityMember1: Partial<UpdateWantedVideoResponse_fulfilledInQualityMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!updateWantedVideoResponse_fulfilledInQualityMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(updateWantedVideoResponse_fulfilledInQualityMember1.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param UpdateWantedVideoResponse_fulfillmentByApp The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateWantedVideoResponse_fulfillmentByApp(writer: SerializationWriter, updateWantedVideoResponse_fulfillmentByApp: Partial<FulfillmentApp | UpdateWantedVideoResponse_fulfillmentByAppMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeFulfillmentApp(writer, updateWantedVideoResponse_fulfillmentByApp as FulfillmentApp);
-    serializeUpdateWantedVideoResponse_fulfillmentByAppMember1(writer, updateWantedVideoResponse_fulfillmentByApp as UpdateWantedVideoResponse_fulfillmentByAppMember1);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param UpdateWantedVideoResponse_fulfillmentByAppMember1 The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateWantedVideoResponse_fulfillmentByAppMember1(writer: SerializationWriter, updateWantedVideoResponse_fulfillmentByAppMember1: Partial<UpdateWantedVideoResponse_fulfillmentByAppMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!updateWantedVideoResponse_fulfillmentByAppMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(updateWantedVideoResponse_fulfillmentByAppMember1.additionalData);
 }
 /**
  * Serializes information the current object
@@ -6342,32 +5385,10 @@ export function serializeVideoDetailPreNameDto(writer: SerializationWriter, vide
 export function serializeVideoDetailSiteDto(writer: SerializationWriter, videoDetailSiteDto: Partial<VideoDetailSiteDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!videoDetailSiteDto || isSerializingDerivedType) { return; }
     writer.writeGuidValue("id", videoDetailSiteDto.id);
-    writer.writeObjectValue<VideoDetailNetworkDto | VideoDetailSiteDto_networkMember1>("network", videoDetailSiteDto.network, serializeVideoDetailSiteDto_network);
+    writer.writeObjectValue<VideoDetailNetworkDto>("network", videoDetailSiteDto.network, serializeVideoDetailNetworkDto);
     writer.writeStringValue("title", videoDetailSiteDto.title);
     writer.writeStringValue("url", videoDetailSiteDto.url);
     writer.writeAdditionalData(videoDetailSiteDto.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param VideoDetailSiteDto_network The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeVideoDetailSiteDto_network(writer: SerializationWriter, videoDetailSiteDto_network: Partial<VideoDetailNetworkDto | VideoDetailSiteDto_networkMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeVideoDetailNetworkDto(writer, videoDetailSiteDto_network as VideoDetailNetworkDto);
-    serializeVideoDetailSiteDto_networkMember1(writer, videoDetailSiteDto_network as VideoDetailSiteDto_networkMember1);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param VideoDetailSiteDto_networkMember1 The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeVideoDetailSiteDto_networkMember1(writer: SerializationWriter, videoDetailSiteDto_networkMember1: Partial<VideoDetailSiteDto_networkMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!videoDetailSiteDto_networkMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(videoDetailSiteDto_networkMember1.additionalData);
 }
 /**
  * Serializes information the current object
@@ -6451,17 +5472,6 @@ export function serializeVideoFilehashesByVideoIdDto(writer: SerializationWriter
     writer.writeCollectionOfObjectValues<VideoFilehashDto>("filehashes", videoFilehashesByVideoIdDto.filehashes, serializeVideoFilehashDto);
     writer.writeGuidValue("videoId", videoFilehashesByVideoIdDto.videoId);
     writer.writeAdditionalData(videoFilehashesByVideoIdDto.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param VideoQuality The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeVideoQuality(writer: SerializationWriter, videoQuality: Partial<VideoQuality> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!videoQuality || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(videoQuality.additionalData);
 }
 /**
  * Serializes information the current object
@@ -6592,8 +5602,8 @@ export function serializeWantedVideoChangeWantedVideoDto(writer: SerializationWr
     writer.writeDateValue("createdAtUtc", wantedVideoChangeWantedVideoDto.createdAtUtc);
     writer.writeDateValue("deletedAtUtc", wantedVideoChangeWantedVideoDto.deletedAtUtc);
     writer.writeDateValue("fulfilledAtUtc", wantedVideoChangeWantedVideoDto.fulfilledAtUtc);
-    writer.writeObjectValue<VideoQuality | WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1>("fulfilledInQuality", wantedVideoChangeWantedVideoDto.fulfilledInQuality, serializeWantedVideoChangeWantedVideoDto_fulfilledInQuality);
-    writer.writeObjectValue<FulfillmentApp | WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1>("fulfillmentByApp", wantedVideoChangeWantedVideoDto.fulfillmentByApp, serializeWantedVideoChangeWantedVideoDto_fulfillmentByApp);
+    writer.writeNumberValue("fulfilledInQuality", wantedVideoChangeWantedVideoDto.fulfilledInQuality);
+    writer.writeNumberValue("fulfillmentByApp", wantedVideoChangeWantedVideoDto.fulfillmentByApp);
     writer.writeStringValue("fulfillmentExternalId", wantedVideoChangeWantedVideoDto.fulfillmentExternalId);
     writer.writeStringValue("imageCdnPath", wantedVideoChangeWantedVideoDto.imageCdnPath);
     writer.writeBooleanValue("isDeleted", wantedVideoChangeWantedVideoDto.isDeleted);
@@ -6609,50 +5619,6 @@ export function serializeWantedVideoChangeWantedVideoDto(writer: SerializationWr
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param WantedVideoChangeWantedVideoDto_fulfilledInQuality The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeWantedVideoChangeWantedVideoDto_fulfilledInQuality(writer: SerializationWriter, wantedVideoChangeWantedVideoDto_fulfilledInQuality: Partial<VideoQuality | WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeVideoQuality(writer, wantedVideoChangeWantedVideoDto_fulfilledInQuality as VideoQuality);
-    serializeWantedVideoChangeWantedVideoDto_fulfilledInQualityMember1(writer, wantedVideoChangeWantedVideoDto_fulfilledInQuality as WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1 The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeWantedVideoChangeWantedVideoDto_fulfilledInQualityMember1(writer: SerializationWriter, wantedVideoChangeWantedVideoDto_fulfilledInQualityMember1: Partial<WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!wantedVideoChangeWantedVideoDto_fulfilledInQualityMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(wantedVideoChangeWantedVideoDto_fulfilledInQualityMember1.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param WantedVideoChangeWantedVideoDto_fulfillmentByApp The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeWantedVideoChangeWantedVideoDto_fulfillmentByApp(writer: SerializationWriter, wantedVideoChangeWantedVideoDto_fulfillmentByApp: Partial<FulfillmentApp | WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeFulfillmentApp(writer, wantedVideoChangeWantedVideoDto_fulfillmentByApp as FulfillmentApp);
-    serializeWantedVideoChangeWantedVideoDto_fulfillmentByAppMember1(writer, wantedVideoChangeWantedVideoDto_fulfillmentByApp as WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1 The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeWantedVideoChangeWantedVideoDto_fulfillmentByAppMember1(writer: SerializationWriter, wantedVideoChangeWantedVideoDto_fulfillmentByAppMember1: Partial<WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!wantedVideoChangeWantedVideoDto_fulfillmentByAppMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(wantedVideoChangeWantedVideoDto_fulfillmentByAppMember1.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param WantedVideoSummaryDto The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -6661,8 +5627,8 @@ export function serializeWantedVideoSummaryDto(writer: SerializationWriter, want
     if (!wantedVideoSummaryDto || isSerializingDerivedType) { return; }
     writer.writeDateValue("createdAtUtc", wantedVideoSummaryDto.createdAtUtc);
     writer.writeDateValue("fulfilledAtUtc", wantedVideoSummaryDto.fulfilledAtUtc);
-    writer.writeObjectValue<VideoQuality | WantedVideoSummaryDto_fulfilledInQualityMember1>("fulfilledInQuality", wantedVideoSummaryDto.fulfilledInQuality, serializeWantedVideoSummaryDto_fulfilledInQuality);
-    writer.writeObjectValue<FulfillmentApp | WantedVideoSummaryDto_fulfillmentByAppMember1>("fulfillmentByApp", wantedVideoSummaryDto.fulfillmentByApp, serializeWantedVideoSummaryDto_fulfillmentByApp);
+    writer.writeNumberValue("fulfilledInQuality", wantedVideoSummaryDto.fulfilledInQuality);
+    writer.writeNumberValue("fulfillmentByApp", wantedVideoSummaryDto.fulfillmentByApp);
     writer.writeStringValue("fulfillmentExternalId", wantedVideoSummaryDto.fulfillmentExternalId);
     writer.writeStringValue("imageCdnPath", wantedVideoSummaryDto.imageCdnPath);
     writer.writeBooleanValue("isFulfilled", wantedVideoSummaryDto.isFulfilled);
@@ -6673,50 +5639,6 @@ export function serializeWantedVideoSummaryDto(writer: SerializationWriter, want
     writer.writeDateOnlyValue("videoReleaseDate", wantedVideoSummaryDto.videoReleaseDate);
     writer.writeStringValue("videoTitle", wantedVideoSummaryDto.videoTitle);
     writer.writeAdditionalData(wantedVideoSummaryDto.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param WantedVideoSummaryDto_fulfilledInQuality The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeWantedVideoSummaryDto_fulfilledInQuality(writer: SerializationWriter, wantedVideoSummaryDto_fulfilledInQuality: Partial<VideoQuality | WantedVideoSummaryDto_fulfilledInQualityMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeVideoQuality(writer, wantedVideoSummaryDto_fulfilledInQuality as VideoQuality);
-    serializeWantedVideoSummaryDto_fulfilledInQualityMember1(writer, wantedVideoSummaryDto_fulfilledInQuality as WantedVideoSummaryDto_fulfilledInQualityMember1);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param WantedVideoSummaryDto_fulfilledInQualityMember1 The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeWantedVideoSummaryDto_fulfilledInQualityMember1(writer: SerializationWriter, wantedVideoSummaryDto_fulfilledInQualityMember1: Partial<WantedVideoSummaryDto_fulfilledInQualityMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!wantedVideoSummaryDto_fulfilledInQualityMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(wantedVideoSummaryDto_fulfilledInQualityMember1.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param WantedVideoSummaryDto_fulfillmentByApp The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeWantedVideoSummaryDto_fulfillmentByApp(writer: SerializationWriter, wantedVideoSummaryDto_fulfillmentByApp: Partial<FulfillmentApp | WantedVideoSummaryDto_fulfillmentByAppMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    serializeFulfillmentApp(writer, wantedVideoSummaryDto_fulfillmentByApp as FulfillmentApp);
-    serializeWantedVideoSummaryDto_fulfillmentByAppMember1(writer, wantedVideoSummaryDto_fulfillmentByApp as WantedVideoSummaryDto_fulfillmentByAppMember1);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param WantedVideoSummaryDto_fulfillmentByAppMember1 The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeWantedVideoSummaryDto_fulfillmentByAppMember1(writer: SerializationWriter, wantedVideoSummaryDto_fulfillmentByAppMember1: Partial<WantedVideoSummaryDto_fulfillmentByAppMember1> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!wantedVideoSummaryDto_fulfillmentByAppMember1 || isSerializingDerivedType) { return; }
-    writer.writeAdditionalData(wantedVideoSummaryDto_fulfillmentByAppMember1.additionalData);
 }
 export interface SiteSummaryDto extends AdditionalDataHolder, Parsable {
     /**
@@ -6830,13 +5752,13 @@ export interface UpdateWantedVideoRequest extends AdditionalDataHolder, Parsable
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * The fulfilledInQuality property
+     * Known values: P720 (0), P1080 (1), P2160 (2).
      */
-    fulfilledInQuality?: UpdateWantedVideoRequest_fulfilledInQualityMember1 | VideoQuality | null;
+    fulfilledInQuality?: number | null;
     /**
-     * The fulfillmentByApp property
+     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
      */
-    fulfillmentByApp?: FulfillmentApp | UpdateWantedVideoRequest_fulfillmentByAppMember1 | null;
+    fulfillmentByApp?: number | null;
     /**
      * The fulfillmentExternalId property
      */
@@ -6845,12 +5767,6 @@ export interface UpdateWantedVideoRequest extends AdditionalDataHolder, Parsable
      * The isFulfilled property
      */
     isFulfilled?: boolean | null;
-}
-export type UpdateWantedVideoRequest_fulfilledInQuality = UpdateWantedVideoRequest_fulfilledInQualityMember1 | VideoQuality;
-export interface UpdateWantedVideoRequest_fulfilledInQualityMember1 extends AdditionalDataHolder, Parsable {
-}
-export type UpdateWantedVideoRequest_fulfillmentByApp = FulfillmentApp | UpdateWantedVideoRequest_fulfillmentByAppMember1;
-export interface UpdateWantedVideoRequest_fulfillmentByAppMember1 extends AdditionalDataHolder, Parsable {
 }
 export interface UpdateWantedVideoResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -6862,13 +5778,13 @@ export interface UpdateWantedVideoResponse extends AdditionalDataHolder, Parsabl
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * The fulfilledInQuality property
+     * Known values: P720 (0), P1080 (1), P2160 (2).
      */
-    fulfilledInQuality?: UpdateWantedVideoResponse_fulfilledInQualityMember1 | VideoQuality | null;
+    fulfilledInQuality?: number | null;
     /**
-     * The fulfillmentByApp property
+     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
      */
-    fulfillmentByApp?: FulfillmentApp | UpdateWantedVideoResponse_fulfillmentByAppMember1 | null;
+    fulfillmentByApp?: number | null;
     /**
      * The fulfillmentExternalId property
      */
@@ -6885,12 +5801,6 @@ export interface UpdateWantedVideoResponse extends AdditionalDataHolder, Parsabl
      * The videoId property
      */
     videoId?: Guid | null;
-}
-export type UpdateWantedVideoResponse_fulfilledInQuality = UpdateWantedVideoResponse_fulfilledInQualityMember1 | VideoQuality;
-export interface UpdateWantedVideoResponse_fulfilledInQualityMember1 extends AdditionalDataHolder, Parsable {
-}
-export type UpdateWantedVideoResponse_fulfillmentByApp = FulfillmentApp | UpdateWantedVideoResponse_fulfillmentByAppMember1;
-export interface UpdateWantedVideoResponse_fulfillmentByAppMember1 extends AdditionalDataHolder, Parsable {
 }
 export interface UserIdentityResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -7022,7 +5932,7 @@ export interface VideoDetailSiteDto extends AdditionalDataHolder, Parsable {
     /**
      * The network property
      */
-    network?: VideoDetailNetworkDto | VideoDetailSiteDto_networkMember1 | null;
+    network?: VideoDetailNetworkDto | null;
     /**
      * The title property
      */
@@ -7031,9 +5941,6 @@ export interface VideoDetailSiteDto extends AdditionalDataHolder, Parsable {
      * The url property
      */
     url?: string | null;
-}
-export type VideoDetailSiteDto_network = VideoDetailNetworkDto | VideoDetailSiteDto_networkMember1;
-export interface VideoDetailSiteDto_networkMember1 extends AdditionalDataHolder, Parsable {
 }
 export interface VideoFilehashChangeDto extends AdditionalDataHolder, Parsable {
     /**
@@ -7156,11 +6063,6 @@ export interface VideoFilehashesByVideoIdDto extends AdditionalDataHolder, Parsa
      * The videoId property
      */
     videoId?: Guid | null;
-}
-/**
- * Known values: P720 (0), P1080 (1), P2160 (2).
- */
-export interface VideoQuality extends AdditionalDataHolder, Parsable {
 }
 export interface VideoSummaryActorDto extends AdditionalDataHolder, Parsable {
     /**
@@ -7350,13 +6252,13 @@ export interface WantedVideoChangeWantedVideoDto extends AdditionalDataHolder, P
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * The fulfilledInQuality property
+     * Known values: P720 (0), P1080 (1), P2160 (2).
      */
-    fulfilledInQuality?: VideoQuality | WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1 | null;
+    fulfilledInQuality?: number | null;
     /**
-     * The fulfillmentByApp property
+     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
      */
-    fulfillmentByApp?: FulfillmentApp | WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1 | null;
+    fulfillmentByApp?: number | null;
     /**
      * The fulfillmentExternalId property
      */
@@ -7398,12 +6300,6 @@ export interface WantedVideoChangeWantedVideoDto extends AdditionalDataHolder, P
      */
     videoTitle?: string | null;
 }
-export type WantedVideoChangeWantedVideoDto_fulfilledInQuality = VideoQuality | WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1;
-export interface WantedVideoChangeWantedVideoDto_fulfilledInQualityMember1 extends AdditionalDataHolder, Parsable {
-}
-export type WantedVideoChangeWantedVideoDto_fulfillmentByApp = FulfillmentApp | WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1;
-export interface WantedVideoChangeWantedVideoDto_fulfillmentByAppMember1 extends AdditionalDataHolder, Parsable {
-}
 export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
     /**
      * The createdAtUtc property
@@ -7414,13 +6310,13 @@ export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * The fulfilledInQuality property
+     * Known values: P720 (0), P1080 (1), P2160 (2).
      */
-    fulfilledInQuality?: VideoQuality | WantedVideoSummaryDto_fulfilledInQualityMember1 | null;
+    fulfilledInQuality?: number | null;
     /**
-     * The fulfillmentByApp property
+     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
      */
-    fulfillmentByApp?: FulfillmentApp | WantedVideoSummaryDto_fulfillmentByAppMember1 | null;
+    fulfillmentByApp?: number | null;
     /**
      * The fulfillmentExternalId property
      */
@@ -7457,12 +6353,6 @@ export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
      * The videoTitle property
      */
     videoTitle?: string | null;
-}
-export type WantedVideoSummaryDto_fulfilledInQuality = VideoQuality | WantedVideoSummaryDto_fulfilledInQualityMember1;
-export interface WantedVideoSummaryDto_fulfilledInQualityMember1 extends AdditionalDataHolder, Parsable {
-}
-export type WantedVideoSummaryDto_fulfillmentByApp = FulfillmentApp | WantedVideoSummaryDto_fulfillmentByAppMember1;
-export interface WantedVideoSummaryDto_fulfillmentByAppMember1 extends AdditionalDataHolder, Parsable {
 }
 /**
  * Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
