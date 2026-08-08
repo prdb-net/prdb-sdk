@@ -12,6 +12,15 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-08-08
+
+The first release with a breaking change, and the first shaped by someone
+integrating the SDK rather than by us: porganizer's adoption review
+([porganizer#12]) produced both the contract changes below and the retry
+control. Reading actor changes needs a code change; nothing else does.
+
+[porganizer#12]: https://gitlab.com/porganizer/porganizer/-/issues/12
+
 ### Changed
 
 - **BREAKING — the actor change feed now matches the other six.** `GET
