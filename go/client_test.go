@@ -8,6 +8,11 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	abs "github.com/microsoft/kiota-abstractions-go"
+
+	"github.com/prdb-net/prdb-sdk/go/generated"
+	"github.com/prdb-net/prdb-sdk/go/generated/models"
 )
 
 // healthServer answers GET /health over TLS and records the request it saw.
@@ -317,6 +322,129 @@ func TestRejectsRetryOptionsOutOfRange(t *testing.T) {
 		if _, err := NewClient("secret-key", Options{Retry: retry}); err == nil {
 			t.Errorf("Retry %+v: expected an error", retry)
 		}
+	}
+}
+
+// entryBody is a DownloadedFromIndexerResponse, the shape both success statuses
+// of POST /downloaded-from-indexers answer with.
+const entryBody = `{"id":"00000000-0000-0000-0000-000000000100","indexerId":"indexer-entry-id"}`
+
+func addEntry(
+	t *testing.T,
+	client *generated.PrdbClient,
+	status *ResponseStatusOption,
+) (models.DownloadedFromIndexerResponseable, error) {
+	t.Helper()
+
+	body := models.NewAddDownloadedFromIndexerRequest()
+	indexerID := "indexer-entry-id"
+	body.SetIndexerId(&indexerID)
+
+	return client.DownloadedFromIndexers().Post(
+		context.Background(),
+		body,
+		&abs.RequestConfiguration[abs.DefaultQueryParameters]{
+			Options: []abs.RequestOption{status},
+		},
+	)
+}
+
+// POST /downloaded-from-indexers answers 201 when it created the entry and 200
+// when an equivalent one already existed. The bodies are the same shape, so a
+// caller who has to tell them apart has nothing else to go on -- and a generated
+// method returns the model alone.
+func TestResponseStatusOptionReportsTheSuccessStatus(t *testing.T) {
+	for _, want := range []int{http.StatusCreated, http.StatusOK} {
+		server := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(want)
+			_, _ = w.Write([]byte(entryBody))
+		}))
+		t.Cleanup(server.Close)
+
+		client, err := NewClient("secret-key", Options{
+			BaseURL:    server.URL,
+			HTTPClient: server.Client(),
+		})
+		if err != nil {
+			t.Fatalf("NewClient: %v", err)
+		}
+
+		status := NewResponseStatusOption()
+
+		entry, err := addEntry(t, client, status)
+		if err != nil {
+			t.Fatalf("Post: %v", err)
+		}
+
+		if entry == nil || entry.GetIndexerId() == nil || *entry.GetIndexerId() != "indexer-entry-id" {
+			t.Errorf("the typed result did not survive: %+v", entry)
+		}
+		if status.StatusCode != want {
+			t.Errorf("StatusCode = %d, want %d", status.StatusCode, want)
+		}
+	}
+}
+
+// The recorder wraps the whole middleware pipeline, so a retried request reports
+// the attempt that succeeded rather than the refusal before it.
+func TestResponseStatusOptionReportsTheLastAttempt(t *testing.T) {
+	served := 0
+	server := refusingServer(t, 1, &served)
+
+	client, err := NewAnonymousClient(Options{
+		BaseURL: server.URL,
+		Retry:   &RetryOptions{MaxRetries: 1},
+	})
+	if err != nil {
+		t.Fatalf("NewAnonymousClient: %v", err)
+	}
+
+	status := NewResponseStatusOption()
+
+	if _, err := client.Health().Get(
+		context.Background(),
+		&abs.RequestConfiguration[abs.DefaultQueryParameters]{
+			Options: []abs.RequestOption{status},
+		},
+	); err != nil {
+		t.Fatalf("Health().Get: %v", err)
+	}
+
+	if served != 2 {
+		t.Errorf("served %d requests, want 2", served)
+	}
+	if status.StatusCode != http.StatusOK {
+		t.Errorf("StatusCode = %d, want %d", status.StatusCode, http.StatusOK)
+	}
+}
+
+// A refusal records too, for a caller that inspects the error.
+func TestResponseStatusOptionReportsARefusal(t *testing.T) {
+	served := 0
+	server := refusingServer(t, 5, &served)
+
+	client, err := NewAnonymousClient(Options{
+		BaseURL: server.URL,
+		Retry:   RetryDisabled(),
+	})
+	if err != nil {
+		t.Fatalf("NewAnonymousClient: %v", err)
+	}
+
+	status := NewResponseStatusOption()
+
+	if _, err := client.Health().Get(
+		context.Background(),
+		&abs.RequestConfiguration[abs.DefaultQueryParameters]{
+			Options: []abs.RequestOption{status},
+		},
+	); err == nil {
+		t.Fatal("expected the refusal to reach the caller")
+	}
+
+	if status.StatusCode != http.StatusServiceUnavailable {
+		t.Errorf("StatusCode = %d, want %d", status.StatusCode, http.StatusServiceUnavailable)
 	}
 }
 

@@ -199,6 +199,71 @@ rather than throwing — `AddStandardResilienceHandler` does. This is Kiota's
 behaviour in .NET only; the Python, TypeScript and Go SDKs return the last
 response and keep the typed error.
 
+## Reading the response status
+
+A typed call returns the deserialised body, which is all you need until an
+operation answers with more than one success status. `POST
+/downloaded-from-indexers` is the one that does: **201** when it created the
+entry, **200** when an equivalent one already existed and is being returned
+unchanged. The bodies are the same shape, so the status is the only thing that
+tells the two apart.
+
+Pass a `ResponseStatusOption` to read it:
+
+```csharp
+using System.Net;
+
+var status = new ResponseStatusOption();
+
+var entry = await client.DownloadedFromIndexers.PostAsync(
+    body,
+    config => config.Options.Add(status));
+
+if (status.StatusCode == HttpStatusCode.OK)
+{
+    // An equivalent entry already existed; entry is the one the API has.
+}
+```
+
+Kiota's own `NativeResponseHandler` cannot serve this: it surfaces the raw
+`HttpResponseMessage` but suppresses deserialisation while doing so, so the
+typed result comes back null. The option is the other half — the call returns
+its model as usual, and the status is on the option afterwards.
+
+Use one instance per call. It is written when the response arrives, so sharing
+one across concurrent calls means whichever finishes last wins.
+
+The status recorded is the one the result was built from: after a redirect the
+SDK followed, and after the last retry, whether that retrying is the SDK's own
+or your resilience handler inside the pipeline. A call that throws records too,
+so a `ProblemDetails` caught from a `403` still has its status alongside. It
+stays null when no response was reached at all — a failed connection, a
+timeout, or a refused cross-origin redirect.
+
+## Uploading an image
+
+`POST /video-user-images` takes a `MultipartBody`:
+
+```csharp
+using Microsoft.Kiota.Abstractions;
+
+using var file = File.OpenRead("preview.jpg");
+
+var body = new MultipartBody();
+body.AddOrReplacePart("File", "image/jpeg", file, "preview.jpg");
+body.AddOrReplacePart("PreviewImageType", "text/plain", "Single");
+body.AddOrReplacePart("VideoId", "text/plain", videoId.ToString());
+
+var result = await client.VideoUserImages.PostAsync(body);
+```
+
+**Do not set `RequestAdapter` on the body.** The property is public and its
+documentation says serialisation needs it, which makes the endpoint look
+uncallable from outside the SDK — the adapter behind `PrdbClient` is
+`protected`, so there is no way to reach it. There is no need to: the request
+adapter fills the property in while sending. A test in this repository pins that
+down.
+
 ## Reading response headers
 
 A typed call returns the deserialised body, but the response headers are

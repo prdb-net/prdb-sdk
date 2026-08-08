@@ -107,6 +107,46 @@ To keep it but change it:
 client = create_client("...", retry=RetryOptions(max_retries=5, delay=1.0))
 ```
 
+## Reading the response status
+
+A typed call returns the deserialised body, which is all you need until an
+operation answers with more than one success status. `POST
+/downloaded-from-indexers` is the one that does: **201** when it created the
+entry, **200** when an equivalent one already existed and is being returned
+unchanged. The bodies are the same shape, so the status is the only thing that
+tells the two apart.
+
+Pass a `ResponseStatusOption` to read it:
+
+```python
+from kiota_abstractions.base_request_configuration import RequestConfiguration
+
+from prdb_sdk import ResponseStatusOption
+
+status = ResponseStatusOption()
+
+entry = await client.downloaded_from_indexers.post(
+    body, request_configuration=RequestConfiguration(options=[status])
+)
+
+if status.status_code == 200:
+    ...  # an equivalent entry already existed; entry is the one the API has
+```
+
+Kiota's own `NativeResponseHandler` cannot serve this: it surfaces the raw
+response but suppresses deserialisation while doing so, so the typed result
+comes back `None`. The option is the other half — the call returns its model as
+usual, and the status is on the option afterwards.
+
+Use one instance per call. It is written when the response arrives, so sharing
+one across concurrent calls means whichever finishes last wins.
+
+The status recorded is the one the result was built from: after a redirect the
+SDK followed, and after the last retry. A call that raises records too, so an
+`APIError` caught from a `403` still has its status alongside. It stays `None`
+when no response was reached at all — a failed connection, a timeout, or a
+refused cross-origin redirect.
+
 ## Generated code
 
 Everything under `prdb_sdk/generated/` is produced by Kiota from

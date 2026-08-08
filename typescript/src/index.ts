@@ -18,6 +18,7 @@ import {
 	AnonymousAuthenticationProvider,
 	ApiKeyAuthenticationProvider,
 	ApiKeyLocation,
+	type RequestOption,
 } from "@microsoft/kiota-abstractions";
 import { DefaultRequestAdapter } from "@microsoft/kiota-bundle";
 import {
@@ -59,6 +60,94 @@ export class CrossOriginRedirectError extends Error {
 				`${new URL(newUrl).host}; the api key is bound to the first host`,
 		);
 		this.name = "CrossOriginRedirectError";
+	}
+}
+
+/** Key the {@link ResponseStatusOption} travels under. */
+export const RESPONSE_STATUS_OPTION_KEY = "prdb.responseStatus";
+
+/**
+ * Per-request option reporting which status code the API answered with.
+ *
+ * A generated method returns the deserialised body and nothing else, which is a
+ * problem when an operation answers with more than one success status. `POST
+ * /downloaded-from-indexers` is the one that does: `201` when it created the
+ * entry, `200` when an equivalent one already existed and is being returned
+ * unchanged. The bodies are the same shape, so the status is the only thing
+ * that tells the two apart.
+ *
+ * Kiota's own way of reaching the response is a native response handler, which
+ * suppresses deserialisation while it does so — you get the raw response or the
+ * typed model, never both. This option is the other half: the call returns its
+ * model as usual, and the status is here afterwards.
+ *
+ * ```ts
+ * const status = new ResponseStatusOption();
+ *
+ * const entry = await client.downloadedFromIndexers.post(body, {
+ * 	options: [status],
+ * });
+ *
+ * if (status.statusCode === 200) {
+ * 	// An equivalent entry already existed and was returned unchanged.
+ * }
+ * ```
+ *
+ * Use one instance per call: it is written when the response arrives, so
+ * sharing one across concurrent calls means whichever finishes last wins.
+ *
+ * The status recorded is the one of the response the result was built from —
+ * after any redirect the SDK followed, and after the last retry. A call that
+ * rejects records too, so the status is there for a caller that catches the
+ * error.
+ */
+export class ResponseStatusOption implements RequestOption {
+	/**
+	 * The status the API answered with, or `undefined` until the call has
+	 * produced a response — and for good if none was reached at all, as with a
+	 * connection failure or a redirect refused by
+	 * {@link CrossOriginRedirectError}.
+	 */
+	statusCode?: number;
+
+	getKey(): string {
+		return RESPONSE_STATUS_OPTION_KEY;
+	}
+}
+
+/**
+ * Records the response status into the {@link ResponseStatusOption} a request
+ * carries.
+ *
+ * Sits at the outer end of the SDK's pipeline, above the retry and redirect
+ * handlers, so what it records is the response the caller's result is built
+ * from rather than an attempt on the way there.
+ */
+class ResponseStatusHandler implements Middleware {
+	next: Middleware | undefined;
+
+	async execute(
+		url: string,
+		requestInit: RequestInit,
+		requestOptions?: Record<string, RequestOption>,
+	): Promise<Response> {
+		if (!this.next) {
+			throw new Error("next middleware is undefined.");
+		}
+
+		const response = await this.next.execute(url, requestInit, requestOptions);
+
+		// Matched by key rather than `instanceof`: the key is ours alone, and two
+		// copies of this package in one dependency tree would still agree on it
+		// where a class identity check would not.
+		const option = requestOptions?.[RESPONSE_STATUS_OPTION_KEY] as
+			| ResponseStatusOption
+			| undefined;
+		if (option) {
+			option.statusCode = response.status;
+		}
+
+		return response;
 	}
 }
 
@@ -217,6 +306,11 @@ function buildHttpClient(
 	if (retry) {
 		middlewares = applyRetryOptions(middlewares, retry);
 	}
+
+	// First in the list is outermost, which puts it above the retry and redirect
+	// handlers: the status it records is the one the caller's result was built
+	// from, not that of an attempt on the way there.
+	middlewares = [new ResponseStatusHandler(), ...middlewares];
 
 	return KiotaClientFactory.create(customFetch, middlewares);
 }

@@ -18,6 +18,7 @@ from kiota_abstractions.authentication.api_key_authentication_provider import (
     ApiKeyAuthenticationProvider,
     KeyLocation,
 )
+from kiota_abstractions.request_option import RequestOption
 from kiota_bundle.default_request_adapter import DefaultRequestAdapter
 from kiota_http.kiota_client_factory import KiotaClientFactory
 from kiota_http.middleware import BaseMiddleware, RetryHandler
@@ -39,6 +40,81 @@ class CrossOriginRedirectError(RuntimeError):
     new location, so the SDK refuses it. Redirects that stay on the same origin
     are followed normally.
     """
+
+
+class ResponseStatusOption(RequestOption):
+    """Per-request option reporting which status code the API answered with.
+
+    A generated method returns the deserialised body and nothing else, which is
+    a problem when an operation answers with more than one success status.
+    ``POST /downloaded-from-indexers`` is the one that does: ``201`` when it
+    created the entry, ``200`` when an equivalent one already existed and is
+    being returned unchanged. The bodies are the same shape, so the status is
+    the only thing that tells the two apart.
+
+    Kiota's own way of reaching the response, ``NativeResponseHandler``,
+    suppresses deserialisation while it does so -- you get the raw response or
+    the typed model, never both. This option is the other half: the call
+    returns its model as usual, and the status is here afterwards::
+
+        from kiota_abstractions.base_request_configuration import RequestConfiguration
+
+        status = ResponseStatusOption()
+        entry = await client.downloaded_from_indexers.post(
+            body, request_configuration=RequestConfiguration(options=[status])
+        )
+        if status.status_code == 200:
+            ...  # an equivalent entry already existed and was returned unchanged
+
+    Use one instance per call: it is written when the response arrives, so
+    sharing one across concurrent calls means whichever finishes last wins.
+
+    The status recorded is the one of the response the result was built from --
+    after any redirect the SDK followed, and after the last retry. A call that
+    raises records too, so the ``status_code`` is set for a caller that catches
+    an :class:`APIError`.
+
+    Attributes:
+        status_code: The status the API answered with, or ``None`` until the
+            call has produced a response -- and for good if none was reached at
+            all, as with a connection failure, a timeout, or a redirect refused
+            by :class:`CrossOriginRedirectError`.
+    """
+
+    #: Key this option travels under, unique to the SDK.
+    RESPONSE_STATUS_KEY = "prdb.response_status"
+
+    def __init__(self) -> None:
+        self.status_code: Optional[int] = None
+
+    @staticmethod
+    def get_key() -> str:
+        return ResponseStatusOption.RESPONSE_STATUS_KEY
+
+
+class _ResponseStatusHandler(BaseMiddleware):
+    """Records the response status into the option a request carries.
+
+    Sits at the outer end of the SDK's pipeline, above the retry and redirect
+    handlers, so what it records is the response the caller's result is built
+    from rather than an attempt on the way there.
+    """
+
+    async def send(
+        self, request: httpx.Request, transport: httpx.AsyncBaseTransport
+    ) -> httpx.Response:
+        # Read before sending: the innermost middleware strips the options off
+        # the request on its way to the transport, so afterwards there is
+        # nothing left to look them up in.
+        options = getattr(request, "options", None)
+        option = options.get(ResponseStatusOption.get_key()) if options else None
+
+        response = await super().send(request, transport)
+
+        if option is not None:
+            option.status_code = response.status_code
+
+        return response
 
 
 @dataclass(frozen=True)
@@ -200,6 +276,11 @@ def _build_http_client(
         middleware = [
             handler for handler in middleware if not isinstance(handler, RetryHandler)
         ]
+
+    # First in the list is outermost, which puts it above the retry and
+    # redirect handlers: the status it records is the one the caller's result
+    # was built from, not that of an attempt on the way there.
+    middleware = [_ResponseStatusHandler(), *middleware]
 
     if http_client is None:
         return KiotaClientFactory.create_with_custom_middleware(middleware=middleware)

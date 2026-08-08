@@ -169,11 +169,19 @@ public static class PrdbClientFactory
     }
 
     /// <summary>
-    /// Kiota's default handlers, with the retry handler configured or removed.
+    /// Kiota's default handlers, with the retry handler configured or removed, and the SDK's
+    /// own status recorder in front of them.
     /// </summary>
     /// <remarks>
-    /// Removed rather than configured with zero attempts, so "no retrying" means the handler
-    /// is not in the pipeline at all and cannot be re-enabled by a per-request option.
+    /// The retry handler is removed rather than configured with zero attempts, so "no retrying"
+    /// means the handler is not in the pipeline at all and cannot be re-enabled by a per-request
+    /// option.
+    /// <para>
+    /// <see cref="ResponseStatusHandler"/> goes first, which puts it above the retry and
+    /// redirect handlers — and above whatever an application added through
+    /// <c>AddPrdbClient</c>, since that runs inside ours. So the status it records is the one of
+    /// the response the caller's result was built from, not of an attempt on the way there.
+    /// </para>
     /// </remarks>
     private static IList<DelegatingHandler> CreateHandlers(PrdbRetryOptions? retry)
     {
@@ -200,6 +208,8 @@ public static class PrdbClientFactory
                 }
             }
         }
+
+        handlers.Insert(0, new ResponseStatusHandler());
 
         return handlers;
     }
