@@ -47,6 +47,15 @@ the API only maps its OpenAPI endpoint in the Development environment.
 unmerged, take the spec from the `openapi:` job artifact
 (`artifacts/public-api.json`) instead.
 
+**The document is OpenAPI 3.0 on purpose.** Nullability is spelled
+`nullable: true`, and a nullable `$ref` is `allOf: [{$ref}]` alongside it. Do
+not treat that as stale and do not ask prdb to publish 3.1: both 3.1 spellings
+break generators. `oneOf: [null, $ref]` becomes a composed wrapper type, and
+sibling keywords next to a `$ref` are intersected under JSON Schema 2020-12, so
+`{"$ref": X, "type": ["null","object"]}` still rejects `null`. 3.0's `allOf`
+plus `nullable` has one meaning that every generator implements. See prdb #20
+and #21, and prdb commit `992a2e9`.
+
 ## Regenerating
 
 ```bash
