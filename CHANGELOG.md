@@ -12,6 +12,54 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+Shaped by porganizer's second adoption review, which ran against the published
+0.2.0 package. Both findings are C#, and both were blockers: between them they
+ruled out every way of pointing the SDK at an application's own connection pool.
+
+### Added
+
+- **C#: `AddPrdbClient` can read its settings on every resolution.** The
+  existing overload captures the options at registration, which freezes the API
+  key and base URL for the lifetime of the process — so an application that
+  keeps its prdb credentials in a database, and lets a user edit them, kept
+  sending the old key until it was restarted. The new overload also receives the
+  `IServiceProvider` and runs per resolution:
+
+  ```csharp
+  services.AddPrdbClient((serviceProvider, options) =>
+  {
+      options.ApiKey = serviceProvider.GetRequiredService<ISettingsSnapshot>().PrdbApiKey;
+  });
+  ```
+
+  The client is transient, so each injected client gets the current values. The
+  registration-time overload is unchanged and remains the right default: it
+  validates while the application is still starting, which the dynamic one
+  cannot.
+
+### Changed
+
+- **BREAKING — C#: a `transport` that follows redirects is now refused, not
+  corrected.** 0.2.0 closed the redirect leak by turning `AllowAutoRedirect`
+  off on the supplied handler. That write is not the SDK's to make: a
+  `SocketsHttpHandler` rejects every property write once it has served a
+  request, and a handler from `IHttpMessageHandlerFactory` is pooled for the
+  whole handler lifetime — so the first client built from a pooled handler
+  worked and every later one threw `InvalidOperationException`, and even the
+  first one reconfigured a transport shared with the rest of the process. The
+  SDK now reads the property instead, and throws an `ArgumentException` naming
+  it when the transport would follow redirects. Pass a handler with
+  `AllowAutoRedirect = false`, or `KiotaClientFactory.GetDefaultHttpMessageHandler()`;
+  `AddPrdbClient` already installs one and is unaffected.
+- **C#: the README now documents that retrying costs you the error body.** Once
+  Kiota's .NET retry handler has spent its attempts it throws an
+  `AggregateException` of bare `ApiException`s rather than passing the last
+  response on, so the error mapping never runs and the `ProblemDetails` that
+  0.2.0 added is lost — in precisely the cases it was added for, a refusal the
+  API repeats. Disabling the SDK's retry keeps the typed error. Behaviour is
+  unchanged; only the documentation is new. The Python, TypeScript and Go
+  handlers return the last response and are not affected.
+
 ## [0.2.0] - 2026-08-08
 
 The first release with a breaking change, and the first shaped by someone

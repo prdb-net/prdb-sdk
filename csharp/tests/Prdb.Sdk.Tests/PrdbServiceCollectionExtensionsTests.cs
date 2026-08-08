@@ -130,6 +130,65 @@ public class PrdbServiceCollectionExtensionsTests
         Assert.NotNull(provider.GetRequiredService<PrdbClient>());
     }
 
+    /// <summary>
+    /// The overload for an application whose credentials can change while it runs: the API key
+    /// is read on every resolution, not captured at registration.
+    /// </summary>
+    /// <remarks>
+    /// prdb credentials are commonly kept in an application's own settings store and edited by
+    /// a user at runtime. Freezing them at startup would mean a pasted key does nothing until
+    /// the process is restarted.
+    /// </remarks>
+    [Fact]
+    public async Task AddPrdbClient_ReadsTheApiKeyPerResolution_WhenConfiguredWithTheProvider()
+    {
+        var recorder = new Recorder();
+        var settings = new MutableSettings { ApiKey = "key-v1" };
+        var services = new ServiceCollection();
+
+        services.AddSingleton(settings);
+        services.AddPrdbClient((serviceProvider, options) =>
+        {
+            options.ApiKey = serviceProvider.GetRequiredService<MutableSettings>().ApiKey;
+            options.BaseUrl = ApiOrigin;
+        })
+        .ConfigurePrimaryHttpMessageHandler(() => recorder);
+
+        using var provider = services.BuildServiceProvider();
+
+        await provider.GetRequiredService<PrdbClient>().Health.GetAsync();
+        settings.ApiKey = "key-v2";
+        await provider.GetRequiredService<PrdbClient>().Health.GetAsync();
+
+        Assert.Equal(["key-v1", "key-v2"], recorder.ApiKeys);
+    }
+
+    /// <summary>
+    /// Settings that are not known at registration cannot be validated there, so the check
+    /// still has to happen — on resolution, where the value finally exists.
+    /// </summary>
+    [Fact]
+    public void AddPrdbClient_RejectsAPlaintextBaseUrl_OnResolution_WhenConfiguredWithTheProvider()
+    {
+        var services = new ServiceCollection();
+        services.AddPrdbClient((_, options) =>
+        {
+            options.ApiKey = "secret-key";
+            options.BaseUrl = "http://localhost:8080";
+        });
+
+        using var provider = services.BuildServiceProvider();
+
+        var error = Assert.Throws<ArgumentException>(provider.GetRequiredService<PrdbClient>);
+
+        Assert.Contains("https", error.Message, StringComparison.Ordinal);
+    }
+
+    private sealed class MutableSettings
+    {
+        public string? ApiKey { get; set; }
+    }
+
     private static bool AllowsAutoRedirect(HttpMessageHandler handler)
     {
         for (var current = handler; current is not null;)

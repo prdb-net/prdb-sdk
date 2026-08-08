@@ -44,8 +44,9 @@ public static class PrdbClientFactory
     /// <param name="transport">
     /// Supply your own innermost <see cref="HttpMessageHandler"/> to control proxies or
     /// connection pooling, or to insert your own resilience pipeline. The SDK's middleware is
-    /// layered on top of it either way, so the redirect rule below always applies. The SDK
-    /// never disposes a handler you supply.
+    /// layered on top of it either way, so the redirect rule below always applies. It must not
+    /// follow redirects itself — see <see cref="RequireNoRedirectsBelowUs"/>. The SDK neither
+    /// disposes nor modifies a handler you supply.
     /// </param>
     /// <param name="retry">
     /// How the SDK retries a refused request. Defaults to Kiota's policy — three attempts,
@@ -59,7 +60,8 @@ public static class PrdbClientFactory
     /// </param>
     /// <exception cref="ArgumentException">
     /// <paramref name="apiKey"/> is empty, <paramref name="baseUrl"/> is not an absolute
-    /// <c>https</c> URL, or <paramref name="retry"/> or <paramref name="timeout"/> is out of range.
+    /// <c>https</c> URL, <paramref name="transport"/> follows redirects, or
+    /// <paramref name="retry"/> or <paramref name="timeout"/> is out of range.
     /// </exception>
     public static PrdbClient Create(
         string apiKey,
@@ -95,8 +97,8 @@ public static class PrdbClientFactory
     /// </para>
     /// </remarks>
     /// <exception cref="ArgumentException">
-    /// <paramref name="baseUrl"/> is not an absolute URL, or <paramref name="retry"/> or
-    /// <paramref name="timeout"/> is out of range.
+    /// <paramref name="baseUrl"/> is not an absolute URL, <paramref name="transport"/> follows
+    /// redirects, or <paramref name="retry"/> or <paramref name="timeout"/> is out of range.
     /// </exception>
     public static PrdbClient CreateAnonymous(
         string baseUrl = DefaultBaseUrl,
@@ -151,7 +153,7 @@ public static class PrdbClientFactory
         }
         else
         {
-            RefuseRedirectsBelowUs(transport);
+            RequireNoRedirectsBelowUs(transport);
 
             // Built by hand rather than through KiotaClientFactory.Create, which leaves the
             // HttpClient owning its handler: disposing this client would then dispose the
@@ -203,42 +205,55 @@ public static class PrdbClientFactory
     }
 
     /// <summary>
-    /// Turns off redirect following on a caller-supplied transport, so the SDK's redirect
-    /// handler is the only thing that decides whether a redirect is followed.
+    /// Refuses a caller-supplied transport that follows redirects itself, so the SDK's
+    /// redirect handler is the only thing that decides whether a redirect is followed.
     /// </summary>
     /// <remarks>
     /// A fresh <see cref="SocketsHttpHandler"/> or <see cref="HttpClientHandler"/> follows
     /// redirects on its own — Kiota's default transport is the exception, not the rule. A
     /// transport that follows one itself never lets our handler see it, and neither
     /// <see cref="HttpClient"/> nor the handler below strips a custom header across origins,
-    /// so the API key would travel to whoever answered. The caller's handler is modified in
-    /// place, because the alternative is to leak the credential silently.
+    /// so the API key would travel to whoever answered.
+    /// <para>
+    /// Checked rather than corrected. Writing the property is not ours to do twice over: a
+    /// <see cref="SocketsHttpHandler"/> refuses every property write once it has served a
+    /// request, and a handler from <c>IHttpMessageHandlerFactory</c> is pooled for the whole
+    /// handler lifetime — so correcting it would throw on the second client built from the
+    /// same handler, and on the first it would reconfigure a transport shared with every other
+    /// consumer of that client name. Reading is legal at any time, and a configuration error
+    /// naming the property says more than a leak that never happens.
+    /// </para>
     /// <para>
     /// A handler from <c>IHttpMessageHandlerFactory</c> is a chain of delegating handlers, so
     /// the primary one at the end of it is what has to be reached.
     /// </para>
     /// </remarks>
-    private static void RefuseRedirectsBelowUs(HttpMessageHandler transport)
+    /// <exception cref="ArgumentException">The transport follows redirects.</exception>
+    private static void RequireNoRedirectsBelowUs(HttpMessageHandler transport)
     {
         for (var handler = transport; handler is not null;)
         {
             switch (handler)
             {
-                case SocketsHttpHandler sockets:
-                    sockets.AllowAutoRedirect = false;
-                    return;
-
-                case HttpClientHandler client:
-                    client.AllowAutoRedirect = false;
-                    return;
+                case SocketsHttpHandler { AllowAutoRedirect: true }:
+                case HttpClientHandler { AllowAutoRedirect: true }:
+                    throw new ArgumentException(
+                        "The transport must not follow redirects: set AllowAutoRedirect to "
+                        + "false on its primary handler, or build it with "
+                        + "KiotaClientFactory.GetDefaultHttpMessageHandler(). A redirect the "
+                        + "transport follows itself is one the SDK never sees, and nothing "
+                        + $"below strips {ApiKeyHeader}, so the key would reach whoever "
+                        + "answered at the other origin.",
+                        nameof(transport));
 
                 case DelegatingHandler delegating:
                     handler = delegating.InnerHandler;
                     continue;
 
                 default:
-                    // Someone else's handler type. It may or may not redirect, and there is no
-                    // portable way to ask; the redirect test covers the types we can reach.
+                    // Either a handler that does not redirect, or someone else's handler type.
+                    // For the latter there is no portable way to ask; the redirect tests cover
+                    // the types we can reach.
                     return;
             }
         }

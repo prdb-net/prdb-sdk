@@ -3,7 +3,7 @@ namespace Prdb.Sdk;
 /// <summary>
 /// Settings for a <see cref="Generated.PrdbClient"/> registered through dependency injection.
 /// </summary>
-/// <seealso cref="PrdbServiceCollectionExtensions.AddPrdbClient"/>
+/// <seealso cref="PrdbServiceCollectionExtensions.AddPrdbClient(Microsoft.Extensions.DependencyInjection.IServiceCollection, System.Action{PrdbClientOptions})"/>
 public sealed class PrdbClientOptions
 {
     /// <summary>

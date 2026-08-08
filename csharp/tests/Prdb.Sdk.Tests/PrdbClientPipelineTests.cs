@@ -1,6 +1,8 @@
 using System.Net;
 using System.Text;
 using Microsoft.Kiota.Abstractions;
+using Microsoft.Kiota.Http.HttpClientLibrary;
+using Prdb.Sdk.Generated.Models;
 using Xunit;
 
 namespace Prdb.Sdk.Tests;
@@ -55,6 +57,48 @@ public class PrdbClientPipelineTests
 
         await Assert.ThrowsAsync<ApiException>(() => client.Health.GetAsync());
 
+        Assert.Single(recorder.Requests);
+    }
+
+    /// <summary>
+    /// What retrying costs, pinned down because the README documents it: a refusal that
+    /// persists never reaches the error mapping, so the caller loses the <c>ProblemDetails</c>
+    /// explaining why the API said no — in exactly the cases the body was added for.
+    /// </summary>
+    /// <remarks>
+    /// Kiota's <c>RetryHandler</c> throws its own aggregate once the attempts are spent,
+    /// rather than returning the last response, so the typed error is never built. This is
+    /// Kiota's behaviour, not ours; if a later version returns the response instead, this test
+    /// fails and the README paragraph can go.
+    /// </remarks>
+    [Fact]
+    public async Task Create_LosesTheTypedError_WhenAPersistentRefusalIsRetried()
+    {
+        var recorder = new Recorder(AlwaysRefuseWithADetail);
+        var client = PrdbClientFactory.Create("secret-key", ApiOrigin, recorder, retry: Immediate);
+
+        var error = await Assert.ThrowsAsync<AggregateException>(
+            () => client.UserIdentity.GetAsync());
+
+        // Bare ApiExceptions: a status code and nothing else, one per spent attempt.
+        Assert.All(error.InnerExceptions, attempt => Assert.IsType<ApiException>(attempt));
+        Assert.Equal(2, recorder.Requests.Count);
+    }
+
+    /// <summary>The same refusal, with retrying off: the body survives.</summary>
+    [Fact]
+    public async Task Create_KeepsTheTypedError_WhenRetryIsDisabled()
+    {
+        var recorder = new Recorder(AlwaysRefuseWithADetail);
+        var client = PrdbClientFactory.Create(
+            "secret-key",
+            ApiOrigin,
+            recorder,
+            retry: PrdbRetryOptions.Disabled);
+
+        var error = await Assert.ThrowsAsync<ProblemDetails>(() => client.UserIdentity.GetAsync());
+
+        Assert.Equal("fail-closed", error.Detail);
         Assert.Single(recorder.Requests);
     }
 
@@ -139,19 +183,63 @@ public class PrdbClientPipelineTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void Create_StopsACallerSuppliedTransportFromFollowingRedirects(bool behindADelegatingHandler)
+    public void Create_RejectsACallerSuppliedTransportThatFollowsRedirects(bool behindADelegatingHandler)
     {
-        var primary = new SocketsHttpHandler { AllowAutoRedirect = true };
+        using var primary = new SocketsHttpHandler { AllowAutoRedirect = true };
         HttpMessageHandler transport = behindADelegatingHandler
             ? new PassThroughHandler { InnerHandler = primary }
             : primary;
 
-        using (transport)
-        {
-            PrdbClientFactory.Create("secret-key", ApiOrigin, transport);
+        var error = Assert.Throws<ArgumentException>(
+            () => PrdbClientFactory.Create("secret-key", ApiOrigin, transport));
 
-            Assert.False(primary.AllowAutoRedirect);
+        Assert.Contains("AllowAutoRedirect", error.Message, StringComparison.Ordinal);
+        Assert.Equal("transport", error.ParamName);
+    }
+
+    /// <summary>A transport that leaves the redirect to us is what the SDK wants.</summary>
+    [Fact]
+    public void Create_AcceptsATransportThatDoesNotFollowRedirects()
+    {
+        using var transport = KiotaClientFactory.GetDefaultHttpMessageHandler();
+
+        Assert.NotNull(PrdbClientFactory.Create("secret-key", ApiOrigin, transport));
+    }
+
+    /// <summary>
+    /// The transport is inspected, never written to, so the same one can back any number of
+    /// clients.
+    /// </summary>
+    /// <remarks>
+    /// Correcting <c>AllowAutoRedirect</c> instead would work exactly once: a
+    /// <see cref="SocketsHttpHandler"/> refuses property writes as soon as it has served a
+    /// request, and the handler an application gets from <c>IHttpMessageHandlerFactory</c> is
+    /// pooled for the whole handler lifetime — so the second client built from it would throw
+    /// <see cref="InvalidOperationException"/>. Hence a handler here that has already sent
+    /// something, which is the state a pooled one is in.
+    /// </remarks>
+    [Fact]
+    public async Task Create_AcceptsATransportThatHasAlreadyServedARequest()
+    {
+        using var transport = new SocketsHttpHandler { AllowAutoRedirect = false };
+
+        using (var probe = new HttpClient(transport, disposeHandler: false)
+        {
+            Timeout = TimeSpan.FromSeconds(5),
+        })
+        {
+            // Nothing listens there; that the connection is refused is beside the point. The
+            // attempt is what freezes the handler's settings.
+            await Assert.ThrowsAnyAsync<Exception>(() => probe.GetAsync("http://127.0.0.1:1/"));
         }
+
+        // The precondition, asserted rather than assumed: the handler now refuses the very
+        // write the SDK used to perform. Without this the test below could pass on a handler
+        // that never got that far.
+        Assert.Throws<InvalidOperationException>(() => transport.AllowAutoRedirect = false);
+
+        PrdbClientFactory.Create("secret-key", ApiOrigin, transport);
+        PrdbClientFactory.Create("secret-key", ApiOrigin, transport);
     }
 
     /// <summary>Retrying with no delay, so a test does not wait out the real backoff.</summary>
@@ -168,6 +256,17 @@ public class PrdbClientPipelineTests
 
     private static HttpResponseMessage Unavailable(HttpRequestMessage request) =>
         new(HttpStatusCode.ServiceUnavailable) { RequestMessage = request };
+
+    /// <summary>A 503 shaped the way the API sends it: refused, and saying why.</summary>
+    private static HttpResponseMessage AlwaysRefuseWithADetail(HttpRequestMessage request) =>
+        new(HttpStatusCode.ServiceUnavailable)
+        {
+            RequestMessage = request,
+            Content = new StringContent(
+                """{"title":"Service Unavailable","status":503,"detail":"fail-closed"}""",
+                Encoding.UTF8,
+                "application/problem+json"),
+        };
 
     private static HttpResponseMessage Healthy(HttpRequestMessage request) =>
         new(HttpStatusCode.OK)

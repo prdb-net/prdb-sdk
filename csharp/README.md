@@ -91,6 +91,29 @@ because that is a configuration value that failed to resolve rather than a
 deliberate choice. Every other setting is checked at registration too, so a bad
 base URL stops startup instead of the first request.
 
+### Settings that change while the application runs
+
+The overload above reads the options once, at registration. If your API key or
+base URL lives somewhere a user can edit — a database row, a reloading
+configuration source — take the overload that also gets the `IServiceProvider`.
+It runs on every resolution, and the client is transient, so each injected
+client uses the current values:
+
+```csharp
+services.AddPrdbClient((serviceProvider, options) =>
+{
+    var settings = serviceProvider.GetRequiredService<ISettingsSnapshot>();
+    options.ApiKey = settings.PrdbApiKey;
+    options.BaseUrl = settings.PrdbApiUrl;
+    options.Retry = PrdbRetryOptions.Disabled;
+})
+.AddStandardResilienceHandler();
+```
+
+Settings that are not known at registration cannot be validated there, so a bad
+base URL or an empty key throws when a client is resolved rather than at
+startup. Resolve one while starting up if you want the failure there.
+
 ## Options
 
 ```csharp
@@ -103,13 +126,32 @@ var client = PrdbClientFactory.Create(
 ```
 
 `transport` is the innermost `HttpMessageHandler`. The SDK's middleware is
-layered on top of it, so the redirect rule above applies to it too — and
-redirect following is turned off on the handler itself, since otherwise it
-would follow a redirect before the SDK's rule could refuse it.
+layered on top of it, so the redirect rule above applies to it too.
 
-The SDK never disposes a transport you supply. That matters when it comes from
-`IHttpMessageHandlerFactory.CreateHandler`, where handlers are pooled and shared
-across the process.
+**A transport must not follow redirects itself.** One that does would follow a
+redirect off the API host before the SDK's rule could refuse it, and nothing
+below strips `X-Api-Key`. So the SDK checks, and refuses to build a client on a
+transport whose primary handler has `AllowAutoRedirect` set:
+
+```csharp
+var transport = new SocketsHttpHandler { AllowAutoRedirect = false };
+var client = PrdbClientFactory.Create("...", transport: transport);
+```
+
+`KiotaClientFactory.GetDefaultHttpMessageHandler()` produces a suitable handler
+too. For a handler that comes from `IHttpClientFactory`, configure it where it
+is registered:
+
+```csharp
+services.AddHttpClient("prdb")
+    .ConfigurePrimaryHttpMessageHandler(
+        () => new SocketsHttpHandler { AllowAutoRedirect = false });
+```
+
+The SDK neither disposes nor modifies a transport you supply. Both matter when
+it comes from `IHttpMessageHandlerFactory.CreateHandler`, where handlers are
+pooled and shared across the process — and where a `SocketsHttpHandler` refuses
+to be reconfigured at all once it has served its first request.
 
 ### Retrying
 
@@ -136,6 +178,26 @@ var client = PrdbClientFactory.Create("...", retry: new PrdbRetryOptions
     Delay = TimeSpan.FromSeconds(1),
 });
 ```
+
+**Retrying costs you the error body.** Kiota's retry handler throws its own
+`AggregateException` of bare `ApiException`s once the attempts are spent,
+instead of handing the last response on, so the error mapping never runs:
+
+```
+503, retrying enabled   AggregateException of ApiException, no body
+503, retrying disabled  ProblemDetails, detail: "fail-closed"
+```
+
+That applies to a refusal that *persists* — one the API repeats until the
+attempts run out, which is exactly the case where `403` explains that there is
+no API plan, or `503` that rate limiting is unavailable and the API is
+fail-closed. A retry that succeeds is unaffected.
+
+So an application that wants to log *why* prdb refused should disable the SDK's
+retry and own the retrying itself, with a policy that returns the final response
+rather than throwing — `AddStandardResilienceHandler` does. This is Kiota's
+behaviour in .NET only; the Python, TypeScript and Go SDKs return the last
+response and keep the typed error.
 
 ## Reading response headers
 
