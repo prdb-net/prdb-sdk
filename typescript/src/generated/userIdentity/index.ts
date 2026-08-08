@@ -15,6 +15,9 @@ export interface UserIdentityRequestBuilder extends BaseRequestBuilder<UserIdent
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<UserIdentityResponse>}
      * @throws {ProblemDetails} error when the service returns a 401 status code
+     * @throws {ProblemDetails} error when the service returns a 403 status code
+     * @throws {ProblemDetails} error when the service returns a 429 status code
+     * @throws {ProblemDetails} error when the service returns a 503 status code
      */
      get(requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<UserIdentityResponse | undefined>;
     /**
@@ -37,6 +40,9 @@ export const UserIdentityRequestBuilderRequestsMetadata: RequestsMetadata = {
         responseBodyContentType: "application/json",
         errorMappings: {
             401: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            403: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            429: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            503: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
         },
         adapterMethodName: "send",
         responseBodyFactory:  createUserIdentityResponseFromDiscriminatorValue,

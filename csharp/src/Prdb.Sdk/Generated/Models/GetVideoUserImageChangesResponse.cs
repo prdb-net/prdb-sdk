@@ -34,6 +34,8 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>The pageSize property</summary>
         public int? PageSize { get; set; }
+        /// <summary>The serverTimeUtc property</summary>
+        public DateTimeOffset? ServerTimeUtc { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.GetVideoUserImageChangesResponse"/> and sets the default values.
         /// </summary>
@@ -63,6 +65,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "items", n => { Items = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoUserImageChangeItemDto>(global::Prdb.Sdk.Generated.Models.VideoUserImageChangeItemDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "nextCursor", n => { NextCursor = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoUserImageChangesCursorDto>(global::Prdb.Sdk.Generated.Models.VideoUserImageChangesCursorDto.CreateFromDiscriminatorValue); } },
                 { "pageSize", n => { PageSize = n.GetIntValue(); } },
+                { "serverTimeUtc", n => { ServerTimeUtc = n.GetDateTimeOffsetValue(); } },
             };
         }
         /// <summary>
@@ -76,6 +79,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoUserImageChangeItemDto>("items", Items);
             writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoUserImageChangesCursorDto>("nextCursor", NextCursor);
             writer.WriteIntValue("pageSize", PageSize);
+            writer.WriteDateTimeOffsetValue("serverTimeUtc", ServerTimeUtc);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

@@ -22,7 +22,7 @@ namespace Prdb.Sdk.Generated.Actors.Changes
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ChangesRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/actors/changes{?PageSize*,SinceId*,SinceUtc*}", pathParameters)
+        public ChangesRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/actors/changes{?PageSize*,Since*,SinceId*}", pathParameters)
         {
         }
         /// <summary>
@@ -30,17 +30,20 @@ namespace Prdb.Sdk.Generated.Actors.Changes
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public ChangesRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/actors/changes{?PageSize*,SinceId*,SinceUtc*}", rawUrl)
+        public ChangesRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/actors/changes{?PageSize*,Since*,SinceId*}", rawUrl)
         {
         }
         /// <summary>
-        /// Returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+        /// Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.GetActorChangesResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 400 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 401 status code</exception>
+        /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 403 status code</exception>
+        /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 429 status code</exception>
+        /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 503 status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public async Task<global::Prdb.Sdk.Generated.Models.GetActorChangesResponse?> GetAsync(Action<RequestConfiguration<global::Prdb.Sdk.Generated.Actors.Changes.ChangesRequestBuilder.ChangesRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
@@ -55,11 +58,14 @@ namespace Prdb.Sdk.Generated.Actors.Changes
             {
                 { "400", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "401", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
+                { "403", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
+                { "429", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
+                { "503", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
             };
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.GetActorChangesResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.GetActorChangesResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+        /// Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -87,14 +93,14 @@ namespace Prdb.Sdk.Generated.Actors.Changes
             return new global::Prdb.Sdk.Generated.Actors.Changes.ChangesRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
-        /// Returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+        /// Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class ChangesRequestBuilderGetQueryParameters 
         {
             public int? PageSize { get; set; }
+            public DateTimeOffset? Since { get; set; }
             public Guid? SinceId { get; set; }
-            public DateTimeOffset? SinceUtc { get; set; }
         }
     }
 }

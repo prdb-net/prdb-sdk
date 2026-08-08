@@ -11,39 +11,42 @@ import { type BaseRequestBuilder, type Guid, type Parsable, type ParsableFactory
  */
 export interface ChangesRequestBuilder extends BaseRequestBuilder<ChangesRequestBuilder> {
     /**
-     * Returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+     * Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<GetActorChangesResponse>}
      * @throws {ProblemDetails} error when the service returns a 400 status code
      * @throws {ProblemDetails} error when the service returns a 401 status code
+     * @throws {ProblemDetails} error when the service returns a 403 status code
+     * @throws {ProblemDetails} error when the service returns a 429 status code
+     * @throws {ProblemDetails} error when the service returns a 503 status code
      */
      get(requestConfiguration?: RequestConfiguration<ChangesRequestBuilderGetQueryParameters> | undefined) : Promise<GetActorChangesResponse | undefined>;
     /**
-     * Returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+     * Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */
      toGetRequestInformation(requestConfiguration?: RequestConfiguration<ChangesRequestBuilderGetQueryParameters> | undefined) : RequestInformation;
 }
 /**
- * Returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+ * Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
  */
 export interface ChangesRequestBuilderGetQueryParameters {
     pageSize?: number;
+    since?: Date;
     sinceId?: Guid;
-    sinceUtc?: Date;
 }
 /**
  * Uri template for the request builder.
  */
-export const ChangesRequestBuilderUriTemplate = "{+baseurl}/actors/changes{?PageSize*,SinceId*,SinceUtc*}";
+export const ChangesRequestBuilderUriTemplate = "{+baseurl}/actors/changes{?PageSize*,Since*,SinceId*}";
 /**
  * Mapper for query parameters from symbol name to serialization name represented as a constant.
  */
 const ChangesRequestBuilderGetQueryParametersMapper: Record<string, string> = {
     "pageSize": "PageSize",
+    "since": "Since",
     "sinceId": "SinceId",
-    "sinceUtc": "SinceUtc",
 };
 /**
  * Metadata for all the requests in the request builder.
@@ -55,6 +58,9 @@ export const ChangesRequestBuilderRequestsMetadata: RequestsMetadata = {
         errorMappings: {
             400: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             401: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            403: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            429: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            503: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
         },
         adapterMethodName: "send",
         responseBodyFactory:  createGetActorChangesResponseFromDiscriminatorValue,

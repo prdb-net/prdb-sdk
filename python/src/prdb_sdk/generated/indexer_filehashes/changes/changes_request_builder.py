@@ -35,7 +35,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     
     async def get(self,request_configuration: Optional[RequestConfiguration[ChangesRequestBuilderGetQueryParameters]] = None) -> Optional[GetIndexerFilehashChangesResponse]:
         """
-        Returns a seek-paged delta feed of indexer filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional indexer source and indexer ID filters. Requires API key authentication.
+        Returns a seek-paged delta feed of indexer filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional indexer source and indexer ID filters. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[GetIndexerFilehashChangesResponse]
         """
@@ -47,6 +47,9 @@ class ChangesRequestBuilder(BaseRequestBuilder):
         error_mapping: dict[str, type[ParsableFactory]] = {
             "400": ProblemDetails,
             "401": ProblemDetails,
+            "403": ProblemDetails,
+            "429": ProblemDetails,
+            "503": ProblemDetails,
         }
         if not self.request_adapter:
             raise Exception("Http core is null") 
@@ -56,7 +59,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     
     def to_get_request_information(self,request_configuration: Optional[RequestConfiguration[ChangesRequestBuilderGetQueryParameters]] = None) -> RequestInformation:
         """
-        Returns a seek-paged delta feed of indexer filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional indexer source and indexer ID filters. Requires API key authentication.
+        Returns a seek-paged delta feed of indexer filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional indexer source and indexer ID filters. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
@@ -78,7 +81,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     @dataclass
     class ChangesRequestBuilderGetQueryParameters():
         """
-        Returns a seek-paged delta feed of indexer filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional indexer source and indexer ID filters. Requires API key authentication.
+        Returns a seek-paged delta feed of indexer filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional indexer source and indexer ID filters. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         """
         def get_query_parameter(self,original_name: str) -> str:
             """

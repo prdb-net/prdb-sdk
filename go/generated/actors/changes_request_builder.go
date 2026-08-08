@@ -15,16 +15,16 @@ import (
 type ChangesRequestBuilder struct {
     i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.BaseRequestBuilder
 }
-// ChangesRequestBuilderGetQueryParameters returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+// ChangesRequestBuilderGetQueryParameters returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
 type ChangesRequestBuilderGetQueryParameters struct {
     PageSize *int32
+    Since *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     SinceId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    SinceUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewChangesRequestBuilderInternal instantiates a new ChangesRequestBuilder and sets the default values.
 func NewChangesRequestBuilderInternal(pathParameters map[string]string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*ChangesRequestBuilder) {
     m := &ChangesRequestBuilder{
-        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/actors/changes{?PageSize*,SinceId*,SinceUtc*}", pathParameters),
+        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/actors/changes{?PageSize*,Since*,SinceId*}", pathParameters),
     }
     return m
 }
@@ -34,10 +34,13 @@ func NewChangesRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263371
     urlParams["request-raw-url"] = rawUrl
     return NewChangesRequestBuilderInternal(urlParams, requestAdapter)
 }
-// Get returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+// Get returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
 // returns a GetActorChangesResponseable when successful
 // returns a ProblemDetails error when the service returns a 400 status code
 // returns a ProblemDetails error when the service returns a 401 status code
+// returns a ProblemDetails error when the service returns a 403 status code
+// returns a ProblemDetails error when the service returns a 429 status code
+// returns a ProblemDetails error when the service returns a 503 status code
 func (m *ChangesRequestBuilder) Get(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[ChangesRequestBuilderGetQueryParameters])(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.GetActorChangesResponseable, error) {
     requestInfo, err := m.ToGetRequestInformation(ctx, requestConfiguration);
     if err != nil {
@@ -46,6 +49,9 @@ func (m *ChangesRequestBuilder) Get(ctx context.Context, requestConfiguration *i
     errorMapping := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.ErrorMappings {
         "400": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "401": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "403": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "429": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "503": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
     }
     res, err := m.BaseRequestBuilder.RequestAdapter.Send(ctx, requestInfo, ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateGetActorChangesResponseFromDiscriminatorValue, errorMapping)
     if err != nil {
@@ -56,7 +62,7 @@ func (m *ChangesRequestBuilder) Get(ctx context.Context, requestConfiguration *i
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.GetActorChangesResponseable), nil
 }
-// ToGetRequestInformation returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+// ToGetRequestInformation returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *ChangesRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[ChangesRequestBuilderGetQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.GET, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

@@ -14,7 +14,10 @@ export interface WithFilenameItemRequestBuilder extends BaseRequestBuilder<WithF
      * Hard-deletes a single filename row from a downloaded-from-indexer entry owned by the currently authenticated user. Returns 404 when the parent or filename does not exist.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @throws {ProblemDetails} error when the service returns a 401 status code
+     * @throws {ProblemDetails} error when the service returns a 403 status code
      * @throws {ProblemDetails} error when the service returns a 404 status code
+     * @throws {ProblemDetails} error when the service returns a 429 status code
+     * @throws {ProblemDetails} error when the service returns a 503 status code
      */
      delete(requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<void>;
     /**
@@ -24,8 +27,11 @@ export interface WithFilenameItemRequestBuilder extends BaseRequestBuilder<WithF
      * @returns {Promise<DownloadedFromIndexerResponse>}
      * @throws {ProblemDetails} error when the service returns a 400 status code
      * @throws {ProblemDetails} error when the service returns a 401 status code
+     * @throws {ProblemDetails} error when the service returns a 403 status code
      * @throws {ProblemDetails} error when the service returns a 404 status code
      * @throws {ProblemDetails} error when the service returns a 409 status code
+     * @throws {ProblemDetails} error when the service returns a 429 status code
+     * @throws {ProblemDetails} error when the service returns a 503 status code
      */
      put(body: UpdateDownloadedFromIndexerFilenameRequest, requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<DownloadedFromIndexerResponse | undefined>;
     /**
@@ -55,7 +61,10 @@ export const WithFilenameItemRequestBuilderRequestsMetadata: RequestsMetadata = 
         responseBodyContentType: "application/json",
         errorMappings: {
             401: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            403: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             404: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            429: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            503: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
         },
         adapterMethodName: "sendNoResponseContent",
     },
@@ -65,8 +74,11 @@ export const WithFilenameItemRequestBuilderRequestsMetadata: RequestsMetadata = 
         errorMappings: {
             400: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             401: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            403: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             404: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             409: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            429: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            503: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
         },
         adapterMethodName: "send",
         responseBodyFactory:  createDownloadedFromIndexerResponseFromDiscriminatorValue,

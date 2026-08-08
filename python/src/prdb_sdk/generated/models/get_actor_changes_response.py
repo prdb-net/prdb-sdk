@@ -4,9 +4,9 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, ParseNode, SerializationWriter
 from typing import Any, Optional, TYPE_CHECKING, Union
-from uuid import UUID
 
 if TYPE_CHECKING:
+    from .actor_changes_cursor_dto import ActorChangesCursorDto
     from .actor_change_dto import ActorChangeDto
 
 @dataclass
@@ -18,12 +18,12 @@ class GetActorChangesResponse(AdditionalDataHolder, Parsable):
     has_more: Optional[bool] = None
     # The items property
     items: Optional[list[ActorChangeDto]] = None
-    # The nextCursorId property
-    next_cursor_id: Optional[UUID] = None
-    # The nextCursorUtc property
-    next_cursor_utc: Optional[datetime.datetime] = None
+    # The nextCursor property
+    next_cursor: Optional[ActorChangesCursorDto] = None
     # The pageSize property
     page_size: Optional[int] = None
+    # The serverTimeUtc property
+    server_time_utc: Optional[datetime.datetime] = None
     
     @staticmethod
     def create_from_discriminator_value(parse_node: ParseNode) -> GetActorChangesResponse:
@@ -41,16 +41,18 @@ class GetActorChangesResponse(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
+        from .actor_changes_cursor_dto import ActorChangesCursorDto
         from .actor_change_dto import ActorChangeDto
 
+        from .actor_changes_cursor_dto import ActorChangesCursorDto
         from .actor_change_dto import ActorChangeDto
 
         fields: dict[str, Callable[[Any], None]] = {
             "hasMore": lambda n : setattr(self, 'has_more', n.get_bool_value()),
             "items": lambda n : setattr(self, 'items', n.get_collection_of_object_values(ActorChangeDto)),
-            "nextCursorId": lambda n : setattr(self, 'next_cursor_id', n.get_uuid_value()),
-            "nextCursorUtc": lambda n : setattr(self, 'next_cursor_utc', n.get_datetime_value()),
+            "nextCursor": lambda n : setattr(self, 'next_cursor', n.get_object_value(ActorChangesCursorDto)),
             "pageSize": lambda n : setattr(self, 'page_size', n.get_int_value()),
+            "serverTimeUtc": lambda n : setattr(self, 'server_time_utc', n.get_datetime_value()),
         }
         return fields
     
@@ -64,9 +66,9 @@ class GetActorChangesResponse(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_bool_value("hasMore", self.has_more)
         writer.write_collection_of_object_values("items", self.items)
-        writer.write_uuid_value("nextCursorId", self.next_cursor_id)
-        writer.write_datetime_value("nextCursorUtc", self.next_cursor_utc)
+        writer.write_object_value("nextCursor", self.next_cursor)
         writer.write_int_value("pageSize", self.page_size)
+        writer.write_datetime_value("serverTimeUtc", self.server_time_utc)
         writer.write_additional_data_value(self.additional_data)
     
 

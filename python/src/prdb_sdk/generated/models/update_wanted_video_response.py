@@ -15,9 +15,9 @@ class UpdateWantedVideoResponse(AdditionalDataHolder, Parsable):
     created_at_utc: Optional[datetime.datetime] = None
     # The fulfilledAtUtc property
     fulfilled_at_utc: Optional[datetime.datetime] = None
-    # Known values: P720 (0), P1080 (1), P2160 (2).
+    # The fulfilledInQuality property
     fulfilled_in_quality: Optional[int] = None
-    # Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+    # The fulfillmentByApp property
     fulfillment_by_app: Optional[int] = None
     # The fulfillmentExternalId property
     fulfillment_external_id: Optional[str] = None

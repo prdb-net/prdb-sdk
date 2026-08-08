@@ -38,6 +38,9 @@ export interface VideosRequestBuilder extends BaseRequestBuilder<VideosRequestBu
      * @returns {Promise<ListVideosResponse>}
      * @throws {ProblemDetails} error when the service returns a 400 status code
      * @throws {ProblemDetails} error when the service returns a 401 status code
+     * @throws {ProblemDetails} error when the service returns a 403 status code
+     * @throws {ProblemDetails} error when the service returns a 429 status code
+     * @throws {ProblemDetails} error when the service returns a 503 status code
      */
      get(requestConfiguration?: RequestConfiguration<VideosRequestBuilderGetQueryParameters> | undefined) : Promise<ListVideosResponse | undefined>;
     /**
@@ -120,6 +123,9 @@ export const VideosRequestBuilderRequestsMetadata: RequestsMetadata = {
         errorMappings: {
             400: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             401: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            403: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            429: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            503: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
         },
         adapterMethodName: "send",
         responseBodyFactory:  createListVideosResponseFromDiscriminatorValue,

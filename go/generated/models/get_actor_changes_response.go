@@ -5,7 +5,6 @@ package models
 
 import (
     i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e "time"
-    i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22 "github.com/google/uuid"
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
@@ -16,12 +15,12 @@ type GetActorChangesResponse struct {
     hasMore *bool
     // The items property
     items []ActorChangeDtoable
-    // The nextCursorId property
-    nextCursorId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The nextCursorUtc property
-    nextCursorUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // The nextCursor property
+    nextCursor ActorChangesCursorDtoable
     // The pageSize property
     pageSize *int32
+    // The serverTimeUtc property
+    serverTimeUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewGetActorChangesResponse instantiates a new GetActorChangesResponse and sets the default values.
 func NewGetActorChangesResponse()(*GetActorChangesResponse) {
@@ -70,23 +69,13 @@ func (m *GetActorChangesResponse) GetFieldDeserializers()(map[string]func(i878a8
         }
         return nil
     }
-    res["nextCursorId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetUUIDValue()
+    res["nextCursor"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetObjectValue(CreateActorChangesCursorDtoFromDiscriminatorValue)
         if err != nil {
             return err
         }
         if val != nil {
-            m.SetNextCursorId(val)
-        }
-        return nil
-    }
-    res["nextCursorUtc"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
-        val, err := n.GetTimeValue()
-        if err != nil {
-            return err
-        }
-        if val != nil {
-            m.SetNextCursorUtc(val)
+            m.SetNextCursor(val.(ActorChangesCursorDtoable))
         }
         return nil
     }
@@ -97,6 +86,16 @@ func (m *GetActorChangesResponse) GetFieldDeserializers()(map[string]func(i878a8
         }
         if val != nil {
             m.SetPageSize(val)
+        }
+        return nil
+    }
+    res["serverTimeUtc"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetTimeValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetServerTimeUtc(val)
         }
         return nil
     }
@@ -112,20 +111,20 @@ func (m *GetActorChangesResponse) GetHasMore()(*bool) {
 func (m *GetActorChangesResponse) GetItems()([]ActorChangeDtoable) {
     return m.items
 }
-// GetNextCursorId gets the nextCursorId property value. The nextCursorId property
-// returns a *UUID when successful
-func (m *GetActorChangesResponse) GetNextCursorId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
-    return m.nextCursorId
-}
-// GetNextCursorUtc gets the nextCursorUtc property value. The nextCursorUtc property
-// returns a *Time when successful
-func (m *GetActorChangesResponse) GetNextCursorUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
-    return m.nextCursorUtc
+// GetNextCursor gets the nextCursor property value. The nextCursor property
+// returns a ActorChangesCursorDtoable when successful
+func (m *GetActorChangesResponse) GetNextCursor()(ActorChangesCursorDtoable) {
+    return m.nextCursor
 }
 // GetPageSize gets the pageSize property value. The pageSize property
 // returns a *int32 when successful
 func (m *GetActorChangesResponse) GetPageSize()(*int32) {
     return m.pageSize
+}
+// GetServerTimeUtc gets the serverTimeUtc property value. The serverTimeUtc property
+// returns a *Time when successful
+func (m *GetActorChangesResponse) GetServerTimeUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
+    return m.serverTimeUtc
 }
 // Serialize serializes information the current object
 func (m *GetActorChangesResponse) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
@@ -148,19 +147,19 @@ func (m *GetActorChangesResponse) Serialize(writer i878a80d2330e89d26896388a3f48
         }
     }
     {
-        err := writer.WriteUUIDValue("nextCursorId", m.GetNextCursorId())
-        if err != nil {
-            return err
-        }
-    }
-    {
-        err := writer.WriteTimeValue("nextCursorUtc", m.GetNextCursorUtc())
+        err := writer.WriteObjectValue("nextCursor", m.GetNextCursor())
         if err != nil {
             return err
         }
     }
     {
         err := writer.WriteInt32Value("pageSize", m.GetPageSize())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteTimeValue("serverTimeUtc", m.GetServerTimeUtc())
         if err != nil {
             return err
         }
@@ -185,29 +184,29 @@ func (m *GetActorChangesResponse) SetHasMore(value *bool)() {
 func (m *GetActorChangesResponse) SetItems(value []ActorChangeDtoable)() {
     m.items = value
 }
-// SetNextCursorId sets the nextCursorId property value. The nextCursorId property
-func (m *GetActorChangesResponse) SetNextCursorId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
-    m.nextCursorId = value
-}
-// SetNextCursorUtc sets the nextCursorUtc property value. The nextCursorUtc property
-func (m *GetActorChangesResponse) SetNextCursorUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
-    m.nextCursorUtc = value
+// SetNextCursor sets the nextCursor property value. The nextCursor property
+func (m *GetActorChangesResponse) SetNextCursor(value ActorChangesCursorDtoable)() {
+    m.nextCursor = value
 }
 // SetPageSize sets the pageSize property value. The pageSize property
 func (m *GetActorChangesResponse) SetPageSize(value *int32)() {
     m.pageSize = value
+}
+// SetServerTimeUtc sets the serverTimeUtc property value. The serverTimeUtc property
+func (m *GetActorChangesResponse) SetServerTimeUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
+    m.serverTimeUtc = value
 }
 type GetActorChangesResponseable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetHasMore()(*bool)
     GetItems()([]ActorChangeDtoable)
-    GetNextCursorId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
-    GetNextCursorUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
+    GetNextCursor()(ActorChangesCursorDtoable)
     GetPageSize()(*int32)
+    GetServerTimeUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     SetHasMore(value *bool)()
     SetItems(value []ActorChangeDtoable)()
-    SetNextCursorId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
-    SetNextCursorUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
+    SetNextCursor(value ActorChangesCursorDtoable)()
     SetPageSize(value *int32)()
+    SetServerTimeUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
 }

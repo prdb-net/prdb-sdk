@@ -56,7 +56,7 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     birthday?: DateOnly | null;
     /**
-     * Known values: ExactDate (1), MonthYear (2), Year (3).
+     * The birthdayType property
      */
     birthdayType?: number | null;
     /**
@@ -214,9 +214,9 @@ export interface ActorChangeDto extends AdditionalDataHolder, Parsable {
      */
     actor?: ActorChangeActorDto | null;
     /**
-     * The changeType property
+     * The eventType property
      */
-    changeType?: string | null;
+    eventType?: string | null;
 }
 export interface ActorChangeImageDto extends AdditionalDataHolder, Parsable {
     /**
@@ -250,6 +250,16 @@ export interface ActorChangeLinkDto extends AdditionalDataHolder, Parsable {
      */
     url?: string | null;
 }
+export interface ActorChangesCursorDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
+}
 export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
     /**
      * The aliases property
@@ -264,7 +274,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     birthday?: DateOnly | null;
     /**
-     * Known values: ExactDate (1), MonthYear (2), Year (3).
+     * The birthdayType property
      */
     birthdayType?: number | null;
     /**
@@ -610,6 +620,15 @@ export function createActorChangeImageDtoFromDiscriminatorValue(parseNode: Parse
 // @ts-ignore
 export function createActorChangeLinkDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoActorChangeLinkDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ActorChangesCursorDto}
+ */
+// @ts-ignore
+export function createActorChangesCursorDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoActorChangesCursorDto;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1538,7 +1557,7 @@ export function deserializeIntoActorChangeBioDto(actorChangeBioDto: Partial<Acto
 export function deserializeIntoActorChangeDto(actorChangeDto: Partial<ActorChangeDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "actor": n => { actorChangeDto.actor = n.getObjectValue<ActorChangeActorDto>(createActorChangeActorDtoFromDiscriminatorValue); },
-        "changeType": n => { actorChangeDto.changeType = n.getStringValue(); },
+        "eventType": n => { actorChangeDto.eventType = n.getStringValue(); },
     }
 }
 /**
@@ -1566,6 +1585,18 @@ export function deserializeIntoActorChangeLinkDto(actorChangeLinkDto: Partial<Ac
         "externalSite": n => { actorChangeLinkDto.externalSite = n.getNumberValue(); },
         "externalSiteLabel": n => { actorChangeLinkDto.externalSiteLabel = n.getStringValue(); },
         "url": n => { actorChangeLinkDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ActorChangesCursorDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoActorChangesCursorDto(actorChangesCursorDto: Partial<ActorChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { actorChangesCursorDto.id = n.getGuidValue(); },
+        "updatedAtUtc": n => { actorChangesCursorDto.updatedAtUtc = n.getDateValue(); },
     }
 }
 /**
@@ -1882,9 +1913,9 @@ export function deserializeIntoGetActorChangesResponse(getActorChangesResponse: 
     return {
         "hasMore": n => { getActorChangesResponse.hasMore = n.getBooleanValue(); },
         "items": n => { getActorChangesResponse.items = n.getCollectionOfObjectValues<ActorChangeDto>(createActorChangeDtoFromDiscriminatorValue); },
-        "nextCursorId": n => { getActorChangesResponse.nextCursorId = n.getGuidValue(); },
-        "nextCursorUtc": n => { getActorChangesResponse.nextCursorUtc = n.getDateValue(); },
+        "nextCursor": n => { getActorChangesResponse.nextCursor = n.getObjectValue<ActorChangesCursorDto>(createActorChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getActorChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getActorChangesResponse.serverTimeUtc = n.getDateValue(); },
     }
 }
 /**
@@ -1910,6 +1941,7 @@ export function deserializeIntoGetFavoriteActorChangesResponse(getFavoriteActorC
         "items": n => { getFavoriteActorChangesResponse.items = n.getCollectionOfObjectValues<FavoriteActorChangeDto>(createFavoriteActorChangeDtoFromDiscriminatorValue); },
         "nextCursor": n => { getFavoriteActorChangesResponse.nextCursor = n.getObjectValue<FavoriteActorChangesCursorDto>(createFavoriteActorChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getFavoriteActorChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getFavoriteActorChangesResponse.serverTimeUtc = n.getDateValue(); },
     }
 }
 /**
@@ -1924,6 +1956,7 @@ export function deserializeIntoGetFavoriteSiteChangesResponse(getFavoriteSiteCha
         "items": n => { getFavoriteSiteChangesResponse.items = n.getCollectionOfObjectValues<FavoriteSiteChangeDto>(createFavoriteSiteChangeDtoFromDiscriminatorValue); },
         "nextCursor": n => { getFavoriteSiteChangesResponse.nextCursor = n.getObjectValue<FavoriteSiteChangesCursorDto>(createFavoriteSiteChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getFavoriteSiteChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getFavoriteSiteChangesResponse.serverTimeUtc = n.getDateValue(); },
     }
 }
 /**
@@ -1950,6 +1983,7 @@ export function deserializeIntoGetIndexerFilehashChangesResponse(getIndexerFileh
         "items": n => { getIndexerFilehashChangesResponse.items = n.getCollectionOfObjectValues<IndexerFilehashChangeDto>(createIndexerFilehashChangeDtoFromDiscriminatorValue); },
         "nextCursor": n => { getIndexerFilehashChangesResponse.nextCursor = n.getObjectValue<IndexerFilehashChangesCursorDto>(createIndexerFilehashChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getIndexerFilehashChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getIndexerFilehashChangesResponse.serverTimeUtc = n.getDateValue(); },
     }
 }
 /**
@@ -1977,6 +2011,7 @@ export function deserializeIntoGetVideoFilehashChangesResponse(getVideoFilehashC
         "items": n => { getVideoFilehashChangesResponse.items = n.getCollectionOfObjectValues<VideoFilehashChangeDto>(createVideoFilehashChangeDtoFromDiscriminatorValue); },
         "nextCursor": n => { getVideoFilehashChangesResponse.nextCursor = n.getObjectValue<VideoFilehashChangesCursorDto>(createVideoFilehashChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getVideoFilehashChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getVideoFilehashChangesResponse.serverTimeUtc = n.getDateValue(); },
     }
 }
 /**
@@ -2025,6 +2060,7 @@ export function deserializeIntoGetVideoUserImageChangesResponse(getVideoUserImag
         "items": n => { getVideoUserImageChangesResponse.items = n.getCollectionOfObjectValues<VideoUserImageChangeItemDto>(createVideoUserImageChangeItemDtoFromDiscriminatorValue); },
         "nextCursor": n => { getVideoUserImageChangesResponse.nextCursor = n.getObjectValue<VideoUserImageChangesCursorDto>(createVideoUserImageChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getVideoUserImageChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getVideoUserImageChangesResponse.serverTimeUtc = n.getDateValue(); },
     }
 }
 /**
@@ -2039,6 +2075,7 @@ export function deserializeIntoGetWantedVideoChangesResponse(getWantedVideoChang
         "items": n => { getWantedVideoChangesResponse.items = n.getCollectionOfObjectValues<WantedVideoChangeDto>(createWantedVideoChangeDtoFromDiscriminatorValue); },
         "nextCursor": n => { getWantedVideoChangesResponse.nextCursor = n.getObjectValue<WantedVideoChangesCursorDto>(createWantedVideoChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getWantedVideoChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getWantedVideoChangesResponse.serverTimeUtc = n.getDateValue(); },
     }
 }
 /**
@@ -3203,17 +3240,17 @@ export interface GetActorChangesResponse extends AdditionalDataHolder, Parsable 
      */
     items?: ActorChangeDto[] | null;
     /**
-     * The nextCursorId property
+     * The nextCursor property
      */
-    nextCursorId?: Guid | null;
-    /**
-     * The nextCursorUtc property
-     */
-    nextCursorUtc?: Date | null;
+    nextCursor?: ActorChangesCursorDto | null;
     /**
      * The pageSize property
      */
     pageSize?: number | null;
+    /**
+     * The serverTimeUtc property
+     */
+    serverTimeUtc?: Date | null;
 }
 export interface GetActorsByIdsRequest extends AdditionalDataHolder, Parsable {
     /**
@@ -3238,6 +3275,10 @@ export interface GetFavoriteActorChangesResponse extends AdditionalDataHolder, P
      * The pageSize property
      */
     pageSize?: number | null;
+    /**
+     * The serverTimeUtc property
+     */
+    serverTimeUtc?: Date | null;
 }
 export interface GetFavoriteSiteChangesResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -3256,6 +3297,10 @@ export interface GetFavoriteSiteChangesResponse extends AdditionalDataHolder, Pa
      * The pageSize property
      */
     pageSize?: number | null;
+    /**
+     * The serverTimeUtc property
+     */
+    serverTimeUtc?: Date | null;
 }
 export interface GetHealthResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -3284,6 +3329,10 @@ export interface GetIndexerFilehashChangesResponse extends AdditionalDataHolder,
      * The pageSize property
      */
     pageSize?: number | null;
+    /**
+     * The serverTimeUtc property
+     */
+    serverTimeUtc?: Date | null;
 }
 export interface GetRateLimitResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -3316,6 +3365,10 @@ export interface GetVideoFilehashChangesResponse extends AdditionalDataHolder, P
      * The pageSize property
      */
     pageSize?: number | null;
+    /**
+     * The serverTimeUtc property
+     */
+    serverTimeUtc?: Date | null;
 }
 export interface GetVideoFilehashesByVideoIdsRequest extends AdditionalDataHolder, Parsable {
     /**
@@ -3356,6 +3409,10 @@ export interface GetVideoUserImageChangesResponse extends AdditionalDataHolder, 
      * The pageSize property
      */
     pageSize?: number | null;
+    /**
+     * The serverTimeUtc property
+     */
+    serverTimeUtc?: Date | null;
 }
 export interface GetWantedVideoChangesResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -3374,6 +3431,10 @@ export interface GetWantedVideoChangesResponse extends AdditionalDataHolder, Par
      * The pageSize property
      */
     pageSize?: number | null;
+    /**
+     * The serverTimeUtc property
+     */
+    serverTimeUtc?: Date | null;
 }
 export interface IndexerFilehashChangeDto extends AdditionalDataHolder, Parsable {
     /**
@@ -4145,7 +4206,7 @@ export function serializeActorChangeBioDto(writer: SerializationWriter, actorCha
 export function serializeActorChangeDto(writer: SerializationWriter, actorChangeDto: Partial<ActorChangeDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!actorChangeDto || isSerializingDerivedType) { return; }
     writer.writeObjectValue<ActorChangeActorDto>("actor", actorChangeDto.actor, serializeActorChangeActorDto);
-    writer.writeStringValue("changeType", actorChangeDto.changeType);
+    writer.writeStringValue("eventType", actorChangeDto.eventType);
     writer.writeAdditionalData(actorChangeDto.additionalData);
 }
 /**
@@ -4176,6 +4237,19 @@ export function serializeActorChangeLinkDto(writer: SerializationWriter, actorCh
     writer.writeStringValue("externalSiteLabel", actorChangeLinkDto.externalSiteLabel);
     writer.writeStringValue("url", actorChangeLinkDto.url);
     writer.writeAdditionalData(actorChangeLinkDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param ActorChangesCursorDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeActorChangesCursorDto(writer: SerializationWriter, actorChangesCursorDto: Partial<ActorChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!actorChangesCursorDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", actorChangesCursorDto.id);
+    writer.writeDateValue("updatedAtUtc", actorChangesCursorDto.updatedAtUtc);
+    writer.writeAdditionalData(actorChangesCursorDto.additionalData);
 }
 /**
  * Serializes information the current object
@@ -4510,9 +4584,9 @@ export function serializeGetActorChangesResponse(writer: SerializationWriter, ge
     if (!getActorChangesResponse || isSerializingDerivedType) { return; }
     writer.writeBooleanValue("hasMore", getActorChangesResponse.hasMore);
     writer.writeCollectionOfObjectValues<ActorChangeDto>("items", getActorChangesResponse.items, serializeActorChangeDto);
-    writer.writeGuidValue("nextCursorId", getActorChangesResponse.nextCursorId);
-    writer.writeDateValue("nextCursorUtc", getActorChangesResponse.nextCursorUtc);
+    writer.writeObjectValue<ActorChangesCursorDto>("nextCursor", getActorChangesResponse.nextCursor, serializeActorChangesCursorDto);
     writer.writeNumberValue("pageSize", getActorChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getActorChangesResponse.serverTimeUtc);
     writer.writeAdditionalData(getActorChangesResponse.additionalData);
 }
 /**
@@ -4540,6 +4614,7 @@ export function serializeGetFavoriteActorChangesResponse(writer: SerializationWr
     writer.writeCollectionOfObjectValues<FavoriteActorChangeDto>("items", getFavoriteActorChangesResponse.items, serializeFavoriteActorChangeDto);
     writer.writeObjectValue<FavoriteActorChangesCursorDto>("nextCursor", getFavoriteActorChangesResponse.nextCursor, serializeFavoriteActorChangesCursorDto);
     writer.writeNumberValue("pageSize", getFavoriteActorChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getFavoriteActorChangesResponse.serverTimeUtc);
     writer.writeAdditionalData(getFavoriteActorChangesResponse.additionalData);
 }
 /**
@@ -4555,6 +4630,7 @@ export function serializeGetFavoriteSiteChangesResponse(writer: SerializationWri
     writer.writeCollectionOfObjectValues<FavoriteSiteChangeDto>("items", getFavoriteSiteChangesResponse.items, serializeFavoriteSiteChangeDto);
     writer.writeObjectValue<FavoriteSiteChangesCursorDto>("nextCursor", getFavoriteSiteChangesResponse.nextCursor, serializeFavoriteSiteChangesCursorDto);
     writer.writeNumberValue("pageSize", getFavoriteSiteChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getFavoriteSiteChangesResponse.serverTimeUtc);
     writer.writeAdditionalData(getFavoriteSiteChangesResponse.additionalData);
 }
 /**
@@ -4583,6 +4659,7 @@ export function serializeGetIndexerFilehashChangesResponse(writer: Serialization
     writer.writeCollectionOfObjectValues<IndexerFilehashChangeDto>("items", getIndexerFilehashChangesResponse.items, serializeIndexerFilehashChangeDto);
     writer.writeObjectValue<IndexerFilehashChangesCursorDto>("nextCursor", getIndexerFilehashChangesResponse.nextCursor, serializeIndexerFilehashChangesCursorDto);
     writer.writeNumberValue("pageSize", getIndexerFilehashChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getIndexerFilehashChangesResponse.serverTimeUtc);
     writer.writeAdditionalData(getIndexerFilehashChangesResponse.additionalData);
 }
 /**
@@ -4612,6 +4689,7 @@ export function serializeGetVideoFilehashChangesResponse(writer: SerializationWr
     writer.writeCollectionOfObjectValues<VideoFilehashChangeDto>("items", getVideoFilehashChangesResponse.items, serializeVideoFilehashChangeDto);
     writer.writeObjectValue<VideoFilehashChangesCursorDto>("nextCursor", getVideoFilehashChangesResponse.nextCursor, serializeVideoFilehashChangesCursorDto);
     writer.writeNumberValue("pageSize", getVideoFilehashChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getVideoFilehashChangesResponse.serverTimeUtc);
     writer.writeAdditionalData(getVideoFilehashChangesResponse.additionalData);
 }
 /**
@@ -4664,6 +4742,7 @@ export function serializeGetVideoUserImageChangesResponse(writer: SerializationW
     writer.writeCollectionOfObjectValues<VideoUserImageChangeItemDto>("items", getVideoUserImageChangesResponse.items, serializeVideoUserImageChangeItemDto);
     writer.writeObjectValue<VideoUserImageChangesCursorDto>("nextCursor", getVideoUserImageChangesResponse.nextCursor, serializeVideoUserImageChangesCursorDto);
     writer.writeNumberValue("pageSize", getVideoUserImageChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getVideoUserImageChangesResponse.serverTimeUtc);
     writer.writeAdditionalData(getVideoUserImageChangesResponse.additionalData);
 }
 /**
@@ -4679,6 +4758,7 @@ export function serializeGetWantedVideoChangesResponse(writer: SerializationWrit
     writer.writeCollectionOfObjectValues<WantedVideoChangeDto>("items", getWantedVideoChangesResponse.items, serializeWantedVideoChangeDto);
     writer.writeObjectValue<WantedVideoChangesCursorDto>("nextCursor", getWantedVideoChangesResponse.nextCursor, serializeWantedVideoChangesCursorDto);
     writer.writeNumberValue("pageSize", getWantedVideoChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getWantedVideoChangesResponse.serverTimeUtc);
     writer.writeAdditionalData(getWantedVideoChangesResponse.additionalData);
 }
 /**
@@ -5752,11 +5832,11 @@ export interface UpdateWantedVideoRequest extends AdditionalDataHolder, Parsable
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * Known values: P720 (0), P1080 (1), P2160 (2).
+     * The fulfilledInQuality property
      */
     fulfilledInQuality?: number | null;
     /**
-     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+     * The fulfillmentByApp property
      */
     fulfillmentByApp?: number | null;
     /**
@@ -5778,11 +5858,11 @@ export interface UpdateWantedVideoResponse extends AdditionalDataHolder, Parsabl
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * Known values: P720 (0), P1080 (1), P2160 (2).
+     * The fulfilledInQuality property
      */
     fulfilledInQuality?: number | null;
     /**
-     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+     * The fulfillmentByApp property
      */
     fulfillmentByApp?: number | null;
     /**
@@ -6252,11 +6332,11 @@ export interface WantedVideoChangeWantedVideoDto extends AdditionalDataHolder, P
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * Known values: P720 (0), P1080 (1), P2160 (2).
+     * The fulfilledInQuality property
      */
     fulfilledInQuality?: number | null;
     /**
-     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+     * The fulfillmentByApp property
      */
     fulfillmentByApp?: number | null;
     /**
@@ -6310,11 +6390,11 @@ export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * Known values: P720 (0), P1080 (1), P2160 (2).
+     * The fulfilledInQuality property
      */
     fulfilledInQuality?: number | null;
     /**
-     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+     * The fulfillmentByApp property
      */
     fulfillmentByApp?: number | null;
     /**

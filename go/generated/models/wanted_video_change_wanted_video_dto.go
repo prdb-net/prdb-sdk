@@ -18,9 +18,9 @@ type WantedVideoChangeWantedVideoDto struct {
     deletedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // The fulfilledAtUtc property
     fulfilledAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // Known values: P720 (0), P1080 (1), P2160 (2).
+    // The fulfilledInQuality property
     fulfilledInQuality *int32
-    // Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+    // The fulfillmentByApp property
     fulfillmentByApp *int32
     // The fulfillmentExternalId property
     fulfillmentExternalId *string
@@ -231,12 +231,12 @@ func (m *WantedVideoChangeWantedVideoDto) GetFieldDeserializers()(map[string]fun
 func (m *WantedVideoChangeWantedVideoDto) GetFulfilledAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.fulfilledAtUtc
 }
-// GetFulfilledInQuality gets the fulfilledInQuality property value. Known values: P720 (0), P1080 (1), P2160 (2).
+// GetFulfilledInQuality gets the fulfilledInQuality property value. The fulfilledInQuality property
 // returns a *int32 when successful
 func (m *WantedVideoChangeWantedVideoDto) GetFulfilledInQuality()(*int32) {
     return m.fulfilledInQuality
 }
-// GetFulfillmentByApp gets the fulfillmentByApp property value. Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+// GetFulfillmentByApp gets the fulfillmentByApp property value. The fulfillmentByApp property
 // returns a *int32 when successful
 func (m *WantedVideoChangeWantedVideoDto) GetFulfillmentByApp()(*int32) {
     return m.fulfillmentByApp
@@ -407,11 +407,11 @@ func (m *WantedVideoChangeWantedVideoDto) SetDeletedAtUtc(value *i336074805fc853
 func (m *WantedVideoChangeWantedVideoDto) SetFulfilledAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.fulfilledAtUtc = value
 }
-// SetFulfilledInQuality sets the fulfilledInQuality property value. Known values: P720 (0), P1080 (1), P2160 (2).
+// SetFulfilledInQuality sets the fulfilledInQuality property value. The fulfilledInQuality property
 func (m *WantedVideoChangeWantedVideoDto) SetFulfilledInQuality(value *int32)() {
     m.fulfilledInQuality = value
 }
-// SetFulfillmentByApp sets the fulfillmentByApp property value. Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3).
+// SetFulfillmentByApp sets the fulfillmentByApp property value. The fulfillmentByApp property
 func (m *WantedVideoChangeWantedVideoDto) SetFulfillmentByApp(value *int32)() {
     m.fulfillmentByApp = value
 }

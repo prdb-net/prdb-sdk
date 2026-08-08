@@ -34,13 +34,16 @@ namespace Prdb.Sdk.Generated.FavoriteActors.Changes
         {
         }
         /// <summary>
-        /// Returns a seek-paged delta feed of favorite actor rows for the currently authenticated user ordered by updatedAtUtc ascending, then actorId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Requires API key authentication.
+        /// Returns a seek-paged delta feed of favorite actor rows for the currently authenticated user ordered by updatedAtUtc ascending, then actorId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.GetFavoriteActorChangesResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 400 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 401 status code</exception>
+        /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 403 status code</exception>
+        /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 429 status code</exception>
+        /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 503 status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public async Task<global::Prdb.Sdk.Generated.Models.GetFavoriteActorChangesResponse?> GetAsync(Action<RequestConfiguration<global::Prdb.Sdk.Generated.FavoriteActors.Changes.ChangesRequestBuilder.ChangesRequestBuilderGetQueryParameters>>? requestConfiguration = default, CancellationToken cancellationToken = default)
@@ -55,11 +58,14 @@ namespace Prdb.Sdk.Generated.FavoriteActors.Changes
             {
                 { "400", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "401", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
+                { "403", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
+                { "429", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
+                { "503", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
             };
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.GetFavoriteActorChangesResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.GetFavoriteActorChangesResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns a seek-paged delta feed of favorite actor rows for the currently authenticated user ordered by updatedAtUtc ascending, then actorId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Requires API key authentication.
+        /// Returns a seek-paged delta feed of favorite actor rows for the currently authenticated user ordered by updatedAtUtc ascending, then actorId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -87,7 +93,7 @@ namespace Prdb.Sdk.Generated.FavoriteActors.Changes
             return new global::Prdb.Sdk.Generated.FavoriteActors.Changes.ChangesRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
-        /// Returns a seek-paged delta feed of favorite actor rows for the currently authenticated user ordered by updatedAtUtc ascending, then actorId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Requires API key authentication.
+        /// Returns a seek-paged delta feed of favorite actor rows for the currently authenticated user ordered by updatedAtUtc ascending, then actorId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class ChangesRequestBuilderGetQueryParameters 

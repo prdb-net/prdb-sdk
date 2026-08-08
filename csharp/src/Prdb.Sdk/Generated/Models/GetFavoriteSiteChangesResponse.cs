@@ -34,6 +34,8 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>The pageSize property</summary>
         public int? PageSize { get; set; }
+        /// <summary>The serverTimeUtc property</summary>
+        public DateTimeOffset? ServerTimeUtc { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.GetFavoriteSiteChangesResponse"/> and sets the default values.
         /// </summary>
@@ -63,6 +65,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "items", n => { Items = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.FavoriteSiteChangeDto>(global::Prdb.Sdk.Generated.Models.FavoriteSiteChangeDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "nextCursor", n => { NextCursor = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.FavoriteSiteChangesCursorDto>(global::Prdb.Sdk.Generated.Models.FavoriteSiteChangesCursorDto.CreateFromDiscriminatorValue); } },
                 { "pageSize", n => { PageSize = n.GetIntValue(); } },
+                { "serverTimeUtc", n => { ServerTimeUtc = n.GetDateTimeOffsetValue(); } },
             };
         }
         /// <summary>
@@ -76,6 +79,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.FavoriteSiteChangeDto>("items", Items);
             writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.FavoriteSiteChangesCursorDto>("nextCursor", NextCursor);
             writer.WriteIntValue("pageSize", PageSize);
+            writer.WriteDateTimeOffsetValue("serverTimeUtc", ServerTimeUtc);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

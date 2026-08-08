@@ -30,11 +30,11 @@ class ChangesRequestBuilder(BaseRequestBuilder):
         param request_adapter: The request adapter to use to execute the requests.
         Returns: None
         """
-        super().__init__(request_adapter, "{+baseurl}/actors/changes{?PageSize*,SinceId*,SinceUtc*}", path_parameters)
+        super().__init__(request_adapter, "{+baseurl}/actors/changes{?PageSize*,Since*,SinceId*}", path_parameters)
     
     async def get(self,request_configuration: Optional[RequestConfiguration[ChangesRequestBuilderGetQueryParameters]] = None) -> Optional[GetActorChangesResponse]:
         """
-        Returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+        Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[GetActorChangesResponse]
         """
@@ -46,6 +46,9 @@ class ChangesRequestBuilder(BaseRequestBuilder):
         error_mapping: dict[str, type[ParsableFactory]] = {
             "400": ProblemDetails,
             "401": ProblemDetails,
+            "403": ProblemDetails,
+            "429": ProblemDetails,
+            "503": ProblemDetails,
         }
         if not self.request_adapter:
             raise Exception("Http core is null") 
@@ -55,7 +58,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     
     def to_get_request_information(self,request_configuration: Optional[RequestConfiguration[ChangesRequestBuilderGetQueryParameters]] = None) -> RequestInformation:
         """
-        Returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+        Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
@@ -77,7 +80,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     @dataclass
     class ChangesRequestBuilderGetQueryParameters():
         """
-        Returns created, updated, and deleted actors ordered by updatedAtUtc ascending and actor ID ascending. Continue with nextCursorUtc and nextCursorId. Page size defaults to 100 and is limited to 500. Requires API key authentication.
+        Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
         """
         def get_query_parameter(self,original_name: str) -> str:
             """
@@ -89,17 +92,17 @@ class ChangesRequestBuilder(BaseRequestBuilder):
                 raise TypeError("original_name cannot be null.")
             if original_name == "page_size":
                 return "PageSize"
+            if original_name == "since":
+                return "Since"
             if original_name == "since_id":
                 return "SinceId"
-            if original_name == "since_utc":
-                return "SinceUtc"
             return original_name
         
         page_size: Optional[int] = None
 
-        since_id: Optional[UUID] = None
+        since: Optional[datetime.datetime] = None
 
-        since_utc: Optional[datetime.datetime] = None
+        since_id: Optional[UUID] = None
 
     
     @dataclass

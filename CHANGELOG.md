@@ -12,7 +12,33 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Changed
+
+- **BREAKING — the actor change feed now matches the other six.** `GET
+  /actors/changes` was the odd one out on three axes at once, which forced a
+  generic change-feed reader to special-case actors forever. The query
+  parameter `sinceUtc` is now `since`; the flat `nextCursorUtc` and
+  `nextCursorId` are one nested `nextCursor` object, like every other feed; and
+  the discriminator on a change is `eventType`, not `changeType`. Code that
+  reads actor changes has to be updated. Everything else is unaffected
+  (prdb#24).
+
 ### Added
+
+- **403, 429 and 503 now deserialise into `ProblemDetails`.** The API returns
+  all three on any authenticated endpoint — no API plan, quota spent, and rate
+  limit enforcement unavailable respectively — but declared none of them, so
+  the generated error mapping could not parse the body and a caller got a bare
+  transport exception with a status code and nothing else. All three are now
+  declared on all 48 authenticated operations, so the `detail` explaining *why*
+  the request was refused reaches the caller. `429` also documents its
+  `Retry-After` header (prdb#23).
+- **Every change feed response carries `serverTimeUtc`.** An empty page used to
+  leave a caller with no cursor to persist, so incremental syncs either
+  re-read from the same point forever or invented a timestamp from the client
+  clock or the HTTP `Date` header. `serverTimeUtc` is the server's own clock
+  read when the page was produced, and is safe to store as the next `since`
+  (prdb#25).
 
 - **Retrying is now configurable, and can be turned off.** All four SDKs install
   Kiota's retry handler, which retries `429`, `503` and `504` honouring

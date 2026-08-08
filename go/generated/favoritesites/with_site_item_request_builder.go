@@ -28,7 +28,10 @@ func NewWithSiteItemRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee2
 }
 // Delete unmarks the specified site as a favourite for the currently authenticated user. Returns 404 if the site was not in the user's favourites. Requires API key authentication.
 // returns a ProblemDetails error when the service returns a 401 status code
+// returns a ProblemDetails error when the service returns a 403 status code
 // returns a ProblemDetails error when the service returns a 404 status code
+// returns a ProblemDetails error when the service returns a 429 status code
+// returns a ProblemDetails error when the service returns a 503 status code
 func (m *WithSiteItemRequestBuilder) Delete(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(error) {
     requestInfo, err := m.ToDeleteRequestInformation(ctx, requestConfiguration);
     if err != nil {
@@ -36,7 +39,10 @@ func (m *WithSiteItemRequestBuilder) Delete(ctx context.Context, requestConfigur
     }
     errorMapping := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.ErrorMappings {
         "401": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "403": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "404": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "429": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "503": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
     }
     err = m.BaseRequestBuilder.RequestAdapter.SendNoContent(ctx, requestInfo, errorMapping)
     if err != nil {
@@ -46,7 +52,10 @@ func (m *WithSiteItemRequestBuilder) Delete(ctx context.Context, requestConfigur
 }
 // Post marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Requires API key authentication.
 // returns a ProblemDetails error when the service returns a 401 status code
+// returns a ProblemDetails error when the service returns a 403 status code
 // returns a ProblemDetails error when the service returns a 404 status code
+// returns a ProblemDetails error when the service returns a 429 status code
+// returns a ProblemDetails error when the service returns a 503 status code
 func (m *WithSiteItemRequestBuilder) Post(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(error) {
     requestInfo, err := m.ToPostRequestInformation(ctx, requestConfiguration);
     if err != nil {
@@ -54,7 +63,10 @@ func (m *WithSiteItemRequestBuilder) Post(ctx context.Context, requestConfigurat
     }
     errorMapping := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.ErrorMappings {
         "401": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "403": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "404": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "429": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "503": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
     }
     err = m.BaseRequestBuilder.RequestAdapter.SendNoContent(ctx, requestInfo, errorMapping)
     if err != nil {
