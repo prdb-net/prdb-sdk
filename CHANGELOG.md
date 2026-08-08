@@ -12,6 +12,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-08-08
+
 Shaped by porganizer's second adoption review, which ran against the published
 0.2.0 package. Both findings are C#, and both were blockers: between them they
 ruled out every way of pointing the SDK at an application's own connection pool.
