@@ -12,6 +12,84 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-08-08
+
+Three new endpoints from one API change. Everything here is additive: no
+existing call site changes, and nothing was renamed, retyped or removed.
+
+### Added
+
+- **`POST /videos/identify`** — hand the API a batch of video files and let it
+  match them against the catalogue server-side. Matching a file name to a site
+  happens here and nowhere else; sites carry no alias names a client could match
+  against itself. Each result reports how it was matched (`matchKind`: os hash,
+  perceptual hash, file name, release name, or site) and how sure the API is
+  (`confidence`, from none through exact, plus ambiguous). Ask for
+  `includeVideoDetails` and the full `VideoDetailDto` comes back with the match
+  instead of just an id.
+
+  ```python
+  result = await client.videos.identify.post(request)
+  ```
+
+- **`POST /wanted-videos/fulfillments`** — mark wanted videos as fulfilled in
+  one request instead of one call each. Each item reports its own outcome
+  (`Updated`, `Unchanged`, `NotWanted`, `NotFound`), so a partial success is
+  readable rather than an all-or-nothing failure.
+
+  ```python
+  result = await client.wanted_videos.fulfillments.post(request)
+  ```
+
+- **`POST /videos/filehash-submissions`** — submit hash-to-video assignments
+  from a client. Submissions are stored apart from the aggregated hash set and
+  change no read result, so this is a write-only path: it is deliberately not
+  the inverse of `GET /videos/{id}/filehashes`. Each item says whether it was
+  `Recorded`, `Updated`, `Conflicted`, or whether the video was not found, and
+  carries the source of the assignment (`UserConfirmed` or `ClientDetected`).
+
+  ```python
+  result = await client.videos.filehash_submissions.post(request)
+  ```
+
+  It sits next to `filehashes` on the `videos` builder — `filehashes` reads the
+  aggregated set, `filehashSubmissions` writes a submission. Naming follows the
+  route, as everywhere else in these SDKs.
+
+- **`SiteSummaryDto` now carries `createdAtUtc` and `updatedAtUtc`**, so a
+  cached copy of the site list can be reconciled without refetching each site.
+
+### Changed
+
+- **`GET /sites` accepts `pageSize` up to 1000**, up from 100. The whole site
+  list fits in one request at that size.
+- **`FulfillmentApp` gained a fifth member, `Ordeno` (`4`).** The four existing
+  members keep their numbers. Note that the API document spells its integer
+  enums as a bare list of numbers with the member names in the description, so
+  none of them are generated as named types in any of the four SDKs —
+  `fulfillmentByApp` is an `int`, and `4` is now a value it can carry.
+
+### Known limitations
+
+- **`GET /sites` answers `304 Not Modified` when you send back the `ETag` it
+  gave you, and the four SDKs surface that differently.** Python and TypeScript
+  return `None`/`undefined` from the typed call, with `ResponseStatusOption`
+  reporting `304`. **C# throws `ApiException`** instead — Kiota generates no
+  handling for a 3xx response, and its C# adapter treats anything outside 2xx
+  with no registered error factory as a failure. So in C# the conditional
+  request works, but only through a `try`/`catch`. Tracked separately.
+
+  Reading the `ETag` off the `200` in the first place needs Kiota's native
+  response handler, which returns the raw response *instead of* the deserialised
+  model, in every language. A typed way to reach response headers is separate
+  work and is tracked with the rate-limit headers below.
+
+- **The API now returns six rate-limit headers**
+  (`X-RateLimit-{Limit,Remaining,Reset}-{Hour,Month}`) on every metered
+  response. `Reset` is a number of seconds until a slot frees up, not a
+  timestamp. They pass through untouched but have no typed representation in any
+  SDK yet.
+
 ## [0.4.0] - 2026-08-08
 
 Shaped by porganizer's third adoption review, which ran against 0.3.0. Neither
