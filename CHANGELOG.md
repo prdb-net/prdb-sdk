@@ -12,6 +12,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-08-08
+
 Shaped by porganizer's third adoption review, which ran against 0.3.0. Neither
 finding blocked the migration; one of them cost a workaround.
 
