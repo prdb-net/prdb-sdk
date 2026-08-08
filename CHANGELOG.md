@@ -12,6 +12,22 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Fixed
+
+- **Python: a caller-supplied `httpx.AsyncClient` is no longer modified.** The
+  SDK installed its middleware the way Kiota does — by replacing the client's
+  transport in place — which reconfigured an object the application goes on
+  using. Every unrelated request through that client then ran prdb's
+  middleware, including the cross-origin redirect rule, so a redirect that had
+  nothing to do with prdb was refused with a `CrossOriginRedirectError`. Each
+  call wrapped the transport again, so a client shared across several SDK
+  clients accumulated one pipeline per client built from it. The middleware now
+  goes onto a shallow copy: it keeps the caller's timeouts, headers, auth and
+  event hooks, and shares their transport, so their connection pool, TLS
+  settings and proxies are still the ones used — but their client object is
+  left exactly as it was. This is the same stance the C# wrapper took in 0.3.0,
+  from the other end: neither SDK reconfigures what the caller owns.
+
 ## [0.3.0] - 2026-08-08
 
 Shaped by porganizer's second adoption review, which ran against the published

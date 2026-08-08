@@ -134,6 +134,46 @@ async def test_same_origin_redirect_is_followed(recorder: Recorder) -> None:
     assert recorder.keys_sent_to("api.example.test") == ["secret-key", "secret-key"]
 
 
+async def test_leaves_the_supplied_client_alone(recorder: Recorder) -> None:
+    """The client belongs to the caller; the SDK only borrows it.
+
+    Kiota installs its middleware by replacing a client's transport in place.
+    Were the SDK to let it do that to a client it was lent, every unrelated
+    request the application made through that client would run prdb's
+    middleware -- including the cross-origin rule, which would refuse redirects
+    that have nothing to do with prdb.
+    """
+
+    def redirect_away(request: httpx.Request) -> httpx.Response:
+        if request.url.host == "api.example.test":
+            return httpx.Response(307, headers={"Location": f"{OTHER_ORIGIN}/health"})
+        return httpx.Response(200, json=HEALTH_BODY)
+
+    caller_client = recorder.client(redirect_away)
+
+    # Twice: installing in place wraps the transport again on every call, so a
+    # client reused across several SDK clients would accumulate pipelines.
+    create_client("secret-key", base_url=API_ORIGIN, http_client=caller_client)
+    create_client("secret-key", base_url=API_ORIGIN, http_client=caller_client)
+
+    # Their own request, through their own client: the SDK's rule must not be
+    # in this path, so the redirect comes back as an ordinary 307.
+    response = await caller_client.get(f"{API_ORIGIN}/health")
+
+    assert response.status_code == 307
+
+
+async def test_uses_the_transport_of_the_supplied_client(recorder: Recorder) -> None:
+    """The copy shares the caller's transport, so their pool is the one used."""
+    client = create_client(
+        "secret-key", base_url=API_ORIGIN, http_client=recorder.client(health)
+    )
+
+    await client.health.get()
+
+    assert len(recorder.requests) == 1
+
+
 async def test_retries_a_refused_request_by_default(recorder: Recorder) -> None:
     """Kiota's retry handler is in the default pipeline, so this is the status quo."""
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 from dataclasses import dataclass
 from typing import Optional
 from urllib.parse import urlparse
@@ -19,7 +20,7 @@ from kiota_abstractions.authentication.api_key_authentication_provider import (
 )
 from kiota_bundle.default_request_adapter import DefaultRequestAdapter
 from kiota_http.kiota_client_factory import KiotaClientFactory
-from kiota_http.middleware import RetryHandler
+from kiota_http.middleware import BaseMiddleware, RetryHandler
 from kiota_http.middleware.options import RedirectHandlerOption, RetryHandlerOption
 
 from .generated.prdb_client import PrdbClient
@@ -96,8 +97,11 @@ def create_client(
             use ``https``, so the key never travels in cleartext.
         http_client: Supply your own ``httpx.AsyncClient`` to control timeouts,
             proxies or connection limits. One is created for you when omitted.
-            Either way the SDK's middleware is installed on it, which modifies
-            the client you pass in place.
+            The SDK does not modify the client you pass: it copies it and
+            installs its middleware on the copy, so your client keeps behaving
+            the way you configured it. The copy shares your transport, so your
+            connection pool is the one used -- and closing your client closes
+            the connections this one sends through.
         retry: How the SDK retries a refused request. Defaults to Kiota's
             policy — three attempts, honouring ``Retry-After``. Pass
             :meth:`RetryOptions.disabled` if your application already retries
@@ -168,7 +172,7 @@ def _build_http_client(
     http_client: Optional[httpx.AsyncClient],
     retry: Optional[RetryOptions],
 ) -> httpx.AsyncClient:
-    """Load the SDK's middleware pipeline onto a client, creating one if needed.
+    """Build the client the request adapter sends through.
 
     A client handed straight to the request adapter carries no middleware at
     all, which loses redirect handling, retries and Kiota's parameter name
@@ -197,9 +201,45 @@ def _build_http_client(
             handler for handler in middleware if not isinstance(handler, RetryHandler)
         ]
 
+    if http_client is None:
+        return KiotaClientFactory.create_with_custom_middleware(middleware=middleware)
+
+    return _load_middleware_onto_a_copy(http_client, middleware)
+
+
+def _load_middleware_onto_a_copy(
+    http_client: httpx.AsyncClient,
+    middleware: list[BaseMiddleware],
+) -> httpx.AsyncClient:
+    """Install the pipeline on a copy of the caller's client, not on theirs.
+
+    Kiota loads middleware by replacing a client's transport, in place. Doing
+    that to a client the SDK was merely lent reconfigures an object the caller
+    still uses: every other request their application makes through it would
+    run prdb's middleware, including the cross-origin rule below, which would
+    refuse redirects that have nothing to do with prdb. Each call wraps the
+    transport again, too, so a client shared across several SDK clients would
+    accumulate a pipeline per client built from it.
+
+    So the pipeline goes onto a shallow copy. It keeps the caller's timeouts,
+    headers, auth and event hooks, and it shares their transport, so their
+    connection pool, TLS settings and proxies are the ones actually used --
+    only the transport reference on the copy is replaced. Their client object
+    is left exactly as it was.
+
+    The copy shares the caller's transport, so it also shares its lifetime:
+    closing their client closes the connections this one sends through.
+    """
+    ours: httpx.AsyncClient = copy.copy(http_client)
+
+    # Ours to decide, now that the client is ours. httpx follows redirects above
+    # the transport, which is where Kiota's middleware lives, so a redirect httpx
+    # followed itself is one the rule below would never see.
+    ours.follow_redirects = False
+
     return KiotaClientFactory.create_with_custom_middleware(
         middleware=middleware,
-        client=http_client,
+        client=ours,
     )
 
 

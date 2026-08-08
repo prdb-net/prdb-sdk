@@ -104,7 +104,9 @@ middleware. Python, TypeScript and C# take the innermost transport and build the
 pipeline around it; Go copies the client and sets `CheckRedirect`, because its
 Kiota middleware lives in the `Transport` the caller owns.
 
-C# checks the transport rather than correcting it: a handler from
+None of the four reconfigure what the caller owns. Go copies the client, Python
+copies it and installs the pipeline on the copy, TypeScript wraps the supplied
+`fetch`, and C# checks the transport rather than correcting it: a handler from
 `IHttpMessageHandlerFactory` is pooled and shared, and a `SocketsHttpHandler`
 refuses property writes once it has served a request, so turning
 `AllowAutoRedirect` off for the caller both reconfigures someone else's

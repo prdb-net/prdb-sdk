@@ -76,8 +76,14 @@ client = create_client(
 )
 ```
 
-The client you pass in is configured with the SDK's middleware in place, so it
-behaves like the one built for you — same redirect rule, same retry handling.
+A client you pass in is left as it is. The SDK copies it and installs its
+middleware on the copy, so the client it sends through behaves like the one
+built for you — same redirect rule, same retry handling — while yours keeps
+behaving the way you configured it.
+
+The copy shares your transport, so your connection pool, TLS settings and
+proxies are the ones actually used. That also ties the lifetimes together:
+closing your client closes the connections the SDK sends through.
 
 ### Retrying
 
