@@ -12,6 +12,49 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+Shaped by porganizer's third adoption review, which ran against 0.3.0. Neither
+finding blocked the migration; one of them cost a workaround.
+
+### Added
+
+- **A typed call can now report which status the API answered with.** `POST
+  /downloaded-from-indexers` answers `201` when it created the entry and `200`
+  when an equivalent one already existed, and that distinction is behaviour, not
+  logging — the 200 path means adopting what the API already has. A generated
+  method returns the deserialised body alone, and Kiota's `NativeResponseHandler`
+  surfaces the raw response only by suppressing deserialisation, so the typed
+  model and the status were mutually exclusive: reading the status meant keeping
+  that one call on a raw HTTP client, outside the SDK's typed layer. Pass a
+  per-request option instead and get both:
+
+  ```csharp
+  var status = new ResponseStatusOption();
+  var entry = await client.DownloadedFromIndexers.PostAsync(
+      body, config => config.Options.Add(status));
+
+  if (status.StatusCode == HttpStatusCode.OK) { /* it already existed */ }
+  ```
+
+  `ResponseStatusOption` (C#, Python, TypeScript) and
+  `prdb.NewResponseStatusOption()` (Go). The status recorded is the one the
+  result was built from — after a followed redirect and after the last retry,
+  the SDK's own or an application's inside the pipeline — and a call that fails
+  records too, so a `403`'s `ProblemDetails` arrives with its status alongside.
+
+### Changed
+
+- **C#: how to upload an image, and that `MultipartBody.RequestAdapter` is not
+  yours to set.** `POST /video-user-images` takes a `MultipartBody` whose public
+  `RequestAdapter` property is documented as needed for serialisation — and a
+  consumer cannot obtain one, because the adapter behind `PrdbClient` is
+  `protected` on `BaseRequestBuilder`. The endpoint therefore reads as
+  uncallable from outside the SDK, which it is not: the request adapter fills the
+  property in while sending. The C# README now shows the call, and a test pins
+  the behaviour down so a Kiota upgrade that changed it would fail the build
+  rather than the caller.
+- **TypeScript: the README said Node 20 where `package.json` has required 22
+  since 0.2.0.**
+
 ## [0.3.1] - 2026-08-08
 
 A Python fix. The other three packages are identical to 0.3.0 apart from their

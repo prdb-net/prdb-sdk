@@ -58,6 +58,101 @@ type Options struct {
 	Retry *RetryOptions
 }
 
+// ResponseStatusOption reports which status code the API answered a typed call
+// with.
+//
+// A generated method returns the deserialised body and nothing else, which is a
+// problem when an operation answers with more than one success status. POST
+// /downloaded-from-indexers is the one that does: 201 when it created the
+// entry, 200 when an equivalent one already existed and is being returned
+// unchanged. The bodies are the same shape, so the status is the only thing
+// that tells the two apart.
+//
+// Pass one per call, in the request configuration's Options:
+//
+//	status := prdb.NewResponseStatusOption()
+//	entry, err := client.DownloadedFromIndexers().Post(ctx, body,
+//	    &abstractions.RequestConfiguration[abstractions.DefaultQueryParameters]{
+//	        Options: []abstractions.RequestOption{status},
+//	    })
+//	if status.StatusCode == http.StatusOK {
+//	    // An equivalent entry already existed and was returned unchanged.
+//	}
+//
+// One instance per call: it is written when the response arrives, so sharing
+// one across concurrent calls means whichever finishes last wins.
+//
+// The status recorded is the one of the response the result was built from --
+// after any redirect that was followed, and after the last retry. A call that
+// fails records too, so the status is there for a caller that inspects the
+// error.
+type ResponseStatusOption struct {
+	// StatusCode is the status of the last response received, or zero until the
+	// call the option was passed to has produced one -- and for good if nothing
+	// answered at all, as with a connection failure or a timeout.
+	//
+	// "Last" matters only when a redirect is refused: a caller-supplied
+	// *http.Client follows redirects above the SDK's transport, so the redirect
+	// response itself is what was last received. Everywhere else the last
+	// response is the one the result was built from.
+	StatusCode int
+}
+
+// NewResponseStatusOption returns an option ready to be passed to one call.
+func NewResponseStatusOption() *ResponseStatusOption {
+	return &ResponseStatusOption{}
+}
+
+// responseStatusKey is what the request adapter files the option under in the
+// request context, and therefore what recordResponseStatus looks it up by.
+var responseStatusKey = abs.RequestOptionKey{Key: "prdb.responseStatus"}
+
+// GetKey identifies the option to Kiota.
+func (o *ResponseStatusOption) GetKey() abs.RequestOptionKey {
+	return responseStatusKey
+}
+
+// responseStatusTransport records the response status into the
+// ResponseStatusOption a request carries.
+//
+// A RoundTripper rather than a Kiota middleware, because it has to work on both
+// paths: Kiota's middleware lives in the Transport, which a caller-supplied
+// client owns and the SDK does not touch. Wrapping the transport of the client
+// the SDK sends through covers both.
+//
+// On the client the SDK builds, that puts it outside the whole middleware
+// pipeline, retries and redirects included, so it records the response the
+// result was built from. With a caller-supplied client it runs per round trip,
+// below net/http's own redirect following, so the last response it sees wins --
+// the same one, unless a redirect was refused.
+type responseStatusTransport struct {
+	next nethttp.RoundTripper
+}
+
+func (t responseStatusTransport) RoundTrip(req *nethttp.Request) (*nethttp.Response, error) {
+	response, err := t.next.RoundTrip(req)
+
+	if response != nil {
+		if option, ok := req.Context().Value(responseStatusKey).(*ResponseStatusOption); ok {
+			option.StatusCode = response.StatusCode
+		}
+	}
+
+	return response, err
+}
+
+// recordResponseStatus wraps a client's transport so the option is filled in.
+// The client is ours by this point -- either built here or a copy of the
+// caller's -- so replacing its transport is not a write to anything they own.
+func recordResponseStatus(client *nethttp.Client) {
+	next := client.Transport
+	if next == nil {
+		next = nethttp.DefaultTransport
+	}
+
+	client.Transport = responseStatusTransport{next: next}
+}
+
 // RetryOptions describes the SDK's retry policy.
 //
 // Retry belongs to whoever owns the calling application's resilience story. An
@@ -178,6 +273,7 @@ func buildClient(
 		if err != nil {
 			return nil, err
 		}
+		recordResponseStatus(httpClient)
 	} else {
 		// A caller-supplied client does not run Kiota's middleware, so apply the
 		// same-host redirect rule through net/http instead. Copied rather than
@@ -189,6 +285,7 @@ func buildClient(
 		// Ours runs first and refuses; anything it allows is then theirs to judge.
 		clone := *httpClient
 		clone.CheckRedirect = refuseCrossHostRedirectThen(httpClient.CheckRedirect)
+		recordResponseStatus(&clone)
 		httpClient = &clone
 	}
 

@@ -8,7 +8,7 @@ TypeScript client for the [prdb Public API](https://apidocs.prdb.net/).
 npm install @prdb/sdk
 ```
 
-Requires Node 20 or newer. The package is ESM-only and ships type declarations.
+Requires Node 22 or newer. The package is ESM-only and ships type declarations.
 
 ## Usage
 
@@ -88,6 +88,45 @@ const client = createClient({
   retry: { maxRetries: 5, delay: 1 },
 });
 ```
+
+## Reading the response status
+
+A typed call returns the deserialised body, which is all you need until an
+operation answers with more than one success status. `POST
+/downloaded-from-indexers` is the one that does: **201** when it created the
+entry, **200** when an equivalent one already existed and is being returned
+unchanged. The bodies are the same shape, so the status is the only thing that
+tells the two apart.
+
+Pass a `ResponseStatusOption` to read it:
+
+```ts
+import { ResponseStatusOption } from "@prdb/sdk";
+
+const status = new ResponseStatusOption();
+
+const entry = await client.downloadedFromIndexers.post(body, {
+  options: [status],
+});
+
+if (status.statusCode === 200) {
+  // An equivalent entry already existed; entry is the one the API has.
+}
+```
+
+Kiota's own native response handler cannot serve this: it surfaces the raw
+`Response` but suppresses deserialisation while doing so, so the typed result
+comes back `undefined`. The option is the other half — the call returns its
+model as usual, and the status is on the option afterwards.
+
+Use one instance per call. It is written when the response arrives, so sharing
+one across concurrent calls means whichever finishes last wins.
+
+The status recorded is the one the result was built from: after a redirect the
+SDK followed, and after the last retry. A call that rejects records too, so an
+error caught from a `403` still has its status alongside. It stays `undefined`
+when no response was reached at all — a failed connection, a timeout, or a
+refused cross-origin redirect.
 
 ## Generated code
 

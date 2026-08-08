@@ -112,6 +112,55 @@ client, err := prdb.NewClient("...", prdb.Options{
 Kiota's middleware lives in the `Transport` a supplied client owns, so the SDK's
 pipeline does not run for it — configure retrying on that client instead.
 
+## Reading the response status
+
+A typed call returns the deserialised body, which is all you need until an
+operation answers with more than one success status. `POST
+/downloaded-from-indexers` is the one that does: **201** when it created the
+entry, **200** when an equivalent one already existed and is being returned
+unchanged. The bodies are the same shape, so the status is the only thing that
+tells the two apart.
+
+Pass a `ResponseStatusOption` to read it:
+
+```go
+import (
+	abstractions "github.com/microsoft/kiota-abstractions-go"
+	prdb "github.com/prdb-net/prdb-sdk/go"
+)
+
+status := prdb.NewResponseStatusOption()
+
+entry, err := client.DownloadedFromIndexers().Post(ctx, body,
+	&abstractions.RequestConfiguration[abstractions.DefaultQueryParameters]{
+		Options: []abstractions.RequestOption{status},
+	})
+if err != nil {
+	return err
+}
+
+if status.StatusCode == http.StatusOK {
+	// An equivalent entry already existed; entry is the one the API has.
+}
+```
+
+Kiota's own native response handler cannot serve this: it surfaces the raw
+response but suppresses deserialisation while doing so, so the typed result
+comes back nil. The option is the other half — the call returns its model as
+usual, and the status is on the option afterwards.
+
+Use one instance per call. It is written when the response arrives, so sharing
+one across concurrent calls means whichever finishes last wins.
+
+The status recorded is the one the result was built from: after a redirect that
+was followed, and after the last retry. A call that fails records too, so the
+status is there alongside a `403`'s error. It stays zero when nothing answered
+at all — a failed connection or a timeout. Unlike the other three SDKs this also
+works with a supplied `HTTPClient`, because the recorder is a `RoundTripper`
+rather than Kiota middleware; with one, a refused cross-host redirect leaves the
+redirect's own status behind, since `net/http` follows redirects above the
+transport.
+
 ## Generated code
 
 Everything under `generated/` is produced by Kiota from `spec/openapi.json` in

@@ -83,6 +83,12 @@ authentication and the base URL. They are deliberately the same shape:
   cannot travel off the API host
 - validation that rejects an empty key, a non-absolute base URL, and — for the
   authenticated constructor only — a base URL that is not `https`
+- a per-request option reporting the response status, because a typed call
+  otherwise cannot tell 201 from 200 on `POST /downloaded-from-indexers`. It is
+  recorded at the outer end of the pipeline, above the retry and redirect
+  handlers, so it is the status the caller's result was built from. Go does it
+  with a `RoundTripper` instead of Kiota middleware, so that a caller-supplied
+  `*http.Client` is covered too
 
 Adding a capability to one wrapper means adding it to all four. A user who
 learns one SDK should recognise the others.

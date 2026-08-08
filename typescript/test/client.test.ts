@@ -17,6 +17,7 @@ import {
 	DEFAULT_BASE_URL,
 	type FetchLike,
 	RETRY_DISABLED,
+	ResponseStatusOption,
 	createAnonymousClient,
 	createClient,
 } from "../src/index.js";
@@ -243,6 +244,128 @@ describe("retrying", () => {
 			);
 		});
 	}
+});
+
+describe("ResponseStatusOption", () => {
+	const ENTRY_BODY = JSON.stringify({
+		id: "00000000-0000-0000-0000-000000000100",
+		indexerId: "indexer-entry-id",
+	});
+
+	function entry(status: number): Response {
+		return new Response(ENTRY_BODY, {
+			status,
+			headers: { "content-type": "application/json" },
+		});
+	}
+
+	function addEntry(
+		client: ReturnType<typeof createClient>,
+		status: ResponseStatusOption,
+	) {
+		return client.downloadedFromIndexers.post(
+			{ indexerId: "indexer-entry-id" },
+			{ options: [status] },
+		);
+	}
+
+	/**
+	 * Both halves at once.
+	 *
+	 * `POST /downloaded-from-indexers` answers 201 when it created the entry and
+	 * 200 when an equivalent one already existed, and the bodies are the same
+	 * shape, so a caller who has to tell them apart has nothing else to go on.
+	 * Kiota's native response handler surfaces the response but suppresses
+	 * deserialisation, so it cannot serve both.
+	 */
+	for (const status of [201, 200]) {
+		it(`reports ${status} alongside the typed result`, async () => {
+			const recorder = new Recorder();
+			const client = createClient({
+				apiKey: "secret-key",
+				baseUrl: API_ORIGIN,
+				customFetch: recorder.fetch(() => entry(status)),
+			});
+			const option = new ResponseStatusOption();
+
+			const result = await addEntry(client, option);
+
+			assert.equal(result?.indexerId, "indexer-entry-id");
+			assert.equal(option.statusCode, status);
+		});
+	}
+
+	// The handler sits above the retry handler, so the attempt that succeeded wins.
+	it("reports the last attempt when a refusal is retried", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: recorder.fetch(() =>
+				recorder.requests.length === 1
+					? new Response(null, { status: 503 })
+					: entry(201),
+			),
+			retry: { maxRetries: 1, delay: 0 },
+		});
+		const option = new ResponseStatusOption();
+
+		await addEntry(client, option);
+
+		assert.equal(recorder.requests.length, 2);
+		assert.equal(option.statusCode, 201);
+	});
+
+	// A refusal records too, for a caller that catches the error.
+	it("reports the status when the api refuses", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: recorder.fetch(
+				() =>
+					new Response(
+						JSON.stringify({
+							title: "Forbidden",
+							status: 403,
+							detail: "no api plan",
+						}),
+						{ status: 403, headers: { "content-type": "application/json" } },
+					),
+			),
+			retry: RETRY_DISABLED,
+		});
+		const option = new ResponseStatusOption();
+
+		await assert.rejects(() => addEntry(client, option));
+
+		assert.equal(option.statusCode, 403);
+	});
+
+	// Nothing answered, so there is no status -- rather than an invented one.
+	it("reports no status when no response was reached", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: recorder.fetch((url) =>
+				url.startsWith(API_ORIGIN)
+					? new Response(null, {
+							status: 307,
+							headers: { location: `${OTHER_ORIGIN}/health` },
+						})
+					: healthy(),
+			),
+		});
+		const option = new ResponseStatusOption();
+
+		await assert.rejects(
+			() => client.health.get({ options: [option] }),
+			(error: unknown) => error instanceof CrossOriginRedirectError,
+		);
+
+		assert.equal(option.statusCode, undefined);
+	});
 });
 
 describe("defaults", () => {
