@@ -51,15 +51,43 @@ protect, so it accepts a plain `http` base URL.
 ## Options
 
 ```ts
+import { RETRY_DISABLED, createClient } from "@prdb/sdk";
+
 const client = createClient({
   apiKey: "...",
   baseUrl: "https://api.prdb.net", // override for a staging deployment
   customFetch: myFetch,            // control timeouts, proxies, agents
+  retry: RETRY_DISABLED,           // see below
 });
 ```
 
 `customFetch` is wrapped in the SDK's middleware, so the redirect rule above
 applies to it too.
+
+### Retrying
+
+By default the SDK retries a `429`, `503` or `504` up to three times, honouring
+`Retry-After`.
+
+Turn that off if your application already retries prdb calls:
+
+```ts
+const client = createClient({ apiKey: "...", retry: RETRY_DISABLED });
+```
+
+Otherwise the two policies multiply — one logical call becomes up to *n×m*
+requests against an API that rate limits, and an outer circuit breaker never
+sees a stable failure to open on. The built-in policy also retries writes, so an
+application that must not repeat one should own the retry itself.
+
+To keep it but change it:
+
+```ts
+const client = createClient({
+  apiKey: "...",
+  retry: { maxRetries: 5, delay: 1 },
+});
+```
 
 ## Generated code
 

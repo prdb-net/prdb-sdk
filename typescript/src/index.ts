@@ -27,6 +27,8 @@ import {
 	MiddlewareFactory,
 	RedirectHandler,
 	RedirectHandlerOptions,
+	RetryHandler,
+	RetryHandlerOptions,
 } from "@microsoft/kiota-http-fetchlibrary";
 
 import { createPrdbClient, type PrdbClient } from "./generated/prdbClient.js";
@@ -60,6 +62,38 @@ export class CrossOriginRedirectError extends Error {
 	}
 }
 
+/**
+ * How the SDK retries a request the API refused with 429, 503 or 504.
+ *
+ * Retry belongs to whoever owns the calling application's resilience story. An
+ * application that already retries prdb calls itself should pass
+ * {@link RETRY_DISABLED}, otherwise the two policies multiply: one logical call
+ * becomes up to `n×m` requests against an API that rate limits, and the outer
+ * circuit breaker never sees a stable failure to open on.
+ *
+ * The built-in policy retries idempotent and non-idempotent requests alike, so
+ * an application that must not repeat a write should own the retry itself.
+ */
+export interface RetryOptions {
+	/**
+	 * How often a refused request is retried. At most 10. Zero leaves the retry
+	 * handler out of the pipeline entirely.
+	 *
+	 * @default 3
+	 */
+	maxRetries?: number;
+	/**
+	 * Seconds to wait before a retry, unless the response carries a
+	 * `Retry-After` header, which always wins. At most 180.
+	 *
+	 * @default 3
+	 */
+	delay?: number;
+}
+
+/** No retrying at all: a 429 or 503 reaches the caller as the API sent it. */
+export const RETRY_DISABLED: RetryOptions = { maxRetries: 0 };
+
 export interface ClientOptions {
 	/** The API key, sent in the `X-Api-Key` header on every request. */
 	apiKey: string;
@@ -74,6 +108,12 @@ export interface ClientOptions {
 	 * rule below always applies.
 	 */
 	customFetch?: FetchLike;
+	/**
+	 * How the SDK retries a refused request. Defaults to Kiota's policy — three
+	 * attempts, honouring `Retry-After`. Pass {@link RETRY_DISABLED} if your
+	 * application already retries prdb calls itself.
+	 */
+	retry?: RetryOptions;
 }
 
 export type AnonymousClientOptions = Omit<ClientOptions, "apiKey">;
@@ -84,7 +124,7 @@ export type AnonymousClientOptions = Omit<ClientOptions, "apiKey">;
  * @throws If `apiKey` is empty, or `baseUrl` is not an absolute `https` URL.
  */
 export function createClient(options: ClientOptions): PrdbClient {
-	const { apiKey, baseUrl = DEFAULT_BASE_URL, customFetch } = options;
+	const { apiKey, baseUrl = DEFAULT_BASE_URL, customFetch, retry } = options;
 
 	if (!apiKey) {
 		throw new Error("apiKey must not be empty");
@@ -99,7 +139,7 @@ export function createClient(options: ClientOptions): PrdbClient {
 		new Set([host]),
 	);
 
-	return buildClient(authProvider, baseUrl, customFetch);
+	return buildClient(authProvider, baseUrl, customFetch, retry);
 }
 
 /**
@@ -113,13 +153,14 @@ export function createClient(options: ClientOptions): PrdbClient {
 export function createAnonymousClient(
 	options: AnonymousClientOptions = {},
 ): PrdbClient {
-	const { baseUrl = DEFAULT_BASE_URL, customFetch } = options;
+	const { baseUrl = DEFAULT_BASE_URL, customFetch, retry } = options;
 	hostOf(baseUrl, { requireHttps: false });
 
 	return buildClient(
 		new AnonymousAuthenticationProvider(),
 		baseUrl,
 		customFetch,
+		retry,
 	);
 }
 
@@ -127,12 +168,13 @@ function buildClient(
 	authProvider: ConstructorParameters<typeof DefaultRequestAdapter>[0],
 	baseUrl: string,
 	customFetch?: FetchLike,
+	retry?: RetryOptions,
 ): PrdbClient {
 	const adapter = new DefaultRequestAdapter(
 		authProvider,
 		undefined,
 		undefined,
-		buildHttpClient(customFetch),
+		buildHttpClient(customFetch, retry),
 	);
 	adapter.baseUrl = baseUrl;
 
@@ -149,8 +191,11 @@ function buildClient(
  * redirect, so a redirect off the API host would hand the credential to
  * whoever answered.
  */
-function buildHttpClient(customFetch?: FetchLike): HttpClient {
-	const middlewares: Middleware[] =
+function buildHttpClient(
+	customFetch?: FetchLike,
+	retry?: RetryOptions,
+): HttpClient {
+	let middlewares: Middleware[] =
 		MiddlewareFactory.getDefaultMiddlewares(customFetch);
 
 	const ours = new RedirectHandler(
@@ -169,7 +214,55 @@ function buildHttpClient(customFetch?: FetchLike): HttpClient {
 		middlewares[index] = ours;
 	}
 
+	if (retry) {
+		middlewares = applyRetryOptions(middlewares, retry);
+	}
+
 	return KiotaClientFactory.create(customFetch, middlewares);
+}
+
+/**
+ * Replaces Kiota's retry handler with one built from `retry`, or drops it.
+ *
+ * Dropped rather than configured with zero attempts, so "no retrying" means the
+ * handler is not in the pipeline at all and cannot be re-enabled by a
+ * per-request option.
+ */
+function applyRetryOptions(
+	middlewares: Middleware[],
+	retry: RetryOptions,
+): Middleware[] {
+	const { maxRetries = 3, delay = 3 } = retry;
+
+	if (maxRetries < 0 || maxRetries > 10) {
+		throw new Error(
+			`retry.maxRetries must be between 0 and 10, got ${maxRetries}`,
+		);
+	}
+	if (delay < 0 || delay > 180) {
+		throw new Error(
+			`retry.delay must be between 0 and 180 seconds, got ${delay}`,
+		);
+	}
+
+	if (maxRetries === 0) {
+		return middlewares.filter(
+			(middleware) => !(middleware instanceof RetryHandler),
+		);
+	}
+
+	const index = middlewares.findIndex(
+		(middleware) => middleware instanceof RetryHandler,
+	);
+	const ours = new RetryHandler(new RetryHandlerOptions({ maxRetries, delay }));
+
+	if (index === -1) {
+		return [ours, ...middlewares];
+	}
+
+	const configured = [...middlewares];
+	configured[index] = ours;
+	return configured;
 }
 
 /**

@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 )
 
 // healthServer answers GET /health over TLS and records the request it saw.
@@ -185,6 +186,136 @@ func TestSameHostRedirectIsFollowed(t *testing.T) {
 	for i, key := range keys {
 		if key != "secret-key" {
 			t.Errorf("request %d: %s = %q, want %q", i, APIKeyHeader, key, "secret-key")
+		}
+	}
+}
+
+// A CheckRedirect the caller set must not be able to switch the rule off.
+// Theirs may follow a redirect off the API host, and nothing below strips
+// X-Api-Key, so ours has to run first and refuse.
+func TestACallerCheckRedirectCannotReenableCrossHostRedirects(t *testing.T) {
+	var elsewhereSaw http.Header
+	elsewhere := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		elsewhereSaw = r.Header.Clone()
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"status":"healthy","timestamp":"2026-08-07T12:00:00Z"}`))
+	}))
+	t.Cleanup(elsewhere.Close)
+
+	origin := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, elsewhere.URL+"/health", http.StatusTemporaryRedirect)
+	}))
+	t.Cleanup(origin.Close)
+
+	httpClient := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true}, //nolint:gosec // test servers
+		},
+		// Follow everything, the way a caller with their own policy might.
+		CheckRedirect: func(*http.Request, []*http.Request) error { return nil },
+	}
+
+	client, err := NewClient("secret-key", Options{
+		BaseURL:    origin.URL,
+		HTTPClient: httpClient,
+	})
+	if err != nil {
+		t.Fatalf("NewClient: %v", err)
+	}
+
+	_, _ = client.Health().Get(context.Background(), nil)
+
+	if got := elsewhereSaw.Get(APIKeyHeader); got != "" {
+		t.Errorf("the api key leaked to the redirect target: %s = %q", APIKeyHeader, got)
+	}
+}
+
+// refusingServer answers 503 for the first attempts, then 200. Retry-After: 0
+// keeps the handler from sleeping out its real backoff during the test.
+func refusingServer(t *testing.T, refusals int, served *int) *httptest.Server {
+	t.Helper()
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		*served++
+		if *served <= refusals {
+			w.Header().Set("Retry-After", "0")
+			w.WriteHeader(http.StatusServiceUnavailable)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"status":"healthy","timestamp":"2026-08-07T12:00:00Z"}`))
+	}))
+	t.Cleanup(server.Close)
+
+	return server
+}
+
+// Kiota's retry handler is in the default pipeline, so this is the status quo.
+func TestRetriesARefusedRequest(t *testing.T) {
+	served := 0
+	server := refusingServer(t, 1, &served)
+
+	client, err := NewAnonymousClient(Options{
+		BaseURL: server.URL,
+		Retry:   &RetryOptions{MaxRetries: 1},
+	})
+	if err != nil {
+		t.Fatalf("NewAnonymousClient: %v", err)
+	}
+
+	if _, err := client.Health().Get(context.Background(), nil); err != nil {
+		t.Fatalf("Health().Get: %v", err)
+	}
+
+	if served != 2 {
+		t.Errorf("served %d requests, want 2", served)
+	}
+}
+
+// The opt-out an application with its own retry policy needs. Without it the
+// SDK's retry sits outside the application's and the two multiply.
+func TestRetryDisabledDoesNotRetry(t *testing.T) {
+	served := 0
+	server := refusingServer(t, 5, &served)
+
+	client, err := NewAnonymousClient(Options{
+		BaseURL: server.URL,
+		Retry:   RetryDisabled(),
+	})
+	if err != nil {
+		t.Fatalf("NewAnonymousClient: %v", err)
+	}
+
+	if _, err := client.Health().Get(context.Background(), nil); err == nil {
+		t.Fatal("expected the refusal to reach the caller")
+	}
+
+	if served != 1 {
+		t.Errorf("served %d requests, want 1", served)
+	}
+}
+
+// Kiota's middleware lives in the Transport a supplied client owns, so Retry
+// would silently do nothing. Better to say so than to be quietly ignored.
+func TestRetryWithASuppliedHTTPClientIsRejected(t *testing.T) {
+	_, err := NewClient("secret-key", Options{
+		HTTPClient: &http.Client{},
+		Retry:      RetryDisabled(),
+	})
+	if err == nil {
+		t.Fatal("expected an error when both HTTPClient and Retry are set")
+	}
+}
+
+func TestRejectsRetryOptionsOutOfRange(t *testing.T) {
+	for _, retry := range []*RetryOptions{
+		{MaxRetries: -1},
+		{MaxRetries: 11},
+		{MaxRetries: 1, Delay: -time.Second},
+		{MaxRetries: 1, Delay: 181 * time.Second},
+	} {
+		if _, err := NewClient("secret-key", Options{Retry: retry}); err == nil {
+			t.Errorf("Retry %+v: expected an error", retry)
 		}
 	}
 }

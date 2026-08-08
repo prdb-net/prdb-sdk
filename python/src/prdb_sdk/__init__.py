@@ -17,6 +17,7 @@ from .client import (
     DEFAULT_BASE_URL,
     CrossOriginRedirectError,
     PrdbClient,
+    RetryOptions,
     create_anonymous_client,
     create_client,
 )
@@ -26,6 +27,7 @@ __all__ = [
     "DEFAULT_BASE_URL",
     "CrossOriginRedirectError",
     "PrdbClient",
+    "RetryOptions",
     "create_anonymous_client",
     "create_client",
 ]
