@@ -12,6 +12,11 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-08-08
+
+A Python fix. The other three packages are identical to 0.3.0 apart from their
+version number, because the four are released together.
+
 ### Fixed
 
 - **Python: a caller-supplied `httpx.AsyncClient` is no longer modified.** The
