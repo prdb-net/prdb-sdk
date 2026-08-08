@@ -4,6 +4,7 @@
 package models
 
 import (
+    i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e "time"
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
@@ -18,6 +19,8 @@ type GetFavoriteActorChangesResponse struct {
     nextCursor FavoriteActorChangesCursorDtoable
     // The pageSize property
     pageSize *int32
+    // The serverTimeUtc property
+    serverTimeUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewGetFavoriteActorChangesResponse instantiates a new GetFavoriteActorChangesResponse and sets the default values.
 func NewGetFavoriteActorChangesResponse()(*GetFavoriteActorChangesResponse) {
@@ -86,6 +89,16 @@ func (m *GetFavoriteActorChangesResponse) GetFieldDeserializers()(map[string]fun
         }
         return nil
     }
+    res["serverTimeUtc"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetTimeValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetServerTimeUtc(val)
+        }
+        return nil
+    }
     return res
 }
 // GetHasMore gets the hasMore property value. The hasMore property
@@ -107,6 +120,11 @@ func (m *GetFavoriteActorChangesResponse) GetNextCursor()(FavoriteActorChangesCu
 // returns a *int32 when successful
 func (m *GetFavoriteActorChangesResponse) GetPageSize()(*int32) {
     return m.pageSize
+}
+// GetServerTimeUtc gets the serverTimeUtc property value. The serverTimeUtc property
+// returns a *Time when successful
+func (m *GetFavoriteActorChangesResponse) GetServerTimeUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
+    return m.serverTimeUtc
 }
 // Serialize serializes information the current object
 func (m *GetFavoriteActorChangesResponse) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
@@ -141,6 +159,12 @@ func (m *GetFavoriteActorChangesResponse) Serialize(writer i878a80d2330e89d26896
         }
     }
     {
+        err := writer.WriteTimeValue("serverTimeUtc", m.GetServerTimeUtc())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteAdditionalData(m.GetAdditionalData())
         if err != nil {
             return err
@@ -168,6 +192,10 @@ func (m *GetFavoriteActorChangesResponse) SetNextCursor(value FavoriteActorChang
 func (m *GetFavoriteActorChangesResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
+// SetServerTimeUtc sets the serverTimeUtc property value. The serverTimeUtc property
+func (m *GetFavoriteActorChangesResponse) SetServerTimeUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
+    m.serverTimeUtc = value
+}
 type GetFavoriteActorChangesResponseable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
@@ -175,8 +203,10 @@ type GetFavoriteActorChangesResponseable interface {
     GetItems()([]FavoriteActorChangeDtoable)
     GetNextCursor()(FavoriteActorChangesCursorDtoable)
     GetPageSize()(*int32)
+    GetServerTimeUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     SetHasMore(value *bool)()
     SetItems(value []FavoriteActorChangeDtoable)()
     SetNextCursor(value FavoriteActorChangesCursorDtoable)()
     SetPageSize(value *int32)()
+    SetServerTimeUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
 }

@@ -18,7 +18,7 @@ type ActorDetailDto struct {
     bios []ActorBioDtoable
     // The birthday property
     birthday *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
-    // Known values: ExactDate (1), MonthYear (2), Year (3).
+    // The birthdayType property
     birthdayType *int32
     // The birthdayTypeLabel property
     birthdayTypeLabel *string
@@ -113,7 +113,7 @@ func (m *ActorDetailDto) GetBios()([]ActorBioDtoable) {
 func (m *ActorDetailDto) GetBirthday()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly) {
     return m.birthday
 }
-// GetBirthdayType gets the birthdayType property value. Known values: ExactDate (1), MonthYear (2), Year (3).
+// GetBirthdayType gets the birthdayType property value. The birthdayType property
 // returns a *int32 when successful
 func (m *ActorDetailDto) GetBirthdayType()(*int32) {
     return m.birthdayType
@@ -892,7 +892,7 @@ func (m *ActorDetailDto) SetBios(value []ActorBioDtoable)() {
 func (m *ActorDetailDto) SetBirthday(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)() {
     m.birthday = value
 }
-// SetBirthdayType sets the birthdayType property value. Known values: ExactDate (1), MonthYear (2), Year (3).
+// SetBirthdayType sets the birthdayType property value. The birthdayType property
 func (m *ActorDetailDto) SetBirthdayType(value *int32)() {
     m.birthdayType = value
 }

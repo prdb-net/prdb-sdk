@@ -61,6 +61,9 @@ func NewActorsRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263371c
 // Get returns a paged list of actors. Supports free-text search by name or alias, and sorting by name or creation date. Default page size is 100, maximum is 500. Requires API key authentication.
 // returns a ListActorsResponseable when successful
 // returns a ProblemDetails error when the service returns a 401 status code
+// returns a ProblemDetails error when the service returns a 403 status code
+// returns a ProblemDetails error when the service returns a 429 status code
+// returns a ProblemDetails error when the service returns a 503 status code
 func (m *ActorsRequestBuilder) Get(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[ActorsRequestBuilderGetQueryParameters])(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.ListActorsResponseable, error) {
     requestInfo, err := m.ToGetRequestInformation(ctx, requestConfiguration);
     if err != nil {
@@ -68,6 +71,9 @@ func (m *ActorsRequestBuilder) Get(ctx context.Context, requestConfiguration *i2
     }
     errorMapping := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.ErrorMappings {
         "401": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "403": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "429": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "503": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
     }
     res, err := m.BaseRequestBuilder.RequestAdapter.Send(ctx, requestInfo, ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateListActorsResponseFromDiscriminatorValue, errorMapping)
     if err != nil {

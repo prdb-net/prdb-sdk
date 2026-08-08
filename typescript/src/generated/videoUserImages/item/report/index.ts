@@ -20,6 +20,8 @@ export interface ReportRequestBuilder extends BaseRequestBuilder<ReportRequestBu
      * @throws {ProblemDetails} error when the service returns a 403 status code
      * @throws {ProblemDetails} error when the service returns a 404 status code
      * @throws {ProblemDetails} error when the service returns a 409 status code
+     * @throws {ProblemDetails} error when the service returns a 429 status code
+     * @throws {ProblemDetails} error when the service returns a 503 status code
      */
      post(body: ReportVideoUserImageRequest, requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<ReportVideoUserImageResponse | undefined>;
     /**
@@ -47,6 +49,8 @@ export const ReportRequestBuilderRequestsMetadata: RequestsMetadata = {
             403: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             404: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             409: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            429: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
+            503: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
         },
         adapterMethodName: "send",
         responseBodyFactory:  createReportVideoUserImageResponseFromDiscriminatorValue,

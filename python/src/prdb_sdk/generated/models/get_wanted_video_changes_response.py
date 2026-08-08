@@ -1,4 +1,5 @@
 from __future__ import annotations
+import datetime
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, ParseNode, SerializationWriter
@@ -21,6 +22,8 @@ class GetWantedVideoChangesResponse(AdditionalDataHolder, Parsable):
     next_cursor: Optional[WantedVideoChangesCursorDto] = None
     # The pageSize property
     page_size: Optional[int] = None
+    # The serverTimeUtc property
+    server_time_utc: Optional[datetime.datetime] = None
     
     @staticmethod
     def create_from_discriminator_value(parse_node: ParseNode) -> GetWantedVideoChangesResponse:
@@ -49,6 +52,7 @@ class GetWantedVideoChangesResponse(AdditionalDataHolder, Parsable):
             "items": lambda n : setattr(self, 'items', n.get_collection_of_object_values(WantedVideoChangeDto)),
             "nextCursor": lambda n : setattr(self, 'next_cursor', n.get_object_value(WantedVideoChangesCursorDto)),
             "pageSize": lambda n : setattr(self, 'page_size', n.get_int_value()),
+            "serverTimeUtc": lambda n : setattr(self, 'server_time_utc', n.get_datetime_value()),
         }
         return fields
     
@@ -64,6 +68,7 @@ class GetWantedVideoChangesResponse(AdditionalDataHolder, Parsable):
         writer.write_collection_of_object_values("items", self.items)
         writer.write_object_value("nextCursor", self.next_cursor)
         writer.write_int_value("pageSize", self.page_size)
+        writer.write_datetime_value("serverTimeUtc", self.server_time_utc)
         writer.write_additional_data_value(self.additional_data)
     
 

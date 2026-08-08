@@ -33,6 +33,8 @@ func NewItemReportRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263
 // returns a ProblemDetails error when the service returns a 403 status code
 // returns a ProblemDetails error when the service returns a 404 status code
 // returns a ProblemDetails error when the service returns a 409 status code
+// returns a ProblemDetails error when the service returns a 429 status code
+// returns a ProblemDetails error when the service returns a 503 status code
 func (m *ItemReportRequestBuilder) Post(ctx context.Context, body ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.ReportVideoUserImageRequestable, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.ReportVideoUserImageResponseable, error) {
     requestInfo, err := m.ToPostRequestInformation(ctx, body, requestConfiguration);
     if err != nil {
@@ -44,6 +46,8 @@ func (m *ItemReportRequestBuilder) Post(ctx context.Context, body ibd6e645a77671
         "403": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "404": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "409": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "429": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "503": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
     }
     res, err := m.BaseRequestBuilder.RequestAdapter.Send(ctx, requestInfo, ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateReportVideoUserImageResponseFromDiscriminatorValue, errorMapping)
     if err != nil {

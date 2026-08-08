@@ -24,12 +24,18 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.ActorChangeDto> Items { get; set; }
 #endif
-        /// <summary>The nextCursorId property</summary>
-        public Guid? NextCursorId { get; set; }
-        /// <summary>The nextCursorUtc property</summary>
-        public DateTimeOffset? NextCursorUtc { get; set; }
+        /// <summary>The nextCursor property</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public global::Prdb.Sdk.Generated.Models.ActorChangesCursorDto? NextCursor { get; set; }
+#nullable restore
+#else
+        public global::Prdb.Sdk.Generated.Models.ActorChangesCursorDto NextCursor { get; set; }
+#endif
         /// <summary>The pageSize property</summary>
         public int? PageSize { get; set; }
+        /// <summary>The serverTimeUtc property</summary>
+        public DateTimeOffset? ServerTimeUtc { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.GetActorChangesResponse"/> and sets the default values.
         /// </summary>
@@ -57,9 +63,9 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "hasMore", n => { HasMore = n.GetBoolValue(); } },
                 { "items", n => { Items = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.ActorChangeDto>(global::Prdb.Sdk.Generated.Models.ActorChangeDto.CreateFromDiscriminatorValue)?.AsList(); } },
-                { "nextCursorId", n => { NextCursorId = n.GetGuidValue(); } },
-                { "nextCursorUtc", n => { NextCursorUtc = n.GetDateTimeOffsetValue(); } },
+                { "nextCursor", n => { NextCursor = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.ActorChangesCursorDto>(global::Prdb.Sdk.Generated.Models.ActorChangesCursorDto.CreateFromDiscriminatorValue); } },
                 { "pageSize", n => { PageSize = n.GetIntValue(); } },
+                { "serverTimeUtc", n => { ServerTimeUtc = n.GetDateTimeOffsetValue(); } },
             };
         }
         /// <summary>
@@ -71,9 +77,9 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteBoolValue("hasMore", HasMore);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.ActorChangeDto>("items", Items);
-            writer.WriteGuidValue("nextCursorId", NextCursorId);
-            writer.WriteDateTimeOffsetValue("nextCursorUtc", NextCursorUtc);
+            writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.ActorChangesCursorDto>("nextCursor", NextCursor);
             writer.WriteIntValue("pageSize", PageSize);
+            writer.WriteDateTimeOffsetValue("serverTimeUtc", ServerTimeUtc);
             writer.WriteAdditionalData(AdditionalData);
         }
     }
