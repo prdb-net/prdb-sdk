@@ -33,7 +33,7 @@ class SitesRequestBuilder(BaseRequestBuilder):
     
     async def get(self,request_configuration: Optional[RequestConfiguration[SitesRequestBuilderGetQueryParameters]] = None) -> Optional[ListSitesResponse]:
         """
-        Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+        Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[ListSitesResponse]
         """
@@ -43,6 +43,7 @@ class SitesRequestBuilder(BaseRequestBuilder):
         from ..models.problem_details import ProblemDetails
 
         error_mapping: dict[str, type[ParsableFactory]] = {
+            "400": ProblemDetails,
             "401": ProblemDetails,
             "403": ProblemDetails,
             "429": ProblemDetails,
@@ -56,7 +57,7 @@ class SitesRequestBuilder(BaseRequestBuilder):
     
     def to_get_request_information(self,request_configuration: Optional[RequestConfiguration[SitesRequestBuilderGetQueryParameters]] = None) -> RequestInformation:
         """
-        Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+        Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
@@ -78,7 +79,7 @@ class SitesRequestBuilder(BaseRequestBuilder):
     @dataclass
     class SitesRequestBuilderGetQueryParameters():
         """
-        Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+        Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
         """
         def get_query_parameter(self,original_name: str) -> str:
             """

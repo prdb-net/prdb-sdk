@@ -20,8 +20,10 @@ if TYPE_CHECKING:
     from ..models.problem_details import ProblemDetails
     from .batch.batch_request_builder import BatchRequestBuilder
     from .filehashes.filehashes_request_builder import FilehashesRequestBuilder
+    from .filehash_submissions.filehash_submissions_request_builder import FilehashSubmissionsRequestBuilder
     from .get_sort_by_query_parameter_type import GetSortByQueryParameterType
     from .get_sort_direction_query_parameter_type import GetSortDirectionQueryParameterType
+    from .identify.identify_request_builder import IdentifyRequestBuilder
     from .item.item_request_builder import ItemRequestBuilder
 
 class VideosRequestBuilder(BaseRequestBuilder):
@@ -106,6 +108,15 @@ class VideosRequestBuilder(BaseRequestBuilder):
         return BatchRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
+    def filehash_submissions(self) -> FilehashSubmissionsRequestBuilder:
+        """
+        The filehashSubmissions property
+        """
+        from .filehash_submissions.filehash_submissions_request_builder import FilehashSubmissionsRequestBuilder
+
+        return FilehashSubmissionsRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
     def filehashes(self) -> FilehashesRequestBuilder:
         """
         The filehashes property
@@ -113,6 +124,15 @@ class VideosRequestBuilder(BaseRequestBuilder):
         from .filehashes.filehashes_request_builder import FilehashesRequestBuilder
 
         return FilehashesRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
+    def identify(self) -> IdentifyRequestBuilder:
+        """
+        The identify property
+        """
+        from .identify.identify_request_builder import IdentifyRequestBuilder
+
+        return IdentifyRequestBuilder(self.request_adapter, self.path_parameters)
     
     @dataclass
     class VideosRequestBuilderGetQueryParameters():

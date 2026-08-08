@@ -6,6 +6,7 @@ using Microsoft.Kiota.Abstractions;
 using Prdb.Sdk.Generated.Models;
 using Prdb.Sdk.Generated.WantedVideos.Batch;
 using Prdb.Sdk.Generated.WantedVideos.Changes;
+using Prdb.Sdk.Generated.WantedVideos.Fulfillments;
 using Prdb.Sdk.Generated.WantedVideos.Item;
 using System.Collections.Generic;
 using System.IO;
@@ -29,6 +30,11 @@ namespace Prdb.Sdk.Generated.WantedVideos
         public global::Prdb.Sdk.Generated.WantedVideos.Changes.ChangesRequestBuilder Changes
         {
             get => new global::Prdb.Sdk.Generated.WantedVideos.Changes.ChangesRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The fulfillments property</summary>
+        public global::Prdb.Sdk.Generated.WantedVideos.Fulfillments.FulfillmentsRequestBuilder Fulfillments
+        {
+            get => new global::Prdb.Sdk.Generated.WantedVideos.Fulfillments.FulfillmentsRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>Gets an item from the Prdb.Sdk.Generated.wantedVideos.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>

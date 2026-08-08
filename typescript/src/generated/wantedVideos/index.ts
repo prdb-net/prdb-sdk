@@ -8,6 +8,8 @@ import { BatchRequestBuilderRequestsMetadata, type BatchRequestBuilder } from '.
 // @ts-ignore
 import { ChangesRequestBuilderRequestsMetadata, type ChangesRequestBuilder } from './changes/index.js';
 // @ts-ignore
+import { FulfillmentsRequestBuilderRequestsMetadata, type FulfillmentsRequestBuilder } from './fulfillments/index.js';
+// @ts-ignore
 import { type WithVideoItemRequestBuilder, WithVideoItemRequestBuilderRequestsMetadata } from './item/index.js';
 // @ts-ignore
 import { type BaseRequestBuilder, type Guid, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
@@ -25,6 +27,10 @@ export interface WantedVideosRequestBuilder extends BaseRequestBuilder<WantedVid
      * The changes property
      */
     get changes(): ChangesRequestBuilder;
+    /**
+     * The fulfillments property
+     */
+    get fulfillments(): FulfillmentsRequestBuilder;
     /**
      * Gets an item from the prdb-sdk.wantedVideos.item collection
      * @param videoId Unique identifier of the item
@@ -101,6 +107,9 @@ export const WantedVideosRequestBuilderNavigationMetadata: Record<Exclude<keyof 
     },
     changes: {
         requestsMetadata: ChangesRequestBuilderRequestsMetadata,
+    },
+    fulfillments: {
+        requestsMetadata: FulfillmentsRequestBuilderRequestsMetadata,
     },
 };
 /**

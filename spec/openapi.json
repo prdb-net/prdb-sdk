@@ -487,6 +487,107 @@
         ]
       }
     },
+    "/wanted-videos/fulfillments": {
+      "post": {
+        "tags": [
+          "WantedVideos"
+        ],
+        "summary": "Batch update wanted video fulfilment",
+        "description": "Marks up to 50 wanted videos of the currently authenticated user as fulfilled or unfulfilled in a single request. Returns one result per video, naming the outcome — updated, unchanged, not on the wanted list, or unknown video — so unknown and unwanted IDs do not fail the request; the status code stays 200. A 400 is only returned for form errors: an empty list, more than 50 entries, a video listed twice, or an invalid enum value. Setting isFulfilled to false clears the fulfilment timestamp, quality, external ID and application. Setting it to true without a fulfilledAtUtc stamps the server time, unless the entry is already fulfilled, in which case its timestamp is kept. Soft-deleted wanted entries are reported as not wanted and are not revived; use POST /wanted-videos/batch for that. The whole request counts as one request against the rate limit. Requires API key authentication.",
+        "operationId": "FulfillWantedVideosBatch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FulfillWantedVideosBatchRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FulfillWantedVideosBatchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FulfillWantedVideosBatchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
     "/wanted-videos/changes": {
       "get": {
         "tags": [
@@ -1572,6 +1673,107 @@
         ]
       }
     },
+    "/videos/identify": {
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "summary": "Identify files against the catalogue",
+        "description": "Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: OS hash, then perceptual hash (compared for equality), then a stored file name, then the file name without its extension as a scene release title, and finally the site read out of the file name. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. The whole request counts as one request against the rate limit. Nothing sent to this endpoint is stored. Requires API key authentication.",
+        "operationId": "IdentifyVideos",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdentifyVideosRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdentifyVideosRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentifyVideosResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
     "/videos/batch": {
       "post": {
         "tags": [
@@ -2537,6 +2739,107 @@
         ]
       }
     },
+    "/videos/filehash-submissions": {
+      "post": {
+        "tags": [
+          "VideoFilehashSubmissions"
+        ],
+        "summary": "Submit hash-to-video assignments",
+        "description": "Submits up to 200 assignments of a file hash to a video, on behalf of the authenticated user. Intended for assignments a person confirmed in a client's UI — exactly the cases automatic detection missed. Each entry needs a videoId and an osHash; the osHash is the only aggregation key, so an entry carrying only a pHash cannot be used. The filename is optional and may be withheld; the endpoint works without it. Every entry gets its own outcome and the status stays 200: an unknown videoId is reported as videoNotFound, and an assignment that contradicts an existing one is stored as conflicted rather than overwriting it. Submissions are recorded in their own table. They appear in no read endpoint and change no lookup result; whether they ever enter the aggregated hash set is decided by the scraper's aggregation job, not here. Clients must make this strictly opt-in and off by default — that is a client-side obligation the API cannot enforce. Requires API key authentication.",
+        "operationId": "SubmitVideoFilehashes",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitVideoFilehashesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitVideoFilehashesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitVideoFilehashesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
     "/user-identity": {
       "get": {
         "tags": [
@@ -2619,7 +2922,7 @@
           "Sites"
         ],
         "summary": "List sites",
-        "description": "Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.",
+        "description": "Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.",
         "operationId": "ListSites",
         "parameters": [
           {
@@ -2636,7 +2939,7 @@
             "name": "PageSize",
             "in": "query",
             "schema": {
-              "maximum": 100,
+              "maximum": 1000,
               "minimum": 1,
               "type": "integer",
               "format": "int32"
@@ -2677,6 +2980,22 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ListSitesResponse"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not Modified",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -6913,7 +7232,68 @@
           }
         }
       },
+      "FilehashSubmissionSource": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "description": "Known values: UserConfirmed (0), ClientDetected (1)."
+      },
       "FulfillmentApp": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "description": "Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4)."
+      },
+      "FulfillWantedVideoItem": {
+        "required": [
+          "videoId",
+          "isFulfilled"
+        ],
+        "type": "object",
+        "properties": {
+          "videoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "isFulfilled": {
+            "type": "boolean"
+          },
+          "fulfilledAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fulfilledInQuality": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VideoQuality"
+              }
+            ],
+            "nullable": true
+          },
+          "fulfillmentExternalId": {
+            "maxLength": 255,
+            "type": "string",
+            "nullable": true
+          },
+          "fulfillmentByApp": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FulfillmentApp"
+              }
+            ],
+            "nullable": true
+          }
+        }
+      },
+      "FulfillWantedVideoOutcome": {
         "enum": [
           0,
           1,
@@ -6921,7 +7301,53 @@
           3
         ],
         "type": "integer",
-        "description": "Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3)."
+        "description": "Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3)."
+      },
+      "FulfillWantedVideoResultDto": {
+        "required": [
+          "videoId",
+          "outcome"
+        ],
+        "type": "object",
+        "properties": {
+          "videoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "outcome": {
+            "$ref": "#/components/schemas/FulfillWantedVideoOutcome"
+          }
+        }
+      },
+      "FulfillWantedVideosBatchRequest": {
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "maxItems": 50,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FulfillWantedVideoItem"
+            }
+          }
+        }
+      },
+      "FulfillWantedVideosBatchResponse": {
+        "required": [
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FulfillWantedVideoResultDto"
+            }
+          }
+        }
       },
       "GetActorChangesResponse": {
         "required": [
@@ -7299,6 +7725,164 @@
         ],
         "type": "integer",
         "description": "Known values: Unknown (0), Blonde (1), Brown (2), Black (3), Red (4), Auburn (5), Grey (6), White (7), Bald (8), Various (9), Other (10)."
+      },
+      "IdentifyConfidence": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "type": "integer",
+        "description": "Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5)."
+      },
+      "IdentifyMatchKind": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "description": "Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4)."
+      },
+      "IdentifySiteDto": {
+        "required": [
+          "id",
+          "title",
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "IdentifyVideoFileDto": {
+        "required": [
+          "ref",
+          "filename"
+        ],
+        "type": "object",
+        "properties": {
+          "ref": {
+            "maxLength": 64,
+            "type": "string"
+          },
+          "filename": {
+            "maxLength": 2000,
+            "type": "string"
+          },
+          "filesize": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "osHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "pHash": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "IdentifyVideoResultDto": {
+        "required": [
+          "ref",
+          "confidence",
+          "candidates"
+        ],
+        "type": "object",
+        "properties": {
+          "ref": {
+            "type": "string"
+          },
+          "confidence": {
+            "$ref": "#/components/schemas/IdentifyConfidence"
+          },
+          "matchedBy": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IdentifyMatchKind"
+              }
+            ],
+            "nullable": true
+          },
+          "videoId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "video": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VideoDetailDto"
+              }
+            ],
+            "nullable": true
+          },
+          "site": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IdentifySiteDto"
+              }
+            ],
+            "nullable": true
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      },
+      "IdentifyVideosRequest": {
+        "required": [
+          "files"
+        ],
+        "type": "object",
+        "properties": {
+          "files": {
+            "maxItems": 200,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentifyVideoFileDto"
+            }
+          },
+          "includeVideoDetails": {
+            "type": "boolean"
+          }
+        }
+      },
+      "IdentifyVideosResponse": {
+        "required": [
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentifyVideoResultDto"
+            }
+          }
+        }
       },
       "IFormFile": {
         "type": "string",
@@ -8476,7 +9060,9 @@
         "required": [
           "id",
           "title",
-          "url"
+          "url",
+          "createdAtUtc",
+          "updatedAtUtc"
         ],
         "type": "object",
         "properties": {
@@ -8498,6 +9084,108 @@
           "networkTitle": {
             "type": "string",
             "nullable": true
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SubmitFilehashOutcome": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "description": "Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3)."
+      },
+      "SubmitVideoFilehashesRequest": {
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "maxItems": 200,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubmitVideoFilehashItem"
+            }
+          }
+        }
+      },
+      "SubmitVideoFilehashesResponse": {
+        "required": [
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubmitVideoFilehashResultDto"
+            }
+          }
+        }
+      },
+      "SubmitVideoFilehashItem": {
+        "required": [
+          "videoId",
+          "osHash",
+          "filesize",
+          "source"
+        ],
+        "type": "object",
+        "properties": {
+          "videoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "osHash": {
+            "type": "string"
+          },
+          "pHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "filesize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "filename": {
+            "maxLength": 2000,
+            "type": "string",
+            "nullable": true
+          },
+          "source": {
+            "$ref": "#/components/schemas/FilehashSubmissionSource"
+          }
+        }
+      },
+      "SubmitVideoFilehashResultDto": {
+        "required": [
+          "videoId",
+          "osHash",
+          "outcome"
+        ],
+        "type": "object",
+        "properties": {
+          "videoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "osHash": {
+            "type": "string"
+          },
+          "outcome": {
+            "$ref": "#/components/schemas/SubmitFilehashOutcome"
           }
         }
       },
@@ -9502,6 +10190,10 @@
     {
       "name": "VideoFilehashes",
       "description": "File hashes aggregated per video: lookup by hash, per-video reads, a latest feed and a delta feed."
+    },
+    {
+      "name": "VideoFilehashSubmissions",
+      "description": "Hash-to-video assignments submitted by the calling user. Write-only: submissions live apart from the aggregated hash set and change no read result."
     },
     {
       "name": "VideoUserImages",

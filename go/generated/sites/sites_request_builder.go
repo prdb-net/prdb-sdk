@@ -13,7 +13,7 @@ import (
 type SitesRequestBuilder struct {
     i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.BaseRequestBuilder
 }
-// SitesRequestBuilderGetQueryParameters returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+// SitesRequestBuilderGetQueryParameters returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
 type SitesRequestBuilderGetQueryParameters struct {
     Page *int32
     PageSize *int32
@@ -34,8 +34,9 @@ func NewSitesRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263371cb
     urlParams["request-raw-url"] = rawUrl
     return NewSitesRequestBuilderInternal(urlParams, requestAdapter)
 }
-// Get returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+// Get returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
 // returns a ListSitesResponseable when successful
+// returns a ProblemDetails error when the service returns a 400 status code
 // returns a ProblemDetails error when the service returns a 401 status code
 // returns a ProblemDetails error when the service returns a 403 status code
 // returns a ProblemDetails error when the service returns a 429 status code
@@ -46,6 +47,7 @@ func (m *SitesRequestBuilder) Get(ctx context.Context, requestConfiguration *i2a
         return nil, err
     }
     errorMapping := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.ErrorMappings {
+        "400": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "401": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "403": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "429": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
@@ -60,7 +62,7 @@ func (m *SitesRequestBuilder) Get(ctx context.Context, requestConfiguration *i2a
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.ListSitesResponseable), nil
 }
-// ToGetRequestInformation returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+// ToGetRequestInformation returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *SitesRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[SitesRequestBuilderGetQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.GET, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

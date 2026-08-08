@@ -12,9 +12,10 @@ export type GetSortDirectionQueryParameterType = (typeof GetSortDirectionQueryPa
  */
 export interface SitesRequestBuilder extends BaseRequestBuilder<SitesRequestBuilder> {
     /**
-     * Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+     * Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<ListSitesResponse>}
+     * @throws {ProblemDetails} error when the service returns a 400 status code
      * @throws {ProblemDetails} error when the service returns a 401 status code
      * @throws {ProblemDetails} error when the service returns a 403 status code
      * @throws {ProblemDetails} error when the service returns a 429 status code
@@ -22,14 +23,14 @@ export interface SitesRequestBuilder extends BaseRequestBuilder<SitesRequestBuil
      */
      get(requestConfiguration?: RequestConfiguration<SitesRequestBuilderGetQueryParameters> | undefined) : Promise<ListSitesResponse | undefined>;
     /**
-     * Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+     * Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */
      toGetRequestInformation(requestConfiguration?: RequestConfiguration<SitesRequestBuilderGetQueryParameters> | undefined) : RequestInformation;
 }
 /**
- * Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+ * Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
  */
 export interface SitesRequestBuilderGetQueryParameters {
     page?: number;
@@ -67,6 +68,7 @@ export const SitesRequestBuilderRequestsMetadata: RequestsMetadata = {
         uriTemplate: SitesRequestBuilderUriTemplate,
         responseBodyContentType: "application/json",
         errorMappings: {
+            400: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             401: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             403: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
             429: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,

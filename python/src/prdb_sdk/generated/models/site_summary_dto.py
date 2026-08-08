@@ -1,4 +1,5 @@
 from __future__ import annotations
+import datetime
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, ParseNode, SerializationWriter
@@ -10,6 +11,8 @@ class SiteSummaryDto(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
+    # The createdAtUtc property
+    created_at_utc: Optional[datetime.datetime] = None
     # The id property
     id: Optional[UUID] = None
     # The networkId property
@@ -18,6 +21,8 @@ class SiteSummaryDto(AdditionalDataHolder, Parsable):
     network_title: Optional[str] = None
     # The title property
     title: Optional[str] = None
+    # The updatedAtUtc property
+    updated_at_utc: Optional[datetime.datetime] = None
     # The url property
     url: Optional[str] = None
     
@@ -38,10 +43,12 @@ class SiteSummaryDto(AdditionalDataHolder, Parsable):
         Returns: dict[str, Callable[[ParseNode], None]]
         """
         fields: dict[str, Callable[[Any], None]] = {
+            "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "networkId": lambda n : setattr(self, 'network_id', n.get_uuid_value()),
             "networkTitle": lambda n : setattr(self, 'network_title', n.get_str_value()),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
+            "updatedAtUtc": lambda n : setattr(self, 'updated_at_utc', n.get_datetime_value()),
             "url": lambda n : setattr(self, 'url', n.get_str_value()),
         }
         return fields
@@ -54,10 +61,12 @@ class SiteSummaryDto(AdditionalDataHolder, Parsable):
         """
         if writer is None:
             raise TypeError("writer cannot be null.")
+        writer.write_datetime_value("createdAtUtc", self.created_at_utc)
         writer.write_uuid_value("id", self.id)
         writer.write_uuid_value("networkId", self.network_id)
         writer.write_str_value("networkTitle", self.network_title)
         writer.write_str_value("title", self.title)
+        writer.write_datetime_value("updatedAtUtc", self.updated_at_utc)
         writer.write_str_value("url", self.url)
         writer.write_additional_data_value(self.additional_data)
     

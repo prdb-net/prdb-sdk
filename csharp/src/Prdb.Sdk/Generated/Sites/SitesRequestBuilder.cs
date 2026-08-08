@@ -34,11 +34,12 @@ namespace Prdb.Sdk.Generated.Sites
         {
         }
         /// <summary>
-        /// Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+        /// Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.ListSitesResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
+        /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 400 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 401 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 403 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 429 status code</exception>
@@ -55,6 +56,7 @@ namespace Prdb.Sdk.Generated.Sites
             var requestInfo = ToGetRequestInformation(requestConfiguration);
             var errorMapping = new Dictionary<string, ParsableFactory<IParsable>>
             {
+                { "400", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "401", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "403", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "429", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
@@ -63,7 +65,7 @@ namespace Prdb.Sdk.Generated.Sites
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.ListSitesResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.ListSitesResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+        /// Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -91,7 +93,7 @@ namespace Prdb.Sdk.Generated.Sites
             return new global::Prdb.Sdk.Generated.Sites.SitesRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
-        /// Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. Requires API key authentication.
+        /// Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class SitesRequestBuilderGetQueryParameters 

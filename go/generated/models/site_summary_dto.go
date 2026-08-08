@@ -4,6 +4,7 @@
 package models
 
 import (
+    i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e "time"
     i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22 "github.com/google/uuid"
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
@@ -11,6 +12,8 @@ import (
 type SiteSummaryDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
+    // The createdAtUtc property
+    createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The networkId property
@@ -19,6 +22,8 @@ type SiteSummaryDto struct {
     networkTitle *string
     // The title property
     title *string
+    // The updatedAtUtc property
+    updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // The url property
     url *string
 }
@@ -39,10 +44,25 @@ func CreateSiteSummaryDtoFromDiscriminatorValue(parseNode i878a80d2330e89d268963
 func (m *SiteSummaryDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
+// GetCreatedAtUtc gets the createdAtUtc property value. The createdAtUtc property
+// returns a *Time when successful
+func (m *SiteSummaryDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
+    return m.createdAtUtc
+}
 // GetFieldDeserializers the deserialization information for the current model
 // returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
 func (m *SiteSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
     res := make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
+    res["createdAtUtc"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetTimeValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetCreatedAtUtc(val)
+        }
+        return nil
+    }
     res["id"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetUUIDValue()
         if err != nil {
@@ -83,6 +103,16 @@ func (m *SiteSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         return nil
     }
+    res["updatedAtUtc"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetTimeValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetUpdatedAtUtc(val)
+        }
+        return nil
+    }
     res["url"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -115,6 +145,11 @@ func (m *SiteSummaryDto) GetNetworkTitle()(*string) {
 func (m *SiteSummaryDto) GetTitle()(*string) {
     return m.title
 }
+// GetUpdatedAtUtc gets the updatedAtUtc property value. The updatedAtUtc property
+// returns a *Time when successful
+func (m *SiteSummaryDto) GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
+    return m.updatedAtUtc
+}
 // GetUrl gets the url property value. The url property
 // returns a *string when successful
 func (m *SiteSummaryDto) GetUrl()(*string) {
@@ -122,6 +157,12 @@ func (m *SiteSummaryDto) GetUrl()(*string) {
 }
 // Serialize serializes information the current object
 func (m *SiteSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
+    {
+        err := writer.WriteTimeValue("createdAtUtc", m.GetCreatedAtUtc())
+        if err != nil {
+            return err
+        }
+    }
     {
         err := writer.WriteUUIDValue("id", m.GetId())
         if err != nil {
@@ -147,6 +188,12 @@ func (m *SiteSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
         }
     }
     {
+        err := writer.WriteTimeValue("updatedAtUtc", m.GetUpdatedAtUtc())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteStringValue("url", m.GetUrl())
         if err != nil {
             return err
@@ -164,6 +211,10 @@ func (m *SiteSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
 func (m *SiteSummaryDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
+// SetCreatedAtUtc sets the createdAtUtc property value. The createdAtUtc property
+func (m *SiteSummaryDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
+    m.createdAtUtc = value
+}
 // SetId sets the id property value. The id property
 func (m *SiteSummaryDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
@@ -180,6 +231,10 @@ func (m *SiteSummaryDto) SetNetworkTitle(value *string)() {
 func (m *SiteSummaryDto) SetTitle(value *string)() {
     m.title = value
 }
+// SetUpdatedAtUtc sets the updatedAtUtc property value. The updatedAtUtc property
+func (m *SiteSummaryDto) SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
+    m.updatedAtUtc = value
+}
 // SetUrl sets the url property value. The url property
 func (m *SiteSummaryDto) SetUrl(value *string)() {
     m.url = value
@@ -187,14 +242,18 @@ func (m *SiteSummaryDto) SetUrl(value *string)() {
 type SiteSummaryDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
+    GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetNetworkId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetNetworkTitle()(*string)
     GetTitle()(*string)
+    GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetUrl()(*string)
+    SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetNetworkId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetNetworkTitle(value *string)()
     SetTitle(value *string)()
+    SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetUrl(value *string)()
 }

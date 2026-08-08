@@ -14,6 +14,8 @@ namespace Prdb.Sdk.Generated.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
+        /// <summary>The createdAtUtc property</summary>
+        public DateTimeOffset? CreatedAtUtc { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
         /// <summary>The networkId property</summary>
@@ -34,6 +36,8 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Title { get; set; }
 #endif
+        /// <summary>The updatedAtUtc property</summary>
+        public DateTimeOffset? UpdatedAtUtc { get; set; }
         /// <summary>The url property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -67,10 +71,12 @@ namespace Prdb.Sdk.Generated.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "createdAtUtc", n => { CreatedAtUtc = n.GetDateTimeOffsetValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "networkId", n => { NetworkId = n.GetGuidValue(); } },
                 { "networkTitle", n => { NetworkTitle = n.GetStringValue(); } },
                 { "title", n => { Title = n.GetStringValue(); } },
+                { "updatedAtUtc", n => { UpdatedAtUtc = n.GetDateTimeOffsetValue(); } },
                 { "url", n => { Url = n.GetStringValue(); } },
             };
         }
@@ -81,10 +87,12 @@ namespace Prdb.Sdk.Generated.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteDateTimeOffsetValue("createdAtUtc", CreatedAtUtc);
             writer.WriteGuidValue("id", Id);
             writer.WriteGuidValue("networkId", NetworkId);
             writer.WriteStringValue("networkTitle", NetworkTitle);
             writer.WriteStringValue("title", Title);
+            writer.WriteDateTimeOffsetValue("updatedAtUtc", UpdatedAtUtc);
             writer.WriteStringValue("url", Url);
             writer.WriteAdditionalData(AdditionalData);
         }

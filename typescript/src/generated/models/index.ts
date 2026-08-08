@@ -795,6 +795,42 @@ export function createFavoriteSiteSummaryDtoFromDiscriminatorValue(parseNode: Pa
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {FulfillWantedVideoItem}
+ */
+// @ts-ignore
+export function createFulfillWantedVideoItemFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoFulfillWantedVideoItem;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {FulfillWantedVideoResultDto}
+ */
+// @ts-ignore
+export function createFulfillWantedVideoResultDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoFulfillWantedVideoResultDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {FulfillWantedVideosBatchRequest}
+ */
+// @ts-ignore
+export function createFulfillWantedVideosBatchRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoFulfillWantedVideosBatchRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {FulfillWantedVideosBatchResponse}
+ */
+// @ts-ignore
+export function createFulfillWantedVideosBatchResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoFulfillWantedVideosBatchResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {GetActorChangesResponse}
  */
 // @ts-ignore
@@ -908,6 +944,51 @@ export function createGetVideoUserImageChangesResponseFromDiscriminatorValue(par
 // @ts-ignore
 export function createGetWantedVideoChangesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoGetWantedVideoChangesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IdentifySiteDto}
+ */
+// @ts-ignore
+export function createIdentifySiteDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIdentifySiteDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IdentifyVideoFileDto}
+ */
+// @ts-ignore
+export function createIdentifyVideoFileDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIdentifyVideoFileDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IdentifyVideoResultDto}
+ */
+// @ts-ignore
+export function createIdentifyVideoResultDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIdentifyVideoResultDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IdentifyVideosRequest}
+ */
+// @ts-ignore
+export function createIdentifyVideosRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIdentifyVideosRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IdentifyVideosResponse}
+ */
+// @ts-ignore
+export function createIdentifyVideosResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIdentifyVideosResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1187,6 +1268,42 @@ export function createSearchPreDbByVideoResponseFromDiscriminatorValue(parseNode
 // @ts-ignore
 export function createSiteSummaryDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoSiteSummaryDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SubmitVideoFilehashesRequest}
+ */
+// @ts-ignore
+export function createSubmitVideoFilehashesRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSubmitVideoFilehashesRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SubmitVideoFilehashesResponse}
+ */
+// @ts-ignore
+export function createSubmitVideoFilehashesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSubmitVideoFilehashesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SubmitVideoFilehashItem}
+ */
+// @ts-ignore
+export function createSubmitVideoFilehashItemFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSubmitVideoFilehashItem;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SubmitVideoFilehashResultDto}
+ */
+// @ts-ignore
+export function createSubmitVideoFilehashResultDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSubmitVideoFilehashResultDto;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1905,6 +2022,56 @@ export function deserializeIntoFavoriteSiteSummaryDto(favoriteSiteSummaryDto: Pa
 }
 /**
  * The deserialization information for the current model
+ * @param FulfillWantedVideoItem The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoFulfillWantedVideoItem(fulfillWantedVideoItem: Partial<FulfillWantedVideoItem> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "fulfilledAtUtc": n => { fulfillWantedVideoItem.fulfilledAtUtc = n.getDateValue(); },
+        "fulfilledInQuality": n => { fulfillWantedVideoItem.fulfilledInQuality = n.getNumberValue(); },
+        "fulfillmentByApp": n => { fulfillWantedVideoItem.fulfillmentByApp = n.getNumberValue(); },
+        "fulfillmentExternalId": n => { fulfillWantedVideoItem.fulfillmentExternalId = n.getStringValue(); },
+        "isFulfilled": n => { fulfillWantedVideoItem.isFulfilled = n.getBooleanValue(); },
+        "videoId": n => { fulfillWantedVideoItem.videoId = n.getGuidValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param FulfillWantedVideoResultDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoFulfillWantedVideoResultDto(fulfillWantedVideoResultDto: Partial<FulfillWantedVideoResultDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "outcome": n => { fulfillWantedVideoResultDto.outcome = n.getNumberValue(); },
+        "videoId": n => { fulfillWantedVideoResultDto.videoId = n.getGuidValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param FulfillWantedVideosBatchRequest The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoFulfillWantedVideosBatchRequest(fulfillWantedVideosBatchRequest: Partial<FulfillWantedVideosBatchRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "items": n => { fulfillWantedVideosBatchRequest.items = n.getCollectionOfObjectValues<FulfillWantedVideoItem>(createFulfillWantedVideoItemFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param FulfillWantedVideosBatchResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoFulfillWantedVideosBatchResponse(fulfillWantedVideosBatchResponse: Partial<FulfillWantedVideosBatchResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "results": n => { fulfillWantedVideosBatchResponse.results = n.getCollectionOfObjectValues<FulfillWantedVideoResultDto>(createFulfillWantedVideoResultDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param GetActorChangesResponse The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2076,6 +2243,74 @@ export function deserializeIntoGetWantedVideoChangesResponse(getWantedVideoChang
         "nextCursor": n => { getWantedVideoChangesResponse.nextCursor = n.getObjectValue<WantedVideoChangesCursorDto>(createWantedVideoChangesCursorDtoFromDiscriminatorValue); },
         "pageSize": n => { getWantedVideoChangesResponse.pageSize = n.getNumberValue(); },
         "serverTimeUtc": n => { getWantedVideoChangesResponse.serverTimeUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IdentifySiteDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIdentifySiteDto(identifySiteDto: Partial<IdentifySiteDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { identifySiteDto.id = n.getGuidValue(); },
+        "title": n => { identifySiteDto.title = n.getStringValue(); },
+        "url": n => { identifySiteDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IdentifyVideoFileDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIdentifyVideoFileDto(identifyVideoFileDto: Partial<IdentifyVideoFileDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "filename": n => { identifyVideoFileDto.filename = n.getStringValue(); },
+        "filesize": n => { identifyVideoFileDto.filesize = n.getNumberValue(); },
+        "osHash": n => { identifyVideoFileDto.osHash = n.getStringValue(); },
+        "pHash": n => { identifyVideoFileDto.pHash = n.getStringValue(); },
+        "ref": n => { identifyVideoFileDto.ref = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IdentifyVideoResultDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIdentifyVideoResultDto(identifyVideoResultDto: Partial<IdentifyVideoResultDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "candidates": n => { identifyVideoResultDto.candidates = n.getCollectionOfPrimitiveValues<Guid>("string"); },
+        "confidence": n => { identifyVideoResultDto.confidence = n.getNumberValue(); },
+        "matchedBy": n => { identifyVideoResultDto.matchedBy = n.getNumberValue(); },
+        "ref": n => { identifyVideoResultDto.ref = n.getStringValue(); },
+        "site": n => { identifyVideoResultDto.site = n.getObjectValue<IdentifySiteDto>(createIdentifySiteDtoFromDiscriminatorValue); },
+        "video": n => { identifyVideoResultDto.video = n.getObjectValue<VideoDetailDto>(createVideoDetailDtoFromDiscriminatorValue); },
+        "videoId": n => { identifyVideoResultDto.videoId = n.getGuidValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IdentifyVideosRequest The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIdentifyVideosRequest(identifyVideosRequest: Partial<IdentifyVideosRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "files": n => { identifyVideosRequest.files = n.getCollectionOfObjectValues<IdentifyVideoFileDto>(createIdentifyVideoFileDtoFromDiscriminatorValue); },
+        "includeVideoDetails": n => { identifyVideosRequest.includeVideoDetails = n.getBooleanValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IdentifyVideosResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIdentifyVideosResponse(identifyVideosResponse: Partial<IdentifyVideosResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "results": n => { identifyVideosResponse.results = n.getCollectionOfObjectValues<IdentifyVideoResultDto>(createIdentifyVideoResultDtoFromDiscriminatorValue); },
     }
 }
 /**
@@ -2532,11 +2767,64 @@ export function deserializeIntoSearchPreDbByVideoResponse(searchPreDbByVideoResp
 // @ts-ignore
 export function deserializeIntoSiteSummaryDto(siteSummaryDto: Partial<SiteSummaryDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "createdAtUtc": n => { siteSummaryDto.createdAtUtc = n.getDateValue(); },
         "id": n => { siteSummaryDto.id = n.getGuidValue(); },
         "networkId": n => { siteSummaryDto.networkId = n.getGuidValue(); },
         "networkTitle": n => { siteSummaryDto.networkTitle = n.getStringValue(); },
         "title": n => { siteSummaryDto.title = n.getStringValue(); },
+        "updatedAtUtc": n => { siteSummaryDto.updatedAtUtc = n.getDateValue(); },
         "url": n => { siteSummaryDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param SubmitVideoFilehashesRequest The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSubmitVideoFilehashesRequest(submitVideoFilehashesRequest: Partial<SubmitVideoFilehashesRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "items": n => { submitVideoFilehashesRequest.items = n.getCollectionOfObjectValues<SubmitVideoFilehashItem>(createSubmitVideoFilehashItemFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param SubmitVideoFilehashesResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSubmitVideoFilehashesResponse(submitVideoFilehashesResponse: Partial<SubmitVideoFilehashesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "results": n => { submitVideoFilehashesResponse.results = n.getCollectionOfObjectValues<SubmitVideoFilehashResultDto>(createSubmitVideoFilehashResultDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param SubmitVideoFilehashItem The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSubmitVideoFilehashItem(submitVideoFilehashItem: Partial<SubmitVideoFilehashItem> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "filename": n => { submitVideoFilehashItem.filename = n.getStringValue(); },
+        "filesize": n => { submitVideoFilehashItem.filesize = n.getNumberValue(); },
+        "osHash": n => { submitVideoFilehashItem.osHash = n.getStringValue(); },
+        "pHash": n => { submitVideoFilehashItem.pHash = n.getStringValue(); },
+        "source": n => { submitVideoFilehashItem.source = n.getNumberValue(); },
+        "videoId": n => { submitVideoFilehashItem.videoId = n.getGuidValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param SubmitVideoFilehashResultDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSubmitVideoFilehashResultDto(submitVideoFilehashResultDto: Partial<SubmitVideoFilehashResultDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "osHash": n => { submitVideoFilehashResultDto.osHash = n.getStringValue(); },
+        "outcome": n => { submitVideoFilehashResultDto.outcome = n.getNumberValue(); },
+        "videoId": n => { submitVideoFilehashResultDto.videoId = n.getGuidValue(); },
     }
 }
 /**
@@ -3230,6 +3518,54 @@ export interface FavoriteSiteSummaryDto extends AdditionalDataHolder, Parsable {
      */
     url?: string | null;
 }
+export interface FulfillWantedVideoItem extends AdditionalDataHolder, Parsable {
+    /**
+     * The fulfilledAtUtc property
+     */
+    fulfilledAtUtc?: Date | null;
+    /**
+     * The fulfilledInQuality property
+     */
+    fulfilledInQuality?: number | null;
+    /**
+     * The fulfillmentByApp property
+     */
+    fulfillmentByApp?: number | null;
+    /**
+     * The fulfillmentExternalId property
+     */
+    fulfillmentExternalId?: string | null;
+    /**
+     * The isFulfilled property
+     */
+    isFulfilled?: boolean | null;
+    /**
+     * The videoId property
+     */
+    videoId?: Guid | null;
+}
+export interface FulfillWantedVideoResultDto extends AdditionalDataHolder, Parsable {
+    /**
+     * Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).
+     */
+    outcome?: number | null;
+    /**
+     * The videoId property
+     */
+    videoId?: Guid | null;
+}
+export interface FulfillWantedVideosBatchRequest extends AdditionalDataHolder, Parsable {
+    /**
+     * The items property
+     */
+    items?: FulfillWantedVideoItem[] | null;
+}
+export interface FulfillWantedVideosBatchResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The results property
+     */
+    results?: FulfillWantedVideoResultDto[] | null;
+}
 export interface GetActorChangesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The hasMore property
@@ -3435,6 +3771,88 @@ export interface GetWantedVideoChangesResponse extends AdditionalDataHolder, Par
      * The serverTimeUtc property
      */
     serverTimeUtc?: Date | null;
+}
+export interface IdentifySiteDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+    /**
+     * The url property
+     */
+    url?: string | null;
+}
+export interface IdentifyVideoFileDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The filename property
+     */
+    filename?: string | null;
+    /**
+     * The filesize property
+     */
+    filesize?: number | null;
+    /**
+     * The osHash property
+     */
+    osHash?: string | null;
+    /**
+     * The pHash property
+     */
+    pHash?: string | null;
+    /**
+     * The ref property
+     */
+    ref?: string | null;
+}
+export interface IdentifyVideoResultDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The candidates property
+     */
+    candidates?: Guid[] | null;
+    /**
+     * Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
+     */
+    confidence?: number | null;
+    /**
+     * The matchedBy property
+     */
+    matchedBy?: number | null;
+    /**
+     * The ref property
+     */
+    ref?: string | null;
+    /**
+     * The site property
+     */
+    site?: IdentifySiteDto | null;
+    /**
+     * The video property
+     */
+    video?: VideoDetailDto | null;
+    /**
+     * The videoId property
+     */
+    videoId?: Guid | null;
+}
+export interface IdentifyVideosRequest extends AdditionalDataHolder, Parsable {
+    /**
+     * The files property
+     */
+    files?: IdentifyVideoFileDto[] | null;
+    /**
+     * The includeVideoDetails property
+     */
+    includeVideoDetails?: boolean | null;
+}
+export interface IdentifyVideosResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The results property
+     */
+    results?: IdentifyVideoResultDto[] | null;
 }
 export interface IndexerFilehashChangeDto extends AdditionalDataHolder, Parsable {
     /**
@@ -4575,6 +4993,60 @@ export function serializeFavoriteSiteSummaryDto(writer: SerializationWriter, fav
 }
 /**
  * Serializes information the current object
+ * @param FulfillWantedVideoItem The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeFulfillWantedVideoItem(writer: SerializationWriter, fulfillWantedVideoItem: Partial<FulfillWantedVideoItem> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!fulfillWantedVideoItem || isSerializingDerivedType) { return; }
+    writer.writeDateValue("fulfilledAtUtc", fulfillWantedVideoItem.fulfilledAtUtc);
+    writer.writeNumberValue("fulfilledInQuality", fulfillWantedVideoItem.fulfilledInQuality);
+    writer.writeNumberValue("fulfillmentByApp", fulfillWantedVideoItem.fulfillmentByApp);
+    writer.writeStringValue("fulfillmentExternalId", fulfillWantedVideoItem.fulfillmentExternalId);
+    writer.writeBooleanValue("isFulfilled", fulfillWantedVideoItem.isFulfilled);
+    writer.writeGuidValue("videoId", fulfillWantedVideoItem.videoId);
+    writer.writeAdditionalData(fulfillWantedVideoItem.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param FulfillWantedVideoResultDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeFulfillWantedVideoResultDto(writer: SerializationWriter, fulfillWantedVideoResultDto: Partial<FulfillWantedVideoResultDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!fulfillWantedVideoResultDto || isSerializingDerivedType) { return; }
+    writer.writeNumberValue("outcome", fulfillWantedVideoResultDto.outcome);
+    writer.writeGuidValue("videoId", fulfillWantedVideoResultDto.videoId);
+    writer.writeAdditionalData(fulfillWantedVideoResultDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param FulfillWantedVideosBatchRequest The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeFulfillWantedVideosBatchRequest(writer: SerializationWriter, fulfillWantedVideosBatchRequest: Partial<FulfillWantedVideosBatchRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!fulfillWantedVideosBatchRequest || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<FulfillWantedVideoItem>("items", fulfillWantedVideosBatchRequest.items, serializeFulfillWantedVideoItem);
+    writer.writeAdditionalData(fulfillWantedVideosBatchRequest.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param FulfillWantedVideosBatchResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeFulfillWantedVideosBatchResponse(writer: SerializationWriter, fulfillWantedVideosBatchResponse: Partial<FulfillWantedVideosBatchResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!fulfillWantedVideosBatchResponse || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<FulfillWantedVideoResultDto>("results", fulfillWantedVideosBatchResponse.results, serializeFulfillWantedVideoResultDto);
+    writer.writeAdditionalData(fulfillWantedVideosBatchResponse.additionalData);
+}
+/**
+ * Serializes information the current object
  * @param GetActorChangesResponse The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -4760,6 +5232,79 @@ export function serializeGetWantedVideoChangesResponse(writer: SerializationWrit
     writer.writeNumberValue("pageSize", getWantedVideoChangesResponse.pageSize);
     writer.writeDateValue("serverTimeUtc", getWantedVideoChangesResponse.serverTimeUtc);
     writer.writeAdditionalData(getWantedVideoChangesResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IdentifySiteDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIdentifySiteDto(writer: SerializationWriter, identifySiteDto: Partial<IdentifySiteDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!identifySiteDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", identifySiteDto.id);
+    writer.writeStringValue("title", identifySiteDto.title);
+    writer.writeStringValue("url", identifySiteDto.url);
+    writer.writeAdditionalData(identifySiteDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IdentifyVideoFileDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIdentifyVideoFileDto(writer: SerializationWriter, identifyVideoFileDto: Partial<IdentifyVideoFileDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!identifyVideoFileDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("filename", identifyVideoFileDto.filename);
+    writer.writeNumberValue("filesize", identifyVideoFileDto.filesize);
+    writer.writeStringValue("osHash", identifyVideoFileDto.osHash);
+    writer.writeStringValue("pHash", identifyVideoFileDto.pHash);
+    writer.writeStringValue("ref", identifyVideoFileDto.ref);
+    writer.writeAdditionalData(identifyVideoFileDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IdentifyVideoResultDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIdentifyVideoResultDto(writer: SerializationWriter, identifyVideoResultDto: Partial<IdentifyVideoResultDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!identifyVideoResultDto || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfPrimitiveValues<Guid>("candidates", identifyVideoResultDto.candidates);
+    writer.writeNumberValue("confidence", identifyVideoResultDto.confidence);
+    writer.writeNumberValue("matchedBy", identifyVideoResultDto.matchedBy);
+    writer.writeStringValue("ref", identifyVideoResultDto.ref);
+    writer.writeObjectValue<IdentifySiteDto>("site", identifyVideoResultDto.site, serializeIdentifySiteDto);
+    writer.writeObjectValue<VideoDetailDto>("video", identifyVideoResultDto.video, serializeVideoDetailDto);
+    writer.writeGuidValue("videoId", identifyVideoResultDto.videoId);
+    writer.writeAdditionalData(identifyVideoResultDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IdentifyVideosRequest The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIdentifyVideosRequest(writer: SerializationWriter, identifyVideosRequest: Partial<IdentifyVideosRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!identifyVideosRequest || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<IdentifyVideoFileDto>("files", identifyVideosRequest.files, serializeIdentifyVideoFileDto);
+    writer.writeBooleanValue("includeVideoDetails", identifyVideosRequest.includeVideoDetails);
+    writer.writeAdditionalData(identifyVideosRequest.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IdentifyVideosResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIdentifyVideosResponse(writer: SerializationWriter, identifyVideosResponse: Partial<IdentifyVideosResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!identifyVideosResponse || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<IdentifyVideoResultDto>("results", identifyVideosResponse.results, serializeIdentifyVideoResultDto);
+    writer.writeAdditionalData(identifyVideosResponse.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5246,12 +5791,69 @@ export function serializeSearchPreDbByVideoResponse(writer: SerializationWriter,
 // @ts-ignore
 export function serializeSiteSummaryDto(writer: SerializationWriter, siteSummaryDto: Partial<SiteSummaryDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!siteSummaryDto || isSerializingDerivedType) { return; }
+    writer.writeDateValue("createdAtUtc", siteSummaryDto.createdAtUtc);
     writer.writeGuidValue("id", siteSummaryDto.id);
     writer.writeGuidValue("networkId", siteSummaryDto.networkId);
     writer.writeStringValue("networkTitle", siteSummaryDto.networkTitle);
     writer.writeStringValue("title", siteSummaryDto.title);
+    writer.writeDateValue("updatedAtUtc", siteSummaryDto.updatedAtUtc);
     writer.writeStringValue("url", siteSummaryDto.url);
     writer.writeAdditionalData(siteSummaryDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SubmitVideoFilehashesRequest The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSubmitVideoFilehashesRequest(writer: SerializationWriter, submitVideoFilehashesRequest: Partial<SubmitVideoFilehashesRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!submitVideoFilehashesRequest || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<SubmitVideoFilehashItem>("items", submitVideoFilehashesRequest.items, serializeSubmitVideoFilehashItem);
+    writer.writeAdditionalData(submitVideoFilehashesRequest.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SubmitVideoFilehashesResponse The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSubmitVideoFilehashesResponse(writer: SerializationWriter, submitVideoFilehashesResponse: Partial<SubmitVideoFilehashesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!submitVideoFilehashesResponse || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<SubmitVideoFilehashResultDto>("results", submitVideoFilehashesResponse.results, serializeSubmitVideoFilehashResultDto);
+    writer.writeAdditionalData(submitVideoFilehashesResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SubmitVideoFilehashItem The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSubmitVideoFilehashItem(writer: SerializationWriter, submitVideoFilehashItem: Partial<SubmitVideoFilehashItem> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!submitVideoFilehashItem || isSerializingDerivedType) { return; }
+    writer.writeStringValue("filename", submitVideoFilehashItem.filename);
+    writer.writeNumberValue("filesize", submitVideoFilehashItem.filesize);
+    writer.writeStringValue("osHash", submitVideoFilehashItem.osHash);
+    writer.writeStringValue("pHash", submitVideoFilehashItem.pHash);
+    writer.writeNumberValue("source", submitVideoFilehashItem.source);
+    writer.writeGuidValue("videoId", submitVideoFilehashItem.videoId);
+    writer.writeAdditionalData(submitVideoFilehashItem.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SubmitVideoFilehashResultDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSubmitVideoFilehashResultDto(writer: SerializationWriter, submitVideoFilehashResultDto: Partial<SubmitVideoFilehashResultDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!submitVideoFilehashResultDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("osHash", submitVideoFilehashResultDto.osHash);
+    writer.writeNumberValue("outcome", submitVideoFilehashResultDto.outcome);
+    writer.writeGuidValue("videoId", submitVideoFilehashResultDto.videoId);
+    writer.writeAdditionalData(submitVideoFilehashResultDto.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5722,6 +6324,10 @@ export function serializeWantedVideoSummaryDto(writer: SerializationWriter, want
 }
 export interface SiteSummaryDto extends AdditionalDataHolder, Parsable {
     /**
+     * The createdAtUtc property
+     */
+    createdAtUtc?: Date | null;
+    /**
      * The id property
      */
     id?: Guid | null;
@@ -5738,9 +6344,65 @@ export interface SiteSummaryDto extends AdditionalDataHolder, Parsable {
      */
     title?: string | null;
     /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
+    /**
      * The url property
      */
     url?: string | null;
+}
+export interface SubmitVideoFilehashesRequest extends AdditionalDataHolder, Parsable {
+    /**
+     * The items property
+     */
+    items?: SubmitVideoFilehashItem[] | null;
+}
+export interface SubmitVideoFilehashesResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The results property
+     */
+    results?: SubmitVideoFilehashResultDto[] | null;
+}
+export interface SubmitVideoFilehashItem extends AdditionalDataHolder, Parsable {
+    /**
+     * The filename property
+     */
+    filename?: string | null;
+    /**
+     * The filesize property
+     */
+    filesize?: number | null;
+    /**
+     * The osHash property
+     */
+    osHash?: string | null;
+    /**
+     * The pHash property
+     */
+    pHash?: string | null;
+    /**
+     * Known values: UserConfirmed (0), ClientDetected (1).
+     */
+    source?: number | null;
+    /**
+     * The videoId property
+     */
+    videoId?: Guid | null;
+}
+export interface SubmitVideoFilehashResultDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The osHash property
+     */
+    osHash?: string | null;
+    /**
+     * Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
+     */
+    outcome?: number | null;
+    /**
+     * The videoId property
+     */
+    videoId?: Guid | null;
 }
 export interface SubmitVideoUserImageResponse extends AdditionalDataHolder, Parsable {
     /**

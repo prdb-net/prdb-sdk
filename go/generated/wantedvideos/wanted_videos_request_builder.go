@@ -59,6 +59,11 @@ func NewWantedVideosRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee2
     urlParams["request-raw-url"] = rawUrl
     return NewWantedVideosRequestBuilderInternal(urlParams, requestAdapter)
 }
+// Fulfillments the fulfillments property
+// returns a *FulfillmentsRequestBuilder when successful
+func (m *WantedVideosRequestBuilder) Fulfillments()(*FulfillmentsRequestBuilder) {
+    return NewFulfillmentsRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
 // Get returns a paged, sortable list of wanted videos for the currently authenticated user. Supports filtering by fulfilment status, site, actor, search term, and recency. Requires API key authentication.
 // returns a ListWantedVideosResponseable when successful
 // returns a ProblemDetails error when the service returns a 400 status code

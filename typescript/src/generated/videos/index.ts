@@ -8,6 +8,10 @@ import { BatchRequestBuilderRequestsMetadata, type BatchRequestBuilder } from '.
 // @ts-ignore
 import { FilehashesRequestBuilderNavigationMetadata, type FilehashesRequestBuilder } from './filehashes/index.js';
 // @ts-ignore
+import { FilehashSubmissionsRequestBuilderRequestsMetadata, type FilehashSubmissionsRequestBuilder } from './filehashSubmissions/index.js';
+// @ts-ignore
+import { IdentifyRequestBuilderRequestsMetadata, type IdentifyRequestBuilder } from './identify/index.js';
+// @ts-ignore
 import { ItemRequestBuilderNavigationMetadata, ItemRequestBuilderRequestsMetadata, type ItemRequestBuilder } from './item/index.js';
 // @ts-ignore
 import { type BaseRequestBuilder, type Guid, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
@@ -26,6 +30,14 @@ export interface VideosRequestBuilder extends BaseRequestBuilder<VideosRequestBu
      * The filehashes property
      */
     get filehashes(): FilehashesRequestBuilder;
+    /**
+     * The filehashSubmissions property
+     */
+    get filehashSubmissions(): FilehashSubmissionsRequestBuilder;
+    /**
+     * The identify property
+     */
+    get identify(): IdentifyRequestBuilder;
     /**
      * Gets an item from the prdb-sdk.videos.item collection
      * @param id Unique identifier of the item
@@ -111,6 +123,12 @@ export const VideosRequestBuilderNavigationMetadata: Record<Exclude<keyof Videos
     },
     filehashes: {
         navigationMetadata: FilehashesRequestBuilderNavigationMetadata,
+    },
+    filehashSubmissions: {
+        requestsMetadata: FilehashSubmissionsRequestBuilderRequestsMetadata,
+    },
+    identify: {
+        requestsMetadata: IdentifyRequestBuilderRequestsMetadata,
     },
 };
 /**

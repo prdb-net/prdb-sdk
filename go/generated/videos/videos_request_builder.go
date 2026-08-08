@@ -60,6 +60,11 @@ func NewVideosRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263371c
 func (m *VideosRequestBuilder) Filehashes()(*FilehashesRequestBuilder) {
     return NewFilehashesRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
+// FilehashSubmissions the filehashSubmissions property
+// returns a *FilehashSubmissionsRequestBuilder when successful
+func (m *VideosRequestBuilder) FilehashSubmissions()(*FilehashSubmissionsRequestBuilder) {
+    return NewFilehashSubmissionsRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
 // Get returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
 // returns a ListVideosResponseable when successful
 // returns a ProblemDetails error when the service returns a 400 status code
@@ -87,6 +92,11 @@ func (m *VideosRequestBuilder) Get(ctx context.Context, requestConfiguration *i2
         return nil, nil
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.ListVideosResponseable), nil
+}
+// Identify the identify property
+// returns a *IdentifyRequestBuilder when successful
+func (m *VideosRequestBuilder) Identify()(*IdentifyRequestBuilder) {
+    return NewIdentifyRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
 // ToGetRequestInformation returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
 // returns a *RequestInformation when successful

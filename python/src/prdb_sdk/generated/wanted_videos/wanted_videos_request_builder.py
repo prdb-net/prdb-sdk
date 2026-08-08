@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from ..models.problem_details import ProblemDetails
     from .batch.batch_request_builder import BatchRequestBuilder
     from .changes.changes_request_builder import ChangesRequestBuilder
+    from .fulfillments.fulfillments_request_builder import FulfillmentsRequestBuilder
     from .get_sort_direction_query_parameter_type import GetSortDirectionQueryParameterType
     from .item.with_video_item_request_builder import WithVideoItemRequestBuilder
 
@@ -111,6 +112,15 @@ class WantedVideosRequestBuilder(BaseRequestBuilder):
         from .changes.changes_request_builder import ChangesRequestBuilder
 
         return ChangesRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
+    def fulfillments(self) -> FulfillmentsRequestBuilder:
+        """
+        The fulfillments property
+        """
+        from .fulfillments.fulfillments_request_builder import FulfillmentsRequestBuilder
+
+        return FulfillmentsRequestBuilder(self.request_adapter, self.path_parameters)
     
     @dataclass
     class WantedVideosRequestBuilderGetQueryParameters():
