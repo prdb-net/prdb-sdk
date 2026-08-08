@@ -78,7 +78,39 @@ client, err := prdb.NewClient("...", prdb.Options{
 ```
 
 Supplying an `*http.Client` leaves it untouched: the redirect rule is applied to
-a copy, unless you have set `CheckRedirect` yourself.
+a copy. It is applied even if you set `CheckRedirect` yourself — yours runs
+after ours, so it can refuse more redirects but not re-enable one that leaves
+the API host with your key attached.
+
+### Retrying
+
+By default the SDK retries a `429`, `503` or `504` up to three times, honouring
+`Retry-After`.
+
+Turn that off if your application already retries prdb calls:
+
+```go
+client, err := prdb.NewClient("...", prdb.Options{
+	Retry: prdb.RetryDisabled(),
+})
+```
+
+Otherwise the two policies multiply — one logical call becomes up to *n×m*
+requests against an API that rate limits, and an outer circuit breaker never
+sees a stable failure to open on. The built-in policy also retries writes, so an
+application that must not repeat one should own the retry itself.
+
+To keep it but change it:
+
+```go
+client, err := prdb.NewClient("...", prdb.Options{
+	Retry: &prdb.RetryOptions{MaxRetries: 5, Delay: time.Second},
+})
+```
+
+`Retry` and `HTTPClient` are mutually exclusive, and setting both is an error.
+Kiota's middleware lives in the `Transport` a supplied client owns, so the SDK's
+pipeline does not run for it — configure retrying on that client instead.
 
 ## Generated code
 

@@ -12,6 +12,52 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **Retrying is now configurable, and can be turned off.** All four SDKs install
+  Kiota's retry handler, which retries `429`, `503` and `504` honouring
+  `Retry-After`. An application that already retries prdb calls had no way to
+  opt out, so the two policies multiplied: one logical call became up to *n×m*
+  requests against an API that rate limits, and an outer circuit breaker never
+  saw a stable failure to open on. Pass `PrdbRetryOptions.Disabled` (C#),
+  `RetryOptions.disabled()` (Python), `RETRY_DISABLED` (TypeScript) or
+  `prdb.RetryDisabled()` (Go), or supply your own attempt count and delay.
+  In Go, `Retry` and `HTTPClient` are mutually exclusive and setting both is an
+  error, because Kiota's middleware lives in the `Transport` a supplied client
+  owns.
+- **C#: `services.AddPrdbClient(...)`**, which wires the client through
+  `IHttpClientFactory` so handler lifetime and connection pooling are managed
+  the way the rest of an ASP.NET application expects. It returns the
+  `IHttpClientBuilder`, so an application can attach its own resilience
+  handler — that runs inside the SDK's middleware, seeing the individual HTTP
+  attempts. Configuration is validated at registration, so a bad base URL stops
+  startup rather than the first request.
+- **C#: a `timeout` parameter on `Create` and `CreateAnonymous`.** The request
+  deadline lives on the `HttpClient` the factory builds, which is deliberately
+  never exposed, so it could not be reached through `transport` at all — the
+  README claimed otherwise. It now has its own parameter, defaulting to the
+  same 100 seconds as before.
+
+### Fixed
+
+- **C#: a caller-supplied `transport` could follow a cross-origin redirect
+  before the SDK refused it, leaking the API key.** Kiota's own transport
+  disables redirect following, but a plain `SocketsHttpHandler` or
+  `HttpClientHandler` does not, and neither does the handler chain from
+  `IHttpMessageHandlerFactory`. Such a transport followed the redirect itself,
+  so the SDK's rule never ran and `X-Api-Key` reached the other origin.
+  Redirect following is now turned off on a supplied transport, and the DI
+  registration installs a primary handler that does not redirect.
+- **Go: a caller-supplied `*http.Client` with its own `CheckRedirect` could
+  follow a cross-origin redirect, leaking the API key.** The wrapper installed
+  its rule only when `CheckRedirect` was unset. It is now always installed and
+  runs first; a caller's policy still runs afterwards and can refuse more, but
+  cannot re-enable a redirect off the API host.
+- **C#: the SDK no longer lets its `HttpClient` own a caller-supplied
+  transport.** Disposing the client would have disposed the transport with it,
+  which matters because a handler from `IHttpMessageHandlerFactory` is pooled
+  and shared across the process. Backed by a test.
+
 ### Changed
 
 - **TypeScript: the minimum supported Node version is now 22.** Node 20 reached

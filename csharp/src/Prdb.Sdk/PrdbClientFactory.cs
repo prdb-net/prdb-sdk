@@ -1,6 +1,8 @@
+using Microsoft.Kiota.Abstractions;
 using Microsoft.Kiota.Abstractions.Authentication;
 using Microsoft.Kiota.Bundle;
 using Microsoft.Kiota.Http.HttpClientLibrary;
+using Microsoft.Kiota.Http.HttpClientLibrary.Middleware;
 using Microsoft.Kiota.Http.HttpClientLibrary.Middleware.Options;
 using Prdb.Sdk.Generated;
 
@@ -26,6 +28,12 @@ public static class PrdbClientFactory
     public const string DefaultBaseUrl = "https://api.prdb.net";
 
     /// <summary>
+    /// How long a request may take before it is abandoned, unless a caller asks for
+    /// something else. Matches <see cref="HttpClient"/>'s own default.
+    /// </summary>
+    public static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(100);
+
+    /// <summary>
     /// Creates a client authenticated with an API key.
     /// </summary>
     /// <param name="apiKey">The API key, sent in the <c>X-Api-Key</c> header on every request.</param>
@@ -34,18 +42,31 @@ public static class PrdbClientFactory
     /// so the key is never sent in cleartext.
     /// </param>
     /// <param name="transport">
-    /// Supply your own innermost <see cref="HttpMessageHandler"/> to control timeouts,
-    /// proxies or connection pooling. The SDK's middleware is layered on top of it either
-    /// way, so the redirect rule below always applies.
+    /// Supply your own innermost <see cref="HttpMessageHandler"/> to control proxies or
+    /// connection pooling, or to insert your own resilience pipeline. The SDK's middleware is
+    /// layered on top of it either way, so the redirect rule below always applies. The SDK
+    /// never disposes a handler you supply.
+    /// </param>
+    /// <param name="retry">
+    /// How the SDK retries a refused request. Defaults to Kiota's policy — three attempts,
+    /// honouring <c>Retry-After</c>. Pass <see cref="PrdbRetryOptions.Disabled"/> if your
+    /// application already retries prdb calls itself.
+    /// </param>
+    /// <param name="timeout">
+    /// How long a request may take before it is abandoned. Defaults to
+    /// <see cref="DefaultTimeout"/>. This cannot be set through <paramref name="transport"/>,
+    /// because the deadline lives on the <see cref="HttpClient"/> above it.
     /// </param>
     /// <exception cref="ArgumentException">
-    /// <paramref name="apiKey"/> is empty, or <paramref name="baseUrl"/> is not an
-    /// absolute <c>https</c> URL.
+    /// <paramref name="apiKey"/> is empty, <paramref name="baseUrl"/> is not an absolute
+    /// <c>https</c> URL, or <paramref name="retry"/> or <paramref name="timeout"/> is out of range.
     /// </exception>
     public static PrdbClient Create(
         string apiKey,
         string baseUrl = DefaultBaseUrl,
-        HttpMessageHandler? transport = null)
+        HttpMessageHandler? transport = null,
+        PrdbRetryOptions? retry = null,
+        TimeSpan? timeout = null)
     {
         if (string.IsNullOrWhiteSpace(apiKey))
         {
@@ -60,7 +81,7 @@ public static class PrdbClientFactory
             ApiKeyAuthenticationProvider.KeyLocation.Header,
             host);
 
-        return Build(authProvider, baseUrl, transport);
+        return Build(authProvider, baseUrl, transport, retry, timeout);
     }
 
     /// <summary>
@@ -74,31 +95,153 @@ public static class PrdbClientFactory
     /// </para>
     /// </remarks>
     /// <exception cref="ArgumentException">
-    /// <paramref name="baseUrl"/> is not an absolute URL.
+    /// <paramref name="baseUrl"/> is not an absolute URL, or <paramref name="retry"/> or
+    /// <paramref name="timeout"/> is out of range.
     /// </exception>
     public static PrdbClient CreateAnonymous(
         string baseUrl = DefaultBaseUrl,
-        HttpMessageHandler? transport = null)
+        HttpMessageHandler? transport = null,
+        PrdbRetryOptions? retry = null,
+        TimeSpan? timeout = null)
     {
         HostOf(baseUrl, nameof(baseUrl), requireHttps: false);
 
-        return Build(new AnonymousAuthenticationProvider(), baseUrl, transport);
+        return Build(new AnonymousAuthenticationProvider(), baseUrl, transport, retry, timeout);
     }
 
     private static PrdbClient Build(
         IAuthenticationProvider authProvider,
         string baseUrl,
-        HttpMessageHandler? transport)
+        HttpMessageHandler? transport,
+        PrdbRetryOptions? retry,
+        TimeSpan? timeout)
     {
-        var handlers = KiotaClientFactory.CreateDefaultHandlers([RedirectOption()]);
-        var httpClient = KiotaClientFactory.Create(handlers, transport);
-
-        var adapter = new DefaultRequestAdapter(authProvider, httpClient: httpClient)
+        var adapter = new DefaultRequestAdapter(
+            authProvider,
+            httpClient: BuildHttpClient(transport, retry, timeout))
         {
             BaseUrl = baseUrl,
         };
 
         return new PrdbClient(adapter);
+    }
+
+    /// <summary>
+    /// Builds the <see cref="HttpClient"/> the request adapter sends through: the SDK's
+    /// middleware pipeline, ending in <paramref name="transport"/> when one was supplied.
+    /// </summary>
+    internal static HttpClient BuildHttpClient(
+        HttpMessageHandler? transport,
+        PrdbRetryOptions? retry,
+        TimeSpan? timeout)
+    {
+        retry?.Validate(nameof(retry));
+
+        if (timeout is { } requested && requested <= TimeSpan.Zero && requested != Timeout.InfiniteTimeSpan)
+        {
+            throw new ArgumentException($"Timeout must be positive, got {requested}.", nameof(timeout));
+        }
+
+        var handlers = CreateHandlers(retry);
+
+        HttpClient httpClient;
+        if (transport is null)
+        {
+            httpClient = KiotaClientFactory.Create(handlers, null);
+        }
+        else
+        {
+            RefuseRedirectsBelowUs(transport);
+
+            // Built by hand rather than through KiotaClientFactory.Create, which leaves the
+            // HttpClient owning its handler: disposing this client would then dispose the
+            // caller's transport too. A handler from IHttpMessageHandlerFactory is pooled and
+            // shared, so tearing it down would break every other caller in the process.
+            var chain = KiotaClientFactory.ChainHandlersCollectionAndGetFirstLink(transport, [.. handlers]);
+            httpClient = new HttpClient(chain!, disposeHandler: false);
+        }
+
+        httpClient.Timeout = timeout ?? DefaultTimeout;
+
+        return httpClient;
+    }
+
+    /// <summary>
+    /// Kiota's default handlers, with the retry handler configured or removed.
+    /// </summary>
+    /// <remarks>
+    /// Removed rather than configured with zero attempts, so "no retrying" means the handler
+    /// is not in the pipeline at all and cannot be re-enabled by a per-request option.
+    /// </remarks>
+    private static IList<DelegatingHandler> CreateHandlers(PrdbRetryOptions? retry)
+    {
+        var options = new List<IRequestOption> { RedirectOption() };
+
+        if (retry is { MaxRetries: > 0 })
+        {
+            options.Add(new RetryHandlerOption
+            {
+                MaxRetry = retry.MaxRetries,
+                Delay = (int)Math.Ceiling(retry.Delay.TotalSeconds),
+            });
+        }
+
+        var handlers = KiotaClientFactory.CreateDefaultHandlers([.. options]);
+
+        if (retry is { MaxRetries: 0 })
+        {
+            for (var i = handlers.Count - 1; i >= 0; i--)
+            {
+                if (handlers[i] is RetryHandler)
+                {
+                    handlers.RemoveAt(i);
+                }
+            }
+        }
+
+        return handlers;
+    }
+
+    /// <summary>
+    /// Turns off redirect following on a caller-supplied transport, so the SDK's redirect
+    /// handler is the only thing that decides whether a redirect is followed.
+    /// </summary>
+    /// <remarks>
+    /// A fresh <see cref="SocketsHttpHandler"/> or <see cref="HttpClientHandler"/> follows
+    /// redirects on its own — Kiota's default transport is the exception, not the rule. A
+    /// transport that follows one itself never lets our handler see it, and neither
+    /// <see cref="HttpClient"/> nor the handler below strips a custom header across origins,
+    /// so the API key would travel to whoever answered. The caller's handler is modified in
+    /// place, because the alternative is to leak the credential silently.
+    /// <para>
+    /// A handler from <c>IHttpMessageHandlerFactory</c> is a chain of delegating handlers, so
+    /// the primary one at the end of it is what has to be reached.
+    /// </para>
+    /// </remarks>
+    private static void RefuseRedirectsBelowUs(HttpMessageHandler transport)
+    {
+        for (var handler = transport; handler is not null;)
+        {
+            switch (handler)
+            {
+                case SocketsHttpHandler sockets:
+                    sockets.AllowAutoRedirect = false;
+                    return;
+
+                case HttpClientHandler client:
+                    client.AllowAutoRedirect = false;
+                    return;
+
+                case DelegatingHandler delegating:
+                    handler = delegating.InnerHandler;
+                    continue;
+
+                default:
+                    // Someone else's handler type. It may or may not redirect, and there is no
+                    // portable way to ask; the redirect test covers the types we can reach.
+                    return;
+            }
+        }
     }
 
     /// <summary>

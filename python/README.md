@@ -66,15 +66,40 @@ protect, so it accepts a plain `http` base URL.
 ## Options
 
 ```python
+from prdb_sdk import RetryOptions, create_client
+
 client = create_client(
     api_key="...",
     base_url="https://api.prdb.net",   # override for a staging deployment
     http_client=my_httpx_async_client, # control timeouts, proxies, connection limits
+    retry=RetryOptions.disabled(),     # see below
 )
 ```
 
 The client you pass in is configured with the SDK's middleware in place, so it
 behaves like the one built for you — same redirect rule, same retry handling.
+
+### Retrying
+
+By default the SDK retries a `429`, `503` or `504` up to three times, honouring
+`Retry-After`.
+
+Turn that off if your application already retries prdb calls:
+
+```python
+client = create_client("...", retry=RetryOptions.disabled())
+```
+
+Otherwise the two policies multiply — one logical call becomes up to *n×m*
+requests against an API that rate limits, and an outer circuit breaker never
+sees a stable failure to open on. The built-in policy also retries writes, so an
+application that must not repeat one should own the retry itself.
+
+To keep it but change it:
+
+```python
+client = create_client("...", retry=RetryOptions(max_retries=5, delay=1.0))
+```
 
 ## Generated code
 

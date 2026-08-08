@@ -19,7 +19,9 @@ import (
 	nethttp "net/http"
 	"net/url"
 	"strings"
+	"time"
 
+	abs "github.com/microsoft/kiota-abstractions-go"
 	auth "github.com/microsoft/kiota-abstractions-go/authentication"
 	bundle "github.com/microsoft/kiota-bundle-go"
 	khttp "github.com/microsoft/kiota-http-go"
@@ -44,7 +46,62 @@ type Options struct {
 
 	// HTTPClient supplies your own client to control timeouts, proxies or
 	// retries. One is created for you when nil.
+	//
+	// Kiota's middleware lives in the Transport, which a supplied client owns,
+	// so the SDK's pipeline -- Retry included -- does not apply to it. Setting
+	// both HTTPClient and Retry is an error rather than a silent no-op.
 	HTTPClient *nethttp.Client
+
+	// Retry configures how the SDK retries a request the API refused with 429,
+	// 503 or 504. Nil keeps Kiota's policy: three attempts, honouring
+	// Retry-After.
+	Retry *RetryOptions
+}
+
+// RetryOptions describes the SDK's retry policy.
+//
+// Retry belongs to whoever owns the calling application's resilience story. An
+// application that already retries prdb calls itself should pass
+// RetryDisabled, otherwise the two policies multiply: one logical call becomes
+// up to n*m requests against an API that rate limits, and the outer circuit
+// breaker never sees a stable failure to open on.
+//
+// The built-in policy retries idempotent and non-idempotent requests alike, so
+// an application that must not repeat a write should own the retry itself.
+type RetryOptions struct {
+	// MaxRetries is how often a refused request is retried, at most 10. Zero
+	// leaves the retry handler out of the pipeline entirely.
+	MaxRetries int
+
+	// Delay is how long to wait before a retry, unless the response carries a
+	// Retry-After header, which always wins. At most 180 seconds. Rounded down
+	// to whole seconds, which is the granularity the handler works in. Zero
+	// means Kiota's default of three seconds.
+	Delay time.Duration
+}
+
+// RetryDisabled turns retrying off: a 429 or 503 reaches the caller as the API
+// sent it.
+func RetryDisabled() *RetryOptions {
+	return &RetryOptions{MaxRetries: 0}
+}
+
+const (
+	maxAllowedRetries = 10
+	maxAllowedDelay   = 180 * time.Second
+)
+
+func (o *RetryOptions) validate() error {
+	if o.MaxRetries < 0 || o.MaxRetries > maxAllowedRetries {
+		return fmt.Errorf(
+			"prdb: retry MaxRetries must be between 0 and %d, got %d",
+			maxAllowedRetries, o.MaxRetries)
+	}
+	if o.Delay < 0 || o.Delay > maxAllowedDelay {
+		return fmt.Errorf(
+			"prdb: retry Delay must be between 0 and %s, got %s", maxAllowedDelay, o.Delay)
+	}
+	return nil
 }
 
 // NewClient creates a client authenticated with an API key, which is sent in
@@ -78,7 +135,7 @@ func NewClient(apiKey string, opts ...Options) (*generated.PrdbClient, error) {
 		return nil, fmt.Errorf("prdb: building authentication provider: %w", err)
 	}
 
-	return buildClient(authProvider, baseURL, options.HTTPClient)
+	return buildClient(authProvider, baseURL, options)
 }
 
 // NewAnonymousClient creates a client without credentials.
@@ -94,27 +151,44 @@ func NewAnonymousClient(opts ...Options) (*generated.PrdbClient, error) {
 		return nil, err
 	}
 
-	return buildClient(&auth.AnonymousAuthenticationProvider{}, baseURL, options.HTTPClient)
+	return buildClient(&auth.AnonymousAuthenticationProvider{}, baseURL, options)
 }
 
 func buildClient(
 	authProvider auth.AuthenticationProvider,
 	baseURL string,
-	httpClient *nethttp.Client,
+	options Options,
 ) (*generated.PrdbClient, error) {
+	if options.Retry != nil {
+		if err := options.Retry.validate(); err != nil {
+			return nil, err
+		}
+		if options.HTTPClient != nil {
+			return nil, errors.New(
+				"prdb: Retry has no effect on a supplied HTTPClient, because Kiota's " +
+					"middleware lives in the Transport that client owns; configure " +
+					"retrying on that client instead, or leave HTTPClient nil")
+		}
+	}
+
+	httpClient := options.HTTPClient
 	if httpClient == nil {
 		var err error
-		httpClient, err = newHTTPClient()
+		httpClient, err = newHTTPClient(options.Retry)
 		if err != nil {
 			return nil, err
 		}
-	} else if httpClient.CheckRedirect == nil {
+	} else {
 		// A caller-supplied client does not run Kiota's middleware, so apply the
 		// same-host redirect rule through net/http instead. Copied rather than
-		// mutated: the caller's client is theirs, not ours. A CheckRedirect they
-		// set themselves is left alone.
+		// mutated: the caller's client is theirs, not ours.
+		//
+		// Applied even over a CheckRedirect they set themselves. Theirs may well
+		// follow a redirect off the API host, and nothing below strips X-Api-Key,
+		// so leaving it in charge would hand the credential to whoever answered.
+		// Ours runs first and refuses; anything it allows is then theirs to judge.
 		clone := *httpClient
-		clone.CheckRedirect = refuseCrossHostRedirect
+		clone.CheckRedirect = refuseCrossHostRedirectThen(httpClient.CheckRedirect)
 		httpClient = &clone
 	}
 
@@ -136,19 +210,66 @@ func buildClient(
 // neither net/http nor Kiota's redirect handler strips it across hosts — both
 // only drop Authorization — so a redirect off api.prdb.net would hand the
 // credential to whoever answered. Same-host redirects are still followed.
-func newHTTPClient() (*nethttp.Client, error) {
-	middlewares, err := khttp.GetDefaultMiddlewaresWithOptions(&khttp.RedirectHandlerOptions{
-		MaxRedirects:   defaultMaxRedirects,
-		ShouldRedirect: sameHostOnly,
-	})
+func newHTTPClient(retry *RetryOptions) (*nethttp.Client, error) {
+	requestOptions := []abs.RequestOption{
+		&khttp.RedirectHandlerOptions{
+			MaxRedirects:   defaultMaxRedirects,
+			ShouldRedirect: sameHostOnly,
+		},
+	}
+
+	if retry != nil && retry.MaxRetries > 0 {
+		requestOptions = append(requestOptions, &khttp.RetryHandlerOptions{
+			MaxRetries:   retry.MaxRetries,
+			DelaySeconds: int(retry.Delay.Seconds()),
+			ShouldRetry: func(_ time.Duration, _ int, _ *nethttp.Request, _ *nethttp.Response) bool {
+				return true
+			},
+		})
+	}
+
+	middlewares, err := khttp.GetDefaultMiddlewaresWithOptions(requestOptions...)
 	if err != nil {
 		return nil, fmt.Errorf("prdb: building http middleware: %w", err)
+	}
+
+	if retry != nil && retry.MaxRetries == 0 {
+		// Removed rather than configured with zero attempts, so "no retrying"
+		// means the handler is not in the pipeline at all and cannot be
+		// re-enabled by a per-request option.
+		middlewares = withoutRetryHandler(middlewares)
 	}
 
 	return khttp.GetDefaultClient(middlewares...), nil
 }
 
+func withoutRetryHandler(middlewares []khttp.Middleware) []khttp.Middleware {
+	kept := make([]khttp.Middleware, 0, len(middlewares))
+	for _, middleware := range middlewares {
+		if _, isRetry := middleware.(*khttp.RetryHandler); !isRetry {
+			kept = append(kept, middleware)
+		}
+	}
+	return kept
+}
+
 const defaultMaxRedirects = 5
+
+// refuseCrossHostRedirectThen refuses a redirect that leaves the API host, and
+// otherwise defers to the caller's own policy.
+func refuseCrossHostRedirectThen(
+	next func(req *nethttp.Request, via []*nethttp.Request) error,
+) func(req *nethttp.Request, via []*nethttp.Request) error {
+	return func(req *nethttp.Request, via []*nethttp.Request) error {
+		if err := refuseCrossHostRedirect(req, via); err != nil {
+			return err
+		}
+		if next != nil {
+			return next(req, via)
+		}
+		return nil
+	}
+}
 
 // refuseCrossHostRedirect is the net/http equivalent of sameHostOnly, for the
 // path where a caller supplies their own client.

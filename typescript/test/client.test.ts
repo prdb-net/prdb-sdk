@@ -16,6 +16,7 @@ import {
 	CrossOriginRedirectError,
 	DEFAULT_BASE_URL,
 	type FetchLike,
+	RETRY_DISABLED,
 	createAnonymousClient,
 	createClient,
 } from "../src/index.js";
@@ -183,6 +184,65 @@ describe("redirects", () => {
 			"secret-key",
 		]);
 	});
+});
+
+describe("retrying", () => {
+	function refuseOnce(recorder: Recorder): (url: string) => Response {
+		return () =>
+			recorder.requests.length === 1
+				? new Response(null, { status: 503 })
+				: healthy();
+	}
+
+	// Kiota's retry handler is in the default pipeline, so this is the status quo.
+	it("retries a refused request by default", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: recorder.fetch(refuseOnce(recorder)),
+			retry: { maxRetries: 1, delay: 0 },
+		});
+
+		const result = await client.health.get();
+
+		assert.notEqual(result, undefined);
+		assert.equal(recorder.requests.length, 2);
+	});
+
+	/**
+	 * The opt-out an application with its own retry policy needs.
+	 *
+	 * Without it the SDK's retry sits outside the application's and the two
+	 * multiply: one logical call becomes several requests against an API that
+	 * rate limits, and the outer circuit breaker never sees a stable failure.
+	 */
+	it("does not retry when retrying is disabled", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: recorder.fetch(() => new Response(null, { status: 503 })),
+			retry: RETRY_DISABLED,
+		});
+
+		await assert.rejects(() => client.health.get());
+
+		assert.equal(recorder.requests.length, 1);
+	});
+
+	for (const retry of [
+		{ maxRetries: -1 },
+		{ maxRetries: 11 },
+		{ delay: -1 },
+		{ delay: 181 },
+	]) {
+		it(`rejects the out-of-range option ${JSON.stringify(retry)}`, () => {
+			assert.throws(() =>
+				createClient({ apiKey: "secret-key", baseUrl: API_ORIGIN, retry }),
+			);
+		});
+	}
 });
 
 describe("defaults", () => {

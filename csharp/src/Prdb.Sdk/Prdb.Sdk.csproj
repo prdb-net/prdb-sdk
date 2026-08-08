@@ -24,10 +24,19 @@
     <!-- Pulls in Kiota abstractions, HTTP and the four serializers the
          generated code uses (json, text, form, multipart). -->
     <PackageReference Include="Microsoft.Kiota.Bundle" Version="2.0.0" />
+    <!-- IHttpClientFactory and the DI abstractions behind AddPrdbClient. -->
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The pipeline the factory builds is not otherwise reachable: the HttpClient it
+         wraps is deliberately never exposed, and the timeout and disposal promises can
+         only be asserted on it directly. -->
+    <InternalsVisibleTo Include="Prdb.Sdk.Tests" />
   </ItemGroup>
 
   <!-- The generated tree produces documentation warnings that are not ours to

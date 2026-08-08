@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Optional
 from urllib.parse import urlparse
 
@@ -18,7 +19,8 @@ from kiota_abstractions.authentication.api_key_authentication_provider import (
 )
 from kiota_bundle.default_request_adapter import DefaultRequestAdapter
 from kiota_http.kiota_client_factory import KiotaClientFactory
-from kiota_http.middleware.options import RedirectHandlerOption
+from kiota_http.middleware import RetryHandler
+from kiota_http.middleware.options import RedirectHandlerOption, RetryHandlerOption
 
 from .generated.prdb_client import PrdbClient
 
@@ -38,11 +40,53 @@ class CrossOriginRedirectError(RuntimeError):
     """
 
 
+@dataclass(frozen=True)
+class RetryOptions:
+    """How the SDK retries a request the API refused with 429, 503 or 504.
+
+    Retry belongs to whoever owns the calling application's resilience story.
+    An application that already retries prdb calls itself should pass
+    :meth:`disabled`, otherwise the two policies multiply: one logical call
+    becomes up to ``n×m`` requests against an API that rate limits, and the
+    outer circuit breaker never sees a stable failure to open on.
+
+    The built-in policy retries idempotent and non-idempotent requests alike,
+    so an application that must not repeat a write should own the retry itself.
+
+    Attributes:
+        max_retries: How often a refused request is retried. At most 10. Zero
+            leaves the retry handler out of the pipeline entirely.
+        delay: Seconds to wait before a retry, unless the response carries a
+            ``Retry-After`` header, which always wins. At most 180.
+    """
+
+    max_retries: int = RetryHandlerOption.DEFAULT_MAX_RETRIES
+    delay: float = RetryHandlerOption.DEFAULT_DELAY
+
+    def __post_init__(self) -> None:
+        if not 0 <= self.max_retries <= RetryHandlerOption.MAX_MAX_RETRIES:
+            raise ValueError(
+                f"max_retries must be between 0 and "
+                f"{RetryHandlerOption.MAX_MAX_RETRIES}, got {self.max_retries}"
+            )
+        if not 0 <= self.delay <= RetryHandlerOption.MAX_DELAY:
+            raise ValueError(
+                f"delay must be between 0 and {RetryHandlerOption.MAX_DELAY} "
+                f"seconds, got {self.delay}"
+            )
+
+    @classmethod
+    def disabled(cls) -> "RetryOptions":
+        """No retrying at all: a 429 or 503 reaches the caller as the API sent it."""
+        return cls(max_retries=0)
+
+
 def create_client(
     api_key: str,
     *,
     base_url: str = DEFAULT_BASE_URL,
     http_client: Optional[httpx.AsyncClient] = None,
+    retry: Optional[RetryOptions] = None,
 ) -> PrdbClient:
     """Create a client authenticated with an API key.
 
@@ -54,14 +98,18 @@ def create_client(
             proxies or connection limits. One is created for you when omitted.
             Either way the SDK's middleware is installed on it, which modifies
             the client you pass in place.
+        retry: How the SDK retries a refused request. Defaults to Kiota's
+            policy — three attempts, honouring ``Retry-After``. Pass
+            :meth:`RetryOptions.disabled` if your application already retries
+            prdb calls itself.
 
     Returns:
         A client whose request builders mirror the API's URL structure, so
         ``GET /videos/{id}`` is ``client.videos.by_id(video_id).get()``.
 
     Raises:
-        ValueError: If ``api_key`` is empty, or ``base_url`` is not an absolute
-            ``https`` URL.
+        ValueError: If ``api_key`` is empty, or ``base_url`` is not an
+            absolute ``https`` URL.
     """
     if not api_key:
         raise ValueError("api_key must not be empty")
@@ -75,13 +123,14 @@ def create_client(
         allowed_hosts=[host],
     )
 
-    return _build_client(auth_provider, base_url, http_client)
+    return _build_client(auth_provider, base_url, http_client, retry)
 
 
 def create_anonymous_client(
     *,
     base_url: str = DEFAULT_BASE_URL,
     http_client: Optional[httpx.AsyncClient] = None,
+    retry: Optional[RetryOptions] = None,
 ) -> PrdbClient:
     """Create a client without credentials.
 
@@ -95,24 +144,30 @@ def create_anonymous_client(
     """
     _resolve_host(base_url, require_https=False)
 
-    return _build_client(AnonymousAuthenticationProvider(), base_url, http_client)
+    return _build_client(
+        AnonymousAuthenticationProvider(), base_url, http_client, retry
+    )
 
 
 def _build_client(
     auth_provider: AuthenticationProvider,
     base_url: str,
     http_client: Optional[httpx.AsyncClient],
+    retry: Optional[RetryOptions],
 ) -> PrdbClient:
     request_adapter = DefaultRequestAdapter(
         authentication_provider=auth_provider,
-        http_client=_build_http_client(http_client),
+        http_client=_build_http_client(http_client, retry),
     )
     request_adapter.base_url = base_url
 
     return PrdbClient(request_adapter)
 
 
-def _build_http_client(http_client: Optional[httpx.AsyncClient]) -> httpx.AsyncClient:
+def _build_http_client(
+    http_client: Optional[httpx.AsyncClient],
+    retry: Optional[RetryOptions],
+) -> httpx.AsyncClient:
     """Load the SDK's middleware pipeline onto a client, creating one if needed.
 
     A client handed straight to the request adapter carries no middleware at
@@ -120,13 +175,31 @@ def _build_http_client(http_client: Optional[httpx.AsyncClient]) -> httpx.AsyncC
     decoding. Routing both paths through this function keeps a caller-supplied
     client behaving like the one we build ourselves.
     """
-    redirect_options = RedirectHandlerOption(
-        scrub_sensitive_headers=_refuse_cross_origin_redirect,
-    )
+    options: dict[str, object] = {
+        RedirectHandlerOption.get_key(): RedirectHandlerOption(
+            scrub_sensitive_headers=_refuse_cross_origin_redirect,
+        ),
+    }
 
-    return KiotaClientFactory.create_with_default_middleware(
+    if retry is not None and retry.max_retries > 0:
+        options[RetryHandlerOption.get_key()] = RetryHandlerOption(
+            delay=retry.delay,
+            max_retries=retry.max_retries,
+        )
+
+    middleware = KiotaClientFactory.get_default_middleware(options)  # type: ignore[arg-type]
+
+    if retry is not None and retry.max_retries == 0:
+        # Removed rather than configured with zero attempts, so "no retrying"
+        # means the handler is not in the pipeline at all and cannot be
+        # re-enabled by a per-request option.
+        middleware = [
+            handler for handler in middleware if not isinstance(handler, RetryHandler)
+        ]
+
+    return KiotaClientFactory.create_with_custom_middleware(
+        middleware=middleware,
         client=http_client,
-        options={RedirectHandlerOption.get_key(): redirect_options},
     )
 
 

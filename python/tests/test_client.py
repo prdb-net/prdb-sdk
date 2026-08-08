@@ -12,11 +12,13 @@ from __future__ import annotations
 
 import httpx
 import pytest
+from kiota_abstractions.api_error import APIError
 
 from prdb_sdk import (
     API_KEY_HEADER,
     DEFAULT_BASE_URL,
     CrossOriginRedirectError,
+    RetryOptions,
     create_anonymous_client,
     create_client,
 )
@@ -130,6 +132,56 @@ async def test_same_origin_redirect_is_followed(recorder: Recorder) -> None:
         "/healthz",
     ]
     assert recorder.keys_sent_to("api.example.test") == ["secret-key", "secret-key"]
+
+
+async def test_retries_a_refused_request_by_default(recorder: Recorder) -> None:
+    """Kiota's retry handler is in the default pipeline, so this is the status quo."""
+
+    def refuse_once(request: httpx.Request) -> httpx.Response:
+        if len(recorder.requests) == 1:
+            return httpx.Response(503)
+        return httpx.Response(200, json=HEALTH_BODY)
+
+    client = create_client(
+        "secret-key",
+        base_url=API_ORIGIN,
+        http_client=recorder.client(refuse_once),
+        retry=RetryOptions(max_retries=1, delay=0),
+    )
+
+    result = await client.health.get()
+
+    assert result is not None
+    assert len(recorder.requests) == 2
+
+
+async def test_does_not_retry_when_retrying_is_disabled(recorder: Recorder) -> None:
+    """The opt-out an application with its own retry policy needs.
+
+    Without it the SDK's retry sits outside the application's and the two
+    multiply: one logical call becomes several requests against an API that
+    rate limits, and the outer circuit breaker never sees a stable failure.
+    """
+    client = create_client(
+        "secret-key",
+        base_url=API_ORIGIN,
+        http_client=recorder.client(lambda _: httpx.Response(503)),
+        retry=RetryOptions.disabled(),
+    )
+
+    with pytest.raises(APIError):
+        await client.health.get()
+
+    assert len(recorder.requests) == 1
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    [{"max_retries": -1}, {"max_retries": 11}, {"delay": -1.0}, {"delay": 181.0}],
+)
+def test_rejects_retry_options_out_of_range(kwargs: dict[str, float]) -> None:
+    with pytest.raises(ValueError):
+        RetryOptions(**kwargs)  # type: ignore[arg-type]
 
 
 def test_rejects_an_empty_api_key() -> None:
