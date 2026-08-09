@@ -19,6 +19,8 @@ from prdb_sdk import (
     API_KEY_HEADER,
     DEFAULT_BASE_URL,
     CrossOriginRedirectError,
+    RateLimitOption,
+    RateLimitWindow,
     ResponseStatusOption,
     RetryOptions,
     create_anonymous_client,
@@ -327,6 +329,125 @@ async def test_reports_no_status_when_no_response_was_reached(
         )
 
     assert status.status_code is None
+
+
+RATE_LIMIT_HEADERS = {
+    "X-RateLimit-Limit-Hour": "1000",
+    "X-RateLimit-Remaining-Hour": "993",
+    "X-RateLimit-Reset-Hour": "2471",
+    "X-RateLimit-Limit-Month": "50000",
+    "X-RateLimit-Remaining-Month": "48120",
+    "X-RateLimit-Reset-Month": "1904322",
+}
+
+
+def sites_page(recorder: Recorder, *, status_code: int = 200, headers=None, retry=None):
+    """A client whose GET /sites answers with the given status and headers."""
+    return create_client(
+        "secret-key",
+        base_url=API_ORIGIN,
+        http_client=recorder.client(
+            lambda _: httpx.Response(
+                status_code, json=SITES_BODY, headers=headers or {}
+            )
+        ),
+        retry=retry,
+    )
+
+
+SITES_BODY = {"items": [], "page": 1, "pageSize": 20, "totalCount": 7}
+
+
+async def test_reports_both_rate_limit_windows_alongside_the_typed_result(
+    recorder: Recorder,
+) -> None:
+    """The point of the option: pace off the response you already have.
+
+    Kiota can surface the headers, but as raw multi-valued strings. This is the
+    typed reading, and it arrives with the model rather than instead of it.
+    """
+    client = sites_page(recorder, headers=RATE_LIMIT_HEADERS)
+    limits = RateLimitOption()
+
+    page = await client.sites.get(
+        request_configuration=RequestConfiguration(options=[limits])
+    )
+
+    assert page is not None
+    assert page.total_count == 7
+
+    assert limits.hour == RateLimitWindow(
+        limit=1000, remaining=993, reset_in_seconds=2471
+    )
+    assert limits.month == RateLimitWindow(
+        limit=50000, remaining=48120, reset_in_seconds=1904322
+    )
+
+
+async def test_reports_only_the_window_that_refused_a_request(
+    recorder: Recorder,
+) -> None:
+    """A 429 carries only the window it came from, so one window alone is normal."""
+    hourly_only = {
+        name: value
+        for name, value in RATE_LIMIT_HEADERS.items()
+        if name.endswith("-Hour")
+    }
+    client = sites_page(
+        recorder,
+        status_code=429,
+        headers={**hourly_only, "Retry-After": "2471"},
+        retry=RetryOptions.disabled(),
+    )
+    limits = RateLimitOption()
+
+    with pytest.raises(APIError):
+        await client.sites.get(
+            request_configuration=RequestConfiguration(options=[limits])
+        )
+
+    # A refusal is exactly when a caller wants the reading, so it records too.
+    assert limits.hour == RateLimitWindow(
+        limit=1000, remaining=993, reset_in_seconds=2471
+    )
+    assert limits.month is None
+
+
+async def test_reports_no_rate_limit_for_an_unmetered_response(
+    recorder: Recorder,
+) -> None:
+    """401, 403, 503 and GET /rate-limit carry no headers -- that is an answer."""
+    client = sites_page(recorder)
+    limits = RateLimitOption()
+
+    await client.sites.get(
+        request_configuration=RequestConfiguration(options=[limits])
+    )
+
+    assert limits.hour is None
+    assert limits.month is None
+
+
+async def test_a_malformed_rate_limit_header_does_not_fail_the_call(
+    recorder: Recorder,
+) -> None:
+    """Metadata about a call that already worked must not be able to break it."""
+    client = sites_page(
+        recorder,
+        headers={**RATE_LIMIT_HEADERS, "X-RateLimit-Remaining-Hour": "not-a-number"},
+    )
+    limits = RateLimitOption()
+
+    page = await client.sites.get(
+        request_configuration=RequestConfiguration(options=[limits])
+    )
+
+    assert page is not None
+    assert limits.hour is None
+    # The other window is independent, so it still reads.
+    assert limits.month == RateLimitWindow(
+        limit=50000, remaining=48120, reset_in_seconds=1904322
+    )
 
 
 @pytest.mark.parametrize(

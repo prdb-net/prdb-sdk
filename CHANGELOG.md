@@ -12,6 +12,59 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **A typed call can now report the rate limit it was counted against.** Every
+  metered response carries the six `X-RateLimit-*` headers, so a client can pace
+  itself off the answers it is already getting rather than spending a request on
+  `GET /rate-limit` to ask. `RateLimitOption` (C#, Python, TypeScript) and
+  `prdb.NewRateLimitOption()` (Go) follow `ResponseStatusOption`: the call
+  returns its model as usual, and the reading is on the option afterwards.
+
+  ```python
+  limits = RateLimitOption()
+
+  sites = await client.sites.get(
+      request_configuration=RequestConfiguration(options=[limits])
+  )
+
+  if limits.hour and limits.hour.remaining < 50:
+      ...  # slow down; limits.hour.reset_in_seconds until a slot frees up
+  ```
+
+  `hour` and `month` are each a window of `limit`, `remaining` and
+  `reset_in_seconds`, or absent. Absent is an answer rather than a gap: `401`,
+  `403`, `503` and `GET /rate-limit` itself are not metered and carry no
+  headers, and a `429` carries only the window that refused the request, so
+  exactly one of the two being set is normal. A refused call records too. A
+  malformed header reports "no reading" rather than failing a call that
+  otherwise succeeded.
+
+  **Go callers who supply their own `*http.Client` should prefer this over
+  Kiota's `HeadersInspectionOptions`**, which reads nothing at all on that path
+  — silently. Kiota's is a middleware, and middleware lives in the `Transport`
+  that a supplied client owns; this option is a `RoundTripper` on the client the
+  SDK sends through, so it works either way. Measured, not assumed.
+
+### Documented
+
+- **How to read response headers, in the three READMEs that did not say.** Kiota
+  ships a headers-inspection option and every wrapper here already installs it,
+  so the `ETag` from a conditional `GET /sites` and the rate-limit headers have
+  been reachable *alongside* the typed model since before 0.5.0 — the C# README
+  was alone in mentioning it. The 0.5.0 notes claimed the opposite, that reaching
+  response headers cost the deserialised model. That was wrong; see the
+  correction below.
+
+### Fixed
+
+- **0.5.0's release notes were wrong about response headers.** They said that
+  reading the `ETag` off `GET /sites` required Kiota's native response handler
+  and therefore gave up the typed model. It does not: the headers-inspection
+  option returns both, on the `200` and on the `304`. The one part that stands
+  is that **C# still raises `ApiException` on the `304` itself**, where Python
+  and TypeScript return null.
+
 ## [0.5.0] - 2026-08-08
 
 Three new endpoints from one API change. Everything here is additive: no

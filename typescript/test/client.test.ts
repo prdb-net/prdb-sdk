@@ -17,6 +17,7 @@ import {
 	DEFAULT_BASE_URL,
 	type FetchLike,
 	RETRY_DISABLED,
+	RateLimitOption,
 	ResponseStatusOption,
 	createAnonymousClient,
 	createClient,
@@ -365,6 +366,137 @@ describe("ResponseStatusOption", () => {
 		);
 
 		assert.equal(option.statusCode, undefined);
+	});
+});
+
+describe("RateLimitOption", () => {
+	const SITES_BODY = JSON.stringify({
+		items: [],
+		page: 1,
+		pageSize: 20,
+		totalCount: 7,
+	});
+
+	const RATE_LIMIT_HEADERS: Record<string, string> = {
+		"X-RateLimit-Limit-Hour": "1000",
+		"X-RateLimit-Remaining-Hour": "993",
+		"X-RateLimit-Reset-Hour": "2471",
+		"X-RateLimit-Limit-Month": "50000",
+		"X-RateLimit-Remaining-Month": "48120",
+		"X-RateLimit-Reset-Month": "1904322",
+	};
+
+	function sites(
+		status = 200,
+		headers: Record<string, string> = {},
+	): Response {
+		return new Response(SITES_BODY, {
+			status,
+			headers: { "content-type": "application/json", ...headers },
+		});
+	}
+
+	/**
+	 * The point of the option: pace off the response you already have.
+	 *
+	 * Kiota can surface the headers, but as raw multi-valued strings. This is the
+	 * typed reading, and it arrives with the model rather than instead of it.
+	 */
+	it("reports both windows alongside the typed result", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: recorder.fetch(() => sites(200, RATE_LIMIT_HEADERS)),
+		});
+		const limits = new RateLimitOption();
+
+		const page = await client.sites.get({ options: [limits] });
+
+		assert.equal(page?.totalCount, 7);
+		assert.deepEqual(limits.hour, {
+			limit: 1000,
+			remaining: 993,
+			resetInSeconds: 2471,
+		});
+		assert.deepEqual(limits.month, {
+			limit: 50000,
+			remaining: 48120,
+			resetInSeconds: 1904322,
+		});
+	});
+
+	// A 429 carries only the window it came from, so one window alone is normal.
+	it("reports only the window that refused a request", async () => {
+		const recorder = new Recorder();
+		const hourlyOnly = Object.fromEntries(
+			Object.entries(RATE_LIMIT_HEADERS).filter(([name]) =>
+				name.endsWith("-Hour"),
+			),
+		);
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: recorder.fetch(() =>
+				sites(429, { ...hourlyOnly, "retry-after": "2471" }),
+			),
+			retry: RETRY_DISABLED,
+		});
+		const limits = new RateLimitOption();
+
+		await assert.rejects(() => client.sites.get({ options: [limits] }));
+
+		// A refusal is exactly when a caller wants the reading, so it records too.
+		assert.deepEqual(limits.hour, {
+			limit: 1000,
+			remaining: 993,
+			resetInSeconds: 2471,
+		});
+		assert.equal(limits.month, undefined);
+	});
+
+	// 401, 403, 503 and GET /rate-limit carry no headers -- that is an answer.
+	it("reports no rate limit for an unmetered response", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: recorder.fetch(() => sites()),
+		});
+		const limits = new RateLimitOption();
+
+		await client.sites.get({ options: [limits] });
+
+		assert.equal(limits.hour, undefined);
+		assert.equal(limits.month, undefined);
+	});
+
+	// Metadata about a call that already worked must not be able to break it.
+	it("survives a malformed header without failing the call", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: recorder.fetch(() =>
+				sites(200, {
+					...RATE_LIMIT_HEADERS,
+					"X-RateLimit-Remaining-Hour": "12abc",
+				}),
+			),
+		});
+		const limits = new RateLimitOption();
+
+		const page = await client.sites.get({ options: [limits] });
+
+		assert.equal(page?.totalCount, 7);
+		// parseInt("12abc") would be 12 — a plausible-looking wrong reading.
+		assert.equal(limits.hour, undefined);
+		// The other window is independent, so it still reads.
+		assert.deepEqual(limits.month, {
+			limit: 50000,
+			remaining: 48120,
+			resetInSeconds: 1904322,
+		});
 	});
 });
 
