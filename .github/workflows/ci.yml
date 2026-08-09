@@ -108,3 +108,4 @@ jobs:
           dotnet build Prdb.Sdk.slnx -c Release --nologo
           dotnet test Prdb.Sdk.slnx -c Release --no-build --nologo
           dotnet pack src/Prdb.Sdk/Prdb.Sdk.csproj -c Release --no-build --nologo
+          dotnet pack src/Prdb.Hashing/Prdb.Hashing.csproj -c Release --no-build --nologo

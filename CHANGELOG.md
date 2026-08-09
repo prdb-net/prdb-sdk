@@ -3,6 +3,9 @@
 All four SDKs share this file and one version number, because they are
 generated from the same OpenAPI document and released together.
 
+`Prdb.Hashing` is not one of them and is versioned separately; its changes are
+in [`csharp/src/Prdb.Hashing/CHANGELOG.md`](csharp/src/Prdb.Hashing/CHANGELOG.md).
+
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 

@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Prdb.Hashing</PackageId>
+    <!-- Versioned independently of the four SDK packages. This one is not generated
+         from the OpenAPI document and does not change when the API does. -->
+    <Version>0.1.0</Version>
+    <Description>OSHash and perceptual video hashing, compatible with Stash and the prdb Public API.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/prdb-net/prdb-sdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/prdb-net/prdb-sdk</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>prdb;stash;oshash;phash;perceptual-hash;video</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <!-- No package references on purpose. The hash has to be reproducible bit for bit,
+       and every dependency is a way for that to change without this code changing.
+       ffmpeg is invoked as a process rather than bound as a library for the same
+       reason: the specification pins a command line. -->
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Prdb.Hashing.Tests" />
+  </ItemGroup>
+
+</Project>

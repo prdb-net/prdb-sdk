@@ -91,6 +91,32 @@ for keeping a local copy in sync.
 
 Full reference: <https://apidocs.prdb.net/>
 
+## Video hashing
+
+Several endpoints identify a file by its `osHash` and `pHash` rather than by its
+name. Both are defined in [`docs/video-hashing.md`](docs/video-hashing.md),
+which is normative and detailed enough to implement from — including public test
+vectors, because "compatible with everyone else's hashes" is otherwise just a
+claim.
+
+The values are only comparable if everyone computes them the same way: two
+64-bit perceptual hashes from different methods sit about 32 bits apart whether
+or not they describe the same video. They match what
+[Stash](https://github.com/stashapp/stash) computes, bit for bit.
+
+For C# there is a package that implements it —
+[`Prdb.Hashing`](csharp/src/Prdb.Hashing/), separate from the SDK because it
+starts processes and needs ffmpeg:
+
+```csharp
+string? osHash = OsHash.Compute(path);
+var result = await new VideoPerceptualHasher().ComputeAsync(path);
+```
+
+The other three languages have no such package yet. The specification is the
+contract, not the C# code, so an implementation that agrees with the test
+vectors is correct whatever it shares.
+
 ## Regenerating
 
 The spec is pinned at [`spec/openapi.json`](spec/openapi.json) and the generated

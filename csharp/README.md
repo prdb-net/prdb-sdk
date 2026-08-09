@@ -368,6 +368,31 @@ One wrinkle from the API side: the shared read-only cache does not vary by
 `If-None-Match`, so a request that hits it is answered `200` with a body even
 when your validator still matches. That is expected rather than an error.
 
+## Computing the file hashes
+
+Several endpoints identify a file by its `osHash` and `pHash` rather than by its
+name — `POST /videos/filehashes/lookup`, `POST /videos/identify`,
+`POST /videos/filehash-submissions`. This package sends those values; it does not
+compute them.
+
+[`Prdb.Hashing`](https://www.nuget.org/packages/Prdb.Hashing) does, matching what
+Stash produces bit for bit:
+
+```bash
+dotnet add package Prdb.Hashing
+```
+
+```csharp
+using Prdb.Hashing;
+
+string? osHash = OsHash.Compute(path);
+var pHash = await new VideoPerceptualHasher().ComputeAsync(path);
+```
+
+It is a separate package because it starts processes and needs ffmpeg, which an
+HTTP client has no business doing. The method is specified in
+[`docs/video-hashing.md`](../docs/video-hashing.md).
+
 ## Generated code
 
 Everything under `src/Prdb.Sdk/Generated/` is produced by Kiota from

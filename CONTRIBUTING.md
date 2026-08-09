@@ -70,6 +70,14 @@ The C# tests run on both target frameworks, so plain `dotnet test` needs the
 .NET 8 and .NET 10 runtimes. With only one installed, pick it explicitly:
 `dotnet test Prdb.Sdk.slnx -f net10.0`.
 
+`Prdb.Hashing` is in the same solution and runs with it. A handful of its tests
+drive a real ffmpeg end to end and **skip** where none is installed, which
+includes CI — the tests that decide whether the hashes still match Stash's need
+no external tool, so nothing important is lost there. Install ffmpeg locally if
+you are touching frame extraction. Note that its reference vectors are not
+ordinary tests: see *The hashing package* in [AGENTS.md](AGENTS.md) before
+changing anything under `csharp/src/Prdb.Hashing/`.
+
 ## Changing the wrappers
 
 The four wrappers are deliberately the same shape: an API-key constructor, an
