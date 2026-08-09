@@ -19,7 +19,7 @@ export interface FilenamesRequestBuilder extends BaseRequestBuilder<FilenamesReq
      */
      byFilenameId(filenameId: Guid) : WithFilenameItemRequestBuilder;
     /**
-     * Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename already exists under the parent entry.
+     * Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename already exists under the parent entry.
      * @param body The request body
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<DownloadedFromIndexerResponse>}
@@ -33,7 +33,7 @@ export interface FilenamesRequestBuilder extends BaseRequestBuilder<FilenamesReq
      */
      post(body: AddDownloadedFromIndexerFilenameRequest, requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<DownloadedFromIndexerResponse | undefined>;
     /**
-     * Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename already exists under the parent entry.
+     * Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename already exists under the parent entry.
      * @param body The request body
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}

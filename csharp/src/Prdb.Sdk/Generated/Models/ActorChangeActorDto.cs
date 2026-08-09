@@ -33,7 +33,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>The birthday property</summary>
         public Date? Birthday { get; set; }
-        /// <summary>The birthdayType property</summary>
+        /// <summary>Known values: ExactDate (1), MonthYear (2), Year (3).</summary>
         public int? BirthdayType { get; set; }
         /// <summary>The birthdayTypeLabel property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER

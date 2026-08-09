@@ -34,7 +34,7 @@ namespace Prdb.Sdk.Generated.IndexerFilehashes.Lookup
         {
         }
         /// <summary>
-        /// Returns a flat list of active indexer filehash entries matching any supplied IDs, combined indexer source and indexer ID pairs, hashes, filenames, or file sizes. Requires API key authentication.
+        /// Returns a flat list of active indexer filehash entries matching any supplied IDs, combined indexer source and indexer ID pairs, hashes, filenames, or file sizes. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.LookupIndexerFilehashesResponse"/></returns>
         /// <param name="body">The request body</param>
@@ -67,7 +67,7 @@ namespace Prdb.Sdk.Generated.IndexerFilehashes.Lookup
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.LookupIndexerFilehashesResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.LookupIndexerFilehashesResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns a flat list of active indexer filehash entries matching any supplied IDs, combined indexer source and indexer ID pairs, hashes, filenames, or file sizes. Requires API key authentication.
+        /// Returns a flat list of active indexer filehash entries matching any supplied IDs, combined indexer source and indexer ID pairs, hashes, filenames, or file sizes. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>

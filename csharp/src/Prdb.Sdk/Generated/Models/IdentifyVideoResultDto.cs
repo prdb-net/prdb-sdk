@@ -24,7 +24,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).</summary>
         public int? Confidence { get; set; }
-        /// <summary>The matchedBy property</summary>
+        /// <summary>Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).</summary>
         public int? MatchedBy { get; set; }
         /// <summary>The ref property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER

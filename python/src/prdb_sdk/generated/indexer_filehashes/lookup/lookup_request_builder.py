@@ -33,7 +33,7 @@ class LookupRequestBuilder(BaseRequestBuilder):
     
     async def post(self,body: LookupIndexerFilehashesRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[LookupIndexerFilehashesResponse]:
         """
-        Returns a flat list of active indexer filehash entries matching any supplied IDs, combined indexer source and indexer ID pairs, hashes, filenames, or file sizes. Requires API key authentication.
+        Returns a flat list of active indexer filehash entries matching any supplied IDs, combined indexer source and indexer ID pairs, hashes, filenames, or file sizes. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[LookupIndexerFilehashesResponse]
@@ -60,7 +60,7 @@ class LookupRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,body: LookupIndexerFilehashesRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Returns a flat list of active indexer filehash entries matching any supplied IDs, combined indexer source and indexer ID pairs, hashes, filenames, or file sizes. Requires API key authentication.
+        Returns a flat list of active indexer filehash entries matching any supplied IDs, combined indexer source and indexer ID pairs, hashes, filenames, or file sizes. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation

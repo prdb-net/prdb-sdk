@@ -19,7 +19,7 @@ export interface DownloadedFromIndexersRequestBuilder extends BaseRequestBuilder
      */
      byDownloadedFromIndexerId(downloadedFromIndexerId: Guid) : WithDownloadedFromIndexerItemRequestBuilder;
     /**
-     * Creates a downloaded-from-indexer entry for the authenticated user and returns 201, or returns the complete existing owned entry without mutating it and returns 200. Uniqueness is defined by userId, videoId (including null), indexerSource, and the trimmed indexerId; comparison uses the database collation. downloadIdentifier is not part of the key. Returns 404 when the referenced wanted video does not exist and 409 only for a different non-recoverable conflict.
+     * Creates a downloaded-from-indexer entry for the authenticated user and returns 201, or returns the complete existing owned entry without mutating it and returns 200. Uniqueness is defined by userId, videoId (including null), indexerSource, and the trimmed indexerId; comparison uses the database collation. downloadIdentifier is not part of the key. A pHash on a filename must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 404 when the referenced wanted video does not exist and 409 only for a different non-recoverable conflict.
      * @param body The request body
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<DownloadedFromIndexerResponse>}
@@ -33,7 +33,7 @@ export interface DownloadedFromIndexersRequestBuilder extends BaseRequestBuilder
      */
      post(body: AddDownloadedFromIndexerRequest, requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<DownloadedFromIndexerResponse | undefined>;
     /**
-     * Creates a downloaded-from-indexer entry for the authenticated user and returns 201, or returns the complete existing owned entry without mutating it and returns 200. Uniqueness is defined by userId, videoId (including null), indexerSource, and the trimmed indexerId; comparison uses the database collation. downloadIdentifier is not part of the key. Returns 404 when the referenced wanted video does not exist and 409 only for a different non-recoverable conflict.
+     * Creates a downloaded-from-indexer entry for the authenticated user and returns 201, or returns the complete existing owned entry without mutating it and returns 200. Uniqueness is defined by userId, videoId (including null), indexerSource, and the trimmed indexerId; comparison uses the database collation. downloadIdentifier is not part of the key. A pHash on a filename must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 404 when the referenced wanted video does not exist and 409 only for a different non-recoverable conflict.
      * @param body The request body
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}

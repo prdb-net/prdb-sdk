@@ -18,7 +18,7 @@ class IdentifyVideoResultDto(AdditionalDataHolder, Parsable):
     candidates: Optional[list[UUID]] = None
     # Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
     confidence: Optional[int] = None
-    # The matchedBy property
+    # Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).
     matched_by: Optional[int] = None
     # The ref property
     ref: Optional[str] = None

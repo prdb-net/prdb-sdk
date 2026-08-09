@@ -47,7 +47,7 @@ namespace Prdb.Sdk.Generated.DownloadedFromIndexers.Item.Filenames
         {
         }
         /// <summary>
-        /// Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename already exists under the parent entry.
+        /// Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename already exists under the parent entry.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.DownloadedFromIndexerResponse"/></returns>
         /// <param name="body">The request body</param>
@@ -84,7 +84,7 @@ namespace Prdb.Sdk.Generated.DownloadedFromIndexers.Item.Filenames
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.DownloadedFromIndexerResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.DownloadedFromIndexerResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename already exists under the parent entry.
+        /// Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename already exists under the parent entry.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>

@@ -12,9 +12,9 @@ class UpdateWantedVideoRequest(AdditionalDataHolder, Parsable):
 
     # The fulfilledAtUtc property
     fulfilled_at_utc: Optional[datetime.datetime] = None
-    # The fulfilledInQuality property
+    # Known values: P720 (0), P1080 (1), P2160 (2).
     fulfilled_in_quality: Optional[int] = None
-    # The fulfillmentByApp property
+    # Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
     fulfillment_by_app: Optional[int] = None
     # The fulfillmentExternalId property
     fulfillment_external_id: Optional[str] = None

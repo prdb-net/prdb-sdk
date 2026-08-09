@@ -55,7 +55,7 @@ class WithFilenameItemRequestBuilder(BaseRequestBuilder):
     
     async def put(self,body: UpdateDownloadedFromIndexerFilenameRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[DownloadedFromIndexerResponse]:
         """
-        Updates a single filename row for a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename would duplicate another filename under the same parent.
+        Updates a single filename row for a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename would duplicate another filename under the same parent.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[DownloadedFromIndexerResponse]
@@ -95,7 +95,7 @@ class WithFilenameItemRequestBuilder(BaseRequestBuilder):
     
     def to_put_request_information(self,body: UpdateDownloadedFromIndexerFilenameRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Updates a single filename row for a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename would duplicate another filename under the same parent.
+        Updates a single filename row for a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename would duplicate another filename under the same parent.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
