@@ -91,6 +91,18 @@ for keeping a local copy in sync.
 
 Full reference: <https://apidocs.prdb.net/>
 
+## Video hashing
+
+Several endpoints identify a file by its `osHash` and `pHash` rather than by its
+name. Both are defined in [`docs/video-hashing.md`](docs/video-hashing.md),
+which is normative and detailed enough to implement from — including public test
+vectors, because "compatible with everyone else's hashes" is otherwise just a
+claim.
+
+The values are only comparable if everyone computes them the same way: two
+64-bit perceptual hashes from different methods sit about 32 bits apart whether
+or not they describe the same video.
+
 ## Regenerating
 
 The spec is pinned at [`spec/openapi.json`](spec/openapi.json) and the generated
