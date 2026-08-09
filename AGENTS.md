@@ -4,6 +4,10 @@ Open-source SDKs for the prdb Public API in Python, TypeScript, Go and C#.
 All four are generated with [Kiota](https://learn.microsoft.com/openapi/kiota/)
 from one OpenAPI document, and the generated code is committed.
 
+The repository also holds one package that is **not** an SDK and not generated:
+`Prdb.Hashing`, which computes the `osHash` and `pHash` values the API
+identifies files by. It has its own rules — see *The hashing package* below.
+
 ## Language
 
 **Everything in this repository is in English** — code, comments, documentation,
@@ -30,6 +34,7 @@ never by patching the output here.
 
 ```
 spec/openapi.json        pinned copy of the published API document
+docs/video-hashing.md    normative osHash and pHash specification
 scripts/config.sh        spec URL, pinned Kiota version, shared coordinates
 scripts/update-spec.sh   refresh the spec from apidocs.prdb.net
 scripts/generate.sh      regenerate all four SDKs
@@ -136,12 +141,48 @@ add `-f net10.0` (or whichever you have) to `dotnet test`.
 Examples in a README are code. When you change one, compile it — a snippet that
 does not build is a bug report waiting to happen.
 
+## The hashing package
+
+`csharp/src/Prdb.Hashing/` computes the `osHash` and `pHash` values the API
+identifies files by. It is hand-written, has no package dependencies, and shells
+out to ffmpeg. C# only for now, by decision — a port to the other three is not
+planned.
+
+**`docs/video-hashing.md` is the specification; this package is one
+implementation of it.** When the two disagree, the document is right. It is
+normative because the values have to be comparable with Stash's and with every
+other client's: two 64-bit perceptual hashes from different methods sit about 32
+bits apart whether or not they describe the same video.
+
+That makes `PerceptualHashReferenceTests` unlike other tests. Its expectations
+were produced by the Go reference chain, and a failure means these hashes
+stopped matching the rest of the ecosystem. **Do not update the expected values
+to match new output** — find what changed in the arithmetic instead.
+
+The code deliberately reproduces the reference's mistakes: the resampler is not
+ordinary bilinear interpolation, the "median" is not a median, the DC
+coefficient is kept, and the DCT divisors are copied rather than recomputed
+because two runtimes need not agree on the last bit of a cosine. Each of those
+has a comment saying so. A cleanup that fixes any of them changes every hash the
+package produces.
+
+The ffmpeg command line is part of the specification, not an implementation
+detail: which frame a seek lands on depends on the argument order. It is pinned
+by tests that need no ffmpeg installed, so a change to it fails in CI rather
+than on a developer machine.
+
 ## Versioning
 
-The four packages share one version number, set per language in
+The four SDK packages share one version number, set per language in
 `python/pyproject.toml`, `typescript/package.json` and
 `csharp/src/Prdb.Sdk/Prdb.Sdk.csproj`. Go takes its version from the git tag.
-Keep them in step.
+Keep them in step; `scripts/check-version.sh` enforces it.
+
+`Prdb.Hashing` is **exempt** and carries its own version. It is not generated
+from the spec and does not change when the API does, so it releases from its own
+tag (`hashing/v0.1.0`, via `release-hashing.yml`) rather than from `v*`. Do not
+add it to `check-version.sh`: that would force a version bump on a package
+nothing changed in.
 
 ## Solution files
 

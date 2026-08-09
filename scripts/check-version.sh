@@ -8,6 +8,12 @@
 # Go is not listed: it takes its version from the git tag rather than a
 # manifest, and its tag carries the module subdirectory as a prefix
 # (go/v0.1.0), because the module does not live at the repository root.
+#
+# Prdb.Hashing is not listed either, and that is deliberate rather than an
+# oversight. It is not generated from the OpenAPI document and does not change
+# when the API does, so it carries its own version and releases from its own
+# tag (hashing/v0.1.0). Adding it here would force a version bump on a package
+# that nothing changed in.
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

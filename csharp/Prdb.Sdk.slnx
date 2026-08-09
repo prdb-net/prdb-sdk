@@ -4,8 +4,10 @@
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/Prdb.Sdk/Prdb.Sdk.csproj" />
+    <Project Path="src/Prdb.Hashing/Prdb.Hashing.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Prdb.Sdk.Tests/Prdb.Sdk.Tests.csproj" />
+    <Project Path="tests/Prdb.Hashing.Tests/Prdb.Hashing.Tests.csproj" />
   </Folder>
 </Solution>
