@@ -481,14 +481,23 @@ today a pHash only contributes where an `osHash` would already have matched.
 A claim of compatibility is worth nothing without these. They come in three
 levels, each one adding a stage of the chain.
 
-Levels 1 and 2 use procedurally generated images rather than binary fixtures, so
-that anyone can regenerate them by running the same formula through the
-reference libraries, and so the repository stays free of megabytes of opaque
-image data. Both generators produce straight RGBA with alpha 255.
+The same vectors are in [`video-hashing-vectors.json`](video-hashing-vectors.json)
+in machine-readable form, for driving a test suite directly. That file also
+carries a SHA-256 of every input — `pixelsSha256` over the raw RGBA buffer
+(`w * h * 4` bytes, row-major, R G B A), `montageSha256` over the assembled
+montage, `contentSha256` over the video file. They exist so that a mismatch can
+be attributed to the input before the hash is blamed, which is worth more than
+it sounds: the first failure most implementations hit is a generator that
+differs, not a DCT that does.
+
+The images come from formulas rather than shipped files, so the vectors stay
+checkable — anyone can regenerate them and run them through goimagehash — and
+the repository stays free of megabytes of opaque binary. All generators produce
+straight RGBA with alpha 255, pixels in row-major order.
 
 **`noise(seed, w, h)`** — high-frequency content, where a resampler that averages
 over the wrong window shows up immediately. A linear congruential generator,
-with R, G and B drawn in that order for each pixel, pixels in row-major order:
+with R, G and B drawn in that order for each pixel:
 
 ```
 state = (seed * 2654435761 + 12345)             mod 2^32
@@ -508,75 +517,143 @@ G = (y * 255 / h + seed * 13)                   mod 256
 B = (x * 255 / w + y * 255 / h + seed * 31)     mod 256
 ```
 
-**`flat(w, h, v)`** — every channel set to `v`.
+**`checker(size, w, h)`** — a maximal step at every square boundary, which is the
+hardest case for a resampler with the wrong support width:
+
+```
+v = 0 if ((x / size) + (y / size)) is even else 255      (integer division)
+R = G = B = v
+```
+
+**`flat(value, w, h)`** — every channel set to `value`.
 
 ### Level 1 — a single image
 
-Exercises the resampler, the DCT, the threshold and the bit order.
+At 64×64 the resampler is bypassed (step 3 returns the input unchanged), so
+these isolate the greyscale conversion, the DCT, the threshold and the bit
+order.
+
+| Image | Size | Expected |
+|---|---|---|
+| `flat(0)` | 64×64 | `0000000000000000` |
+| `flat(128)` | 64×64 | `8000000000000000` |
+| `gradient(1)` | 64×64 | `85421fb227ae7ca9` |
+| `gradient(3)` | 64×64 | `956d4a8d7ad12953` |
+| `gradient(7)` | 64×64 | `969f346ed87254c1` |
+| `noise(1)` | 64×64 | `9705ba3b68cae0d5` |
+| `noise(2)` | 64×64 | `e4179d8a695e0b4e` |
+| `noise(42)` | 64×64 | `c6bdce914d06164f` |
+| `checker(16)` | 64×64 | `8005000500500050` |
+| `checker(32)` | 64×64 | `8011004400110044` |
+
+The two flat images pin the bit order on their own. A flat image has no AC
+energy, so only the coefficient at index 0 can clear the threshold: `flat(128)`
+must set exactly the most significant bit, and `flat(0)` must set none.
+**`0000000000000000` is a valid hash, not an error code** — a caller that treats
+it as "no hash" will silently drop real values.
+
+A checker of 8-pixel squares is deliberately absent: at 64 pixels across, its
+energy falls outside the 8×8 block the hash reads, and it hashes to
+`8000000000000000` like any flat image. 16 and 32 are 2 and 1 cycles per axis
+and do land inside it.
+
+At other sizes the resampler runs, on a single image rather than a montage:
 
 | Image | Size | Expected |
 |---|---|---|
 | `noise(1)` | 800×450 | `9d0b303b629cf8d9` |
 | `gradient(1)` | 800×450 | `85421fb227ae7ca9` |
-| `gradient(3)` | 64×64 | `956d4a8d7ad12953` |
+| `flat(128)` | 800×450 | `8000000000000000` |
 | `gradient(5)` | 33×17 | `95b368d3050bde5c` |
 | `noise(9)` | 37×23 | `8dd8dc85c7d84791` |
 | `noise(4)` | 65×64 | `9a6367da8e971541` |
 | `gradient(11)` | 127×71 | `dbe9c01d5a918357` |
 | `gradient(2)` | 1×1 | `8000000000000000` |
-| `flat(128)` | 800×450 | `8000000000000000` |
 
-The flat image is the strongest single check on bit order: with no AC energy
-every coefficient but the DC one is zero, so exactly one bit may be set and it
-must be the most significant.
-
-`gradient(3)` at 64×64 covers the identity shortcut in step 3, and
-`gradient(5)` at 33×17 an upscale, where `filterLength` collapses to its
-minimum.
+`gradient(5)` at 33×17 is an upscale, where `filterLength` collapses to its
+minimum, and 65×64 downscales one axis while leaving the other alone.
+`gradient(1)` hashing the same at 64×64 and at 800×450 is expected: the
+generator normalises by width and height, so both are the same ramp at different
+resolutions, and a correct resampler lands on the same 64×64 image.
 
 ### Level 2 — a montage
 
 Adds the montage geometry and, because the input is 5× larger per axis, the
-wide-window behaviour of the resampler. Each is 25 tiles of the given size,
-tile `i` generated with `seed = i`:
+wide-window behaviour of the resampler — in practice the hardest part to get
+right. Each is 25 tiles of the given size, tile `i` generated with `seed = i`;
+for the `checker` row, tile `i` has squares of `max(i, 1)` pixels, so no two
+tiles are alike.
 
-| Tiles | Tile size | Expected |
-|---|---|---|
-| `noise` | 160×90 | `c1f4572a54f72c98` |
-| `gradient` | 160×90 | `d5808a2f7e2f7415` |
-| `noise` | 160×120 | `c1fc562254f32e99` |
-| `gradient` | 160×67 | `d5808a2f7e2f7c05` |
-| `noise` | 200×113 | `c6c8573156f124be` |
-| `gradient` | 320×180 | `d5808a2f5e2f7c15` |
+| Tiles | Tile size | Montage | Expected |
+|---|---|---|---|
+| `gradient` | 160×90 | 800×450 | `d5808a2f7e2f7415` |
+| `noise` | 160×90 | 800×450 | `c1f4572a54f72c98` |
+| `gradient` | 160×120 | 800×600 | `d5808a2f7e2f7415` |
+| `noise` | 160×120 | 800×600 | `c1fc562254f32e99` |
+| `gradient` | 160×67 | 800×335 | `d5808a2f7e2f7c05` |
+| `noise` | 200×113 | 1000×565 | `c6c8573156f124be` |
+| `gradient` | 320×180 | 1600×900 | `d5808a2f5e2f7c15` |
+| `checker` | 160×90 | 800×450 | `e297916a956a956a` |
 
-The values above were produced by running `corona10/goimagehash` v1.1.0,
-`disintegration/imaging` v1.6.2 and `nfnt/resize` at the revision Stash pins
-over the same formulas. A failure at either level means the implementation has
-stopped being comparable with the rest of the ecosystem — it is not a number to
-adjust.
+The sizes are deliberate. 800×450 to 64×64 is a non-integer downscale on both
+axes; 160×67 gives a montage height of 335, which is odd; and the checker puts a
+different spatial frequency in every tile. A resampler with the wrong support
+width passes none of them. The two gradients hashing alike is the expected
+behaviour of a 64×64 hash over smooth content, not a mistake in the table.
+
+The values at levels 1 and 2 were produced by running `corona10/goimagehash`
+v1.1.0, `disintegration/imaging` v1.6.2 and `nfnt/resize` at the revision Stash
+pins over the same formulas. **A failure here is not a number to adjust** — it
+means the implementation stopped being comparable with the rest of the
+ecosystem.
 
 ### Level 3 — a video file
 
-Adds frame selection, and therefore ffmpeg. **Not yet published.** These vectors
-must name the exact ffmpeg version that produced them, because the frame a seek
-lands on is a property of the build as much as of the arguments. Until they
-exist, steps 2 through 8 are verifiable and step 1 is not.
+Adds frame selection, and therefore ffmpeg, which is the one part of the chain
+that is not pure arithmetic. Generate the clip rather than downloading a
+fixture:
+
+```
+ffmpeg -y -loglevel error -f lavfi -i "<source>" \
+       -c:v ffv1 -level 3 -pix_fmt yuv420p \
+       -fflags +bitexact -flags:v +bitexact <file>
+```
+
+| Source | Expected |
+|---|---|
+| `testsrc2=size=640x360:rate=10:duration=20` | `827e2bfde750412a` |
+| `smptebars=size=640x360:rate=25:duration=12` | `dfd580d580d591d5` |
+
+Produced with **ffmpeg 8.0.1-3ubuntu2**. The version belongs to the vector: the
+frame a seek lands on is a property of the build as much as of the arguments, so
+a different ffmpeg may legitimately produce a different hash here while levels 1
+and 2 still pass. That is the boundary of what a specification can pin.
+
+**The `+bitexact` flags are not optional for reproducing `contentSha256`.**
+Without them Matroska writes a random segment UID and muxer metadata, so the
+same command produces a different file on every run and the digest can never
+match. They change no decoded pixel, and the `pHash` values above are the same
+with or without them.
 
 ## Reference implementation
 
-`Prdb.Hashing`, a C# package in this repository — *in preparation*; this
-document lands ahead of it. It is a transcription of the reference chain rather
-than a reimplementation, and it reproduces the reference's mistakes — the
-resampler, the kept DC coefficient and the threshold above — because a value
-that does not match is worth very little.
+[`Prdb.Hashing`](../csharp/src/Prdb.Hashing/), a C# package in this repository.
+It is a transcription of the reference chain rather than a reimplementation, and
+it reproduces the reference's mistakes — the resampler, the kept DC coefficient
+and the threshold above — because a value that does not match is worth very
+little. Its test suite reads `video-hashing-vectors.json` directly, so the
+published vectors are checked on every build rather than transcribed into test
+code that could drift from them.
 
-Other languages are not covered yet. This document, not the C# package, is the
-specification: an implementation that agrees with the test vectors is correct
-even if it shares no code.
+Other languages are not covered. **This document, not the C# package, is the
+specification**: an implementation that agrees with the vectors is correct even
+if it shares no code with it.
 
 ## Open points
 
-- **Level 3 test vectors** do not exist yet, so the ffmpeg stage rests on the
-  command line above rather than on a checkable value.
-- **Values stored before this specification** are of unknown origin. Whether
-  they are kept, marked or discarded is prdb's decision and is not settled here.
+- **Level 3 is pinned to one ffmpeg build.** Vectors from more versions would
+  show how far frame selection actually moves between them, which is currently
+  assumed rather than measured.
+- **Distance matching is not implemented by the API.** Until it is, the
+  threshold in *Comparison* governs what a client does with its own files, not
+  what a lookup returns.

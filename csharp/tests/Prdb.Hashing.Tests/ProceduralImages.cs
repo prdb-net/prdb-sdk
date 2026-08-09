@@ -13,12 +13,43 @@ namespace Prdb.Hashing.Tests;
 /// </summary>
 public static class ProceduralImages
 {
-    public static PixelImage Create(string kind, int seed, int width, int height) => kind switch
+    /// <summary>
+    /// Builds one of the specification's generators. <paramref name="param"/> is the
+    /// generator's second argument: the seed for noise and gradient, the square size for
+    /// checker, and the pixel value for flat.
+    /// </summary>
+    public static PixelImage Create(string kind, int param, int width, int height) => kind switch
     {
-        "noise" => Noise(seed, width, height),
-        "gradient" => Gradient(seed, width, height),
+        "noise" => Noise(param, width, height),
+        "gradient" => Gradient(param, width, height),
+        "checker" => Checker(param, width, height),
+        "flat" => Flat(width, height, (byte)param),
         _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, "Unknown procedural image kind."),
     };
+
+    /// <summary>
+    /// A maximal step at every square boundary — the hardest case for a resampler whose
+    /// support width is wrong, because there is no smooth region to hide the error in.
+    /// </summary>
+    public static PixelImage Checker(int size, int width, int height)
+    {
+        var image = new PixelImage(width, height);
+
+        for (var y = 0; y < height; y++)
+        {
+            for (var x = 0; x < width; x++)
+            {
+                var value = (byte)(((x / size) + (y / size)) % 2 == 0 ? 0 : 255);
+                var offset = image.OffsetOf(x, y);
+                image.Pixels[offset + 0] = value;
+                image.Pixels[offset + 1] = value;
+                image.Pixels[offset + 2] = value;
+                image.Pixels[offset + 3] = 255;
+            }
+        }
+
+        return image;
+    }
 
     /// <summary>
     /// Noise from a linear congruential generator: high-frequency content, which is where
