@@ -12,6 +12,12 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-08-09
+
+Two things the 0.5.0 regeneration surfaced but could not fix, because neither
+lives in generated code. Both are about the API telling you something the typed
+layer was dropping on the floor.
+
 ### Added
 
 - **A typed call can now report the rate limit it was counted against.** Every
