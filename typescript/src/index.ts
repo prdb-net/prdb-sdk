@@ -115,15 +115,109 @@ export class ResponseStatusOption implements RequestOption {
 	}
 }
 
+/** Key the {@link RateLimitOption} travels under. */
+export const RATE_LIMIT_OPTION_KEY = "prdb.rateLimit";
+
+/** One rate-limiting window, as the API reported it on a response. */
+export interface RateLimitWindow {
+	/** How many requests the window allows in total. */
+	readonly limit: number;
+	/** How many of them are left. */
+	readonly remaining: number;
+	/**
+	 * Seconds until the oldest request leaves the sliding window and frees one
+	 * slot — not a timestamp, and not the time until the whole window resets.
+	 * The same quantity `resetsInSeconds` carries on `GET /rate-limit`.
+	 */
+	readonly resetInSeconds: number;
+}
+
 /**
- * Records the response status into the {@link ResponseStatusOption} a request
- * carries.
+ * Per-request option reporting the rate-limit state the API sent back.
+ *
+ * Every metered response carries its rate-limit headers, so a client can pace
+ * itself off the answers it is already getting instead of spending a request on
+ * `GET /rate-limit` to ask.
+ *
+ * Kiota can surface response headers through its own headers-inspection option,
+ * but as raw multi-valued strings that a caller has to find, pick apart and
+ * parse. This option is the typed form:
+ *
+ * ```ts
+ * const limits = new RateLimitOption();
+ *
+ * const sites = await client.sites.get({ options: [limits] });
+ *
+ * if (limits.hour && limits.hour.remaining < 50) {
+ * 	// Slow down; limits.hour.resetInSeconds until a slot frees up.
+ * }
+ * ```
+ *
+ * Use one instance per call: it is written when the response arrives, so
+ * sharing one across concurrent calls means whichever finishes last wins.
+ */
+export class RateLimitOption implements RequestOption {
+	/**
+	 * The hourly window, or `undefined` if the response carried no hourly
+	 * headers.
+	 */
+	hour?: RateLimitWindow;
+
+	/**
+	 * The monthly window, or `undefined` if the response carried no monthly
+	 * headers.
+	 *
+	 * Both are `undefined` for a response the API did not meter — `401`, `403`,
+	 * `503` and `GET /rate-limit` itself — and for a call that never reached a
+	 * response. A `429` carries only the window that refused it, so exactly one
+	 * of the two being set is normal rather than a partial reading.
+	 */
+	month?: RateLimitWindow;
+
+	getKey(): string {
+		return RATE_LIMIT_OPTION_KEY;
+	}
+}
+
+/**
+ * Read one window's three headers, or `undefined` if they are not all there.
+ *
+ * Deliberately lenient: rate-limit headers are metadata about a call that has
+ * already succeeded, so a missing or malformed one reports "no reading" rather
+ * than failing the call the caller actually made.
+ */
+function readRateLimitWindow(
+	headers: Headers,
+	window: "Hour" | "Month",
+): RateLimitWindow | undefined {
+	const values: number[] = [];
+
+	for (const name of ["Limit", "Remaining", "Reset"]) {
+		const raw = headers.get(`X-RateLimit-${name}-${window}`);
+		if (raw === null) {
+			return undefined;
+		}
+		// Number() rather than parseInt(): parseInt("12abc") is 12, which would
+		// turn a malformed header into a plausible-looking reading.
+		const value = Number(raw.trim());
+		if (!Number.isInteger(value)) {
+			return undefined;
+		}
+		values.push(value);
+	}
+
+	const [limit, remaining, resetInSeconds] = values as [number, number, number];
+	return { limit, remaining, resetInSeconds };
+}
+
+/**
+ * Records response metadata into the options a request carries.
  *
  * Sits at the outer end of the SDK's pipeline, above the retry and redirect
  * handlers, so what it records is the response the caller's result is built
  * from rather than an attempt on the way there.
  */
-class ResponseStatusHandler implements Middleware {
+class ResponseMetadataHandler implements Middleware {
 	next: Middleware | undefined;
 
 	async execute(
@@ -140,11 +234,19 @@ class ResponseStatusHandler implements Middleware {
 		// Matched by key rather than `instanceof`: the key is ours alone, and two
 		// copies of this package in one dependency tree would still agree on it
 		// where a class identity check would not.
-		const option = requestOptions?.[RESPONSE_STATUS_OPTION_KEY] as
+		const status = requestOptions?.[RESPONSE_STATUS_OPTION_KEY] as
 			| ResponseStatusOption
 			| undefined;
-		if (option) {
-			option.statusCode = response.status;
+		if (status) {
+			status.statusCode = response.status;
+		}
+
+		const limits = requestOptions?.[RATE_LIMIT_OPTION_KEY] as
+			| RateLimitOption
+			| undefined;
+		if (limits) {
+			limits.hour = readRateLimitWindow(response.headers, "Hour");
+			limits.month = readRateLimitWindow(response.headers, "Month");
 		}
 
 		return response;
@@ -310,7 +412,7 @@ function buildHttpClient(
 	// First in the list is outermost, which puts it above the retry and redirect
 	// handlers: the status it records is the one the caller's result was built
 	// from, not that of an attempt on the way there.
-	middlewares = [new ResponseStatusHandler(), ...middlewares];
+	middlewares = [new ResponseMetadataHandler(), ...middlewares];
 
 	return KiotaClientFactory.create(customFetch, middlewares);
 }

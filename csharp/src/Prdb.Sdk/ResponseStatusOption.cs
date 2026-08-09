@@ -61,14 +61,14 @@ public sealed class ResponseStatusOption : IRequestOption
 }
 
 /// <summary>
-/// Records the response status into the <see cref="ResponseStatusOption"/> a call carries.
+/// Records response metadata into the options a call carries.
 /// </summary>
 /// <remarks>
 /// Sits at the outer end of the SDK's pipeline, above the retry and redirect handlers, so what
 /// it sees is the response the caller's result is built from rather than an attempt on the way
 /// there.
 /// </remarks>
-internal sealed class ResponseStatusHandler : DelegatingHandler
+internal sealed class ResponseMetadataHandler : DelegatingHandler
 {
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request,
@@ -76,9 +76,15 @@ internal sealed class ResponseStatusHandler : DelegatingHandler
     {
         var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-        if (request.GetRequestOption<ResponseStatusOption>() is { } option)
+        if (request.GetRequestOption<ResponseStatusOption>() is { } status)
         {
-            option.StatusCode = response.StatusCode;
+            status.StatusCode = response.StatusCode;
+        }
+
+        if (request.GetRequestOption<RateLimitOption>() is { } limits)
+        {
+            limits.Hour = RateLimitOption.Read(response.Headers, "Hour");
+            limits.Month = RateLimitOption.Read(response.Headers, "Month");
         }
 
         return response;

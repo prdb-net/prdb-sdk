@@ -149,6 +149,55 @@ response but suppresses deserialisation while doing so, so the typed result
 comes back nil. The option is the other half — the call returns its model as
 usual, and the status is on the option afterwards.
 
+## Reading the rate limit
+
+Every metered response carries the rate limit it was counted against, so you can
+pace off the answers you are already getting instead of spending a request on
+`GET /rate-limit` to ask.
+
+```go
+import (
+	abstractions "github.com/microsoft/kiota-abstractions-go"
+	prdb "github.com/prdb-net/prdb-sdk/go"
+	"github.com/prdb-net/prdb-sdk/go/generated/sites"
+)
+
+limits := prdb.NewRateLimitOption()
+
+page, err := client.Sites().Get(ctx,
+	&abstractions.RequestConfiguration[sites.SitesRequestBuilderGetQueryParameters]{
+		Options: []abstractions.RequestOption{limits},
+	})
+if err != nil {
+	return err
+}
+
+if limits.Hour != nil && limits.Hour.Remaining < 50 {
+	// Slow down; limits.Hour.ResetInSeconds until a slot frees up.
+}
+```
+
+`Hour` and `Month` are each a `*RateLimitWindow` with `Limit`, `Remaining` and
+`ResetInSeconds`, or nil.
+
+`ResetInSeconds` is the wait until the oldest request leaves the sliding window
+and frees **one** slot — not a timestamp, and not the time until the whole
+window resets. It is the same quantity `resetsInSeconds` carries on
+`GET /rate-limit`.
+
+Nil is an answer rather than a gap. A response the API did not meter — `401`,
+`403`, `503`, and `GET /rate-limit` itself — carries no headers at all, and a
+`429` carries only the window that refused the request, so exactly one of the
+two being set is normal. A failed call records too, so the reading is there for
+a caller that inspects the error.
+
+Kiota can also surface response headers itself, through
+`khttp.HeadersInspectionOptions`. Prefer this option in Go: Kiota's is a
+middleware, and middleware lives in the `Transport` that a supplied
+`HTTPClient` owns, so it reads nothing at all on that path — silently. This one
+is a `RoundTripper` on the client the SDK sends through, so it works whether or
+not you brought your own.
+
 Use one instance per call. It is written when the response arrives, so sharing
 one across concurrent calls means whichever finishes last wins.
 

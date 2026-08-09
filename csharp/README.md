@@ -264,10 +264,42 @@ uncallable from outside the SDK — the adapter behind `PrdbClient` is
 adapter fills the property in while sending. A test in this repository pins that
 down.
 
+## Reading the rate limit
+
+Every metered response carries the rate limit it was counted against, so you can
+pace off the answers you are already getting instead of spending a request on
+`GET /rate-limit` to ask.
+
+```csharp
+var limits = new RateLimitOption();
+
+var sites = await client.Sites.GetAsync(config => config.Options.Add(limits));
+
+if (limits.Hour is { Remaining: < 50 } hour)
+{
+    // Slow down; hour.ResetInSeconds until a slot frees up.
+}
+```
+
+`Hour` and `Month` are each a `RateLimitWindow` with `Limit`, `Remaining` and
+`ResetInSeconds`, or null.
+
+`ResetInSeconds` is the wait until the oldest request leaves the sliding window
+and frees **one** slot — not a timestamp, and not the time until the whole
+window resets. It is the same quantity `resetsInSeconds` carries on
+`GET /rate-limit`.
+
+Null is an answer rather than a gap. A response the API did not meter — `401`,
+`403`, `503`, and `GET /rate-limit` itself — carries no headers at all, and a
+`429` carries only the window that refused the request, so exactly one of the
+two being set is normal. A call that throws records too, so the reading is
+there for a caller that catches the error.
+
 ## Reading response headers
 
-A typed call returns the deserialised body, but the response headers are
-reachable per request through `HeadersInspectionHandlerOption`:
+The rate limit above is the typed reading of six of them. For anything else —
+`ETag`, `Retry-After` on a `429` — the raw headers are reachable per request
+through `HeadersInspectionHandlerOption`:
 
 ```csharp
 using Microsoft.Kiota.Http.HttpClientLibrary.Middleware.Options;
@@ -286,7 +318,8 @@ var page = await client.WantedVideos.Changes.GetAsync(config =>
 var date = inspection.ResponseHeaders["Date"];
 ```
 
-Useful for the rate limit headers, `ETag`, and `Retry-After` on a `429`.
+It populates on a `304` too, so the `ETag` from a conditional `GET /sites` is
+readable on both legs of the round trip.
 
 ## Generated code
 

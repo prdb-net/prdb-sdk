@@ -92,8 +92,98 @@ class ResponseStatusOption(RequestOption):
         return ResponseStatusOption.RESPONSE_STATUS_KEY
 
 
-class _ResponseStatusHandler(BaseMiddleware):
-    """Records the response status into the option a request carries.
+@dataclass(frozen=True)
+class RateLimitWindow:
+    """One rate-limiting window, as the API reported it on a response.
+
+    Attributes:
+        limit: How many requests the window allows in total.
+        remaining: How many of them are left.
+        reset_in_seconds: Seconds until the oldest request leaves the sliding
+            window and frees one slot -- not a timestamp, and not the time until
+            the whole window resets. The same quantity ``resetsInSeconds``
+            carries on ``GET /rate-limit``.
+    """
+
+    limit: int
+    remaining: int
+    reset_in_seconds: int
+
+
+class RateLimitOption(RequestOption):
+    """Per-request option reporting the rate-limit state the API sent back.
+
+    Every metered response carries its rate-limit headers, so a client can pace
+    itself off the answers it is already getting instead of spending a request
+    on ``GET /rate-limit`` to ask.
+
+    Kiota can surface response headers through its own headers-inspection
+    option, but as raw multi-valued strings that a caller has to find, pick
+    apart and parse. This option is the typed form, and it reads like the rest
+    of the SDK::
+
+        limits = RateLimitOption()
+        sites = await client.sites.get(
+            request_configuration=RequestConfiguration(options=[limits])
+        )
+
+        if limits.hour and limits.hour.remaining < 50:
+            ...  # slow down; limits.hour.reset_in_seconds until a slot frees up
+
+    Use one instance per call: it is written when the response arrives, so
+    sharing one across concurrent calls means whichever finishes last wins.
+
+    Attributes:
+        hour: The hourly window, or ``None`` if the response carried no hourly
+            headers.
+        month: The monthly window, or ``None`` if the response carried no
+            monthly headers.
+
+    Both are ``None`` for a response the API did not meter -- ``401``, ``403``,
+    ``503`` and ``GET /rate-limit`` itself -- and for a call that never reached
+    a response at all. A ``429`` carries only the window that refused it, so
+    exactly one of the two being set is normal rather than a partial reading.
+    """
+
+    #: Key this option travels under, unique to the SDK.
+    RATE_LIMIT_KEY = "prdb.rateLimit"
+
+    def __init__(self) -> None:
+        self.hour: Optional[RateLimitWindow] = None
+        self.month: Optional[RateLimitWindow] = None
+
+    @staticmethod
+    def get_key() -> str:
+        return RateLimitOption.RATE_LIMIT_KEY
+
+
+def _read_rate_limit_window(
+    headers: httpx.Headers, window: str
+) -> Optional[RateLimitWindow]:
+    """Read one window's three headers, or ``None`` if they are not all there.
+
+    Deliberately lenient: rate-limit headers are metadata about a call that has
+    already succeeded, so a missing or malformed one reports "no reading" rather
+    than failing the call the caller actually made.
+    """
+    values = []
+    for name in ("Limit", "Remaining", "Reset"):
+        raw = headers.get(f"X-RateLimit-{name}-{window}")
+        if raw is None:
+            return None
+        try:
+            values.append(int(raw))
+        except ValueError:
+            return None
+
+    limit, remaining, reset_in_seconds = values
+    return RateLimitWindow(
+        limit=limit, remaining=remaining, reset_in_seconds=reset_in_seconds
+    )
+
+
+class _ResponseMetadataHandler(BaseMiddleware):
+    """Records response metadata into the options a request carries.
 
     Sits at the outer end of the SDK's pipeline, above the retry and redirect
     handlers, so what it records is the response the caller's result is built
@@ -106,13 +196,18 @@ class _ResponseStatusHandler(BaseMiddleware):
         # Read before sending: the innermost middleware strips the options off
         # the request on its way to the transport, so afterwards there is
         # nothing left to look them up in.
-        options = getattr(request, "options", None)
-        option = options.get(ResponseStatusOption.get_key()) if options else None
+        options = getattr(request, "options", None) or {}
+        status_option = options.get(ResponseStatusOption.get_key())
+        rate_limit_option = options.get(RateLimitOption.get_key())
 
         response = await super().send(request, transport)
 
-        if option is not None:
-            option.status_code = response.status_code
+        if status_option is not None:
+            status_option.status_code = response.status_code
+
+        if rate_limit_option is not None:
+            rate_limit_option.hour = _read_rate_limit_window(response.headers, "Hour")
+            rate_limit_option.month = _read_rate_limit_window(response.headers, "Month")
 
         return response
 
@@ -280,7 +375,7 @@ def _build_http_client(
     # First in the list is outermost, which puts it above the retry and
     # redirect handlers: the status it records is the one the caller's result
     # was built from, not that of an attempt on the way there.
-    middleware = [_ResponseStatusHandler(), *middleware]
+    middleware = [_ResponseMetadataHandler(), *middleware]
 
     if http_client is None:
         return KiotaClientFactory.create_with_custom_middleware(middleware=middleware)

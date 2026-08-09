@@ -18,6 +18,7 @@ import (
 	"fmt"
 	nethttp "net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 
@@ -104,7 +105,7 @@ func NewResponseStatusOption() *ResponseStatusOption {
 }
 
 // responseStatusKey is what the request adapter files the option under in the
-// request context, and therefore what recordResponseStatus looks it up by.
+// request context, and therefore what the metadata transport looks it up by.
 var responseStatusKey = abs.RequestOptionKey{Key: "prdb.responseStatus"}
 
 // GetKey identifies the option to Kiota.
@@ -112,45 +113,151 @@ func (o *ResponseStatusOption) GetKey() abs.RequestOptionKey {
 	return responseStatusKey
 }
 
-// responseStatusTransport records the response status into the
-// ResponseStatusOption a request carries.
+// RateLimitWindow is one rate-limiting window, as the API reported it on a
+// response.
+type RateLimitWindow struct {
+	// Limit is how many requests the window allows in total.
+	Limit int
+	// Remaining is how many of them are left.
+	Remaining int
+	// ResetInSeconds is the number of seconds until the oldest request leaves
+	// the sliding window and frees one slot -- not a timestamp, and not the time
+	// until the whole window resets. The same quantity resetsInSeconds carries
+	// on GET /rate-limit.
+	ResetInSeconds int
+}
+
+// RateLimitOption reports the rate-limit state the API sent back.
+//
+// Every metered response carries its rate-limit headers, so a client can pace
+// itself off the answers it is already getting instead of spending a request on
+// GET /rate-limit to ask.
+//
+// Kiota can surface response headers through its own headers-inspection option,
+// but as raw multi-valued strings that a caller has to find, pick apart and
+// parse -- and that option is a Kiota middleware, so it reads nothing at all
+// when the caller supplied their own *http.Client. This one is the typed form
+// and works on both paths:
+//
+//	limits := prdb.NewRateLimitOption()
+//	sites, err := client.Sites().Get(ctx,
+//	    &abstractions.RequestConfiguration[sites.SitesRequestBuilderGetQueryParameters]{
+//	        Options: []abstractions.RequestOption{limits},
+//	    })
+//	if limits.Hour != nil && limits.Hour.Remaining < 50 {
+//	    // Slow down; limits.Hour.ResetInSeconds until a slot frees up.
+//	}
+//
+// One instance per call: it is written when the response arrives, so sharing
+// one across concurrent calls means whichever finishes last wins.
+type RateLimitOption struct {
+	// Hour is the hourly window, or nil if the response carried no hourly
+	// headers.
+	Hour *RateLimitWindow
+
+	// Month is the monthly window, or nil if the response carried no monthly
+	// headers.
+	//
+	// Both are nil for a response the API did not meter -- 401, 403, 503 and
+	// GET /rate-limit itself -- and for a call that never reached a response. A
+	// 429 carries only the window that refused it, so exactly one of the two
+	// being set is normal rather than a partial reading.
+	Month *RateLimitWindow
+}
+
+// NewRateLimitOption returns an option ready to be passed to one call.
+func NewRateLimitOption() *RateLimitOption {
+	return &RateLimitOption{}
+}
+
+// rateLimitKey is what the request adapter files the option under in the
+// request context.
+var rateLimitKey = abs.RequestOptionKey{Key: "prdb.rateLimit"}
+
+// GetKey identifies the option to Kiota.
+func (o *RateLimitOption) GetKey() abs.RequestOptionKey {
+	return rateLimitKey
+}
+
+// readRateLimitWindow reads one window's three headers, or nil if they are not
+// all there.
+//
+// Deliberately lenient: rate-limit headers are metadata about a call that has
+// already succeeded, so a missing or malformed one reports "no reading" rather
+// than failing the call the caller actually made.
+func readRateLimitWindow(header nethttp.Header, window string) *RateLimitWindow {
+	var values [3]int
+
+	for i, name := range [3]string{"Limit", "Remaining", "Reset"} {
+		raw := header.Get("X-RateLimit-" + name + "-" + window)
+		if raw == "" {
+			return nil
+		}
+
+		value, err := strconv.Atoi(strings.TrimSpace(raw))
+		if err != nil {
+			return nil
+		}
+
+		values[i] = value
+	}
+
+	return &RateLimitWindow{
+		Limit:          values[0],
+		Remaining:      values[1],
+		ResetInSeconds: values[2],
+	}
+}
+
+// responseMetadataTransport records response metadata into the options a
+// request carries.
 //
 // A RoundTripper rather than a Kiota middleware, because it has to work on both
 // paths: Kiota's middleware lives in the Transport, which a caller-supplied
 // client owns and the SDK does not touch. Wrapping the transport of the client
-// the SDK sends through covers both.
+// the SDK sends through covers both. That matters for more than tidiness --
+// Kiota's own headers-inspection option is a middleware, so it silently reads
+// nothing for a caller who supplied their own client, which is exactly the trap
+// this avoids.
 //
 // On the client the SDK builds, that puts it outside the whole middleware
 // pipeline, retries and redirects included, so it records the response the
 // result was built from. With a caller-supplied client it runs per round trip,
 // below net/http's own redirect following, so the last response it sees wins --
 // the same one, unless a redirect was refused.
-type responseStatusTransport struct {
+type responseMetadataTransport struct {
 	next nethttp.RoundTripper
 }
 
-func (t responseStatusTransport) RoundTrip(req *nethttp.Request) (*nethttp.Response, error) {
+func (t responseMetadataTransport) RoundTrip(req *nethttp.Request) (*nethttp.Response, error) {
 	response, err := t.next.RoundTrip(req)
 
 	if response != nil {
-		if option, ok := req.Context().Value(responseStatusKey).(*ResponseStatusOption); ok {
+		ctx := req.Context()
+
+		if option, ok := ctx.Value(responseStatusKey).(*ResponseStatusOption); ok {
 			option.StatusCode = response.StatusCode
+		}
+
+		if option, ok := ctx.Value(rateLimitKey).(*RateLimitOption); ok {
+			option.Hour = readRateLimitWindow(response.Header, "Hour")
+			option.Month = readRateLimitWindow(response.Header, "Month")
 		}
 	}
 
 	return response, err
 }
 
-// recordResponseStatus wraps a client's transport so the option is filled in.
-// The client is ours by this point -- either built here or a copy of the
+// recordResponseMetadata wraps a client's transport so the options are filled
+// in. The client is ours by this point -- either built here or a copy of the
 // caller's -- so replacing its transport is not a write to anything they own.
-func recordResponseStatus(client *nethttp.Client) {
+func recordResponseMetadata(client *nethttp.Client) {
 	next := client.Transport
 	if next == nil {
 		next = nethttp.DefaultTransport
 	}
 
-	client.Transport = responseStatusTransport{next: next}
+	client.Transport = responseMetadataTransport{next: next}
 }
 
 // RetryOptions describes the SDK's retry policy.
@@ -273,7 +380,7 @@ func buildClient(
 		if err != nil {
 			return nil, err
 		}
-		recordResponseStatus(httpClient)
+		recordResponseMetadata(httpClient)
 	} else {
 		// A caller-supplied client does not run Kiota's middleware, so apply the
 		// same-host redirect rule through net/http instead. Copied rather than
@@ -285,7 +392,7 @@ func buildClient(
 		// Ours runs first and refuses; anything it allows is then theirs to judge.
 		clone := *httpClient
 		clone.CheckRedirect = refuseCrossHostRedirectThen(httpClient.CheckRedirect)
-		recordResponseStatus(&clone)
+		recordResponseMetadata(&clone)
 		httpClient = &clone
 	}
 

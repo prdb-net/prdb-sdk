@@ -138,6 +138,45 @@ response but suppresses deserialisation while doing so, so the typed result
 comes back `None`. The option is the other half — the call returns its model as
 usual, and the status is on the option afterwards.
 
+## Reading the rate limit
+
+Every metered response carries the rate limit it was counted against, so you can
+pace off the answers you are already getting instead of spending a request on
+`GET /rate-limit` to ask.
+
+```python
+from kiota_abstractions.base_request_configuration import RequestConfiguration
+
+from prdb_sdk import RateLimitOption
+
+limits = RateLimitOption()
+
+sites = await client.sites.get(
+    request_configuration=RequestConfiguration(options=[limits])
+)
+
+if limits.hour and limits.hour.remaining < 50:
+    ...  # slow down; limits.hour.reset_in_seconds until a slot frees up
+```
+
+`hour` and `month` are each a `RateLimitWindow` with `limit`, `remaining` and
+`reset_in_seconds`, or `None`.
+
+`reset_in_seconds` is the wait until the oldest request leaves the sliding
+window and frees **one** slot — not a timestamp, and not the time until the
+whole window resets. It is the same quantity `resetsInSeconds` carries on
+`GET /rate-limit`.
+
+`None` is an answer rather than a gap. A response the API did not meter — `401`,
+`403`, `503`, and `GET /rate-limit` itself — carries no headers at all, and a
+`429` carries only the window that refused the request, so exactly one of the
+two being set is normal. A refusal records too, so the reading is there for a
+caller that catches the error.
+
+Kiota can also surface response headers itself, through
+`HeadersInspectionHandlerOption`, as raw multi-valued strings. This option is
+the typed reading of the six that matter.
+
 Use one instance per call. It is written when the response arrives, so sharing
 one across concurrent calls means whichever finishes last wins.
 
