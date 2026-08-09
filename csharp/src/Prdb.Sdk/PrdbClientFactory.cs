@@ -177,10 +177,12 @@ public static class PrdbClientFactory
     /// means the handler is not in the pipeline at all and cannot be re-enabled by a per-request
     /// option.
     /// <para>
-    /// <see cref="ResponseMetadataHandler"/> goes first, which puts it above the retry and
-    /// redirect handlers — and above whatever an application added through
+    /// <see cref="ResponseMetadataHandler"/> goes near the front, which puts it above the retry
+    /// and redirect handlers — and above whatever an application added through
     /// <c>AddPrdbClient</c>, since that runs inside ours. So what it records is read off the
     /// response the caller's result was built from, not off an attempt on the way there.
+    /// <see cref="NotModifiedHandler"/> goes in front of even that, so the <c>304</c> it
+    /// rewrites has already been recorded as itself.
     /// </para>
     /// </remarks>
     private static IList<DelegatingHandler> CreateHandlers(PrdbRetryOptions? retry)
@@ -210,6 +212,10 @@ public static class PrdbClientFactory
         }
 
         handlers.Insert(0, new ResponseMetadataHandler());
+
+        // Outermost of all, so it runs after the metadata handler has recorded the real 304 and
+        // is the last thing between the pipeline and the request adapter.
+        handlers.Insert(0, new NotModifiedHandler());
 
         return handlers;
     }

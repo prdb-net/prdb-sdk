@@ -198,6 +198,62 @@ middleware, and middleware lives in the `Transport` that a supplied
 is a `RoundTripper` on the client the SDK sends through, so it works whether or
 not you brought your own.
 
+## Conditional requests
+
+`GET /sites` returns a weak `ETag` covering the matched rows and the paging,
+sorting and search parameters. Send it back as `If-None-Match` and the endpoint
+answers **304 Not Modified** with no body while nothing has changed — the whole
+site list fits in one request at `PageSize` 1000, so this is worth doing.
+
+```go
+import (
+	abstractions "github.com/microsoft/kiota-abstractions-go"
+	khttp "github.com/microsoft/kiota-http-go"
+	prdb "github.com/prdb-net/prdb-sdk/go"
+	"github.com/prdb-net/prdb-sdk/go/generated/sites"
+)
+
+// First call: read the validator off the response.
+inspect := khttp.NewHeadersInspectionOptions()
+inspect.InspectResponseHeaders = true
+
+if _, err := client.Sites().Get(ctx,
+	&abstractions.RequestConfiguration[sites.SitesRequestBuilderGetQueryParameters]{
+		Options: []abstractions.RequestOption{inspect},
+	}); err != nil {
+	return err
+}
+etag := inspect.GetResponseHeaders().Get("etag")[0]
+
+// Later: ask only for what changed.
+headers := abstractions.NewRequestHeaders()
+headers.Add("If-None-Match", etag)
+status := prdb.NewResponseStatusOption()
+
+page, err := client.Sites().Get(ctx,
+	&abstractions.RequestConfiguration[sites.SitesRequestBuilderGetQueryParameters]{
+		Headers: headers,
+		Options: []abstractions.RequestOption{status},
+	})
+if err != nil {
+	return err
+}
+
+if status.StatusCode == http.StatusNotModified {
+	// Nothing changed; page is nil, keep the copy you already have.
+}
+```
+
+A `304` returns nil from the typed call rather than an error. Nil alone does not
+distinguish "not modified" from "no rows", so pass a `ResponseStatusOption` when
+you need to tell them apart. Note that reading the validator needs Kiota's
+headers-inspection option, which — as above — reads nothing when you supplied
+your own `HTTPClient`.
+
+One wrinkle from the API side: the shared read-only cache does not vary by
+`If-None-Match`, so a request that hits it is answered `200` with a body even
+when your validator still matches. That is expected rather than an error.
+
 Use one instance per call. It is written when the response arrives, so sharing
 one across concurrent calls means whichever finishes last wins.
 

@@ -10,7 +10,7 @@
 
   <PropertyGroup>
     <PackageId>Prdb.Sdk</PackageId>
-    <Version>0.5.0</Version>
+    <Version>0.6.0</Version>
     <Description>C# SDK for the prdb Public API.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/prdb-net/prdb-sdk</PackageProjectUrl>

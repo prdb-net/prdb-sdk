@@ -12,6 +12,12 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-08-09
+
+Two things the 0.5.0 regeneration surfaced but could not fix, because neither
+lives in generated code. Both are about the API telling you something the typed
+layer was dropping on the floor.
+
 ### Added
 
 - **A typed call can now report the rate limit it was counted against.** Every
@@ -46,24 +52,54 @@ changed type is, whichever language it landed in.
   that a supplied client owns; this option is a `RoundTripper` on the client the
   SDK sends through, so it works either way. Measured, not assumed.
 
-### Documented
-
-- **How to read response headers, in the three READMEs that did not say.** Kiota
-  ships a headers-inspection option and every wrapper here already installs it,
-  so the `ETag` from a conditional `GET /sites` and the rate-limit headers have
-  been reachable *alongside* the typed model since before 0.5.0 — the C# README
-  was alone in mentioning it. The 0.5.0 notes claimed the opposite, that reaching
-  response headers cost the deserialised model. That was wrong; see the
-  correction below.
-
 ### Fixed
 
-- **0.5.0's release notes were wrong about response headers.** They said that
-  reading the `ETag` off `GET /sites` required Kiota's native response handler
-  and therefore gave up the typed model. It does not: the headers-inspection
-  option returns both, on the `200` and on the `304`. The one part that stands
-  is that **C# still raises `ApiException` on the `304` itself**, where Python
-  and TypeScript return null.
+- **C#: a `304 Not Modified` no longer arrives as an exception.** `GET /sites`
+  answers `304` when you send back the `ETag` it gave you — the request working,
+  not failing. Python, TypeScript and Go all return null from that call, but the
+  C# request adapter treats any unmapped non-2xx status as a failure and raised
+  `ApiException`, so conditional requests were the one thing in this SDK that
+  needed a `try`/`catch` around the *successful* path. C# now returns null like
+  the other three:
+
+  ```csharp
+  var status = new ResponseStatusOption();
+
+  var sites = await client.Sites.GetAsync(config =>
+  {
+      config.Headers.Add("If-None-Match", etag);
+      config.Options.Add(status);
+  });
+
+  if (status.StatusCode == HttpStatusCode.NotModified) { /* keep your copy */ }
+  ```
+
+  Kiota generates no handling for a declared 3xx in any of the four languages,
+  so what each SDK did with a `304` was its adapter's fallback rather than
+  anything generated. That is now pinned by a test in all four, so a generator
+  upgrade that moved any of them has to fail the build rather than the caller.
+
+  This is the one place the SDK reshapes a response: C# presents the `304` to
+  the adapter as a `204`, after the real status has been recorded and with the
+  headers left intact. `ResponseStatusOption` still reports `304`, and remains
+  how you tell "not modified" from "no rows" — null alone cannot. The
+  substitution is visible only to Kiota's `NativeResponseHandler`, which sits
+  above it.
+
+### Documented
+
+- **Conditional requests, in all four READMEs**, including how to read the
+  `ETag` in the first place — and the API-side wrinkle that a request served
+  from the shared read-only cache comes back `200` with a body even when your
+  validator still matches, because that cache does not vary by `If-None-Match`.
+- **How to read response headers, in the three READMEs that did not say.** Kiota
+  ships a headers-inspection option and every wrapper here already installs it,
+  so response headers have been reachable *alongside* the typed model all along —
+  the C# README was alone in mentioning it.
+
+  This corrects 0.5.0's release notes, which claimed the opposite: that reaching
+  response headers cost you the deserialised model. It does not, on the `200` or
+  on the `304`. Only the C# `304` throw was real, and it is fixed above.
 
 ## [0.5.0] - 2026-08-08
 
