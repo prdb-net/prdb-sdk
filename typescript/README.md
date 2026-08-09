@@ -155,6 +155,42 @@ Kiota can also surface response headers itself, through
 `HeadersInspectionOptions`, as raw multi-valued strings. This option is the
 typed reading of the six that matter.
 
+## Conditional requests
+
+`GET /sites` returns a weak `ETag` covering the matched rows and the paging,
+sorting and search parameters. Send it back as `If-None-Match` and the endpoint
+answers **304 Not Modified** with no body while nothing has changed — the whole
+site list fits in one request at `pageSize: 1000`, so this is worth doing.
+
+```ts
+import { HeadersInspectionOptions } from "@microsoft/kiota-http-fetchlibrary";
+import { ResponseStatusOption } from "@prdb/sdk";
+
+// First call: read the validator off the response.
+const inspect = new HeadersInspectionOptions({ inspectResponseHeaders: true });
+await client.sites.get({ options: [inspect] });
+const [etag] = inspect.getResponseHeaders().get("etag") ?? [];
+
+// Later: ask only for what changed.
+const status = new ResponseStatusOption();
+const sites = await client.sites.get({
+  headers: { "If-None-Match": etag },
+  options: [status],
+});
+
+if (status.statusCode === 304) {
+  // Nothing changed; keep the copy you already have.
+}
+```
+
+A `304` returns `undefined` from the typed call rather than rejecting.
+`undefined` alone does not distinguish "not modified" from "no rows", so pass a
+`ResponseStatusOption` when you need to tell them apart.
+
+One wrinkle from the API side: the shared read-only cache does not vary by
+`If-None-Match`, so a request that hits it is answered `200` with a body even
+when your validator still matches. That is expected rather than an error.
+
 Use one instance per call. It is written when the response arrives, so sharing
 one across concurrent calls means whichever finishes last wins.
 

@@ -450,6 +450,42 @@ async def test_a_malformed_rate_limit_header_does_not_fail_the_call(
     )
 
 
+ETAG = 'W/"abc123"'
+
+
+def conditional(request: httpx.Request) -> httpx.Response:
+    """GET /sites, answering 304 when the caller sends the validator back."""
+    if request.headers.get("If-None-Match") == ETAG:
+        return httpx.Response(304, headers={"ETag": ETAG})
+    return httpx.Response(200, json=SITES_BODY, headers={"ETag": ETAG})
+
+
+async def test_a_conditional_request_returns_none_rather_than_raising(
+    recorder: Recorder,
+) -> None:
+    """A 304 is the request working, not failing.
+
+    Kiota generates no handling for a declared 3xx in any language, so what each
+    SDK does with one is its request adapter's fallback rather than anything
+    generated. Python falls through to "no body, return None". Pinned here
+    because C# does not -- it raises, and needs a handler in the pipeline to
+    match the other three -- so a Kiota upgrade that moved Python the same way
+    should fail the build rather than the caller.
+    """
+    client = create_client(
+        "secret-key", base_url=API_ORIGIN, http_client=recorder.client(conditional)
+    )
+    status = ResponseStatusOption()
+    configuration = RequestConfiguration(options=[status])
+    configuration.headers.add("If-None-Match", ETAG)
+
+    page = await client.sites.get(request_configuration=configuration)
+
+    assert page is None
+    # None alone cannot be told apart from an empty page; the status is what does.
+    assert status.status_code == 304
+
+
 @pytest.mark.parametrize(
     "kwargs",
     [{"max_retries": -1}, {"max_retries": 11}, {"delay": -1.0}, {"delay": 181.0}],

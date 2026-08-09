@@ -321,6 +321,53 @@ var date = inspection.ResponseHeaders["Date"];
 It populates on a `304` too, so the `ETag` from a conditional `GET /sites` is
 readable on both legs of the round trip.
 
+## Conditional requests
+
+`GET /sites` returns a weak `ETag` covering the matched rows and the paging,
+sorting and search parameters. Send it back as `If-None-Match` and the endpoint
+answers **304 Not Modified** with no body while nothing has changed — the whole
+site list fits in one request at `PageSize = 1000`, so this is worth doing.
+
+```csharp
+using System.Net;
+using Microsoft.Kiota.Http.HttpClientLibrary.Middleware.Options;
+
+// First call: read the validator off the response.
+var inspection = new HeadersInspectionHandlerOption { InspectResponseHeaders = true };
+await client.Sites.GetAsync(config => config.Options.Add(inspection));
+var etag = inspection.ResponseHeaders["ETag"].First();
+
+// Later: ask only for what changed.
+var status = new ResponseStatusOption();
+
+var sites = await client.Sites.GetAsync(config =>
+{
+    config.Headers.Add("If-None-Match", etag);
+    config.Options.Add(status);
+});
+
+if (status.StatusCode == HttpStatusCode.NotModified)
+{
+    // Nothing changed; sites is null, keep the copy you already have.
+}
+```
+
+A `304` returns null from the typed call rather than throwing. Null alone does
+not distinguish "not modified" from "no rows", so pass a `ResponseStatusOption`
+when you need to tell them apart.
+
+This is the one place where the SDK reshapes a response. Kiota generates no
+handling for a 3xx in any language, and the C# request adapter alone treats an
+unmapped non-2xx as a failure — Python, TypeScript and Go all return null from
+the same call. So the SDK presents the `304` to the adapter as a `204`, after
+the real status has been recorded and with the headers left intact. The only
+place the substitution shows is Kiota's `NativeResponseHandler`, which sits
+above it and sees the `204`.
+
+One wrinkle from the API side: the shared read-only cache does not vary by
+`If-None-Match`, so a request that hits it is answered `200` with a body even
+when your validator still matches. That is expected rather than an error.
+
 ## Generated code
 
 Everything under `src/Prdb.Sdk/Generated/` is produced by Kiota from

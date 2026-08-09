@@ -500,6 +500,58 @@ describe("RateLimitOption", () => {
 	});
 });
 
+describe("conditional requests", () => {
+	const ETAG = 'W/"abc123"';
+
+	/**
+	 * A 304 is the request working, not failing.
+	 *
+	 * Kiota generates no handling for a declared 3xx in any language, so what
+	 * each SDK does with one is its request adapter's fallback rather than
+	 * anything generated. TypeScript falls through to "no body, return
+	 * undefined". Pinned here because C# does not — it throws, and needs a
+	 * handler in the pipeline to match the other three — so a Kiota upgrade that
+	 * moved TypeScript the same way should fail the build rather than the caller.
+	 */
+	it("returns undefined on a 304 rather than rejecting", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: async (url, init) => {
+				const headers = (init.headers ?? {}) as Record<string, string>;
+				const sent = headers["If-None-Match"] ?? headers["if-none-match"];
+				recorder.requests.push({ url, apiKey: undefined });
+
+				return sent === ETAG
+					? new Response(null, { status: 304, headers: { etag: ETAG } })
+					: new Response(
+							JSON.stringify({
+								items: [],
+								page: 1,
+								pageSize: 20,
+								totalCount: 7,
+							}),
+							{
+								status: 200,
+								headers: { "content-type": "application/json", etag: ETAG },
+							},
+						);
+			},
+		});
+		const status = new ResponseStatusOption();
+
+		const page = await client.sites.get({
+			headers: { "If-None-Match": ETAG },
+			options: [status],
+		});
+
+		assert.equal(page, undefined);
+		// undefined alone cannot be told apart from an empty page; the status can.
+		assert.equal(status.statusCode, 304);
+	});
+});
+
 describe("defaults", () => {
 	it("point at production over https", () => {
 		assert.ok(DEFAULT_BASE_URL.startsWith("https://"));

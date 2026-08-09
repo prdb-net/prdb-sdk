@@ -261,3 +261,52 @@ func TestRateLimitOptionIsOptional(t *testing.T) {
 		t.Fatalf("Get: %v", err)
 	}
 }
+
+// A 304 is the request working, not failing.
+//
+// Kiota generates no handling for a declared 3xx in any language, so what each
+// SDK does with one is its request adapter's fallback rather than anything
+// generated. Go falls through to "no body, return nil". Pinned here because C#
+// does not -- it raises, and needs a handler in the pipeline to match the other
+// three -- so a Kiota upgrade that moved Go the same way should fail the build
+// rather than the caller.
+func TestConditionalRequestReturnsNilOnNotModified(t *testing.T) {
+	const etag = `W/"abc123"`
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("ETag", etag)
+		if r.Header.Get("If-None-Match") == etag {
+			w.WriteHeader(http.StatusNotModified)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(sitesBody))
+	}))
+	t.Cleanup(server.Close)
+
+	client, err := NewAnonymousClient(Options{BaseURL: server.URL})
+	if err != nil {
+		t.Fatalf("NewAnonymousClient: %v", err)
+	}
+
+	headers := abs.NewRequestHeaders()
+	headers.Add("If-None-Match", etag)
+	status := NewResponseStatusOption()
+
+	page, err := client.Sites().Get(context.Background(),
+		&abs.RequestConfiguration[sites.SitesRequestBuilderGetQueryParameters]{
+			Headers: headers,
+			Options: []abs.RequestOption{status},
+		})
+	if err != nil {
+		t.Fatalf("Get: %v", err)
+	}
+
+	if page != nil {
+		t.Errorf("page = %+v, want nil", page)
+	}
+	// Nil alone cannot be told apart from an empty page; the status can.
+	if status.StatusCode != http.StatusNotModified {
+		t.Errorf("StatusCode = %d, want %d", status.StatusCode, http.StatusNotModified)
+	}
+}
