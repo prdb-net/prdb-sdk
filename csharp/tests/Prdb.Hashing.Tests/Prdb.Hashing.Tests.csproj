@@ -20,4 +20,12 @@
     <ProjectReference Include="../../src/Prdb.Hashing/Prdb.Hashing.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- The published vectors are the expectations, read at run time rather than
+         transcribed into test code where the two copies could drift apart. -->
+    <None Include="../../../docs/video-hashing-vectors.json"
+          Link="video-hashing-vectors.json"
+          CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

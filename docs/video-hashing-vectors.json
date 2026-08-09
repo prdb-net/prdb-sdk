@@ -1,0 +1,240 @@
+{
+  "specification": "docs/video-hashing.md",
+  "description": "Test vectors for the prdb pHash. The generators are defined in the specification; pixel buffers are 8-bit RGBA, row-major, alpha 255. \u0027param\u0027 is the generator\u0027s second argument: the seed for noise and gradient, the square size in pixels for checker, and the pixel value for flat. SHA-256 digests identify the input, so a mismatch can be attributed to the input rather than to the hash.",
+  "level1": [
+    {
+      "image": "flat",
+      "param": 0,
+      "width": 64,
+      "height": 64,
+      "pixelsSha256": "62fb561c59d0cea247fc588f3311ee665375f35d8675b186e2792cb7dfcff88c",
+      "pHash": "0000000000000000"
+    },
+    {
+      "image": "flat",
+      "param": 128,
+      "width": 64,
+      "height": 64,
+      "pixelsSha256": "d8d553546719ecc9637714ba865b13783ef9f55aa28c0b79b0dfe2e7042cc38a",
+      "pHash": "8000000000000000"
+    },
+    {
+      "image": "gradient",
+      "param": 1,
+      "width": 64,
+      "height": 64,
+      "pixelsSha256": "6cc6e074f5d637a1a1eee37092a4d568d5996fd5fa7e406bd0dcf9d5372b515c",
+      "pHash": "85421fb227ae7ca9"
+    },
+    {
+      "image": "gradient",
+      "param": 3,
+      "width": 64,
+      "height": 64,
+      "pixelsSha256": "23d5d0f7c889fac048d8471b78a85e8abe06e651ee767ca45323e12566616c95",
+      "pHash": "956d4a8d7ad12953"
+    },
+    {
+      "image": "gradient",
+      "param": 7,
+      "width": 64,
+      "height": 64,
+      "pixelsSha256": "1614176906593da7570918a578d867bd3d21079388659262420812311482df4c",
+      "pHash": "969f346ed87254c1"
+    },
+    {
+      "image": "noise",
+      "param": 1,
+      "width": 64,
+      "height": 64,
+      "pixelsSha256": "e48fd268ec6aad2333aaa80a1ce64bbd1efaa5a922e7f740425da6b53067b7d1",
+      "pHash": "9705ba3b68cae0d5"
+    },
+    {
+      "image": "noise",
+      "param": 2,
+      "width": 64,
+      "height": 64,
+      "pixelsSha256": "ba0e5e65695fd0a1b3df257e6dda9d85b629c9ca9d9a88d9fe4cf076d80b856f",
+      "pHash": "e4179d8a695e0b4e"
+    },
+    {
+      "image": "noise",
+      "param": 42,
+      "width": 64,
+      "height": 64,
+      "pixelsSha256": "9e5ce879c7edfaa43abf5078f5f4f91bf00e7e090cda9dfb14f7dcae70343b16",
+      "pHash": "c6bdce914d06164f"
+    },
+    {
+      "image": "checker",
+      "param": 16,
+      "width": 64,
+      "height": 64,
+      "pixelsSha256": "afce0284a3c609d6ad7fc1f3822fb3e6872de1e167118b62930d710696ca663a",
+      "pHash": "8005000500500050"
+    },
+    {
+      "image": "checker",
+      "param": 32,
+      "width": 64,
+      "height": 64,
+      "pixelsSha256": "e9a420ea26258d750b590e49209d48b54d4def23b8d35d0b1ecaf4c9eb4b4edf",
+      "pHash": "8011004400110044"
+    },
+    {
+      "image": "noise",
+      "param": 1,
+      "width": 800,
+      "height": 450,
+      "pixelsSha256": "4b007f408c9ca606e5badfe342bc0c3fc8200a61889135fed737e09c3bed7dcd",
+      "pHash": "9d0b303b629cf8d9"
+    },
+    {
+      "image": "gradient",
+      "param": 1,
+      "width": 800,
+      "height": 450,
+      "pixelsSha256": "05b67eae4c80967be0eeb7fd88dd93abfd06d772a2cfd1c5c677a039b1ec9c89",
+      "pHash": "85421fb227ae7ca9"
+    },
+    {
+      "image": "flat",
+      "param": 128,
+      "width": 800,
+      "height": 450,
+      "pixelsSha256": "0f22e1693fa9cc7279419e50dbbde520683515ae5c406334a776643ed219adc0",
+      "pHash": "8000000000000000"
+    },
+    {
+      "image": "gradient",
+      "param": 5,
+      "width": 33,
+      "height": 17,
+      "pixelsSha256": "af0932f8ba3a1737551c698d810f9db792cef7bfca1a01ed02e8cfad963c6e28",
+      "pHash": "95b368d3050bde5c"
+    },
+    {
+      "image": "noise",
+      "param": 9,
+      "width": 37,
+      "height": 23,
+      "pixelsSha256": "b087be4cfec7737276e199cef52afd1cfd5571328a3ffca059ab4029379de755",
+      "pHash": "8dd8dc85c7d84791"
+    },
+    {
+      "image": "noise",
+      "param": 4,
+      "width": 65,
+      "height": 64,
+      "pixelsSha256": "dbdfe7d3896c3a82bd796d1b92559fe9e9b491996760a16e214fa25c6436577d",
+      "pHash": "9a6367da8e971541"
+    },
+    {
+      "image": "gradient",
+      "param": 11,
+      "width": 127,
+      "height": 71,
+      "pixelsSha256": "11617a0fffbf6bc8598746667573581b1282d4d13eada14474d5259ffbc97406",
+      "pHash": "dbe9c01d5a918357"
+    },
+    {
+      "image": "gradient",
+      "param": 2,
+      "width": 1,
+      "height": 1,
+      "pixelsSha256": "3aaece65ded0c3c7b8cb153ec328f90c1964fcefbae5a1c05fecb67fea2fe944",
+      "pHash": "8000000000000000"
+    }
+  ],
+  "level2": [
+    {
+      "frames": "gradient",
+      "tileWidth": 160,
+      "tileHeight": 90,
+      "montageWidth": 800,
+      "montageHeight": 450,
+      "montageSha256": "59d2eb0db3bd2b472bba8b8d690373445bba9b6ddd68391c1f87b27621fa98c5",
+      "pHash": "d5808a2f7e2f7415"
+    },
+    {
+      "frames": "noise",
+      "tileWidth": 160,
+      "tileHeight": 90,
+      "montageWidth": 800,
+      "montageHeight": 450,
+      "montageSha256": "ed9154b8d5450d0f8c5d1202781d481ad201462586762ea2e8784e6529e11616",
+      "pHash": "c1f4572a54f72c98"
+    },
+    {
+      "frames": "gradient",
+      "tileWidth": 160,
+      "tileHeight": 120,
+      "montageWidth": 800,
+      "montageHeight": 600,
+      "montageSha256": "eba526cb2779708982f6003c119d0888d10b708121d6e35bf91753c581d496c7",
+      "pHash": "d5808a2f7e2f7415"
+    },
+    {
+      "frames": "noise",
+      "tileWidth": 160,
+      "tileHeight": 120,
+      "montageWidth": 800,
+      "montageHeight": 600,
+      "montageSha256": "699ee37ba641fe43aecc9a04629453b061e402e47fb353f1b4bf10f27c524b8e",
+      "pHash": "c1fc562254f32e99"
+    },
+    {
+      "frames": "gradient",
+      "tileWidth": 160,
+      "tileHeight": 67,
+      "montageWidth": 800,
+      "montageHeight": 335,
+      "montageSha256": "a520ccdad5aea4746457bb9ff3b8a121cd143ebe0344d65f015998145ae9b9be",
+      "pHash": "d5808a2f7e2f7c05"
+    },
+    {
+      "frames": "noise",
+      "tileWidth": 200,
+      "tileHeight": 113,
+      "montageWidth": 1000,
+      "montageHeight": 565,
+      "montageSha256": "cfd37e0ee683b76b6dfcef302f0306375fa87a6ffa2bfaa71b9046aa79694731",
+      "pHash": "c6c8573156f124be"
+    },
+    {
+      "frames": "gradient",
+      "tileWidth": 320,
+      "tileHeight": 180,
+      "montageWidth": 1600,
+      "montageHeight": 900,
+      "montageSha256": "c3b0aa7f87931bafb8d1e23aae9a1c94e0daf99d694a5b300bdfdbb1223d8b6e",
+      "pHash": "d5808a2f5e2f7c15"
+    },
+    {
+      "frames": "checker",
+      "tileWidth": 160,
+      "tileHeight": 90,
+      "montageWidth": 800,
+      "montageHeight": 450,
+      "montageSha256": "000f66e557670e9d9ebfea8f7dd7c9994a68bbfe6c406e91ab8845a693297655",
+      "pHash": "e297916a956a956a"
+    }
+  ],
+  "level3": [
+    {
+      "file": "testsrc2-640x360-10fps-20s.mkv",
+      "lavfiSource": "testsrc2=size=640x360:rate=10:duration=20",
+      "contentSha256": "e07020cac189796421e271671c25e5d1285ba0b8376c9d8612658f9f3ca74f9e",
+      "ffmpegVersion": "ffmpeg version 8.0.1-3ubuntu2",
+      "pHash": "827e2bfde750412a"
+    },
+    {
+      "file": "smptebars-640x360-25fps-12s.mkv",
+      "lavfiSource": "smptebars=size=640x360:rate=25:duration=12",
+      "contentSha256": "c4586b5a22735d888c9957a886e95c83f9a7c062ca4f18b8b12a4615d1f250e8",
+      "ffmpegVersion": "ffmpeg version 8.0.1-3ubuntu2",
+      "pHash": "dfd580d580d591d5"
+    }
+  ]
+}

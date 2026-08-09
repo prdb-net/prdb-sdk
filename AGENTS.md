@@ -155,9 +155,16 @@ other client's: two 64-bit perceptual hashes from different methods sit about 32
 bits apart whether or not they describe the same video.
 
 That makes `PerceptualHashReferenceTests` unlike other tests. Its expectations
-were produced by the Go reference chain, and a failure means these hashes
-stopped matching the rest of the ecosystem. **Do not update the expected values
-to match new output** — find what changed in the arithmetic instead.
+are not in the test file at all: it reads `docs/video-hashing-vectors.json`, the
+published vectors, which were produced by the Go reference chain. A failure
+means these hashes stopped matching the rest of the ecosystem. **Do not update
+the vector file to match new output** — find what changed in the arithmetic
+instead. Editing it is editing the specification.
+
+Level 3 is the one exception worth knowing. Those vectors are pinned to the
+ffmpeg build named in the file, because which frame a seek lands on depends on
+the build; a different ffmpeg may legitimately disagree there while levels 1 and
+2 still pass. Compare ffmpeg versions before suspecting the code.
 
 The code deliberately reproduces the reference's mistakes: the resampler is not
 ordinary bilinear interpolation, the "median" is not a median, the DC
