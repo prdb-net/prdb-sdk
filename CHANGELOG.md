@@ -15,6 +15,30 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+A regeneration that changes no type, field, method or status code. Both entries
+below are doc comments, in all four languages.
+
+### Documented
+
+- **What an integer enum's values mean, at all 42 use sites instead of 29.** An
+  enum reaches the SDK as a plain `int`, so the schema description — `Known
+  values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).` — is
+  the only place a caller learns what `4` stands for. Kiota picks that up
+  through a bare `$ref` but not through the `allOf: [$ref]` plus `nullable`
+  wrapper a nullable property gets, so 13 properties said `The fulfillmentByApp
+  property` and nothing else. `FulfillmentApp` gained `Ordeno = 4` in 0.5.0 and
+  not one of its five use sites mentioned it. `BirthdayType`, `VideoQuality`,
+  `FulfillmentApp` and `IdentifyMatchKind` are the enums affected.
+
+- **That a `pHash` is only comparable if it was computed the one right way**, on
+  the five endpoints that accept one and the two `filenames` routes underneath
+  them. A value from any other procedure is not wrong in a way the value itself
+  reveals: `POST /videos/identify` skips that rung silently, the two lookups
+  match nothing, and the submission paths store it where it can never be
+  matched. The procedure is specified in
+  [`docs/video-hashing.md`](docs/video-hashing.md), and `Prdb.Hashing`
+  implements it for .NET.
+
 ## [0.6.0] - 2026-08-09
 
 Two things the 0.5.0 regeneration surfaced but could not fix, because neither

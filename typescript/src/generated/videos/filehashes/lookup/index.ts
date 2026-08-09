@@ -11,7 +11,7 @@ import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type Requ
  */
 export interface LookupRequestBuilder extends BaseRequestBuilder<LookupRequestBuilder> {
     /**
-     * Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. Requires API key authentication.
+     * Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.
      * @param body The request body
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<LookupVideoFilehashesResponse>}
@@ -23,7 +23,7 @@ export interface LookupRequestBuilder extends BaseRequestBuilder<LookupRequestBu
      */
      post(body: LookupVideoFilehashesRequest, requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<LookupVideoFilehashesResponse | undefined>;
     /**
-     * Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. Requires API key authentication.
+     * Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.
      * @param body The request body
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}

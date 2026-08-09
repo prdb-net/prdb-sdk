@@ -37,7 +37,7 @@ func NewItemFilenamesRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee
     urlParams["request-raw-url"] = rawUrl
     return NewItemFilenamesRequestBuilderInternal(urlParams, requestAdapter)
 }
-// Post adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename already exists under the parent entry.
+// Post adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename already exists under the parent entry.
 // returns a DownloadedFromIndexerResponseable when successful
 // returns a ProblemDetails error when the service returns a 400 status code
 // returns a ProblemDetails error when the service returns a 401 status code
@@ -69,7 +69,7 @@ func (m *ItemFilenamesRequestBuilder) Post(ctx context.Context, body ibd6e645a77
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.DownloadedFromIndexerResponseable), nil
 }
-// ToPostRequestInformation adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename already exists under the parent entry.
+// ToPostRequestInformation adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename already exists under the parent entry.
 // returns a *RequestInformation when successful
 func (m *ItemFilenamesRequestBuilder) ToPostRequestInformation(ctx context.Context, body ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.AddDownloadedFromIndexerFilenameRequestable, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.POST, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

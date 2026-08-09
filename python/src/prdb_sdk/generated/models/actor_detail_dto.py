@@ -23,7 +23,7 @@ class ActorDetailDto(AdditionalDataHolder, Parsable):
     bios: Optional[list[ActorBioDto]] = None
     # The birthday property
     birthday: Optional[datetime.date] = None
-    # The birthdayType property
+    # Known values: ExactDate (1), MonthYear (2), Year (3).
     birthday_type: Optional[int] = None
     # The birthdayTypeLabel property
     birthday_type_label: Optional[str] = None

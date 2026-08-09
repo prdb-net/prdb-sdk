@@ -49,7 +49,7 @@ class FilenamesRequestBuilder(BaseRequestBuilder):
     
     async def post(self,body: AddDownloadedFromIndexerFilenameRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[DownloadedFromIndexerResponse]:
         """
-        Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename already exists under the parent entry.
+        Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename already exists under the parent entry.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[DownloadedFromIndexerResponse]
@@ -78,7 +78,7 @@ class FilenamesRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,body: AddDownloadedFromIndexerFilenameRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename already exists under the parent entry.
+        Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename already exists under the parent entry.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation

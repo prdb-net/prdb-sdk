@@ -56,7 +56,7 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     birthday?: DateOnly | null;
     /**
-     * The birthdayType property
+     * Known values: ExactDate (1), MonthYear (2), Year (3).
      */
     birthdayType?: number | null;
     /**
@@ -274,7 +274,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     birthday?: DateOnly | null;
     /**
-     * The birthdayType property
+     * Known values: ExactDate (1), MonthYear (2), Year (3).
      */
     birthdayType?: number | null;
     /**
@@ -3524,11 +3524,11 @@ export interface FulfillWantedVideoItem extends AdditionalDataHolder, Parsable {
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * The fulfilledInQuality property
+     * Known values: P720 (0), P1080 (1), P2160 (2).
      */
     fulfilledInQuality?: number | null;
     /**
-     * The fulfillmentByApp property
+     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
      */
     fulfillmentByApp?: number | null;
     /**
@@ -3818,7 +3818,7 @@ export interface IdentifyVideoResultDto extends AdditionalDataHolder, Parsable {
      */
     confidence?: number | null;
     /**
-     * The matchedBy property
+     * Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).
      */
     matchedBy?: number | null;
     /**
@@ -6494,11 +6494,11 @@ export interface UpdateWantedVideoRequest extends AdditionalDataHolder, Parsable
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * The fulfilledInQuality property
+     * Known values: P720 (0), P1080 (1), P2160 (2).
      */
     fulfilledInQuality?: number | null;
     /**
-     * The fulfillmentByApp property
+     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
      */
     fulfillmentByApp?: number | null;
     /**
@@ -6520,11 +6520,11 @@ export interface UpdateWantedVideoResponse extends AdditionalDataHolder, Parsabl
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * The fulfilledInQuality property
+     * Known values: P720 (0), P1080 (1), P2160 (2).
      */
     fulfilledInQuality?: number | null;
     /**
-     * The fulfillmentByApp property
+     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
      */
     fulfillmentByApp?: number | null;
     /**
@@ -6994,11 +6994,11 @@ export interface WantedVideoChangeWantedVideoDto extends AdditionalDataHolder, P
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * The fulfilledInQuality property
+     * Known values: P720 (0), P1080 (1), P2160 (2).
      */
     fulfilledInQuality?: number | null;
     /**
-     * The fulfillmentByApp property
+     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
      */
     fulfillmentByApp?: number | null;
     /**
@@ -7052,11 +7052,11 @@ export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
      */
     fulfilledAtUtc?: Date | null;
     /**
-     * The fulfilledInQuality property
+     * Known values: P720 (0), P1080 (1), P2160 (2).
      */
     fulfilledInQuality?: number | null;
     /**
-     * The fulfillmentByApp property
+     * Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
      */
     fulfillmentByApp?: number | null;
     /**

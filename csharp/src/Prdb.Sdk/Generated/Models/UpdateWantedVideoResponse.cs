@@ -18,9 +18,9 @@ namespace Prdb.Sdk.Generated.Models
         public DateTimeOffset? CreatedAtUtc { get; set; }
         /// <summary>The fulfilledAtUtc property</summary>
         public DateTimeOffset? FulfilledAtUtc { get; set; }
-        /// <summary>The fulfilledInQuality property</summary>
+        /// <summary>Known values: P720 (0), P1080 (1), P2160 (2).</summary>
         public int? FulfilledInQuality { get; set; }
-        /// <summary>The fulfillmentByApp property</summary>
+        /// <summary>Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).</summary>
         public int? FulfillmentByApp { get; set; }
         /// <summary>The fulfillmentExternalId property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER

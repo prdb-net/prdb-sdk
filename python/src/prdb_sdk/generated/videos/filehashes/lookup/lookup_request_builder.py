@@ -33,7 +33,7 @@ class LookupRequestBuilder(BaseRequestBuilder):
     
     async def post(self,body: LookupVideoFilehashesRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[LookupVideoFilehashesResponse]:
         """
-        Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. Requires API key authentication.
+        Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[LookupVideoFilehashesResponse]
@@ -60,7 +60,7 @@ class LookupRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,body: LookupVideoFilehashesRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. Requires API key authentication.
+        Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation

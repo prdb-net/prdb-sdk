@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "prdb Public API",
-    "description": "Read and write access to the prdb catalogue: videos, actors, sites, scene pre-database\nreleases, file hashes and the per-user lists built on top of them.\n\nAuthenticate every request except the health probe with an API key in the `X-Api-Key`\nheader. API access is part of the paid subscription tiers; requests are rate limited per\naccount and `GET /rate-limit` reports the remaining budget.\n\nEvery authenticated endpoint can answer `403` when the account has no subscription tier that\nincludes API access, `429` when the hourly or monthly budget is spent, and `503` while rate\nlimiting itself is unavailable. The API serves no content it cannot meter, so treat `503`\nas retryable rather than as a permission problem.\n\nEndpoints named `/{resource}/changes` are delta feeds: they return the current state of\nrows changed since a cursor, including soft-deleted rows as tombstones, rather than a full\nhistory of every mutation.",
+    "description": "Read and write access to the prdb catalogue: videos, actors, sites, scene pre-database\nreleases, file hashes and the per-user lists built on top of them.\n\nAuthenticate every request except the health probe with an API key in the `X-Api-Key`\nheader. API access is part of the paid subscription tiers; requests are rate limited per\naccount and `GET /rate-limit` reports the remaining budget.\n\nEvery authenticated endpoint can answer `403` when the account has no subscription tier that\nincludes API access, `429` when the hourly or monthly budget is spent, and `503` while rate\nlimiting itself is unavailable. The API serves no content it cannot meter, so treat `503`\nas retryable rather than as a permission problem.\n\nEndpoints named `/{resource}/changes` are delta feeds: they return the current state of\nrows changed since a cursor, including soft-deleted rows as tombstones, rather than a full\nhistory of every mutation.\n\n### Perceptual hashes\n\nEvery endpoint that accepts a `pHash` expects a 64-bit perceptual hash as 16 hexadecimal\ncharacters, in either case; values are stored and returned uppercase. There is one\nprocedure for computing it — the one Stash uses — and a value produced any other way is\nnot comparable with the rest of the column, which nothing in the value itself reveals.\n\nSample 25 frames across the middle 90% of the runtime, one per timestamp, with the seek\nplaced **before** the input:\n`ffmpeg -loglevel error -y -ss <t> -i <file> -frames:v 1 -vf scale=160:-2 -c:v bmp -f rawvideo -`.\nAssemble them left to right and top to bottom into a 5x5 montage, scale that to 64x64 with\n`github.com/nfnt/resize`'s bilinear filter — whose support scales with the downscale\nfactor, so it is not four-neighbour interpolation and no other library substitutes for it\n— convert to luminance with 0.299/0.587/0.114, apply an unscaled DCT-II, and keep the\ntop-left 8x8 block row-major. Set the bit for every coefficient strictly above\n`goimagehash`'s `MedianOfPixels` threshold, most significant bit first, keeping the DC\ncoefficient. `0000000000000000` is a valid hash, not an error code.\n\n`pHash` values are matched for **equality**. Hamming-distance matching is not implemented.\n\nThe summary above is not enough to implement from, and it is not meant to be. The\nnormative specification — the exact resampler arithmetic, the threshold's quickselect\n(which is not a median), the DCT divisor tables, and test vectors at three levels — is\npublished at <https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing.md>, with\nthe vectors as data at\n<https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing-vectors.json>.\n\nFor .NET there is an implementation of it, the `Prdb.Hashing` package, which also computes\nthe `osHash`.",
     "license": {
       "name": "Proprietary",
       "url": "https://prdb.net"
@@ -1679,7 +1679,7 @@
           "Videos"
         ],
         "summary": "Identify files against the catalogue",
-        "description": "Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: OS hash, then perceptual hash (compared for equality), then a stored file name, then the file name without its extension as a scene release title, and finally the site read out of the file name. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. The whole request counts as one request against the rate limit. Nothing sent to this endpoint is stored. Requires API key authentication.",
+        "description": "Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: OS hash, then perceptual hash (compared for equality), then a stored file name, then the file name without its extension as a scene release title, and finally the site read out of the file name. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure skips that rung silently rather than failing, so send none if in doubt. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. The whole request counts as one request against the rate limit. Nothing sent to this endpoint is stored. Requires API key authentication.",
         "operationId": "IdentifyVideos",
         "requestBody": {
           "content": {
@@ -2122,7 +2122,7 @@
           "VideoFilehashes"
         ],
         "summary": "Lookup video filehash entries",
-        "description": "Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. Requires API key authentication.",
+        "description": "Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.",
         "operationId": "LookupVideoFilehashes",
         "requestBody": {
           "content": {
@@ -2745,7 +2745,7 @@
           "VideoFilehashSubmissions"
         ],
         "summary": "Submit hash-to-video assignments",
-        "description": "Submits up to 200 assignments of a file hash to a video, on behalf of the authenticated user. Intended for assignments a person confirmed in a client's UI — exactly the cases automatic detection missed. Each entry needs a videoId and an osHash; the osHash is the only aggregation key, so an entry carrying only a pHash cannot be used. The filename is optional and may be withheld; the endpoint works without it. Every entry gets its own outcome and the status stays 200: an unknown videoId is reported as videoNotFound, and an assignment that contradicts an existing one is stored as conflicted rather than overwriting it. Submissions are recorded in their own table. They appear in no read endpoint and change no lookup result; whether they ever enter the aggregated hash set is decided by the scraper's aggregation job, not here. Clients must make this strictly opt-in and off by default — that is a client-side obligation the API cannot enforce. Requires API key authentication.",
+        "description": "Submits up to 200 assignments of a file hash to a video, on behalf of the authenticated user. Intended for assignments a person confirmed in a client's UI — exactly the cases automatic detection missed. Each entry needs a videoId and an osHash; the osHash is the only aggregation key, so an entry carrying only a pHash cannot be used. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. The filename is optional and may be withheld; the endpoint works without it. Every entry gets its own outcome and the status stays 200: an unknown videoId is reported as videoNotFound, and an assignment that contradicts an existing one is stored as conflicted rather than overwriting it. Submissions are recorded in their own table. They appear in no read endpoint and change no lookup result; whether they ever enter the aggregated hash set is decided by the scraper's aggregation job, not here. Clients must make this strictly opt-in and off by default — that is a client-side obligation the API cannot enforce. Requires API key authentication.",
         "operationId": "SubmitVideoFilehashes",
         "requestBody": {
           "content": {
@@ -3545,7 +3545,7 @@
           "IndexerFilehashes"
         ],
         "summary": "Lookup indexer filehash entries",
-        "description": "Returns a flat list of active indexer filehash entries matching any supplied IDs, combined indexer source and indexer ID pairs, hashes, filenames, or file sizes. Requires API key authentication.",
+        "description": "Returns a flat list of active indexer filehash entries matching any supplied IDs, combined indexer source and indexer ID pairs, hashes, filenames, or file sizes. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.",
         "operationId": "LookupIndexerFilehashes",
         "requestBody": {
           "content": {
@@ -4868,7 +4868,7 @@
           "DownloadedFromIndexers"
         ],
         "summary": "Update a downloaded-from-indexer filename",
-        "description": "Updates a single filename row for a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename would duplicate another filename under the same parent.",
+        "description": "Updates a single filename row for a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename would duplicate another filename under the same parent.",
         "operationId": "UpdateDownloadedFromIndexerFilename",
         "parameters": [
           {
@@ -5332,7 +5332,7 @@
           "DownloadedFromIndexers"
         ],
         "summary": "Add a downloaded-from-indexer filename",
-        "description": "Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. Returns 409 when the filename already exists under the parent entry.",
+        "description": "Adds a single filename row to a downloaded-from-indexer entry owned by the currently authenticated user. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 409 when the filename already exists under the parent entry.",
         "operationId": "AddDownloadedFromIndexerFilename",
         "parameters": [
           {
@@ -5464,7 +5464,7 @@
           "DownloadedFromIndexers"
         ],
         "summary": "Add a downloaded-from-indexer entry",
-        "description": "Creates a downloaded-from-indexer entry for the authenticated user and returns 201, or returns the complete existing owned entry without mutating it and returns 200. Uniqueness is defined by userId, videoId (including null), indexerSource, and the trimmed indexerId; comparison uses the database collation. downloadIdentifier is not part of the key. Returns 404 when the referenced wanted video does not exist and 409 only for a different non-recoverable conflict.",
+        "description": "Creates a downloaded-from-indexer entry for the authenticated user and returns 201, or returns the complete existing owned entry without mutating it and returns 200. Uniqueness is defined by userId, videoId (including null), indexerSource, and the trimmed indexerId; comparison uses the database collation. downloadIdentifier is not part of the key. A pHash on a filename must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. Returns 404 when the referenced wanted video does not exist and 409 only for a different non-recoverable conflict.",
         "operationId": "AddDownloadedFromIndexer",
         "requestBody": {
           "content": {
@@ -6212,6 +6212,7 @@
                 "$ref": "#/components/schemas/BirthdayType"
               }
             ],
+            "description": "Known values: ExactDate (1), MonthYear (2), Year (3).",
             "nullable": true
           },
           "birthdayTypeLabel": {
@@ -6497,6 +6498,7 @@
                 "$ref": "#/components/schemas/BirthdayType"
               }
             ],
+            "description": "Known values: ExactDate (1), MonthYear (2), Year (3).",
             "nullable": true
           },
           "birthdayTypeLabel": {
@@ -7276,6 +7278,7 @@
                 "$ref": "#/components/schemas/VideoQuality"
               }
             ],
+            "description": "Known values: P720 (0), P1080 (1), P2160 (2).",
             "nullable": true
           },
           "fulfillmentExternalId": {
@@ -7289,6 +7292,7 @@
                 "$ref": "#/components/schemas/FulfillmentApp"
               }
             ],
+            "description": "Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).",
             "nullable": true
           }
         }
@@ -7819,6 +7823,7 @@
                 "$ref": "#/components/schemas/IdentifyMatchKind"
               }
             ],
+            "description": "Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).",
             "nullable": true
           },
           "videoId": {
@@ -9327,6 +9332,7 @@
                 "$ref": "#/components/schemas/VideoQuality"
               }
             ],
+            "description": "Known values: P720 (0), P1080 (1), P2160 (2).",
             "nullable": true
           },
           "fulfillmentExternalId": {
@@ -9339,6 +9345,7 @@
                 "$ref": "#/components/schemas/FulfillmentApp"
               }
             ],
+            "description": "Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).",
             "nullable": true
           }
         }
@@ -9370,6 +9377,7 @@
                 "$ref": "#/components/schemas/VideoQuality"
               }
             ],
+            "description": "Known values: P720 (0), P1080 (1), P2160 (2).",
             "nullable": true
           },
           "fulfillmentExternalId": {
@@ -9382,6 +9390,7 @@
                 "$ref": "#/components/schemas/FulfillmentApp"
               }
             ],
+            "description": "Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).",
             "nullable": true
           },
           "createdAtUtc": {
@@ -10075,6 +10084,7 @@
                 "$ref": "#/components/schemas/VideoQuality"
               }
             ],
+            "description": "Known values: P720 (0), P1080 (1), P2160 (2).",
             "nullable": true
           },
           "fulfillmentExternalId": {
@@ -10087,6 +10097,7 @@
                 "$ref": "#/components/schemas/FulfillmentApp"
               }
             ],
+            "description": "Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).",
             "nullable": true
           },
           "createdAtUtc": {
@@ -10148,6 +10159,7 @@
                 "$ref": "#/components/schemas/VideoQuality"
               }
             ],
+            "description": "Known values: P720 (0), P1080 (1), P2160 (2).",
             "nullable": true
           },
           "fulfillmentExternalId": {
@@ -10160,6 +10172,7 @@
                 "$ref": "#/components/schemas/FulfillmentApp"
               }
             ],
+            "description": "Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).",
             "nullable": true
           },
           "createdAtUtc": {

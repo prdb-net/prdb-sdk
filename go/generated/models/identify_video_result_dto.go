@@ -15,7 +15,7 @@ type IdentifyVideoResultDto struct {
     candidates []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
     confidence *int32
-    // The matchedBy property
+    // Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).
     matchedBy *int32
     // The ref property
     ref *string
@@ -135,7 +135,7 @@ func (m *IdentifyVideoResultDto) GetFieldDeserializers()(map[string]func(i878a80
     }
     return res
 }
-// GetMatchedBy gets the matchedBy property value. The matchedBy property
+// GetMatchedBy gets the matchedBy property value. Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).
 // returns a *int32 when successful
 func (m *IdentifyVideoResultDto) GetMatchedBy()(*int32) {
     return m.matchedBy
@@ -224,7 +224,7 @@ func (m *IdentifyVideoResultDto) SetCandidates(value []i561e97a8befe7661a44c8f54
 func (m *IdentifyVideoResultDto) SetConfidence(value *int32)() {
     m.confidence = value
 }
-// SetMatchedBy sets the matchedBy property value. The matchedBy property
+// SetMatchedBy sets the matchedBy property value. Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).
 func (m *IdentifyVideoResultDto) SetMatchedBy(value *int32)() {
     m.matchedBy = value
 }
