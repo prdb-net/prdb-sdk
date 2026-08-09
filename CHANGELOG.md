@@ -15,8 +15,11 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-08-09
+
 A regeneration that changes no type, field, method or status code. Both entries
-below are doc comments, in all four languages.
+below are doc comments, in all four languages, so upgrading changes what your
+editor tells you and nothing else.
 
 ### Documented
 
