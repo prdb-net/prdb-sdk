@@ -13,6 +13,8 @@ matching, and the comparison is silent about it — files simply go unidentified
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-08-09
+
 ### Added
 
 - Initial release. `OsHash` and `PerceptualHash` compute the values the prdb
