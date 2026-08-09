@@ -1,6 +1,6 @@
 {
   "specification": "docs/video-hashing.md",
-  "description": "Test vectors for the prdb pHash. The generators are defined in the specification; pixel buffers are 8-bit RGBA, row-major, alpha 255. \u0027param\u0027 is the generator\u0027s second argument: the seed for noise and gradient, the square size in pixels for checker, and the pixel value for flat. SHA-256 digests identify the input, so a mismatch can be attributed to the input rather than to the hash.",
+  "description": "Test vectors for the prdb pHash. The generators are defined in the specification; pixel buffers are 8-bit RGBA, row-major, alpha 255. 'param' is the generator's second argument: the seed for noise and gradient, the square size in pixels for checker, and the pixel value for flat. SHA-256 digests identify the input, so a mismatch can be attributed to the input rather than to the hash. For level 3, contentSha256 is over the decoded stream rather than the file, because an encoder need not write byte-identical output twice for identical pixels.",
   "level1": [
     {
       "image": "flat",
@@ -225,14 +225,14 @@
     {
       "file": "testsrc2-640x360-10fps-20s.mkv",
       "lavfiSource": "testsrc2=size=640x360:rate=10:duration=20",
-      "contentSha256": "e07020cac189796421e271671c25e5d1285ba0b8376c9d8612658f9f3ca74f9e",
+      "contentSha256": "df74c6ed911b60028589102d55b8a7913840c99c59bf8d7b31c50d146ba9cb71",
       "ffmpegVersion": "ffmpeg version 8.0.1-3ubuntu2",
       "pHash": "827e2bfde750412a"
     },
     {
       "file": "smptebars-640x360-25fps-12s.mkv",
       "lavfiSource": "smptebars=size=640x360:rate=25:duration=12",
-      "contentSha256": "c4586b5a22735d888c9957a886e95c83f9a7c062ca4f18b8b12a4615d1f250e8",
+      "contentSha256": "7f50e842a5641ab6f793798633b87d7918f38e6f9022f11f0f59e4aa0b64019b",
       "ffmpegVersion": "ffmpeg version 8.0.1-3ubuntu2",
       "pHash": "dfd580d580d591d5"
     }

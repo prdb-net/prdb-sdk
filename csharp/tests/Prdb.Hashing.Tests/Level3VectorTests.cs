@@ -33,10 +33,12 @@ public sealed class Level3VectorTests : IDisposable
             var path = Path.Combine(_directory, file);
             await RenderAsync(path, source);
 
-            // The +bitexact flags in the documented command are what make this digest
-            // reproducible at all: without them Matroska writes a random segment UID, so
-            // the same command produces a different file every run.
-            Assert.Equal(contentSha256, TestVectors.Sha256Hex(await File.ReadAllBytesAsync(path)));
+            // The digest is over the decoded stream, not the file: FFV1 does not write
+            // byte-identical output twice even for identical pixels, so the file's own
+            // hash is not reproducible while its content is. Checking it first separates
+            // "the clip differs" from "frame selection differs" — without it, a pHash
+            // mismatch cannot be attributed to either.
+            Assert.Equal(contentSha256, await DecodedSha256Async(path));
 
             var result = await new VideoPerceptualHasher().ComputeAsync(path);
 
@@ -54,7 +56,6 @@ public sealed class Level3VectorTests : IDisposable
                 "-y", "-loglevel", "error",
                 "-f", "lavfi", "-i", source,
                 "-c:v", "ffv1", "-level", "3", "-pix_fmt", "yuv420p",
-                "-fflags", "+bitexact", "-flags:v", "+bitexact",
                 path,
             ]),
             TimeSpan.FromMinutes(2),
@@ -62,5 +63,24 @@ public sealed class Level3VectorTests : IDisposable
 
         if (result.ExitCode != 0)
             throw new InvalidOperationException($"ffmpeg failed to render the fixture: {result.StandardError}");
+    }
+
+    /// <summary>
+    /// SHA-256 over the decoded stream, matching the specification's
+    /// <c>ffmpeg -i &lt;file&gt; -f rawvideo -pix_fmt rgb24 - | sha256sum</c>.
+    /// </summary>
+    private static async Task<string> DecodedSha256Async(string path)
+    {
+        var result = await new ProcessRunner().RunAsync(
+            new ProcessRequest("ffmpeg",
+                ["-loglevel", "error", "-i", path, "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
+                CaptureBinaryOutput: true),
+            TimeSpan.FromMinutes(2),
+            CancellationToken.None);
+
+        if (result.ExitCode != 0 || result.BinaryOutput is null)
+            throw new InvalidOperationException($"ffmpeg failed to decode the fixture: {result.StandardError}");
+
+        return TestVectors.Sha256Hex(result.BinaryOutput);
     }
 }

@@ -615,8 +615,7 @@ fixture:
 
 ```
 ffmpeg -y -loglevel error -f lavfi -i "<source>" \
-       -c:v ffv1 -level 3 -pix_fmt yuv420p \
-       -fflags +bitexact -flags:v +bitexact <file>
+       -c:v ffv1 -level 3 -pix_fmt yuv420p <file>
 ```
 
 | Source | Expected |
@@ -624,16 +623,30 @@ ffmpeg -y -loglevel error -f lavfi -i "<source>" \
 | `testsrc2=size=640x360:rate=10:duration=20` | `827e2bfde750412a` |
 | `smptebars=size=640x360:rate=25:duration=12` | `dfd580d580d591d5` |
 
-Produced with **ffmpeg 8.0.1-3ubuntu2**. The version belongs to the vector: the
-frame a seek lands on is a property of the build as much as of the arguments, so
-a different ffmpeg may legitimately produce a different hash here while levels 1
-and 2 still pass. That is the boundary of what a specification can pin.
+Produced with **ffmpeg 8.0.1-3ubuntu2** (Ubuntu, gcc 15). The version belongs to
+the vector: the frame a seek lands on is a property of the build as much as of
+the arguments, so a different ffmpeg may legitimately produce a different hash
+here while levels 1 and 2 still pass. That is the boundary of what a
+specification can pin.
 
-**The `+bitexact` flags are not optional for reproducing `contentSha256`.**
-Without them Matroska writes a random segment UID and muxer metadata, so the
-same command produces a different file on every run and the digest can never
-match. They change no decoded pixel, and the `pHash` values above are the same
-with or without them.
+**`contentSha256` in the vector file is over the *decoded* stream, not over the
+file:**
+
+```
+ffmpeg -loglevel error -i <file> -f rawvideo -pix_fmt rgb24 - | sha256sum
+```
+
+The FFV1 encoder does not write byte-identical output twice even for identical
+pixels — the container carries a random segment UID and muxer metadata — so the
+file's own digest is not reproducible while its content is. This matters for
+reading a failure: if `contentSha256` matches, a `pHash` mismatch is a real
+disagreement about frame selection; if it does not, the clips differ and nothing
+can be concluded from the hash at all.
+
+Check `smptebars` first. It is a still pattern, so all 25 frames are identical
+and seek behaviour cannot affect the result: a failure there is in decoding or
+scaling, not in frame selection. `testsrc2` moves, so its sample points genuinely
+differ, and it is the one that exercises selection.
 
 ## Reference implementation
 
