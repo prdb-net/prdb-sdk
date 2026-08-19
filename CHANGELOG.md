@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-08-19
+
 ### Added
 
 - **`GET /videos/images/changes`** — a delta feed for the images a site supplies
