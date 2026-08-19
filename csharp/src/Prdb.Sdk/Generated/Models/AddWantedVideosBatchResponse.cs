@@ -7,18 +7,19 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Summary of a batch add-wanted-videos operation.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class AddWantedVideosBatchResponse : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
-        /// <summary>The added property</summary>
+        /// <summary>Number of entries newly added to the wanted list.</summary>
         public int? Added { get; set; }
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The alreadyExisted property</summary>
+        /// <summary>Number of entries that were already on the wanted list.</summary>
         public int? AlreadyExisted { get; set; }
-        /// <summary>The notFound property</summary>
+        /// <summary>Number of video IDs that were not found in the database.</summary>
         public int? NotFound { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.AddWantedVideosBatchResponse"/> and sets the default values.

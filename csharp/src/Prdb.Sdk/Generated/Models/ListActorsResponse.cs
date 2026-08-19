@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Paged list of actors.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class ListActorsResponse : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The items property</summary>
+        /// <summary>Actors on the current page.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<global::Prdb.Sdk.Generated.Models.ActorSummaryDto>? Items { get; set; }
@@ -22,11 +23,11 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.ActorSummaryDto> Items { get; set; }
 #endif
-        /// <summary>The page property</summary>
+        /// <summary>Current page number (1-based).</summary>
         public int? Page { get; set; }
-        /// <summary>The pageSize property</summary>
+        /// <summary>Number of items per page.</summary>
         public int? PageSize { get; set; }
-        /// <summary>The sortBy property</summary>
+        /// <summary>Field the result is sorted by: &quot;name&quot; or &quot;createdAtUtc&quot;.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? SortBy { get; set; }
@@ -34,7 +35,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string SortBy { get; set; }
 #endif
-        /// <summary>The sortDirection property</summary>
+        /// <summary>Sort direction applied: &quot;asc&quot; or &quot;desc&quot;.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? SortDirection { get; set; }
@@ -42,9 +43,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string SortDirection { get; set; }
 #endif
-        /// <summary>The totalCount property</summary>
+        /// <summary>Total number of actors matching the current query filters.</summary>
         public int? TotalCount { get; set; }
-        /// <summary>The totalPages property</summary>
+        /// <summary>Total number of pages for the current query and page size.</summary>
         public int? TotalPages { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.ListActorsResponse"/> and sets the default values.

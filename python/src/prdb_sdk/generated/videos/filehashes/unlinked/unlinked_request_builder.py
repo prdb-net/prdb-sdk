@@ -100,12 +100,16 @@ class UnlinkedRequestBuilder(BaseRequestBuilder):
                 return "SortDirection"
             return original_name
         
+        # Page number, starting at 1.
         page: Optional[int] = None
 
+        # Page size. Values above 1000 are clamped.
         page_size: Optional[int] = None
 
+        # Sort field. Allowed values: createdAtUtc, updatedAtUtc, submissionCount, filesize.
         sort_by: Optional[GetSortByQueryParameterType] = None
 
+        # Sort direction. Allowed values: asc, desc.
         sort_direction: Optional[GetSortDirectionQueryParameterType] = None
 
     

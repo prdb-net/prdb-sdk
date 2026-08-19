@@ -13,17 +13,17 @@ class LookupIndexerFilehashesRequest(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The filenames property
+    # Optional exact filenames to match.
     filenames: Optional[list[str]] = None
-    # The filesizes property
+    # Optional exact file sizes to match.
     filesizes: Optional[list[int]] = None
-    # The ids property
+    # Optional filehash row IDs to match.
     ids: Optional[list[UUID]] = None
-    # The indexerKeys property
+    # Optional combined indexer source and indexer ID pairs to match.
     indexer_keys: Optional[list[IndexerFilehashLookupKeyDto]] = None
-    # The osHashes property
+    # Optional OS hash values to match.
     os_hashes: Optional[list[str]] = None
-    # The pHashes property
+    # Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under "Perceptualhashes" in the API description matches nothing rather than failing.
     p_hashes: Optional[list[str]] = None
     
     @staticmethod

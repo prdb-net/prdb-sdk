@@ -121,10 +121,15 @@ namespace Prdb.Sdk.Generated.Actors
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class ActorsRequestBuilderGetQueryParameters 
         {
+            /// <summary>Return only actors created strictly after this timestamp (exclusive).</summary>
             public DateTimeOffset? CreatedAfter { get; set; }
+            /// <summary>Return only actors created strictly before this timestamp (exclusive).</summary>
             public DateTimeOffset? CreatedBefore { get; set; }
+            /// <summary>1-based page number. Defaults to 1.</summary>
             public int? Page { get; set; }
+            /// <summary>Number of items per page. Defaults to 100, max 500.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Optional search term matched against actor name and aliases.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? Search { get; set; }
@@ -132,6 +137,7 @@ namespace Prdb.Sdk.Generated.Actors
 #else
             public string Search { get; set; }
 #endif
+            /// <summary>Field to sort by. Supported values: &quot;name&quot; (default), &quot;createdAtUtc&quot;.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? SortBy { get; set; }
@@ -139,6 +145,7 @@ namespace Prdb.Sdk.Generated.Actors
 #else
             public string SortBy { get; set; }
 #endif
+            /// <summary>Sort direction: &quot;asc&quot; (default) or &quot;desc&quot;.</summary>
             public global::Prdb.Sdk.Generated.Actors.GetSortDirectionQueryParameterType? SortDirection { get; set; }
         }
     }

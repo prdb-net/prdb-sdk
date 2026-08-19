@@ -110,11 +110,17 @@ namespace Prdb.Sdk.Generated.Predb
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class PredbRequestBuilderGetQueryParameters 
         {
+            /// <summary>Optional category filter. Supported values: `movies`, `tvshows`, `adult`.</summary>
             public global::Prdb.Sdk.Generated.Predb.GetCategoryQueryParameterType? Category { get; set; }
+            /// <summary>1-based page number. Defaults to 1.</summary>
             public int? Page { get; set; }
+            /// <summary>Number of items per page. Defaults to 20, max 100.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Optional. Return only entries released on or after this date.</summary>
             public Date? ReleaseDateFrom { get; set; }
+            /// <summary>Optional. Return only entries released on or before this date.</summary>
             public Date? ReleaseDateTo { get; set; }
+            /// <summary>Optional search term matched against title and release group.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? Search { get; set; }
@@ -122,7 +128,9 @@ namespace Prdb.Sdk.Generated.Predb
 #else
             public string Search { get; set; }
 #endif
+            /// <summary>Field to sort by. Supported values: `releaseDate` (default), `title`.</summary>
             public global::Prdb.Sdk.Generated.Predb.GetSortByQueryParameterType? SortBy { get; set; }
+            /// <summary>Sort direction: `desc` (default) or `asc`.</summary>
             public global::Prdb.Sdk.Generated.Predb.GetSortDirectionQueryParameterType? SortDirection { get; set; }
         }
     }

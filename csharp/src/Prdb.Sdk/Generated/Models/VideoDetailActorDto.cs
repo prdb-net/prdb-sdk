@@ -21,7 +21,7 @@ namespace Prdb.Sdk.Generated.Models
         public int? Gender { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
-        /// <summary>The images property</summary>
+        /// <summary>Images for this actor, ordered by ActorImageType VideoDetailActorImageDto.ImageType ascending(Thumbnail, Poster, Face), then oldest first, with the image ID as the tie-breaker. The orderis stable across requests.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<global::Prdb.Sdk.Generated.Models.VideoDetailActorImageDto>? Images { get; set; }

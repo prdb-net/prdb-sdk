@@ -167,22 +167,31 @@ class VideosRequestBuilder(BaseRequestBuilder):
                 return "SortDirection"
             return original_name
         
+        # Optional filter to return only videos featuring the specified actor.
         actor_id: Optional[UUID] = None
 
+        # Return only videos created strictly after this timestamp (exclusive).
         created_after: Optional[datetime.datetime] = None
 
+        # Return only videos created strictly before this timestamp (exclusive).
         created_before: Optional[datetime.datetime] = None
 
+        # 1-based page number. Defaults to 1.
         page: Optional[int] = None
 
+        # Number of items per page. Defaults to 20, max 100.
         page_size: Optional[int] = None
 
+        # Optional search term matched against video title and site title.
         search: Optional[str] = None
 
+        # Optional filter to return only videos belonging to the specified site.
         site_id: Optional[UUID] = None
 
+        # Field to sort by. Supported values: `title` (default), `releaseDate`, `createdAtUtc`.
         sort_by: Optional[GetSortByQueryParameterType] = None
 
+        # Sort direction: `asc` (default) or `desc`.
         sort_direction: Optional[GetSortDirectionQueryParameterType] = None
 
     

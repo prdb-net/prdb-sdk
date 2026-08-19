@@ -14,7 +14,7 @@ namespace Prdb.Sdk.Generated.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The filenames property</summary>
+        /// <summary>Optional exact filenames to match.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<string>? Filenames { get; set; }
@@ -22,7 +22,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<string> Filenames { get; set; }
 #endif
-        /// <summary>The filesizes property</summary>
+        /// <summary>Optional exact file sizes to match.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<long?>? Filesizes { get; set; }
@@ -30,7 +30,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<long?> Filesizes { get; set; }
 #endif
-        /// <summary>The ids property</summary>
+        /// <summary>Optional filehash row IDs to match.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<Guid?>? Ids { get; set; }
@@ -38,7 +38,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<Guid?> Ids { get; set; }
 #endif
-        /// <summary>The osHashes property</summary>
+        /// <summary>Optional OS hash values to match.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<string>? OsHashes { get; set; }
@@ -46,7 +46,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<string> OsHashes { get; set; }
 #endif
-        /// <summary>The pHashes property</summary>
+        /// <summary>Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under &quot;Perceptualhashes&quot; in the API description matches nothing rather than failing.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<string>? PHashes { get; set; }
@@ -54,7 +54,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<string> PHashes { get; set; }
 #endif
-        /// <summary>The videoIds property</summary>
+        /// <summary>Optional associated video IDs to match.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<Guid?>? VideoIds { get; set; }

@@ -51,12 +51,33 @@ export interface ActorsRequestBuilder extends BaseRequestBuilder<ActorsRequestBu
  * Returns a paged list of actors. Supports free-text search by name or alias, and sorting by name or creation date. Default page size is 100, maximum is 500. Requires API key authentication.
  */
 export interface ActorsRequestBuilderGetQueryParameters {
+    /**
+     * Return only actors created strictly after this timestamp (exclusive).
+     */
     createdAfter?: Date;
+    /**
+     * Return only actors created strictly before this timestamp (exclusive).
+     */
     createdBefore?: Date;
+    /**
+     * 1-based page number. Defaults to 1.
+     */
     page?: number;
+    /**
+     * Number of items per page. Defaults to 100, max 500.
+     */
     pageSize?: number;
+    /**
+     * Optional search term matched against actor name and aliases.
+     */
     search?: string;
+    /**
+     * Field to sort by. Supported values: "name" (default), "createdAtUtc".
+     */
     sortBy?: string;
+    /**
+     * Sort direction: "asc" (default) or "desc".
+     */
     sortDirection?: GetSortDirectionQueryParameterType;
 }
 export type GetSortDirectionQueryParameterType = (typeof GetSortDirectionQueryParameterTypeObject)[keyof typeof GetSortDirectionQueryParameterTypeObject];

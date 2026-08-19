@@ -7,20 +7,21 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// A single fulfilment update.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class FulfillWantedVideoItem : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The fulfilledAtUtc property</summary>
+        /// <summary>When the video was fulfilled. Ignored when isFulfilled is false; defaults to the server time when omitted.</summary>
         public DateTimeOffset? FulfilledAtUtc { get; set; }
         /// <summary>Known values: P720 (0), P1080 (1), P2160 (2).</summary>
         public int? FulfilledInQuality { get; set; }
         /// <summary>Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).</summary>
         public int? FulfillmentByApp { get; set; }
-        /// <summary>The fulfillmentExternalId property</summary>
+        /// <summary>External identifier from the fulfilling application, if applicable.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? FulfillmentExternalId { get; set; }
@@ -28,9 +29,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string FulfillmentExternalId { get; set; }
 #endif
-        /// <summary>The isFulfilled property</summary>
+        /// <summary>Whether the wanted video has been fulfilled.</summary>
         public bool? IsFulfilled { get; set; }
-        /// <summary>The videoId property</summary>
+        /// <summary>ID of the video whose wanted entry is updated. Must be unique within the request.</summary>
         public Guid? VideoId { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.FulfillWantedVideoItem"/> and sets the default values.

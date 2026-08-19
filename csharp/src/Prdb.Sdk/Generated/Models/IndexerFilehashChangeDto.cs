@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// A single changed indexer filehash row in the incremental feed.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class IndexerFilehashChangeDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The eventType property</summary>
+        /// <summary>One of `created`, `updated`, or `deleted`.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? EventType { get; set; }
@@ -22,7 +23,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string EventType { get; set; }
 #endif
-        /// <summary>The filehash property</summary>
+        /// <summary>Current persisted state of a changed indexer filehash row, including soft-delete fields.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public global::Prdb.Sdk.Generated.Models.IndexerFilehashChangeFilehashDto? Filehash { get; set; }

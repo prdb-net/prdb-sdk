@@ -7,12 +7,13 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// ActorChangeDto a single current-state actor change.
 type ActorChangeDto struct {
-    // The actor property
+    // Full current actor payload, including tombstone metadata.
     actor ActorChangeActorDtoable
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The eventType property
+    // One of `created`, `updated`, or `deleted`.
     eventType *string
 }
 // NewActorChangeDto instantiates a new ActorChangeDto and sets the default values.
@@ -27,7 +28,7 @@ func NewActorChangeDto()(*ActorChangeDto) {
 func CreateActorChangeDtoFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
     return NewActorChangeDto(), nil
 }
-// GetActor gets the actor property value. The actor property
+// GetActor gets the actor property value. Full current actor payload, including tombstone metadata.
 // returns a ActorChangeActorDtoable when successful
 func (m *ActorChangeDto) GetActor()(ActorChangeActorDtoable) {
     return m.actor
@@ -37,7 +38,7 @@ func (m *ActorChangeDto) GetActor()(ActorChangeActorDtoable) {
 func (m *ActorChangeDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetEventType gets the eventType property value. The eventType property
+// GetEventType gets the eventType property value. One of `created`, `updated`, or `deleted`.
 // returns a *string when successful
 func (m *ActorChangeDto) GetEventType()(*string) {
     return m.eventType
@@ -90,7 +91,7 @@ func (m *ActorChangeDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
     }
     return nil
 }
-// SetActor sets the actor property value. The actor property
+// SetActor sets the actor property value. Full current actor payload, including tombstone metadata.
 func (m *ActorChangeDto) SetActor(value ActorChangeActorDtoable)() {
     m.actor = value
 }
@@ -98,7 +99,7 @@ func (m *ActorChangeDto) SetActor(value ActorChangeActorDtoable)() {
 func (m *ActorChangeDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetEventType sets the eventType property value. The eventType property
+// SetEventType sets the eventType property value. One of `created`, `updated`, or `deleted`.
 func (m *ActorChangeDto) SetEventType(value *string)() {
     m.eventType = value
 }

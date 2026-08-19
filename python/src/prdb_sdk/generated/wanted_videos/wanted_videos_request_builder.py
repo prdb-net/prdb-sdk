@@ -155,22 +155,31 @@ class WantedVideosRequestBuilder(BaseRequestBuilder):
                 return "SortDirection"
             return original_name
         
+        # Optional filter to return only videos featuring the specified actor.
         actor_id: Optional[UUID] = None
 
+        # Optional filter to return only wanted videos added within the last N days.
         added_in_last_days: Optional[int] = None
 
+        # Filter by fulfilment status. Omit to return all.
         is_fulfilled: Optional[bool] = None
 
+        # 1-based page number. Defaults to 1.
         page: Optional[int] = None
 
+        # Number of items per page. Defaults to 100, max 500.
         page_size: Optional[int] = None
 
+        # Optional search term matched against video title or site title.
         search: Optional[str] = None
 
+        # Optional filter to return only videos belonging to the specified site.
         site_id: Optional[UUID] = None
 
+        # Field to sort by. Supported values: `createdAtUtc`, `isFulfilled`. Defaults to `createdAtUtc`.
         sort_by: Optional[str] = None
 
+        # Sort direction: `asc` or `desc`. Defaults to `desc`.
         sort_direction: Optional[GetSortDirectionQueryParameterType] = None
 
     

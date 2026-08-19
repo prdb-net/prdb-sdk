@@ -7,12 +7,15 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 
 @dataclass
 class GetHealthResponse(AdditionalDataHolder, Parsable):
+    """
+    Health check response.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The status property
+    # Always "ok" when the API is reachable.
     status: Optional[str] = None
-    # The timestamp property
+    # UTC timestamp at the time of the request.
     timestamp: Optional[datetime.datetime] = None
     
     @staticmethod

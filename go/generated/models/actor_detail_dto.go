@@ -9,6 +9,7 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// ActorDetailDto full details for a single actor.
 type ActorDetailDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
@@ -16,29 +17,29 @@ type ActorDetailDto struct {
     aliases []ActorAliasDtoable
     // The bios property
     bios []ActorBioDtoable
-    // The birthday property
+    // Date of birth, if known.
     birthday *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
     // Known values: ExactDate (1), MonthYear (2), Year (3).
     birthdayType *int32
-    // The birthdayTypeLabel property
+    // Human-readable birthday type label (e.g. "Exact", "Approximate").
     birthdayTypeLabel *string
     // The birthplace property
     birthplace *string
     // The braSize property
     braSize *int32
-    // The braSizeLabel property
+    // Human-readable bra size label (e.g. "34B").
     braSizeLabel *string
     // Known values: Unknown (0), Natural (1), Augmented (2), NotApplicable (3).
     breastType *int32
     // The breastTypeLabel property
     breastTypeLabel *string
-    // The careerEnd property
+    // Year the actor's career ended, if applicable.
     careerEnd *int32
-    // The careerStart property
+    // Year the actor's career began.
     careerStart *int32
     // The createdAtUtc property
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The deathday property
+    // Date of death, if applicable.
     deathday *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
     // Known values: Unknown (0), Caucasian (1), Black (2), Asian (3), Indian (4), Latin (5), MiddleEastern (6), Mixed (7), Other (8).
     ethnicity *int32
@@ -50,15 +51,15 @@ type ActorDetailDto struct {
     eyecolorLabel *string
     // Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).
     gender *int32
-    // The genderLabel property
+    // Human-readable gender label.
     genderLabel *string
     // Known values: Unknown (0), Blonde (1), Brown (2), Black (3), Red (4), Auburn (5), Grey (6), White (7), Bald (8), Various (9), Other (10).
     haircolor *int32
     // The haircolorLabel property
     haircolorLabel *string
-    // The height property
+    // Height in centimetres.
     height *int32
-    // The hipSize property
+    // Hip measurement in centimetres.
     hipSize *int32
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
@@ -66,7 +67,7 @@ type ActorDetailDto struct {
     images []ActorImageDetailDtoable
     // The links property
     links []ActorLinkDtoable
-    // The name property
+    // Stage name of the actor.
     name *string
     // Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
     nationality *int32
@@ -78,7 +79,7 @@ type ActorDetailDto struct {
     tattoos *string
     // The updatedAtUtc property
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The waistSize property
+    // Waist measurement in centimetres.
     waistSize *int32
 }
 // NewActorDetailDto instantiates a new ActorDetailDto and sets the default values.
@@ -108,7 +109,7 @@ func (m *ActorDetailDto) GetAliases()([]ActorAliasDtoable) {
 func (m *ActorDetailDto) GetBios()([]ActorBioDtoable) {
     return m.bios
 }
-// GetBirthday gets the birthday property value. The birthday property
+// GetBirthday gets the birthday property value. Date of birth, if known.
 // returns a *DateOnly when successful
 func (m *ActorDetailDto) GetBirthday()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly) {
     return m.birthday
@@ -118,7 +119,7 @@ func (m *ActorDetailDto) GetBirthday()(*i878a80d2330e89d26896388a3f487eef27b0a0e
 func (m *ActorDetailDto) GetBirthdayType()(*int32) {
     return m.birthdayType
 }
-// GetBirthdayTypeLabel gets the birthdayTypeLabel property value. The birthdayTypeLabel property
+// GetBirthdayTypeLabel gets the birthdayTypeLabel property value. Human-readable birthday type label (e.g. "Exact", "Approximate").
 // returns a *string when successful
 func (m *ActorDetailDto) GetBirthdayTypeLabel()(*string) {
     return m.birthdayTypeLabel
@@ -133,7 +134,7 @@ func (m *ActorDetailDto) GetBirthplace()(*string) {
 func (m *ActorDetailDto) GetBraSize()(*int32) {
     return m.braSize
 }
-// GetBraSizeLabel gets the braSizeLabel property value. The braSizeLabel property
+// GetBraSizeLabel gets the braSizeLabel property value. Human-readable bra size label (e.g. "34B").
 // returns a *string when successful
 func (m *ActorDetailDto) GetBraSizeLabel()(*string) {
     return m.braSizeLabel
@@ -148,12 +149,12 @@ func (m *ActorDetailDto) GetBreastType()(*int32) {
 func (m *ActorDetailDto) GetBreastTypeLabel()(*string) {
     return m.breastTypeLabel
 }
-// GetCareerEnd gets the careerEnd property value. The careerEnd property
+// GetCareerEnd gets the careerEnd property value. Year the actor's career ended, if applicable.
 // returns a *int32 when successful
 func (m *ActorDetailDto) GetCareerEnd()(*int32) {
     return m.careerEnd
 }
-// GetCareerStart gets the careerStart property value. The careerStart property
+// GetCareerStart gets the careerStart property value. Year the actor's career began.
 // returns a *int32 when successful
 func (m *ActorDetailDto) GetCareerStart()(*int32) {
     return m.careerStart
@@ -163,7 +164,7 @@ func (m *ActorDetailDto) GetCareerStart()(*int32) {
 func (m *ActorDetailDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
 }
-// GetDeathday gets the deathday property value. The deathday property
+// GetDeathday gets the deathday property value. Date of death, if applicable.
 // returns a *DateOnly when successful
 func (m *ActorDetailDto) GetDeathday()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly) {
     return m.deathday
@@ -563,7 +564,7 @@ func (m *ActorDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
 func (m *ActorDetailDto) GetGender()(*int32) {
     return m.gender
 }
-// GetGenderLabel gets the genderLabel property value. The genderLabel property
+// GetGenderLabel gets the genderLabel property value. Human-readable gender label.
 // returns a *string when successful
 func (m *ActorDetailDto) GetGenderLabel()(*string) {
     return m.genderLabel
@@ -578,12 +579,12 @@ func (m *ActorDetailDto) GetHaircolor()(*int32) {
 func (m *ActorDetailDto) GetHaircolorLabel()(*string) {
     return m.haircolorLabel
 }
-// GetHeight gets the height property value. The height property
+// GetHeight gets the height property value. Height in centimetres.
 // returns a *int32 when successful
 func (m *ActorDetailDto) GetHeight()(*int32) {
     return m.height
 }
-// GetHipSize gets the hipSize property value. The hipSize property
+// GetHipSize gets the hipSize property value. Hip measurement in centimetres.
 // returns a *int32 when successful
 func (m *ActorDetailDto) GetHipSize()(*int32) {
     return m.hipSize
@@ -603,7 +604,7 @@ func (m *ActorDetailDto) GetImages()([]ActorImageDetailDtoable) {
 func (m *ActorDetailDto) GetLinks()([]ActorLinkDtoable) {
     return m.links
 }
-// GetName gets the name property value. The name property
+// GetName gets the name property value. Stage name of the actor.
 // returns a *string when successful
 func (m *ActorDetailDto) GetName()(*string) {
     return m.name
@@ -633,7 +634,7 @@ func (m *ActorDetailDto) GetTattoos()(*string) {
 func (m *ActorDetailDto) GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.updatedAtUtc
 }
-// GetWaistSize gets the waistSize property value. The waistSize property
+// GetWaistSize gets the waistSize property value. Waist measurement in centimetres.
 // returns a *int32 when successful
 func (m *ActorDetailDto) GetWaistSize()(*int32) {
     return m.waistSize
@@ -888,7 +889,7 @@ func (m *ActorDetailDto) SetAliases(value []ActorAliasDtoable)() {
 func (m *ActorDetailDto) SetBios(value []ActorBioDtoable)() {
     m.bios = value
 }
-// SetBirthday sets the birthday property value. The birthday property
+// SetBirthday sets the birthday property value. Date of birth, if known.
 func (m *ActorDetailDto) SetBirthday(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)() {
     m.birthday = value
 }
@@ -896,7 +897,7 @@ func (m *ActorDetailDto) SetBirthday(value *i878a80d2330e89d26896388a3f487eef27b
 func (m *ActorDetailDto) SetBirthdayType(value *int32)() {
     m.birthdayType = value
 }
-// SetBirthdayTypeLabel sets the birthdayTypeLabel property value. The birthdayTypeLabel property
+// SetBirthdayTypeLabel sets the birthdayTypeLabel property value. Human-readable birthday type label (e.g. "Exact", "Approximate").
 func (m *ActorDetailDto) SetBirthdayTypeLabel(value *string)() {
     m.birthdayTypeLabel = value
 }
@@ -908,7 +909,7 @@ func (m *ActorDetailDto) SetBirthplace(value *string)() {
 func (m *ActorDetailDto) SetBraSize(value *int32)() {
     m.braSize = value
 }
-// SetBraSizeLabel sets the braSizeLabel property value. The braSizeLabel property
+// SetBraSizeLabel sets the braSizeLabel property value. Human-readable bra size label (e.g. "34B").
 func (m *ActorDetailDto) SetBraSizeLabel(value *string)() {
     m.braSizeLabel = value
 }
@@ -920,11 +921,11 @@ func (m *ActorDetailDto) SetBreastType(value *int32)() {
 func (m *ActorDetailDto) SetBreastTypeLabel(value *string)() {
     m.breastTypeLabel = value
 }
-// SetCareerEnd sets the careerEnd property value. The careerEnd property
+// SetCareerEnd sets the careerEnd property value. Year the actor's career ended, if applicable.
 func (m *ActorDetailDto) SetCareerEnd(value *int32)() {
     m.careerEnd = value
 }
-// SetCareerStart sets the careerStart property value. The careerStart property
+// SetCareerStart sets the careerStart property value. Year the actor's career began.
 func (m *ActorDetailDto) SetCareerStart(value *int32)() {
     m.careerStart = value
 }
@@ -932,7 +933,7 @@ func (m *ActorDetailDto) SetCareerStart(value *int32)() {
 func (m *ActorDetailDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
-// SetDeathday sets the deathday property value. The deathday property
+// SetDeathday sets the deathday property value. Date of death, if applicable.
 func (m *ActorDetailDto) SetDeathday(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)() {
     m.deathday = value
 }
@@ -956,7 +957,7 @@ func (m *ActorDetailDto) SetEyecolorLabel(value *string)() {
 func (m *ActorDetailDto) SetGender(value *int32)() {
     m.gender = value
 }
-// SetGenderLabel sets the genderLabel property value. The genderLabel property
+// SetGenderLabel sets the genderLabel property value. Human-readable gender label.
 func (m *ActorDetailDto) SetGenderLabel(value *string)() {
     m.genderLabel = value
 }
@@ -968,11 +969,11 @@ func (m *ActorDetailDto) SetHaircolor(value *int32)() {
 func (m *ActorDetailDto) SetHaircolorLabel(value *string)() {
     m.haircolorLabel = value
 }
-// SetHeight sets the height property value. The height property
+// SetHeight sets the height property value. Height in centimetres.
 func (m *ActorDetailDto) SetHeight(value *int32)() {
     m.height = value
 }
-// SetHipSize sets the hipSize property value. The hipSize property
+// SetHipSize sets the hipSize property value. Hip measurement in centimetres.
 func (m *ActorDetailDto) SetHipSize(value *int32)() {
     m.hipSize = value
 }
@@ -988,7 +989,7 @@ func (m *ActorDetailDto) SetImages(value []ActorImageDetailDtoable)() {
 func (m *ActorDetailDto) SetLinks(value []ActorLinkDtoable)() {
     m.links = value
 }
-// SetName sets the name property value. The name property
+// SetName sets the name property value. Stage name of the actor.
 func (m *ActorDetailDto) SetName(value *string)() {
     m.name = value
 }
@@ -1012,7 +1013,7 @@ func (m *ActorDetailDto) SetTattoos(value *string)() {
 func (m *ActorDetailDto) SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.updatedAtUtc = value
 }
-// SetWaistSize sets the waistSize property value. The waistSize property
+// SetWaistSize sets the waistSize property value. Waist measurement in centimetres.
 func (m *ActorDetailDto) SetWaistSize(value *int32)() {
     m.waistSize = value
 }

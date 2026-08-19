@@ -19,7 +19,7 @@ type GetVideoUserImageChangesResponse struct {
     nextCursor VideoUserImageChangesCursorDtoable
     // The pageSize property
     pageSize *int32
-    // The serverTimeUtc property
+    // The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
     serverTimeUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewGetVideoUserImageChangesResponse instantiates a new GetVideoUserImageChangesResponse and sets the default values.
@@ -121,7 +121,7 @@ func (m *GetVideoUserImageChangesResponse) GetNextCursor()(VideoUserImageChanges
 func (m *GetVideoUserImageChangesResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetServerTimeUtc gets the serverTimeUtc property value. The serverTimeUtc property
+// GetServerTimeUtc gets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 // returns a *Time when successful
 func (m *GetVideoUserImageChangesResponse) GetServerTimeUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.serverTimeUtc
@@ -192,7 +192,7 @@ func (m *GetVideoUserImageChangesResponse) SetNextCursor(value VideoUserImageCha
 func (m *GetVideoUserImageChangesResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetServerTimeUtc sets the serverTimeUtc property value. The serverTimeUtc property
+// SetServerTimeUtc sets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 func (m *GetVideoUserImageChangesResponse) SetServerTimeUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.serverTimeUtc = value
 }

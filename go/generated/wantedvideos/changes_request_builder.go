@@ -17,8 +17,11 @@ type ChangesRequestBuilder struct {
 }
 // ChangesRequestBuilderGetQueryParameters returns a seek-paged delta feed of wanted video rows for the currently authenticated user ordered by updatedAtUtc ascending, then videoId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
 type ChangesRequestBuilderGetQueryParameters struct {
+    // Number of items per page. Defaults to 100, max 1000.
     PageSize *int32
+    // Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.
     Since *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.
     SinceId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewChangesRequestBuilderInternal instantiates a new ChangesRequestBuilder and sets the default values.

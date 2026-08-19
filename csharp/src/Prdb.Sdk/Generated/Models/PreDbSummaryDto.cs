@@ -8,14 +8,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Summary representation of a PreDb entry.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class PreDbSummaryDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The category property</summary>
+        /// <summary>Readable category value: Movies, TvShows, or Adult.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Category { get; set; }
@@ -23,13 +24,13 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Category { get; set; }
 #endif
-        /// <summary>The filesize property</summary>
+        /// <summary>Optional file size value if known.</summary>
         public int? Filesize { get; set; }
-        /// <summary>The id property</summary>
+        /// <summary>Unique identifier of the PreDb entry.</summary>
         public Guid? Id { get; set; }
-        /// <summary>The releaseDate property</summary>
+        /// <summary>Release date associated with the entry.</summary>
         public Date? ReleaseDate { get; set; }
-        /// <summary>The releaseGroup property</summary>
+        /// <summary>Release group name.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? ReleaseGroup { get; set; }
@@ -37,7 +38,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string ReleaseGroup { get; set; }
 #endif
-        /// <summary>The title property</summary>
+        /// <summary>Release title as indexed in PreDb.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Title { get; set; }

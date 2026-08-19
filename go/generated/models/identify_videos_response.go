@@ -7,10 +7,11 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// IdentifyVideosResponse identification results, one per submitted file.
 type IdentifyVideosResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The results property
+    // One result per input file, in input order.
     results []IdentifyVideoResultDtoable
 }
 // NewIdentifyVideosResponse instantiates a new IdentifyVideosResponse and sets the default values.
@@ -52,7 +53,7 @@ func (m *IdentifyVideosResponse) GetFieldDeserializers()(map[string]func(i878a80
     }
     return res
 }
-// GetResults gets the results property value. The results property
+// GetResults gets the results property value. One result per input file, in input order.
 // returns a []IdentifyVideoResultDtoable when successful
 func (m *IdentifyVideosResponse) GetResults()([]IdentifyVideoResultDtoable) {
     return m.results
@@ -83,7 +84,7 @@ func (m *IdentifyVideosResponse) Serialize(writer i878a80d2330e89d26896388a3f487
 func (m *IdentifyVideosResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetResults sets the results property value. The results property
+// SetResults sets the results property value. One result per input file, in input order.
 func (m *IdentifyVideosResponse) SetResults(value []IdentifyVideoResultDtoable)() {
     m.results = value
 }

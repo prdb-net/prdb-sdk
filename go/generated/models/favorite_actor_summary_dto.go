@@ -9,22 +9,23 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// FavoriteActorSummaryDto summary of an actor in the current user's favorites list.
 type FavoriteActorSummaryDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The ethnicity property
+    // Ethnicity label.
     ethnicity *string
-    // The favoritedAtUtc property
+    // UTC timestamp when the user added this actor to their favorites.
     favoritedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The gender property
+    // Gender label (e.g. `Female`, `Male`, `Unknown`).
     gender *string
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The name property
     name *string
-    // The nationality property
+    // Nationality label.
     nationality *string
-    // The profileImageCdnPath property
+    // CDN URL of the actor's face/profile image, if available.
     profileImageCdnPath *string
 }
 // NewFavoriteActorSummaryDto instantiates a new FavoriteActorSummaryDto and sets the default values.
@@ -44,12 +45,12 @@ func CreateFavoriteActorSummaryDtoFromDiscriminatorValue(parseNode i878a80d2330e
 func (m *FavoriteActorSummaryDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetEthnicity gets the ethnicity property value. The ethnicity property
+// GetEthnicity gets the ethnicity property value. Ethnicity label.
 // returns a *string when successful
 func (m *FavoriteActorSummaryDto) GetEthnicity()(*string) {
     return m.ethnicity
 }
-// GetFavoritedAtUtc gets the favoritedAtUtc property value. The favoritedAtUtc property
+// GetFavoritedAtUtc gets the favoritedAtUtc property value. UTC timestamp when the user added this actor to their favorites.
 // returns a *Time when successful
 func (m *FavoriteActorSummaryDto) GetFavoritedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.favoritedAtUtc
@@ -130,7 +131,7 @@ func (m *FavoriteActorSummaryDto) GetFieldDeserializers()(map[string]func(i878a8
     }
     return res
 }
-// GetGender gets the gender property value. The gender property
+// GetGender gets the gender property value. Gender label (e.g. `Female`, `Male`, `Unknown`).
 // returns a *string when successful
 func (m *FavoriteActorSummaryDto) GetGender()(*string) {
     return m.gender
@@ -145,12 +146,12 @@ func (m *FavoriteActorSummaryDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a
 func (m *FavoriteActorSummaryDto) GetName()(*string) {
     return m.name
 }
-// GetNationality gets the nationality property value. The nationality property
+// GetNationality gets the nationality property value. Nationality label.
 // returns a *string when successful
 func (m *FavoriteActorSummaryDto) GetNationality()(*string) {
     return m.nationality
 }
-// GetProfileImageCdnPath gets the profileImageCdnPath property value. The profileImageCdnPath property
+// GetProfileImageCdnPath gets the profileImageCdnPath property value. CDN URL of the actor's face/profile image, if available.
 // returns a *string when successful
 func (m *FavoriteActorSummaryDto) GetProfileImageCdnPath()(*string) {
     return m.profileImageCdnPath
@@ -211,15 +212,15 @@ func (m *FavoriteActorSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f48
 func (m *FavoriteActorSummaryDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetEthnicity sets the ethnicity property value. The ethnicity property
+// SetEthnicity sets the ethnicity property value. Ethnicity label.
 func (m *FavoriteActorSummaryDto) SetEthnicity(value *string)() {
     m.ethnicity = value
 }
-// SetFavoritedAtUtc sets the favoritedAtUtc property value. The favoritedAtUtc property
+// SetFavoritedAtUtc sets the favoritedAtUtc property value. UTC timestamp when the user added this actor to their favorites.
 func (m *FavoriteActorSummaryDto) SetFavoritedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.favoritedAtUtc = value
 }
-// SetGender sets the gender property value. The gender property
+// SetGender sets the gender property value. Gender label (e.g. `Female`, `Male`, `Unknown`).
 func (m *FavoriteActorSummaryDto) SetGender(value *string)() {
     m.gender = value
 }
@@ -231,11 +232,11 @@ func (m *FavoriteActorSummaryDto) SetId(value *i561e97a8befe7661a44c8f54600992b4
 func (m *FavoriteActorSummaryDto) SetName(value *string)() {
     m.name = value
 }
-// SetNationality sets the nationality property value. The nationality property
+// SetNationality sets the nationality property value. Nationality label.
 func (m *FavoriteActorSummaryDto) SetNationality(value *string)() {
     m.nationality = value
 }
-// SetProfileImageCdnPath sets the profileImageCdnPath property value. The profileImageCdnPath property
+// SetProfileImageCdnPath sets the profileImageCdnPath property value. CDN URL of the actor's face/profile image, if available.
 func (m *FavoriteActorSummaryDto) SetProfileImageCdnPath(value *string)() {
     m.profileImageCdnPath = value
 }

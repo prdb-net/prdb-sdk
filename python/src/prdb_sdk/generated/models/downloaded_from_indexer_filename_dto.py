@@ -8,24 +8,27 @@ from uuid import UUID
 
 @dataclass
 class DownloadedFromIndexerFilenameDto(AdditionalDataHolder, Parsable):
+    """
+    A filename recorded for a downloaded-from-indexer entry.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The createdAtUtc property
+    # When this filename row was created.
     created_at_utc: Optional[datetime.datetime] = None
-    # The downloadedFromIndexerId property
+    # ID of the parent downloaded-from-indexer entry.
     downloaded_from_indexer_id: Optional[UUID] = None
-    # The filename property
+    # The filename as reported by the indexer/download source.
     filename: Optional[str] = None
-    # The filesize property
+    # File size in bytes.
     filesize: Optional[int] = None
-    # The id property
+    # ID of the filename row.
     id: Optional[UUID] = None
-    # The osHash property
+    # Optional OS hash value as a 16-character fixed-length string.
     os_hash: Optional[str] = None
-    # The pHash property
+    # Optional perceptual hash value as a 16-character fixed-length string.
     p_hash: Optional[str] = None
-    # The updatedAtUtc property
+    # When this filename row was last updated.
     updated_at_utc: Optional[datetime.datetime] = None
     
     @staticmethod

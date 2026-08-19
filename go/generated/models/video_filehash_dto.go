@@ -14,19 +14,19 @@ type VideoFilehashDto struct {
     additionalData map[string]any
     // The createdAtUtc property
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The filename property
+    // Original filename submitted for this filehash record.
     filename *string
-    // The filesize property
+    // File size in bytes.
     filesize *int64
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The isVerified property
+    // Whether this filehash record has been verified.
     isVerified *bool
-    // The osHash property
+    // OS hash value as stored, or null when not available.
     osHash *string
-    // The pHash property
+    // P hash value as stored, or null when not available.
     pHash *string
-    // The submissionCount property
+    // Number of submissions merged into this filehash record.
     submissionCount *int32
     // The updatedAtUtc property
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
@@ -161,12 +161,12 @@ func (m *VideoFilehashDto) GetFieldDeserializers()(map[string]func(i878a80d2330e
     }
     return res
 }
-// GetFilename gets the filename property value. The filename property
+// GetFilename gets the filename property value. Original filename submitted for this filehash record.
 // returns a *string when successful
 func (m *VideoFilehashDto) GetFilename()(*string) {
     return m.filename
 }
-// GetFilesize gets the filesize property value. The filesize property
+// GetFilesize gets the filesize property value. File size in bytes.
 // returns a *int64 when successful
 func (m *VideoFilehashDto) GetFilesize()(*int64) {
     return m.filesize
@@ -176,22 +176,22 @@ func (m *VideoFilehashDto) GetFilesize()(*int64) {
 func (m *VideoFilehashDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetIsVerified gets the isVerified property value. The isVerified property
+// GetIsVerified gets the isVerified property value. Whether this filehash record has been verified.
 // returns a *bool when successful
 func (m *VideoFilehashDto) GetIsVerified()(*bool) {
     return m.isVerified
 }
-// GetOsHash gets the osHash property value. The osHash property
+// GetOsHash gets the osHash property value. OS hash value as stored, or null when not available.
 // returns a *string when successful
 func (m *VideoFilehashDto) GetOsHash()(*string) {
     return m.osHash
 }
-// GetPHash gets the pHash property value. The pHash property
+// GetPHash gets the pHash property value. P hash value as stored, or null when not available.
 // returns a *string when successful
 func (m *VideoFilehashDto) GetPHash()(*string) {
     return m.pHash
 }
-// GetSubmissionCount gets the submissionCount property value. The submissionCount property
+// GetSubmissionCount gets the submissionCount property value. Number of submissions merged into this filehash record.
 // returns a *int32 when successful
 func (m *VideoFilehashDto) GetSubmissionCount()(*int32) {
     return m.submissionCount
@@ -284,11 +284,11 @@ func (m *VideoFilehashDto) SetAdditionalData(value map[string]any)() {
 func (m *VideoFilehashDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
-// SetFilename sets the filename property value. The filename property
+// SetFilename sets the filename property value. Original filename submitted for this filehash record.
 func (m *VideoFilehashDto) SetFilename(value *string)() {
     m.filename = value
 }
-// SetFilesize sets the filesize property value. The filesize property
+// SetFilesize sets the filesize property value. File size in bytes.
 func (m *VideoFilehashDto) SetFilesize(value *int64)() {
     m.filesize = value
 }
@@ -296,19 +296,19 @@ func (m *VideoFilehashDto) SetFilesize(value *int64)() {
 func (m *VideoFilehashDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetIsVerified sets the isVerified property value. The isVerified property
+// SetIsVerified sets the isVerified property value. Whether this filehash record has been verified.
 func (m *VideoFilehashDto) SetIsVerified(value *bool)() {
     m.isVerified = value
 }
-// SetOsHash sets the osHash property value. The osHash property
+// SetOsHash sets the osHash property value. OS hash value as stored, or null when not available.
 func (m *VideoFilehashDto) SetOsHash(value *string)() {
     m.osHash = value
 }
-// SetPHash sets the pHash property value. The pHash property
+// SetPHash sets the pHash property value. P hash value as stored, or null when not available.
 func (m *VideoFilehashDto) SetPHash(value *string)() {
     m.pHash = value
 }
-// SetSubmissionCount sets the submissionCount property value. The submissionCount property
+// SetSubmissionCount sets the submissionCount property value. Number of submissions merged into this filehash record.
 func (m *VideoFilehashDto) SetSubmissionCount(value *int32)() {
     m.submissionCount = value
 }

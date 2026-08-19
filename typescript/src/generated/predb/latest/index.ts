@@ -32,10 +32,25 @@ export interface LatestRequestBuilder extends BaseRequestBuilder<LatestRequestBu
  * Returns a paged list of canonical PreDb entries ordered by creation date descending. Linked video details are included when available; unlinked PreDb entries are also returned. Supports filtering by site ID and creation date range. Requires API key authentication.
  */
 export interface LatestRequestBuilderGetQueryParameters {
+    /**
+     * Optional. Return only PreDb entries created at or after this timestamp (UTC).
+     */
     createdFrom?: Date;
+    /**
+     * Optional. Return only PreDb entries created at or before this timestamp (UTC).
+     */
     createdTo?: Date;
+    /**
+     * 1-based page number. Defaults to 1.
+     */
     page?: number;
+    /**
+     * Number of items per page. Defaults to 20, max 500.
+     */
     pageSize?: number;
+    /**
+     * Optional. Filter to predbs linked to videos on the specified site.
+     */
     siteId?: Guid;
 }
 /**

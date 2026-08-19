@@ -32,10 +32,25 @@ export interface ChangesRequestBuilder extends BaseRequestBuilder<ChangesRequest
  * Returns a seek-paged delta feed of video filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional video ID and site ID filters. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
  */
 export interface ChangesRequestBuilderGetQueryParameters {
+    /**
+     * Number of items per page. Defaults to 100, max 1000.
+     */
     pageSize?: number;
+    /**
+     * Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.
+     */
     since?: Date;
+    /**
+     * Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.
+     */
     sinceId?: Guid;
+    /**
+     * Optional. Restrict changes to videos on the specified site.
+     */
     siteId?: Guid;
+    /**
+     * Optional. Restrict changes to a single video.
+     */
     videoId?: Guid;
 }
 /**

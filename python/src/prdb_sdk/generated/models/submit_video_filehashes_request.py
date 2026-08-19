@@ -9,10 +9,13 @@ if TYPE_CHECKING:
 
 @dataclass
 class SubmitVideoFilehashesRequest(AdditionalDataHolder, Parsable):
+    """
+    Request body for submitting confirmed hash-to-video assignments.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The items property
+    # Assignments to submit. Between 1 and 200 entries.
     items: Optional[list[SubmitVideoFilehashItem]] = None
     
     @staticmethod

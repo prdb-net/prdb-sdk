@@ -17,10 +17,15 @@ type LatestRequestBuilder struct {
 }
 // LatestRequestBuilderGetQueryParameters returns a paged list of canonical PreDb entries ordered by creation date descending. Linked video details are included when available; unlinked PreDb entries are also returned. Supports filtering by site ID and creation date range. Requires API key authentication.
 type LatestRequestBuilderGetQueryParameters struct {
+    // Optional. Return only PreDb entries created at or after this timestamp (UTC).
     CreatedFrom *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Optional. Return only PreDb entries created at or before this timestamp (UTC).
     CreatedTo *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // 1-based page number. Defaults to 1.
     Page *int32
+    // Number of items per page. Defaults to 20, max 500.
     PageSize *int32
+    // Optional. Filter to predbs linked to videos on the specified site.
     SiteId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewLatestRequestBuilderInternal instantiates a new LatestRequestBuilder and sets the default values.

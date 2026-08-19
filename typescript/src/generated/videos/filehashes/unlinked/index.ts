@@ -34,9 +34,21 @@ export interface UnlinkedRequestBuilder extends BaseRequestBuilder<UnlinkedReque
  * Returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
  */
 export interface UnlinkedRequestBuilderGetQueryParameters {
+    /**
+     * Page number, starting at 1.
+     */
     page?: number;
+    /**
+     * Page size. Values above 1000 are clamped.
+     */
     pageSize?: number;
+    /**
+     * Sort field. Allowed values: createdAtUtc, updatedAtUtc, submissionCount, filesize.
+     */
     sortBy?: GetSortByQueryParameterType;
+    /**
+     * Sort direction. Allowed values: asc, desc.
+     */
     sortDirection?: GetSortDirectionQueryParameterType;
 }
 /**

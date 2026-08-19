@@ -13,7 +13,7 @@ type ActorAliasDto struct {
     additionalData map[string]any
     // The name property
     name *string
-    // The siteId property
+    // ID of the site this alias is associated with, if any.
     siteId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewActorAliasDto instantiates a new ActorAliasDto and sets the default values.
@@ -64,7 +64,7 @@ func (m *ActorAliasDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89d
 func (m *ActorAliasDto) GetName()(*string) {
     return m.name
 }
-// GetSiteId gets the siteId property value. The siteId property
+// GetSiteId gets the siteId property value. ID of the site this alias is associated with, if any.
 // returns a *UUID when successful
 func (m *ActorAliasDto) GetSiteId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.siteId
@@ -99,7 +99,7 @@ func (m *ActorAliasDto) SetAdditionalData(value map[string]any)() {
 func (m *ActorAliasDto) SetName(value *string)() {
     m.name = value
 }
-// SetSiteId sets the siteId property value. The siteId property
+// SetSiteId sets the siteId property value. ID of the site this alias is associated with, if any.
 func (m *ActorAliasDto) SetSiteId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.siteId = value
 }

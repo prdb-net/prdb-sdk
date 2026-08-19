@@ -17,16 +17,27 @@ type LatestRequestBuilder struct {
 }
 // LatestRequestBuilderGetQueryParameters returns a paged list of active indexer filehash entries. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by indexer source, indexer ID, verification state, and inclusive created/updated date ranges. Requires API key authentication.
 type LatestRequestBuilderGetQueryParameters struct {
+    // Optional. Return only filehashes created at or after this timestamp (UTC).
     CreatedFrom *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Optional. Return only filehashes created at or before this timestamp (UTC).
     CreatedTo *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Optional. Restrict results to an indexer-specific identifier.
     IndexerId *string
+    // Optional. Restrict results to an indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.
     IndexerSource *id6bf30f997c33ec3a150b03b6804c93d5856cbd2af258d8c87fb3bb8a5cb1360.GetIndexerSourceQueryParameterType
+    // Optional. Filter by verification state. Omit for both verified and unverified entries.
     IsVerified *bool
+    // 1-based page number. Defaults to 1.
     Page *int32
+    // Number of items per page. Defaults to 20, max 5000.
     PageSize *int32
+    // Field to sort by. Supported values: `createdAtUtc` (default), `updatedAtUtc`, `submissionCount`, `filesize`.
     SortBy *id6bf30f997c33ec3a150b03b6804c93d5856cbd2af258d8c87fb3bb8a5cb1360.GetSortByQueryParameterType
+    // Sort direction: `desc` (default) or `asc`.
     SortDirection *id6bf30f997c33ec3a150b03b6804c93d5856cbd2af258d8c87fb3bb8a5cb1360.GetSortDirectionQueryParameterType
+    // Optional. Return only filehashes updated at or after this timestamp (UTC).
     UpdatedFrom *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Optional. Return only filehashes updated at or before this timestamp (UTC).
     UpdatedTo *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewLatestRequestBuilderInternal instantiates a new LatestRequestBuilder and sets the default values.

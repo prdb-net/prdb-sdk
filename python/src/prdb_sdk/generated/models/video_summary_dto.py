@@ -11,22 +11,25 @@ if TYPE_CHECKING:
 
 @dataclass
 class VideoSummaryDto(AdditionalDataHolder, Parsable):
+    """
+    Summary of a single video.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The actors property
+    # Actors appearing in this video.
     actors: Optional[list[VideoSummaryActorDto]] = None
-    # The createdAtUtc property
+    # Timestamp when the video was created in PRDB.
     created_at_utc: Optional[datetime.datetime] = None
-    # The id property
+    # Unique identifier of the video.
     id: Optional[UUID] = None
-    # The releaseDate property
+    # Release date of the video, if known.
     release_date: Optional[datetime.date] = None
-    # The siteId property
+    # Unique identifier of the site this video belongs to.
     site_id: Optional[UUID] = None
-    # The siteTitle property
+    # Title of the site this video belongs to.
     site_title: Optional[str] = None
-    # The title property
+    # Video title.
     title: Optional[str] = None
     
     @staticmethod

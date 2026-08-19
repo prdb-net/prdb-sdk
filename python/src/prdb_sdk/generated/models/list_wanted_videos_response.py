@@ -9,22 +9,25 @@ if TYPE_CHECKING:
 
 @dataclass
 class ListWantedVideosResponse(AdditionalDataHolder, Parsable):
+    """
+    Paged list of the current user's wanted videos.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The items property
+    # Wanted video entries on the current page.
     items: Optional[list[WantedVideoSummaryDto]] = None
-    # The page property
+    # Current page number (1-based).
     page: Optional[int] = None
-    # The pageSize property
+    # Number of items per page.
     page_size: Optional[int] = None
-    # The sortBy property
+    # Field the results are sorted by.
     sort_by: Optional[str] = None
-    # The sortDirection property
+    # Sort direction applied: `asc` or `desc`.
     sort_direction: Optional[str] = None
-    # The totalCount property
+    # Total number of wanted videos matching the current query filters.
     total_count: Optional[int] = None
-    # The totalPages property
+    # Total number of pages.
     total_pages: Optional[int] = None
     
     @staticmethod

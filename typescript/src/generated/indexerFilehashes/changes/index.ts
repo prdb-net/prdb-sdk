@@ -32,10 +32,25 @@ export interface ChangesRequestBuilder extends BaseRequestBuilder<ChangesRequest
  * Returns a seek-paged delta feed of indexer filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional indexer source and indexer ID filters. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
  */
 export interface ChangesRequestBuilderGetQueryParameters {
+    /**
+     * Optional. Restrict changes to an indexer-specific identifier.
+     */
     indexerId?: string;
+    /**
+     * Optional. Restrict changes to an indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.
+     */
     indexerSource?: GetIndexerSourceQueryParameterType;
+    /**
+     * Number of items per page. Defaults to 100, max 1000.
+     */
     pageSize?: number;
+    /**
+     * Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.
+     */
     since?: Date;
+    /**
+     * Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.
+     */
     sinceId?: Guid;
 }
 export type GetIndexerSourceQueryParameterType = (typeof GetIndexerSourceQueryParameterTypeObject)[keyof typeof GetIndexerSourceQueryParameterTypeObject];

@@ -11,22 +11,25 @@ if TYPE_CHECKING:
 
 @dataclass
 class IdentifyVideoResultDto(AdditionalDataHolder, Parsable):
+    """
+    What the identification ladder made of one file.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The candidates property
+    # All equally good videos when the match was ambiguous; otherwise empty.
     candidates: Optional[list[UUID]] = None
-    # Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
+    # How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
     confidence: Optional[int] = None
     # Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).
     matched_by: Optional[int] = None
-    # The ref property
+    # The client-assigned identifier of the input file, returned unchanged.
     ref: Optional[str] = None
-    # The site property
+    # The site a file could be attributed to.
     site: Optional[IdentifySiteDto] = None
     # The video property
     video: Optional[VideoDetailDto] = None
-    # The videoId property
+    # The identified video, when exactly one was found.
     video_id: Optional[UUID] = None
     
     @staticmethod

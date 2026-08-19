@@ -9,12 +9,15 @@ if TYPE_CHECKING:
 
 @dataclass
 class IndexerFilehashChangeDto(AdditionalDataHolder, Parsable):
+    """
+    A single changed indexer filehash row in the incremental feed.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The eventType property
+    # One of `created`, `updated`, or `deleted`.
     event_type: Optional[str] = None
-    # The filehash property
+    # Current persisted state of a changed indexer filehash row, including soft-delete fields.
     filehash: Optional[IndexerFilehashChangeFilehashDto] = None
     
     @staticmethod

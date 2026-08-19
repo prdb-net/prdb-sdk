@@ -7,10 +7,11 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// FulfillWantedVideosBatchResponse per-video outcome of a batch fulfilment update.
 type FulfillWantedVideosBatchResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The results property
+    // One result per requested video, in request order.
     results []FulfillWantedVideoResultDtoable
 }
 // NewFulfillWantedVideosBatchResponse instantiates a new FulfillWantedVideosBatchResponse and sets the default values.
@@ -52,7 +53,7 @@ func (m *FulfillWantedVideosBatchResponse) GetFieldDeserializers()(map[string]fu
     }
     return res
 }
-// GetResults gets the results property value. The results property
+// GetResults gets the results property value. One result per requested video, in request order.
 // returns a []FulfillWantedVideoResultDtoable when successful
 func (m *FulfillWantedVideosBatchResponse) GetResults()([]FulfillWantedVideoResultDtoable) {
     return m.results
@@ -83,7 +84,7 @@ func (m *FulfillWantedVideosBatchResponse) Serialize(writer i878a80d2330e89d2689
 func (m *FulfillWantedVideosBatchResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetResults sets the results property value. The results property
+// SetResults sets the results property value. One result per requested video, in request order.
 func (m *FulfillWantedVideosBatchResponse) SetResults(value []FulfillWantedVideoResultDtoable)() {
     m.results = value
 }

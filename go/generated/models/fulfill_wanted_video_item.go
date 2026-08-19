@@ -9,20 +9,21 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// FulfillWantedVideoItem a single fulfilment update.
 type FulfillWantedVideoItem struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The fulfilledAtUtc property
+    // When the video was fulfilled. Ignored when isFulfilled is false; defaults to the server time when omitted.
     fulfilledAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // Known values: P720 (0), P1080 (1), P2160 (2).
     fulfilledInQuality *int32
     // Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
     fulfillmentByApp *int32
-    // The fulfillmentExternalId property
+    // External identifier from the fulfilling application, if applicable.
     fulfillmentExternalId *string
-    // The isFulfilled property
+    // Whether the wanted video has been fulfilled.
     isFulfilled *bool
-    // The videoId property
+    // ID of the video whose wanted entry is updated. Must be unique within the request.
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewFulfillWantedVideoItem instantiates a new FulfillWantedVideoItem and sets the default values.
@@ -108,7 +109,7 @@ func (m *FulfillWantedVideoItem) GetFieldDeserializers()(map[string]func(i878a80
     }
     return res
 }
-// GetFulfilledAtUtc gets the fulfilledAtUtc property value. The fulfilledAtUtc property
+// GetFulfilledAtUtc gets the fulfilledAtUtc property value. When the video was fulfilled. Ignored when isFulfilled is false; defaults to the server time when omitted.
 // returns a *Time when successful
 func (m *FulfillWantedVideoItem) GetFulfilledAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.fulfilledAtUtc
@@ -123,17 +124,17 @@ func (m *FulfillWantedVideoItem) GetFulfilledInQuality()(*int32) {
 func (m *FulfillWantedVideoItem) GetFulfillmentByApp()(*int32) {
     return m.fulfillmentByApp
 }
-// GetFulfillmentExternalId gets the fulfillmentExternalId property value. The fulfillmentExternalId property
+// GetFulfillmentExternalId gets the fulfillmentExternalId property value. External identifier from the fulfilling application, if applicable.
 // returns a *string when successful
 func (m *FulfillWantedVideoItem) GetFulfillmentExternalId()(*string) {
     return m.fulfillmentExternalId
 }
-// GetIsFulfilled gets the isFulfilled property value. The isFulfilled property
+// GetIsFulfilled gets the isFulfilled property value. Whether the wanted video has been fulfilled.
 // returns a *bool when successful
 func (m *FulfillWantedVideoItem) GetIsFulfilled()(*bool) {
     return m.isFulfilled
 }
-// GetVideoId gets the videoId property value. The videoId property
+// GetVideoId gets the videoId property value. ID of the video whose wanted entry is updated. Must be unique within the request.
 // returns a *UUID when successful
 func (m *FulfillWantedVideoItem) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
@@ -188,7 +189,7 @@ func (m *FulfillWantedVideoItem) Serialize(writer i878a80d2330e89d26896388a3f487
 func (m *FulfillWantedVideoItem) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetFulfilledAtUtc sets the fulfilledAtUtc property value. The fulfilledAtUtc property
+// SetFulfilledAtUtc sets the fulfilledAtUtc property value. When the video was fulfilled. Ignored when isFulfilled is false; defaults to the server time when omitted.
 func (m *FulfillWantedVideoItem) SetFulfilledAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.fulfilledAtUtc = value
 }
@@ -200,15 +201,15 @@ func (m *FulfillWantedVideoItem) SetFulfilledInQuality(value *int32)() {
 func (m *FulfillWantedVideoItem) SetFulfillmentByApp(value *int32)() {
     m.fulfillmentByApp = value
 }
-// SetFulfillmentExternalId sets the fulfillmentExternalId property value. The fulfillmentExternalId property
+// SetFulfillmentExternalId sets the fulfillmentExternalId property value. External identifier from the fulfilling application, if applicable.
 func (m *FulfillWantedVideoItem) SetFulfillmentExternalId(value *string)() {
     m.fulfillmentExternalId = value
 }
-// SetIsFulfilled sets the isFulfilled property value. The isFulfilled property
+// SetIsFulfilled sets the isFulfilled property value. Whether the wanted video has been fulfilled.
 func (m *FulfillWantedVideoItem) SetIsFulfilled(value *bool)() {
     m.isFulfilled = value
 }
-// SetVideoId sets the videoId property value. The videoId property
+// SetVideoId sets the videoId property value. ID of the video whose wanted entry is updated. Must be unique within the request.
 func (m *FulfillWantedVideoItem) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }

@@ -7,12 +7,13 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// IndexerFilehashLookupKeyDto combined indexer identity used to match filehashes by indexer source and indexer-specific ID.
 type IndexerFilehashLookupKeyDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The indexerId property
+    // Indexer-specific identifier for the release.
     indexerId *string
-    // Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
+    // Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
     indexerSource *IndexerFilehashLookupKeyDto_indexerSource
 }
 // NewIndexerFilehashLookupKeyDto instantiates a new IndexerFilehashLookupKeyDto and sets the default values.
@@ -58,12 +59,12 @@ func (m *IndexerFilehashLookupKeyDto) GetFieldDeserializers()(map[string]func(i8
     }
     return res
 }
-// GetIndexerId gets the indexerId property value. The indexerId property
+// GetIndexerId gets the indexerId property value. Indexer-specific identifier for the release.
 // returns a *string when successful
 func (m *IndexerFilehashLookupKeyDto) GetIndexerId()(*string) {
     return m.indexerId
 }
-// GetIndexerSource gets the indexerSource property value. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
+// GetIndexerSource gets the indexerSource property value. Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
 // returns a *IndexerFilehashLookupKeyDto_indexerSource when successful
 func (m *IndexerFilehashLookupKeyDto) GetIndexerSource()(*IndexerFilehashLookupKeyDto_indexerSource) {
     return m.indexerSource
@@ -95,11 +96,11 @@ func (m *IndexerFilehashLookupKeyDto) Serialize(writer i878a80d2330e89d26896388a
 func (m *IndexerFilehashLookupKeyDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetIndexerId sets the indexerId property value. The indexerId property
+// SetIndexerId sets the indexerId property value. Indexer-specific identifier for the release.
 func (m *IndexerFilehashLookupKeyDto) SetIndexerId(value *string)() {
     m.indexerId = value
 }
-// SetIndexerSource sets the indexerSource property value. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
+// SetIndexerSource sets the indexerSource property value. Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
 func (m *IndexerFilehashLookupKeyDto) SetIndexerSource(value *IndexerFilehashLookupKeyDto_indexerSource)() {
     m.indexerSource = value
 }

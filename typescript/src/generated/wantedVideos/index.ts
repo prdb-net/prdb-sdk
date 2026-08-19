@@ -59,14 +59,41 @@ export interface WantedVideosRequestBuilder extends BaseRequestBuilder<WantedVid
  * Returns a paged, sortable list of wanted videos for the currently authenticated user. Supports filtering by fulfilment status, site, actor, search term, and recency. Requires API key authentication.
  */
 export interface WantedVideosRequestBuilderGetQueryParameters {
+    /**
+     * Optional filter to return only videos featuring the specified actor.
+     */
     actorId?: Guid;
+    /**
+     * Optional filter to return only wanted videos added within the last N days.
+     */
     addedInLastDays?: number;
+    /**
+     * Filter by fulfilment status. Omit to return all.
+     */
     isFulfilled?: boolean;
+    /**
+     * 1-based page number. Defaults to 1.
+     */
     page?: number;
+    /**
+     * Number of items per page. Defaults to 100, max 500.
+     */
     pageSize?: number;
+    /**
+     * Optional search term matched against video title or site title.
+     */
     search?: string;
+    /**
+     * Optional filter to return only videos belonging to the specified site.
+     */
     siteId?: Guid;
+    /**
+     * Field to sort by. Supported values: `createdAtUtc`, `isFulfilled`. Defaults to `createdAtUtc`.
+     */
     sortBy?: string;
+    /**
+     * Sort direction: `asc` or `desc`. Defaults to `desc`.
+     */
     sortDirection?: GetSortDirectionQueryParameterType;
 }
 /**

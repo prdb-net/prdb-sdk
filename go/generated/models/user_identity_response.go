@@ -7,12 +7,13 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// UserIdentityResponse identity and subscription state for the authenticated user.
 type UserIdentityResponse struct {
-    // The activeSubscriptions property
+    // All subscriptions with Status=Active and an end date in the future.
     activeSubscriptions []ActiveSubscriptionDtoable
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The userHash property
+    // Stable HMAC-SHA256 hex digest derived from the user's immutable ID.Suitable as a durable public identifier — does not change unless the server secret rotates.
     userHash *string
 }
 // NewUserIdentityResponse instantiates a new UserIdentityResponse and sets the default values.
@@ -27,7 +28,7 @@ func NewUserIdentityResponse()(*UserIdentityResponse) {
 func CreateUserIdentityResponseFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
     return NewUserIdentityResponse(), nil
 }
-// GetActiveSubscriptions gets the activeSubscriptions property value. The activeSubscriptions property
+// GetActiveSubscriptions gets the activeSubscriptions property value. All subscriptions with Status=Active and an end date in the future.
 // returns a []ActiveSubscriptionDtoable when successful
 func (m *UserIdentityResponse) GetActiveSubscriptions()([]ActiveSubscriptionDtoable) {
     return m.activeSubscriptions
@@ -69,7 +70,7 @@ func (m *UserIdentityResponse) GetFieldDeserializers()(map[string]func(i878a80d2
     }
     return res
 }
-// GetUserHash gets the userHash property value. The userHash property
+// GetUserHash gets the userHash property value. Stable HMAC-SHA256 hex digest derived from the user's immutable ID.Suitable as a durable public identifier — does not change unless the server secret rotates.
 // returns a *string when successful
 func (m *UserIdentityResponse) GetUserHash()(*string) {
     return m.userHash
@@ -102,7 +103,7 @@ func (m *UserIdentityResponse) Serialize(writer i878a80d2330e89d26896388a3f487ee
     }
     return nil
 }
-// SetActiveSubscriptions sets the activeSubscriptions property value. The activeSubscriptions property
+// SetActiveSubscriptions sets the activeSubscriptions property value. All subscriptions with Status=Active and an end date in the future.
 func (m *UserIdentityResponse) SetActiveSubscriptions(value []ActiveSubscriptionDtoable)() {
     m.activeSubscriptions = value
 }
@@ -110,7 +111,7 @@ func (m *UserIdentityResponse) SetActiveSubscriptions(value []ActiveSubscription
 func (m *UserIdentityResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetUserHash sets the userHash property value. The userHash property
+// SetUserHash sets the userHash property value. Stable HMAC-SHA256 hex digest derived from the user's immutable ID.Suitable as a durable public identifier — does not change unless the server secret rotates.
 func (m *UserIdentityResponse) SetUserHash(value *string)() {
     m.userHash = value
 }

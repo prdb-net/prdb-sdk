@@ -116,26 +116,37 @@ class LatestRequestBuilder(BaseRequestBuilder):
                 return "UpdatedTo"
             return original_name
         
+        # Optional. Return only filehashes created at or after this timestamp (UTC).
         created_from: Optional[datetime.datetime] = None
 
+        # Optional. Return only filehashes created at or before this timestamp (UTC).
         created_to: Optional[datetime.datetime] = None
 
+        # Optional. Restrict results to an indexer-specific identifier.
         indexer_id: Optional[str] = None
 
+        # Optional. Restrict results to an indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.
         indexer_source: Optional[GetIndexerSourceQueryParameterType] = None
 
+        # Optional. Filter by verification state. Omit for both verified and unverified entries.
         is_verified: Optional[bool] = None
 
+        # 1-based page number. Defaults to 1.
         page: Optional[int] = None
 
+        # Number of items per page. Defaults to 20, max 5000.
         page_size: Optional[int] = None
 
+        # Field to sort by. Supported values: `createdAtUtc` (default), `updatedAtUtc`, `submissionCount`, `filesize`.
         sort_by: Optional[GetSortByQueryParameterType] = None
 
+        # Sort direction: `desc` (default) or `asc`.
         sort_direction: Optional[GetSortDirectionQueryParameterType] = None
 
+        # Optional. Return only filehashes updated at or after this timestamp (UTC).
         updated_from: Optional[datetime.datetime] = None
 
+        # Optional. Return only filehashes updated at or before this timestamp (UTC).
         updated_to: Optional[datetime.datetime] = None
 
     

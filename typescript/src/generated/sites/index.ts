@@ -33,10 +33,25 @@ export interface SitesRequestBuilder extends BaseRequestBuilder<SitesRequestBuil
  * Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
  */
 export interface SitesRequestBuilderGetQueryParameters {
+    /**
+     * 1-based page number. Defaults to 1.
+     */
     page?: number;
+    /**
+     * Number of items per page. Defaults to 20, max 1000 — the full list fits in one page.
+     */
     pageSize?: number;
+    /**
+     * Optional search term matched against site title.
+     */
     search?: string;
+    /**
+     * Field to sort by. Supported values: `title` (default).
+     */
     sortBy?: string;
+    /**
+     * Sort direction: `asc` (default) or `desc`.
+     */
     sortDirection?: GetSortDirectionQueryParameterType;
 }
 /**

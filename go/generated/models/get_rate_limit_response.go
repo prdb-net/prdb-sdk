@@ -7,14 +7,15 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// GetRateLimitResponse current rate limit status for the authenticated user.
 type GetRateLimitResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The hourly property
+    // Rate limit status for a single time window.
     hourly RateLimitWindowStatusable
-    // The isEnforced property
+    // Always true. Rate limiting is enforced unconditionally; when it cannot be enforced the APIanswers 503 instead of returning this document. Kept for compatibility with clients thatread the field.
     isEnforced *bool
-    // The monthly property
+    // Rate limit status for a single time window.
     monthly RateLimitWindowStatusable
 }
 // NewGetRateLimitResponse instantiates a new GetRateLimitResponse and sets the default values.
@@ -70,17 +71,17 @@ func (m *GetRateLimitResponse) GetFieldDeserializers()(map[string]func(i878a80d2
     }
     return res
 }
-// GetHourly gets the hourly property value. The hourly property
+// GetHourly gets the hourly property value. Rate limit status for a single time window.
 // returns a RateLimitWindowStatusable when successful
 func (m *GetRateLimitResponse) GetHourly()(RateLimitWindowStatusable) {
     return m.hourly
 }
-// GetIsEnforced gets the isEnforced property value. The isEnforced property
+// GetIsEnforced gets the isEnforced property value. Always true. Rate limiting is enforced unconditionally; when it cannot be enforced the APIanswers 503 instead of returning this document. Kept for compatibility with clients thatread the field.
 // returns a *bool when successful
 func (m *GetRateLimitResponse) GetIsEnforced()(*bool) {
     return m.isEnforced
 }
-// GetMonthly gets the monthly property value. The monthly property
+// GetMonthly gets the monthly property value. Rate limit status for a single time window.
 // returns a RateLimitWindowStatusable when successful
 func (m *GetRateLimitResponse) GetMonthly()(RateLimitWindowStatusable) {
     return m.monthly
@@ -117,15 +118,15 @@ func (m *GetRateLimitResponse) Serialize(writer i878a80d2330e89d26896388a3f487ee
 func (m *GetRateLimitResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetHourly sets the hourly property value. The hourly property
+// SetHourly sets the hourly property value. Rate limit status for a single time window.
 func (m *GetRateLimitResponse) SetHourly(value RateLimitWindowStatusable)() {
     m.hourly = value
 }
-// SetIsEnforced sets the isEnforced property value. The isEnforced property
+// SetIsEnforced sets the isEnforced property value. Always true. Rate limiting is enforced unconditionally; when it cannot be enforced the APIanswers 503 instead of returning this document. Kept for compatibility with clients thatread the field.
 func (m *GetRateLimitResponse) SetIsEnforced(value *bool)() {
     m.isEnforced = value
 }
-// SetMonthly sets the monthly property value. The monthly property
+// SetMonthly sets the monthly property value. Rate limit status for a single time window.
 func (m *GetRateLimitResponse) SetMonthly(value RateLimitWindowStatusable)() {
     m.monthly = value
 }

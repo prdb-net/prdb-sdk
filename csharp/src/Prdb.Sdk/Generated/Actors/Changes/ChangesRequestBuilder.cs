@@ -98,8 +98,11 @@ namespace Prdb.Sdk.Generated.Actors.Changes
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class ChangesRequestBuilderGetQueryParameters 
         {
+            /// <summary>Number of items per page. Defaults to 100, max 1000.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.</summary>
             public DateTimeOffset? Since { get; set; }
+            /// <summary>Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.</summary>
             public Guid? SinceId { get; set; }
         }
     }

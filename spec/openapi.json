@@ -331,6 +331,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "1-based page number. Defaults to 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -341,6 +342,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 500.",
             "schema": {
               "maximum": 500,
               "minimum": 1,
@@ -351,6 +353,7 @@
           {
             "name": "SortBy",
             "in": "query",
+            "description": "Field to sort by. Supported values: `createdAtUtc`, `isFulfilled`. Defaults to `createdAtUtc`.",
             "schema": {
               "type": "string"
             }
@@ -358,6 +361,7 @@
           {
             "name": "SortDirection",
             "in": "query",
+            "description": "Sort direction: `asc` or `desc`. Defaults to `desc`.",
             "schema": {
               "pattern": "^(?i)(asc|desc)$",
               "enum": [
@@ -371,6 +375,7 @@
           {
             "name": "IsFulfilled",
             "in": "query",
+            "description": "Filter by fulfilment status. Omit to return all.",
             "schema": {
               "type": "boolean"
             }
@@ -378,6 +383,7 @@
           {
             "name": "Search",
             "in": "query",
+            "description": "Optional search term matched against video title or site title.",
             "schema": {
               "type": "string"
             }
@@ -385,6 +391,7 @@
           {
             "name": "SiteId",
             "in": "query",
+            "description": "Optional filter to return only videos belonging to the specified site.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -393,6 +400,7 @@
           {
             "name": "ActorId",
             "in": "query",
+            "description": "Optional filter to return only videos featuring the specified actor.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -401,6 +409,7 @@
           {
             "name": "AddedInLastDays",
             "in": "query",
+            "description": "Optional filter to return only wanted videos added within the last N days.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -600,6 +609,7 @@
           {
             "name": "Since",
             "in": "query",
+            "description": "Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -608,6 +618,7 @@
           {
             "name": "SinceId",
             "in": "query",
+            "description": "Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -616,6 +627,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 1000.",
             "schema": {
               "maximum": 1000,
               "minimum": 1,
@@ -812,6 +824,7 @@
         "description": "Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Requires API key authentication.",
         "operationId": "SubmitVideoUserImage",
         "requestBody": {
+          "description": "Optional existing video link. Omit this to submit images grouped only by BasedOnFileWithOsHash.",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -1511,6 +1524,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "1-based page number. Defaults to 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -1521,6 +1535,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 20, max 100.",
             "schema": {
               "maximum": 100,
               "minimum": 1,
@@ -1531,6 +1546,7 @@
           {
             "name": "Search",
             "in": "query",
+            "description": "Optional search term matched against video title and site title.",
             "schema": {
               "type": "string"
             }
@@ -1538,6 +1554,7 @@
           {
             "name": "SiteId",
             "in": "query",
+            "description": "Optional filter to return only videos belonging to the specified site.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -1546,6 +1563,7 @@
           {
             "name": "ActorId",
             "in": "query",
+            "description": "Optional filter to return only videos featuring the specified actor.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -1554,6 +1572,7 @@
           {
             "name": "SortBy",
             "in": "query",
+            "description": "Field to sort by. Supported values: `title` (default), `releaseDate`, `createdAtUtc`.",
             "schema": {
               "pattern": "^(?i)(title|releaseDate|createdAtUtc)$",
               "enum": [
@@ -1568,6 +1587,7 @@
           {
             "name": "SortDirection",
             "in": "query",
+            "description": "Sort direction: `asc` (default) or `desc`.",
             "schema": {
               "pattern": "^(?i)(asc|desc)$",
               "enum": [
@@ -1581,6 +1601,7 @@
           {
             "name": "CreatedAfter",
             "in": "query",
+            "description": "Return only videos created strictly after this timestamp (exclusive).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -1589,6 +1610,7 @@
           {
             "name": "CreatedBefore",
             "in": "query",
+            "description": "Return only videos created strictly before this timestamp (exclusive).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -1992,6 +2014,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "Page number, starting at 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -2002,6 +2025,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Page size. Values above 1000 are clamped.",
             "schema": {
               "maximum": 1000,
               "minimum": 1,
@@ -2012,6 +2036,7 @@
           {
             "name": "SortBy",
             "in": "query",
+            "description": "Sort field. Allowed values: createdAtUtc, updatedAtUtc, submissionCount, filesize.",
             "schema": {
               "pattern": "^(?i)(createdAtUtc|updatedAtUtc|submissionCount|filesize)$",
               "enum": [
@@ -2027,6 +2052,7 @@
           {
             "name": "SortDirection",
             "in": "query",
+            "description": "Sort direction. Allowed values: asc, desc.",
             "schema": {
               "pattern": "^(?i)(asc|desc)$",
               "enum": [
@@ -2229,6 +2255,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "1-based page number. Defaults to 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -2239,6 +2266,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 20, max 5000.",
             "schema": {
               "maximum": 5000,
               "minimum": 1,
@@ -2249,6 +2277,7 @@
           {
             "name": "SortBy",
             "in": "query",
+            "description": "Field to sort by. Supported values: `createdAtUtc` (default), `updatedAtUtc`, `submissionCount`, `filesize`.",
             "schema": {
               "pattern": "^(?i)(createdAtUtc|updatedAtUtc|submissionCount|filesize)$",
               "enum": [
@@ -2264,6 +2293,7 @@
           {
             "name": "SortDirection",
             "in": "query",
+            "description": "Sort direction: `desc` (default) or `asc`.",
             "schema": {
               "pattern": "^(?i)(asc|desc)$",
               "enum": [
@@ -2277,6 +2307,7 @@
           {
             "name": "VideoId",
             "in": "query",
+            "description": "Optional. Restrict results to a single video.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -2285,6 +2316,7 @@
           {
             "name": "SiteId",
             "in": "query",
+            "description": "Optional. Restrict results to videos on the specified site.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -2293,6 +2325,7 @@
           {
             "name": "IsVerified",
             "in": "query",
+            "description": "Optional. Filter by verification state. Omit for both verified and unverified entries.",
             "schema": {
               "type": "boolean"
             }
@@ -2300,6 +2333,7 @@
           {
             "name": "CreatedFrom",
             "in": "query",
+            "description": "Optional. Return only filehashes created at or after this timestamp (UTC).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -2308,6 +2342,7 @@
           {
             "name": "CreatedTo",
             "in": "query",
+            "description": "Optional. Return only filehashes created at or before this timestamp (UTC).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -2316,6 +2351,7 @@
           {
             "name": "UpdatedFrom",
             "in": "query",
+            "description": "Optional. Return only filehashes updated at or after this timestamp (UTC).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -2324,6 +2360,7 @@
           {
             "name": "UpdatedTo",
             "in": "query",
+            "description": "Optional. Return only filehashes updated at or before this timestamp (UTC).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -2621,6 +2658,7 @@
           {
             "name": "Since",
             "in": "query",
+            "description": "Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -2629,6 +2667,7 @@
           {
             "name": "SinceId",
             "in": "query",
+            "description": "Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -2637,6 +2676,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 1000.",
             "schema": {
               "maximum": 1000,
               "minimum": 1,
@@ -2647,6 +2687,7 @@
           {
             "name": "VideoId",
             "in": "query",
+            "description": "Optional. Restrict changes to a single video.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -2655,6 +2696,7 @@
           {
             "name": "SiteId",
             "in": "query",
+            "description": "Optional. Restrict changes to videos on the specified site.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -2928,6 +2970,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "1-based page number. Defaults to 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -2938,6 +2981,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 20, max 1000 — the full list fits in one page.",
             "schema": {
               "maximum": 1000,
               "minimum": 1,
@@ -2948,6 +2992,7 @@
           {
             "name": "Search",
             "in": "query",
+            "description": "Optional search term matched against site title.",
             "schema": {
               "type": "string"
             }
@@ -2955,6 +3000,7 @@
           {
             "name": "SortBy",
             "in": "query",
+            "description": "Field to sort by. Supported values: `title` (default).",
             "schema": {
               "type": "string"
             }
@@ -2962,6 +3008,7 @@
           {
             "name": "SortDirection",
             "in": "query",
+            "description": "Sort direction: `asc` (default) or `desc`.",
             "schema": {
               "pattern": "^(?i)(asc|desc)$",
               "enum": [
@@ -3145,6 +3192,7 @@
           {
             "name": "Q",
             "in": "query",
+            "description": "Search keyword. Must be at least 3 characters.",
             "schema": {
               "type": "string"
             }
@@ -3152,6 +3200,7 @@
           {
             "name": "ReleaseDate",
             "in": "query",
+            "description": "Optional. Filter results to videos with this exact release date (format: yyyy-MM-dd).",
             "schema": {
               "type": "string",
               "format": "date"
@@ -3248,6 +3297,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "1-based page number. Defaults to 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -3258,6 +3308,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 20, max 100.",
             "schema": {
               "maximum": 100,
               "minimum": 1,
@@ -3268,6 +3319,7 @@
           {
             "name": "Search",
             "in": "query",
+            "description": "Optional search term matched against title and release group.",
             "schema": {
               "type": "string"
             }
@@ -3275,6 +3327,7 @@
           {
             "name": "Category",
             "in": "query",
+            "description": "Optional category filter. Supported values: `movies`, `tvshows`, `adult`.",
             "schema": {
               "pattern": "^(?i)(movies|tvshows|adult)$",
               "enum": [
@@ -3289,6 +3342,7 @@
           {
             "name": "ReleaseDateFrom",
             "in": "query",
+            "description": "Optional. Return only entries released on or after this date.",
             "schema": {
               "type": "string",
               "format": "date"
@@ -3297,6 +3351,7 @@
           {
             "name": "ReleaseDateTo",
             "in": "query",
+            "description": "Optional. Return only entries released on or before this date.",
             "schema": {
               "type": "string",
               "format": "date"
@@ -3305,6 +3360,7 @@
           {
             "name": "SortBy",
             "in": "query",
+            "description": "Field to sort by. Supported values: `releaseDate` (default), `title`.",
             "schema": {
               "pattern": "^(?i)(releaseDate|title)$",
               "enum": [
@@ -3318,6 +3374,7 @@
           {
             "name": "SortDirection",
             "in": "query",
+            "description": "Sort direction: `desc` (default) or `asc`.",
             "schema": {
               "pattern": "^(?i)(asc|desc)$",
               "enum": [
@@ -3419,6 +3476,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "1-based page number. Defaults to 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -3429,6 +3487,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 20, max 500.",
             "schema": {
               "maximum": 500,
               "minimum": 1,
@@ -3439,6 +3498,7 @@
           {
             "name": "SiteId",
             "in": "query",
+            "description": "Optional. Filter to predbs linked to videos on the specified site.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -3447,6 +3507,7 @@
           {
             "name": "CreatedFrom",
             "in": "query",
+            "description": "Optional. Return only PreDb entries created at or after this timestamp (UTC).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3455,6 +3516,7 @@
           {
             "name": "CreatedTo",
             "in": "query",
+            "description": "Optional. Return only PreDb entries created at or before this timestamp (UTC).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3652,6 +3714,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "1-based page number. Defaults to 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -3662,6 +3725,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 20, max 5000.",
             "schema": {
               "maximum": 5000,
               "minimum": 1,
@@ -3672,6 +3736,7 @@
           {
             "name": "SortBy",
             "in": "query",
+            "description": "Field to sort by. Supported values: `createdAtUtc` (default), `updatedAtUtc`, `submissionCount`, `filesize`.",
             "schema": {
               "pattern": "^(?i)(createdAtUtc|updatedAtUtc|submissionCount|filesize)$",
               "enum": [
@@ -3687,6 +3752,7 @@
           {
             "name": "SortDirection",
             "in": "query",
+            "description": "Sort direction: `desc` (default) or `asc`.",
             "schema": {
               "pattern": "^(?i)(asc|desc)$",
               "enum": [
@@ -3700,6 +3766,7 @@
           {
             "name": "IndexerSource",
             "in": "query",
+            "description": "Optional. Restrict results to an indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.",
             "schema": {
               "pattern": "^(?i)(DrunkenSlug|NzbFinder|NzbPorn)$",
               "enum": [
@@ -3714,6 +3781,7 @@
           {
             "name": "IndexerId",
             "in": "query",
+            "description": "Optional. Restrict results to an indexer-specific identifier.",
             "schema": {
               "maxLength": 255,
               "type": "string"
@@ -3722,6 +3790,7 @@
           {
             "name": "IsVerified",
             "in": "query",
+            "description": "Optional. Filter by verification state. Omit for both verified and unverified entries.",
             "schema": {
               "type": "boolean"
             }
@@ -3729,6 +3798,7 @@
           {
             "name": "CreatedFrom",
             "in": "query",
+            "description": "Optional. Return only filehashes created at or after this timestamp (UTC).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3737,6 +3807,7 @@
           {
             "name": "CreatedTo",
             "in": "query",
+            "description": "Optional. Return only filehashes created at or before this timestamp (UTC).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3745,6 +3816,7 @@
           {
             "name": "UpdatedFrom",
             "in": "query",
+            "description": "Optional. Return only filehashes updated at or after this timestamp (UTC).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3753,6 +3825,7 @@
           {
             "name": "UpdatedTo",
             "in": "query",
+            "description": "Optional. Return only filehashes updated at or before this timestamp (UTC).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3849,6 +3922,7 @@
           {
             "name": "Since",
             "in": "query",
+            "description": "Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -3857,6 +3931,7 @@
           {
             "name": "SinceId",
             "in": "query",
+            "description": "Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -3865,6 +3940,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 1000.",
             "schema": {
               "maximum": 1000,
               "minimum": 1,
@@ -3875,6 +3951,7 @@
           {
             "name": "IndexerSource",
             "in": "query",
+            "description": "Optional. Restrict changes to an indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.",
             "schema": {
               "pattern": "^(?i)(DrunkenSlug|NzbFinder|NzbPorn)$",
               "enum": [
@@ -3889,6 +3966,7 @@
           {
             "name": "IndexerId",
             "in": "query",
+            "description": "Optional. Restrict changes to an indexer-specific identifier.",
             "schema": {
               "maxLength": 255,
               "type": "string"
@@ -4192,6 +4270,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "1-based page number. Defaults to 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -4202,6 +4281,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 500.",
             "schema": {
               "maximum": 500,
               "minimum": 1,
@@ -4212,6 +4292,7 @@
           {
             "name": "SortBy",
             "in": "query",
+            "description": "Field to sort by. Supported values: `favoritedAtUtc`, `title`. Defaults to `favoritedAtUtc`.",
             "schema": {
               "type": "string"
             }
@@ -4219,6 +4300,7 @@
           {
             "name": "SortDirection",
             "in": "query",
+            "description": "Sort direction: `asc` or `desc`. Defaults to `desc`.",
             "schema": {
               "pattern": "^(?i)(asc|desc)$",
               "enum": [
@@ -4232,6 +4314,7 @@
           {
             "name": "Search",
             "in": "query",
+            "description": "Optional search term matched against site title.",
             "schema": {
               "type": "string"
             }
@@ -4625,6 +4708,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "1-based page number. Defaults to 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -4635,6 +4719,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 500.",
             "schema": {
               "maximum": 500,
               "minimum": 1,
@@ -4645,6 +4730,7 @@
           {
             "name": "SortBy",
             "in": "query",
+            "description": "Field to sort by. Supported values: `favoritedAtUtc`, `name`. Defaults to `favoritedAtUtc`.",
             "schema": {
               "type": "string"
             }
@@ -4652,6 +4738,7 @@
           {
             "name": "SortDirection",
             "in": "query",
+            "description": "Sort direction: `asc` or `desc`. Defaults to `desc`.",
             "schema": {
               "pattern": "^(?i)(asc|desc)$",
               "enum": [
@@ -4665,6 +4752,7 @@
           {
             "name": "Search",
             "in": "query",
+            "description": "Optional search term matched against actor name.",
             "schema": {
               "type": "string"
             }
@@ -5647,6 +5735,7 @@
           {
             "name": "Page",
             "in": "query",
+            "description": "1-based page number. Defaults to 1.",
             "schema": {
               "maximum": 2147483647,
               "minimum": 1,
@@ -5657,6 +5746,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 500.",
             "schema": {
               "maximum": 500,
               "minimum": 1,
@@ -5667,6 +5757,7 @@
           {
             "name": "Search",
             "in": "query",
+            "description": "Optional search term matched against actor name and aliases.",
             "schema": {
               "type": "string"
             }
@@ -5674,6 +5765,7 @@
           {
             "name": "SortBy",
             "in": "query",
+            "description": "Field to sort by. Supported values: \"name\" (default), \"createdAtUtc\".",
             "schema": {
               "type": "string"
             }
@@ -5681,6 +5773,7 @@
           {
             "name": "SortDirection",
             "in": "query",
+            "description": "Sort direction: \"asc\" (default) or \"desc\".",
             "schema": {
               "pattern": "^(?i)(asc|desc)$",
               "enum": [
@@ -5694,6 +5787,7 @@
           {
             "name": "CreatedAfter",
             "in": "query",
+            "description": "Return only actors created strictly after this timestamp (exclusive).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -5702,6 +5796,7 @@
           {
             "name": "CreatedBefore",
             "in": "query",
+            "description": "Return only actors created strictly before this timestamp (exclusive).",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -6000,6 +6095,7 @@
           {
             "name": "Since",
             "in": "query",
+            "description": "Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.",
             "schema": {
               "type": "string",
               "format": "date-time"
@@ -6008,6 +6104,7 @@
           {
             "name": "SinceId",
             "in": "query",
+            "description": "Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -6016,6 +6113,7 @@
           {
             "name": "PageSize",
             "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 1000.",
             "schema": {
               "maximum": 1000,
               "minimum": 1,
@@ -6115,20 +6213,25 @@
         "type": "object",
         "properties": {
           "packageIdentifier": {
-            "type": "string"
+            "type": "string",
+            "description": "Stable slug identifying the subscription package (e.g. \"plus\", \"premium\")."
           },
           "packageTitle": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable title of the subscription package."
           },
           "startsAtUtc": {
             "type": "string",
+            "description": "UTC timestamp when this subscription period starts.",
             "format": "date-time"
           },
           "endsAtUtc": {
             "type": "string",
+            "description": "UTC timestamp when this subscription period ends.",
             "format": "date-time"
           }
-        }
+        },
+        "description": "An active subscription held by the authenticated user."
       },
       "ActorAliasDto": {
         "required": [
@@ -6141,6 +6244,7 @@
           },
           "siteId": {
             "type": "string",
+            "description": "ID of the site this alias is associated with, if any.",
             "format": "uuid",
             "nullable": true
           }
@@ -6340,7 +6444,8 @@
             "format": "date-time",
             "nullable": true
           }
-        }
+        },
+        "description": "Full current actor payload, including tombstone metadata."
       },
       "ActorChangeAliasDto": {
         "required": [
@@ -6382,12 +6487,14 @@
         "type": "object",
         "properties": {
           "eventType": {
-            "type": "string"
+            "type": "string",
+            "description": "One of `created`, `updated`, or `deleted`."
           },
           "actor": {
             "$ref": "#/components/schemas/ActorChangeActorDto"
           }
-        }
+        },
+        "description": "A single current-state actor change."
       },
       "ActorChangeImageDto": {
         "required": [
@@ -6447,7 +6554,8 @@
             "type": "string",
             "format": "uuid"
           }
-        }
+        },
+        "description": "Seek cursor for continuing an actor change feed."
       },
       "ActorDetailDto": {
         "required": [
@@ -6479,16 +6587,19 @@
             "format": "uuid"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Stage name of the actor."
           },
           "gender": {
             "$ref": "#/components/schemas/ActorGender"
           },
           "genderLabel": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable gender label."
           },
           "birthday": {
             "type": "string",
+            "description": "Date of birth, if known.",
             "format": "date",
             "nullable": true
           },
@@ -6503,10 +6614,12 @@
           },
           "birthdayTypeLabel": {
             "type": "string",
+            "description": "Human-readable birthday type label (e.g. \"Exact\", \"Approximate\").",
             "nullable": true
           },
           "deathday": {
             "type": "string",
+            "description": "Date of death, if applicable.",
             "format": "date",
             "nullable": true
           },
@@ -6534,6 +6647,7 @@
           },
           "height": {
             "type": "integer",
+            "description": "Height in centimetres.",
             "format": "int32",
             "nullable": true
           },
@@ -6544,15 +6658,18 @@
           },
           "braSizeLabel": {
             "type": "string",
+            "description": "Human-readable bra size label (e.g. \"34B\").",
             "nullable": true
           },
           "waistSize": {
             "type": "integer",
+            "description": "Waist measurement in centimetres.",
             "format": "int32",
             "nullable": true
           },
           "hipSize": {
             "type": "integer",
+            "description": "Hip measurement in centimetres.",
             "format": "int32",
             "nullable": true
           },
@@ -6570,11 +6687,13 @@
           },
           "careerStart": {
             "type": "integer",
+            "description": "Year the actor's career began.",
             "format": "int32",
             "nullable": true
           },
           "careerEnd": {
             "type": "integer",
+            "description": "Year the actor's career ended, if applicable.",
             "format": "int32",
             "nullable": true
           },
@@ -6618,7 +6737,8 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Full details for a single actor."
       },
       "ActorGender": {
         "enum": [
@@ -6653,6 +6773,7 @@
           },
           "url": {
             "type": "string",
+            "description": "Full CDN URL for the image, if available.",
             "nullable": true
           }
         }
@@ -6703,36 +6824,43 @@
             "format": "uuid"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Stage name of the actor."
           },
           "gender": {
             "$ref": "#/components/schemas/ActorGender"
           },
           "genderLabel": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable gender label."
           },
           "nationality": {
             "$ref": "#/components/schemas/Nationality"
           },
           "nationalityLabel": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable nationality label."
           },
           "ethnicity": {
             "$ref": "#/components/schemas/Ethnicity"
           },
           "ethnicityLabel": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable ethnicity label."
           },
           "birthday": {
             "type": "string",
+            "description": "Date of birth, if known.",
             "format": "date",
             "nullable": true
           },
           "profileImageUrl": {
             "type": "string",
+            "description": "Full CDN URL of the actor's profile image, if available.",
             "nullable": true
           }
-        }
+        },
+        "description": "Summary of a single actor."
       },
       "AddDownloadedFromIndexerFilenameRequest": {
         "required": [
@@ -6742,22 +6870,26 @@
         "properties": {
           "filename": {
             "maxLength": 2000,
-            "type": "string"
+            "type": "string",
+            "description": "The filename as reported by the indexer/download source."
           },
           "filesize": {
             "maximum": 9223372036854776000,
             "minimum": 0,
             "type": "integer",
+            "description": "File size in bytes.",
             "format": "int64"
           },
           "osHash": {
             "pattern": "^[0-9A-Fa-f]{16}$",
             "type": "string",
+            "description": "Optional OS hash value as a 16-character fixed-length string.",
             "nullable": true
           },
           "pHash": {
             "pattern": "^[0-9A-Fa-f]{16}$",
             "type": "string",
+            "description": "Optional perceptual hash value, 16 hexadecimal characters. It must be computed as\n\"Perceptual hashes\" in the API description prescribes; a value from another procedure\nis stored but can never be matched.",
             "nullable": true
           }
         }
@@ -6774,6 +6906,7 @@
         "properties": {
           "videoId": {
             "type": "string",
+            "description": "Optional ID of the wanted video this download belongs to. Pass null when the download is not linked to a video yet.",
             "format": "uuid",
             "nullable": true
           },
@@ -6782,25 +6915,30 @@
           },
           "indexerId": {
             "maxLength": 255,
-            "type": "string"
+            "type": "string",
+            "description": "Indexer-specific identifier for the download item."
           },
           "downloadIdentifier": {
             "maxLength": 2000,
-            "type": "string"
+            "type": "string",
+            "description": "Download identifier returned by the indexer or download client."
           },
           "nzbName": {
             "maxLength": 2000,
-            "type": "string"
+            "type": "string",
+            "description": "NZB or release name."
           },
           "nzbUrl": {
             "maxLength": 2000,
-            "type": "string"
+            "type": "string",
+            "description": "NZB or release URL."
           },
           "filenames": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AddDownloadedFromIndexerFilenameRequest"
-            }
+            },
+            "description": "Optional filename rows to create together with the parent entry."
           }
         }
       },
@@ -6817,9 +6955,11 @@
             "items": {
               "type": "string",
               "format": "uuid"
-            }
+            },
+            "description": "IDs of the videos to add. Between 1 and 50 entries."
           }
-        }
+        },
+        "description": "Request body for batch-adding wanted videos."
       },
       "AddWantedVideosBatchResponse": {
         "required": [
@@ -6831,17 +6971,21 @@
         "properties": {
           "added": {
             "type": "integer",
+            "description": "Number of entries newly added to the wanted list.",
             "format": "int32"
           },
           "alreadyExisted": {
             "type": "integer",
+            "description": "Number of entries that were already on the wanted list.",
             "format": "int32"
           },
           "notFound": {
             "type": "integer",
+            "description": "Number of video IDs that were not found in the database.",
             "format": "int32"
           }
-        }
+        },
+        "description": "Summary of a batch add-wanted-videos operation."
       },
       "BirthdayType": {
         "enum": [
@@ -6875,36 +7019,45 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "ID of the filename row.",
             "format": "uuid"
           },
           "downloadedFromIndexerId": {
             "type": "string",
+            "description": "ID of the parent downloaded-from-indexer entry.",
             "format": "uuid"
           },
           "filename": {
-            "type": "string"
+            "type": "string",
+            "description": "The filename as reported by the indexer/download source."
           },
           "filesize": {
             "type": "integer",
+            "description": "File size in bytes.",
             "format": "int64"
           },
           "osHash": {
             "type": "string",
+            "description": "Optional OS hash value as a 16-character fixed-length string.",
             "nullable": true
           },
           "pHash": {
             "type": "string",
+            "description": "Optional perceptual hash value as a 16-character fixed-length string.",
             "nullable": true
           },
           "createdAtUtc": {
             "type": "string",
+            "description": "When this filename row was created.",
             "format": "date-time"
           },
           "updatedAtUtc": {
             "type": "string",
+            "description": "When this filename row was last updated.",
             "format": "date-time"
           }
-        }
+        },
+        "description": "A filename recorded for a downloaded-from-indexer entry."
       },
       "DownloadedFromIndexerResponse": {
         "required": [
@@ -6923,10 +7076,12 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "ID of the downloaded-from-indexer entry.",
             "format": "uuid"
           },
           "videoId": {
             "type": "string",
+            "description": "ID of the associated wanted video, or null when the download is not linked to a video.",
             "format": "uuid",
             "nullable": true
           },
@@ -6934,32 +7089,40 @@
             "$ref": "#/components/schemas/IndexerSlug"
           },
           "indexerId": {
-            "type": "string"
+            "type": "string",
+            "description": "Indexer-specific identifier for the download item."
           },
           "downloadIdentifier": {
-            "type": "string"
+            "type": "string",
+            "description": "Download identifier returned by the indexer or download client."
           },
           "nzbName": {
-            "type": "string"
+            "type": "string",
+            "description": "NZB or release name."
           },
           "nzbUrl": {
-            "type": "string"
+            "type": "string",
+            "description": "NZB or release URL."
           },
           "filenames": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DownloadedFromIndexerFilenameDto"
-            }
+            },
+            "description": "Filename rows recorded for this entry."
           },
           "createdAtUtc": {
             "type": "string",
+            "description": "When this entry was created.",
             "format": "date-time"
           },
           "updatedAtUtc": {
             "type": "string",
+            "description": "When this entry was last updated.",
             "format": "date-time"
           }
-        }
+        },
+        "description": "A downloaded-from-indexer entry for the current user."
       },
       "Ethnicity": {
         "enum": [
@@ -7008,12 +7171,14 @@
         "type": "object",
         "properties": {
           "eventType": {
-            "type": "string"
+            "type": "string",
+            "description": "One of `created`, `updated`, or `deleted`."
           },
           "favoriteActor": {
             "$ref": "#/components/schemas/FavoriteActorChangeFavoriteActorDto"
           }
-        }
+        },
+        "description": "A single changed favorite actor row in the incremental feed."
       },
       "FavoriteActorChangeFavoriteActorDto": {
         "required": [
@@ -7064,7 +7229,8 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Current-state payload for a favorite actor row in the incremental feed."
       },
       "FavoriteActorChangesCursorDto": {
         "required": [
@@ -7081,7 +7247,8 @@
             "type": "string",
             "format": "uuid"
           }
-        }
+        },
+        "description": "Seek cursor for continuing a favorite actor change feed."
       },
       "FavoriteActorSummaryDto": {
         "required": [
@@ -7102,23 +7269,29 @@
             "type": "string"
           },
           "gender": {
-            "type": "string"
+            "type": "string",
+            "description": "Gender label (e.g. `Female`, `Male`, `Unknown`)."
           },
           "nationality": {
-            "type": "string"
+            "type": "string",
+            "description": "Nationality label."
           },
           "ethnicity": {
-            "type": "string"
+            "type": "string",
+            "description": "Ethnicity label."
           },
           "profileImageCdnPath": {
             "type": "string",
+            "description": "CDN URL of the actor's face/profile image, if available.",
             "nullable": true
           },
           "favoritedAtUtc": {
             "type": "string",
+            "description": "UTC timestamp when the user added this actor to their favorites.",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Summary of an actor in the current user's favorites list."
       },
       "FavoriteSiteChangeDto": {
         "required": [
@@ -7128,12 +7301,14 @@
         "type": "object",
         "properties": {
           "eventType": {
-            "type": "string"
+            "type": "string",
+            "description": "One of `created`, `updated`, or `deleted`."
           },
           "favoriteSite": {
             "$ref": "#/components/schemas/FavoriteSiteChangeFavoriteSiteDto"
           }
-        }
+        },
+        "description": "A single changed favorite site row in the incremental feed."
       },
       "FavoriteSiteChangeFavoriteSiteDto": {
         "required": [
@@ -7181,7 +7356,8 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Current-state payload for a favorite site row in the incremental feed."
       },
       "FavoriteSiteChangesCursorDto": {
         "required": [
@@ -7198,7 +7374,8 @@
             "type": "string",
             "format": "uuid"
           }
-        }
+        },
+        "description": "Seek cursor for continuing a favorite site change feed."
       },
       "FavoriteSiteSummaryDto": {
         "required": [
@@ -7230,9 +7407,11 @@
           },
           "favoritedAtUtc": {
             "type": "string",
+            "description": "UTC timestamp when the user added this site to their favorites.",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Summary of a site in the current user's favorites list."
       },
       "FilehashSubmissionSource": {
         "enum": [
@@ -7262,13 +7441,16 @@
         "properties": {
           "videoId": {
             "type": "string",
+            "description": "ID of the video whose wanted entry is updated. Must be unique within the request.",
             "format": "uuid"
           },
           "isFulfilled": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the wanted video has been fulfilled."
           },
           "fulfilledAtUtc": {
             "type": "string",
+            "description": "When the video was fulfilled. Ignored when isFulfilled is false; defaults to the server time when omitted.",
             "format": "date-time",
             "nullable": true
           },
@@ -7284,6 +7466,7 @@
           "fulfillmentExternalId": {
             "maxLength": 255,
             "type": "string",
+            "description": "External identifier from the fulfilling application, if applicable.",
             "nullable": true
           },
           "fulfillmentByApp": {
@@ -7295,7 +7478,8 @@
             "description": "Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).",
             "nullable": true
           }
-        }
+        },
+        "description": "A single fulfilment update."
       },
       "FulfillWantedVideoOutcome": {
         "enum": [
@@ -7305,7 +7489,7 @@
           3
         ],
         "type": "integer",
-        "description": "Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3)."
+        "description": "Outcome of a single fulfilment update. Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3)."
       },
       "FulfillWantedVideoResultDto": {
         "required": [
@@ -7316,12 +7500,14 @@
         "properties": {
           "videoId": {
             "type": "string",
+            "description": "ID of the video this result belongs to.",
             "format": "uuid"
           },
           "outcome": {
             "$ref": "#/components/schemas/FulfillWantedVideoOutcome"
           }
-        }
+        },
+        "description": "What happened to one video of the batch."
       },
       "FulfillWantedVideosBatchRequest": {
         "required": [
@@ -7335,9 +7521,11 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FulfillWantedVideoItem"
-            }
+            },
+            "description": "Fulfilment updates to apply. Between 1 and 50 entries, each for a distinct video."
           }
-        }
+        },
+        "description": "Request body for batch-updating the fulfilment state of wanted videos."
       },
       "FulfillWantedVideosBatchResponse": {
         "required": [
@@ -7349,9 +7537,11 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FulfillWantedVideoResultDto"
-            }
+            },
+            "description": "One result per requested video, in request order."
           }
-        }
+        },
+        "description": "Per-video outcome of a batch fulfilment update."
       },
       "GetActorChangesResponse": {
         "required": [
@@ -7377,6 +7567,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7385,9 +7576,11 @@
                 "$ref": "#/components/schemas/ActorChangesCursorDto"
               }
             ],
+            "description": "Seek cursor for continuing an actor change feed.",
             "nullable": true
           }
-        }
+        },
+        "description": "A seek-paged actor delta feed ordered by updated timestamp and actor ID."
       },
       "GetActorsByIdsRequest": {
         "required": [
@@ -7430,6 +7623,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7438,9 +7632,11 @@
                 "$ref": "#/components/schemas/FavoriteActorChangesCursorDto"
               }
             ],
+            "description": "Seek cursor for continuing a favorite actor change feed.",
             "nullable": true
           }
-        }
+        },
+        "description": "Paged delta feed of favorite actor changes ordered by updated timestamp and ID."
       },
       "GetFavoriteSiteChangesResponse": {
         "required": [
@@ -7466,6 +7662,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7474,9 +7671,11 @@
                 "$ref": "#/components/schemas/FavoriteSiteChangesCursorDto"
               }
             ],
+            "description": "Seek cursor for continuing a favorite site change feed.",
             "nullable": true
           }
-        }
+        },
+        "description": "Paged delta feed of favorite site changes ordered by updated timestamp and ID."
       },
       "GetHealthResponse": {
         "required": [
@@ -7486,13 +7685,16 @@
         "type": "object",
         "properties": {
           "status": {
-            "type": "string"
+            "type": "string",
+            "description": "Always \"ok\" when the API is reachable."
           },
           "timestamp": {
             "type": "string",
+            "description": "UTC timestamp at the time of the request.",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Health check response."
       },
       "GetIndexerFilehashChangesResponse": {
         "required": [
@@ -7511,13 +7713,16 @@
           },
           "pageSize": {
             "type": "integer",
+            "description": "The resolved page size for this response.",
             "format": "int32"
           },
           "hasMore": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether additional rows exist after the current page."
           },
           "serverTimeUtc": {
             "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7526,9 +7731,11 @@
                 "$ref": "#/components/schemas/IndexerFilehashChangesCursorDto"
               }
             ],
+            "description": "Seek cursor for continuing an indexer filehash change feed.",
             "nullable": true
           }
-        }
+        },
+        "description": "Paged delta feed of indexer filehash changes ordered by updated timestamp and ID."
       },
       "GetRateLimitResponse": {
         "required": [
@@ -7539,7 +7746,8 @@
         "type": "object",
         "properties": {
           "isEnforced": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Always true. Rate limiting is enforced unconditionally; when it cannot be enforced the API\nanswers 503 instead of returning this document. Kept for compatibility with clients that\nread the field."
           },
           "hourly": {
             "$ref": "#/components/schemas/RateLimitWindowStatus"
@@ -7547,7 +7755,8 @@
           "monthly": {
             "$ref": "#/components/schemas/RateLimitWindowStatus"
           }
-        }
+        },
+        "description": "Current rate limit status for the authenticated user."
       },
       "GetVideoFilehashChangesResponse": {
         "required": [
@@ -7566,13 +7775,16 @@
           },
           "pageSize": {
             "type": "integer",
+            "description": "The resolved page size for this response.",
             "format": "int32"
           },
           "hasMore": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether additional rows exist after the current page."
           },
           "serverTimeUtc": {
             "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7581,9 +7793,11 @@
                 "$ref": "#/components/schemas/VideoFilehashChangesCursorDto"
               }
             ],
+            "description": "Seek cursor for continuing a video filehash change feed.",
             "nullable": true
           }
-        }
+        },
+        "description": "Paged delta feed of video filehash changes ordered by updated timestamp and ID."
       },
       "GetVideoFilehashesByVideoIdsRequest": {
         "required": [
@@ -7665,6 +7879,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7701,6 +7916,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7709,9 +7925,11 @@
                 "$ref": "#/components/schemas/WantedVideoChangesCursorDto"
               }
             ],
+            "description": "Seek cursor for continuing a wanted video change feed.",
             "nullable": true
           }
-        }
+        },
+        "description": "Paged delta feed of wanted video changes ordered by updated timestamp and ID."
       },
       "Haircolor": {
         "enum": [
@@ -7740,7 +7958,7 @@
           5
         ],
         "type": "integer",
-        "description": "Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5)."
+        "description": "How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5)."
       },
       "IdentifyMatchKind": {
         "enum": [
@@ -7763,15 +7981,19 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier of the site.",
             "format": "uuid"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "description": "Site title."
           },
           "url": {
-            "type": "string"
+            "type": "string",
+            "description": "Site URL."
           }
-        }
+        },
+        "description": "The site a file could be attributed to."
       },
       "IdentifyVideoFileDto": {
         "required": [
@@ -7782,26 +8004,32 @@
         "properties": {
           "ref": {
             "maxLength": 64,
-            "type": "string"
+            "type": "string",
+            "description": "Client-assigned identifier, returned unchanged. Unique within the request."
           },
           "filename": {
             "maxLength": 2000,
-            "type": "string"
+            "type": "string",
+            "description": "File name without directory. Required — it carries the lowest rungs of the ladder."
           },
           "filesize": {
             "type": "integer",
+            "description": "Size of the file in bytes, if known.",
             "format": "int64",
             "nullable": true
           },
           "osHash": {
             "type": "string",
+            "description": "OS hash of the file, 16 hexadecimal characters, if the client computed one.",
             "nullable": true
           },
           "pHash": {
             "type": "string",
+            "description": "Perceptual hash of the file, 16 hexadecimal characters, if the client computed one.\nCompared for equality only, and only against values computed the way \"Perceptual hashes\"\nin the API description prescribes — send none rather than one from another procedure.",
             "nullable": true
           }
-        }
+        },
+        "description": "One file to identify."
       },
       "IdentifyVideoResultDto": {
         "required": [
@@ -7812,7 +8040,8 @@
         "type": "object",
         "properties": {
           "ref": {
-            "type": "string"
+            "type": "string",
+            "description": "The client-assigned identifier of the input file, returned unchanged."
           },
           "confidence": {
             "$ref": "#/components/schemas/IdentifyConfidence"
@@ -7828,6 +8057,7 @@
           },
           "videoId": {
             "type": "string",
+            "description": "The identified video, when exactly one was found.",
             "format": "uuid",
             "nullable": true
           },
@@ -7845,6 +8075,7 @@
                 "$ref": "#/components/schemas/IdentifySiteDto"
               }
             ],
+            "description": "The site a file could be attributed to.",
             "nullable": true
           },
           "candidates": {
@@ -7852,9 +8083,11 @@
             "items": {
               "type": "string",
               "format": "uuid"
-            }
+            },
+            "description": "All equally good videos when the match was ambiguous; otherwise empty."
           }
-        }
+        },
+        "description": "What the identification ladder made of one file."
       },
       "IdentifyVideosRequest": {
         "required": [
@@ -7868,12 +8101,15 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IdentifyVideoFileDto"
-            }
+            },
+            "description": "Files to identify. Between 1 and 200 entries."
           },
           "includeVideoDetails": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "When true, each matched result carries the full video document. Defaults to false."
           }
-        }
+        },
+        "description": "Request body for identifying local files against the prdb catalogue."
       },
       "IdentifyVideosResponse": {
         "required": [
@@ -7885,9 +8121,11 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IdentifyVideoResultDto"
-            }
+            },
+            "description": "One result per input file, in input order."
           }
-        }
+        },
+        "description": "Identification results, one per submitted file."
       },
       "IFormFile": {
         "type": "string",
@@ -7901,12 +8139,14 @@
         "type": "object",
         "properties": {
           "eventType": {
-            "type": "string"
+            "type": "string",
+            "description": "One of `created`, `updated`, or `deleted`."
           },
           "filehash": {
             "$ref": "#/components/schemas/IndexerFilehashChangeFilehashDto"
           }
-        }
+        },
+        "description": "A single changed indexer filehash row in the incremental feed."
       },
       "IndexerFilehashChangeFilehashDto": {
         "required": [
@@ -7929,37 +8169,47 @@
             "format": "uuid"
           },
           "indexerSource": {
-            "type": "string"
+            "type": "string",
+            "description": "Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`."
           },
           "indexerId": {
-            "type": "string"
+            "type": "string",
+            "description": "Indexer-specific identifier for the release."
           },
           "filename": {
-            "type": "string"
+            "type": "string",
+            "description": "Original filename submitted for this filehash record."
           },
           "osHash": {
-            "type": "string"
+            "type": "string",
+            "description": "OS hash value as stored."
           },
           "pHash": {
             "type": "string",
+            "description": "P hash value as stored, or null when not available.",
             "nullable": true
           },
           "filesize": {
             "type": "integer",
+            "description": "File size in bytes.",
             "format": "int64"
           },
           "submissionCount": {
             "type": "integer",
+            "description": "Number of submissions merged into this filehash record.",
             "format": "int32"
           },
           "isVerified": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this filehash record has been verified."
           },
           "isDeleted": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this row is soft-deleted."
           },
           "deletedAtUtc": {
             "type": "string",
+            "description": "Timestamp when the row was soft-deleted, or null when still active.",
             "format": "date-time",
             "nullable": true
           },
@@ -7971,7 +8221,8 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Current persisted state of a changed indexer filehash row, including soft-delete fields."
       },
       "IndexerFilehashChangesCursorDto": {
         "required": [
@@ -7988,7 +8239,8 @@
             "type": "string",
             "format": "uuid"
           }
-        }
+        },
+        "description": "Seek cursor for continuing an indexer filehash change feed."
       },
       "IndexerFilehashDto": {
         "required": [
@@ -8010,31 +8262,39 @@
             "format": "uuid"
           },
           "indexerSource": {
-            "type": "string"
+            "type": "string",
+            "description": "Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`."
           },
           "indexerId": {
-            "type": "string"
+            "type": "string",
+            "description": "Indexer-specific identifier for the release."
           },
           "filename": {
-            "type": "string"
+            "type": "string",
+            "description": "Original filename submitted for this filehash record."
           },
           "osHash": {
-            "type": "string"
+            "type": "string",
+            "description": "OS hash value as stored."
           },
           "pHash": {
             "type": "string",
+            "description": "P hash value as stored, or null when not available.",
             "nullable": true
           },
           "filesize": {
             "type": "integer",
+            "description": "File size in bytes.",
             "format": "int64"
           },
           "submissionCount": {
             "type": "integer",
+            "description": "Number of submissions merged into this filehash record.",
             "format": "int32"
           },
           "isVerified": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this filehash record has been verified."
           },
           "createdAtUtc": {
             "type": "string",
@@ -8061,13 +8321,15 @@
               "NzbPorn"
             ],
             "type": "string",
-            "description": "Allowed values: DrunkenSlug, NzbFinder, NzbPorn."
+            "description": "Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn."
           },
           "indexerId": {
             "maxLength": 255,
-            "type": "string"
+            "type": "string",
+            "description": "Indexer-specific identifier for the release."
           }
-        }
+        },
+        "description": "Combined indexer identity used to match filehashes by indexer source and indexer-specific ID."
       },
       "IndexerSlug": {
         "enum": [
@@ -8097,23 +8359,29 @@
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of filehash entries matching the current filters.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           },
           "sortBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Resolved sort field for the current query."
           },
           "sortDirection": {
-            "type": "string"
+            "type": "string",
+            "description": "Resolved sort direction for the current query."
           }
-        }
+        },
+        "description": "Paged list of the latest indexer filehash entries."
       },
       "LatestPreDbItemDto": {
         "required": [
@@ -8161,17 +8429,21 @@
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of PreDb entries matching the current filters.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           }
-        }
+        },
+        "description": "Paged list of the latest PreDb entries."
       },
       "LatestPreDbSiteDto": {
         "required": [
@@ -8233,23 +8505,29 @@
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of filehash entries matching the current filters.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           },
           "sortBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Resolved sort field for the current query."
           },
           "sortDirection": {
-            "type": "string"
+            "type": "string",
+            "description": "Resolved sort direction for the current query."
           }
-        }
+        },
+        "description": "Paged list of the latest video filehash entries."
       },
       "ListActorsResponse": {
         "required": [
@@ -8267,31 +8545,39 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ActorSummaryDto"
-            }
+            },
+            "description": "Actors on the current page."
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of actors matching the current query filters.",
             "format": "int32"
           },
           "totalPages": {
             "type": "integer",
+            "description": "Total number of pages for the current query and page size.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           },
           "sortBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Field the result is sorted by: \"name\" or \"createdAtUtc\"."
           },
           "sortDirection": {
-            "type": "string"
+            "type": "string",
+            "description": "Sort direction applied: \"asc\" or \"desc\"."
           }
-        }
+        },
+        "description": "Paged list of actors."
       },
       "ListFavoriteActorsResponse": {
         "required": [
@@ -8309,31 +8595,39 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FavoriteActorSummaryDto"
-            }
+            },
+            "description": "Favorite actor entries on the current page."
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of favorite actors matching the current query filters.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           },
           "totalPages": {
             "type": "integer",
+            "description": "Total number of pages.",
             "format": "int32"
           },
           "sortBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Field the results are sorted by."
           },
           "sortDirection": {
-            "type": "string"
+            "type": "string",
+            "description": "Sort direction applied: `asc` or `desc`."
           }
-        }
+        },
+        "description": "Paged list of the current user's favorite actors."
       },
       "ListFavoriteSitesResponse": {
         "required": [
@@ -8351,31 +8645,39 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FavoriteSiteSummaryDto"
-            }
+            },
+            "description": "Favorite site entries on the current page."
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of favorite sites matching the current query filters.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           },
           "totalPages": {
             "type": "integer",
+            "description": "Total number of pages.",
             "format": "int32"
           },
           "sortBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Field the results are sorted by."
           },
           "sortDirection": {
-            "type": "string"
+            "type": "string",
+            "description": "Sort direction applied: `asc` or `desc`."
           }
-        }
+        },
+        "description": "Paged list of the current user's favorite sites."
       },
       "ListPreDbResponse": {
         "required": [
@@ -8392,27 +8694,34 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PreDbSummaryDto"
-            }
+            },
+            "description": "PreDb entries on the current page."
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of entries matching the current query filters.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           },
           "sortBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Field the result is sorted by: \"releaseDate\" or \"title\"."
           },
           "sortDirection": {
-            "type": "string"
+            "type": "string",
+            "description": "Sort direction applied: \"asc\" or \"desc\"."
           }
-        }
+        },
+        "description": "Paged list of PreDb entries."
       },
       "ListSitesResponse": {
         "required": [
@@ -8429,27 +8738,34 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SiteSummaryDto"
-            }
+            },
+            "description": "Sites on the current page."
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of sites matching the current query filters.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           },
           "sortBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Field the result is sorted by: \"title\"."
           },
           "sortDirection": {
-            "type": "string"
+            "type": "string",
+            "description": "Sort direction applied: \"asc\" or \"desc\"."
           }
-        }
+        },
+        "description": "Paged list of sites."
       },
       "ListVideosResponse": {
         "required": [
@@ -8466,27 +8782,34 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/VideoSummaryDto"
-            }
+            },
+            "description": "Videos on the current page."
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of videos matching the current query filters.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           },
           "sortBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Field the result is sorted by: \"title\" or \"releaseDate\"."
           },
           "sortDirection": {
-            "type": "string"
+            "type": "string",
+            "description": "Sort direction applied: \"asc\" or \"desc\"."
           }
-        }
+        },
+        "description": "Paged list of videos."
       },
       "ListWantedVideosResponse": {
         "required": [
@@ -8504,31 +8827,39 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/WantedVideoSummaryDto"
-            }
+            },
+            "description": "Wanted video entries on the current page."
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of wanted videos matching the current query filters.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           },
           "totalPages": {
             "type": "integer",
+            "description": "Total number of pages.",
             "format": "int32"
           },
           "sortBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Field the results are sorted by."
           },
           "sortDirection": {
-            "type": "string"
+            "type": "string",
+            "description": "Sort direction applied: `asc` or `desc`."
           }
-        }
+        },
+        "description": "Paged list of the current user's wanted videos."
       },
       "LookupIndexerFilehashesRequest": {
         "type": "object",
@@ -8539,35 +8870,40 @@
             "items": {
               "type": "string",
               "format": "uuid"
-            }
+            },
+            "description": "Optional filehash row IDs to match."
           },
           "indexerKeys": {
             "maxItems": 100,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/IndexerFilehashLookupKeyDto"
-            }
+            },
+            "description": "Optional combined indexer source and indexer ID pairs to match."
           },
           "osHashes": {
             "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Optional OS hash values to match."
           },
           "pHashes": {
             "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Optional perceptual hash values to match, 16 hexadecimal characters each. Matched for\nequality, so a value computed by any procedure other than the one under \"Perceptual\nhashes\" in the API description matches nothing rather than failing."
           },
           "filenames": {
             "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Optional exact filenames to match."
           },
           "filesizes": {
             "maxItems": 100,
@@ -8575,7 +8911,8 @@
             "items": {
               "type": "integer",
               "format": "int64"
-            }
+            },
+            "description": "Optional exact file sizes to match."
           }
         }
       },
@@ -8591,7 +8928,8 @@
               "$ref": "#/components/schemas/IndexerFilehashDto"
             }
           }
-        }
+        },
+        "description": "Flat indexer filehash lookup results."
       },
       "LookupVideoFilehashesRequest": {
         "type": "object",
@@ -8602,7 +8940,8 @@
             "items": {
               "type": "string",
               "format": "uuid"
-            }
+            },
+            "description": "Optional filehash row IDs to match."
           },
           "videoIds": {
             "maxItems": 100,
@@ -8610,28 +8949,32 @@
             "items": {
               "type": "string",
               "format": "uuid"
-            }
+            },
+            "description": "Optional associated video IDs to match."
           },
           "osHashes": {
             "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Optional OS hash values to match."
           },
           "pHashes": {
             "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Optional perceptual hash values to match, 16 hexadecimal characters each. Matched for\nequality, so a value computed by any procedure other than the one under \"Perceptual\nhashes\" in the API description matches nothing rather than failing."
           },
           "filenames": {
             "maxItems": 100,
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Optional exact filenames to match."
           },
           "filesizes": {
             "maxItems": 100,
@@ -8639,7 +8982,8 @@
             "items": {
               "type": "integer",
               "format": "int64"
-            }
+            },
+            "description": "Optional exact file sizes to match."
           }
         }
       },
@@ -8655,7 +8999,8 @@
               "$ref": "#/components/schemas/VideoFilehashDto"
             }
           }
-        }
+        },
+        "description": "Flat filehash lookup results."
       },
       "Nationality": {
         "enum": [
@@ -8884,27 +9229,34 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier of the PreDb entry.",
             "format": "uuid"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "description": "Release title as indexed in PreDb."
           },
           "releaseDate": {
             "type": "string",
+            "description": "Release date associated with the entry.",
             "format": "date"
           },
           "releaseGroup": {
-            "type": "string"
+            "type": "string",
+            "description": "Release group name."
           },
           "category": {
-            "type": "string"
+            "type": "string",
+            "description": "Readable category value: Movies, TvShows, or Adult."
           },
           "filesize": {
             "type": "integer",
+            "description": "Optional file size value if known.",
             "format": "int32",
             "nullable": true
           }
-        }
+        },
+        "description": "Summary representation of a PreDb entry."
       },
       "PreDbVideoGroupDto": {
         "required": [
@@ -8975,21 +9327,26 @@
         "properties": {
           "limit": {
             "type": "integer",
+            "description": "Maximum number of requests allowed within this window.",
             "format": "int32"
           },
           "used": {
             "type": "integer",
+            "description": "Number of requests made within the current window.",
             "format": "int32"
           },
           "remaining": {
             "type": "integer",
+            "description": "Number of requests remaining before the limit is reached.",
             "format": "int32"
           },
           "resetsInSeconds": {
             "type": "integer",
+            "description": "Seconds until the oldest request in the window expires, reducing the used count by one.",
             "format": "int32"
           }
-        }
+        },
+        "description": "Rate limit status for a single time window."
       },
       "ReportVideoUserImageRequest": {
         "required": [
@@ -9057,6 +9414,7 @@
           },
           "totalGroups": {
             "type": "integer",
+            "description": "Number of distinct videos in the result set (capped at 500).",
             "format": "int32"
           }
         }
@@ -9073,32 +9431,40 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier of the site.",
             "format": "uuid"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "description": "Site title."
           },
           "url": {
-            "type": "string"
+            "type": "string",
+            "description": "Site URL."
           },
           "networkId": {
             "type": "string",
+            "description": "Unique identifier of the network this site belongs to, if any.",
             "format": "uuid",
             "nullable": true
           },
           "networkTitle": {
             "type": "string",
+            "description": "Title of the network this site belongs to, if any.",
             "nullable": true
           },
           "createdAtUtc": {
             "type": "string",
+            "description": "When this site was created.",
             "format": "date-time"
           },
           "updatedAtUtc": {
             "type": "string",
+            "description": "When this site was last changed.",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Summary of a single site."
       },
       "SubmitFilehashOutcome": {
         "enum": [
@@ -9108,7 +9474,7 @@
           3
         ],
         "type": "integer",
-        "description": "Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3)."
+        "description": "Outcome of a single submission. Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3)."
       },
       "SubmitVideoFilehashesRequest": {
         "required": [
@@ -9122,9 +9488,11 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SubmitVideoFilehashItem"
-            }
+            },
+            "description": "Assignments to submit. Between 1 and 200 entries."
           }
-        }
+        },
+        "description": "Request body for submitting confirmed hash-to-video assignments."
       },
       "SubmitVideoFilehashesResponse": {
         "required": [
@@ -9136,9 +9504,11 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SubmitVideoFilehashResultDto"
-            }
+            },
+            "description": "One result per submitted entry, in request order."
           }
-        }
+        },
+        "description": "Per-entry outcome of a filehash submission."
       },
       "SubmitVideoFilehashItem": {
         "required": [
@@ -9151,28 +9521,34 @@
         "properties": {
           "videoId": {
             "type": "string",
+            "description": "The video this file is. Required — a hash observation without an assignment is not accepted.",
             "format": "uuid"
           },
           "osHash": {
-            "type": "string"
+            "type": "string",
+            "description": "OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key."
           },
           "pHash": {
             "type": "string",
+            "description": "Perceptual hash of the file, 16 hexadecimal characters, if the client computed one. It must\nbe computed as \"Perceptual hashes\" in the API description prescribes; a submission carrying\na value from another procedure contributes a row nothing can match.",
             "nullable": true
           },
           "filesize": {
             "type": "integer",
+            "description": "Size of the file in bytes.",
             "format": "int64"
           },
           "filename": {
             "maxLength": 2000,
             "type": "string",
+            "description": "File name without directory. Optional — a client may withhold it, and the endpoint works without it.",
             "nullable": true
           },
           "source": {
             "$ref": "#/components/schemas/FilehashSubmissionSource"
           }
-        }
+        },
+        "description": "A single hash-to-video assignment."
       },
       "SubmitVideoFilehashResultDto": {
         "required": [
@@ -9184,15 +9560,18 @@
         "properties": {
           "videoId": {
             "type": "string",
+            "description": "The video the entry named.",
             "format": "uuid"
           },
           "osHash": {
-            "type": "string"
+            "type": "string",
+            "description": "The OS hash of the entry, normalized to upper case."
           },
           "outcome": {
             "$ref": "#/components/schemas/SubmitFilehashOutcome"
           }
-        }
+        },
+        "description": "What happened to one submitted assignment."
       },
       "SubmitVideoUserImageResponse": {
         "required": [
@@ -9238,23 +9617,29 @@
           },
           "totalCount": {
             "type": "integer",
+            "description": "Total number of active unlinked filehash entries matching the current filters.",
             "format": "int32"
           },
           "page": {
             "type": "integer",
+            "description": "Current page number (1-based).",
             "format": "int32"
           },
           "pageSize": {
             "type": "integer",
+            "description": "Number of items per page.",
             "format": "int32"
           },
           "sortBy": {
-            "type": "string"
+            "type": "string",
+            "description": "Resolved sort field for the current query."
           },
           "sortDirection": {
-            "type": "string"
+            "type": "string",
+            "description": "Resolved sort direction for the current query."
           }
-        }
+        },
+        "description": "Paged list of active filehash entries that are not linked to a video."
       },
       "UpdateDownloadedFromIndexerFilenameRequest": {
         "required": [
@@ -9264,22 +9649,26 @@
         "properties": {
           "filename": {
             "maxLength": 2000,
-            "type": "string"
+            "type": "string",
+            "description": "The filename as reported by the indexer/download source."
           },
           "filesize": {
             "maximum": 9223372036854776000,
             "minimum": 0,
             "type": "integer",
+            "description": "File size in bytes.",
             "format": "int64"
           },
           "osHash": {
             "pattern": "^[0-9A-Fa-f]{16}$",
             "type": "string",
+            "description": "Optional OS hash value as a 16-character fixed-length string.",
             "nullable": true
           },
           "pHash": {
             "pattern": "^[0-9A-Fa-f]{16}$",
             "type": "string",
+            "description": "Optional perceptual hash value, 16 hexadecimal characters. It must be computed as\n\"Perceptual hashes\" in the API description prescribes; a value from another procedure\nis stored but can never be matched.",
             "nullable": true
           }
         }
@@ -9299,19 +9688,23 @@
           },
           "indexerId": {
             "maxLength": 255,
-            "type": "string"
+            "type": "string",
+            "description": "Indexer-specific identifier for the download item."
           },
           "downloadIdentifier": {
             "maxLength": 2000,
-            "type": "string"
+            "type": "string",
+            "description": "Download identifier returned by the indexer or download client."
           },
           "nzbName": {
             "maxLength": 2000,
-            "type": "string"
+            "type": "string",
+            "description": "NZB or release name."
           },
           "nzbUrl": {
             "maxLength": 2000,
-            "type": "string"
+            "type": "string",
+            "description": "NZB or release URL."
           }
         }
       },
@@ -9319,10 +9712,12 @@
         "type": "object",
         "properties": {
           "isFulfilled": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the wanted video has been fulfilled."
           },
           "fulfilledAtUtc": {
             "type": "string",
+            "description": "When the wanted video was fulfilled, if applicable.",
             "format": "date-time",
             "nullable": true
           },
@@ -9337,6 +9732,7 @@
           },
           "fulfillmentExternalId": {
             "type": "string",
+            "description": "External identifier from the fulfilling application, if applicable.",
             "nullable": true
           },
           "fulfillmentByApp": {
@@ -9361,13 +9757,16 @@
         "properties": {
           "videoId": {
             "type": "string",
+            "description": "ID of the video.",
             "format": "uuid"
           },
           "isFulfilled": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this wanted video has been fulfilled."
           },
           "fulfilledAtUtc": {
             "type": "string",
+            "description": "When the wanted video was fulfilled, if applicable.",
             "format": "date-time",
             "nullable": true
           },
@@ -9382,6 +9781,7 @@
           },
           "fulfillmentExternalId": {
             "type": "string",
+            "description": "External identifier from the fulfilling application, if applicable.",
             "nullable": true
           },
           "fulfillmentByApp": {
@@ -9395,13 +9795,16 @@
           },
           "createdAtUtc": {
             "type": "string",
+            "description": "When this wanted video entry was created.",
             "format": "date-time"
           },
           "updatedAtUtc": {
             "type": "string",
+            "description": "When this wanted video entry was last updated.",
             "format": "date-time"
           }
-        }
+        },
+        "description": "The updated wanted video entry."
       },
       "UserIdentityResponse": {
         "required": [
@@ -9411,15 +9814,18 @@
         "type": "object",
         "properties": {
           "userHash": {
-            "type": "string"
+            "type": "string",
+            "description": "Stable HMAC-SHA256 hex digest derived from the user's immutable ID.\nSuitable as a durable public identifier — does not change unless the server secret rotates."
           },
           "activeSubscriptions": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ActiveSubscriptionDto"
-            }
+            },
+            "description": "All subscriptions with Status=Active and an end date in the future."
           }
-        }
+        },
+        "description": "Identity and subscription state for the authenticated user."
       },
       "VideoDetailActorDto": {
         "required": [
@@ -9453,7 +9859,8 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/VideoDetailActorImageDto"
-            }
+            },
+            "description": "Images for this actor, ordered by ActorImageType VideoDetailActorImageDto.ImageType ascending\n(Thumbnail, Poster, Face), then oldest first, with the image ID as the tie-breaker. The order\nis stable across requests."
           }
         }
       },
@@ -9470,6 +9877,7 @@
           },
           "cdnPath": {
             "type": "string",
+            "description": "Absolute CDN URL for the image, if available. Despite the field name this is a complete URL\nincluding scheme and host — it needs no base to be prepended and is ready to request as-is.\nThe same image is exposed as `url` by the actor endpoints.",
             "nullable": true
           },
           "imageType": {
@@ -9517,7 +9925,8 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/VideoDetailImageDto"
-            }
+            },
+            "description": "Images for this video, ordered oldest first by the time they were added, with the image ID\nas the tie-breaker. The order is stable across requests."
           },
           "preNames": {
             "type": "array",
@@ -9545,6 +9954,7 @@
           },
           "cdnPath": {
             "type": "string",
+            "description": "Absolute CDN URL for the image, if available. Despite the field name this is a complete URL\nincluding scheme and host — it needs no base to be prepended and is ready to request as-is.",
             "nullable": true
           }
         }
@@ -9621,12 +10031,14 @@
         "type": "object",
         "properties": {
           "eventType": {
-            "type": "string"
+            "type": "string",
+            "description": "One of `created`, `updated`, or `deleted`."
           },
           "filehash": {
             "$ref": "#/components/schemas/VideoFilehashChangeFilehashDto"
           }
-        }
+        },
+        "description": "A single changed video filehash row in the incremental feed."
       },
       "VideoFilehashChangeFilehashDto": {
         "required": [
@@ -9652,32 +10064,40 @@
             "nullable": true
           },
           "filename": {
-            "type": "string"
+            "type": "string",
+            "description": "Original filename submitted for this filehash record."
           },
           "osHash": {
             "type": "string",
+            "description": "OS hash value as stored, or null when not available.",
             "nullable": true
           },
           "pHash": {
             "type": "string",
+            "description": "P hash value as stored, or null when not available.",
             "nullable": true
           },
           "filesize": {
             "type": "integer",
+            "description": "File size in bytes.",
             "format": "int64"
           },
           "submissionCount": {
             "type": "integer",
+            "description": "Number of submissions merged into this filehash record.",
             "format": "int32"
           },
           "isVerified": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this filehash record has been verified."
           },
           "isDeleted": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this row is soft-deleted."
           },
           "deletedAtUtc": {
             "type": "string",
+            "description": "Timestamp when the row was soft-deleted, or null when still active.",
             "format": "date-time",
             "nullable": true
           },
@@ -9689,7 +10109,8 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Current persisted state of a changed video filehash row, including soft-delete fields."
       },
       "VideoFilehashChangesCursorDto": {
         "required": [
@@ -9706,7 +10127,8 @@
             "type": "string",
             "format": "uuid"
           }
-        }
+        },
+        "description": "Seek cursor for continuing a video filehash change feed."
       },
       "VideoFilehashDto": {
         "required": [
@@ -9731,26 +10153,32 @@
             "nullable": true
           },
           "filename": {
-            "type": "string"
+            "type": "string",
+            "description": "Original filename submitted for this filehash record."
           },
           "osHash": {
             "type": "string",
+            "description": "OS hash value as stored, or null when not available.",
             "nullable": true
           },
           "pHash": {
             "type": "string",
+            "description": "P hash value as stored, or null when not available.",
             "nullable": true
           },
           "filesize": {
             "type": "integer",
+            "description": "File size in bytes.",
             "format": "int64"
           },
           "submissionCount": {
             "type": "integer",
+            "description": "Number of submissions merged into this filehash record.",
             "format": "int32"
           },
           "isVerified": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this filehash record has been verified."
           },
           "createdAtUtc": {
             "type": "string",
@@ -9799,12 +10227,15 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier of the actor.",
             "format": "uuid"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Actor name."
           }
-        }
+        },
+        "description": "Minimal actor summary included in a video list item."
       },
       "VideoSummaryDto": {
         "required": [
@@ -9819,34 +10250,42 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier of the video.",
             "format": "uuid"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "description": "Video title."
           },
           "siteId": {
             "type": "string",
+            "description": "Unique identifier of the site this video belongs to.",
             "format": "uuid"
           },
           "siteTitle": {
-            "type": "string"
+            "type": "string",
+            "description": "Title of the site this video belongs to."
           },
           "releaseDate": {
             "type": "string",
+            "description": "Release date of the video, if known.",
             "format": "date",
             "nullable": true
           },
           "createdAtUtc": {
             "type": "string",
+            "description": "Timestamp when the video was created in PRDB.",
             "format": "date-time"
           },
           "actors": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/VideoSummaryActorDto"
-            }
+            },
+            "description": "Actors appearing in this video."
           }
-        }
+        },
+        "description": "Summary of a single video."
       },
       "VideoUserImageChangeItemDto": {
         "required": [
@@ -9914,7 +10353,8 @@
             "nullable": true
           },
           "basedOnFileWithOsHash": {
-            "type": "string"
+            "type": "string",
+            "description": "Server-validated 16-character OS hash of the file the preview is based on."
           },
           "previewImageType": {
             "type": "string"
@@ -9936,37 +10376,44 @@
             "format": "int32"
           },
           "url": {
-            "type": "string"
+            "type": "string",
+            "description": "Resolved public CDN URL for the stored image object."
           },
           "hasVtt": {
             "type": "boolean"
           },
           "vttUrl": {
             "type": "string",
+            "description": "Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.",
             "nullable": true
           },
           "spriteTileCount": {
             "type": "integer",
+            "description": "Number of sprite tiles described by the paired WebVTT metadata object.",
             "format": "int32",
             "nullable": true
           },
           "spriteTileWidth": {
             "type": "integer",
+            "description": "Uniform sprite tile width in pixels.",
             "format": "int32",
             "nullable": true
           },
           "spriteTileHeight": {
             "type": "integer",
+            "description": "Uniform sprite tile height in pixels.",
             "format": "int32",
             "nullable": true
           },
           "spriteColumns": {
             "type": "integer",
+            "description": "Number of occupied tile columns in the sprite-sheet grid.",
             "format": "int32",
             "nullable": true
           },
           "spriteRows": {
             "type": "integer",
+            "description": "Number of occupied tile rows in the sprite-sheet grid.",
             "format": "int32",
             "nullable": true
           },
@@ -10002,12 +10449,14 @@
         "type": "object",
         "properties": {
           "eventType": {
-            "type": "string"
+            "type": "string",
+            "description": "One of `created`, `updated`, or `deleted`."
           },
           "wantedVideo": {
             "$ref": "#/components/schemas/WantedVideoChangeWantedVideoDto"
           }
-        }
+        },
+        "description": "A single changed wanted video row in the incremental feed."
       },
       "WantedVideoChangesCursorDto": {
         "required": [
@@ -10024,7 +10473,8 @@
             "type": "string",
             "format": "uuid"
           }
-        }
+        },
+        "description": "Seek cursor for continuing a wanted video change feed."
       },
       "WantedVideoChangeWantedVideoDto": {
         "required": [
@@ -10108,7 +10558,8 @@
             "type": "string",
             "format": "date-time"
           }
-        }
+        },
+        "description": "Current-state payload for a wanted video row in the incremental feed."
       },
       "WantedVideoSummaryDto": {
         "required": [
@@ -10123,33 +10574,41 @@
         "properties": {
           "videoId": {
             "type": "string",
+            "description": "ID of the wanted video.",
             "format": "uuid"
           },
           "videoTitle": {
-            "type": "string"
+            "type": "string",
+            "description": "Video title."
           },
           "siteTitle": {
-            "type": "string"
+            "type": "string",
+            "description": "Title of the site this video belongs to."
           },
           "videoReleaseDate": {
             "type": "string",
+            "description": "Release date of the video, if known.",
             "format": "date",
             "nullable": true
           },
           "videoCreatedAtUtc": {
             "type": "string",
+            "description": "When the video was added to the database.",
             "format": "date-time",
             "nullable": true
           },
           "imageCdnPath": {
             "type": "string",
+            "description": "Absolute CDN URL for the video's primary image, if available.",
             "nullable": true
           },
           "isFulfilled": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether this wanted video has been fulfilled."
           },
           "fulfilledAtUtc": {
             "type": "string",
+            "description": "When the wanted video was fulfilled, if applicable.",
             "format": "date-time",
             "nullable": true
           },
@@ -10164,6 +10623,7 @@
           },
           "fulfillmentExternalId": {
             "type": "string",
+            "description": "External identifier from the fulfilling application, if applicable.",
             "nullable": true
           },
           "fulfillmentByApp": {
@@ -10177,13 +10637,16 @@
           },
           "createdAtUtc": {
             "type": "string",
+            "description": "When this wanted video entry was created.",
             "format": "date-time"
           },
           "updatedAtUtc": {
             "type": "string",
+            "description": "When this wanted video entry was last updated.",
             "format": "date-time"
           }
-        }
+        },
+        "description": "A wanted video entry for the current user."
       }
     },
     "securitySchemes": {

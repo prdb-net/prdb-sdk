@@ -9,28 +9,29 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// DownloadedFromIndexerResponse a downloaded-from-indexer entry for the current user.
 type DownloadedFromIndexerResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The createdAtUtc property
+    // When this entry was created.
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The downloadIdentifier property
+    // Download identifier returned by the indexer or download client.
     downloadIdentifier *string
-    // The filenames property
+    // Filename rows recorded for this entry.
     filenames []DownloadedFromIndexerFilenameDtoable
-    // The id property
+    // ID of the downloaded-from-indexer entry.
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The indexerId property
+    // Indexer-specific identifier for the download item.
     indexerId *string
     // Known values: DrunkenSlug (0), NzbFinder (1), NzbPorn (2).
     indexerSource *int32
-    // The nzbName property
+    // NZB or release name.
     nzbName *string
-    // The nzbUrl property
+    // NZB or release URL.
     nzbUrl *string
-    // The updatedAtUtc property
+    // When this entry was last updated.
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The videoId property
+    // ID of the associated wanted video, or null when the download is not linked to a video.
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewDownloadedFromIndexerResponse instantiates a new DownloadedFromIndexerResponse and sets the default values.
@@ -50,12 +51,12 @@ func CreateDownloadedFromIndexerResponseFromDiscriminatorValue(parseNode i878a80
 func (m *DownloadedFromIndexerResponse) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetCreatedAtUtc gets the createdAtUtc property value. The createdAtUtc property
+// GetCreatedAtUtc gets the createdAtUtc property value. When this entry was created.
 // returns a *Time when successful
 func (m *DownloadedFromIndexerResponse) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
 }
-// GetDownloadIdentifier gets the downloadIdentifier property value. The downloadIdentifier property
+// GetDownloadIdentifier gets the downloadIdentifier property value. Download identifier returned by the indexer or download client.
 // returns a *string when successful
 func (m *DownloadedFromIndexerResponse) GetDownloadIdentifier()(*string) {
     return m.downloadIdentifier
@@ -172,17 +173,17 @@ func (m *DownloadedFromIndexerResponse) GetFieldDeserializers()(map[string]func(
     }
     return res
 }
-// GetFilenames gets the filenames property value. The filenames property
+// GetFilenames gets the filenames property value. Filename rows recorded for this entry.
 // returns a []DownloadedFromIndexerFilenameDtoable when successful
 func (m *DownloadedFromIndexerResponse) GetFilenames()([]DownloadedFromIndexerFilenameDtoable) {
     return m.filenames
 }
-// GetId gets the id property value. The id property
+// GetId gets the id property value. ID of the downloaded-from-indexer entry.
 // returns a *UUID when successful
 func (m *DownloadedFromIndexerResponse) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetIndexerId gets the indexerId property value. The indexerId property
+// GetIndexerId gets the indexerId property value. Indexer-specific identifier for the download item.
 // returns a *string when successful
 func (m *DownloadedFromIndexerResponse) GetIndexerId()(*string) {
     return m.indexerId
@@ -192,22 +193,22 @@ func (m *DownloadedFromIndexerResponse) GetIndexerId()(*string) {
 func (m *DownloadedFromIndexerResponse) GetIndexerSource()(*int32) {
     return m.indexerSource
 }
-// GetNzbName gets the nzbName property value. The nzbName property
+// GetNzbName gets the nzbName property value. NZB or release name.
 // returns a *string when successful
 func (m *DownloadedFromIndexerResponse) GetNzbName()(*string) {
     return m.nzbName
 }
-// GetNzbUrl gets the nzbUrl property value. The nzbUrl property
+// GetNzbUrl gets the nzbUrl property value. NZB or release URL.
 // returns a *string when successful
 func (m *DownloadedFromIndexerResponse) GetNzbUrl()(*string) {
     return m.nzbUrl
 }
-// GetUpdatedAtUtc gets the updatedAtUtc property value. The updatedAtUtc property
+// GetUpdatedAtUtc gets the updatedAtUtc property value. When this entry was last updated.
 // returns a *Time when successful
 func (m *DownloadedFromIndexerResponse) GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.updatedAtUtc
 }
-// GetVideoId gets the videoId property value. The videoId property
+// GetVideoId gets the videoId property value. ID of the associated wanted video, or null when the download is not linked to a video.
 // returns a *UUID when successful
 func (m *DownloadedFromIndexerResponse) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
@@ -292,23 +293,23 @@ func (m *DownloadedFromIndexerResponse) Serialize(writer i878a80d2330e89d2689638
 func (m *DownloadedFromIndexerResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetCreatedAtUtc sets the createdAtUtc property value. The createdAtUtc property
+// SetCreatedAtUtc sets the createdAtUtc property value. When this entry was created.
 func (m *DownloadedFromIndexerResponse) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
-// SetDownloadIdentifier sets the downloadIdentifier property value. The downloadIdentifier property
+// SetDownloadIdentifier sets the downloadIdentifier property value. Download identifier returned by the indexer or download client.
 func (m *DownloadedFromIndexerResponse) SetDownloadIdentifier(value *string)() {
     m.downloadIdentifier = value
 }
-// SetFilenames sets the filenames property value. The filenames property
+// SetFilenames sets the filenames property value. Filename rows recorded for this entry.
 func (m *DownloadedFromIndexerResponse) SetFilenames(value []DownloadedFromIndexerFilenameDtoable)() {
     m.filenames = value
 }
-// SetId sets the id property value. The id property
+// SetId sets the id property value. ID of the downloaded-from-indexer entry.
 func (m *DownloadedFromIndexerResponse) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetIndexerId sets the indexerId property value. The indexerId property
+// SetIndexerId sets the indexerId property value. Indexer-specific identifier for the download item.
 func (m *DownloadedFromIndexerResponse) SetIndexerId(value *string)() {
     m.indexerId = value
 }
@@ -316,19 +317,19 @@ func (m *DownloadedFromIndexerResponse) SetIndexerId(value *string)() {
 func (m *DownloadedFromIndexerResponse) SetIndexerSource(value *int32)() {
     m.indexerSource = value
 }
-// SetNzbName sets the nzbName property value. The nzbName property
+// SetNzbName sets the nzbName property value. NZB or release name.
 func (m *DownloadedFromIndexerResponse) SetNzbName(value *string)() {
     m.nzbName = value
 }
-// SetNzbUrl sets the nzbUrl property value. The nzbUrl property
+// SetNzbUrl sets the nzbUrl property value. NZB or release URL.
 func (m *DownloadedFromIndexerResponse) SetNzbUrl(value *string)() {
     m.nzbUrl = value
 }
-// SetUpdatedAtUtc sets the updatedAtUtc property value. The updatedAtUtc property
+// SetUpdatedAtUtc sets the updatedAtUtc property value. When this entry was last updated.
 func (m *DownloadedFromIndexerResponse) SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.updatedAtUtc = value
 }
-// SetVideoId sets the videoId property value. The videoId property
+// SetVideoId sets the videoId property value. ID of the associated wanted video, or null when the download is not linked to a video.
 func (m *DownloadedFromIndexerResponse) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }

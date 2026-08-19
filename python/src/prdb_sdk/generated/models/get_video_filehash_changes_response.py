@@ -11,18 +11,21 @@ if TYPE_CHECKING:
 
 @dataclass
 class GetVideoFilehashChangesResponse(AdditionalDataHolder, Parsable):
+    """
+    Paged delta feed of video filehash changes ordered by updated timestamp and ID.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The hasMore property
+    # Whether additional rows exist after the current page.
     has_more: Optional[bool] = None
     # The items property
     items: Optional[list[VideoFilehashChangeDto]] = None
-    # The nextCursor property
+    # Seek cursor for continuing a video filehash change feed.
     next_cursor: Optional[VideoFilehashChangesCursorDto] = None
-    # The pageSize property
+    # The resolved page size for this response.
     page_size: Optional[int] = None
-    # The serverTimeUtc property
+    # The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
     server_time_utc: Optional[datetime.datetime] = None
     
     @staticmethod

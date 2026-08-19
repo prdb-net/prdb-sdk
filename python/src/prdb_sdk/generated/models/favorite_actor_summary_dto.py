@@ -8,22 +8,25 @@ from uuid import UUID
 
 @dataclass
 class FavoriteActorSummaryDto(AdditionalDataHolder, Parsable):
+    """
+    Summary of an actor in the current user's favorites list.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The ethnicity property
+    # Ethnicity label.
     ethnicity: Optional[str] = None
-    # The favoritedAtUtc property
+    # UTC timestamp when the user added this actor to their favorites.
     favorited_at_utc: Optional[datetime.datetime] = None
-    # The gender property
+    # Gender label (e.g. `Female`, `Male`, `Unknown`).
     gender: Optional[str] = None
     # The id property
     id: Optional[UUID] = None
     # The name property
     name: Optional[str] = None
-    # The nationality property
+    # Nationality label.
     nationality: Optional[str] = None
-    # The profileImageCdnPath property
+    # CDN URL of the actor's face/profile image, if available.
     profile_image_cdn_path: Optional[str] = None
     
     @staticmethod

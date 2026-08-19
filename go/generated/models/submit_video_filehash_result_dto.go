@@ -8,14 +8,15 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// SubmitVideoFilehashResultDto what happened to one submitted assignment.
 type SubmitVideoFilehashResultDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The osHash property
+    // The OS hash of the entry, normalized to upper case.
     osHash *string
-    // Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
+    // Outcome of a single submission. Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
     outcome *int32
-    // The videoId property
+    // The video the entry named.
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewSubmitVideoFilehashResultDto instantiates a new SubmitVideoFilehashResultDto and sets the default values.
@@ -71,17 +72,17 @@ func (m *SubmitVideoFilehashResultDto) GetFieldDeserializers()(map[string]func(i
     }
     return res
 }
-// GetOsHash gets the osHash property value. The osHash property
+// GetOsHash gets the osHash property value. The OS hash of the entry, normalized to upper case.
 // returns a *string when successful
 func (m *SubmitVideoFilehashResultDto) GetOsHash()(*string) {
     return m.osHash
 }
-// GetOutcome gets the outcome property value. Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
+// GetOutcome gets the outcome property value. Outcome of a single submission. Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
 // returns a *int32 when successful
 func (m *SubmitVideoFilehashResultDto) GetOutcome()(*int32) {
     return m.outcome
 }
-// GetVideoId gets the videoId property value. The videoId property
+// GetVideoId gets the videoId property value. The video the entry named.
 // returns a *UUID when successful
 func (m *SubmitVideoFilehashResultDto) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
@@ -118,15 +119,15 @@ func (m *SubmitVideoFilehashResultDto) Serialize(writer i878a80d2330e89d26896388
 func (m *SubmitVideoFilehashResultDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetOsHash sets the osHash property value. The osHash property
+// SetOsHash sets the osHash property value. The OS hash of the entry, normalized to upper case.
 func (m *SubmitVideoFilehashResultDto) SetOsHash(value *string)() {
     m.osHash = value
 }
-// SetOutcome sets the outcome property value. Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
+// SetOutcome sets the outcome property value. Outcome of a single submission. Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
 func (m *SubmitVideoFilehashResultDto) SetOutcome(value *int32)() {
     m.outcome = value
 }
-// SetVideoId sets the videoId property value. The videoId property
+// SetVideoId sets the videoId property value. The video the entry named.
 func (m *SubmitVideoFilehashResultDto) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }

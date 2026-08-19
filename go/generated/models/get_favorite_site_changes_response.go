@@ -8,6 +8,7 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// GetFavoriteSiteChangesResponse paged delta feed of favorite site changes ordered by updated timestamp and ID.
 type GetFavoriteSiteChangesResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
@@ -15,11 +16,11 @@ type GetFavoriteSiteChangesResponse struct {
     hasMore *bool
     // The items property
     items []FavoriteSiteChangeDtoable
-    // The nextCursor property
+    // Seek cursor for continuing a favorite site change feed.
     nextCursor FavoriteSiteChangesCursorDtoable
     // The pageSize property
     pageSize *int32
-    // The serverTimeUtc property
+    // The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
     serverTimeUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewGetFavoriteSiteChangesResponse instantiates a new GetFavoriteSiteChangesResponse and sets the default values.
@@ -111,7 +112,7 @@ func (m *GetFavoriteSiteChangesResponse) GetHasMore()(*bool) {
 func (m *GetFavoriteSiteChangesResponse) GetItems()([]FavoriteSiteChangeDtoable) {
     return m.items
 }
-// GetNextCursor gets the nextCursor property value. The nextCursor property
+// GetNextCursor gets the nextCursor property value. Seek cursor for continuing a favorite site change feed.
 // returns a FavoriteSiteChangesCursorDtoable when successful
 func (m *GetFavoriteSiteChangesResponse) GetNextCursor()(FavoriteSiteChangesCursorDtoable) {
     return m.nextCursor
@@ -121,7 +122,7 @@ func (m *GetFavoriteSiteChangesResponse) GetNextCursor()(FavoriteSiteChangesCurs
 func (m *GetFavoriteSiteChangesResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetServerTimeUtc gets the serverTimeUtc property value. The serverTimeUtc property
+// GetServerTimeUtc gets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 // returns a *Time when successful
 func (m *GetFavoriteSiteChangesResponse) GetServerTimeUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.serverTimeUtc
@@ -184,7 +185,7 @@ func (m *GetFavoriteSiteChangesResponse) SetHasMore(value *bool)() {
 func (m *GetFavoriteSiteChangesResponse) SetItems(value []FavoriteSiteChangeDtoable)() {
     m.items = value
 }
-// SetNextCursor sets the nextCursor property value. The nextCursor property
+// SetNextCursor sets the nextCursor property value. Seek cursor for continuing a favorite site change feed.
 func (m *GetFavoriteSiteChangesResponse) SetNextCursor(value FavoriteSiteChangesCursorDtoable)() {
     m.nextCursor = value
 }
@@ -192,7 +193,7 @@ func (m *GetFavoriteSiteChangesResponse) SetNextCursor(value FavoriteSiteChanges
 func (m *GetFavoriteSiteChangesResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetServerTimeUtc sets the serverTimeUtc property value. The serverTimeUtc property
+// SetServerTimeUtc sets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 func (m *GetFavoriteSiteChangesResponse) SetServerTimeUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.serverTimeUtc = value
 }

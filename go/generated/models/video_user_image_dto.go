@@ -12,7 +12,7 @@ import (
 type VideoUserImageDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The basedOnFileWithOsHash property
+    // Server-validated 16-character OS hash of the file the preview is based on.
     basedOnFileWithOsHash *string
     // The createdAtUtc property
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
@@ -36,25 +36,25 @@ type VideoUserImageDto struct {
     moderationVisibility *string
     // The previewImageType property
     previewImageType *string
-    // The spriteColumns property
+    // Number of occupied tile columns in the sprite-sheet grid.
     spriteColumns *int32
-    // The spriteRows property
+    // Number of occupied tile rows in the sprite-sheet grid.
     spriteRows *int32
-    // The spriteTileCount property
+    // Number of sprite tiles described by the paired WebVTT metadata object.
     spriteTileCount *int32
-    // The spriteTileHeight property
+    // Uniform sprite tile height in pixels.
     spriteTileHeight *int32
-    // The spriteTileWidth property
+    // Uniform sprite tile width in pixels.
     spriteTileWidth *int32
     // The updatedAtUtc property
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The url property
+    // Resolved public CDN URL for the stored image object.
     url *string
     // The userId property
     userId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The videoId property
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The vttUrl property
+    // Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.
     vttUrl *string
     // The width property
     width *int32
@@ -76,7 +76,7 @@ func CreateVideoUserImageDtoFromDiscriminatorValue(parseNode i878a80d2330e89d268
 func (m *VideoUserImageDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetBasedOnFileWithOsHash gets the basedOnFileWithOsHash property value. The basedOnFileWithOsHash property
+// GetBasedOnFileWithOsHash gets the basedOnFileWithOsHash property value. Server-validated 16-character OS hash of the file the preview is based on.
 // returns a *string when successful
 func (m *VideoUserImageDto) GetBasedOnFileWithOsHash()(*string) {
     return m.basedOnFileWithOsHash
@@ -372,27 +372,27 @@ func (m *VideoUserImageDto) GetModerationVisibility()(*string) {
 func (m *VideoUserImageDto) GetPreviewImageType()(*string) {
     return m.previewImageType
 }
-// GetSpriteColumns gets the spriteColumns property value. The spriteColumns property
+// GetSpriteColumns gets the spriteColumns property value. Number of occupied tile columns in the sprite-sheet grid.
 // returns a *int32 when successful
 func (m *VideoUserImageDto) GetSpriteColumns()(*int32) {
     return m.spriteColumns
 }
-// GetSpriteRows gets the spriteRows property value. The spriteRows property
+// GetSpriteRows gets the spriteRows property value. Number of occupied tile rows in the sprite-sheet grid.
 // returns a *int32 when successful
 func (m *VideoUserImageDto) GetSpriteRows()(*int32) {
     return m.spriteRows
 }
-// GetSpriteTileCount gets the spriteTileCount property value. The spriteTileCount property
+// GetSpriteTileCount gets the spriteTileCount property value. Number of sprite tiles described by the paired WebVTT metadata object.
 // returns a *int32 when successful
 func (m *VideoUserImageDto) GetSpriteTileCount()(*int32) {
     return m.spriteTileCount
 }
-// GetSpriteTileHeight gets the spriteTileHeight property value. The spriteTileHeight property
+// GetSpriteTileHeight gets the spriteTileHeight property value. Uniform sprite tile height in pixels.
 // returns a *int32 when successful
 func (m *VideoUserImageDto) GetSpriteTileHeight()(*int32) {
     return m.spriteTileHeight
 }
-// GetSpriteTileWidth gets the spriteTileWidth property value. The spriteTileWidth property
+// GetSpriteTileWidth gets the spriteTileWidth property value. Uniform sprite tile width in pixels.
 // returns a *int32 when successful
 func (m *VideoUserImageDto) GetSpriteTileWidth()(*int32) {
     return m.spriteTileWidth
@@ -402,7 +402,7 @@ func (m *VideoUserImageDto) GetSpriteTileWidth()(*int32) {
 func (m *VideoUserImageDto) GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.updatedAtUtc
 }
-// GetUrl gets the url property value. The url property
+// GetUrl gets the url property value. Resolved public CDN URL for the stored image object.
 // returns a *string when successful
 func (m *VideoUserImageDto) GetUrl()(*string) {
     return m.url
@@ -417,7 +417,7 @@ func (m *VideoUserImageDto) GetUserId()(*i561e97a8befe7661a44c8f54600992b4207a3a
 func (m *VideoUserImageDto) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
 }
-// GetVttUrl gets the vttUrl property value. The vttUrl property
+// GetVttUrl gets the vttUrl property value. Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.
 // returns a *string when successful
 func (m *VideoUserImageDto) GetVttUrl()(*string) {
     return m.vttUrl
@@ -579,7 +579,7 @@ func (m *VideoUserImageDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27
 func (m *VideoUserImageDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetBasedOnFileWithOsHash sets the basedOnFileWithOsHash property value. The basedOnFileWithOsHash property
+// SetBasedOnFileWithOsHash sets the basedOnFileWithOsHash property value. Server-validated 16-character OS hash of the file the preview is based on.
 func (m *VideoUserImageDto) SetBasedOnFileWithOsHash(value *string)() {
     m.basedOnFileWithOsHash = value
 }
@@ -627,23 +627,23 @@ func (m *VideoUserImageDto) SetModerationVisibility(value *string)() {
 func (m *VideoUserImageDto) SetPreviewImageType(value *string)() {
     m.previewImageType = value
 }
-// SetSpriteColumns sets the spriteColumns property value. The spriteColumns property
+// SetSpriteColumns sets the spriteColumns property value. Number of occupied tile columns in the sprite-sheet grid.
 func (m *VideoUserImageDto) SetSpriteColumns(value *int32)() {
     m.spriteColumns = value
 }
-// SetSpriteRows sets the spriteRows property value. The spriteRows property
+// SetSpriteRows sets the spriteRows property value. Number of occupied tile rows in the sprite-sheet grid.
 func (m *VideoUserImageDto) SetSpriteRows(value *int32)() {
     m.spriteRows = value
 }
-// SetSpriteTileCount sets the spriteTileCount property value. The spriteTileCount property
+// SetSpriteTileCount sets the spriteTileCount property value. Number of sprite tiles described by the paired WebVTT metadata object.
 func (m *VideoUserImageDto) SetSpriteTileCount(value *int32)() {
     m.spriteTileCount = value
 }
-// SetSpriteTileHeight sets the spriteTileHeight property value. The spriteTileHeight property
+// SetSpriteTileHeight sets the spriteTileHeight property value. Uniform sprite tile height in pixels.
 func (m *VideoUserImageDto) SetSpriteTileHeight(value *int32)() {
     m.spriteTileHeight = value
 }
-// SetSpriteTileWidth sets the spriteTileWidth property value. The spriteTileWidth property
+// SetSpriteTileWidth sets the spriteTileWidth property value. Uniform sprite tile width in pixels.
 func (m *VideoUserImageDto) SetSpriteTileWidth(value *int32)() {
     m.spriteTileWidth = value
 }
@@ -651,7 +651,7 @@ func (m *VideoUserImageDto) SetSpriteTileWidth(value *int32)() {
 func (m *VideoUserImageDto) SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.updatedAtUtc = value
 }
-// SetUrl sets the url property value. The url property
+// SetUrl sets the url property value. Resolved public CDN URL for the stored image object.
 func (m *VideoUserImageDto) SetUrl(value *string)() {
     m.url = value
 }
@@ -663,7 +663,7 @@ func (m *VideoUserImageDto) SetUserId(value *i561e97a8befe7661a44c8f54600992b420
 func (m *VideoUserImageDto) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }
-// SetVttUrl sets the vttUrl property value. The vttUrl property
+// SetVttUrl sets the vttUrl property value. Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.
 func (m *VideoUserImageDto) SetVttUrl(value *string)() {
     m.vttUrl = value
 }

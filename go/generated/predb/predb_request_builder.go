@@ -16,13 +16,21 @@ type PredbRequestBuilder struct {
 }
 // PredbRequestBuilderGetQueryParameters returns a paged list of PreDb entries. Supports filtering by title or release group search, category, and release date range. Default sort is release date descending. Requires API key authentication.
 type PredbRequestBuilderGetQueryParameters struct {
+    // Optional category filter. Supported values: `movies`, `tvshows`, `adult`.
     Category *GetCategoryQueryParameterType
+    // 1-based page number. Defaults to 1.
     Page *int32
+    // Number of items per page. Defaults to 20, max 100.
     PageSize *int32
+    // Optional. Return only entries released on or after this date.
     ReleaseDateFrom *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
+    // Optional. Return only entries released on or before this date.
     ReleaseDateTo *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
+    // Optional search term matched against title and release group.
     Search *string
+    // Field to sort by. Supported values: `releaseDate` (default), `title`.
     SortBy *GetSortByQueryParameterType
+    // Sort direction: `desc` (default) or `asc`.
     SortDirection *GetSortDirectionQueryParameterType
 }
 // NewPredbRequestBuilderInternal instantiates a new PredbRequestBuilder and sets the default values.

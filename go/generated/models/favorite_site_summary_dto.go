@@ -9,10 +9,11 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// FavoriteSiteSummaryDto summary of a site in the current user's favorites list.
 type FavoriteSiteSummaryDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The favoritedAtUtc property
+    // UTC timestamp when the user added this site to their favorites.
     favoritedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
@@ -42,7 +43,7 @@ func CreateFavoriteSiteSummaryDtoFromDiscriminatorValue(parseNode i878a80d2330e8
 func (m *FavoriteSiteSummaryDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetFavoritedAtUtc gets the favoritedAtUtc property value. The favoritedAtUtc property
+// GetFavoritedAtUtc gets the favoritedAtUtc property value. UTC timestamp when the user added this site to their favorites.
 // returns a *Time when successful
 func (m *FavoriteSiteSummaryDto) GetFavoritedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.favoritedAtUtc
@@ -188,7 +189,7 @@ func (m *FavoriteSiteSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487
 func (m *FavoriteSiteSummaryDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetFavoritedAtUtc sets the favoritedAtUtc property value. The favoritedAtUtc property
+// SetFavoritedAtUtc sets the favoritedAtUtc property value. UTC timestamp when the user added this site to their favorites.
 func (m *FavoriteSiteSummaryDto) SetFavoritedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.favoritedAtUtc = value
 }

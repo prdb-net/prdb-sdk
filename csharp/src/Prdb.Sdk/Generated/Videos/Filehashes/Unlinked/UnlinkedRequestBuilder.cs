@@ -98,9 +98,13 @@ namespace Prdb.Sdk.Generated.Videos.Filehashes.Unlinked
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class UnlinkedRequestBuilderGetQueryParameters 
         {
+            /// <summary>Page number, starting at 1.</summary>
             public int? Page { get; set; }
+            /// <summary>Page size. Values above 1000 are clamped.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Sort field. Allowed values: createdAtUtc, updatedAtUtc, submissionCount, filesize.</summary>
             public global::Prdb.Sdk.Generated.Videos.Filehashes.Unlinked.GetSortByQueryParameterType? SortBy { get; set; }
+            /// <summary>Sort direction. Allowed values: asc, desc.</summary>
             public global::Prdb.Sdk.Generated.Videos.Filehashes.Unlinked.GetSortDirectionQueryParameterType? SortDirection { get; set; }
         }
     }

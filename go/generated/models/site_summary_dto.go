@@ -9,22 +9,23 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// SiteSummaryDto summary of a single site.
 type SiteSummaryDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The createdAtUtc property
+    // When this site was created.
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The id property
+    // Unique identifier of the site.
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The networkId property
+    // Unique identifier of the network this site belongs to, if any.
     networkId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The networkTitle property
+    // Title of the network this site belongs to, if any.
     networkTitle *string
-    // The title property
+    // Site title.
     title *string
-    // The updatedAtUtc property
+    // When this site was last changed.
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The url property
+    // Site URL.
     url *string
 }
 // NewSiteSummaryDto instantiates a new SiteSummaryDto and sets the default values.
@@ -44,7 +45,7 @@ func CreateSiteSummaryDtoFromDiscriminatorValue(parseNode i878a80d2330e89d268963
 func (m *SiteSummaryDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetCreatedAtUtc gets the createdAtUtc property value. The createdAtUtc property
+// GetCreatedAtUtc gets the createdAtUtc property value. When this site was created.
 // returns a *Time when successful
 func (m *SiteSummaryDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
@@ -125,32 +126,32 @@ func (m *SiteSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
     }
     return res
 }
-// GetId gets the id property value. The id property
+// GetId gets the id property value. Unique identifier of the site.
 // returns a *UUID when successful
 func (m *SiteSummaryDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetNetworkId gets the networkId property value. The networkId property
+// GetNetworkId gets the networkId property value. Unique identifier of the network this site belongs to, if any.
 // returns a *UUID when successful
 func (m *SiteSummaryDto) GetNetworkId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.networkId
 }
-// GetNetworkTitle gets the networkTitle property value. The networkTitle property
+// GetNetworkTitle gets the networkTitle property value. Title of the network this site belongs to, if any.
 // returns a *string when successful
 func (m *SiteSummaryDto) GetNetworkTitle()(*string) {
     return m.networkTitle
 }
-// GetTitle gets the title property value. The title property
+// GetTitle gets the title property value. Site title.
 // returns a *string when successful
 func (m *SiteSummaryDto) GetTitle()(*string) {
     return m.title
 }
-// GetUpdatedAtUtc gets the updatedAtUtc property value. The updatedAtUtc property
+// GetUpdatedAtUtc gets the updatedAtUtc property value. When this site was last changed.
 // returns a *Time when successful
 func (m *SiteSummaryDto) GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.updatedAtUtc
 }
-// GetUrl gets the url property value. The url property
+// GetUrl gets the url property value. Site URL.
 // returns a *string when successful
 func (m *SiteSummaryDto) GetUrl()(*string) {
     return m.url
@@ -211,31 +212,31 @@ func (m *SiteSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
 func (m *SiteSummaryDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetCreatedAtUtc sets the createdAtUtc property value. The createdAtUtc property
+// SetCreatedAtUtc sets the createdAtUtc property value. When this site was created.
 func (m *SiteSummaryDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
-// SetId sets the id property value. The id property
+// SetId sets the id property value. Unique identifier of the site.
 func (m *SiteSummaryDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetNetworkId sets the networkId property value. The networkId property
+// SetNetworkId sets the networkId property value. Unique identifier of the network this site belongs to, if any.
 func (m *SiteSummaryDto) SetNetworkId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.networkId = value
 }
-// SetNetworkTitle sets the networkTitle property value. The networkTitle property
+// SetNetworkTitle sets the networkTitle property value. Title of the network this site belongs to, if any.
 func (m *SiteSummaryDto) SetNetworkTitle(value *string)() {
     m.networkTitle = value
 }
-// SetTitle sets the title property value. The title property
+// SetTitle sets the title property value. Site title.
 func (m *SiteSummaryDto) SetTitle(value *string)() {
     m.title = value
 }
-// SetUpdatedAtUtc sets the updatedAtUtc property value. The updatedAtUtc property
+// SetUpdatedAtUtc sets the updatedAtUtc property value. When this site was last changed.
 func (m *SiteSummaryDto) SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.updatedAtUtc = value
 }
-// SetUrl sets the url property value. The url property
+// SetUrl sets the url property value. Site URL.
 func (m *SiteSummaryDto) SetUrl(value *string)() {
     m.url = value
 }

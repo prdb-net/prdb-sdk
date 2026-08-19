@@ -8,22 +8,23 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// A wanted video entry for the current user.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class WantedVideoSummaryDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The createdAtUtc property</summary>
+        /// <summary>When this wanted video entry was created.</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
-        /// <summary>The fulfilledAtUtc property</summary>
+        /// <summary>When the wanted video was fulfilled, if applicable.</summary>
         public DateTimeOffset? FulfilledAtUtc { get; set; }
         /// <summary>Known values: P720 (0), P1080 (1), P2160 (2).</summary>
         public int? FulfilledInQuality { get; set; }
         /// <summary>Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).</summary>
         public int? FulfillmentByApp { get; set; }
-        /// <summary>The fulfillmentExternalId property</summary>
+        /// <summary>External identifier from the fulfilling application, if applicable.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? FulfillmentExternalId { get; set; }
@@ -31,7 +32,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string FulfillmentExternalId { get; set; }
 #endif
-        /// <summary>The imageCdnPath property</summary>
+        /// <summary>Absolute CDN URL for the video&apos;s primary image, if available.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? ImageCdnPath { get; set; }
@@ -39,9 +40,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string ImageCdnPath { get; set; }
 #endif
-        /// <summary>The isFulfilled property</summary>
+        /// <summary>Whether this wanted video has been fulfilled.</summary>
         public bool? IsFulfilled { get; set; }
-        /// <summary>The siteTitle property</summary>
+        /// <summary>Title of the site this video belongs to.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? SiteTitle { get; set; }
@@ -49,15 +50,15 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string SiteTitle { get; set; }
 #endif
-        /// <summary>The updatedAtUtc property</summary>
+        /// <summary>When this wanted video entry was last updated.</summary>
         public DateTimeOffset? UpdatedAtUtc { get; set; }
-        /// <summary>The videoCreatedAtUtc property</summary>
+        /// <summary>When the video was added to the database.</summary>
         public DateTimeOffset? VideoCreatedAtUtc { get; set; }
-        /// <summary>The videoId property</summary>
+        /// <summary>ID of the wanted video.</summary>
         public Guid? VideoId { get; set; }
-        /// <summary>The videoReleaseDate property</summary>
+        /// <summary>Release date of the video, if known.</summary>
         public Date? VideoReleaseDate { get; set; }
-        /// <summary>The videoTitle property</summary>
+        /// <summary>Video title.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? VideoTitle { get; set; }

@@ -8,20 +8,21 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// PreDbSummaryDto summary representation of a PreDb entry.
 type PreDbSummaryDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The category property
+    // Readable category value: Movies, TvShows, or Adult.
     category *string
-    // The filesize property
+    // Optional file size value if known.
     filesize *int32
-    // The id property
+    // Unique identifier of the PreDb entry.
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The releaseDate property
+    // Release date associated with the entry.
     releaseDate *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
-    // The releaseGroup property
+    // Release group name.
     releaseGroup *string
-    // The title property
+    // Release title as indexed in PreDb.
     title *string
 }
 // NewPreDbSummaryDto instantiates a new PreDbSummaryDto and sets the default values.
@@ -41,7 +42,7 @@ func CreatePreDbSummaryDtoFromDiscriminatorValue(parseNode i878a80d2330e89d26896
 func (m *PreDbSummaryDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetCategory gets the category property value. The category property
+// GetCategory gets the category property value. Readable category value: Movies, TvShows, or Adult.
 // returns a *string when successful
 func (m *PreDbSummaryDto) GetCategory()(*string) {
     return m.category
@@ -112,27 +113,27 @@ func (m *PreDbSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
     }
     return res
 }
-// GetFilesize gets the filesize property value. The filesize property
+// GetFilesize gets the filesize property value. Optional file size value if known.
 // returns a *int32 when successful
 func (m *PreDbSummaryDto) GetFilesize()(*int32) {
     return m.filesize
 }
-// GetId gets the id property value. The id property
+// GetId gets the id property value. Unique identifier of the PreDb entry.
 // returns a *UUID when successful
 func (m *PreDbSummaryDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetReleaseDate gets the releaseDate property value. The releaseDate property
+// GetReleaseDate gets the releaseDate property value. Release date associated with the entry.
 // returns a *DateOnly when successful
 func (m *PreDbSummaryDto) GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly) {
     return m.releaseDate
 }
-// GetReleaseGroup gets the releaseGroup property value. The releaseGroup property
+// GetReleaseGroup gets the releaseGroup property value. Release group name.
 // returns a *string when successful
 func (m *PreDbSummaryDto) GetReleaseGroup()(*string) {
     return m.releaseGroup
 }
-// GetTitle gets the title property value. The title property
+// GetTitle gets the title property value. Release title as indexed in PreDb.
 // returns a *string when successful
 func (m *PreDbSummaryDto) GetTitle()(*string) {
     return m.title
@@ -187,27 +188,27 @@ func (m *PreDbSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0
 func (m *PreDbSummaryDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetCategory sets the category property value. The category property
+// SetCategory sets the category property value. Readable category value: Movies, TvShows, or Adult.
 func (m *PreDbSummaryDto) SetCategory(value *string)() {
     m.category = value
 }
-// SetFilesize sets the filesize property value. The filesize property
+// SetFilesize sets the filesize property value. Optional file size value if known.
 func (m *PreDbSummaryDto) SetFilesize(value *int32)() {
     m.filesize = value
 }
-// SetId sets the id property value. The id property
+// SetId sets the id property value. Unique identifier of the PreDb entry.
 func (m *PreDbSummaryDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetReleaseDate sets the releaseDate property value. The releaseDate property
+// SetReleaseDate sets the releaseDate property value. Release date associated with the entry.
 func (m *PreDbSummaryDto) SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)() {
     m.releaseDate = value
 }
-// SetReleaseGroup sets the releaseGroup property value. The releaseGroup property
+// SetReleaseGroup sets the releaseGroup property value. Release group name.
 func (m *PreDbSummaryDto) SetReleaseGroup(value *string)() {
     m.releaseGroup = value
 }
-// SetTitle sets the title property value. The title property
+// SetTitle sets the title property value. Release title as indexed in PreDb.
 func (m *PreDbSummaryDto) SetTitle(value *string)() {
     m.title = value
 }

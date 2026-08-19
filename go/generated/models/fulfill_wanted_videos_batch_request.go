@@ -7,10 +7,11 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// FulfillWantedVideosBatchRequest request body for batch-updating the fulfilment state of wanted videos.
 type FulfillWantedVideosBatchRequest struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The items property
+    // Fulfilment updates to apply. Between 1 and 50 entries, each for a distinct video.
     items []FulfillWantedVideoItemable
 }
 // NewFulfillWantedVideosBatchRequest instantiates a new FulfillWantedVideosBatchRequest and sets the default values.
@@ -52,7 +53,7 @@ func (m *FulfillWantedVideosBatchRequest) GetFieldDeserializers()(map[string]fun
     }
     return res
 }
-// GetItems gets the items property value. The items property
+// GetItems gets the items property value. Fulfilment updates to apply. Between 1 and 50 entries, each for a distinct video.
 // returns a []FulfillWantedVideoItemable when successful
 func (m *FulfillWantedVideosBatchRequest) GetItems()([]FulfillWantedVideoItemable) {
     return m.items
@@ -83,7 +84,7 @@ func (m *FulfillWantedVideosBatchRequest) Serialize(writer i878a80d2330e89d26896
 func (m *FulfillWantedVideosBatchRequest) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetItems sets the items property value. The items property
+// SetItems sets the items property value. Fulfilment updates to apply. Between 1 and 50 entries, each for a distinct video.
 func (m *FulfillWantedVideosBatchRequest) SetItems(value []FulfillWantedVideoItemable)() {
     m.items = value
 }

@@ -8,22 +8,23 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// IdentifyVideoResultDto what the identification ladder made of one file.
 type IdentifyVideoResultDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The candidates property
+    // All equally good videos when the match was ambiguous; otherwise empty.
     candidates []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
+    // How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
     confidence *int32
     // Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).
     matchedBy *int32
-    // The ref property
+    // The client-assigned identifier of the input file, returned unchanged.
     ref *string
-    // The site property
+    // The site a file could be attributed to.
     site IdentifySiteDtoable
     // The video property
     video VideoDetailDtoable
-    // The videoId property
+    // The identified video, when exactly one was found.
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewIdentifyVideoResultDto instantiates a new IdentifyVideoResultDto and sets the default values.
@@ -43,12 +44,12 @@ func CreateIdentifyVideoResultDtoFromDiscriminatorValue(parseNode i878a80d2330e8
 func (m *IdentifyVideoResultDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetCandidates gets the candidates property value. The candidates property
+// GetCandidates gets the candidates property value. All equally good videos when the match was ambiguous; otherwise empty.
 // returns a []UUID when successful
 func (m *IdentifyVideoResultDto) GetCandidates()([]i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.candidates
 }
-// GetConfidence gets the confidence property value. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
+// GetConfidence gets the confidence property value. How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
 // returns a *int32 when successful
 func (m *IdentifyVideoResultDto) GetConfidence()(*int32) {
     return m.confidence
@@ -140,12 +141,12 @@ func (m *IdentifyVideoResultDto) GetFieldDeserializers()(map[string]func(i878a80
 func (m *IdentifyVideoResultDto) GetMatchedBy()(*int32) {
     return m.matchedBy
 }
-// GetRef gets the ref property value. The ref property
+// GetRef gets the ref property value. The client-assigned identifier of the input file, returned unchanged.
 // returns a *string when successful
 func (m *IdentifyVideoResultDto) GetRef()(*string) {
     return m.ref
 }
-// GetSite gets the site property value. The site property
+// GetSite gets the site property value. The site a file could be attributed to.
 // returns a IdentifySiteDtoable when successful
 func (m *IdentifyVideoResultDto) GetSite()(IdentifySiteDtoable) {
     return m.site
@@ -155,7 +156,7 @@ func (m *IdentifyVideoResultDto) GetSite()(IdentifySiteDtoable) {
 func (m *IdentifyVideoResultDto) GetVideo()(VideoDetailDtoable) {
     return m.video
 }
-// GetVideoId gets the videoId property value. The videoId property
+// GetVideoId gets the videoId property value. The identified video, when exactly one was found.
 // returns a *UUID when successful
 func (m *IdentifyVideoResultDto) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
@@ -216,11 +217,11 @@ func (m *IdentifyVideoResultDto) Serialize(writer i878a80d2330e89d26896388a3f487
 func (m *IdentifyVideoResultDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetCandidates sets the candidates property value. The candidates property
+// SetCandidates sets the candidates property value. All equally good videos when the match was ambiguous; otherwise empty.
 func (m *IdentifyVideoResultDto) SetCandidates(value []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.candidates = value
 }
-// SetConfidence sets the confidence property value. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
+// SetConfidence sets the confidence property value. How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
 func (m *IdentifyVideoResultDto) SetConfidence(value *int32)() {
     m.confidence = value
 }
@@ -228,11 +229,11 @@ func (m *IdentifyVideoResultDto) SetConfidence(value *int32)() {
 func (m *IdentifyVideoResultDto) SetMatchedBy(value *int32)() {
     m.matchedBy = value
 }
-// SetRef sets the ref property value. The ref property
+// SetRef sets the ref property value. The client-assigned identifier of the input file, returned unchanged.
 func (m *IdentifyVideoResultDto) SetRef(value *string)() {
     m.ref = value
 }
-// SetSite sets the site property value. The site property
+// SetSite sets the site property value. The site a file could be attributed to.
 func (m *IdentifyVideoResultDto) SetSite(value IdentifySiteDtoable)() {
     m.site = value
 }
@@ -240,7 +241,7 @@ func (m *IdentifyVideoResultDto) SetSite(value IdentifySiteDtoable)() {
 func (m *IdentifyVideoResultDto) SetVideo(value VideoDetailDtoable)() {
     m.video = value
 }
-// SetVideoId sets the videoId property value. The videoId property
+// SetVideoId sets the videoId property value. The identified video, when exactly one was found.
 func (m *IdentifyVideoResultDto) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }

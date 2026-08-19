@@ -18,16 +18,27 @@ type FilehashesLatestRequestBuilder struct {
 }
 // FilehashesLatestRequestBuilderGetQueryParameters returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Requires API key authentication.
 type FilehashesLatestRequestBuilderGetQueryParameters struct {
+    // Optional. Return only filehashes created at or after this timestamp (UTC).
     CreatedFrom *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Optional. Return only filehashes created at or before this timestamp (UTC).
     CreatedTo *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Optional. Filter by verification state. Omit for both verified and unverified entries.
     IsVerified *bool
+    // 1-based page number. Defaults to 1.
     Page *int32
+    // Number of items per page. Defaults to 20, max 5000.
     PageSize *int32
+    // Optional. Restrict results to videos on the specified site.
     SiteId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Field to sort by. Supported values: `createdAtUtc` (default), `updatedAtUtc`, `submissionCount`, `filesize`.
     SortBy *ife0d411ce88dcfb928b0fc383547d48e54a483878bed624c837a5a77715291b8.GetSortByQueryParameterType
+    // Sort direction: `desc` (default) or `asc`.
     SortDirection *ife0d411ce88dcfb928b0fc383547d48e54a483878bed624c837a5a77715291b8.GetSortDirectionQueryParameterType
+    // Optional. Return only filehashes updated at or after this timestamp (UTC).
     UpdatedFrom *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Optional. Return only filehashes updated at or before this timestamp (UTC).
     UpdatedTo *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Optional. Restrict results to a single video.
     VideoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewFilehashesLatestRequestBuilderInternal instantiates a new FilehashesLatestRequestBuilder and sets the default values.

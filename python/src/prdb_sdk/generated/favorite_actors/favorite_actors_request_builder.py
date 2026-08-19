@@ -127,14 +127,19 @@ class FavoriteActorsRequestBuilder(BaseRequestBuilder):
                 return "SortDirection"
             return original_name
         
+        # 1-based page number. Defaults to 1.
         page: Optional[int] = None
 
+        # Number of items per page. Defaults to 100, max 500.
         page_size: Optional[int] = None
 
+        # Optional search term matched against actor name.
         search: Optional[str] = None
 
+        # Field to sort by. Supported values: `favoritedAtUtc`, `name`. Defaults to `favoritedAtUtc`.
         sort_by: Optional[str] = None
 
+        # Sort direction: `asc` or `desc`. Defaults to `desc`.
         sort_direction: Optional[GetSortDirectionQueryParameterType] = None
 
     

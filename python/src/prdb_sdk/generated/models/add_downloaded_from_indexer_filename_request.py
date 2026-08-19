@@ -9,13 +9,13 @@ class AddDownloadedFromIndexerFilenameRequest(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The filename property
+    # The filename as reported by the indexer/download source.
     filename: Optional[str] = None
-    # The filesize property
+    # File size in bytes.
     filesize: Optional[int] = None
-    # The osHash property
+    # Optional OS hash value as a 16-character fixed-length string.
     os_hash: Optional[str] = None
-    # The pHash property
+    # Optional perceptual hash value, 16 hexadecimal characters. It must be computed as"Perceptual hashes" in the API description prescribes; a value from another procedureis stored but can never be matched.
     p_hash: Optional[str] = None
     
     @staticmethod

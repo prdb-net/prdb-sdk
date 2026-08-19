@@ -34,7 +34,7 @@ class BatchRequestBuilder(BaseRequestBuilder):
     async def post(self,body: AddWantedVideosBatchRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[AddWantedVideosBatchResponse]:
         """
         Adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.
-        param body: The request body
+        param body: Request body for batch-adding wanted videos.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[AddWantedVideosBatchResponse]
         """
@@ -61,7 +61,7 @@ class BatchRequestBuilder(BaseRequestBuilder):
     def to_post_request_information(self,body: AddWantedVideosBatchRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
         Adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.
-        param body: The request body
+        param body: Request body for batch-adding wanted videos.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """

@@ -9,12 +9,15 @@ if TYPE_CHECKING:
 
 @dataclass
 class UserIdentityResponse(AdditionalDataHolder, Parsable):
+    """
+    Identity and subscription state for the authenticated user.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The activeSubscriptions property
+    # All subscriptions with Status=Active and an end date in the future.
     active_subscriptions: Optional[list[ActiveSubscriptionDto]] = None
-    # The userHash property
+    # Stable HMAC-SHA256 hex digest derived from the user's immutable ID.Suitable as a durable public identifier — does not change unless the server secret rotates.
     user_hash: Optional[str] = None
     
     @staticmethod

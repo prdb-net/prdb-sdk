@@ -16,10 +16,15 @@ type FavoriteActorsRequestBuilder struct {
 }
 // FavoriteActorsRequestBuilderGetQueryParameters returns a paged, sortable list of actors the currently authenticated user has favorited. Supports filtering by search term. Requires API key authentication.
 type FavoriteActorsRequestBuilderGetQueryParameters struct {
+    // 1-based page number. Defaults to 1.
     Page *int32
+    // Number of items per page. Defaults to 100, max 500.
     PageSize *int32
+    // Optional search term matched against actor name.
     Search *string
+    // Field to sort by. Supported values: `favoritedAtUtc`, `name`. Defaults to `favoritedAtUtc`.
     SortBy *string
+    // Sort direction: `asc` or `desc`. Defaults to `desc`.
     SortDirection *GetSortDirectionQueryParameterType
 }
 // ByActorId gets an item from the github.com/prdb-net/prdb-sdk/go/generated.favoriteActors.item collection

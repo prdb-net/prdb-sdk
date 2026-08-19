@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Summary of an actor in the current user&apos;s favorites list.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class FavoriteActorSummaryDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The ethnicity property</summary>
+        /// <summary>Ethnicity label.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Ethnicity { get; set; }
@@ -22,9 +23,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Ethnicity { get; set; }
 #endif
-        /// <summary>The favoritedAtUtc property</summary>
+        /// <summary>UTC timestamp when the user added this actor to their favorites.</summary>
         public DateTimeOffset? FavoritedAtUtc { get; set; }
-        /// <summary>The gender property</summary>
+        /// <summary>Gender label (e.g. `Female`, `Male`, `Unknown`).</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Gender { get; set; }
@@ -42,7 +43,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Name { get; set; }
 #endif
-        /// <summary>The nationality property</summary>
+        /// <summary>Nationality label.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Nationality { get; set; }
@@ -50,7 +51,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Nationality { get; set; }
 #endif
-        /// <summary>The profileImageCdnPath property</summary>
+        /// <summary>CDN URL of the actor&apos;s face/profile image, if available.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? ProfileImageCdnPath { get; set; }

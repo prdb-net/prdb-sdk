@@ -7,10 +7,11 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// SubmitVideoFilehashesRequest request body for submitting confirmed hash-to-video assignments.
 type SubmitVideoFilehashesRequest struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The items property
+    // Assignments to submit. Between 1 and 200 entries.
     items []SubmitVideoFilehashItemable
 }
 // NewSubmitVideoFilehashesRequest instantiates a new SubmitVideoFilehashesRequest and sets the default values.
@@ -52,7 +53,7 @@ func (m *SubmitVideoFilehashesRequest) GetFieldDeserializers()(map[string]func(i
     }
     return res
 }
-// GetItems gets the items property value. The items property
+// GetItems gets the items property value. Assignments to submit. Between 1 and 200 entries.
 // returns a []SubmitVideoFilehashItemable when successful
 func (m *SubmitVideoFilehashesRequest) GetItems()([]SubmitVideoFilehashItemable) {
     return m.items
@@ -83,7 +84,7 @@ func (m *SubmitVideoFilehashesRequest) Serialize(writer i878a80d2330e89d26896388
 func (m *SubmitVideoFilehashesRequest) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetItems sets the items property value. The items property
+// SetItems sets the items property value. Assignments to submit. Between 1 and 200 entries.
 func (m *SubmitVideoFilehashesRequest) SetItems(value []SubmitVideoFilehashItemable)() {
     m.items = value
 }

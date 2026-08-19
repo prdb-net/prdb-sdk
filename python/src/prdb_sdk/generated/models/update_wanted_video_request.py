@@ -10,15 +10,15 @@ class UpdateWantedVideoRequest(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The fulfilledAtUtc property
+    # When the wanted video was fulfilled, if applicable.
     fulfilled_at_utc: Optional[datetime.datetime] = None
     # Known values: P720 (0), P1080 (1), P2160 (2).
     fulfilled_in_quality: Optional[int] = None
     # Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
     fulfillment_by_app: Optional[int] = None
-    # The fulfillmentExternalId property
+    # External identifier from the fulfilling application, if applicable.
     fulfillment_external_id: Optional[str] = None
-    # The isFulfilled property
+    # Whether the wanted video has been fulfilled.
     is_fulfilled: Optional[bool] = None
     
     @staticmethod

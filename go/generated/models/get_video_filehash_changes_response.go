@@ -8,18 +8,19 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// GetVideoFilehashChangesResponse paged delta feed of video filehash changes ordered by updated timestamp and ID.
 type GetVideoFilehashChangesResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The hasMore property
+    // Whether additional rows exist after the current page.
     hasMore *bool
     // The items property
     items []VideoFilehashChangeDtoable
-    // The nextCursor property
+    // Seek cursor for continuing a video filehash change feed.
     nextCursor VideoFilehashChangesCursorDtoable
-    // The pageSize property
+    // The resolved page size for this response.
     pageSize *int32
-    // The serverTimeUtc property
+    // The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
     serverTimeUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewGetVideoFilehashChangesResponse instantiates a new GetVideoFilehashChangesResponse and sets the default values.
@@ -101,7 +102,7 @@ func (m *GetVideoFilehashChangesResponse) GetFieldDeserializers()(map[string]fun
     }
     return res
 }
-// GetHasMore gets the hasMore property value. The hasMore property
+// GetHasMore gets the hasMore property value. Whether additional rows exist after the current page.
 // returns a *bool when successful
 func (m *GetVideoFilehashChangesResponse) GetHasMore()(*bool) {
     return m.hasMore
@@ -111,17 +112,17 @@ func (m *GetVideoFilehashChangesResponse) GetHasMore()(*bool) {
 func (m *GetVideoFilehashChangesResponse) GetItems()([]VideoFilehashChangeDtoable) {
     return m.items
 }
-// GetNextCursor gets the nextCursor property value. The nextCursor property
+// GetNextCursor gets the nextCursor property value. Seek cursor for continuing a video filehash change feed.
 // returns a VideoFilehashChangesCursorDtoable when successful
 func (m *GetVideoFilehashChangesResponse) GetNextCursor()(VideoFilehashChangesCursorDtoable) {
     return m.nextCursor
 }
-// GetPageSize gets the pageSize property value. The pageSize property
+// GetPageSize gets the pageSize property value. The resolved page size for this response.
 // returns a *int32 when successful
 func (m *GetVideoFilehashChangesResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetServerTimeUtc gets the serverTimeUtc property value. The serverTimeUtc property
+// GetServerTimeUtc gets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 // returns a *Time when successful
 func (m *GetVideoFilehashChangesResponse) GetServerTimeUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.serverTimeUtc
@@ -176,7 +177,7 @@ func (m *GetVideoFilehashChangesResponse) Serialize(writer i878a80d2330e89d26896
 func (m *GetVideoFilehashChangesResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetHasMore sets the hasMore property value. The hasMore property
+// SetHasMore sets the hasMore property value. Whether additional rows exist after the current page.
 func (m *GetVideoFilehashChangesResponse) SetHasMore(value *bool)() {
     m.hasMore = value
 }
@@ -184,15 +185,15 @@ func (m *GetVideoFilehashChangesResponse) SetHasMore(value *bool)() {
 func (m *GetVideoFilehashChangesResponse) SetItems(value []VideoFilehashChangeDtoable)() {
     m.items = value
 }
-// SetNextCursor sets the nextCursor property value. The nextCursor property
+// SetNextCursor sets the nextCursor property value. Seek cursor for continuing a video filehash change feed.
 func (m *GetVideoFilehashChangesResponse) SetNextCursor(value VideoFilehashChangesCursorDtoable)() {
     m.nextCursor = value
 }
-// SetPageSize sets the pageSize property value. The pageSize property
+// SetPageSize sets the pageSize property value. The resolved page size for this response.
 func (m *GetVideoFilehashChangesResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetServerTimeUtc sets the serverTimeUtc property value. The serverTimeUtc property
+// SetServerTimeUtc sets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 func (m *GetVideoFilehashChangesResponse) SetServerTimeUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.serverTimeUtc = value
 }

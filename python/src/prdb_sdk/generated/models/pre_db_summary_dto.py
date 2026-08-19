@@ -8,20 +8,23 @@ from uuid import UUID
 
 @dataclass
 class PreDbSummaryDto(AdditionalDataHolder, Parsable):
+    """
+    Summary representation of a PreDb entry.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The category property
+    # Readable category value: Movies, TvShows, or Adult.
     category: Optional[str] = None
-    # The filesize property
+    # Optional file size value if known.
     filesize: Optional[int] = None
-    # The id property
+    # Unique identifier of the PreDb entry.
     id: Optional[UUID] = None
-    # The releaseDate property
+    # Release date associated with the entry.
     release_date: Optional[datetime.date] = None
-    # The releaseGroup property
+    # Release group name.
     release_group: Optional[str] = None
-    # The title property
+    # Release title as indexed in PreDb.
     title: Optional[str] = None
     
     @staticmethod

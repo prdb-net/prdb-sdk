@@ -103,14 +103,19 @@ class ChangesRequestBuilder(BaseRequestBuilder):
                 return "SinceId"
             return original_name
         
+        # Optional. Restrict changes to an indexer-specific identifier.
         indexer_id: Optional[str] = None
 
+        # Optional. Restrict changes to an indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.
         indexer_source: Optional[GetIndexerSourceQueryParameterType] = None
 
+        # Number of items per page. Defaults to 100, max 1000.
         page_size: Optional[int] = None
 
+        # Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.
         since: Optional[datetime.datetime] = None
 
+        # Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.
         since_id: Optional[UUID] = None
 
     

@@ -17,7 +17,7 @@ type VideoDetailActorDto struct {
     gender *int32
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The images property
+    // Images for this actor, ordered by ActorImageType VideoDetailActorImageDto.ImageType ascending(Thumbnail, Poster, Face), then oldest first, with the image ID as the tie-breaker. The orderis stable across requests.
     images []VideoDetailActorImageDtoable
     // The name property
     name *string
@@ -128,7 +128,7 @@ func (m *VideoDetailActorDto) GetGender()(*int32) {
 func (m *VideoDetailActorDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetImages gets the images property value. The images property
+// GetImages gets the images property value. Images for this actor, ordered by ActorImageType VideoDetailActorImageDto.ImageType ascending(Thumbnail, Poster, Face), then oldest first, with the image ID as the tie-breaker. The orderis stable across requests.
 // returns a []VideoDetailActorImageDtoable when successful
 func (m *VideoDetailActorDto) GetImages()([]VideoDetailActorImageDtoable) {
     return m.images
@@ -211,7 +211,7 @@ func (m *VideoDetailActorDto) SetGender(value *int32)() {
 func (m *VideoDetailActorDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetImages sets the images property value. The images property
+// SetImages sets the images property value. Images for this actor, ordered by ActorImageType VideoDetailActorImageDto.ImageType ascending(Thumbnail, Poster, Face), then oldest first, with the image ID as the tie-breaker. The orderis stable across requests.
 func (m *VideoDetailActorDto) SetImages(value []VideoDetailActorImageDtoable)() {
     m.images = value
 }

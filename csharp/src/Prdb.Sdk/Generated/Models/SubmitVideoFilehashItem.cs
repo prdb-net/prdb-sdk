@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// A single hash-to-video assignment.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class SubmitVideoFilehashItem : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The filename property</summary>
+        /// <summary>File name without directory. Optional — a client may withhold it, and the endpoint works without it.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Filename { get; set; }
@@ -22,9 +23,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Filename { get; set; }
 #endif
-        /// <summary>The filesize property</summary>
+        /// <summary>Size of the file in bytes.</summary>
         public long? Filesize { get; set; }
-        /// <summary>The osHash property</summary>
+        /// <summary>OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? OsHash { get; set; }
@@ -32,7 +33,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string OsHash { get; set; }
 #endif
-        /// <summary>The pHash property</summary>
+        /// <summary>Perceptual hash of the file, 16 hexadecimal characters, if the client computed one. It mustbe computed as &quot;Perceptual hashes&quot; in the API description prescribes; a submission carryinga value from another procedure contributes a row nothing can match.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? PHash { get; set; }
@@ -42,7 +43,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>Known values: UserConfirmed (0), ClientDetected (1).</summary>
         public int? Source { get; set; }
-        /// <summary>The videoId property</summary>
+        /// <summary>The video this file is. Required — a hash observation without an assignment is not accepted.</summary>
         public Guid? VideoId { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.SubmitVideoFilehashItem"/> and sets the default values.

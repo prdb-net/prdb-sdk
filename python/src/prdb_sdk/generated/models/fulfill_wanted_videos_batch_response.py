@@ -9,10 +9,13 @@ if TYPE_CHECKING:
 
 @dataclass
 class FulfillWantedVideosBatchResponse(AdditionalDataHolder, Parsable):
+    """
+    Per-video outcome of a batch fulfilment update.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The results property
+    # One result per requested video, in request order.
     results: Optional[list[FulfillWantedVideoResultDto]] = None
     
     @staticmethod

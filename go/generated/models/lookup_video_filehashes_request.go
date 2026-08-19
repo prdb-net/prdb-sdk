@@ -11,17 +11,17 @@ import (
 type LookupVideoFilehashesRequest struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The filenames property
+    // Optional exact filenames to match.
     filenames []string
-    // The filesizes property
+    // Optional exact file sizes to match.
     filesizes []int64
-    // The ids property
+    // Optional filehash row IDs to match.
     ids []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The osHashes property
+    // Optional OS hash values to match.
     osHashes []string
-    // The pHashes property
+    // Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under "Perceptualhashes" in the API description matches nothing rather than failing.
     pHashes []string
-    // The videoIds property
+    // Optional associated video IDs to match.
     videoIds []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewLookupVideoFilehashesRequest instantiates a new LookupVideoFilehashesRequest and sets the default values.
@@ -143,32 +143,32 @@ func (m *LookupVideoFilehashesRequest) GetFieldDeserializers()(map[string]func(i
     }
     return res
 }
-// GetFilenames gets the filenames property value. The filenames property
+// GetFilenames gets the filenames property value. Optional exact filenames to match.
 // returns a []string when successful
 func (m *LookupVideoFilehashesRequest) GetFilenames()([]string) {
     return m.filenames
 }
-// GetFilesizes gets the filesizes property value. The filesizes property
+// GetFilesizes gets the filesizes property value. Optional exact file sizes to match.
 // returns a []int64 when successful
 func (m *LookupVideoFilehashesRequest) GetFilesizes()([]int64) {
     return m.filesizes
 }
-// GetIds gets the ids property value. The ids property
+// GetIds gets the ids property value. Optional filehash row IDs to match.
 // returns a []UUID when successful
 func (m *LookupVideoFilehashesRequest) GetIds()([]i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.ids
 }
-// GetOsHashes gets the osHashes property value. The osHashes property
+// GetOsHashes gets the osHashes property value. Optional OS hash values to match.
 // returns a []string when successful
 func (m *LookupVideoFilehashesRequest) GetOsHashes()([]string) {
     return m.osHashes
 }
-// GetPHashes gets the pHashes property value. The pHashes property
+// GetPHashes gets the pHashes property value. Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under "Perceptualhashes" in the API description matches nothing rather than failing.
 // returns a []string when successful
 func (m *LookupVideoFilehashesRequest) GetPHashes()([]string) {
     return m.pHashes
 }
-// GetVideoIds gets the videoIds property value. The videoIds property
+// GetVideoIds gets the videoIds property value. Optional associated video IDs to match.
 // returns a []UUID when successful
 func (m *LookupVideoFilehashesRequest) GetVideoIds()([]i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoIds
@@ -223,27 +223,27 @@ func (m *LookupVideoFilehashesRequest) Serialize(writer i878a80d2330e89d26896388
 func (m *LookupVideoFilehashesRequest) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetFilenames sets the filenames property value. The filenames property
+// SetFilenames sets the filenames property value. Optional exact filenames to match.
 func (m *LookupVideoFilehashesRequest) SetFilenames(value []string)() {
     m.filenames = value
 }
-// SetFilesizes sets the filesizes property value. The filesizes property
+// SetFilesizes sets the filesizes property value. Optional exact file sizes to match.
 func (m *LookupVideoFilehashesRequest) SetFilesizes(value []int64)() {
     m.filesizes = value
 }
-// SetIds sets the ids property value. The ids property
+// SetIds sets the ids property value. Optional filehash row IDs to match.
 func (m *LookupVideoFilehashesRequest) SetIds(value []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.ids = value
 }
-// SetOsHashes sets the osHashes property value. The osHashes property
+// SetOsHashes sets the osHashes property value. Optional OS hash values to match.
 func (m *LookupVideoFilehashesRequest) SetOsHashes(value []string)() {
     m.osHashes = value
 }
-// SetPHashes sets the pHashes property value. The pHashes property
+// SetPHashes sets the pHashes property value. Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under "Perceptualhashes" in the API description matches nothing rather than failing.
 func (m *LookupVideoFilehashesRequest) SetPHashes(value []string)() {
     m.pHashes = value
 }
-// SetVideoIds sets the videoIds property value. The videoIds property
+// SetVideoIds sets the videoIds property value. Optional associated video IDs to match.
 func (m *LookupVideoFilehashesRequest) SetVideoIds(value []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoIds = value
 }

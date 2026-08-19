@@ -8,10 +8,11 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// AddWantedVideosBatchRequest request body for batch-adding wanted videos.
 type AddWantedVideosBatchRequest struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The videoIds property
+    // IDs of the videos to add. Between 1 and 50 entries.
     videoIds []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewAddWantedVideosBatchRequest instantiates a new AddWantedVideosBatchRequest and sets the default values.
@@ -53,7 +54,7 @@ func (m *AddWantedVideosBatchRequest) GetFieldDeserializers()(map[string]func(i8
     }
     return res
 }
-// GetVideoIds gets the videoIds property value. The videoIds property
+// GetVideoIds gets the videoIds property value. IDs of the videos to add. Between 1 and 50 entries.
 // returns a []UUID when successful
 func (m *AddWantedVideosBatchRequest) GetVideoIds()([]i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoIds
@@ -78,7 +79,7 @@ func (m *AddWantedVideosBatchRequest) Serialize(writer i878a80d2330e89d26896388a
 func (m *AddWantedVideosBatchRequest) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetVideoIds sets the videoIds property value. The videoIds property
+// SetVideoIds sets the videoIds property value. IDs of the videos to add. Between 1 and 50 entries.
 func (m *AddWantedVideosBatchRequest) SetVideoIds(value []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoIds = value
 }

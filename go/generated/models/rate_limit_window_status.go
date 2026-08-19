@@ -7,16 +7,17 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// RateLimitWindowStatus rate limit status for a single time window.
 type RateLimitWindowStatus struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The limit property
+    // Maximum number of requests allowed within this window.
     limit *int32
-    // The remaining property
+    // Number of requests remaining before the limit is reached.
     remaining *int32
-    // The resetsInSeconds property
+    // Seconds until the oldest request in the window expires, reducing the used count by one.
     resetsInSeconds *int32
-    // The used property
+    // Number of requests made within the current window.
     used *int32
 }
 // NewRateLimitWindowStatus instantiates a new RateLimitWindowStatus and sets the default values.
@@ -82,22 +83,22 @@ func (m *RateLimitWindowStatus) GetFieldDeserializers()(map[string]func(i878a80d
     }
     return res
 }
-// GetLimit gets the limit property value. The limit property
+// GetLimit gets the limit property value. Maximum number of requests allowed within this window.
 // returns a *int32 when successful
 func (m *RateLimitWindowStatus) GetLimit()(*int32) {
     return m.limit
 }
-// GetRemaining gets the remaining property value. The remaining property
+// GetRemaining gets the remaining property value. Number of requests remaining before the limit is reached.
 // returns a *int32 when successful
 func (m *RateLimitWindowStatus) GetRemaining()(*int32) {
     return m.remaining
 }
-// GetResetsInSeconds gets the resetsInSeconds property value. The resetsInSeconds property
+// GetResetsInSeconds gets the resetsInSeconds property value. Seconds until the oldest request in the window expires, reducing the used count by one.
 // returns a *int32 when successful
 func (m *RateLimitWindowStatus) GetResetsInSeconds()(*int32) {
     return m.resetsInSeconds
 }
-// GetUsed gets the used property value. The used property
+// GetUsed gets the used property value. Number of requests made within the current window.
 // returns a *int32 when successful
 func (m *RateLimitWindowStatus) GetUsed()(*int32) {
     return m.used
@@ -140,19 +141,19 @@ func (m *RateLimitWindowStatus) Serialize(writer i878a80d2330e89d26896388a3f487e
 func (m *RateLimitWindowStatus) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetLimit sets the limit property value. The limit property
+// SetLimit sets the limit property value. Maximum number of requests allowed within this window.
 func (m *RateLimitWindowStatus) SetLimit(value *int32)() {
     m.limit = value
 }
-// SetRemaining sets the remaining property value. The remaining property
+// SetRemaining sets the remaining property value. Number of requests remaining before the limit is reached.
 func (m *RateLimitWindowStatus) SetRemaining(value *int32)() {
     m.remaining = value
 }
-// SetResetsInSeconds sets the resetsInSeconds property value. The resetsInSeconds property
+// SetResetsInSeconds sets the resetsInSeconds property value. Seconds until the oldest request in the window expires, reducing the used count by one.
 func (m *RateLimitWindowStatus) SetResetsInSeconds(value *int32)() {
     m.resetsInSeconds = value
 }
-// SetUsed sets the used property value. The used property
+// SetUsed sets the used property value. Number of requests made within the current window.
 func (m *RateLimitWindowStatus) SetUsed(value *int32)() {
     m.used = value
 }

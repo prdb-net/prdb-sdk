@@ -8,12 +8,13 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// VideoSummaryActorDto minimal actor summary included in a video list item.
 type VideoSummaryActorDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The id property
+    // Unique identifier of the actor.
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The name property
+    // Actor name.
     name *string
 }
 // NewVideoSummaryActorDto instantiates a new VideoSummaryActorDto and sets the default values.
@@ -59,12 +60,12 @@ func (m *VideoSummaryActorDto) GetFieldDeserializers()(map[string]func(i878a80d2
     }
     return res
 }
-// GetId gets the id property value. The id property
+// GetId gets the id property value. Unique identifier of the actor.
 // returns a *UUID when successful
 func (m *VideoSummaryActorDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetName gets the name property value. The name property
+// GetName gets the name property value. Actor name.
 // returns a *string when successful
 func (m *VideoSummaryActorDto) GetName()(*string) {
     return m.name
@@ -95,11 +96,11 @@ func (m *VideoSummaryActorDto) Serialize(writer i878a80d2330e89d26896388a3f487ee
 func (m *VideoSummaryActorDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetId sets the id property value. The id property
+// SetId sets the id property value. Unique identifier of the actor.
 func (m *VideoSummaryActorDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetName sets the name property value. The name property
+// SetName sets the name property value. Actor name.
 func (m *VideoSummaryActorDto) SetName(value *string)() {
     m.name = value
 }

@@ -98,8 +98,11 @@ namespace Prdb.Sdk.Generated.IndexerFilehashes.Latest
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class LatestRequestBuilderGetQueryParameters 
         {
+            /// <summary>Optional. Return only filehashes created at or after this timestamp (UTC).</summary>
             public DateTimeOffset? CreatedFrom { get; set; }
+            /// <summary>Optional. Return only filehashes created at or before this timestamp (UTC).</summary>
             public DateTimeOffset? CreatedTo { get; set; }
+            /// <summary>Optional. Restrict results to an indexer-specific identifier.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? IndexerId { get; set; }
@@ -107,13 +110,21 @@ namespace Prdb.Sdk.Generated.IndexerFilehashes.Latest
 #else
             public string IndexerId { get; set; }
 #endif
+            /// <summary>Optional. Restrict results to an indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.</summary>
             public global::Prdb.Sdk.Generated.IndexerFilehashes.Latest.GetIndexerSourceQueryParameterType? IndexerSource { get; set; }
+            /// <summary>Optional. Filter by verification state. Omit for both verified and unverified entries.</summary>
             public bool? IsVerified { get; set; }
+            /// <summary>1-based page number. Defaults to 1.</summary>
             public int? Page { get; set; }
+            /// <summary>Number of items per page. Defaults to 20, max 5000.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Field to sort by. Supported values: `createdAtUtc` (default), `updatedAtUtc`, `submissionCount`, `filesize`.</summary>
             public global::Prdb.Sdk.Generated.IndexerFilehashes.Latest.GetSortByQueryParameterType? SortBy { get; set; }
+            /// <summary>Sort direction: `desc` (default) or `asc`.</summary>
             public global::Prdb.Sdk.Generated.IndexerFilehashes.Latest.GetSortDirectionQueryParameterType? SortDirection { get; set; }
+            /// <summary>Optional. Return only filehashes updated at or after this timestamp (UTC).</summary>
             public DateTimeOffset? UpdatedFrom { get; set; }
+            /// <summary>Optional. Return only filehashes updated at or before this timestamp (UTC).</summary>
             public DateTimeOffset? UpdatedTo { get; set; }
         }
     }

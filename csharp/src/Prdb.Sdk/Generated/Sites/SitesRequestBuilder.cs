@@ -98,8 +98,11 @@ namespace Prdb.Sdk.Generated.Sites
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class SitesRequestBuilderGetQueryParameters 
         {
+            /// <summary>1-based page number. Defaults to 1.</summary>
             public int? Page { get; set; }
+            /// <summary>Number of items per page. Defaults to 20, max 1000 — the full list fits in one page.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Optional search term matched against site title.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? Search { get; set; }
@@ -107,6 +110,7 @@ namespace Prdb.Sdk.Generated.Sites
 #else
             public string Search { get; set; }
 #endif
+            /// <summary>Field to sort by. Supported values: `title` (default).</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? SortBy { get; set; }
@@ -114,6 +118,7 @@ namespace Prdb.Sdk.Generated.Sites
 #else
             public string SortBy { get; set; }
 #endif
+            /// <summary>Sort direction: `asc` (default) or `desc`.</summary>
             public global::Prdb.Sdk.Generated.Sites.GetSortDirectionQueryParameterType? SortDirection { get; set; }
         }
     }

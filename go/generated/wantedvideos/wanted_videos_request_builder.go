@@ -16,14 +16,23 @@ type WantedVideosRequestBuilder struct {
 }
 // WantedVideosRequestBuilderGetQueryParameters returns a paged, sortable list of wanted videos for the currently authenticated user. Supports filtering by fulfilment status, site, actor, search term, and recency. Requires API key authentication.
 type WantedVideosRequestBuilderGetQueryParameters struct {
+    // Optional filter to return only videos featuring the specified actor.
     ActorId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Optional filter to return only wanted videos added within the last N days.
     AddedInLastDays *int32
+    // Filter by fulfilment status. Omit to return all.
     IsFulfilled *bool
+    // 1-based page number. Defaults to 1.
     Page *int32
+    // Number of items per page. Defaults to 100, max 500.
     PageSize *int32
+    // Optional search term matched against video title or site title.
     Search *string
+    // Optional filter to return only videos belonging to the specified site.
     SiteId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Field to sort by. Supported values: `createdAtUtc`, `isFulfilled`. Defaults to `createdAtUtc`.
     SortBy *string
+    // Sort direction: `asc` or `desc`. Defaults to `desc`.
     SortDirection *GetSortDirectionQueryParameterType
 }
 // Batch the batch property

@@ -129,11 +129,17 @@ namespace Prdb.Sdk.Generated.WantedVideos
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class WantedVideosRequestBuilderGetQueryParameters 
         {
+            /// <summary>Optional filter to return only videos featuring the specified actor.</summary>
             public Guid? ActorId { get; set; }
+            /// <summary>Optional filter to return only wanted videos added within the last N days.</summary>
             public int? AddedInLastDays { get; set; }
+            /// <summary>Filter by fulfilment status. Omit to return all.</summary>
             public bool? IsFulfilled { get; set; }
+            /// <summary>1-based page number. Defaults to 1.</summary>
             public int? Page { get; set; }
+            /// <summary>Number of items per page. Defaults to 100, max 500.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Optional search term matched against video title or site title.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? Search { get; set; }
@@ -141,7 +147,9 @@ namespace Prdb.Sdk.Generated.WantedVideos
 #else
             public string Search { get; set; }
 #endif
+            /// <summary>Optional filter to return only videos belonging to the specified site.</summary>
             public Guid? SiteId { get; set; }
+            /// <summary>Field to sort by. Supported values: `createdAtUtc`, `isFulfilled`. Defaults to `createdAtUtc`.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? SortBy { get; set; }
@@ -149,6 +157,7 @@ namespace Prdb.Sdk.Generated.WantedVideos
 #else
             public string SortBy { get; set; }
 #endif
+            /// <summary>Sort direction: `asc` or `desc`. Defaults to `desc`.</summary>
             public global::Prdb.Sdk.Generated.WantedVideos.GetSortDirectionQueryParameterType? SortDirection { get; set; }
         }
     }

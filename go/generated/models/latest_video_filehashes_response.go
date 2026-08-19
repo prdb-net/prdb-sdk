@@ -7,20 +7,21 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// LatestVideoFilehashesResponse paged list of the latest video filehash entries.
 type LatestVideoFilehashesResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
     // The items property
     items []VideoFilehashDtoable
-    // The page property
+    // Current page number (1-based).
     page *int32
-    // The pageSize property
+    // Number of items per page.
     pageSize *int32
-    // The sortBy property
+    // Resolved sort field for the current query.
     sortBy *string
-    // The sortDirection property
+    // Resolved sort direction for the current query.
     sortDirection *string
-    // The totalCount property
+    // Total number of filehash entries matching the current filters.
     totalCount *int32
 }
 // NewLatestVideoFilehashesResponse instantiates a new LatestVideoFilehashesResponse and sets the default values.
@@ -117,27 +118,27 @@ func (m *LatestVideoFilehashesResponse) GetFieldDeserializers()(map[string]func(
 func (m *LatestVideoFilehashesResponse) GetItems()([]VideoFilehashDtoable) {
     return m.items
 }
-// GetPage gets the page property value. The page property
+// GetPage gets the page property value. Current page number (1-based).
 // returns a *int32 when successful
 func (m *LatestVideoFilehashesResponse) GetPage()(*int32) {
     return m.page
 }
-// GetPageSize gets the pageSize property value. The pageSize property
+// GetPageSize gets the pageSize property value. Number of items per page.
 // returns a *int32 when successful
 func (m *LatestVideoFilehashesResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetSortBy gets the sortBy property value. The sortBy property
+// GetSortBy gets the sortBy property value. Resolved sort field for the current query.
 // returns a *string when successful
 func (m *LatestVideoFilehashesResponse) GetSortBy()(*string) {
     return m.sortBy
 }
-// GetSortDirection gets the sortDirection property value. The sortDirection property
+// GetSortDirection gets the sortDirection property value. Resolved sort direction for the current query.
 // returns a *string when successful
 func (m *LatestVideoFilehashesResponse) GetSortDirection()(*string) {
     return m.sortDirection
 }
-// GetTotalCount gets the totalCount property value. The totalCount property
+// GetTotalCount gets the totalCount property value. Total number of filehash entries matching the current filters.
 // returns a *int32 when successful
 func (m *LatestVideoFilehashesResponse) GetTotalCount()(*int32) {
     return m.totalCount
@@ -202,23 +203,23 @@ func (m *LatestVideoFilehashesResponse) SetAdditionalData(value map[string]any)(
 func (m *LatestVideoFilehashesResponse) SetItems(value []VideoFilehashDtoable)() {
     m.items = value
 }
-// SetPage sets the page property value. The page property
+// SetPage sets the page property value. Current page number (1-based).
 func (m *LatestVideoFilehashesResponse) SetPage(value *int32)() {
     m.page = value
 }
-// SetPageSize sets the pageSize property value. The pageSize property
+// SetPageSize sets the pageSize property value. Number of items per page.
 func (m *LatestVideoFilehashesResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetSortBy sets the sortBy property value. The sortBy property
+// SetSortBy sets the sortBy property value. Resolved sort field for the current query.
 func (m *LatestVideoFilehashesResponse) SetSortBy(value *string)() {
     m.sortBy = value
 }
-// SetSortDirection sets the sortDirection property value. The sortDirection property
+// SetSortDirection sets the sortDirection property value. Resolved sort direction for the current query.
 func (m *LatestVideoFilehashesResponse) SetSortDirection(value *string)() {
     m.sortDirection = value
 }
-// SetTotalCount sets the totalCount property value. The totalCount property
+// SetTotalCount sets the totalCount property value. Total number of filehash entries matching the current filters.
 func (m *LatestVideoFilehashesResponse) SetTotalCount(value *int32)() {
     m.totalCount = value
 }

@@ -17,10 +17,15 @@ type FilehashesChangesRequestBuilder struct {
 }
 // FilehashesChangesRequestBuilderGetQueryParameters returns a seek-paged delta feed of video filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional video ID and site ID filters. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
 type FilehashesChangesRequestBuilderGetQueryParameters struct {
+    // Number of items per page. Defaults to 100, max 1000.
     PageSize *int32
+    // Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.
     Since *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.
     SinceId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Optional. Restrict changes to videos on the specified site.
     SiteId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Optional. Restrict changes to a single video.
     VideoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewFilehashesChangesRequestBuilderInternal instantiates a new FilehashesChangesRequestBuilder and sets the default values.

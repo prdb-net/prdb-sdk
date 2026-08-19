@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Combined indexer identity used to match filehashes by indexer source and indexer-specific ID.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class IndexerFilehashLookupKeyDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The indexerId property</summary>
+        /// <summary>Indexer-specific identifier for the release.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? IndexerId { get; set; }
@@ -22,7 +23,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string IndexerId { get; set; }
 #endif
-        /// <summary>Allowed values: DrunkenSlug, NzbFinder, NzbPorn.</summary>
+        /// <summary>Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.</summary>
         public global::Prdb.Sdk.Generated.Models.IndexerFilehashLookupKeyDto_indexerSource? IndexerSource { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.IndexerFilehashLookupKeyDto"/> and sets the default values.

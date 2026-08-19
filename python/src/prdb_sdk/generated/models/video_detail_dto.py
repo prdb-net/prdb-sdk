@@ -23,7 +23,7 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
     created_at_utc: Optional[datetime.datetime] = None
     # The id property
     id: Optional[UUID] = None
-    # The images property
+    # Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.
     images: Optional[list[VideoDetailImageDto]] = None
     # The preNames property
     pre_names: Optional[list[VideoDetailPreNameDto]] = None

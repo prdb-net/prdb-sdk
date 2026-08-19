@@ -16,7 +16,7 @@ class ActorImageDetailDto(AdditionalDataHolder, Parsable):
     image_type: Optional[int] = None
     # The imageTypeLabel property
     image_type_label: Optional[str] = None
-    # The url property
+    # Full CDN URL for the image, if available.
     url: Optional[str] = None
     
     @staticmethod

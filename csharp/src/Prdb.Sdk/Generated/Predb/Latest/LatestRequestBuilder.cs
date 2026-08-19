@@ -98,10 +98,15 @@ namespace Prdb.Sdk.Generated.Predb.Latest
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class LatestRequestBuilderGetQueryParameters 
         {
+            /// <summary>Optional. Return only PreDb entries created at or after this timestamp (UTC).</summary>
             public DateTimeOffset? CreatedFrom { get; set; }
+            /// <summary>Optional. Return only PreDb entries created at or before this timestamp (UTC).</summary>
             public DateTimeOffset? CreatedTo { get; set; }
+            /// <summary>1-based page number. Defaults to 1.</summary>
             public int? Page { get; set; }
+            /// <summary>Number of items per page. Defaults to 20, max 500.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Optional. Filter to predbs linked to videos on the specified site.</summary>
             public Guid? SiteId { get; set; }
         }
     }

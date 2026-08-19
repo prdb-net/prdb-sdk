@@ -35,16 +35,49 @@ export interface LatestRequestBuilder extends BaseRequestBuilder<LatestRequestBu
  * Returns a paged list of active indexer filehash entries. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by indexer source, indexer ID, verification state, and inclusive created/updated date ranges. Requires API key authentication.
  */
 export interface LatestRequestBuilderGetQueryParameters {
+    /**
+     * Optional. Return only filehashes created at or after this timestamp (UTC).
+     */
     createdFrom?: Date;
+    /**
+     * Optional. Return only filehashes created at or before this timestamp (UTC).
+     */
     createdTo?: Date;
+    /**
+     * Optional. Restrict results to an indexer-specific identifier.
+     */
     indexerId?: string;
+    /**
+     * Optional. Restrict results to an indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.
+     */
     indexerSource?: GetIndexerSourceQueryParameterType;
+    /**
+     * Optional. Filter by verification state. Omit for both verified and unverified entries.
+     */
     isVerified?: boolean;
+    /**
+     * 1-based page number. Defaults to 1.
+     */
     page?: number;
+    /**
+     * Number of items per page. Defaults to 20, max 5000.
+     */
     pageSize?: number;
+    /**
+     * Field to sort by. Supported values: `createdAtUtc` (default), `updatedAtUtc`, `submissionCount`, `filesize`.
+     */
     sortBy?: GetSortByQueryParameterType;
+    /**
+     * Sort direction: `desc` (default) or `asc`.
+     */
     sortDirection?: GetSortDirectionQueryParameterType;
+    /**
+     * Optional. Return only filehashes updated at or after this timestamp (UTC).
+     */
     updatedFrom?: Date;
+    /**
+     * Optional. Return only filehashes updated at or before this timestamp (UTC).
+     */
     updatedTo?: Date;
 }
 /**

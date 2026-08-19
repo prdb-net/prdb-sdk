@@ -7,10 +7,11 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// A seek-paged actor delta feed ordered by updated timestamp and actor ID.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class GetActorChangesResponse : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
@@ -24,7 +25,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.ActorChangeDto> Items { get; set; }
 #endif
-        /// <summary>The nextCursor property</summary>
+        /// <summary>Seek cursor for continuing an actor change feed.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public global::Prdb.Sdk.Generated.Models.ActorChangesCursorDto? NextCursor { get; set; }
@@ -34,7 +35,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>The pageSize property</summary>
         public int? PageSize { get; set; }
-        /// <summary>The serverTimeUtc property</summary>
+        /// <summary>The server&apos;s clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client&apos;s own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.</summary>
         public DateTimeOffset? ServerTimeUtc { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.GetActorChangesResponse"/> and sets the default values.

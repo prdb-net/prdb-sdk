@@ -46,10 +46,25 @@ export interface FavoriteActorsRequestBuilder extends BaseRequestBuilder<Favorit
  * Returns a paged, sortable list of actors the currently authenticated user has favorited. Supports filtering by search term. Requires API key authentication.
  */
 export interface FavoriteActorsRequestBuilderGetQueryParameters {
+    /**
+     * 1-based page number. Defaults to 1.
+     */
     page?: number;
+    /**
+     * Number of items per page. Defaults to 100, max 500.
+     */
     pageSize?: number;
+    /**
+     * Optional search term matched against actor name.
+     */
     search?: string;
+    /**
+     * Field to sort by. Supported values: `favoritedAtUtc`, `name`. Defaults to `favoritedAtUtc`.
+     */
     sortBy?: string;
+    /**
+     * Sort direction: `asc` or `desc`. Defaults to `desc`.
+     */
     sortDirection?: GetSortDirectionQueryParameterType;
 }
 export type GetSortDirectionQueryParameterType = (typeof GetSortDirectionQueryParameterTypeObject)[keyof typeof GetSortDirectionQueryParameterTypeObject];

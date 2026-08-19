@@ -9,14 +9,17 @@ if TYPE_CHECKING:
 
 @dataclass
 class GetRateLimitResponse(AdditionalDataHolder, Parsable):
+    """
+    Current rate limit status for the authenticated user.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The hourly property
+    # Rate limit status for a single time window.
     hourly: Optional[RateLimitWindowStatus] = None
-    # The isEnforced property
+    # Always true. Rate limiting is enforced unconditionally; when it cannot be enforced the APIanswers 503 instead of returning this document. Kept for compatibility with clients thatread the field.
     is_enforced: Optional[bool] = None
-    # The monthly property
+    # Rate limit status for a single time window.
     monthly: Optional[RateLimitWindowStatus] = None
     
     @staticmethod

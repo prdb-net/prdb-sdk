@@ -9,20 +9,23 @@ if TYPE_CHECKING:
 
 @dataclass
 class LatestVideoFilehashesResponse(AdditionalDataHolder, Parsable):
+    """
+    Paged list of the latest video filehash entries.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
     # The items property
     items: Optional[list[VideoFilehashDto]] = None
-    # The page property
+    # Current page number (1-based).
     page: Optional[int] = None
-    # The pageSize property
+    # Number of items per page.
     page_size: Optional[int] = None
-    # The sortBy property
+    # Resolved sort field for the current query.
     sort_by: Optional[str] = None
-    # The sortDirection property
+    # Resolved sort direction for the current query.
     sort_direction: Optional[str] = None
-    # The totalCount property
+    # Total number of filehash entries matching the current filters.
     total_count: Optional[int] = None
     
     @staticmethod

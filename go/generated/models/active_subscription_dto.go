@@ -8,16 +8,17 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// ActiveSubscriptionDto an active subscription held by the authenticated user.
 type ActiveSubscriptionDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The endsAtUtc property
+    // UTC timestamp when this subscription period ends.
     endsAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The packageIdentifier property
+    // Stable slug identifying the subscription package (e.g. "plus", "premium").
     packageIdentifier *string
-    // The packageTitle property
+    // Human-readable title of the subscription package.
     packageTitle *string
-    // The startsAtUtc property
+    // UTC timestamp when this subscription period starts.
     startsAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewActiveSubscriptionDto instantiates a new ActiveSubscriptionDto and sets the default values.
@@ -37,7 +38,7 @@ func CreateActiveSubscriptionDtoFromDiscriminatorValue(parseNode i878a80d2330e89
 func (m *ActiveSubscriptionDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetEndsAtUtc gets the endsAtUtc property value. The endsAtUtc property
+// GetEndsAtUtc gets the endsAtUtc property value. UTC timestamp when this subscription period ends.
 // returns a *Time when successful
 func (m *ActiveSubscriptionDto) GetEndsAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.endsAtUtc
@@ -88,17 +89,17 @@ func (m *ActiveSubscriptionDto) GetFieldDeserializers()(map[string]func(i878a80d
     }
     return res
 }
-// GetPackageIdentifier gets the packageIdentifier property value. The packageIdentifier property
+// GetPackageIdentifier gets the packageIdentifier property value. Stable slug identifying the subscription package (e.g. "plus", "premium").
 // returns a *string when successful
 func (m *ActiveSubscriptionDto) GetPackageIdentifier()(*string) {
     return m.packageIdentifier
 }
-// GetPackageTitle gets the packageTitle property value. The packageTitle property
+// GetPackageTitle gets the packageTitle property value. Human-readable title of the subscription package.
 // returns a *string when successful
 func (m *ActiveSubscriptionDto) GetPackageTitle()(*string) {
     return m.packageTitle
 }
-// GetStartsAtUtc gets the startsAtUtc property value. The startsAtUtc property
+// GetStartsAtUtc gets the startsAtUtc property value. UTC timestamp when this subscription period starts.
 // returns a *Time when successful
 func (m *ActiveSubscriptionDto) GetStartsAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.startsAtUtc
@@ -141,19 +142,19 @@ func (m *ActiveSubscriptionDto) Serialize(writer i878a80d2330e89d26896388a3f487e
 func (m *ActiveSubscriptionDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetEndsAtUtc sets the endsAtUtc property value. The endsAtUtc property
+// SetEndsAtUtc sets the endsAtUtc property value. UTC timestamp when this subscription period ends.
 func (m *ActiveSubscriptionDto) SetEndsAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.endsAtUtc = value
 }
-// SetPackageIdentifier sets the packageIdentifier property value. The packageIdentifier property
+// SetPackageIdentifier sets the packageIdentifier property value. Stable slug identifying the subscription package (e.g. "plus", "premium").
 func (m *ActiveSubscriptionDto) SetPackageIdentifier(value *string)() {
     m.packageIdentifier = value
 }
-// SetPackageTitle sets the packageTitle property value. The packageTitle property
+// SetPackageTitle sets the packageTitle property value. Human-readable title of the subscription package.
 func (m *ActiveSubscriptionDto) SetPackageTitle(value *string)() {
     m.packageTitle = value
 }
-// SetStartsAtUtc sets the startsAtUtc property value. The startsAtUtc property
+// SetStartsAtUtc sets the startsAtUtc property value. UTC timestamp when this subscription period starts.
 func (m *ActiveSubscriptionDto) SetStartsAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.startsAtUtc = value
 }

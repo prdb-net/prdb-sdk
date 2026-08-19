@@ -101,14 +101,19 @@ class SitesRequestBuilder(BaseRequestBuilder):
                 return "SortDirection"
             return original_name
         
+        # 1-based page number. Defaults to 1.
         page: Optional[int] = None
 
+        # Number of items per page. Defaults to 20, max 1000 — the full list fits in one page.
         page_size: Optional[int] = None
 
+        # Optional search term matched against site title.
         search: Optional[str] = None
 
+        # Field to sort by. Supported values: `title` (default).
         sort_by: Optional[str] = None
 
+        # Sort direction: `asc` (default) or `desc`.
         sort_direction: Optional[GetSortDirectionQueryParameterType] = None
 
     

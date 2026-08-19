@@ -9,12 +9,15 @@ if TYPE_CHECKING:
 
 @dataclass
 class FavoriteSiteChangeDto(AdditionalDataHolder, Parsable):
+    """
+    A single changed favorite site row in the incremental feed.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The eventType property
+    # One of `created`, `updated`, or `deleted`.
     event_type: Optional[str] = None
-    # The favoriteSite property
+    # Current-state payload for a favorite site row in the incremental feed.
     favorite_site: Optional[FavoriteSiteChangeFavoriteSiteDto] = None
     
     @staticmethod

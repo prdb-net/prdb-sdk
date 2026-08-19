@@ -7,12 +7,13 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// VideoFilehashChangeDto a single changed video filehash row in the incremental feed.
 type VideoFilehashChangeDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The eventType property
+    // One of `created`, `updated`, or `deleted`.
     eventType *string
-    // The filehash property
+    // Current persisted state of a changed video filehash row, including soft-delete fields.
     filehash VideoFilehashChangeFilehashDtoable
 }
 // NewVideoFilehashChangeDto instantiates a new VideoFilehashChangeDto and sets the default values.
@@ -32,7 +33,7 @@ func CreateVideoFilehashChangeDtoFromDiscriminatorValue(parseNode i878a80d2330e8
 func (m *VideoFilehashChangeDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetEventType gets the eventType property value. The eventType property
+// GetEventType gets the eventType property value. One of `created`, `updated`, or `deleted`.
 // returns a *string when successful
 func (m *VideoFilehashChangeDto) GetEventType()(*string) {
     return m.eventType
@@ -63,7 +64,7 @@ func (m *VideoFilehashChangeDto) GetFieldDeserializers()(map[string]func(i878a80
     }
     return res
 }
-// GetFilehash gets the filehash property value. The filehash property
+// GetFilehash gets the filehash property value. Current persisted state of a changed video filehash row, including soft-delete fields.
 // returns a VideoFilehashChangeFilehashDtoable when successful
 func (m *VideoFilehashChangeDto) GetFilehash()(VideoFilehashChangeFilehashDtoable) {
     return m.filehash
@@ -94,11 +95,11 @@ func (m *VideoFilehashChangeDto) Serialize(writer i878a80d2330e89d26896388a3f487
 func (m *VideoFilehashChangeDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetEventType sets the eventType property value. The eventType property
+// SetEventType sets the eventType property value. One of `created`, `updated`, or `deleted`.
 func (m *VideoFilehashChangeDto) SetEventType(value *string)() {
     m.eventType = value
 }
-// SetFilehash sets the filehash property value. The filehash property
+// SetFilehash sets the filehash property value. Current persisted state of a changed video filehash row, including soft-delete fields.
 func (m *VideoFilehashChangeDto) SetFilehash(value VideoFilehashChangeFilehashDtoable)() {
     m.filehash = value
 }

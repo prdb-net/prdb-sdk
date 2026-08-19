@@ -22,7 +22,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.PreDbVideoGroupDto> Items { get; set; }
 #endif
-        /// <summary>The totalGroups property</summary>
+        /// <summary>Number of distinct videos in the result set (capped at 500).</summary>
         public int? TotalGroups { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.SearchPreDbByVideoResponse"/> and sets the default values.

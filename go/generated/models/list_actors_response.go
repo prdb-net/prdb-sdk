@@ -7,22 +7,23 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// ListActorsResponse paged list of actors.
 type ListActorsResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The items property
+    // Actors on the current page.
     items []ActorSummaryDtoable
-    // The page property
+    // Current page number (1-based).
     page *int32
-    // The pageSize property
+    // Number of items per page.
     pageSize *int32
-    // The sortBy property
+    // Field the result is sorted by: "name" or "createdAtUtc".
     sortBy *string
-    // The sortDirection property
+    // Sort direction applied: "asc" or "desc".
     sortDirection *string
-    // The totalCount property
+    // Total number of actors matching the current query filters.
     totalCount *int32
-    // The totalPages property
+    // Total number of pages for the current query and page size.
     totalPages *int32
 }
 // NewListActorsResponse instantiates a new ListActorsResponse and sets the default values.
@@ -124,37 +125,37 @@ func (m *ListActorsResponse) GetFieldDeserializers()(map[string]func(i878a80d233
     }
     return res
 }
-// GetItems gets the items property value. The items property
+// GetItems gets the items property value. Actors on the current page.
 // returns a []ActorSummaryDtoable when successful
 func (m *ListActorsResponse) GetItems()([]ActorSummaryDtoable) {
     return m.items
 }
-// GetPage gets the page property value. The page property
+// GetPage gets the page property value. Current page number (1-based).
 // returns a *int32 when successful
 func (m *ListActorsResponse) GetPage()(*int32) {
     return m.page
 }
-// GetPageSize gets the pageSize property value. The pageSize property
+// GetPageSize gets the pageSize property value. Number of items per page.
 // returns a *int32 when successful
 func (m *ListActorsResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetSortBy gets the sortBy property value. The sortBy property
+// GetSortBy gets the sortBy property value. Field the result is sorted by: "name" or "createdAtUtc".
 // returns a *string when successful
 func (m *ListActorsResponse) GetSortBy()(*string) {
     return m.sortBy
 }
-// GetSortDirection gets the sortDirection property value. The sortDirection property
+// GetSortDirection gets the sortDirection property value. Sort direction applied: "asc" or "desc".
 // returns a *string when successful
 func (m *ListActorsResponse) GetSortDirection()(*string) {
     return m.sortDirection
 }
-// GetTotalCount gets the totalCount property value. The totalCount property
+// GetTotalCount gets the totalCount property value. Total number of actors matching the current query filters.
 // returns a *int32 when successful
 func (m *ListActorsResponse) GetTotalCount()(*int32) {
     return m.totalCount
 }
-// GetTotalPages gets the totalPages property value. The totalPages property
+// GetTotalPages gets the totalPages property value. Total number of pages for the current query and page size.
 // returns a *int32 when successful
 func (m *ListActorsResponse) GetTotalPages()(*int32) {
     return m.totalPages
@@ -221,31 +222,31 @@ func (m *ListActorsResponse) Serialize(writer i878a80d2330e89d26896388a3f487eef2
 func (m *ListActorsResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetItems sets the items property value. The items property
+// SetItems sets the items property value. Actors on the current page.
 func (m *ListActorsResponse) SetItems(value []ActorSummaryDtoable)() {
     m.items = value
 }
-// SetPage sets the page property value. The page property
+// SetPage sets the page property value. Current page number (1-based).
 func (m *ListActorsResponse) SetPage(value *int32)() {
     m.page = value
 }
-// SetPageSize sets the pageSize property value. The pageSize property
+// SetPageSize sets the pageSize property value. Number of items per page.
 func (m *ListActorsResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetSortBy sets the sortBy property value. The sortBy property
+// SetSortBy sets the sortBy property value. Field the result is sorted by: "name" or "createdAtUtc".
 func (m *ListActorsResponse) SetSortBy(value *string)() {
     m.sortBy = value
 }
-// SetSortDirection sets the sortDirection property value. The sortDirection property
+// SetSortDirection sets the sortDirection property value. Sort direction applied: "asc" or "desc".
 func (m *ListActorsResponse) SetSortDirection(value *string)() {
     m.sortDirection = value
 }
-// SetTotalCount sets the totalCount property value. The totalCount property
+// SetTotalCount sets the totalCount property value. Total number of actors matching the current query filters.
 func (m *ListActorsResponse) SetTotalCount(value *int32)() {
     m.totalCount = value
 }
-// SetTotalPages sets the totalPages property value. The totalPages property
+// SetTotalPages sets the totalPages property value. Total number of pages for the current query and page size.
 func (m *ListActorsResponse) SetTotalPages(value *int32)() {
     m.totalPages = value
 }
