@@ -10,13 +10,13 @@ import (
 type UpdateDownloadedFromIndexerFilenameRequest struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The filename property
+    // The filename as reported by the indexer/download source.
     filename *string
-    // The filesize property
+    // File size in bytes.
     filesize *int64
-    // The osHash property
+    // Optional OS hash value as a 16-character fixed-length string.
     osHash *string
-    // The pHash property
+    // Optional perceptual hash value, 16 hexadecimal characters. It must be computed as"Perceptual hashes" in the API description prescribes; a value from another procedureis stored but can never be matched.
     pHash *string
 }
 // NewUpdateDownloadedFromIndexerFilenameRequest instantiates a new UpdateDownloadedFromIndexerFilenameRequest and sets the default values.
@@ -82,22 +82,22 @@ func (m *UpdateDownloadedFromIndexerFilenameRequest) GetFieldDeserializers()(map
     }
     return res
 }
-// GetFilename gets the filename property value. The filename property
+// GetFilename gets the filename property value. The filename as reported by the indexer/download source.
 // returns a *string when successful
 func (m *UpdateDownloadedFromIndexerFilenameRequest) GetFilename()(*string) {
     return m.filename
 }
-// GetFilesize gets the filesize property value. The filesize property
+// GetFilesize gets the filesize property value. File size in bytes.
 // returns a *int64 when successful
 func (m *UpdateDownloadedFromIndexerFilenameRequest) GetFilesize()(*int64) {
     return m.filesize
 }
-// GetOsHash gets the osHash property value. The osHash property
+// GetOsHash gets the osHash property value. Optional OS hash value as a 16-character fixed-length string.
 // returns a *string when successful
 func (m *UpdateDownloadedFromIndexerFilenameRequest) GetOsHash()(*string) {
     return m.osHash
 }
-// GetPHash gets the pHash property value. The pHash property
+// GetPHash gets the pHash property value. Optional perceptual hash value, 16 hexadecimal characters. It must be computed as"Perceptual hashes" in the API description prescribes; a value from another procedureis stored but can never be matched.
 // returns a *string when successful
 func (m *UpdateDownloadedFromIndexerFilenameRequest) GetPHash()(*string) {
     return m.pHash
@@ -140,19 +140,19 @@ func (m *UpdateDownloadedFromIndexerFilenameRequest) Serialize(writer i878a80d23
 func (m *UpdateDownloadedFromIndexerFilenameRequest) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetFilename sets the filename property value. The filename property
+// SetFilename sets the filename property value. The filename as reported by the indexer/download source.
 func (m *UpdateDownloadedFromIndexerFilenameRequest) SetFilename(value *string)() {
     m.filename = value
 }
-// SetFilesize sets the filesize property value. The filesize property
+// SetFilesize sets the filesize property value. File size in bytes.
 func (m *UpdateDownloadedFromIndexerFilenameRequest) SetFilesize(value *int64)() {
     m.filesize = value
 }
-// SetOsHash sets the osHash property value. The osHash property
+// SetOsHash sets the osHash property value. Optional OS hash value as a 16-character fixed-length string.
 func (m *UpdateDownloadedFromIndexerFilenameRequest) SetOsHash(value *string)() {
     m.osHash = value
 }
-// SetPHash sets the pHash property value. The pHash property
+// SetPHash sets the pHash property value. Optional perceptual hash value, 16 hexadecimal characters. It must be computed as"Perceptual hashes" in the API description prescribes; a value from another procedureis stored but can never be matched.
 func (m *UpdateDownloadedFromIndexerFilenameRequest) SetPHash(value *string)() {
     m.pHash = value
 }

@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// What the identification ladder made of one file.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class IdentifyVideoResultDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The candidates property</summary>
+        /// <summary>All equally good videos when the match was ambiguous; otherwise empty.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<Guid?>? Candidates { get; set; }
@@ -22,11 +23,11 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<Guid?> Candidates { get; set; }
 #endif
-        /// <summary>Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).</summary>
+        /// <summary>How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).</summary>
         public int? Confidence { get; set; }
         /// <summary>Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).</summary>
         public int? MatchedBy { get; set; }
-        /// <summary>The ref property</summary>
+        /// <summary>The client-assigned identifier of the input file, returned unchanged.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Ref { get; set; }
@@ -34,7 +35,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Ref { get; set; }
 #endif
-        /// <summary>The site property</summary>
+        /// <summary>The site a file could be attributed to.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public global::Prdb.Sdk.Generated.Models.IdentifySiteDto? Site { get; set; }
@@ -50,7 +51,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public global::Prdb.Sdk.Generated.Models.VideoDetailDto Video { get; set; }
 #endif
-        /// <summary>The videoId property</summary>
+        /// <summary>The identified video, when exactly one was found.</summary>
         public Guid? VideoId { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.IdentifyVideoResultDto"/> and sets the default values.

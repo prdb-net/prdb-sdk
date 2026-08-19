@@ -7,14 +7,17 @@ from uuid import UUID
 
 @dataclass
 class SubmitVideoFilehashResultDto(AdditionalDataHolder, Parsable):
+    """
+    What happened to one submitted assignment.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The osHash property
+    # The OS hash of the entry, normalized to upper case.
     os_hash: Optional[str] = None
-    # Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
+    # Outcome of a single submission. Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
     outcome: Optional[int] = None
-    # The videoId property
+    # The video the entry named.
     video_id: Optional[UUID] = None
     
     @staticmethod

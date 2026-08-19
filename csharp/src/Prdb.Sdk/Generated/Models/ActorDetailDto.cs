@@ -8,10 +8,11 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Full details for a single actor.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class ActorDetailDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
@@ -31,11 +32,11 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.ActorBioDto> Bios { get; set; }
 #endif
-        /// <summary>The birthday property</summary>
+        /// <summary>Date of birth, if known.</summary>
         public Date? Birthday { get; set; }
         /// <summary>Known values: ExactDate (1), MonthYear (2), Year (3).</summary>
         public int? BirthdayType { get; set; }
-        /// <summary>The birthdayTypeLabel property</summary>
+        /// <summary>Human-readable birthday type label (e.g. &quot;Exact&quot;, &quot;Approximate&quot;).</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? BirthdayTypeLabel { get; set; }
@@ -53,7 +54,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>The braSize property</summary>
         public int? BraSize { get; set; }
-        /// <summary>The braSizeLabel property</summary>
+        /// <summary>Human-readable bra size label (e.g. &quot;34B&quot;).</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? BraSizeLabel { get; set; }
@@ -71,13 +72,13 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string BreastTypeLabel { get; set; }
 #endif
-        /// <summary>The careerEnd property</summary>
+        /// <summary>Year the actor&apos;s career ended, if applicable.</summary>
         public int? CareerEnd { get; set; }
-        /// <summary>The careerStart property</summary>
+        /// <summary>Year the actor&apos;s career began.</summary>
         public int? CareerStart { get; set; }
         /// <summary>The createdAtUtc property</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
-        /// <summary>The deathday property</summary>
+        /// <summary>Date of death, if applicable.</summary>
         public Date? Deathday { get; set; }
         /// <summary>Known values: Unknown (0), Caucasian (1), Black (2), Asian (3), Indian (4), Latin (5), MiddleEastern (6), Mixed (7), Other (8).</summary>
         public int? Ethnicity { get; set; }
@@ -101,7 +102,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).</summary>
         public int? Gender { get; set; }
-        /// <summary>The genderLabel property</summary>
+        /// <summary>Human-readable gender label.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? GenderLabel { get; set; }
@@ -119,9 +120,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string HaircolorLabel { get; set; }
 #endif
-        /// <summary>The height property</summary>
+        /// <summary>Height in centimetres.</summary>
         public int? Height { get; set; }
-        /// <summary>The hipSize property</summary>
+        /// <summary>Hip measurement in centimetres.</summary>
         public int? HipSize { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
@@ -141,7 +142,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.ActorLinkDto> Links { get; set; }
 #endif
-        /// <summary>The name property</summary>
+        /// <summary>Stage name of the actor.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Name { get; set; }
@@ -177,7 +178,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>The updatedAtUtc property</summary>
         public DateTimeOffset? UpdatedAtUtc { get; set; }
-        /// <summary>The waistSize property</summary>
+        /// <summary>Waist measurement in centimetres.</summary>
         public int? WaistSize { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.ActorDetailDto"/> and sets the default values.

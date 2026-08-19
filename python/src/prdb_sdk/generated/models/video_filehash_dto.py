@@ -13,19 +13,19 @@ class VideoFilehashDto(AdditionalDataHolder, Parsable):
 
     # The createdAtUtc property
     created_at_utc: Optional[datetime.datetime] = None
-    # The filename property
+    # Original filename submitted for this filehash record.
     filename: Optional[str] = None
-    # The filesize property
+    # File size in bytes.
     filesize: Optional[int] = None
     # The id property
     id: Optional[UUID] = None
-    # The isVerified property
+    # Whether this filehash record has been verified.
     is_verified: Optional[bool] = None
-    # The osHash property
+    # OS hash value as stored, or null when not available.
     os_hash: Optional[str] = None
-    # The pHash property
+    # P hash value as stored, or null when not available.
     p_hash: Optional[str] = None
-    # The submissionCount property
+    # Number of submissions merged into this filehash record.
     submission_count: Optional[int] = None
     # The updatedAtUtc property
     updated_at_utc: Optional[datetime.datetime] = None

@@ -11,6 +11,9 @@ if TYPE_CHECKING:
 
 @dataclass
 class GetFavoriteSiteChangesResponse(AdditionalDataHolder, Parsable):
+    """
+    Paged delta feed of favorite site changes ordered by updated timestamp and ID.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
@@ -18,11 +21,11 @@ class GetFavoriteSiteChangesResponse(AdditionalDataHolder, Parsable):
     has_more: Optional[bool] = None
     # The items property
     items: Optional[list[FavoriteSiteChangeDto]] = None
-    # The nextCursor property
+    # Seek cursor for continuing a favorite site change feed.
     next_cursor: Optional[FavoriteSiteChangesCursorDto] = None
     # The pageSize property
     page_size: Optional[int] = None
-    # The serverTimeUtc property
+    # The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
     server_time_utc: Optional[datetime.datetime] = None
     
     @staticmethod

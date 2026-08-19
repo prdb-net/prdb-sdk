@@ -14,7 +14,7 @@ namespace Prdb.Sdk.Generated.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The filename property</summary>
+        /// <summary>The filename as reported by the indexer/download source.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Filename { get; set; }
@@ -22,9 +22,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Filename { get; set; }
 #endif
-        /// <summary>The filesize property</summary>
+        /// <summary>File size in bytes.</summary>
         public long? Filesize { get; set; }
-        /// <summary>The osHash property</summary>
+        /// <summary>Optional OS hash value as a 16-character fixed-length string.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? OsHash { get; set; }
@@ -32,7 +32,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string OsHash { get; set; }
 #endif
-        /// <summary>The pHash property</summary>
+        /// <summary>Optional perceptual hash value, 16 hexadecimal characters. It must be computed as&quot;Perceptual hashes&quot; in the API description prescribes; a value from another procedureis stored but can never be matched.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? PHash { get; set; }

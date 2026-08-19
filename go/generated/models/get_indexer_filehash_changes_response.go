@@ -8,18 +8,19 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// GetIndexerFilehashChangesResponse paged delta feed of indexer filehash changes ordered by updated timestamp and ID.
 type GetIndexerFilehashChangesResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The hasMore property
+    // Whether additional rows exist after the current page.
     hasMore *bool
     // The items property
     items []IndexerFilehashChangeDtoable
-    // The nextCursor property
+    // Seek cursor for continuing an indexer filehash change feed.
     nextCursor IndexerFilehashChangesCursorDtoable
-    // The pageSize property
+    // The resolved page size for this response.
     pageSize *int32
-    // The serverTimeUtc property
+    // The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
     serverTimeUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewGetIndexerFilehashChangesResponse instantiates a new GetIndexerFilehashChangesResponse and sets the default values.
@@ -101,7 +102,7 @@ func (m *GetIndexerFilehashChangesResponse) GetFieldDeserializers()(map[string]f
     }
     return res
 }
-// GetHasMore gets the hasMore property value. The hasMore property
+// GetHasMore gets the hasMore property value. Whether additional rows exist after the current page.
 // returns a *bool when successful
 func (m *GetIndexerFilehashChangesResponse) GetHasMore()(*bool) {
     return m.hasMore
@@ -111,17 +112,17 @@ func (m *GetIndexerFilehashChangesResponse) GetHasMore()(*bool) {
 func (m *GetIndexerFilehashChangesResponse) GetItems()([]IndexerFilehashChangeDtoable) {
     return m.items
 }
-// GetNextCursor gets the nextCursor property value. The nextCursor property
+// GetNextCursor gets the nextCursor property value. Seek cursor for continuing an indexer filehash change feed.
 // returns a IndexerFilehashChangesCursorDtoable when successful
 func (m *GetIndexerFilehashChangesResponse) GetNextCursor()(IndexerFilehashChangesCursorDtoable) {
     return m.nextCursor
 }
-// GetPageSize gets the pageSize property value. The pageSize property
+// GetPageSize gets the pageSize property value. The resolved page size for this response.
 // returns a *int32 when successful
 func (m *GetIndexerFilehashChangesResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetServerTimeUtc gets the serverTimeUtc property value. The serverTimeUtc property
+// GetServerTimeUtc gets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 // returns a *Time when successful
 func (m *GetIndexerFilehashChangesResponse) GetServerTimeUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.serverTimeUtc
@@ -176,7 +177,7 @@ func (m *GetIndexerFilehashChangesResponse) Serialize(writer i878a80d2330e89d268
 func (m *GetIndexerFilehashChangesResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetHasMore sets the hasMore property value. The hasMore property
+// SetHasMore sets the hasMore property value. Whether additional rows exist after the current page.
 func (m *GetIndexerFilehashChangesResponse) SetHasMore(value *bool)() {
     m.hasMore = value
 }
@@ -184,15 +185,15 @@ func (m *GetIndexerFilehashChangesResponse) SetHasMore(value *bool)() {
 func (m *GetIndexerFilehashChangesResponse) SetItems(value []IndexerFilehashChangeDtoable)() {
     m.items = value
 }
-// SetNextCursor sets the nextCursor property value. The nextCursor property
+// SetNextCursor sets the nextCursor property value. Seek cursor for continuing an indexer filehash change feed.
 func (m *GetIndexerFilehashChangesResponse) SetNextCursor(value IndexerFilehashChangesCursorDtoable)() {
     m.nextCursor = value
 }
-// SetPageSize sets the pageSize property value. The pageSize property
+// SetPageSize sets the pageSize property value. The resolved page size for this response.
 func (m *GetIndexerFilehashChangesResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetServerTimeUtc sets the serverTimeUtc property value. The serverTimeUtc property
+// SetServerTimeUtc sets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 func (m *GetIndexerFilehashChangesResponse) SetServerTimeUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.serverTimeUtc = value
 }

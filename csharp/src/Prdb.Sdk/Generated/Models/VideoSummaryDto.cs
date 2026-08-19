@@ -8,12 +8,13 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Summary of a single video.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class VideoSummaryDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
-        /// <summary>The actors property</summary>
+        /// <summary>Actors appearing in this video.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto>? Actors { get; set; }
@@ -23,15 +24,15 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The createdAtUtc property</summary>
+        /// <summary>Timestamp when the video was created in PRDB.</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
-        /// <summary>The id property</summary>
+        /// <summary>Unique identifier of the video.</summary>
         public Guid? Id { get; set; }
-        /// <summary>The releaseDate property</summary>
+        /// <summary>Release date of the video, if known.</summary>
         public Date? ReleaseDate { get; set; }
-        /// <summary>The siteId property</summary>
+        /// <summary>Unique identifier of the site this video belongs to.</summary>
         public Guid? SiteId { get; set; }
-        /// <summary>The siteTitle property</summary>
+        /// <summary>Title of the site this video belongs to.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? SiteTitle { get; set; }
@@ -39,7 +40,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string SiteTitle { get; set; }
 #endif
-        /// <summary>The title property</summary>
+        /// <summary>Video title.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Title { get; set; }

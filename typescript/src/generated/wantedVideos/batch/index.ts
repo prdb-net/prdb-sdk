@@ -12,7 +12,7 @@ import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type Requ
 export interface BatchRequestBuilder extends BaseRequestBuilder<BatchRequestBuilder> {
     /**
      * Adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.
-     * @param body The request body
+     * @param body Request body for batch-adding wanted videos.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<AddWantedVideosBatchResponse>}
      * @throws {ProblemDetails} error when the service returns a 400 status code
@@ -24,7 +24,7 @@ export interface BatchRequestBuilder extends BaseRequestBuilder<BatchRequestBuil
      post(body: AddWantedVideosBatchRequest, requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<AddWantedVideosBatchResponse | undefined>;
     /**
      * Adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.
-     * @param body The request body
+     * @param body Request body for batch-adding wanted videos.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */

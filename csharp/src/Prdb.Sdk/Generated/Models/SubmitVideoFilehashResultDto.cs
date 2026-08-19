@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// What happened to one submitted assignment.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class SubmitVideoFilehashResultDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The osHash property</summary>
+        /// <summary>The OS hash of the entry, normalized to upper case.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? OsHash { get; set; }
@@ -22,9 +23,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string OsHash { get; set; }
 #endif
-        /// <summary>Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).</summary>
+        /// <summary>Outcome of a single submission. Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).</summary>
         public int? Outcome { get; set; }
-        /// <summary>The videoId property</summary>
+        /// <summary>The video the entry named.</summary>
         public Guid? VideoId { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.SubmitVideoFilehashResultDto"/> and sets the default values.

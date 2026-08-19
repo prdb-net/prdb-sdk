@@ -7,10 +7,13 @@ from uuid import UUID
 
 @dataclass
 class AddWantedVideosBatchRequest(AdditionalDataHolder, Parsable):
+    """
+    Request body for batch-adding wanted videos.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The videoIds property
+    # IDs of the videos to add. Between 1 and 50 entries.
     video_ids: Optional[list[UUID]] = None
     
     @staticmethod

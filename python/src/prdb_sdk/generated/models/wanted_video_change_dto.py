@@ -9,12 +9,15 @@ if TYPE_CHECKING:
 
 @dataclass
 class WantedVideoChangeDto(AdditionalDataHolder, Parsable):
+    """
+    A single changed wanted video row in the incremental feed.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The eventType property
+    # One of `created`, `updated`, or `deleted`.
     event_type: Optional[str] = None
-    # The wantedVideo property
+    # Current-state payload for a wanted video row in the incremental feed.
     wanted_video: Optional[WantedVideoChangeWantedVideoDto] = None
     
     @staticmethod

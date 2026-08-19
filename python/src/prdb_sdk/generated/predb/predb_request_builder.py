@@ -130,20 +130,28 @@ class PredbRequestBuilder(BaseRequestBuilder):
                 return "SortDirection"
             return original_name
         
+        # Optional category filter. Supported values: `movies`, `tvshows`, `adult`.
         category: Optional[GetCategoryQueryParameterType] = None
 
+        # 1-based page number. Defaults to 1.
         page: Optional[int] = None
 
+        # Number of items per page. Defaults to 20, max 100.
         page_size: Optional[int] = None
 
+        # Optional. Return only entries released on or after this date.
         release_date_from: Optional[datetime.date] = None
 
+        # Optional. Return only entries released on or before this date.
         release_date_to: Optional[datetime.date] = None
 
+        # Optional search term matched against title and release group.
         search: Optional[str] = None
 
+        # Field to sort by. Supported values: `releaseDate` (default), `title`.
         sort_by: Optional[GetSortByQueryParameterType] = None
 
+        # Sort direction: `desc` (default) or `asc`.
         sort_direction: Optional[GetSortDirectionQueryParameterType] = None
 
     

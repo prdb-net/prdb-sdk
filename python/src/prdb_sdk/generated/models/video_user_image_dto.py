@@ -11,7 +11,7 @@ class VideoUserImageDto(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The basedOnFileWithOsHash property
+    # Server-validated 16-character OS hash of the file the preview is based on.
     based_on_file_with_os_hash: Optional[str] = None
     # The createdAtUtc property
     created_at_utc: Optional[datetime.datetime] = None
@@ -35,25 +35,25 @@ class VideoUserImageDto(AdditionalDataHolder, Parsable):
     moderation_visibility: Optional[str] = None
     # The previewImageType property
     preview_image_type: Optional[str] = None
-    # The spriteColumns property
+    # Number of occupied tile columns in the sprite-sheet grid.
     sprite_columns: Optional[int] = None
-    # The spriteRows property
+    # Number of occupied tile rows in the sprite-sheet grid.
     sprite_rows: Optional[int] = None
-    # The spriteTileCount property
+    # Number of sprite tiles described by the paired WebVTT metadata object.
     sprite_tile_count: Optional[int] = None
-    # The spriteTileHeight property
+    # Uniform sprite tile height in pixels.
     sprite_tile_height: Optional[int] = None
-    # The spriteTileWidth property
+    # Uniform sprite tile width in pixels.
     sprite_tile_width: Optional[int] = None
     # The updatedAtUtc property
     updated_at_utc: Optional[datetime.datetime] = None
-    # The url property
+    # Resolved public CDN URL for the stored image object.
     url: Optional[str] = None
     # The userId property
     user_id: Optional[UUID] = None
     # The videoId property
     video_id: Optional[UUID] = None
-    # The vttUrl property
+    # Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.
     vtt_url: Optional[str] = None
     # The width property
     width: Optional[int] = None

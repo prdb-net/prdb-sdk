@@ -7,20 +7,21 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Summary of a single site.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class SiteSummaryDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The createdAtUtc property</summary>
+        /// <summary>When this site was created.</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
-        /// <summary>The id property</summary>
+        /// <summary>Unique identifier of the site.</summary>
         public Guid? Id { get; set; }
-        /// <summary>The networkId property</summary>
+        /// <summary>Unique identifier of the network this site belongs to, if any.</summary>
         public Guid? NetworkId { get; set; }
-        /// <summary>The networkTitle property</summary>
+        /// <summary>Title of the network this site belongs to, if any.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? NetworkTitle { get; set; }
@@ -28,7 +29,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string NetworkTitle { get; set; }
 #endif
-        /// <summary>The title property</summary>
+        /// <summary>Site title.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Title { get; set; }
@@ -36,9 +37,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Title { get; set; }
 #endif
-        /// <summary>The updatedAtUtc property</summary>
+        /// <summary>When this site was last changed.</summary>
         public DateTimeOffset? UpdatedAtUtc { get; set; }
-        /// <summary>The url property</summary>
+        /// <summary>Site URL.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Url { get; set; }

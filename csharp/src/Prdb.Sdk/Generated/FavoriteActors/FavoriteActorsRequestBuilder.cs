@@ -117,8 +117,11 @@ namespace Prdb.Sdk.Generated.FavoriteActors
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class FavoriteActorsRequestBuilderGetQueryParameters 
         {
+            /// <summary>1-based page number. Defaults to 1.</summary>
             public int? Page { get; set; }
+            /// <summary>Number of items per page. Defaults to 100, max 500.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Optional search term matched against actor name.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? Search { get; set; }
@@ -126,6 +129,7 @@ namespace Prdb.Sdk.Generated.FavoriteActors
 #else
             public string Search { get; set; }
 #endif
+            /// <summary>Field to sort by. Supported values: `favoritedAtUtc`, `name`. Defaults to `favoritedAtUtc`.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? SortBy { get; set; }
@@ -133,6 +137,7 @@ namespace Prdb.Sdk.Generated.FavoriteActors
 #else
             public string SortBy { get; set; }
 #endif
+            /// <summary>Sort direction: `asc` or `desc`. Defaults to `desc`.</summary>
             public global::Prdb.Sdk.Generated.FavoriteActors.GetSortDirectionQueryParameterType? SortDirection { get; set; }
         }
     }

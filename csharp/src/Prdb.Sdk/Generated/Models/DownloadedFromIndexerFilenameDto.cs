@@ -7,18 +7,19 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// A filename recorded for a downloaded-from-indexer entry.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class DownloadedFromIndexerFilenameDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The createdAtUtc property</summary>
+        /// <summary>When this filename row was created.</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
-        /// <summary>The downloadedFromIndexerId property</summary>
+        /// <summary>ID of the parent downloaded-from-indexer entry.</summary>
         public Guid? DownloadedFromIndexerId { get; set; }
-        /// <summary>The filename property</summary>
+        /// <summary>The filename as reported by the indexer/download source.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Filename { get; set; }
@@ -26,11 +27,11 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Filename { get; set; }
 #endif
-        /// <summary>The filesize property</summary>
+        /// <summary>File size in bytes.</summary>
         public long? Filesize { get; set; }
-        /// <summary>The id property</summary>
+        /// <summary>ID of the filename row.</summary>
         public Guid? Id { get; set; }
-        /// <summary>The osHash property</summary>
+        /// <summary>Optional OS hash value as a 16-character fixed-length string.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? OsHash { get; set; }
@@ -38,7 +39,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string OsHash { get; set; }
 #endif
-        /// <summary>The pHash property</summary>
+        /// <summary>Optional perceptual hash value as a 16-character fixed-length string.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? PHash { get; set; }
@@ -46,7 +47,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string PHash { get; set; }
 #endif
-        /// <summary>The updatedAtUtc property</summary>
+        /// <summary>When this filename row was last updated.</summary>
         public DateTimeOffset? UpdatedAtUtc { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.DownloadedFromIndexerFilenameDto"/> and sets the default values.

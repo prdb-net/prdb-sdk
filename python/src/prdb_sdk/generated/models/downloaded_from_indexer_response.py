@@ -11,28 +11,31 @@ if TYPE_CHECKING:
 
 @dataclass
 class DownloadedFromIndexerResponse(AdditionalDataHolder, Parsable):
+    """
+    A downloaded-from-indexer entry for the current user.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The createdAtUtc property
+    # When this entry was created.
     created_at_utc: Optional[datetime.datetime] = None
-    # The downloadIdentifier property
+    # Download identifier returned by the indexer or download client.
     download_identifier: Optional[str] = None
-    # The filenames property
+    # Filename rows recorded for this entry.
     filenames: Optional[list[DownloadedFromIndexerFilenameDto]] = None
-    # The id property
+    # ID of the downloaded-from-indexer entry.
     id: Optional[UUID] = None
-    # The indexerId property
+    # Indexer-specific identifier for the download item.
     indexer_id: Optional[str] = None
     # Known values: DrunkenSlug (0), NzbFinder (1), NzbPorn (2).
     indexer_source: Optional[int] = None
-    # The nzbName property
+    # NZB or release name.
     nzb_name: Optional[str] = None
-    # The nzbUrl property
+    # NZB or release URL.
     nzb_url: Optional[str] = None
-    # The updatedAtUtc property
+    # When this entry was last updated.
     updated_at_utc: Optional[datetime.datetime] = None
-    # The videoId property
+    # ID of the associated wanted video, or null when the download is not linked to a video.
     video_id: Optional[UUID] = None
     
     @staticmethod

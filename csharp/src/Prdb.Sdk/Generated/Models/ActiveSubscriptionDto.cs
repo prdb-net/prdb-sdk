@@ -7,16 +7,17 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// An active subscription held by the authenticated user.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class ActiveSubscriptionDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The endsAtUtc property</summary>
+        /// <summary>UTC timestamp when this subscription period ends.</summary>
         public DateTimeOffset? EndsAtUtc { get; set; }
-        /// <summary>The packageIdentifier property</summary>
+        /// <summary>Stable slug identifying the subscription package (e.g. &quot;plus&quot;, &quot;premium&quot;).</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? PackageIdentifier { get; set; }
@@ -24,7 +25,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string PackageIdentifier { get; set; }
 #endif
-        /// <summary>The packageTitle property</summary>
+        /// <summary>Human-readable title of the subscription package.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? PackageTitle { get; set; }
@@ -32,7 +33,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string PackageTitle { get; set; }
 #endif
-        /// <summary>The startsAtUtc property</summary>
+        /// <summary>UTC timestamp when this subscription period starts.</summary>
         public DateTimeOffset? StartsAtUtc { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.ActiveSubscriptionDto"/> and sets the default values.

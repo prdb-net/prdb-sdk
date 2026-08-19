@@ -16,10 +16,15 @@ type FavoriteSitesRequestBuilder struct {
 }
 // FavoriteSitesRequestBuilderGetQueryParameters returns a paged, sortable list of sites the currently authenticated user has favorited. Supports filtering by search term. Requires API key authentication.
 type FavoriteSitesRequestBuilderGetQueryParameters struct {
+    // 1-based page number. Defaults to 1.
     Page *int32
+    // Number of items per page. Defaults to 100, max 500.
     PageSize *int32
+    // Optional search term matched against site title.
     Search *string
+    // Field to sort by. Supported values: `favoritedAtUtc`, `title`. Defaults to `favoritedAtUtc`.
     SortBy *string
+    // Sort direction: `asc` or `desc`. Defaults to `desc`.
     SortDirection *GetSortDirectionQueryParameterType
 }
 // BySiteId gets an item from the github.com/prdb-net/prdb-sdk/go/generated.favoriteSites.item collection

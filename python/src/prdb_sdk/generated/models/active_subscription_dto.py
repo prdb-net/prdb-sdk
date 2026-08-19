@@ -7,16 +7,19 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 
 @dataclass
 class ActiveSubscriptionDto(AdditionalDataHolder, Parsable):
+    """
+    An active subscription held by the authenticated user.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The endsAtUtc property
+    # UTC timestamp when this subscription period ends.
     ends_at_utc: Optional[datetime.datetime] = None
-    # The packageIdentifier property
+    # Stable slug identifying the subscription package (e.g. "plus", "premium").
     package_identifier: Optional[str] = None
-    # The packageTitle property
+    # Human-readable title of the subscription package.
     package_title: Optional[str] = None
-    # The startsAtUtc property
+    # UTC timestamp when this subscription period starts.
     starts_at_utc: Optional[datetime.datetime] = None
     
     @staticmethod

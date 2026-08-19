@@ -7,12 +7,13 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// FavoriteActorChangeDto a single changed favorite actor row in the incremental feed.
 type FavoriteActorChangeDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The eventType property
+    // One of `created`, `updated`, or `deleted`.
     eventType *string
-    // The favoriteActor property
+    // Current-state payload for a favorite actor row in the incremental feed.
     favoriteActor FavoriteActorChangeFavoriteActorDtoable
 }
 // NewFavoriteActorChangeDto instantiates a new FavoriteActorChangeDto and sets the default values.
@@ -32,12 +33,12 @@ func CreateFavoriteActorChangeDtoFromDiscriminatorValue(parseNode i878a80d2330e8
 func (m *FavoriteActorChangeDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetEventType gets the eventType property value. The eventType property
+// GetEventType gets the eventType property value. One of `created`, `updated`, or `deleted`.
 // returns a *string when successful
 func (m *FavoriteActorChangeDto) GetEventType()(*string) {
     return m.eventType
 }
-// GetFavoriteActor gets the favoriteActor property value. The favoriteActor property
+// GetFavoriteActor gets the favoriteActor property value. Current-state payload for a favorite actor row in the incremental feed.
 // returns a FavoriteActorChangeFavoriteActorDtoable when successful
 func (m *FavoriteActorChangeDto) GetFavoriteActor()(FavoriteActorChangeFavoriteActorDtoable) {
     return m.favoriteActor
@@ -94,11 +95,11 @@ func (m *FavoriteActorChangeDto) Serialize(writer i878a80d2330e89d26896388a3f487
 func (m *FavoriteActorChangeDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetEventType sets the eventType property value. The eventType property
+// SetEventType sets the eventType property value. One of `created`, `updated`, or `deleted`.
 func (m *FavoriteActorChangeDto) SetEventType(value *string)() {
     m.eventType = value
 }
-// SetFavoriteActor sets the favoriteActor property value. The favoriteActor property
+// SetFavoriteActor sets the favoriteActor property value. Current-state payload for a favorite actor row in the incremental feed.
 func (m *FavoriteActorChangeDto) SetFavoriteActor(value FavoriteActorChangeFavoriteActorDtoable)() {
     m.favoriteActor = value
 }

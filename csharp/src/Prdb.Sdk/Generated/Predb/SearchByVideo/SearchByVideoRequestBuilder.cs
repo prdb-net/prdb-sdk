@@ -98,6 +98,7 @@ namespace Prdb.Sdk.Generated.Predb.SearchByVideo
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class SearchByVideoRequestBuilderGetQueryParameters 
         {
+            /// <summary>Search keyword. Must be at least 3 characters.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? Q { get; set; }
@@ -105,6 +106,7 @@ namespace Prdb.Sdk.Generated.Predb.SearchByVideo
 #else
             public string Q { get; set; }
 #endif
+            /// <summary>Optional. Filter results to videos with this exact release date (format: yyyy-MM-dd).</summary>
             public Date? ReleaseDate { get; set; }
         }
     }

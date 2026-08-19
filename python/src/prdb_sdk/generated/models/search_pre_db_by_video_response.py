@@ -14,7 +14,7 @@ class SearchPreDbByVideoResponse(AdditionalDataHolder, Parsable):
 
     # The items property
     items: Optional[list[PreDbVideoGroupDto]] = None
-    # The totalGroups property
+    # Number of distinct videos in the result set (capped at 500).
     total_groups: Optional[int] = None
     
     @staticmethod

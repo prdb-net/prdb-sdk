@@ -8,28 +8,29 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// ActorSummaryDto summary of a single actor.
 type ActorSummaryDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The birthday property
+    // Date of birth, if known.
     birthday *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
     // Known values: Unknown (0), Caucasian (1), Black (2), Asian (3), Indian (4), Latin (5), MiddleEastern (6), Mixed (7), Other (8).
     ethnicity *int32
-    // The ethnicityLabel property
+    // Human-readable ethnicity label.
     ethnicityLabel *string
     // Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).
     gender *int32
-    // The genderLabel property
+    // Human-readable gender label.
     genderLabel *string
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The name property
+    // Stage name of the actor.
     name *string
     // Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
     nationality *int32
-    // The nationalityLabel property
+    // Human-readable nationality label.
     nationalityLabel *string
-    // The profileImageUrl property
+    // Full CDN URL of the actor's profile image, if available.
     profileImageUrl *string
 }
 // NewActorSummaryDto instantiates a new ActorSummaryDto and sets the default values.
@@ -49,7 +50,7 @@ func CreateActorSummaryDtoFromDiscriminatorValue(parseNode i878a80d2330e89d26896
 func (m *ActorSummaryDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetBirthday gets the birthday property value. The birthday property
+// GetBirthday gets the birthday property value. Date of birth, if known.
 // returns a *DateOnly when successful
 func (m *ActorSummaryDto) GetBirthday()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly) {
     return m.birthday
@@ -59,7 +60,7 @@ func (m *ActorSummaryDto) GetBirthday()(*i878a80d2330e89d26896388a3f487eef27b0a0
 func (m *ActorSummaryDto) GetEthnicity()(*int32) {
     return m.ethnicity
 }
-// GetEthnicityLabel gets the ethnicityLabel property value. The ethnicityLabel property
+// GetEthnicityLabel gets the ethnicityLabel property value. Human-readable ethnicity label.
 // returns a *string when successful
 func (m *ActorSummaryDto) GetEthnicityLabel()(*string) {
     return m.ethnicityLabel
@@ -175,7 +176,7 @@ func (m *ActorSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
 func (m *ActorSummaryDto) GetGender()(*int32) {
     return m.gender
 }
-// GetGenderLabel gets the genderLabel property value. The genderLabel property
+// GetGenderLabel gets the genderLabel property value. Human-readable gender label.
 // returns a *string when successful
 func (m *ActorSummaryDto) GetGenderLabel()(*string) {
     return m.genderLabel
@@ -185,7 +186,7 @@ func (m *ActorSummaryDto) GetGenderLabel()(*string) {
 func (m *ActorSummaryDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetName gets the name property value. The name property
+// GetName gets the name property value. Stage name of the actor.
 // returns a *string when successful
 func (m *ActorSummaryDto) GetName()(*string) {
     return m.name
@@ -195,12 +196,12 @@ func (m *ActorSummaryDto) GetName()(*string) {
 func (m *ActorSummaryDto) GetNationality()(*int32) {
     return m.nationality
 }
-// GetNationalityLabel gets the nationalityLabel property value. The nationalityLabel property
+// GetNationalityLabel gets the nationalityLabel property value. Human-readable nationality label.
 // returns a *string when successful
 func (m *ActorSummaryDto) GetNationalityLabel()(*string) {
     return m.nationalityLabel
 }
-// GetProfileImageUrl gets the profileImageUrl property value. The profileImageUrl property
+// GetProfileImageUrl gets the profileImageUrl property value. Full CDN URL of the actor's profile image, if available.
 // returns a *string when successful
 func (m *ActorSummaryDto) GetProfileImageUrl()(*string) {
     return m.profileImageUrl
@@ -279,7 +280,7 @@ func (m *ActorSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0
 func (m *ActorSummaryDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetBirthday sets the birthday property value. The birthday property
+// SetBirthday sets the birthday property value. Date of birth, if known.
 func (m *ActorSummaryDto) SetBirthday(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)() {
     m.birthday = value
 }
@@ -287,7 +288,7 @@ func (m *ActorSummaryDto) SetBirthday(value *i878a80d2330e89d26896388a3f487eef27
 func (m *ActorSummaryDto) SetEthnicity(value *int32)() {
     m.ethnicity = value
 }
-// SetEthnicityLabel sets the ethnicityLabel property value. The ethnicityLabel property
+// SetEthnicityLabel sets the ethnicityLabel property value. Human-readable ethnicity label.
 func (m *ActorSummaryDto) SetEthnicityLabel(value *string)() {
     m.ethnicityLabel = value
 }
@@ -295,7 +296,7 @@ func (m *ActorSummaryDto) SetEthnicityLabel(value *string)() {
 func (m *ActorSummaryDto) SetGender(value *int32)() {
     m.gender = value
 }
-// SetGenderLabel sets the genderLabel property value. The genderLabel property
+// SetGenderLabel sets the genderLabel property value. Human-readable gender label.
 func (m *ActorSummaryDto) SetGenderLabel(value *string)() {
     m.genderLabel = value
 }
@@ -303,7 +304,7 @@ func (m *ActorSummaryDto) SetGenderLabel(value *string)() {
 func (m *ActorSummaryDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetName sets the name property value. The name property
+// SetName sets the name property value. Stage name of the actor.
 func (m *ActorSummaryDto) SetName(value *string)() {
     m.name = value
 }
@@ -311,11 +312,11 @@ func (m *ActorSummaryDto) SetName(value *string)() {
 func (m *ActorSummaryDto) SetNationality(value *int32)() {
     m.nationality = value
 }
-// SetNationalityLabel sets the nationalityLabel property value. The nationalityLabel property
+// SetNationalityLabel sets the nationalityLabel property value. Human-readable nationality label.
 func (m *ActorSummaryDto) SetNationalityLabel(value *string)() {
     m.nationalityLabel = value
 }
-// SetProfileImageUrl sets the profileImageUrl property value. The profileImageUrl property
+// SetProfileImageUrl sets the profileImageUrl property value. Full CDN URL of the actor's profile image, if available.
 func (m *ActorSummaryDto) SetProfileImageUrl(value *string)() {
     m.profileImageUrl = value
 }

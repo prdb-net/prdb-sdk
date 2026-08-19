@@ -8,12 +8,13 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// GetHealthResponse health check response.
 type GetHealthResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The status property
+    // Always "ok" when the API is reachable.
     status *string
-    // The timestamp property
+    // UTC timestamp at the time of the request.
     timestamp *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewGetHealthResponse instantiates a new GetHealthResponse and sets the default values.
@@ -59,12 +60,12 @@ func (m *GetHealthResponse) GetFieldDeserializers()(map[string]func(i878a80d2330
     }
     return res
 }
-// GetStatus gets the status property value. The status property
+// GetStatus gets the status property value. Always "ok" when the API is reachable.
 // returns a *string when successful
 func (m *GetHealthResponse) GetStatus()(*string) {
     return m.status
 }
-// GetTimestamp gets the timestamp property value. The timestamp property
+// GetTimestamp gets the timestamp property value. UTC timestamp at the time of the request.
 // returns a *Time when successful
 func (m *GetHealthResponse) GetTimestamp()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.timestamp
@@ -95,11 +96,11 @@ func (m *GetHealthResponse) Serialize(writer i878a80d2330e89d26896388a3f487eef27
 func (m *GetHealthResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetStatus sets the status property value. The status property
+// SetStatus sets the status property value. Always "ok" when the API is reachable.
 func (m *GetHealthResponse) SetStatus(value *string)() {
     m.status = value
 }
-// SetTimestamp sets the timestamp property value. The timestamp property
+// SetTimestamp sets the timestamp property value. UTC timestamp at the time of the request.
 func (m *GetHealthResponse) SetTimestamp(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.timestamp = value
 }

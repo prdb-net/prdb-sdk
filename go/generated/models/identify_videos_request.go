@@ -7,12 +7,13 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// IdentifyVideosRequest request body for identifying local files against the prdb catalogue.
 type IdentifyVideosRequest struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The files property
+    // Files to identify. Between 1 and 200 entries.
     files []IdentifyVideoFileDtoable
-    // The includeVideoDetails property
+    // When true, each matched result carries the full video document. Defaults to false.
     includeVideoDetails *bool
 }
 // NewIdentifyVideosRequest instantiates a new IdentifyVideosRequest and sets the default values.
@@ -64,12 +65,12 @@ func (m *IdentifyVideosRequest) GetFieldDeserializers()(map[string]func(i878a80d
     }
     return res
 }
-// GetFiles gets the files property value. The files property
+// GetFiles gets the files property value. Files to identify. Between 1 and 200 entries.
 // returns a []IdentifyVideoFileDtoable when successful
 func (m *IdentifyVideosRequest) GetFiles()([]IdentifyVideoFileDtoable) {
     return m.files
 }
-// GetIncludeVideoDetails gets the includeVideoDetails property value. The includeVideoDetails property
+// GetIncludeVideoDetails gets the includeVideoDetails property value. When true, each matched result carries the full video document. Defaults to false.
 // returns a *bool when successful
 func (m *IdentifyVideosRequest) GetIncludeVideoDetails()(*bool) {
     return m.includeVideoDetails
@@ -106,11 +107,11 @@ func (m *IdentifyVideosRequest) Serialize(writer i878a80d2330e89d26896388a3f487e
 func (m *IdentifyVideosRequest) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetFiles sets the files property value. The files property
+// SetFiles sets the files property value. Files to identify. Between 1 and 200 entries.
 func (m *IdentifyVideosRequest) SetFiles(value []IdentifyVideoFileDtoable)() {
     m.files = value
 }
-// SetIncludeVideoDetails sets the includeVideoDetails property value. The includeVideoDetails property
+// SetIncludeVideoDetails sets the includeVideoDetails property value. When true, each matched result carries the full video document. Defaults to false.
 func (m *IdentifyVideosRequest) SetIncludeVideoDetails(value *bool)() {
     m.includeVideoDetails = value
 }

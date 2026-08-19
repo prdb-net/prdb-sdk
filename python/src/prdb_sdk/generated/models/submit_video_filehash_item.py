@@ -7,20 +7,23 @@ from uuid import UUID
 
 @dataclass
 class SubmitVideoFilehashItem(AdditionalDataHolder, Parsable):
+    """
+    A single hash-to-video assignment.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The filename property
+    # File name without directory. Optional — a client may withhold it, and the endpoint works without it.
     filename: Optional[str] = None
-    # The filesize property
+    # Size of the file in bytes.
     filesize: Optional[int] = None
-    # The osHash property
+    # OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.
     os_hash: Optional[str] = None
-    # The pHash property
+    # Perceptual hash of the file, 16 hexadecimal characters, if the client computed one. It mustbe computed as "Perceptual hashes" in the API description prescribes; a submission carryinga value from another procedure contributes a row nothing can match.
     p_hash: Optional[str] = None
     # Known values: UserConfirmed (0), ClientDetected (1).
     source: Optional[int] = None
-    # The videoId property
+    # The video this file is. Required — a hash observation without an assignment is not accepted.
     video_id: Optional[UUID] = None
     
     @staticmethod

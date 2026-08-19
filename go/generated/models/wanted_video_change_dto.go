@@ -7,12 +7,13 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// WantedVideoChangeDto a single changed wanted video row in the incremental feed.
 type WantedVideoChangeDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The eventType property
+    // One of `created`, `updated`, or `deleted`.
     eventType *string
-    // The wantedVideo property
+    // Current-state payload for a wanted video row in the incremental feed.
     wantedVideo WantedVideoChangeWantedVideoDtoable
 }
 // NewWantedVideoChangeDto instantiates a new WantedVideoChangeDto and sets the default values.
@@ -32,7 +33,7 @@ func CreateWantedVideoChangeDtoFromDiscriminatorValue(parseNode i878a80d2330e89d
 func (m *WantedVideoChangeDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetEventType gets the eventType property value. The eventType property
+// GetEventType gets the eventType property value. One of `created`, `updated`, or `deleted`.
 // returns a *string when successful
 func (m *WantedVideoChangeDto) GetEventType()(*string) {
     return m.eventType
@@ -63,7 +64,7 @@ func (m *WantedVideoChangeDto) GetFieldDeserializers()(map[string]func(i878a80d2
     }
     return res
 }
-// GetWantedVideo gets the wantedVideo property value. The wantedVideo property
+// GetWantedVideo gets the wantedVideo property value. Current-state payload for a wanted video row in the incremental feed.
 // returns a WantedVideoChangeWantedVideoDtoable when successful
 func (m *WantedVideoChangeDto) GetWantedVideo()(WantedVideoChangeWantedVideoDtoable) {
     return m.wantedVideo
@@ -94,11 +95,11 @@ func (m *WantedVideoChangeDto) Serialize(writer i878a80d2330e89d26896388a3f487ee
 func (m *WantedVideoChangeDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetEventType sets the eventType property value. The eventType property
+// SetEventType sets the eventType property value. One of `created`, `updated`, or `deleted`.
 func (m *WantedVideoChangeDto) SetEventType(value *string)() {
     m.eventType = value
 }
-// SetWantedVideo sets the wantedVideo property value. The wantedVideo property
+// SetWantedVideo sets the wantedVideo property value. Current-state payload for a wanted video row in the incremental feed.
 func (m *WantedVideoChangeDto) SetWantedVideo(value WantedVideoChangeWantedVideoDtoable)() {
     m.wantedVideo = value
 }

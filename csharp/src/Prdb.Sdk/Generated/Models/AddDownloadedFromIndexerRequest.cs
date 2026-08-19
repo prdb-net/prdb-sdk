@@ -14,7 +14,7 @@ namespace Prdb.Sdk.Generated.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The downloadIdentifier property</summary>
+        /// <summary>Download identifier returned by the indexer or download client.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? DownloadIdentifier { get; set; }
@@ -22,7 +22,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string DownloadIdentifier { get; set; }
 #endif
-        /// <summary>The filenames property</summary>
+        /// <summary>Optional filename rows to create together with the parent entry.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<global::Prdb.Sdk.Generated.Models.AddDownloadedFromIndexerFilenameRequest>? Filenames { get; set; }
@@ -30,7 +30,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.AddDownloadedFromIndexerFilenameRequest> Filenames { get; set; }
 #endif
-        /// <summary>The indexerId property</summary>
+        /// <summary>Indexer-specific identifier for the download item.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? IndexerId { get; set; }
@@ -40,7 +40,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>Known values: DrunkenSlug (0), NzbFinder (1), NzbPorn (2).</summary>
         public int? IndexerSource { get; set; }
-        /// <summary>The nzbName property</summary>
+        /// <summary>NZB or release name.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? NzbName { get; set; }
@@ -48,7 +48,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string NzbName { get; set; }
 #endif
-        /// <summary>The nzbUrl property</summary>
+        /// <summary>NZB or release URL.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? NzbUrl { get; set; }
@@ -56,7 +56,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string NzbUrl { get; set; }
 #endif
-        /// <summary>The videoId property</summary>
+        /// <summary>Optional ID of the wanted video this download belongs to. Pass null when the download is not linked to a video yet.</summary>
         public Guid? VideoId { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.AddDownloadedFromIndexerRequest"/> and sets the default values.

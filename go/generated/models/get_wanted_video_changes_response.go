@@ -8,6 +8,7 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// GetWantedVideoChangesResponse paged delta feed of wanted video changes ordered by updated timestamp and ID.
 type GetWantedVideoChangesResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
@@ -15,11 +16,11 @@ type GetWantedVideoChangesResponse struct {
     hasMore *bool
     // The items property
     items []WantedVideoChangeDtoable
-    // The nextCursor property
+    // Seek cursor for continuing a wanted video change feed.
     nextCursor WantedVideoChangesCursorDtoable
     // The pageSize property
     pageSize *int32
-    // The serverTimeUtc property
+    // The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
     serverTimeUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewGetWantedVideoChangesResponse instantiates a new GetWantedVideoChangesResponse and sets the default values.
@@ -111,7 +112,7 @@ func (m *GetWantedVideoChangesResponse) GetHasMore()(*bool) {
 func (m *GetWantedVideoChangesResponse) GetItems()([]WantedVideoChangeDtoable) {
     return m.items
 }
-// GetNextCursor gets the nextCursor property value. The nextCursor property
+// GetNextCursor gets the nextCursor property value. Seek cursor for continuing a wanted video change feed.
 // returns a WantedVideoChangesCursorDtoable when successful
 func (m *GetWantedVideoChangesResponse) GetNextCursor()(WantedVideoChangesCursorDtoable) {
     return m.nextCursor
@@ -121,7 +122,7 @@ func (m *GetWantedVideoChangesResponse) GetNextCursor()(WantedVideoChangesCursor
 func (m *GetWantedVideoChangesResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetServerTimeUtc gets the serverTimeUtc property value. The serverTimeUtc property
+// GetServerTimeUtc gets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 // returns a *Time when successful
 func (m *GetWantedVideoChangesResponse) GetServerTimeUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.serverTimeUtc
@@ -184,7 +185,7 @@ func (m *GetWantedVideoChangesResponse) SetHasMore(value *bool)() {
 func (m *GetWantedVideoChangesResponse) SetItems(value []WantedVideoChangeDtoable)() {
     m.items = value
 }
-// SetNextCursor sets the nextCursor property value. The nextCursor property
+// SetNextCursor sets the nextCursor property value. Seek cursor for continuing a wanted video change feed.
 func (m *GetWantedVideoChangesResponse) SetNextCursor(value WantedVideoChangesCursorDtoable)() {
     m.nextCursor = value
 }
@@ -192,7 +193,7 @@ func (m *GetWantedVideoChangesResponse) SetNextCursor(value WantedVideoChangesCu
 func (m *GetWantedVideoChangesResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetServerTimeUtc sets the serverTimeUtc property value. The serverTimeUtc property
+// SetServerTimeUtc sets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 func (m *GetWantedVideoChangesResponse) SetServerTimeUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.serverTimeUtc = value
 }

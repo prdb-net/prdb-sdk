@@ -8,20 +8,21 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// SubmitVideoFilehashItem a single hash-to-video assignment.
 type SubmitVideoFilehashItem struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The filename property
+    // File name without directory. Optional — a client may withhold it, and the endpoint works without it.
     filename *string
-    // The filesize property
+    // Size of the file in bytes.
     filesize *int64
-    // The osHash property
+    // OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.
     osHash *string
-    // The pHash property
+    // Perceptual hash of the file, 16 hexadecimal characters, if the client computed one. It mustbe computed as "Perceptual hashes" in the API description prescribes; a submission carryinga value from another procedure contributes a row nothing can match.
     pHash *string
     // Known values: UserConfirmed (0), ClientDetected (1).
     source *int32
-    // The videoId property
+    // The video this file is. Required — a hash observation without an assignment is not accepted.
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewSubmitVideoFilehashItem instantiates a new SubmitVideoFilehashItem and sets the default values.
@@ -107,22 +108,22 @@ func (m *SubmitVideoFilehashItem) GetFieldDeserializers()(map[string]func(i878a8
     }
     return res
 }
-// GetFilename gets the filename property value. The filename property
+// GetFilename gets the filename property value. File name without directory. Optional — a client may withhold it, and the endpoint works without it.
 // returns a *string when successful
 func (m *SubmitVideoFilehashItem) GetFilename()(*string) {
     return m.filename
 }
-// GetFilesize gets the filesize property value. The filesize property
+// GetFilesize gets the filesize property value. Size of the file in bytes.
 // returns a *int64 when successful
 func (m *SubmitVideoFilehashItem) GetFilesize()(*int64) {
     return m.filesize
 }
-// GetOsHash gets the osHash property value. The osHash property
+// GetOsHash gets the osHash property value. OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.
 // returns a *string when successful
 func (m *SubmitVideoFilehashItem) GetOsHash()(*string) {
     return m.osHash
 }
-// GetPHash gets the pHash property value. The pHash property
+// GetPHash gets the pHash property value. Perceptual hash of the file, 16 hexadecimal characters, if the client computed one. It mustbe computed as "Perceptual hashes" in the API description prescribes; a submission carryinga value from another procedure contributes a row nothing can match.
 // returns a *string when successful
 func (m *SubmitVideoFilehashItem) GetPHash()(*string) {
     return m.pHash
@@ -132,7 +133,7 @@ func (m *SubmitVideoFilehashItem) GetPHash()(*string) {
 func (m *SubmitVideoFilehashItem) GetSource()(*int32) {
     return m.source
 }
-// GetVideoId gets the videoId property value. The videoId property
+// GetVideoId gets the videoId property value. The video this file is. Required — a hash observation without an assignment is not accepted.
 // returns a *UUID when successful
 func (m *SubmitVideoFilehashItem) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
@@ -187,19 +188,19 @@ func (m *SubmitVideoFilehashItem) Serialize(writer i878a80d2330e89d26896388a3f48
 func (m *SubmitVideoFilehashItem) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetFilename sets the filename property value. The filename property
+// SetFilename sets the filename property value. File name without directory. Optional — a client may withhold it, and the endpoint works without it.
 func (m *SubmitVideoFilehashItem) SetFilename(value *string)() {
     m.filename = value
 }
-// SetFilesize sets the filesize property value. The filesize property
+// SetFilesize sets the filesize property value. Size of the file in bytes.
 func (m *SubmitVideoFilehashItem) SetFilesize(value *int64)() {
     m.filesize = value
 }
-// SetOsHash sets the osHash property value. The osHash property
+// SetOsHash sets the osHash property value. OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.
 func (m *SubmitVideoFilehashItem) SetOsHash(value *string)() {
     m.osHash = value
 }
-// SetPHash sets the pHash property value. The pHash property
+// SetPHash sets the pHash property value. Perceptual hash of the file, 16 hexadecimal characters, if the client computed one. It mustbe computed as "Perceptual hashes" in the API description prescribes; a submission carryinga value from another procedure contributes a row nothing can match.
 func (m *SubmitVideoFilehashItem) SetPHash(value *string)() {
     m.pHash = value
 }
@@ -207,7 +208,7 @@ func (m *SubmitVideoFilehashItem) SetPHash(value *string)() {
 func (m *SubmitVideoFilehashItem) SetSource(value *int32)() {
     m.source = value
 }
-// SetVideoId sets the videoId property value. The videoId property
+// SetVideoId sets the videoId property value. The video this file is. Required — a hash observation without an assignment is not accepted.
 func (m *SubmitVideoFilehashItem) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }

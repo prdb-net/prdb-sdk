@@ -9,10 +9,13 @@ if TYPE_CHECKING:
 
 @dataclass
 class IdentifyVideosResponse(AdditionalDataHolder, Parsable):
+    """
+    Identification results, one per submitted file.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The results property
+    # One result per input file, in input order.
     results: Optional[list[IdentifyVideoResultDto]] = None
     
     @staticmethod

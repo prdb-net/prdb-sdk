@@ -6,18 +6,21 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 
 @dataclass
 class IdentifyVideoFileDto(AdditionalDataHolder, Parsable):
+    """
+    One file to identify.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The filename property
+    # File name without directory. Required — it carries the lowest rungs of the ladder.
     filename: Optional[str] = None
-    # The filesize property
+    # Size of the file in bytes, if known.
     filesize: Optional[int] = None
-    # The osHash property
+    # OS hash of the file, 16 hexadecimal characters, if the client computed one.
     os_hash: Optional[str] = None
-    # The pHash property
+    # Perceptual hash of the file, 16 hexadecimal characters, if the client computed one.Compared for equality only, and only against values computed the way "Perceptual hashes"in the API description prescribes — send none rather than one from another procedure.
     p_hash: Optional[str] = None
-    # The ref property
+    # Client-assigned identifier, returned unchanged. Unique within the request.
     ref: Optional[str] = None
     
     @staticmethod

@@ -8,34 +8,37 @@ from uuid import UUID
 
 @dataclass
 class WantedVideoSummaryDto(AdditionalDataHolder, Parsable):
+    """
+    A wanted video entry for the current user.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The createdAtUtc property
+    # When this wanted video entry was created.
     created_at_utc: Optional[datetime.datetime] = None
-    # The fulfilledAtUtc property
+    # When the wanted video was fulfilled, if applicable.
     fulfilled_at_utc: Optional[datetime.datetime] = None
     # Known values: P720 (0), P1080 (1), P2160 (2).
     fulfilled_in_quality: Optional[int] = None
     # Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
     fulfillment_by_app: Optional[int] = None
-    # The fulfillmentExternalId property
+    # External identifier from the fulfilling application, if applicable.
     fulfillment_external_id: Optional[str] = None
-    # The imageCdnPath property
+    # Absolute CDN URL for the video's primary image, if available.
     image_cdn_path: Optional[str] = None
-    # The isFulfilled property
+    # Whether this wanted video has been fulfilled.
     is_fulfilled: Optional[bool] = None
-    # The siteTitle property
+    # Title of the site this video belongs to.
     site_title: Optional[str] = None
-    # The updatedAtUtc property
+    # When this wanted video entry was last updated.
     updated_at_utc: Optional[datetime.datetime] = None
-    # The videoCreatedAtUtc property
+    # When the video was added to the database.
     video_created_at_utc: Optional[datetime.datetime] = None
-    # The videoId property
+    # ID of the wanted video.
     video_id: Optional[UUID] = None
-    # The videoReleaseDate property
+    # Release date of the video, if known.
     video_release_date: Optional[datetime.date] = None
-    # The videoTitle property
+    # Video title.
     video_title: Optional[str] = None
     
     @staticmethod

@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Current rate limit status for the authenticated user.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class GetRateLimitResponse : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The hourly property</summary>
+        /// <summary>Rate limit status for a single time window.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public global::Prdb.Sdk.Generated.Models.RateLimitWindowStatus? Hourly { get; set; }
@@ -22,9 +23,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public global::Prdb.Sdk.Generated.Models.RateLimitWindowStatus Hourly { get; set; }
 #endif
-        /// <summary>The isEnforced property</summary>
+        /// <summary>Always true. Rate limiting is enforced unconditionally; when it cannot be enforced the APIanswers 503 instead of returning this document. Kept for compatibility with clients thatread the field.</summary>
         public bool? IsEnforced { get; set; }
-        /// <summary>The monthly property</summary>
+        /// <summary>Rate limit status for a single time window.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public global::Prdb.Sdk.Generated.Models.RateLimitWindowStatus? Monthly { get; set; }

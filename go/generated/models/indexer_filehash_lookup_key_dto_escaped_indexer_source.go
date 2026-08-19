@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is regenerated.
 
 package models
-// Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
+// Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
 type IndexerFilehashLookupKeyDto_indexerSource int
 
 const (

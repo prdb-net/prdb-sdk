@@ -10,7 +10,7 @@ class VideoDetailActorImageDto(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The cdnPath property
+    # Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.The same image is exposed as `url` by the actor endpoints.
     cdn_path: Optional[str] = None
     # The id property
     id: Optional[UUID] = None

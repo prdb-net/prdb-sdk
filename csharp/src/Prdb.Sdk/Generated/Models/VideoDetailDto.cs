@@ -27,7 +27,7 @@ namespace Prdb.Sdk.Generated.Models
         public DateTimeOffset? CreatedAtUtc { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
-        /// <summary>The images property</summary>
+        /// <summary>Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<global::Prdb.Sdk.Generated.Models.VideoDetailImageDto>? Images { get; set; }

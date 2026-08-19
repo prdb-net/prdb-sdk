@@ -32,7 +32,13 @@ export interface SearchByVideoRequestBuilder extends BaseRequestBuilder<SearchBy
  * Searches canonical PreDb titles and returns matching linked PreDb entries grouped by video. 'q' (min 3 characters) is required unless 'releaseDate' is provided, in which case 'q' is optional. Each group includes video and site details. Capped at 500 video groups, no paging.
  */
 export interface SearchByVideoRequestBuilderGetQueryParameters {
+    /**
+     * Search keyword. Must be at least 3 characters.
+     */
     q?: string;
+    /**
+     * Optional. Filter results to videos with this exact release date (format: yyyy-MM-dd).
+     */
     releaseDate?: DateOnly;
 }
 /**

@@ -7,10 +7,11 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// SubmitVideoFilehashesResponse per-entry outcome of a filehash submission.
 type SubmitVideoFilehashesResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The results property
+    // One result per submitted entry, in request order.
     results []SubmitVideoFilehashResultDtoable
 }
 // NewSubmitVideoFilehashesResponse instantiates a new SubmitVideoFilehashesResponse and sets the default values.
@@ -52,7 +53,7 @@ func (m *SubmitVideoFilehashesResponse) GetFieldDeserializers()(map[string]func(
     }
     return res
 }
-// GetResults gets the results property value. The results property
+// GetResults gets the results property value. One result per submitted entry, in request order.
 // returns a []SubmitVideoFilehashResultDtoable when successful
 func (m *SubmitVideoFilehashesResponse) GetResults()([]SubmitVideoFilehashResultDtoable) {
     return m.results
@@ -83,7 +84,7 @@ func (m *SubmitVideoFilehashesResponse) Serialize(writer i878a80d2330e89d2689638
 func (m *SubmitVideoFilehashesResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetResults sets the results property value. The results property
+// SetResults sets the results property value. One result per submitted entry, in request order.
 func (m *SubmitVideoFilehashesResponse) SetResults(value []SubmitVideoFilehashResultDtoable)() {
     m.results = value
 }

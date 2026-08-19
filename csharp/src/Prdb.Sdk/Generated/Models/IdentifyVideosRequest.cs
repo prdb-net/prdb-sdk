@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Request body for identifying local files against the prdb catalogue.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class IdentifyVideosRequest : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The files property</summary>
+        /// <summary>Files to identify. Between 1 and 200 entries.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<global::Prdb.Sdk.Generated.Models.IdentifyVideoFileDto>? Files { get; set; }
@@ -22,7 +23,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.IdentifyVideoFileDto> Files { get; set; }
 #endif
-        /// <summary>The includeVideoDetails property</summary>
+        /// <summary>When true, each matched result carries the full video document. Defaults to false.</summary>
         public bool? IncludeVideoDetails { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.IdentifyVideosRequest"/> and sets the default values.

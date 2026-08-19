@@ -9,22 +9,23 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// VideoSummaryDto summary of a single video.
 type VideoSummaryDto struct {
-    // The actors property
+    // Actors appearing in this video.
     actors []VideoSummaryActorDtoable
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The createdAtUtc property
+    // Timestamp when the video was created in PRDB.
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The id property
+    // Unique identifier of the video.
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The releaseDate property
+    // Release date of the video, if known.
     releaseDate *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
-    // The siteId property
+    // Unique identifier of the site this video belongs to.
     siteId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The siteTitle property
+    // Title of the site this video belongs to.
     siteTitle *string
-    // The title property
+    // Video title.
     title *string
 }
 // NewVideoSummaryDto instantiates a new VideoSummaryDto and sets the default values.
@@ -39,7 +40,7 @@ func NewVideoSummaryDto()(*VideoSummaryDto) {
 func CreateVideoSummaryDtoFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
     return NewVideoSummaryDto(), nil
 }
-// GetActors gets the actors property value. The actors property
+// GetActors gets the actors property value. Actors appearing in this video.
 // returns a []VideoSummaryActorDtoable when successful
 func (m *VideoSummaryDto) GetActors()([]VideoSummaryActorDtoable) {
     return m.actors
@@ -49,7 +50,7 @@ func (m *VideoSummaryDto) GetActors()([]VideoSummaryActorDtoable) {
 func (m *VideoSummaryDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetCreatedAtUtc gets the createdAtUtc property value. The createdAtUtc property
+// GetCreatedAtUtc gets the createdAtUtc property value. Timestamp when the video was created in PRDB.
 // returns a *Time when successful
 func (m *VideoSummaryDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
@@ -136,27 +137,27 @@ func (m *VideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
     }
     return res
 }
-// GetId gets the id property value. The id property
+// GetId gets the id property value. Unique identifier of the video.
 // returns a *UUID when successful
 func (m *VideoSummaryDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetReleaseDate gets the releaseDate property value. The releaseDate property
+// GetReleaseDate gets the releaseDate property value. Release date of the video, if known.
 // returns a *DateOnly when successful
 func (m *VideoSummaryDto) GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly) {
     return m.releaseDate
 }
-// GetSiteId gets the siteId property value. The siteId property
+// GetSiteId gets the siteId property value. Unique identifier of the site this video belongs to.
 // returns a *UUID when successful
 func (m *VideoSummaryDto) GetSiteId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.siteId
 }
-// GetSiteTitle gets the siteTitle property value. The siteTitle property
+// GetSiteTitle gets the siteTitle property value. Title of the site this video belongs to.
 // returns a *string when successful
 func (m *VideoSummaryDto) GetSiteTitle()(*string) {
     return m.siteTitle
 }
-// GetTitle gets the title property value. The title property
+// GetTitle gets the title property value. Video title.
 // returns a *string when successful
 func (m *VideoSummaryDto) GetTitle()(*string) {
     return m.title
@@ -219,7 +220,7 @@ func (m *VideoSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0
     }
     return nil
 }
-// SetActors sets the actors property value. The actors property
+// SetActors sets the actors property value. Actors appearing in this video.
 func (m *VideoSummaryDto) SetActors(value []VideoSummaryActorDtoable)() {
     m.actors = value
 }
@@ -227,27 +228,27 @@ func (m *VideoSummaryDto) SetActors(value []VideoSummaryActorDtoable)() {
 func (m *VideoSummaryDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetCreatedAtUtc sets the createdAtUtc property value. The createdAtUtc property
+// SetCreatedAtUtc sets the createdAtUtc property value. Timestamp when the video was created in PRDB.
 func (m *VideoSummaryDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
-// SetId sets the id property value. The id property
+// SetId sets the id property value. Unique identifier of the video.
 func (m *VideoSummaryDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetReleaseDate sets the releaseDate property value. The releaseDate property
+// SetReleaseDate sets the releaseDate property value. Release date of the video, if known.
 func (m *VideoSummaryDto) SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)() {
     m.releaseDate = value
 }
-// SetSiteId sets the siteId property value. The siteId property
+// SetSiteId sets the siteId property value. Unique identifier of the site this video belongs to.
 func (m *VideoSummaryDto) SetSiteId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.siteId = value
 }
-// SetSiteTitle sets the siteTitle property value. The siteTitle property
+// SetSiteTitle sets the siteTitle property value. Title of the site this video belongs to.
 func (m *VideoSummaryDto) SetSiteTitle(value *string)() {
     m.siteTitle = value
 }
-// SetTitle sets the title property value. The title property
+// SetTitle sets the title property value. Video title.
 func (m *VideoSummaryDto) SetTitle(value *string)() {
     m.title = value
 }

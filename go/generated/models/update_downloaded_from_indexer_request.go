@@ -10,15 +10,15 @@ import (
 type UpdateDownloadedFromIndexerRequest struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The downloadIdentifier property
+    // Download identifier returned by the indexer or download client.
     downloadIdentifier *string
-    // The indexerId property
+    // Indexer-specific identifier for the download item.
     indexerId *string
     // Known values: DrunkenSlug (0), NzbFinder (1), NzbPorn (2).
     indexerSource *int32
-    // The nzbName property
+    // NZB or release name.
     nzbName *string
-    // The nzbUrl property
+    // NZB or release URL.
     nzbUrl *string
 }
 // NewUpdateDownloadedFromIndexerRequest instantiates a new UpdateDownloadedFromIndexerRequest and sets the default values.
@@ -38,7 +38,7 @@ func CreateUpdateDownloadedFromIndexerRequestFromDiscriminatorValue(parseNode i8
 func (m *UpdateDownloadedFromIndexerRequest) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetDownloadIdentifier gets the downloadIdentifier property value. The downloadIdentifier property
+// GetDownloadIdentifier gets the downloadIdentifier property value. Download identifier returned by the indexer or download client.
 // returns a *string when successful
 func (m *UpdateDownloadedFromIndexerRequest) GetDownloadIdentifier()(*string) {
     return m.downloadIdentifier
@@ -99,7 +99,7 @@ func (m *UpdateDownloadedFromIndexerRequest) GetFieldDeserializers()(map[string]
     }
     return res
 }
-// GetIndexerId gets the indexerId property value. The indexerId property
+// GetIndexerId gets the indexerId property value. Indexer-specific identifier for the download item.
 // returns a *string when successful
 func (m *UpdateDownloadedFromIndexerRequest) GetIndexerId()(*string) {
     return m.indexerId
@@ -109,12 +109,12 @@ func (m *UpdateDownloadedFromIndexerRequest) GetIndexerId()(*string) {
 func (m *UpdateDownloadedFromIndexerRequest) GetIndexerSource()(*int32) {
     return m.indexerSource
 }
-// GetNzbName gets the nzbName property value. The nzbName property
+// GetNzbName gets the nzbName property value. NZB or release name.
 // returns a *string when successful
 func (m *UpdateDownloadedFromIndexerRequest) GetNzbName()(*string) {
     return m.nzbName
 }
-// GetNzbUrl gets the nzbUrl property value. The nzbUrl property
+// GetNzbUrl gets the nzbUrl property value. NZB or release URL.
 // returns a *string when successful
 func (m *UpdateDownloadedFromIndexerRequest) GetNzbUrl()(*string) {
     return m.nzbUrl
@@ -163,11 +163,11 @@ func (m *UpdateDownloadedFromIndexerRequest) Serialize(writer i878a80d2330e89d26
 func (m *UpdateDownloadedFromIndexerRequest) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetDownloadIdentifier sets the downloadIdentifier property value. The downloadIdentifier property
+// SetDownloadIdentifier sets the downloadIdentifier property value. Download identifier returned by the indexer or download client.
 func (m *UpdateDownloadedFromIndexerRequest) SetDownloadIdentifier(value *string)() {
     m.downloadIdentifier = value
 }
-// SetIndexerId sets the indexerId property value. The indexerId property
+// SetIndexerId sets the indexerId property value. Indexer-specific identifier for the download item.
 func (m *UpdateDownloadedFromIndexerRequest) SetIndexerId(value *string)() {
     m.indexerId = value
 }
@@ -175,11 +175,11 @@ func (m *UpdateDownloadedFromIndexerRequest) SetIndexerId(value *string)() {
 func (m *UpdateDownloadedFromIndexerRequest) SetIndexerSource(value *int32)() {
     m.indexerSource = value
 }
-// SetNzbName sets the nzbName property value. The nzbName property
+// SetNzbName sets the nzbName property value. NZB or release name.
 func (m *UpdateDownloadedFromIndexerRequest) SetNzbName(value *string)() {
     m.nzbName = value
 }
-// SetNzbUrl sets the nzbUrl property value. The nzbUrl property
+// SetNzbUrl sets the nzbUrl property value. NZB or release URL.
 func (m *UpdateDownloadedFromIndexerRequest) SetNzbUrl(value *string)() {
     m.nzbUrl = value
 }

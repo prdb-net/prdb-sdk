@@ -7,20 +7,21 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// ListPreDbResponse paged list of PreDb entries.
 type ListPreDbResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The items property
+    // PreDb entries on the current page.
     items []PreDbSummaryDtoable
-    // The page property
+    // Current page number (1-based).
     page *int32
-    // The pageSize property
+    // Number of items per page.
     pageSize *int32
-    // The sortBy property
+    // Field the result is sorted by: "releaseDate" or "title".
     sortBy *string
-    // The sortDirection property
+    // Sort direction applied: "asc" or "desc".
     sortDirection *string
-    // The totalCount property
+    // Total number of entries matching the current query filters.
     totalCount *int32
 }
 // NewListPreDbResponse instantiates a new ListPreDbResponse and sets the default values.
@@ -112,32 +113,32 @@ func (m *ListPreDbResponse) GetFieldDeserializers()(map[string]func(i878a80d2330
     }
     return res
 }
-// GetItems gets the items property value. The items property
+// GetItems gets the items property value. PreDb entries on the current page.
 // returns a []PreDbSummaryDtoable when successful
 func (m *ListPreDbResponse) GetItems()([]PreDbSummaryDtoable) {
     return m.items
 }
-// GetPage gets the page property value. The page property
+// GetPage gets the page property value. Current page number (1-based).
 // returns a *int32 when successful
 func (m *ListPreDbResponse) GetPage()(*int32) {
     return m.page
 }
-// GetPageSize gets the pageSize property value. The pageSize property
+// GetPageSize gets the pageSize property value. Number of items per page.
 // returns a *int32 when successful
 func (m *ListPreDbResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetSortBy gets the sortBy property value. The sortBy property
+// GetSortBy gets the sortBy property value. Field the result is sorted by: "releaseDate" or "title".
 // returns a *string when successful
 func (m *ListPreDbResponse) GetSortBy()(*string) {
     return m.sortBy
 }
-// GetSortDirection gets the sortDirection property value. The sortDirection property
+// GetSortDirection gets the sortDirection property value. Sort direction applied: "asc" or "desc".
 // returns a *string when successful
 func (m *ListPreDbResponse) GetSortDirection()(*string) {
     return m.sortDirection
 }
-// GetTotalCount gets the totalCount property value. The totalCount property
+// GetTotalCount gets the totalCount property value. Total number of entries matching the current query filters.
 // returns a *int32 when successful
 func (m *ListPreDbResponse) GetTotalCount()(*int32) {
     return m.totalCount
@@ -198,27 +199,27 @@ func (m *ListPreDbResponse) Serialize(writer i878a80d2330e89d26896388a3f487eef27
 func (m *ListPreDbResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetItems sets the items property value. The items property
+// SetItems sets the items property value. PreDb entries on the current page.
 func (m *ListPreDbResponse) SetItems(value []PreDbSummaryDtoable)() {
     m.items = value
 }
-// SetPage sets the page property value. The page property
+// SetPage sets the page property value. Current page number (1-based).
 func (m *ListPreDbResponse) SetPage(value *int32)() {
     m.page = value
 }
-// SetPageSize sets the pageSize property value. The pageSize property
+// SetPageSize sets the pageSize property value. Number of items per page.
 func (m *ListPreDbResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetSortBy sets the sortBy property value. The sortBy property
+// SetSortBy sets the sortBy property value. Field the result is sorted by: "releaseDate" or "title".
 func (m *ListPreDbResponse) SetSortBy(value *string)() {
     m.sortBy = value
 }
-// SetSortDirection sets the sortDirection property value. The sortDirection property
+// SetSortDirection sets the sortDirection property value. Sort direction applied: "asc" or "desc".
 func (m *ListPreDbResponse) SetSortDirection(value *string)() {
     m.sortDirection = value
 }
-// SetTotalCount sets the totalCount property value. The totalCount property
+// SetTotalCount sets the totalCount property value. Total number of entries matching the current query filters.
 func (m *ListPreDbResponse) SetTotalCount(value *int32)() {
     m.totalCount = value
 }

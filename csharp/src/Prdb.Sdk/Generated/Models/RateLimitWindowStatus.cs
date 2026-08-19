@@ -7,20 +7,21 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Rate limit status for a single time window.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class RateLimitWindowStatus : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The limit property</summary>
+        /// <summary>Maximum number of requests allowed within this window.</summary>
         public int? Limit { get; set; }
-        /// <summary>The remaining property</summary>
+        /// <summary>Number of requests remaining before the limit is reached.</summary>
         public int? Remaining { get; set; }
-        /// <summary>The resetsInSeconds property</summary>
+        /// <summary>Seconds until the oldest request in the window expires, reducing the used count by one.</summary>
         public int? ResetsInSeconds { get; set; }
-        /// <summary>The used property</summary>
+        /// <summary>Number of requests made within the current window.</summary>
         public int? Used { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.RateLimitWindowStatus"/> and sets the default values.

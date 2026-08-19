@@ -17,14 +17,23 @@ type VideosRequestBuilder struct {
 }
 // VideosRequestBuilderGetQueryParameters returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
 type VideosRequestBuilderGetQueryParameters struct {
+    // Optional filter to return only videos featuring the specified actor.
     ActorId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Return only videos created strictly after this timestamp (exclusive).
     CreatedAfter *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Return only videos created strictly before this timestamp (exclusive).
     CreatedBefore *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // 1-based page number. Defaults to 1.
     Page *int32
+    // Number of items per page. Defaults to 20, max 100.
     PageSize *int32
+    // Optional search term matched against video title and site title.
     Search *string
+    // Optional filter to return only videos belonging to the specified site.
     SiteId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Field to sort by. Supported values: `title` (default), `releaseDate`, `createdAtUtc`.
     SortBy *GetSortByQueryParameterType
+    // Sort direction: `asc` (default) or `desc`.
     SortDirection *GetSortDirectionQueryParameterType
 }
 // Batch the batch property

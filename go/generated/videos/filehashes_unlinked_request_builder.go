@@ -16,9 +16,13 @@ type FilehashesUnlinkedRequestBuilder struct {
 }
 // FilehashesUnlinkedRequestBuilderGetQueryParameters returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
 type FilehashesUnlinkedRequestBuilderGetQueryParameters struct {
+    // Page number, starting at 1.
     Page *int32
+    // Page size. Values above 1000 are clamped.
     PageSize *int32
+    // Sort field. Allowed values: createdAtUtc, updatedAtUtc, submissionCount, filesize.
     SortBy *i4114c35ec3430dd43ff7afa5fda26e293f42ee9e6d2e196512e9198992757e27.GetSortByQueryParameterType
+    // Sort direction. Allowed values: asc, desc.
     SortDirection *i4114c35ec3430dd43ff7afa5fda26e293f42ee9e6d2e196512e9198992757e27.GetSortDirectionQueryParameterType
 }
 // NewFilehashesUnlinkedRequestBuilderInternal instantiates a new FilehashesUnlinkedRequestBuilder and sets the default values.

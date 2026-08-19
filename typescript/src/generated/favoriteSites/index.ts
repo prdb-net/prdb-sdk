@@ -46,10 +46,25 @@ export interface FavoriteSitesRequestBuilder extends BaseRequestBuilder<Favorite
  * Returns a paged, sortable list of sites the currently authenticated user has favorited. Supports filtering by search term. Requires API key authentication.
  */
 export interface FavoriteSitesRequestBuilderGetQueryParameters {
+    /**
+     * 1-based page number. Defaults to 1.
+     */
     page?: number;
+    /**
+     * Number of items per page. Defaults to 100, max 500.
+     */
     pageSize?: number;
+    /**
+     * Optional search term matched against site title.
+     */
     search?: string;
+    /**
+     * Field to sort by. Supported values: `favoritedAtUtc`, `title`. Defaults to `favoritedAtUtc`.
+     */
     sortBy?: string;
+    /**
+     * Sort direction: `asc` or `desc`. Defaults to `desc`.
+     */
     sortDirection?: GetSortDirectionQueryParameterType;
 }
 export type GetSortDirectionQueryParameterType = (typeof GetSortDirectionQueryParameterTypeObject)[keyof typeof GetSortDirectionQueryParameterTypeObject];

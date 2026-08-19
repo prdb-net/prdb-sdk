@@ -135,11 +135,17 @@ namespace Prdb.Sdk.Generated.Videos
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class VideosRequestBuilderGetQueryParameters 
         {
+            /// <summary>Optional filter to return only videos featuring the specified actor.</summary>
             public Guid? ActorId { get; set; }
+            /// <summary>Return only videos created strictly after this timestamp (exclusive).</summary>
             public DateTimeOffset? CreatedAfter { get; set; }
+            /// <summary>Return only videos created strictly before this timestamp (exclusive).</summary>
             public DateTimeOffset? CreatedBefore { get; set; }
+            /// <summary>1-based page number. Defaults to 1.</summary>
             public int? Page { get; set; }
+            /// <summary>Number of items per page. Defaults to 20, max 100.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Optional search term matched against video title and site title.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? Search { get; set; }
@@ -147,8 +153,11 @@ namespace Prdb.Sdk.Generated.Videos
 #else
             public string Search { get; set; }
 #endif
+            /// <summary>Optional filter to return only videos belonging to the specified site.</summary>
             public Guid? SiteId { get; set; }
+            /// <summary>Field to sort by. Supported values: `title` (default), `releaseDate`, `createdAtUtc`.</summary>
             public global::Prdb.Sdk.Generated.Videos.GetSortByQueryParameterType? SortBy { get; set; }
+            /// <summary>Sort direction: `asc` (default) or `desc`.</summary>
             public global::Prdb.Sdk.Generated.Videos.GetSortDirectionQueryParameterType? SortDirection { get; set; }
         }
     }

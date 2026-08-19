@@ -22,7 +22,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Name { get; set; }
 #endif
-        /// <summary>The siteId property</summary>
+        /// <summary>ID of the site this alias is associated with, if any.</summary>
         public Guid? SiteId { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.ActorAliasDto"/> and sets the default values.

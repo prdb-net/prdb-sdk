@@ -66,14 +66,41 @@ export interface VideosRequestBuilder extends BaseRequestBuilder<VideosRequestBu
  * Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
  */
 export interface VideosRequestBuilderGetQueryParameters {
+    /**
+     * Optional filter to return only videos featuring the specified actor.
+     */
     actorId?: Guid;
+    /**
+     * Return only videos created strictly after this timestamp (exclusive).
+     */
     createdAfter?: Date;
+    /**
+     * Return only videos created strictly before this timestamp (exclusive).
+     */
     createdBefore?: Date;
+    /**
+     * 1-based page number. Defaults to 1.
+     */
     page?: number;
+    /**
+     * Number of items per page. Defaults to 20, max 100.
+     */
     pageSize?: number;
+    /**
+     * Optional search term matched against video title and site title.
+     */
     search?: string;
+    /**
+     * Optional filter to return only videos belonging to the specified site.
+     */
     siteId?: Guid;
+    /**
+     * Field to sort by. Supported values: `title` (default), `releaseDate`, `createdAtUtc`.
+     */
     sortBy?: GetSortByQueryParameterType;
+    /**
+     * Sort direction: `asc` (default) or `desc`.
+     */
     sortDirection?: GetSortDirectionQueryParameterType;
 }
 /**

@@ -8,14 +8,15 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// IdentifySiteDto the site a file could be attributed to.
 type IdentifySiteDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The id property
+    // Unique identifier of the site.
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The title property
+    // Site title.
     title *string
-    // The url property
+    // Site URL.
     url *string
 }
 // NewIdentifySiteDto instantiates a new IdentifySiteDto and sets the default values.
@@ -71,17 +72,17 @@ func (m *IdentifySiteDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
     }
     return res
 }
-// GetId gets the id property value. The id property
+// GetId gets the id property value. Unique identifier of the site.
 // returns a *UUID when successful
 func (m *IdentifySiteDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetTitle gets the title property value. The title property
+// GetTitle gets the title property value. Site title.
 // returns a *string when successful
 func (m *IdentifySiteDto) GetTitle()(*string) {
     return m.title
 }
-// GetUrl gets the url property value. The url property
+// GetUrl gets the url property value. Site URL.
 // returns a *string when successful
 func (m *IdentifySiteDto) GetUrl()(*string) {
     return m.url
@@ -118,15 +119,15 @@ func (m *IdentifySiteDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0
 func (m *IdentifySiteDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetId sets the id property value. The id property
+// SetId sets the id property value. Unique identifier of the site.
 func (m *IdentifySiteDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetTitle sets the title property value. The title property
+// SetTitle sets the title property value. Site title.
 func (m *IdentifySiteDto) SetTitle(value *string)() {
     m.title = value
 }
-// SetUrl sets the url property value. The url property
+// SetUrl sets the url property value. Site URL.
 func (m *IdentifySiteDto) SetUrl(value *string)() {
     m.url = value
 }

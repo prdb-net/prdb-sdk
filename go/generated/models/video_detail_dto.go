@@ -18,7 +18,7 @@ type VideoDetailDto struct {
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The images property
+    // Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.
     images []VideoDetailImageDtoable
     // The preNames property
     preNames []VideoDetailPreNameDtoable
@@ -177,7 +177,7 @@ func (m *VideoDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
 func (m *VideoDetailDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetImages gets the images property value. The images property
+// GetImages gets the images property value. Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.
 // returns a []VideoDetailImageDtoable when successful
 func (m *VideoDetailDto) GetImages()([]VideoDetailImageDtoable) {
     return m.images
@@ -305,7 +305,7 @@ func (m *VideoDetailDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a
 func (m *VideoDetailDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetImages sets the images property value. The images property
+// SetImages sets the images property value. Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.
 func (m *VideoDetailDto) SetImages(value []VideoDetailImageDtoable)() {
     m.images = value
 }

@@ -9,28 +9,29 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// VideoFilehashChangeFilehashDto current persisted state of a changed video filehash row, including soft-delete fields.
 type VideoFilehashChangeFilehashDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
     // The createdAtUtc property
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The deletedAtUtc property
+    // Timestamp when the row was soft-deleted, or null when still active.
     deletedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The filename property
+    // Original filename submitted for this filehash record.
     filename *string
-    // The filesize property
+    // File size in bytes.
     filesize *int64
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The isDeleted property
+    // Whether this row is soft-deleted.
     isDeleted *bool
-    // The isVerified property
+    // Whether this filehash record has been verified.
     isVerified *bool
-    // The osHash property
+    // OS hash value as stored, or null when not available.
     osHash *string
-    // The pHash property
+    // P hash value as stored, or null when not available.
     pHash *string
-    // The submissionCount property
+    // Number of submissions merged into this filehash record.
     submissionCount *int32
     // The updatedAtUtc property
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
@@ -59,7 +60,7 @@ func (m *VideoFilehashChangeFilehashDto) GetAdditionalData()(map[string]any) {
 func (m *VideoFilehashChangeFilehashDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
 }
-// GetDeletedAtUtc gets the deletedAtUtc property value. The deletedAtUtc property
+// GetDeletedAtUtc gets the deletedAtUtc property value. Timestamp when the row was soft-deleted, or null when still active.
 // returns a *Time when successful
 func (m *VideoFilehashChangeFilehashDto) GetDeletedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.deletedAtUtc
@@ -190,12 +191,12 @@ func (m *VideoFilehashChangeFilehashDto) GetFieldDeserializers()(map[string]func
     }
     return res
 }
-// GetFilename gets the filename property value. The filename property
+// GetFilename gets the filename property value. Original filename submitted for this filehash record.
 // returns a *string when successful
 func (m *VideoFilehashChangeFilehashDto) GetFilename()(*string) {
     return m.filename
 }
-// GetFilesize gets the filesize property value. The filesize property
+// GetFilesize gets the filesize property value. File size in bytes.
 // returns a *int64 when successful
 func (m *VideoFilehashChangeFilehashDto) GetFilesize()(*int64) {
     return m.filesize
@@ -205,27 +206,27 @@ func (m *VideoFilehashChangeFilehashDto) GetFilesize()(*int64) {
 func (m *VideoFilehashChangeFilehashDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
-// GetIsDeleted gets the isDeleted property value. The isDeleted property
+// GetIsDeleted gets the isDeleted property value. Whether this row is soft-deleted.
 // returns a *bool when successful
 func (m *VideoFilehashChangeFilehashDto) GetIsDeleted()(*bool) {
     return m.isDeleted
 }
-// GetIsVerified gets the isVerified property value. The isVerified property
+// GetIsVerified gets the isVerified property value. Whether this filehash record has been verified.
 // returns a *bool when successful
 func (m *VideoFilehashChangeFilehashDto) GetIsVerified()(*bool) {
     return m.isVerified
 }
-// GetOsHash gets the osHash property value. The osHash property
+// GetOsHash gets the osHash property value. OS hash value as stored, or null when not available.
 // returns a *string when successful
 func (m *VideoFilehashChangeFilehashDto) GetOsHash()(*string) {
     return m.osHash
 }
-// GetPHash gets the pHash property value. The pHash property
+// GetPHash gets the pHash property value. P hash value as stored, or null when not available.
 // returns a *string when successful
 func (m *VideoFilehashChangeFilehashDto) GetPHash()(*string) {
     return m.pHash
 }
-// GetSubmissionCount gets the submissionCount property value. The submissionCount property
+// GetSubmissionCount gets the submissionCount property value. Number of submissions merged into this filehash record.
 // returns a *int32 when successful
 func (m *VideoFilehashChangeFilehashDto) GetSubmissionCount()(*int32) {
     return m.submissionCount
@@ -330,15 +331,15 @@ func (m *VideoFilehashChangeFilehashDto) SetAdditionalData(value map[string]any)
 func (m *VideoFilehashChangeFilehashDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
-// SetDeletedAtUtc sets the deletedAtUtc property value. The deletedAtUtc property
+// SetDeletedAtUtc sets the deletedAtUtc property value. Timestamp when the row was soft-deleted, or null when still active.
 func (m *VideoFilehashChangeFilehashDto) SetDeletedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.deletedAtUtc = value
 }
-// SetFilename sets the filename property value. The filename property
+// SetFilename sets the filename property value. Original filename submitted for this filehash record.
 func (m *VideoFilehashChangeFilehashDto) SetFilename(value *string)() {
     m.filename = value
 }
-// SetFilesize sets the filesize property value. The filesize property
+// SetFilesize sets the filesize property value. File size in bytes.
 func (m *VideoFilehashChangeFilehashDto) SetFilesize(value *int64)() {
     m.filesize = value
 }
@@ -346,23 +347,23 @@ func (m *VideoFilehashChangeFilehashDto) SetFilesize(value *int64)() {
 func (m *VideoFilehashChangeFilehashDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
-// SetIsDeleted sets the isDeleted property value. The isDeleted property
+// SetIsDeleted sets the isDeleted property value. Whether this row is soft-deleted.
 func (m *VideoFilehashChangeFilehashDto) SetIsDeleted(value *bool)() {
     m.isDeleted = value
 }
-// SetIsVerified sets the isVerified property value. The isVerified property
+// SetIsVerified sets the isVerified property value. Whether this filehash record has been verified.
 func (m *VideoFilehashChangeFilehashDto) SetIsVerified(value *bool)() {
     m.isVerified = value
 }
-// SetOsHash sets the osHash property value. The osHash property
+// SetOsHash sets the osHash property value. OS hash value as stored, or null when not available.
 func (m *VideoFilehashChangeFilehashDto) SetOsHash(value *string)() {
     m.osHash = value
 }
-// SetPHash sets the pHash property value. The pHash property
+// SetPHash sets the pHash property value. P hash value as stored, or null when not available.
 func (m *VideoFilehashChangeFilehashDto) SetPHash(value *string)() {
     m.pHash = value
 }
-// SetSubmissionCount sets the submissionCount property value. The submissionCount property
+// SetSubmissionCount sets the submissionCount property value. Number of submissions merged into this filehash record.
 func (m *VideoFilehashChangeFilehashDto) SetSubmissionCount(value *int32)() {
     m.submissionCount = value
 }

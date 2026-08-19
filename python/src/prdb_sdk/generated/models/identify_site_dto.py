@@ -7,14 +7,17 @@ from uuid import UUID
 
 @dataclass
 class IdentifySiteDto(AdditionalDataHolder, Parsable):
+    """
+    The site a file could be attributed to.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The id property
+    # Unique identifier of the site.
     id: Optional[UUID] = None
-    # The title property
+    # Site title.
     title: Optional[str] = None
-    # The url property
+    # Site URL.
     url: Optional[str] = None
     
     @staticmethod

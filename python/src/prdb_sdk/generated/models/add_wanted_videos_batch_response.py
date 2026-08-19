@@ -6,14 +6,17 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 
 @dataclass
 class AddWantedVideosBatchResponse(AdditionalDataHolder, Parsable):
+    """
+    Summary of a batch add-wanted-videos operation.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The added property
+    # Number of entries newly added to the wanted list.
     added: Optional[int] = None
-    # The alreadyExisted property
+    # Number of entries that were already on the wanted list.
     already_existed: Optional[int] = None
-    # The notFound property
+    # Number of video IDs that were not found in the database.
     not_found: Optional[int] = None
     
     @staticmethod

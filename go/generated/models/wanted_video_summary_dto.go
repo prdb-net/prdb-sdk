@@ -9,34 +9,35 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// WantedVideoSummaryDto a wanted video entry for the current user.
 type WantedVideoSummaryDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The createdAtUtc property
+    // When this wanted video entry was created.
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The fulfilledAtUtc property
+    // When the wanted video was fulfilled, if applicable.
     fulfilledAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // Known values: P720 (0), P1080 (1), P2160 (2).
     fulfilledInQuality *int32
     // Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
     fulfillmentByApp *int32
-    // The fulfillmentExternalId property
+    // External identifier from the fulfilling application, if applicable.
     fulfillmentExternalId *string
-    // The imageCdnPath property
+    // Absolute CDN URL for the video's primary image, if available.
     imageCdnPath *string
-    // The isFulfilled property
+    // Whether this wanted video has been fulfilled.
     isFulfilled *bool
-    // The siteTitle property
+    // Title of the site this video belongs to.
     siteTitle *string
-    // The updatedAtUtc property
+    // When this wanted video entry was last updated.
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The videoCreatedAtUtc property
+    // When the video was added to the database.
     videoCreatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The videoId property
+    // ID of the wanted video.
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The videoReleaseDate property
+    // Release date of the video, if known.
     videoReleaseDate *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
-    // The videoTitle property
+    // Video title.
     videoTitle *string
 }
 // NewWantedVideoSummaryDto instantiates a new WantedVideoSummaryDto and sets the default values.
@@ -56,7 +57,7 @@ func CreateWantedVideoSummaryDtoFromDiscriminatorValue(parseNode i878a80d2330e89
 func (m *WantedVideoSummaryDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetCreatedAtUtc gets the createdAtUtc property value. The createdAtUtc property
+// GetCreatedAtUtc gets the createdAtUtc property value. When this wanted video entry was created.
 // returns a *Time when successful
 func (m *WantedVideoSummaryDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
@@ -197,7 +198,7 @@ func (m *WantedVideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d
     }
     return res
 }
-// GetFulfilledAtUtc gets the fulfilledAtUtc property value. The fulfilledAtUtc property
+// GetFulfilledAtUtc gets the fulfilledAtUtc property value. When the wanted video was fulfilled, if applicable.
 // returns a *Time when successful
 func (m *WantedVideoSummaryDto) GetFulfilledAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.fulfilledAtUtc
@@ -212,47 +213,47 @@ func (m *WantedVideoSummaryDto) GetFulfilledInQuality()(*int32) {
 func (m *WantedVideoSummaryDto) GetFulfillmentByApp()(*int32) {
     return m.fulfillmentByApp
 }
-// GetFulfillmentExternalId gets the fulfillmentExternalId property value. The fulfillmentExternalId property
+// GetFulfillmentExternalId gets the fulfillmentExternalId property value. External identifier from the fulfilling application, if applicable.
 // returns a *string when successful
 func (m *WantedVideoSummaryDto) GetFulfillmentExternalId()(*string) {
     return m.fulfillmentExternalId
 }
-// GetImageCdnPath gets the imageCdnPath property value. The imageCdnPath property
+// GetImageCdnPath gets the imageCdnPath property value. Absolute CDN URL for the video's primary image, if available.
 // returns a *string when successful
 func (m *WantedVideoSummaryDto) GetImageCdnPath()(*string) {
     return m.imageCdnPath
 }
-// GetIsFulfilled gets the isFulfilled property value. The isFulfilled property
+// GetIsFulfilled gets the isFulfilled property value. Whether this wanted video has been fulfilled.
 // returns a *bool when successful
 func (m *WantedVideoSummaryDto) GetIsFulfilled()(*bool) {
     return m.isFulfilled
 }
-// GetSiteTitle gets the siteTitle property value. The siteTitle property
+// GetSiteTitle gets the siteTitle property value. Title of the site this video belongs to.
 // returns a *string when successful
 func (m *WantedVideoSummaryDto) GetSiteTitle()(*string) {
     return m.siteTitle
 }
-// GetUpdatedAtUtc gets the updatedAtUtc property value. The updatedAtUtc property
+// GetUpdatedAtUtc gets the updatedAtUtc property value. When this wanted video entry was last updated.
 // returns a *Time when successful
 func (m *WantedVideoSummaryDto) GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.updatedAtUtc
 }
-// GetVideoCreatedAtUtc gets the videoCreatedAtUtc property value. The videoCreatedAtUtc property
+// GetVideoCreatedAtUtc gets the videoCreatedAtUtc property value. When the video was added to the database.
 // returns a *Time when successful
 func (m *WantedVideoSummaryDto) GetVideoCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.videoCreatedAtUtc
 }
-// GetVideoId gets the videoId property value. The videoId property
+// GetVideoId gets the videoId property value. ID of the wanted video.
 // returns a *UUID when successful
 func (m *WantedVideoSummaryDto) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
 }
-// GetVideoReleaseDate gets the videoReleaseDate property value. The videoReleaseDate property
+// GetVideoReleaseDate gets the videoReleaseDate property value. Release date of the video, if known.
 // returns a *DateOnly when successful
 func (m *WantedVideoSummaryDto) GetVideoReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly) {
     return m.videoReleaseDate
 }
-// GetVideoTitle gets the videoTitle property value. The videoTitle property
+// GetVideoTitle gets the videoTitle property value. Video title.
 // returns a *string when successful
 func (m *WantedVideoSummaryDto) GetVideoTitle()(*string) {
     return m.videoTitle
@@ -349,11 +350,11 @@ func (m *WantedVideoSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487e
 func (m *WantedVideoSummaryDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetCreatedAtUtc sets the createdAtUtc property value. The createdAtUtc property
+// SetCreatedAtUtc sets the createdAtUtc property value. When this wanted video entry was created.
 func (m *WantedVideoSummaryDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
-// SetFulfilledAtUtc sets the fulfilledAtUtc property value. The fulfilledAtUtc property
+// SetFulfilledAtUtc sets the fulfilledAtUtc property value. When the wanted video was fulfilled, if applicable.
 func (m *WantedVideoSummaryDto) SetFulfilledAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.fulfilledAtUtc = value
 }
@@ -365,39 +366,39 @@ func (m *WantedVideoSummaryDto) SetFulfilledInQuality(value *int32)() {
 func (m *WantedVideoSummaryDto) SetFulfillmentByApp(value *int32)() {
     m.fulfillmentByApp = value
 }
-// SetFulfillmentExternalId sets the fulfillmentExternalId property value. The fulfillmentExternalId property
+// SetFulfillmentExternalId sets the fulfillmentExternalId property value. External identifier from the fulfilling application, if applicable.
 func (m *WantedVideoSummaryDto) SetFulfillmentExternalId(value *string)() {
     m.fulfillmentExternalId = value
 }
-// SetImageCdnPath sets the imageCdnPath property value. The imageCdnPath property
+// SetImageCdnPath sets the imageCdnPath property value. Absolute CDN URL for the video's primary image, if available.
 func (m *WantedVideoSummaryDto) SetImageCdnPath(value *string)() {
     m.imageCdnPath = value
 }
-// SetIsFulfilled sets the isFulfilled property value. The isFulfilled property
+// SetIsFulfilled sets the isFulfilled property value. Whether this wanted video has been fulfilled.
 func (m *WantedVideoSummaryDto) SetIsFulfilled(value *bool)() {
     m.isFulfilled = value
 }
-// SetSiteTitle sets the siteTitle property value. The siteTitle property
+// SetSiteTitle sets the siteTitle property value. Title of the site this video belongs to.
 func (m *WantedVideoSummaryDto) SetSiteTitle(value *string)() {
     m.siteTitle = value
 }
-// SetUpdatedAtUtc sets the updatedAtUtc property value. The updatedAtUtc property
+// SetUpdatedAtUtc sets the updatedAtUtc property value. When this wanted video entry was last updated.
 func (m *WantedVideoSummaryDto) SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.updatedAtUtc = value
 }
-// SetVideoCreatedAtUtc sets the videoCreatedAtUtc property value. The videoCreatedAtUtc property
+// SetVideoCreatedAtUtc sets the videoCreatedAtUtc property value. When the video was added to the database.
 func (m *WantedVideoSummaryDto) SetVideoCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.videoCreatedAtUtc = value
 }
-// SetVideoId sets the videoId property value. The videoId property
+// SetVideoId sets the videoId property value. ID of the wanted video.
 func (m *WantedVideoSummaryDto) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }
-// SetVideoReleaseDate sets the videoReleaseDate property value. The videoReleaseDate property
+// SetVideoReleaseDate sets the videoReleaseDate property value. Release date of the video, if known.
 func (m *WantedVideoSummaryDto) SetVideoReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)() {
     m.videoReleaseDate = value
 }
-// SetVideoTitle sets the videoTitle property value. The videoTitle property
+// SetVideoTitle sets the videoTitle property value. Video title.
 func (m *WantedVideoSummaryDto) SetVideoTitle(value *string)() {
     m.videoTitle = value
 }

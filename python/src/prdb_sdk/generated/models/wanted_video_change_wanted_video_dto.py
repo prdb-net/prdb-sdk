@@ -8,6 +8,9 @@ from uuid import UUID
 
 @dataclass
 class WantedVideoChangeWantedVideoDto(AdditionalDataHolder, Parsable):
+    """
+    Current-state payload for a wanted video row in the incremental feed.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 

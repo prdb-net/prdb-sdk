@@ -4,21 +4,24 @@
 // @ts-ignore
 import { type AdditionalDataHolder, type ApiError, type DateOnly, type Guid, type Parsable, type ParseNode, type SerializationWriter } from '@microsoft/kiota-abstractions';
 
+/**
+ * An active subscription held by the authenticated user.
+ */
 export interface ActiveSubscriptionDto extends AdditionalDataHolder, Parsable {
     /**
-     * The endsAtUtc property
+     * UTC timestamp when this subscription period ends.
      */
     endsAtUtc?: Date | null;
     /**
-     * The packageIdentifier property
+     * Stable slug identifying the subscription package (e.g. "plus", "premium").
      */
     packageIdentifier?: string | null;
     /**
-     * The packageTitle property
+     * Human-readable title of the subscription package.
      */
     packageTitle?: string | null;
     /**
-     * The startsAtUtc property
+     * UTC timestamp when this subscription period starts.
      */
     startsAtUtc?: Date | null;
 }
@@ -28,7 +31,7 @@ export interface ActorAliasDto extends AdditionalDataHolder, Parsable {
      */
     name?: string | null;
     /**
-     * The siteId property
+     * ID of the site this alias is associated with, if any.
      */
     siteId?: Guid | null;
 }
@@ -42,6 +45,9 @@ export interface ActorBioDto extends AdditionalDataHolder, Parsable {
      */
     text?: string | null;
 }
+/**
+ * Full current actor payload, including tombstone metadata.
+ */
 export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
     /**
      * The aliases property
@@ -208,13 +214,16 @@ export interface ActorChangeBioDto extends AdditionalDataHolder, Parsable {
      */
     text?: string | null;
 }
+/**
+ * A single current-state actor change.
+ */
 export interface ActorChangeDto extends AdditionalDataHolder, Parsable {
     /**
-     * The actor property
+     * Full current actor payload, including tombstone metadata.
      */
     actor?: ActorChangeActorDto | null;
     /**
-     * The eventType property
+     * One of `created`, `updated`, or `deleted`.
      */
     eventType?: string | null;
 }
@@ -250,6 +259,9 @@ export interface ActorChangeLinkDto extends AdditionalDataHolder, Parsable {
      */
     url?: string | null;
 }
+/**
+ * Seek cursor for continuing an actor change feed.
+ */
 export interface ActorChangesCursorDto extends AdditionalDataHolder, Parsable {
     /**
      * The id property
@@ -260,6 +272,9 @@ export interface ActorChangesCursorDto extends AdditionalDataHolder, Parsable {
      */
     updatedAtUtc?: Date | null;
 }
+/**
+ * Full details for a single actor.
+ */
 export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
     /**
      * The aliases property
@@ -270,7 +285,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     bios?: ActorBioDto[] | null;
     /**
-     * The birthday property
+     * Date of birth, if known.
      */
     birthday?: DateOnly | null;
     /**
@@ -278,7 +293,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     birthdayType?: number | null;
     /**
-     * The birthdayTypeLabel property
+     * Human-readable birthday type label (e.g. "Exact", "Approximate").
      */
     birthdayTypeLabel?: string | null;
     /**
@@ -290,7 +305,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     braSize?: number | null;
     /**
-     * The braSizeLabel property
+     * Human-readable bra size label (e.g. "34B").
      */
     braSizeLabel?: string | null;
     /**
@@ -302,11 +317,11 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     breastTypeLabel?: string | null;
     /**
-     * The careerEnd property
+     * Year the actor's career ended, if applicable.
      */
     careerEnd?: number | null;
     /**
-     * The careerStart property
+     * Year the actor's career began.
      */
     careerStart?: number | null;
     /**
@@ -314,7 +329,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     createdAtUtc?: Date | null;
     /**
-     * The deathday property
+     * Date of death, if applicable.
      */
     deathday?: DateOnly | null;
     /**
@@ -338,7 +353,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     gender?: number | null;
     /**
-     * The genderLabel property
+     * Human-readable gender label.
      */
     genderLabel?: string | null;
     /**
@@ -350,11 +365,11 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     haircolorLabel?: string | null;
     /**
-     * The height property
+     * Height in centimetres.
      */
     height?: number | null;
     /**
-     * The hipSize property
+     * Hip measurement in centimetres.
      */
     hipSize?: number | null;
     /**
@@ -370,7 +385,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     links?: ActorLinkDto[] | null;
     /**
-     * The name property
+     * Stage name of the actor.
      */
     name?: string | null;
     /**
@@ -394,7 +409,7 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     updatedAtUtc?: Date | null;
     /**
-     * The waistSize property
+     * Waist measurement in centimetres.
      */
     waistSize?: number | null;
 }
@@ -412,7 +427,7 @@ export interface ActorImageDetailDto extends AdditionalDataHolder, Parsable {
      */
     imageTypeLabel?: string | null;
     /**
-     * The url property
+     * Full CDN URL for the image, if available.
      */
     url?: string | null;
 }
@@ -430,9 +445,12 @@ export interface ActorLinkDto extends AdditionalDataHolder, Parsable {
      */
     url?: string | null;
 }
+/**
+ * Summary of a single actor.
+ */
 export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
     /**
-     * The birthday property
+     * Date of birth, if known.
      */
     birthday?: DateOnly | null;
     /**
@@ -440,7 +458,7 @@ export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
      */
     ethnicity?: number | null;
     /**
-     * The ethnicityLabel property
+     * Human-readable ethnicity label.
      */
     ethnicityLabel?: string | null;
     /**
@@ -448,7 +466,7 @@ export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
      */
     gender?: number | null;
     /**
-     * The genderLabel property
+     * Human-readable gender label.
      */
     genderLabel?: string | null;
     /**
@@ -456,7 +474,7 @@ export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
      */
     id?: Guid | null;
     /**
-     * The name property
+     * Stage name of the actor.
      */
     name?: string | null;
     /**
@@ -464,43 +482,43 @@ export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
      */
     nationality?: number | null;
     /**
-     * The nationalityLabel property
+     * Human-readable nationality label.
      */
     nationalityLabel?: string | null;
     /**
-     * The profileImageUrl property
+     * Full CDN URL of the actor's profile image, if available.
      */
     profileImageUrl?: string | null;
 }
 export interface AddDownloadedFromIndexerFilenameRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The filename property
+     * The filename as reported by the indexer/download source.
      */
     filename?: string | null;
     /**
-     * The filesize property
+     * File size in bytes.
      */
     filesize?: number | null;
     /**
-     * The osHash property
+     * Optional OS hash value as a 16-character fixed-length string.
      */
     osHash?: string | null;
     /**
-     * The pHash property
+     * Optional perceptual hash value, 16 hexadecimal characters. It must be computed as"Perceptual hashes" in the API description prescribes; a value from another procedureis stored but can never be matched.
      */
     pHash?: string | null;
 }
 export interface AddDownloadedFromIndexerRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The downloadIdentifier property
+     * Download identifier returned by the indexer or download client.
      */
     downloadIdentifier?: string | null;
     /**
-     * The filenames property
+     * Optional filename rows to create together with the parent entry.
      */
     filenames?: AddDownloadedFromIndexerFilenameRequest[] | null;
     /**
-     * The indexerId property
+     * Indexer-specific identifier for the download item.
      */
     indexerId?: string | null;
     /**
@@ -508,35 +526,41 @@ export interface AddDownloadedFromIndexerRequest extends AdditionalDataHolder, P
      */
     indexerSource?: number | null;
     /**
-     * The nzbName property
+     * NZB or release name.
      */
     nzbName?: string | null;
     /**
-     * The nzbUrl property
+     * NZB or release URL.
      */
     nzbUrl?: string | null;
     /**
-     * The videoId property
+     * Optional ID of the wanted video this download belongs to. Pass null when the download is not linked to a video yet.
      */
     videoId?: Guid | null;
 }
+/**
+ * Request body for batch-adding wanted videos.
+ */
 export interface AddWantedVideosBatchRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The videoIds property
+     * IDs of the videos to add. Between 1 and 50 entries.
      */
     videoIds?: Guid[] | null;
 }
+/**
+ * Summary of a batch add-wanted-videos operation.
+ */
 export interface AddWantedVideosBatchResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The added property
+     * Number of entries newly added to the wanted list.
      */
     added?: number | null;
     /**
-     * The alreadyExisted property
+     * Number of entries that were already on the wanted list.
      */
     alreadyExisted?: number | null;
     /**
-     * The notFound property
+     * Number of video IDs that were not found in the database.
      */
     notFound?: number | null;
 }
@@ -3266,59 +3290,65 @@ export function deserializeIntoWantedVideoSummaryDto(wantedVideoSummaryDto: Part
         "videoTitle": n => { wantedVideoSummaryDto.videoTitle = n.getStringValue(); },
     }
 }
+/**
+ * A filename recorded for a downloaded-from-indexer entry.
+ */
 export interface DownloadedFromIndexerFilenameDto extends AdditionalDataHolder, Parsable {
     /**
-     * The createdAtUtc property
+     * When this filename row was created.
      */
     createdAtUtc?: Date | null;
     /**
-     * The downloadedFromIndexerId property
+     * ID of the parent downloaded-from-indexer entry.
      */
     downloadedFromIndexerId?: Guid | null;
     /**
-     * The filename property
+     * The filename as reported by the indexer/download source.
      */
     filename?: string | null;
     /**
-     * The filesize property
+     * File size in bytes.
      */
     filesize?: number | null;
     /**
-     * The id property
+     * ID of the filename row.
      */
     id?: Guid | null;
     /**
-     * The osHash property
+     * Optional OS hash value as a 16-character fixed-length string.
      */
     osHash?: string | null;
     /**
-     * The pHash property
+     * Optional perceptual hash value as a 16-character fixed-length string.
      */
     pHash?: string | null;
     /**
-     * The updatedAtUtc property
+     * When this filename row was last updated.
      */
     updatedAtUtc?: Date | null;
 }
+/**
+ * A downloaded-from-indexer entry for the current user.
+ */
 export interface DownloadedFromIndexerResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The createdAtUtc property
+     * When this entry was created.
      */
     createdAtUtc?: Date | null;
     /**
-     * The downloadIdentifier property
+     * Download identifier returned by the indexer or download client.
      */
     downloadIdentifier?: string | null;
     /**
-     * The filenames property
+     * Filename rows recorded for this entry.
      */
     filenames?: DownloadedFromIndexerFilenameDto[] | null;
     /**
-     * The id property
+     * ID of the downloaded-from-indexer entry.
      */
     id?: Guid | null;
     /**
-     * The indexerId property
+     * Indexer-specific identifier for the download item.
      */
     indexerId?: string | null;
     /**
@@ -3326,32 +3356,38 @@ export interface DownloadedFromIndexerResponse extends AdditionalDataHolder, Par
      */
     indexerSource?: number | null;
     /**
-     * The nzbName property
+     * NZB or release name.
      */
     nzbName?: string | null;
     /**
-     * The nzbUrl property
+     * NZB or release URL.
      */
     nzbUrl?: string | null;
     /**
-     * The updatedAtUtc property
+     * When this entry was last updated.
      */
     updatedAtUtc?: Date | null;
     /**
-     * The videoId property
+     * ID of the associated wanted video, or null when the download is not linked to a video.
      */
     videoId?: Guid | null;
 }
+/**
+ * A single changed favorite actor row in the incremental feed.
+ */
 export interface FavoriteActorChangeDto extends AdditionalDataHolder, Parsable {
     /**
-     * The eventType property
+     * One of `created`, `updated`, or `deleted`.
      */
     eventType?: string | null;
     /**
-     * The favoriteActor property
+     * Current-state payload for a favorite actor row in the incremental feed.
      */
     favoriteActor?: FavoriteActorChangeFavoriteActorDto | null;
 }
+/**
+ * Current-state payload for a favorite actor row in the incremental feed.
+ */
 export interface FavoriteActorChangeFavoriteActorDto extends AdditionalDataHolder, Parsable {
     /**
      * The deletedAtUtc property
@@ -3394,6 +3430,9 @@ export interface FavoriteActorChangeFavoriteActorDto extends AdditionalDataHolde
      */
     updatedAtUtc?: Date | null;
 }
+/**
+ * Seek cursor for continuing a favorite actor change feed.
+ */
 export interface FavoriteActorChangesCursorDto extends AdditionalDataHolder, Parsable {
     /**
      * The id property
@@ -3404,17 +3443,20 @@ export interface FavoriteActorChangesCursorDto extends AdditionalDataHolder, Par
      */
     updatedAtUtc?: Date | null;
 }
+/**
+ * Summary of an actor in the current user's favorites list.
+ */
 export interface FavoriteActorSummaryDto extends AdditionalDataHolder, Parsable {
     /**
-     * The ethnicity property
+     * Ethnicity label.
      */
     ethnicity?: string | null;
     /**
-     * The favoritedAtUtc property
+     * UTC timestamp when the user added this actor to their favorites.
      */
     favoritedAtUtc?: Date | null;
     /**
-     * The gender property
+     * Gender label (e.g. `Female`, `Male`, `Unknown`).
      */
     gender?: string | null;
     /**
@@ -3426,24 +3468,30 @@ export interface FavoriteActorSummaryDto extends AdditionalDataHolder, Parsable 
      */
     name?: string | null;
     /**
-     * The nationality property
+     * Nationality label.
      */
     nationality?: string | null;
     /**
-     * The profileImageCdnPath property
+     * CDN URL of the actor's face/profile image, if available.
      */
     profileImageCdnPath?: string | null;
 }
+/**
+ * A single changed favorite site row in the incremental feed.
+ */
 export interface FavoriteSiteChangeDto extends AdditionalDataHolder, Parsable {
     /**
-     * The eventType property
+     * One of `created`, `updated`, or `deleted`.
      */
     eventType?: string | null;
     /**
-     * The favoriteSite property
+     * Current-state payload for a favorite site row in the incremental feed.
      */
     favoriteSite?: FavoriteSiteChangeFavoriteSiteDto | null;
 }
+/**
+ * Current-state payload for a favorite site row in the incremental feed.
+ */
 export interface FavoriteSiteChangeFavoriteSiteDto extends AdditionalDataHolder, Parsable {
     /**
      * The deletedAtUtc property
@@ -3482,6 +3530,9 @@ export interface FavoriteSiteChangeFavoriteSiteDto extends AdditionalDataHolder,
      */
     url?: string | null;
 }
+/**
+ * Seek cursor for continuing a favorite site change feed.
+ */
 export interface FavoriteSiteChangesCursorDto extends AdditionalDataHolder, Parsable {
     /**
      * The id property
@@ -3492,9 +3543,12 @@ export interface FavoriteSiteChangesCursorDto extends AdditionalDataHolder, Pars
      */
     updatedAtUtc?: Date | null;
 }
+/**
+ * Summary of a site in the current user's favorites list.
+ */
 export interface FavoriteSiteSummaryDto extends AdditionalDataHolder, Parsable {
     /**
-     * The favoritedAtUtc property
+     * UTC timestamp when the user added this site to their favorites.
      */
     favoritedAtUtc?: Date | null;
     /**
@@ -3518,9 +3572,12 @@ export interface FavoriteSiteSummaryDto extends AdditionalDataHolder, Parsable {
      */
     url?: string | null;
 }
+/**
+ * A single fulfilment update.
+ */
 export interface FulfillWantedVideoItem extends AdditionalDataHolder, Parsable {
     /**
-     * The fulfilledAtUtc property
+     * When the video was fulfilled. Ignored when isFulfilled is false; defaults to the server time when omitted.
      */
     fulfilledAtUtc?: Date | null;
     /**
@@ -3532,40 +3589,52 @@ export interface FulfillWantedVideoItem extends AdditionalDataHolder, Parsable {
      */
     fulfillmentByApp?: number | null;
     /**
-     * The fulfillmentExternalId property
+     * External identifier from the fulfilling application, if applicable.
      */
     fulfillmentExternalId?: string | null;
     /**
-     * The isFulfilled property
+     * Whether the wanted video has been fulfilled.
      */
     isFulfilled?: boolean | null;
     /**
-     * The videoId property
+     * ID of the video whose wanted entry is updated. Must be unique within the request.
      */
     videoId?: Guid | null;
 }
+/**
+ * What happened to one video of the batch.
+ */
 export interface FulfillWantedVideoResultDto extends AdditionalDataHolder, Parsable {
     /**
-     * Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).
+     * Outcome of a single fulfilment update. Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).
      */
     outcome?: number | null;
     /**
-     * The videoId property
+     * ID of the video this result belongs to.
      */
     videoId?: Guid | null;
 }
+/**
+ * Request body for batch-updating the fulfilment state of wanted videos.
+ */
 export interface FulfillWantedVideosBatchRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The items property
+     * Fulfilment updates to apply. Between 1 and 50 entries, each for a distinct video.
      */
     items?: FulfillWantedVideoItem[] | null;
 }
+/**
+ * Per-video outcome of a batch fulfilment update.
+ */
 export interface FulfillWantedVideosBatchResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The results property
+     * One result per requested video, in request order.
      */
     results?: FulfillWantedVideoResultDto[] | null;
 }
+/**
+ * A seek-paged actor delta feed ordered by updated timestamp and actor ID.
+ */
 export interface GetActorChangesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The hasMore property
@@ -3576,7 +3645,7 @@ export interface GetActorChangesResponse extends AdditionalDataHolder, Parsable 
      */
     items?: ActorChangeDto[] | null;
     /**
-     * The nextCursor property
+     * Seek cursor for continuing an actor change feed.
      */
     nextCursor?: ActorChangesCursorDto | null;
     /**
@@ -3584,7 +3653,7 @@ export interface GetActorChangesResponse extends AdditionalDataHolder, Parsable 
      */
     pageSize?: number | null;
     /**
-     * The serverTimeUtc property
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -3594,6 +3663,9 @@ export interface GetActorsByIdsRequest extends AdditionalDataHolder, Parsable {
      */
     ids?: Guid[] | null;
 }
+/**
+ * Paged delta feed of favorite actor changes ordered by updated timestamp and ID.
+ */
 export interface GetFavoriteActorChangesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The hasMore property
@@ -3604,7 +3676,7 @@ export interface GetFavoriteActorChangesResponse extends AdditionalDataHolder, P
      */
     items?: FavoriteActorChangeDto[] | null;
     /**
-     * The nextCursor property
+     * Seek cursor for continuing a favorite actor change feed.
      */
     nextCursor?: FavoriteActorChangesCursorDto | null;
     /**
@@ -3612,10 +3684,13 @@ export interface GetFavoriteActorChangesResponse extends AdditionalDataHolder, P
      */
     pageSize?: number | null;
     /**
-     * The serverTimeUtc property
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
+/**
+ * Paged delta feed of favorite site changes ordered by updated timestamp and ID.
+ */
 export interface GetFavoriteSiteChangesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The hasMore property
@@ -3626,7 +3701,7 @@ export interface GetFavoriteSiteChangesResponse extends AdditionalDataHolder, Pa
      */
     items?: FavoriteSiteChangeDto[] | null;
     /**
-     * The nextCursor property
+     * Seek cursor for continuing a favorite site change feed.
      */
     nextCursor?: FavoriteSiteChangesCursorDto | null;
     /**
@@ -3634,23 +3709,29 @@ export interface GetFavoriteSiteChangesResponse extends AdditionalDataHolder, Pa
      */
     pageSize?: number | null;
     /**
-     * The serverTimeUtc property
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
+/**
+ * Health check response.
+ */
 export interface GetHealthResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The status property
+     * Always "ok" when the API is reachable.
      */
     status?: string | null;
     /**
-     * The timestamp property
+     * UTC timestamp at the time of the request.
      */
     timestamp?: Date | null;
 }
+/**
+ * Paged delta feed of indexer filehash changes ordered by updated timestamp and ID.
+ */
 export interface GetIndexerFilehashChangesResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The hasMore property
+     * Whether additional rows exist after the current page.
      */
     hasMore?: boolean | null;
     /**
@@ -3658,35 +3739,41 @@ export interface GetIndexerFilehashChangesResponse extends AdditionalDataHolder,
      */
     items?: IndexerFilehashChangeDto[] | null;
     /**
-     * The nextCursor property
+     * Seek cursor for continuing an indexer filehash change feed.
      */
     nextCursor?: IndexerFilehashChangesCursorDto | null;
     /**
-     * The pageSize property
+     * The resolved page size for this response.
      */
     pageSize?: number | null;
     /**
-     * The serverTimeUtc property
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
+/**
+ * Current rate limit status for the authenticated user.
+ */
 export interface GetRateLimitResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The hourly property
+     * Rate limit status for a single time window.
      */
     hourly?: RateLimitWindowStatus | null;
     /**
-     * The isEnforced property
+     * Always true. Rate limiting is enforced unconditionally; when it cannot be enforced the APIanswers 503 instead of returning this document. Kept for compatibility with clients thatread the field.
      */
     isEnforced?: boolean | null;
     /**
-     * The monthly property
+     * Rate limit status for a single time window.
      */
     monthly?: RateLimitWindowStatus | null;
 }
+/**
+ * Paged delta feed of video filehash changes ordered by updated timestamp and ID.
+ */
 export interface GetVideoFilehashChangesResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The hasMore property
+     * Whether additional rows exist after the current page.
      */
     hasMore?: boolean | null;
     /**
@@ -3694,15 +3781,15 @@ export interface GetVideoFilehashChangesResponse extends AdditionalDataHolder, P
      */
     items?: VideoFilehashChangeDto[] | null;
     /**
-     * The nextCursor property
+     * Seek cursor for continuing a video filehash change feed.
      */
     nextCursor?: VideoFilehashChangesCursorDto | null;
     /**
-     * The pageSize property
+     * The resolved page size for this response.
      */
     pageSize?: number | null;
     /**
-     * The serverTimeUtc property
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -3746,10 +3833,13 @@ export interface GetVideoUserImageChangesResponse extends AdditionalDataHolder, 
      */
     pageSize?: number | null;
     /**
-     * The serverTimeUtc property
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
+/**
+ * Paged delta feed of wanted video changes ordered by updated timestamp and ID.
+ */
 export interface GetWantedVideoChangesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The hasMore property
@@ -3760,7 +3850,7 @@ export interface GetWantedVideoChangesResponse extends AdditionalDataHolder, Par
      */
     items?: WantedVideoChangeDto[] | null;
     /**
-     * The nextCursor property
+     * Seek cursor for continuing a wanted video change feed.
      */
     nextCursor?: WantedVideoChangesCursorDto | null;
     /**
@@ -3768,53 +3858,62 @@ export interface GetWantedVideoChangesResponse extends AdditionalDataHolder, Par
      */
     pageSize?: number | null;
     /**
-     * The serverTimeUtc property
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
+/**
+ * The site a file could be attributed to.
+ */
 export interface IdentifySiteDto extends AdditionalDataHolder, Parsable {
     /**
-     * The id property
+     * Unique identifier of the site.
      */
     id?: Guid | null;
     /**
-     * The title property
+     * Site title.
      */
     title?: string | null;
     /**
-     * The url property
+     * Site URL.
      */
     url?: string | null;
 }
+/**
+ * One file to identify.
+ */
 export interface IdentifyVideoFileDto extends AdditionalDataHolder, Parsable {
     /**
-     * The filename property
+     * File name without directory. Required — it carries the lowest rungs of the ladder.
      */
     filename?: string | null;
     /**
-     * The filesize property
+     * Size of the file in bytes, if known.
      */
     filesize?: number | null;
     /**
-     * The osHash property
+     * OS hash of the file, 16 hexadecimal characters, if the client computed one.
      */
     osHash?: string | null;
     /**
-     * The pHash property
+     * Perceptual hash of the file, 16 hexadecimal characters, if the client computed one.Compared for equality only, and only against values computed the way "Perceptual hashes"in the API description prescribes — send none rather than one from another procedure.
      */
     pHash?: string | null;
     /**
-     * The ref property
+     * Client-assigned identifier, returned unchanged. Unique within the request.
      */
     ref?: string | null;
 }
+/**
+ * What the identification ladder made of one file.
+ */
 export interface IdentifyVideoResultDto extends AdditionalDataHolder, Parsable {
     /**
-     * The candidates property
+     * All equally good videos when the match was ambiguous; otherwise empty.
      */
     candidates?: Guid[] | null;
     /**
-     * Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
+     * How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
      */
     confidence?: number | null;
     /**
@@ -3822,11 +3921,11 @@ export interface IdentifyVideoResultDto extends AdditionalDataHolder, Parsable {
      */
     matchedBy?: number | null;
     /**
-     * The ref property
+     * The client-assigned identifier of the input file, returned unchanged.
      */
     ref?: string | null;
     /**
-     * The site property
+     * The site a file could be attributed to.
      */
     site?: IdentifySiteDto | null;
     /**
@@ -3834,51 +3933,63 @@ export interface IdentifyVideoResultDto extends AdditionalDataHolder, Parsable {
      */
     video?: VideoDetailDto | null;
     /**
-     * The videoId property
+     * The identified video, when exactly one was found.
      */
     videoId?: Guid | null;
 }
+/**
+ * Request body for identifying local files against the prdb catalogue.
+ */
 export interface IdentifyVideosRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The files property
+     * Files to identify. Between 1 and 200 entries.
      */
     files?: IdentifyVideoFileDto[] | null;
     /**
-     * The includeVideoDetails property
+     * When true, each matched result carries the full video document. Defaults to false.
      */
     includeVideoDetails?: boolean | null;
 }
+/**
+ * Identification results, one per submitted file.
+ */
 export interface IdentifyVideosResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The results property
+     * One result per input file, in input order.
      */
     results?: IdentifyVideoResultDto[] | null;
 }
+/**
+ * A single changed indexer filehash row in the incremental feed.
+ */
 export interface IndexerFilehashChangeDto extends AdditionalDataHolder, Parsable {
     /**
-     * The eventType property
+     * One of `created`, `updated`, or `deleted`.
      */
     eventType?: string | null;
     /**
-     * The filehash property
+     * Current persisted state of a changed indexer filehash row, including soft-delete fields.
      */
     filehash?: IndexerFilehashChangeFilehashDto | null;
 }
+/**
+ * Current persisted state of a changed indexer filehash row, including soft-delete fields.
+ */
 export interface IndexerFilehashChangeFilehashDto extends AdditionalDataHolder, Parsable {
     /**
      * The createdAtUtc property
      */
     createdAtUtc?: Date | null;
     /**
-     * The deletedAtUtc property
+     * Timestamp when the row was soft-deleted, or null when still active.
      */
     deletedAtUtc?: Date | null;
     /**
-     * The filename property
+     * Original filename submitted for this filehash record.
      */
     filename?: string | null;
     /**
-     * The filesize property
+     * File size in bytes.
      */
     filesize?: number | null;
     /**
@@ -3886,31 +3997,31 @@ export interface IndexerFilehashChangeFilehashDto extends AdditionalDataHolder, 
      */
     id?: Guid | null;
     /**
-     * The indexerId property
+     * Indexer-specific identifier for the release.
      */
     indexerId?: string | null;
     /**
-     * The indexerSource property
+     * Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.
      */
     indexerSource?: string | null;
     /**
-     * The isDeleted property
+     * Whether this row is soft-deleted.
      */
     isDeleted?: boolean | null;
     /**
-     * The isVerified property
+     * Whether this filehash record has been verified.
      */
     isVerified?: boolean | null;
     /**
-     * The osHash property
+     * OS hash value as stored.
      */
     osHash?: string | null;
     /**
-     * The pHash property
+     * P hash value as stored, or null when not available.
      */
     pHash?: string | null;
     /**
-     * The submissionCount property
+     * Number of submissions merged into this filehash record.
      */
     submissionCount?: number | null;
     /**
@@ -3918,6 +4029,9 @@ export interface IndexerFilehashChangeFilehashDto extends AdditionalDataHolder, 
      */
     updatedAtUtc?: Date | null;
 }
+/**
+ * Seek cursor for continuing an indexer filehash change feed.
+ */
 export interface IndexerFilehashChangesCursorDto extends AdditionalDataHolder, Parsable {
     /**
      * The id property
@@ -3934,11 +4048,11 @@ export interface IndexerFilehashDto extends AdditionalDataHolder, Parsable {
      */
     createdAtUtc?: Date | null;
     /**
-     * The filename property
+     * Original filename submitted for this filehash record.
      */
     filename?: string | null;
     /**
-     * The filesize property
+     * File size in bytes.
      */
     filesize?: number | null;
     /**
@@ -3946,27 +4060,27 @@ export interface IndexerFilehashDto extends AdditionalDataHolder, Parsable {
      */
     id?: Guid | null;
     /**
-     * The indexerId property
+     * Indexer-specific identifier for the release.
      */
     indexerId?: string | null;
     /**
-     * The indexerSource property
+     * Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.
      */
     indexerSource?: string | null;
     /**
-     * The isVerified property
+     * Whether this filehash record has been verified.
      */
     isVerified?: boolean | null;
     /**
-     * The osHash property
+     * OS hash value as stored.
      */
     osHash?: string | null;
     /**
-     * The pHash property
+     * P hash value as stored, or null when not available.
      */
     pHash?: string | null;
     /**
-     * The submissionCount property
+     * Number of submissions merged into this filehash record.
      */
     submissionCount?: number | null;
     /**
@@ -3974,40 +4088,46 @@ export interface IndexerFilehashDto extends AdditionalDataHolder, Parsable {
      */
     updatedAtUtc?: Date | null;
 }
+/**
+ * Combined indexer identity used to match filehashes by indexer source and indexer-specific ID.
+ */
 export interface IndexerFilehashLookupKeyDto extends AdditionalDataHolder, Parsable {
     /**
-     * The indexerId property
+     * Indexer-specific identifier for the release.
      */
     indexerId?: string | null;
     /**
-     * Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
+     * Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
      */
     indexerSource?: IndexerFilehashLookupKeyDto_indexerSource | null;
 }
 export type IndexerFilehashLookupKeyDto_indexerSource = (typeof IndexerFilehashLookupKeyDto_indexerSourceObject)[keyof typeof IndexerFilehashLookupKeyDto_indexerSourceObject];
+/**
+ * Paged list of the latest indexer filehash entries.
+ */
 export interface LatestIndexerFilehashesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The items property
      */
     items?: IndexerFilehashDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The sortBy property
+     * Resolved sort field for the current query.
      */
     sortBy?: string | null;
     /**
-     * The sortDirection property
+     * Resolved sort direction for the current query.
      */
     sortDirection?: string | null;
     /**
-     * The totalCount property
+     * Total number of filehash entries matching the current filters.
      */
     totalCount?: number | null;
 }
@@ -4029,21 +4149,24 @@ export interface LatestPreDbItemDto extends AdditionalDataHolder, Parsable {
      */
     video?: LatestPreDbVideoDto | null;
 }
+/**
+ * Paged list of the latest PreDb entries.
+ */
 export interface LatestPreDbResponse extends AdditionalDataHolder, Parsable {
     /**
      * The items property
      */
     items?: LatestPreDbItemDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The totalCount property
+     * Total number of PreDb entries matching the current filters.
      */
     totalCount?: number | null;
 }
@@ -4075,256 +4198,283 @@ export interface LatestPreDbVideoDto extends AdditionalDataHolder, Parsable {
      */
     title?: string | null;
 }
+/**
+ * Paged list of the latest video filehash entries.
+ */
 export interface LatestVideoFilehashesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The items property
      */
     items?: VideoFilehashDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The sortBy property
+     * Resolved sort field for the current query.
      */
     sortBy?: string | null;
     /**
-     * The sortDirection property
+     * Resolved sort direction for the current query.
      */
     sortDirection?: string | null;
     /**
-     * The totalCount property
+     * Total number of filehash entries matching the current filters.
      */
     totalCount?: number | null;
 }
+/**
+ * Paged list of actors.
+ */
 export interface ListActorsResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The items property
+     * Actors on the current page.
      */
     items?: ActorSummaryDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The sortBy property
+     * Field the result is sorted by: "name" or "createdAtUtc".
      */
     sortBy?: string | null;
     /**
-     * The sortDirection property
+     * Sort direction applied: "asc" or "desc".
      */
     sortDirection?: string | null;
     /**
-     * The totalCount property
+     * Total number of actors matching the current query filters.
      */
     totalCount?: number | null;
     /**
-     * The totalPages property
+     * Total number of pages for the current query and page size.
      */
     totalPages?: number | null;
 }
+/**
+ * Paged list of the current user's favorite actors.
+ */
 export interface ListFavoriteActorsResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The items property
+     * Favorite actor entries on the current page.
      */
     items?: FavoriteActorSummaryDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The sortBy property
+     * Field the results are sorted by.
      */
     sortBy?: string | null;
     /**
-     * The sortDirection property
+     * Sort direction applied: `asc` or `desc`.
      */
     sortDirection?: string | null;
     /**
-     * The totalCount property
+     * Total number of favorite actors matching the current query filters.
      */
     totalCount?: number | null;
     /**
-     * The totalPages property
+     * Total number of pages.
      */
     totalPages?: number | null;
 }
+/**
+ * Paged list of the current user's favorite sites.
+ */
 export interface ListFavoriteSitesResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The items property
+     * Favorite site entries on the current page.
      */
     items?: FavoriteSiteSummaryDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The sortBy property
+     * Field the results are sorted by.
      */
     sortBy?: string | null;
     /**
-     * The sortDirection property
+     * Sort direction applied: `asc` or `desc`.
      */
     sortDirection?: string | null;
     /**
-     * The totalCount property
+     * Total number of favorite sites matching the current query filters.
      */
     totalCount?: number | null;
     /**
-     * The totalPages property
+     * Total number of pages.
      */
     totalPages?: number | null;
 }
+/**
+ * Paged list of PreDb entries.
+ */
 export interface ListPreDbResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The items property
+     * PreDb entries on the current page.
      */
     items?: PreDbSummaryDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The sortBy property
+     * Field the result is sorted by: "releaseDate" or "title".
      */
     sortBy?: string | null;
     /**
-     * The sortDirection property
+     * Sort direction applied: "asc" or "desc".
      */
     sortDirection?: string | null;
     /**
-     * The totalCount property
+     * Total number of entries matching the current query filters.
      */
     totalCount?: number | null;
 }
+/**
+ * Paged list of sites.
+ */
 export interface ListSitesResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The items property
+     * Sites on the current page.
      */
     items?: SiteSummaryDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The sortBy property
+     * Field the result is sorted by: "title".
      */
     sortBy?: string | null;
     /**
-     * The sortDirection property
+     * Sort direction applied: "asc" or "desc".
      */
     sortDirection?: string | null;
     /**
-     * The totalCount property
+     * Total number of sites matching the current query filters.
      */
     totalCount?: number | null;
 }
+/**
+ * Paged list of videos.
+ */
 export interface ListVideosResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The items property
+     * Videos on the current page.
      */
     items?: VideoSummaryDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The sortBy property
+     * Field the result is sorted by: "title" or "releaseDate".
      */
     sortBy?: string | null;
     /**
-     * The sortDirection property
+     * Sort direction applied: "asc" or "desc".
      */
     sortDirection?: string | null;
     /**
-     * The totalCount property
+     * Total number of videos matching the current query filters.
      */
     totalCount?: number | null;
 }
+/**
+ * Paged list of the current user's wanted videos.
+ */
 export interface ListWantedVideosResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The items property
+     * Wanted video entries on the current page.
      */
     items?: WantedVideoSummaryDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The sortBy property
+     * Field the results are sorted by.
      */
     sortBy?: string | null;
     /**
-     * The sortDirection property
+     * Sort direction applied: `asc` or `desc`.
      */
     sortDirection?: string | null;
     /**
-     * The totalCount property
+     * Total number of wanted videos matching the current query filters.
      */
     totalCount?: number | null;
     /**
-     * The totalPages property
+     * Total number of pages.
      */
     totalPages?: number | null;
 }
 export interface LookupIndexerFilehashesRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The filenames property
+     * Optional exact filenames to match.
      */
     filenames?: string[] | null;
     /**
-     * The filesizes property
+     * Optional exact file sizes to match.
      */
     filesizes?: number[] | null;
     /**
-     * The ids property
+     * Optional filehash row IDs to match.
      */
     ids?: Guid[] | null;
     /**
-     * The indexerKeys property
+     * Optional combined indexer source and indexer ID pairs to match.
      */
     indexerKeys?: IndexerFilehashLookupKeyDto[] | null;
     /**
-     * The osHashes property
+     * Optional OS hash values to match.
      */
     osHashes?: string[] | null;
     /**
-     * The pHashes property
+     * Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under "Perceptualhashes" in the API description matches nothing rather than failing.
      */
     pHashes?: string[] | null;
 }
+/**
+ * Flat indexer filehash lookup results.
+ */
 export interface LookupIndexerFilehashesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The items property
@@ -4333,30 +4483,33 @@ export interface LookupIndexerFilehashesResponse extends AdditionalDataHolder, P
 }
 export interface LookupVideoFilehashesRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The filenames property
+     * Optional exact filenames to match.
      */
     filenames?: string[] | null;
     /**
-     * The filesizes property
+     * Optional exact file sizes to match.
      */
     filesizes?: number[] | null;
     /**
-     * The ids property
+     * Optional filehash row IDs to match.
      */
     ids?: Guid[] | null;
     /**
-     * The osHashes property
+     * Optional OS hash values to match.
      */
     osHashes?: string[] | null;
     /**
-     * The pHashes property
+     * Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under "Perceptualhashes" in the API description matches nothing rather than failing.
      */
     pHashes?: string[] | null;
     /**
-     * The videoIds property
+     * Optional associated video IDs to match.
      */
     videoIds?: Guid[] | null;
 }
+/**
+ * Flat filehash lookup results.
+ */
 export interface LookupVideoFilehashesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The items property
@@ -4373,29 +4526,32 @@ export interface PreDbItemDto extends AdditionalDataHolder, Parsable {
      */
     title?: string | null;
 }
+/**
+ * Summary representation of a PreDb entry.
+ */
 export interface PreDbSummaryDto extends AdditionalDataHolder, Parsable {
     /**
-     * The category property
+     * Readable category value: Movies, TvShows, or Adult.
      */
     category?: string | null;
     /**
-     * The filesize property
+     * Optional file size value if known.
      */
     filesize?: number | null;
     /**
-     * The id property
+     * Unique identifier of the PreDb entry.
      */
     id?: Guid | null;
     /**
-     * The releaseDate property
+     * Release date associated with the entry.
      */
     releaseDate?: DateOnly | null;
     /**
-     * The releaseGroup property
+     * Release group name.
      */
     releaseGroup?: string | null;
     /**
-     * The title property
+     * Release title as indexed in PreDb.
      */
     title?: string | null;
 }
@@ -4443,21 +4599,24 @@ export interface ProblemDetails extends AdditionalDataHolder, ApiError, Parsable
      */
     type?: string | null;
 }
+/**
+ * Rate limit status for a single time window.
+ */
 export interface RateLimitWindowStatus extends AdditionalDataHolder, Parsable {
     /**
-     * The limit property
+     * Maximum number of requests allowed within this window.
      */
     limit?: number | null;
     /**
-     * The remaining property
+     * Number of requests remaining before the limit is reached.
      */
     remaining?: number | null;
     /**
-     * The resetsInSeconds property
+     * Seconds until the oldest request in the window expires, reducing the used count by one.
      */
     resetsInSeconds?: number | null;
     /**
-     * The used property
+     * Number of requests made within the current window.
      */
     used?: number | null;
 }
@@ -4496,7 +4655,7 @@ export interface SearchPreDbByVideoResponse extends AdditionalDataHolder, Parsab
      */
     items?: PreDbVideoGroupDto[] | null;
     /**
-     * The totalGroups property
+     * Number of distinct videos in the result set (capped at 500).
      */
     totalGroups?: number | null;
 }
@@ -6322,63 +6481,75 @@ export function serializeWantedVideoSummaryDto(writer: SerializationWriter, want
     writer.writeStringValue("videoTitle", wantedVideoSummaryDto.videoTitle);
     writer.writeAdditionalData(wantedVideoSummaryDto.additionalData);
 }
+/**
+ * Summary of a single site.
+ */
 export interface SiteSummaryDto extends AdditionalDataHolder, Parsable {
     /**
-     * The createdAtUtc property
+     * When this site was created.
      */
     createdAtUtc?: Date | null;
     /**
-     * The id property
+     * Unique identifier of the site.
      */
     id?: Guid | null;
     /**
-     * The networkId property
+     * Unique identifier of the network this site belongs to, if any.
      */
     networkId?: Guid | null;
     /**
-     * The networkTitle property
+     * Title of the network this site belongs to, if any.
      */
     networkTitle?: string | null;
     /**
-     * The title property
+     * Site title.
      */
     title?: string | null;
     /**
-     * The updatedAtUtc property
+     * When this site was last changed.
      */
     updatedAtUtc?: Date | null;
     /**
-     * The url property
+     * Site URL.
      */
     url?: string | null;
 }
+/**
+ * Request body for submitting confirmed hash-to-video assignments.
+ */
 export interface SubmitVideoFilehashesRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The items property
+     * Assignments to submit. Between 1 and 200 entries.
      */
     items?: SubmitVideoFilehashItem[] | null;
 }
+/**
+ * Per-entry outcome of a filehash submission.
+ */
 export interface SubmitVideoFilehashesResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The results property
+     * One result per submitted entry, in request order.
      */
     results?: SubmitVideoFilehashResultDto[] | null;
 }
+/**
+ * A single hash-to-video assignment.
+ */
 export interface SubmitVideoFilehashItem extends AdditionalDataHolder, Parsable {
     /**
-     * The filename property
+     * File name without directory. Optional — a client may withhold it, and the endpoint works without it.
      */
     filename?: string | null;
     /**
-     * The filesize property
+     * Size of the file in bytes.
      */
     filesize?: number | null;
     /**
-     * The osHash property
+     * OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.
      */
     osHash?: string | null;
     /**
-     * The pHash property
+     * Perceptual hash of the file, 16 hexadecimal characters, if the client computed one. It mustbe computed as "Perceptual hashes" in the API description prescribes; a submission carryinga value from another procedure contributes a row nothing can match.
      */
     pHash?: string | null;
     /**
@@ -6386,21 +6557,24 @@ export interface SubmitVideoFilehashItem extends AdditionalDataHolder, Parsable 
      */
     source?: number | null;
     /**
-     * The videoId property
+     * The video this file is. Required — a hash observation without an assignment is not accepted.
      */
     videoId?: Guid | null;
 }
+/**
+ * What happened to one submitted assignment.
+ */
 export interface SubmitVideoFilehashResultDto extends AdditionalDataHolder, Parsable {
     /**
-     * The osHash property
+     * The OS hash of the entry, normalized to upper case.
      */
     osHash?: string | null;
     /**
-     * Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
+     * Outcome of a single submission. Known values: Recorded (0), Updated (1), Conflicted (2), VideoNotFound (3).
      */
     outcome?: number | null;
     /**
-     * The videoId property
+     * The video the entry named.
      */
     videoId?: Guid | null;
 }
@@ -6422,57 +6596,60 @@ export interface SubmitVideoUserImageResponse extends AdditionalDataHolder, Pars
      */
     videoUserImageId?: Guid | null;
 }
+/**
+ * Paged list of active filehash entries that are not linked to a video.
+ */
 export interface UnlinkedVideoFilehashesResponse extends AdditionalDataHolder, Parsable {
     /**
      * The items property
      */
     items?: VideoFilehashDto[] | null;
     /**
-     * The page property
+     * Current page number (1-based).
      */
     page?: number | null;
     /**
-     * The pageSize property
+     * Number of items per page.
      */
     pageSize?: number | null;
     /**
-     * The sortBy property
+     * Resolved sort field for the current query.
      */
     sortBy?: string | null;
     /**
-     * The sortDirection property
+     * Resolved sort direction for the current query.
      */
     sortDirection?: string | null;
     /**
-     * The totalCount property
+     * Total number of active unlinked filehash entries matching the current filters.
      */
     totalCount?: number | null;
 }
 export interface UpdateDownloadedFromIndexerFilenameRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The filename property
+     * The filename as reported by the indexer/download source.
      */
     filename?: string | null;
     /**
-     * The filesize property
+     * File size in bytes.
      */
     filesize?: number | null;
     /**
-     * The osHash property
+     * Optional OS hash value as a 16-character fixed-length string.
      */
     osHash?: string | null;
     /**
-     * The pHash property
+     * Optional perceptual hash value, 16 hexadecimal characters. It must be computed as"Perceptual hashes" in the API description prescribes; a value from another procedureis stored but can never be matched.
      */
     pHash?: string | null;
 }
 export interface UpdateDownloadedFromIndexerRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The downloadIdentifier property
+     * Download identifier returned by the indexer or download client.
      */
     downloadIdentifier?: string | null;
     /**
-     * The indexerId property
+     * Indexer-specific identifier for the download item.
      */
     indexerId?: string | null;
     /**
@@ -6480,17 +6657,17 @@ export interface UpdateDownloadedFromIndexerRequest extends AdditionalDataHolder
      */
     indexerSource?: number | null;
     /**
-     * The nzbName property
+     * NZB or release name.
      */
     nzbName?: string | null;
     /**
-     * The nzbUrl property
+     * NZB or release URL.
      */
     nzbUrl?: string | null;
 }
 export interface UpdateWantedVideoRequest extends AdditionalDataHolder, Parsable {
     /**
-     * The fulfilledAtUtc property
+     * When the wanted video was fulfilled, if applicable.
      */
     fulfilledAtUtc?: Date | null;
     /**
@@ -6502,21 +6679,24 @@ export interface UpdateWantedVideoRequest extends AdditionalDataHolder, Parsable
      */
     fulfillmentByApp?: number | null;
     /**
-     * The fulfillmentExternalId property
+     * External identifier from the fulfilling application, if applicable.
      */
     fulfillmentExternalId?: string | null;
     /**
-     * The isFulfilled property
+     * Whether the wanted video has been fulfilled.
      */
     isFulfilled?: boolean | null;
 }
+/**
+ * The updated wanted video entry.
+ */
 export interface UpdateWantedVideoResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The createdAtUtc property
+     * When this wanted video entry was created.
      */
     createdAtUtc?: Date | null;
     /**
-     * The fulfilledAtUtc property
+     * When the wanted video was fulfilled, if applicable.
      */
     fulfilledAtUtc?: Date | null;
     /**
@@ -6528,29 +6708,32 @@ export interface UpdateWantedVideoResponse extends AdditionalDataHolder, Parsabl
      */
     fulfillmentByApp?: number | null;
     /**
-     * The fulfillmentExternalId property
+     * External identifier from the fulfilling application, if applicable.
      */
     fulfillmentExternalId?: string | null;
     /**
-     * The isFulfilled property
+     * Whether this wanted video has been fulfilled.
      */
     isFulfilled?: boolean | null;
     /**
-     * The updatedAtUtc property
+     * When this wanted video entry was last updated.
      */
     updatedAtUtc?: Date | null;
     /**
-     * The videoId property
+     * ID of the video.
      */
     videoId?: Guid | null;
 }
+/**
+ * Identity and subscription state for the authenticated user.
+ */
 export interface UserIdentityResponse extends AdditionalDataHolder, Parsable {
     /**
-     * The activeSubscriptions property
+     * All subscriptions with Status=Active and an end date in the future.
      */
     activeSubscriptions?: ActiveSubscriptionDto[] | null;
     /**
-     * The userHash property
+     * Stable HMAC-SHA256 hex digest derived from the user's immutable ID.Suitable as a durable public identifier — does not change unless the server secret rotates.
      */
     userHash?: string | null;
 }
@@ -6568,7 +6751,7 @@ export interface VideoDetailActorDto extends AdditionalDataHolder, Parsable {
      */
     id?: Guid | null;
     /**
-     * The images property
+     * Images for this actor, ordered by ActorImageType VideoDetailActorImageDto.ImageType ascending(Thumbnail, Poster, Face), then oldest first, with the image ID as the tie-breaker. The orderis stable across requests.
      */
     images?: VideoDetailActorImageDto[] | null;
     /**
@@ -6582,7 +6765,7 @@ export interface VideoDetailActorDto extends AdditionalDataHolder, Parsable {
 }
 export interface VideoDetailActorImageDto extends AdditionalDataHolder, Parsable {
     /**
-     * The cdnPath property
+     * Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.The same image is exposed as `url` by the actor endpoints.
      */
     cdnPath?: string | null;
     /**
@@ -6608,7 +6791,7 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
      */
     id?: Guid | null;
     /**
-     * The images property
+     * Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.
      */
     images?: VideoDetailImageDto[] | null;
     /**
@@ -6634,7 +6817,7 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
 }
 export interface VideoDetailImageDto extends AdditionalDataHolder, Parsable {
     /**
-     * The cdnPath property
+     * Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.
      */
     cdnPath?: string | null;
     /**
@@ -6684,31 +6867,37 @@ export interface VideoDetailSiteDto extends AdditionalDataHolder, Parsable {
      */
     url?: string | null;
 }
+/**
+ * A single changed video filehash row in the incremental feed.
+ */
 export interface VideoFilehashChangeDto extends AdditionalDataHolder, Parsable {
     /**
-     * The eventType property
+     * One of `created`, `updated`, or `deleted`.
      */
     eventType?: string | null;
     /**
-     * The filehash property
+     * Current persisted state of a changed video filehash row, including soft-delete fields.
      */
     filehash?: VideoFilehashChangeFilehashDto | null;
 }
+/**
+ * Current persisted state of a changed video filehash row, including soft-delete fields.
+ */
 export interface VideoFilehashChangeFilehashDto extends AdditionalDataHolder, Parsable {
     /**
      * The createdAtUtc property
      */
     createdAtUtc?: Date | null;
     /**
-     * The deletedAtUtc property
+     * Timestamp when the row was soft-deleted, or null when still active.
      */
     deletedAtUtc?: Date | null;
     /**
-     * The filename property
+     * Original filename submitted for this filehash record.
      */
     filename?: string | null;
     /**
-     * The filesize property
+     * File size in bytes.
      */
     filesize?: number | null;
     /**
@@ -6716,23 +6905,23 @@ export interface VideoFilehashChangeFilehashDto extends AdditionalDataHolder, Pa
      */
     id?: Guid | null;
     /**
-     * The isDeleted property
+     * Whether this row is soft-deleted.
      */
     isDeleted?: boolean | null;
     /**
-     * The isVerified property
+     * Whether this filehash record has been verified.
      */
     isVerified?: boolean | null;
     /**
-     * The osHash property
+     * OS hash value as stored, or null when not available.
      */
     osHash?: string | null;
     /**
-     * The pHash property
+     * P hash value as stored, or null when not available.
      */
     pHash?: string | null;
     /**
-     * The submissionCount property
+     * Number of submissions merged into this filehash record.
      */
     submissionCount?: number | null;
     /**
@@ -6744,6 +6933,9 @@ export interface VideoFilehashChangeFilehashDto extends AdditionalDataHolder, Pa
      */
     videoId?: Guid | null;
 }
+/**
+ * Seek cursor for continuing a video filehash change feed.
+ */
 export interface VideoFilehashChangesCursorDto extends AdditionalDataHolder, Parsable {
     /**
      * The id property
@@ -6760,11 +6952,11 @@ export interface VideoFilehashDto extends AdditionalDataHolder, Parsable {
      */
     createdAtUtc?: Date | null;
     /**
-     * The filename property
+     * Original filename submitted for this filehash record.
      */
     filename?: string | null;
     /**
-     * The filesize property
+     * File size in bytes.
      */
     filesize?: number | null;
     /**
@@ -6772,19 +6964,19 @@ export interface VideoFilehashDto extends AdditionalDataHolder, Parsable {
      */
     id?: Guid | null;
     /**
-     * The isVerified property
+     * Whether this filehash record has been verified.
      */
     isVerified?: boolean | null;
     /**
-     * The osHash property
+     * OS hash value as stored, or null when not available.
      */
     osHash?: string | null;
     /**
-     * The pHash property
+     * P hash value as stored, or null when not available.
      */
     pHash?: string | null;
     /**
-     * The submissionCount property
+     * Number of submissions merged into this filehash record.
      */
     submissionCount?: number | null;
     /**
@@ -6806,43 +6998,49 @@ export interface VideoFilehashesByVideoIdDto extends AdditionalDataHolder, Parsa
      */
     videoId?: Guid | null;
 }
+/**
+ * Minimal actor summary included in a video list item.
+ */
 export interface VideoSummaryActorDto extends AdditionalDataHolder, Parsable {
     /**
-     * The id property
+     * Unique identifier of the actor.
      */
     id?: Guid | null;
     /**
-     * The name property
+     * Actor name.
      */
     name?: string | null;
 }
+/**
+ * Summary of a single video.
+ */
 export interface VideoSummaryDto extends AdditionalDataHolder, Parsable {
     /**
-     * The actors property
+     * Actors appearing in this video.
      */
     actors?: VideoSummaryActorDto[] | null;
     /**
-     * The createdAtUtc property
+     * Timestamp when the video was created in PRDB.
      */
     createdAtUtc?: Date | null;
     /**
-     * The id property
+     * Unique identifier of the video.
      */
     id?: Guid | null;
     /**
-     * The releaseDate property
+     * Release date of the video, if known.
      */
     releaseDate?: DateOnly | null;
     /**
-     * The siteId property
+     * Unique identifier of the site this video belongs to.
      */
     siteId?: Guid | null;
     /**
-     * The siteTitle property
+     * Title of the site this video belongs to.
      */
     siteTitle?: string | null;
     /**
-     * The title property
+     * Video title.
      */
     title?: string | null;
 }
@@ -6868,7 +7066,7 @@ export interface VideoUserImageChangesCursorDto extends AdditionalDataHolder, Pa
 }
 export interface VideoUserImageDto extends AdditionalDataHolder, Parsable {
     /**
-     * The basedOnFileWithOsHash property
+     * Server-validated 16-character OS hash of the file the preview is based on.
      */
     basedOnFileWithOsHash?: string | null;
     /**
@@ -6916,23 +7114,23 @@ export interface VideoUserImageDto extends AdditionalDataHolder, Parsable {
      */
     previewImageType?: string | null;
     /**
-     * The spriteColumns property
+     * Number of occupied tile columns in the sprite-sheet grid.
      */
     spriteColumns?: number | null;
     /**
-     * The spriteRows property
+     * Number of occupied tile rows in the sprite-sheet grid.
      */
     spriteRows?: number | null;
     /**
-     * The spriteTileCount property
+     * Number of sprite tiles described by the paired WebVTT metadata object.
      */
     spriteTileCount?: number | null;
     /**
-     * The spriteTileHeight property
+     * Uniform sprite tile height in pixels.
      */
     spriteTileHeight?: number | null;
     /**
-     * The spriteTileWidth property
+     * Uniform sprite tile width in pixels.
      */
     spriteTileWidth?: number | null;
     /**
@@ -6940,7 +7138,7 @@ export interface VideoUserImageDto extends AdditionalDataHolder, Parsable {
      */
     updatedAtUtc?: Date | null;
     /**
-     * The url property
+     * Resolved public CDN URL for the stored image object.
      */
     url?: string | null;
     /**
@@ -6952,7 +7150,7 @@ export interface VideoUserImageDto extends AdditionalDataHolder, Parsable {
      */
     videoId?: Guid | null;
     /**
-     * The vttUrl property
+     * Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.
      */
     vttUrl?: string | null;
     /**
@@ -6960,16 +7158,22 @@ export interface VideoUserImageDto extends AdditionalDataHolder, Parsable {
      */
     width?: number | null;
 }
+/**
+ * A single changed wanted video row in the incremental feed.
+ */
 export interface WantedVideoChangeDto extends AdditionalDataHolder, Parsable {
     /**
-     * The eventType property
+     * One of `created`, `updated`, or `deleted`.
      */
     eventType?: string | null;
     /**
-     * The wantedVideo property
+     * Current-state payload for a wanted video row in the incremental feed.
      */
     wantedVideo?: WantedVideoChangeWantedVideoDto | null;
 }
+/**
+ * Seek cursor for continuing a wanted video change feed.
+ */
 export interface WantedVideoChangesCursorDto extends AdditionalDataHolder, Parsable {
     /**
      * The id property
@@ -6980,6 +7184,9 @@ export interface WantedVideoChangesCursorDto extends AdditionalDataHolder, Parsa
      */
     updatedAtUtc?: Date | null;
 }
+/**
+ * Current-state payload for a wanted video row in the incremental feed.
+ */
 export interface WantedVideoChangeWantedVideoDto extends AdditionalDataHolder, Parsable {
     /**
      * The createdAtUtc property
@@ -7042,13 +7249,16 @@ export interface WantedVideoChangeWantedVideoDto extends AdditionalDataHolder, P
      */
     videoTitle?: string | null;
 }
+/**
+ * A wanted video entry for the current user.
+ */
 export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
     /**
-     * The createdAtUtc property
+     * When this wanted video entry was created.
      */
     createdAtUtc?: Date | null;
     /**
-     * The fulfilledAtUtc property
+     * When the wanted video was fulfilled, if applicable.
      */
     fulfilledAtUtc?: Date | null;
     /**
@@ -7060,44 +7270,44 @@ export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
      */
     fulfillmentByApp?: number | null;
     /**
-     * The fulfillmentExternalId property
+     * External identifier from the fulfilling application, if applicable.
      */
     fulfillmentExternalId?: string | null;
     /**
-     * The imageCdnPath property
+     * Absolute CDN URL for the video's primary image, if available.
      */
     imageCdnPath?: string | null;
     /**
-     * The isFulfilled property
+     * Whether this wanted video has been fulfilled.
      */
     isFulfilled?: boolean | null;
     /**
-     * The siteTitle property
+     * Title of the site this video belongs to.
      */
     siteTitle?: string | null;
     /**
-     * The updatedAtUtc property
+     * When this wanted video entry was last updated.
      */
     updatedAtUtc?: Date | null;
     /**
-     * The videoCreatedAtUtc property
+     * When the video was added to the database.
      */
     videoCreatedAtUtc?: Date | null;
     /**
-     * The videoId property
+     * ID of the wanted video.
      */
     videoId?: Guid | null;
     /**
-     * The videoReleaseDate property
+     * Release date of the video, if known.
      */
     videoReleaseDate?: DateOnly | null;
     /**
-     * The videoTitle property
+     * Video title.
      */
     videoTitle?: string | null;
 }
 /**
- * Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
+ * Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
  */
 export const IndexerFilehashLookupKeyDto_indexerSourceObject = {
     DrunkenSlug: "DrunkenSlug",

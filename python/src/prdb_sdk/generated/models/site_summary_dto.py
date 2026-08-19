@@ -8,22 +8,25 @@ from uuid import UUID
 
 @dataclass
 class SiteSummaryDto(AdditionalDataHolder, Parsable):
+    """
+    Summary of a single site.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The createdAtUtc property
+    # When this site was created.
     created_at_utc: Optional[datetime.datetime] = None
-    # The id property
+    # Unique identifier of the site.
     id: Optional[UUID] = None
-    # The networkId property
+    # Unique identifier of the network this site belongs to, if any.
     network_id: Optional[UUID] = None
-    # The networkTitle property
+    # Title of the network this site belongs to, if any.
     network_title: Optional[str] = None
-    # The title property
+    # Site title.
     title: Optional[str] = None
-    # The updatedAtUtc property
+    # When this site was last changed.
     updated_at_utc: Optional[datetime.datetime] = None
-    # The url property
+    # Site URL.
     url: Optional[str] = None
     
     @staticmethod

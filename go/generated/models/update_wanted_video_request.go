@@ -11,15 +11,15 @@ import (
 type UpdateWantedVideoRequest struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The fulfilledAtUtc property
+    // When the wanted video was fulfilled, if applicable.
     fulfilledAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // Known values: P720 (0), P1080 (1), P2160 (2).
     fulfilledInQuality *int32
     // Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
     fulfillmentByApp *int32
-    // The fulfillmentExternalId property
+    // External identifier from the fulfilling application, if applicable.
     fulfillmentExternalId *string
-    // The isFulfilled property
+    // Whether the wanted video has been fulfilled.
     isFulfilled *bool
 }
 // NewUpdateWantedVideoRequest instantiates a new UpdateWantedVideoRequest and sets the default values.
@@ -95,7 +95,7 @@ func (m *UpdateWantedVideoRequest) GetFieldDeserializers()(map[string]func(i878a
     }
     return res
 }
-// GetFulfilledAtUtc gets the fulfilledAtUtc property value. The fulfilledAtUtc property
+// GetFulfilledAtUtc gets the fulfilledAtUtc property value. When the wanted video was fulfilled, if applicable.
 // returns a *Time when successful
 func (m *UpdateWantedVideoRequest) GetFulfilledAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.fulfilledAtUtc
@@ -110,12 +110,12 @@ func (m *UpdateWantedVideoRequest) GetFulfilledInQuality()(*int32) {
 func (m *UpdateWantedVideoRequest) GetFulfillmentByApp()(*int32) {
     return m.fulfillmentByApp
 }
-// GetFulfillmentExternalId gets the fulfillmentExternalId property value. The fulfillmentExternalId property
+// GetFulfillmentExternalId gets the fulfillmentExternalId property value. External identifier from the fulfilling application, if applicable.
 // returns a *string when successful
 func (m *UpdateWantedVideoRequest) GetFulfillmentExternalId()(*string) {
     return m.fulfillmentExternalId
 }
-// GetIsFulfilled gets the isFulfilled property value. The isFulfilled property
+// GetIsFulfilled gets the isFulfilled property value. Whether the wanted video has been fulfilled.
 // returns a *bool when successful
 func (m *UpdateWantedVideoRequest) GetIsFulfilled()(*bool) {
     return m.isFulfilled
@@ -164,7 +164,7 @@ func (m *UpdateWantedVideoRequest) Serialize(writer i878a80d2330e89d26896388a3f4
 func (m *UpdateWantedVideoRequest) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetFulfilledAtUtc sets the fulfilledAtUtc property value. The fulfilledAtUtc property
+// SetFulfilledAtUtc sets the fulfilledAtUtc property value. When the wanted video was fulfilled, if applicable.
 func (m *UpdateWantedVideoRequest) SetFulfilledAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.fulfilledAtUtc = value
 }
@@ -176,11 +176,11 @@ func (m *UpdateWantedVideoRequest) SetFulfilledInQuality(value *int32)() {
 func (m *UpdateWantedVideoRequest) SetFulfillmentByApp(value *int32)() {
     m.fulfillmentByApp = value
 }
-// SetFulfillmentExternalId sets the fulfillmentExternalId property value. The fulfillmentExternalId property
+// SetFulfillmentExternalId sets the fulfillmentExternalId property value. External identifier from the fulfilling application, if applicable.
 func (m *UpdateWantedVideoRequest) SetFulfillmentExternalId(value *string)() {
     m.fulfillmentExternalId = value
 }
-// SetIsFulfilled sets the isFulfilled property value. The isFulfilled property
+// SetIsFulfilled sets the isFulfilled property value. Whether the wanted video has been fulfilled.
 func (m *UpdateWantedVideoRequest) SetIsFulfilled(value *bool)() {
     m.isFulfilled = value
 }

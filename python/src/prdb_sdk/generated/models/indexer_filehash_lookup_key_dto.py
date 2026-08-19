@@ -9,12 +9,15 @@ if TYPE_CHECKING:
 
 @dataclass
 class IndexerFilehashLookupKeyDto(AdditionalDataHolder, Parsable):
+    """
+    Combined indexer identity used to match filehashes by indexer source and indexer-specific ID.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The indexerId property
+    # Indexer-specific identifier for the release.
     indexer_id: Optional[str] = None
-    # Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
+    # Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
     indexer_source: Optional[IndexerFilehashLookupKeyDto_indexerSource] = None
     
     @staticmethod

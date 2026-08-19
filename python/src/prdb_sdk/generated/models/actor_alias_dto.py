@@ -12,7 +12,7 @@ class ActorAliasDto(AdditionalDataHolder, Parsable):
 
     # The name property
     name: Optional[str] = None
-    # The siteId property
+    # ID of the site this alias is associated with, if any.
     site_id: Optional[UUID] = None
     
     @staticmethod

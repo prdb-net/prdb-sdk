@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Summary of a site in the current user&apos;s favorites list.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class FavoriteSiteSummaryDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The favoritedAtUtc property</summary>
+        /// <summary>UTC timestamp when the user added this site to their favorites.</summary>
         public DateTimeOffset? FavoritedAtUtc { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }

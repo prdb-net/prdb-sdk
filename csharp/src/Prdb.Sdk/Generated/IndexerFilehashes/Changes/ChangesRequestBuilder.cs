@@ -98,6 +98,7 @@ namespace Prdb.Sdk.Generated.IndexerFilehashes.Changes
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class ChangesRequestBuilderGetQueryParameters 
         {
+            /// <summary>Optional. Restrict changes to an indexer-specific identifier.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? IndexerId { get; set; }
@@ -105,9 +106,13 @@ namespace Prdb.Sdk.Generated.IndexerFilehashes.Changes
 #else
             public string IndexerId { get; set; }
 #endif
+            /// <summary>Optional. Restrict changes to an indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.</summary>
             public global::Prdb.Sdk.Generated.IndexerFilehashes.Changes.GetIndexerSourceQueryParameterType? IndexerSource { get; set; }
+            /// <summary>Number of items per page. Defaults to 100, max 1000.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.</summary>
             public DateTimeOffset? Since { get; set; }
+            /// <summary>Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.</summary>
             public Guid? SinceId { get; set; }
         }
     }

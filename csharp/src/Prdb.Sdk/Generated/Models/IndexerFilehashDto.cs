@@ -16,7 +16,7 @@ namespace Prdb.Sdk.Generated.Models
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>The createdAtUtc property</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
-        /// <summary>The filename property</summary>
+        /// <summary>Original filename submitted for this filehash record.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Filename { get; set; }
@@ -24,11 +24,11 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Filename { get; set; }
 #endif
-        /// <summary>The filesize property</summary>
+        /// <summary>File size in bytes.</summary>
         public long? Filesize { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
-        /// <summary>The indexerId property</summary>
+        /// <summary>Indexer-specific identifier for the release.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? IndexerId { get; set; }
@@ -36,7 +36,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string IndexerId { get; set; }
 #endif
-        /// <summary>The indexerSource property</summary>
+        /// <summary>Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? IndexerSource { get; set; }
@@ -44,9 +44,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string IndexerSource { get; set; }
 #endif
-        /// <summary>The isVerified property</summary>
+        /// <summary>Whether this filehash record has been verified.</summary>
         public bool? IsVerified { get; set; }
-        /// <summary>The osHash property</summary>
+        /// <summary>OS hash value as stored.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? OsHash { get; set; }
@@ -54,7 +54,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string OsHash { get; set; }
 #endif
-        /// <summary>The pHash property</summary>
+        /// <summary>P hash value as stored, or null when not available.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? PHash { get; set; }
@@ -62,7 +62,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string PHash { get; set; }
 #endif
-        /// <summary>The submissionCount property</summary>
+        /// <summary>Number of submissions merged into this filehash record.</summary>
         public int? SubmissionCount { get; set; }
         /// <summary>The updatedAtUtc property</summary>
         public DateTimeOffset? UpdatedAtUtc { get; set; }

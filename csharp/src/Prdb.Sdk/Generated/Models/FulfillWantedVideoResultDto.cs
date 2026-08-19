@@ -7,16 +7,17 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// What happened to one video of the batch.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class FulfillWantedVideoResultDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).</summary>
+        /// <summary>Outcome of a single fulfilment update. Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).</summary>
         public int? Outcome { get; set; }
-        /// <summary>The videoId property</summary>
+        /// <summary>ID of the video this result belongs to.</summary>
         public Guid? VideoId { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.FulfillWantedVideoResultDto"/> and sets the default values.

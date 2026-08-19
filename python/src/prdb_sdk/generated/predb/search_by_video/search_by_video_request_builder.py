@@ -95,8 +95,10 @@ class SearchByVideoRequestBuilder(BaseRequestBuilder):
                 return "ReleaseDate"
             return original_name
         
+        # Search keyword. Must be at least 3 characters.
         q: Optional[str] = None
 
+        # Optional. Filter results to videos with this exact release date (format: yyyy-MM-dd).
         release_date: Optional[datetime.date] = None
 
     

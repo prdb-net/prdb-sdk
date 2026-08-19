@@ -37,7 +37,7 @@ namespace Prdb.Sdk.Generated.WantedVideos.Fulfillments
         /// Marks up to 50 wanted videos of the currently authenticated user as fulfilled or unfulfilled in a single request. Returns one result per video, naming the outcome — updated, unchanged, not on the wanted list, or unknown video — so unknown and unwanted IDs do not fail the request; the status code stays 200. A 400 is only returned for form errors: an empty list, more than 50 entries, a video listed twice, or an invalid enum value. Setting isFulfilled to false clears the fulfilment timestamp, quality, external ID and application. Setting it to true without a fulfilledAtUtc stamps the server time, unless the entry is already fulfilled, in which case its timestamp is kept. Soft-deleted wanted entries are reported as not wanted and are not revived; use POST /wanted-videos/batch for that. The whole request counts as one request against the rate limit. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.FulfillWantedVideosBatchResponse"/></returns>
-        /// <param name="body">The request body</param>
+        /// <param name="body">Request body for batch-updating the fulfilment state of wanted videos.</param>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 400 status code</exception>
@@ -70,7 +70,7 @@ namespace Prdb.Sdk.Generated.WantedVideos.Fulfillments
         /// Marks up to 50 wanted videos of the currently authenticated user as fulfilled or unfulfilled in a single request. Returns one result per video, naming the outcome — updated, unchanged, not on the wanted list, or unknown video — so unknown and unwanted IDs do not fail the request; the status code stays 200. A 400 is only returned for form errors: an empty list, more than 50 entries, a video listed twice, or an invalid enum value. Setting isFulfilled to false clears the fulfilment timestamp, quality, external ID and application. Setting it to true without a fulfilledAtUtc stamps the server time, unless the entry is already fulfilled, in which case its timestamp is kept. Soft-deleted wanted entries are reported as not wanted and are not revived; use POST /wanted-videos/batch for that. The whole request counts as one request against the rate limit. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
-        /// <param name="body">The request body</param>
+        /// <param name="body">Request body for batch-updating the fulfilment state of wanted videos.</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable

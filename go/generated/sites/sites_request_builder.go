@@ -15,10 +15,15 @@ type SitesRequestBuilder struct {
 }
 // SitesRequestBuilderGetQueryParameters returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
 type SitesRequestBuilderGetQueryParameters struct {
+    // 1-based page number. Defaults to 1.
     Page *int32
+    // Number of items per page. Defaults to 20, max 1000 — the full list fits in one page.
     PageSize *int32
+    // Optional search term matched against site title.
     Search *string
+    // Field to sort by. Supported values: `title` (default).
     SortBy *string
+    // Sort direction: `asc` (default) or `desc`.
     SortDirection *GetSortDirectionQueryParameterType
 }
 // NewSitesRequestBuilderInternal instantiates a new SitesRequestBuilder and sets the default values.

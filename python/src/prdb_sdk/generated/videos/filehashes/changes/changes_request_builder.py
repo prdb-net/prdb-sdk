@@ -102,14 +102,19 @@ class ChangesRequestBuilder(BaseRequestBuilder):
                 return "VideoId"
             return original_name
         
+        # Number of items per page. Defaults to 100, max 1000.
         page_size: Optional[int] = None
 
+        # Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.
         since: Optional[datetime.datetime] = None
 
+        # Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.
         since_id: Optional[UUID] = None
 
+        # Optional. Restrict changes to videos on the specified site.
         site_id: Optional[UUID] = None
 
+        # Optional. Restrict changes to a single video.
         video_id: Optional[UUID] = None
 
     

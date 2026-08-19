@@ -9,24 +9,25 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// UpdateWantedVideoResponse the updated wanted video entry.
 type UpdateWantedVideoResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The createdAtUtc property
+    // When this wanted video entry was created.
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The fulfilledAtUtc property
+    // When the wanted video was fulfilled, if applicable.
     fulfilledAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // Known values: P720 (0), P1080 (1), P2160 (2).
     fulfilledInQuality *int32
     // Known values: Sabnzbd (0), Nzbget (1), Filesystem (2), Other (3), Ordeno (4).
     fulfillmentByApp *int32
-    // The fulfillmentExternalId property
+    // External identifier from the fulfilling application, if applicable.
     fulfillmentExternalId *string
-    // The isFulfilled property
+    // Whether this wanted video has been fulfilled.
     isFulfilled *bool
-    // The updatedAtUtc property
+    // When this wanted video entry was last updated.
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // The videoId property
+    // ID of the video.
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewUpdateWantedVideoResponse instantiates a new UpdateWantedVideoResponse and sets the default values.
@@ -46,7 +47,7 @@ func CreateUpdateWantedVideoResponseFromDiscriminatorValue(parseNode i878a80d233
 func (m *UpdateWantedVideoResponse) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetCreatedAtUtc gets the createdAtUtc property value. The createdAtUtc property
+// GetCreatedAtUtc gets the createdAtUtc property value. When this wanted video entry was created.
 // returns a *Time when successful
 func (m *UpdateWantedVideoResponse) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
@@ -137,7 +138,7 @@ func (m *UpdateWantedVideoResponse) GetFieldDeserializers()(map[string]func(i878
     }
     return res
 }
-// GetFulfilledAtUtc gets the fulfilledAtUtc property value. The fulfilledAtUtc property
+// GetFulfilledAtUtc gets the fulfilledAtUtc property value. When the wanted video was fulfilled, if applicable.
 // returns a *Time when successful
 func (m *UpdateWantedVideoResponse) GetFulfilledAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.fulfilledAtUtc
@@ -152,22 +153,22 @@ func (m *UpdateWantedVideoResponse) GetFulfilledInQuality()(*int32) {
 func (m *UpdateWantedVideoResponse) GetFulfillmentByApp()(*int32) {
     return m.fulfillmentByApp
 }
-// GetFulfillmentExternalId gets the fulfillmentExternalId property value. The fulfillmentExternalId property
+// GetFulfillmentExternalId gets the fulfillmentExternalId property value. External identifier from the fulfilling application, if applicable.
 // returns a *string when successful
 func (m *UpdateWantedVideoResponse) GetFulfillmentExternalId()(*string) {
     return m.fulfillmentExternalId
 }
-// GetIsFulfilled gets the isFulfilled property value. The isFulfilled property
+// GetIsFulfilled gets the isFulfilled property value. Whether this wanted video has been fulfilled.
 // returns a *bool when successful
 func (m *UpdateWantedVideoResponse) GetIsFulfilled()(*bool) {
     return m.isFulfilled
 }
-// GetUpdatedAtUtc gets the updatedAtUtc property value. The updatedAtUtc property
+// GetUpdatedAtUtc gets the updatedAtUtc property value. When this wanted video entry was last updated.
 // returns a *Time when successful
 func (m *UpdateWantedVideoResponse) GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.updatedAtUtc
 }
-// GetVideoId gets the videoId property value. The videoId property
+// GetVideoId gets the videoId property value. ID of the video.
 // returns a *UUID when successful
 func (m *UpdateWantedVideoResponse) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
@@ -234,11 +235,11 @@ func (m *UpdateWantedVideoResponse) Serialize(writer i878a80d2330e89d26896388a3f
 func (m *UpdateWantedVideoResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetCreatedAtUtc sets the createdAtUtc property value. The createdAtUtc property
+// SetCreatedAtUtc sets the createdAtUtc property value. When this wanted video entry was created.
 func (m *UpdateWantedVideoResponse) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
-// SetFulfilledAtUtc sets the fulfilledAtUtc property value. The fulfilledAtUtc property
+// SetFulfilledAtUtc sets the fulfilledAtUtc property value. When the wanted video was fulfilled, if applicable.
 func (m *UpdateWantedVideoResponse) SetFulfilledAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.fulfilledAtUtc = value
 }
@@ -250,19 +251,19 @@ func (m *UpdateWantedVideoResponse) SetFulfilledInQuality(value *int32)() {
 func (m *UpdateWantedVideoResponse) SetFulfillmentByApp(value *int32)() {
     m.fulfillmentByApp = value
 }
-// SetFulfillmentExternalId sets the fulfillmentExternalId property value. The fulfillmentExternalId property
+// SetFulfillmentExternalId sets the fulfillmentExternalId property value. External identifier from the fulfilling application, if applicable.
 func (m *UpdateWantedVideoResponse) SetFulfillmentExternalId(value *string)() {
     m.fulfillmentExternalId = value
 }
-// SetIsFulfilled sets the isFulfilled property value. The isFulfilled property
+// SetIsFulfilled sets the isFulfilled property value. Whether this wanted video has been fulfilled.
 func (m *UpdateWantedVideoResponse) SetIsFulfilled(value *bool)() {
     m.isFulfilled = value
 }
-// SetUpdatedAtUtc sets the updatedAtUtc property value. The updatedAtUtc property
+// SetUpdatedAtUtc sets the updatedAtUtc property value. When this wanted video entry was last updated.
 func (m *UpdateWantedVideoResponse) SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.updatedAtUtc = value
 }
-// SetVideoId sets the videoId property value. The videoId property
+// SetVideoId sets the videoId property value. ID of the video.
 func (m *UpdateWantedVideoResponse) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }

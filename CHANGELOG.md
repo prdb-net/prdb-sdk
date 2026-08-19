@@ -15,6 +15,17 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Documented
+
+- **What every API model represents and what nearly every property means.** The
+  API now publishes the XML documentation that already accompanied its source
+  models, taking the generated SDKs from 15 documented properties to 310. In
+  particular, `VideoDetailImageDto.cdnPath` and
+  `VideoDetailActorImageDto.cdnPath` are complete absolute URLs ready to request
+  as-is, despite their names, and the image collections in a video detail now
+  document their stable ordering. This regeneration changes documentation only:
+  no field, type, method, operation, or status code changed.
+
 ## [0.6.1] - 2026-08-09
 
 A regeneration that changes no type, field, method or status code. Both entries

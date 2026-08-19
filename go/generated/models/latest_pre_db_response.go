@@ -7,16 +7,17 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// LatestPreDbResponse paged list of the latest PreDb entries.
 type LatestPreDbResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
     // The items property
     items []LatestPreDbItemDtoable
-    // The page property
+    // Current page number (1-based).
     page *int32
-    // The pageSize property
+    // Number of items per page.
     pageSize *int32
-    // The totalCount property
+    // Total number of PreDb entries matching the current filters.
     totalCount *int32
 }
 // NewLatestPreDbResponse instantiates a new LatestPreDbResponse and sets the default values.
@@ -93,17 +94,17 @@ func (m *LatestPreDbResponse) GetFieldDeserializers()(map[string]func(i878a80d23
 func (m *LatestPreDbResponse) GetItems()([]LatestPreDbItemDtoable) {
     return m.items
 }
-// GetPage gets the page property value. The page property
+// GetPage gets the page property value. Current page number (1-based).
 // returns a *int32 when successful
 func (m *LatestPreDbResponse) GetPage()(*int32) {
     return m.page
 }
-// GetPageSize gets the pageSize property value. The pageSize property
+// GetPageSize gets the pageSize property value. Number of items per page.
 // returns a *int32 when successful
 func (m *LatestPreDbResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetTotalCount gets the totalCount property value. The totalCount property
+// GetTotalCount gets the totalCount property value. Total number of PreDb entries matching the current filters.
 // returns a *int32 when successful
 func (m *LatestPreDbResponse) GetTotalCount()(*int32) {
     return m.totalCount
@@ -156,15 +157,15 @@ func (m *LatestPreDbResponse) SetAdditionalData(value map[string]any)() {
 func (m *LatestPreDbResponse) SetItems(value []LatestPreDbItemDtoable)() {
     m.items = value
 }
-// SetPage sets the page property value. The page property
+// SetPage sets the page property value. Current page number (1-based).
 func (m *LatestPreDbResponse) SetPage(value *int32)() {
     m.page = value
 }
-// SetPageSize sets the pageSize property value. The pageSize property
+// SetPageSize sets the pageSize property value. Number of items per page.
 func (m *LatestPreDbResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetTotalCount sets the totalCount property value. The totalCount property
+// SetTotalCount sets the totalCount property value. Total number of PreDb entries matching the current filters.
 func (m *LatestPreDbResponse) SetTotalCount(value *int32)() {
     m.totalCount = value
 }

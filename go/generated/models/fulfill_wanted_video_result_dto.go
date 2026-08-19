@@ -8,12 +8,13 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// FulfillWantedVideoResultDto what happened to one video of the batch.
 type FulfillWantedVideoResultDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).
+    // Outcome of a single fulfilment update. Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).
     outcome *int32
-    // The videoId property
+    // ID of the video this result belongs to.
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
 }
 // NewFulfillWantedVideoResultDto instantiates a new FulfillWantedVideoResultDto and sets the default values.
@@ -59,12 +60,12 @@ func (m *FulfillWantedVideoResultDto) GetFieldDeserializers()(map[string]func(i8
     }
     return res
 }
-// GetOutcome gets the outcome property value. Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).
+// GetOutcome gets the outcome property value. Outcome of a single fulfilment update. Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).
 // returns a *int32 when successful
 func (m *FulfillWantedVideoResultDto) GetOutcome()(*int32) {
     return m.outcome
 }
-// GetVideoId gets the videoId property value. The videoId property
+// GetVideoId gets the videoId property value. ID of the video this result belongs to.
 // returns a *UUID when successful
 func (m *FulfillWantedVideoResultDto) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
@@ -95,11 +96,11 @@ func (m *FulfillWantedVideoResultDto) Serialize(writer i878a80d2330e89d26896388a
 func (m *FulfillWantedVideoResultDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetOutcome sets the outcome property value. Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).
+// SetOutcome sets the outcome property value. Outcome of a single fulfilment update. Known values: Updated (0), Unchanged (1), NotWanted (2), NotFound (3).
 func (m *FulfillWantedVideoResultDto) SetOutcome(value *int32)() {
     m.outcome = value
 }
-// SetVideoId sets the videoId property value. The videoId property
+// SetVideoId sets the videoId property value. ID of the video this result belongs to.
 func (m *FulfillWantedVideoResultDto) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }

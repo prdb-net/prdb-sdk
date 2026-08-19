@@ -11,7 +11,7 @@ import (
 type VideoDetailImageDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The cdnPath property
+    // Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.
     cdnPath *string
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
@@ -33,7 +33,7 @@ func CreateVideoDetailImageDtoFromDiscriminatorValue(parseNode i878a80d2330e89d2
 func (m *VideoDetailImageDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetCdnPath gets the cdnPath property value. The cdnPath property
+// GetCdnPath gets the cdnPath property value. Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.
 // returns a *string when successful
 func (m *VideoDetailImageDto) GetCdnPath()(*string) {
     return m.cdnPath
@@ -95,7 +95,7 @@ func (m *VideoDetailImageDto) Serialize(writer i878a80d2330e89d26896388a3f487eef
 func (m *VideoDetailImageDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetCdnPath sets the cdnPath property value. The cdnPath property
+// SetCdnPath sets the cdnPath property value. Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.
 func (m *VideoDetailImageDto) SetCdnPath(value *string)() {
     m.cdnPath = value
 }

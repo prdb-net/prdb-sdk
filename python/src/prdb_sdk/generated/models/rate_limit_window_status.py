@@ -6,16 +6,19 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 
 @dataclass
 class RateLimitWindowStatus(AdditionalDataHolder, Parsable):
+    """
+    Rate limit status for a single time window.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The limit property
+    # Maximum number of requests allowed within this window.
     limit: Optional[int] = None
-    # The remaining property
+    # Number of requests remaining before the limit is reached.
     remaining: Optional[int] = None
-    # The resetsInSeconds property
+    # Seconds until the oldest request in the window expires, reducing the used count by one.
     resets_in_seconds: Optional[int] = None
-    # The used property
+    # Number of requests made within the current window.
     used: Optional[int] = None
     
     @staticmethod

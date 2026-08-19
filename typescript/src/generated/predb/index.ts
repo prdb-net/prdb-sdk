@@ -47,13 +47,37 @@ export interface PredbRequestBuilder extends BaseRequestBuilder<PredbRequestBuil
  * Returns a paged list of PreDb entries. Supports filtering by title or release group search, category, and release date range. Default sort is release date descending. Requires API key authentication.
  */
 export interface PredbRequestBuilderGetQueryParameters {
+    /**
+     * Optional category filter. Supported values: `movies`, `tvshows`, `adult`.
+     */
     category?: GetCategoryQueryParameterType;
+    /**
+     * 1-based page number. Defaults to 1.
+     */
     page?: number;
+    /**
+     * Number of items per page. Defaults to 20, max 100.
+     */
     pageSize?: number;
+    /**
+     * Optional. Return only entries released on or after this date.
+     */
     releaseDateFrom?: DateOnly;
+    /**
+     * Optional. Return only entries released on or before this date.
+     */
     releaseDateTo?: DateOnly;
+    /**
+     * Optional search term matched against title and release group.
+     */
     search?: string;
+    /**
+     * Field to sort by. Supported values: `releaseDate` (default), `title`.
+     */
     sortBy?: GetSortByQueryParameterType;
+    /**
+     * Sort direction: `desc` (default) or `asc`.
+     */
     sortDirection?: GetSortDirectionQueryParameterType;
 }
 /**

@@ -7,14 +7,15 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// One file to identify.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class IdentifyVideoFileDto : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The filename property</summary>
+        /// <summary>File name without directory. Required — it carries the lowest rungs of the ladder.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Filename { get; set; }
@@ -22,9 +23,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Filename { get; set; }
 #endif
-        /// <summary>The filesize property</summary>
+        /// <summary>Size of the file in bytes, if known.</summary>
         public long? Filesize { get; set; }
-        /// <summary>The osHash property</summary>
+        /// <summary>OS hash of the file, 16 hexadecimal characters, if the client computed one.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? OsHash { get; set; }
@@ -32,7 +33,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string OsHash { get; set; }
 #endif
-        /// <summary>The pHash property</summary>
+        /// <summary>Perceptual hash of the file, 16 hexadecimal characters, if the client computed one.Compared for equality only, and only against values computed the way &quot;Perceptual hashes&quot;in the API description prescribes — send none rather than one from another procedure.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? PHash { get; set; }
@@ -40,7 +41,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string PHash { get; set; }
 #endif
-        /// <summary>The ref property</summary>
+        /// <summary>Client-assigned identifier, returned unchanged. Unique within the request.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Ref { get; set; }

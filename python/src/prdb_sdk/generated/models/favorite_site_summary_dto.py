@@ -8,10 +8,13 @@ from uuid import UUID
 
 @dataclass
 class FavoriteSiteSummaryDto(AdditionalDataHolder, Parsable):
+    """
+    Summary of a site in the current user's favorites list.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The favoritedAtUtc property
+    # UTC timestamp when the user added this site to their favorites.
     favorited_at_utc: Optional[datetime.datetime] = None
     # The id property
     id: Optional[UUID] = None

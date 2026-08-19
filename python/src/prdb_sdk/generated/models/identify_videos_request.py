@@ -9,12 +9,15 @@ if TYPE_CHECKING:
 
 @dataclass
 class IdentifyVideosRequest(AdditionalDataHolder, Parsable):
+    """
+    Request body for identifying local files against the prdb catalogue.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The files property
+    # Files to identify. Between 1 and 200 entries.
     files: Optional[list[IdentifyVideoFileDto]] = None
-    # The includeVideoDetails property
+    # When true, each matched result carries the full video document. Defaults to false.
     include_video_details: Optional[bool] = None
     
     @staticmethod

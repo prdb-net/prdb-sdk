@@ -9,15 +9,15 @@ class UpdateDownloadedFromIndexerRequest(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The downloadIdentifier property
+    # Download identifier returned by the indexer or download client.
     download_identifier: Optional[str] = None
-    # The indexerId property
+    # Indexer-specific identifier for the download item.
     indexer_id: Optional[str] = None
     # Known values: DrunkenSlug (0), NzbFinder (1), NzbPorn (2).
     indexer_source: Optional[int] = None
-    # The nzbName property
+    # NZB or release name.
     nzb_name: Optional[str] = None
-    # The nzbUrl property
+    # NZB or release URL.
     nzb_url: Optional[str] = None
     
     @staticmethod

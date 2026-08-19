@@ -102,14 +102,19 @@ class LatestRequestBuilder(BaseRequestBuilder):
                 return "SiteId"
             return original_name
         
+        # Optional. Return only PreDb entries created at or after this timestamp (UTC).
         created_from: Optional[datetime.datetime] = None
 
+        # Optional. Return only PreDb entries created at or before this timestamp (UTC).
         created_to: Optional[datetime.datetime] = None
 
+        # 1-based page number. Defaults to 1.
         page: Optional[int] = None
 
+        # Number of items per page. Defaults to 20, max 500.
         page_size: Optional[int] = None
 
+        # Optional. Filter to predbs linked to videos on the specified site.
         site_id: Optional[UUID] = None
 
     

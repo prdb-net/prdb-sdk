@@ -17,12 +17,19 @@ type ActorsRequestBuilder struct {
 }
 // ActorsRequestBuilderGetQueryParameters returns a paged list of actors. Supports free-text search by name or alias, and sorting by name or creation date. Default page size is 100, maximum is 500. Requires API key authentication.
 type ActorsRequestBuilderGetQueryParameters struct {
+    // Return only actors created strictly after this timestamp (exclusive).
     CreatedAfter *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Return only actors created strictly before this timestamp (exclusive).
     CreatedBefore *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // 1-based page number. Defaults to 1.
     Page *int32
+    // Number of items per page. Defaults to 100, max 500.
     PageSize *int32
+    // Optional search term matched against actor name and aliases.
     Search *string
+    // Field to sort by. Supported values: "name" (default), "createdAtUtc".
     SortBy *string
+    // Sort direction: "asc" (default) or "desc".
     SortDirection *GetSortDirectionQueryParameterType
 }
 // Batch the batch property

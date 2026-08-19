@@ -7,12 +7,13 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// Identity and subscription state for the authenticated user.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class UserIdentityResponse : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
-        /// <summary>The activeSubscriptions property</summary>
+        /// <summary>All subscriptions with Status=Active and an end date in the future.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<global::Prdb.Sdk.Generated.Models.ActiveSubscriptionDto>? ActiveSubscriptions { get; set; }
@@ -22,7 +23,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The userHash property</summary>
+        /// <summary>Stable HMAC-SHA256 hex digest derived from the user&apos;s immutable ID.Suitable as a durable public identifier — does not change unless the server secret rotates.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? UserHash { get; set; }

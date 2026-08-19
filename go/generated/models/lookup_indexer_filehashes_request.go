@@ -11,17 +11,17 @@ import (
 type LookupIndexerFilehashesRequest struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The filenames property
+    // Optional exact filenames to match.
     filenames []string
-    // The filesizes property
+    // Optional exact file sizes to match.
     filesizes []int64
-    // The ids property
+    // Optional filehash row IDs to match.
     ids []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // The indexerKeys property
+    // Optional combined indexer source and indexer ID pairs to match.
     indexerKeys []IndexerFilehashLookupKeyDtoable
-    // The osHashes property
+    // Optional OS hash values to match.
     osHashes []string
-    // The pHashes property
+    // Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under "Perceptualhashes" in the API description matches nothing rather than failing.
     pHashes []string
 }
 // NewLookupIndexerFilehashesRequest instantiates a new LookupIndexerFilehashesRequest and sets the default values.
@@ -143,32 +143,32 @@ func (m *LookupIndexerFilehashesRequest) GetFieldDeserializers()(map[string]func
     }
     return res
 }
-// GetFilenames gets the filenames property value. The filenames property
+// GetFilenames gets the filenames property value. Optional exact filenames to match.
 // returns a []string when successful
 func (m *LookupIndexerFilehashesRequest) GetFilenames()([]string) {
     return m.filenames
 }
-// GetFilesizes gets the filesizes property value. The filesizes property
+// GetFilesizes gets the filesizes property value. Optional exact file sizes to match.
 // returns a []int64 when successful
 func (m *LookupIndexerFilehashesRequest) GetFilesizes()([]int64) {
     return m.filesizes
 }
-// GetIds gets the ids property value. The ids property
+// GetIds gets the ids property value. Optional filehash row IDs to match.
 // returns a []UUID when successful
 func (m *LookupIndexerFilehashesRequest) GetIds()([]i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.ids
 }
-// GetIndexerKeys gets the indexerKeys property value. The indexerKeys property
+// GetIndexerKeys gets the indexerKeys property value. Optional combined indexer source and indexer ID pairs to match.
 // returns a []IndexerFilehashLookupKeyDtoable when successful
 func (m *LookupIndexerFilehashesRequest) GetIndexerKeys()([]IndexerFilehashLookupKeyDtoable) {
     return m.indexerKeys
 }
-// GetOsHashes gets the osHashes property value. The osHashes property
+// GetOsHashes gets the osHashes property value. Optional OS hash values to match.
 // returns a []string when successful
 func (m *LookupIndexerFilehashesRequest) GetOsHashes()([]string) {
     return m.osHashes
 }
-// GetPHashes gets the pHashes property value. The pHashes property
+// GetPHashes gets the pHashes property value. Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under "Perceptualhashes" in the API description matches nothing rather than failing.
 // returns a []string when successful
 func (m *LookupIndexerFilehashesRequest) GetPHashes()([]string) {
     return m.pHashes
@@ -229,27 +229,27 @@ func (m *LookupIndexerFilehashesRequest) Serialize(writer i878a80d2330e89d268963
 func (m *LookupIndexerFilehashesRequest) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetFilenames sets the filenames property value. The filenames property
+// SetFilenames sets the filenames property value. Optional exact filenames to match.
 func (m *LookupIndexerFilehashesRequest) SetFilenames(value []string)() {
     m.filenames = value
 }
-// SetFilesizes sets the filesizes property value. The filesizes property
+// SetFilesizes sets the filesizes property value. Optional exact file sizes to match.
 func (m *LookupIndexerFilehashesRequest) SetFilesizes(value []int64)() {
     m.filesizes = value
 }
-// SetIds sets the ids property value. The ids property
+// SetIds sets the ids property value. Optional filehash row IDs to match.
 func (m *LookupIndexerFilehashesRequest) SetIds(value []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.ids = value
 }
-// SetIndexerKeys sets the indexerKeys property value. The indexerKeys property
+// SetIndexerKeys sets the indexerKeys property value. Optional combined indexer source and indexer ID pairs to match.
 func (m *LookupIndexerFilehashesRequest) SetIndexerKeys(value []IndexerFilehashLookupKeyDtoable)() {
     m.indexerKeys = value
 }
-// SetOsHashes sets the osHashes property value. The osHashes property
+// SetOsHashes sets the osHashes property value. Optional OS hash values to match.
 func (m *LookupIndexerFilehashesRequest) SetOsHashes(value []string)() {
     m.osHashes = value
 }
-// SetPHashes sets the pHashes property value. The pHashes property
+// SetPHashes sets the pHashes property value. Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under "Perceptualhashes" in the API description matches nothing rather than failing.
 func (m *LookupIndexerFilehashesRequest) SetPHashes(value []string)() {
     m.pHashes = value
 }

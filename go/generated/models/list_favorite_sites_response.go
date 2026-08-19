@@ -7,22 +7,23 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// ListFavoriteSitesResponse paged list of the current user's favorite sites.
 type ListFavoriteSitesResponse struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The items property
+    // Favorite site entries on the current page.
     items []FavoriteSiteSummaryDtoable
-    // The page property
+    // Current page number (1-based).
     page *int32
-    // The pageSize property
+    // Number of items per page.
     pageSize *int32
-    // The sortBy property
+    // Field the results are sorted by.
     sortBy *string
-    // The sortDirection property
+    // Sort direction applied: `asc` or `desc`.
     sortDirection *string
-    // The totalCount property
+    // Total number of favorite sites matching the current query filters.
     totalCount *int32
-    // The totalPages property
+    // Total number of pages.
     totalPages *int32
 }
 // NewListFavoriteSitesResponse instantiates a new ListFavoriteSitesResponse and sets the default values.
@@ -124,37 +125,37 @@ func (m *ListFavoriteSitesResponse) GetFieldDeserializers()(map[string]func(i878
     }
     return res
 }
-// GetItems gets the items property value. The items property
+// GetItems gets the items property value. Favorite site entries on the current page.
 // returns a []FavoriteSiteSummaryDtoable when successful
 func (m *ListFavoriteSitesResponse) GetItems()([]FavoriteSiteSummaryDtoable) {
     return m.items
 }
-// GetPage gets the page property value. The page property
+// GetPage gets the page property value. Current page number (1-based).
 // returns a *int32 when successful
 func (m *ListFavoriteSitesResponse) GetPage()(*int32) {
     return m.page
 }
-// GetPageSize gets the pageSize property value. The pageSize property
+// GetPageSize gets the pageSize property value. Number of items per page.
 // returns a *int32 when successful
 func (m *ListFavoriteSitesResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetSortBy gets the sortBy property value. The sortBy property
+// GetSortBy gets the sortBy property value. Field the results are sorted by.
 // returns a *string when successful
 func (m *ListFavoriteSitesResponse) GetSortBy()(*string) {
     return m.sortBy
 }
-// GetSortDirection gets the sortDirection property value. The sortDirection property
+// GetSortDirection gets the sortDirection property value. Sort direction applied: `asc` or `desc`.
 // returns a *string when successful
 func (m *ListFavoriteSitesResponse) GetSortDirection()(*string) {
     return m.sortDirection
 }
-// GetTotalCount gets the totalCount property value. The totalCount property
+// GetTotalCount gets the totalCount property value. Total number of favorite sites matching the current query filters.
 // returns a *int32 when successful
 func (m *ListFavoriteSitesResponse) GetTotalCount()(*int32) {
     return m.totalCount
 }
-// GetTotalPages gets the totalPages property value. The totalPages property
+// GetTotalPages gets the totalPages property value. Total number of pages.
 // returns a *int32 when successful
 func (m *ListFavoriteSitesResponse) GetTotalPages()(*int32) {
     return m.totalPages
@@ -221,31 +222,31 @@ func (m *ListFavoriteSitesResponse) Serialize(writer i878a80d2330e89d26896388a3f
 func (m *ListFavoriteSitesResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetItems sets the items property value. The items property
+// SetItems sets the items property value. Favorite site entries on the current page.
 func (m *ListFavoriteSitesResponse) SetItems(value []FavoriteSiteSummaryDtoable)() {
     m.items = value
 }
-// SetPage sets the page property value. The page property
+// SetPage sets the page property value. Current page number (1-based).
 func (m *ListFavoriteSitesResponse) SetPage(value *int32)() {
     m.page = value
 }
-// SetPageSize sets the pageSize property value. The pageSize property
+// SetPageSize sets the pageSize property value. Number of items per page.
 func (m *ListFavoriteSitesResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetSortBy sets the sortBy property value. The sortBy property
+// SetSortBy sets the sortBy property value. Field the results are sorted by.
 func (m *ListFavoriteSitesResponse) SetSortBy(value *string)() {
     m.sortBy = value
 }
-// SetSortDirection sets the sortDirection property value. The sortDirection property
+// SetSortDirection sets the sortDirection property value. Sort direction applied: `asc` or `desc`.
 func (m *ListFavoriteSitesResponse) SetSortDirection(value *string)() {
     m.sortDirection = value
 }
-// SetTotalCount sets the totalCount property value. The totalCount property
+// SetTotalCount sets the totalCount property value. Total number of favorite sites matching the current query filters.
 func (m *ListFavoriteSitesResponse) SetTotalCount(value *int32)() {
     m.totalCount = value
 }
-// SetTotalPages sets the totalPages property value. The totalPages property
+// SetTotalPages sets the totalPages property value. Total number of pages.
 func (m *ListFavoriteSitesResponse) SetTotalPages(value *int32)() {
     m.totalPages = value
 }

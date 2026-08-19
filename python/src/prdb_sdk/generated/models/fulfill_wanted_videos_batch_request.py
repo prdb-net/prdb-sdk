@@ -9,10 +9,13 @@ if TYPE_CHECKING:
 
 @dataclass
 class FulfillWantedVideosBatchRequest(AdditionalDataHolder, Parsable):
+    """
+    Request body for batch-updating the fulfilment state of wanted videos.
+    """
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # The items property
+    # Fulfilment updates to apply. Between 1 and 50 entries, each for a distinct video.
     items: Optional[list[FulfillWantedVideoItem]] = None
     
     @staticmethod

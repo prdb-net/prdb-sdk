@@ -14,7 +14,7 @@ namespace Prdb.Sdk.Generated.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The basedOnFileWithOsHash property</summary>
+        /// <summary>Server-validated 16-character OS hash of the file the preview is based on.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? BasedOnFileWithOsHash { get; set; }
@@ -62,19 +62,19 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string PreviewImageType { get; set; }
 #endif
-        /// <summary>The spriteColumns property</summary>
+        /// <summary>Number of occupied tile columns in the sprite-sheet grid.</summary>
         public int? SpriteColumns { get; set; }
-        /// <summary>The spriteRows property</summary>
+        /// <summary>Number of occupied tile rows in the sprite-sheet grid.</summary>
         public int? SpriteRows { get; set; }
-        /// <summary>The spriteTileCount property</summary>
+        /// <summary>Number of sprite tiles described by the paired WebVTT metadata object.</summary>
         public int? SpriteTileCount { get; set; }
-        /// <summary>The spriteTileHeight property</summary>
+        /// <summary>Uniform sprite tile height in pixels.</summary>
         public int? SpriteTileHeight { get; set; }
-        /// <summary>The spriteTileWidth property</summary>
+        /// <summary>Uniform sprite tile width in pixels.</summary>
         public int? SpriteTileWidth { get; set; }
         /// <summary>The updatedAtUtc property</summary>
         public DateTimeOffset? UpdatedAtUtc { get; set; }
-        /// <summary>The url property</summary>
+        /// <summary>Resolved public CDN URL for the stored image object.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Url { get; set; }
@@ -86,7 +86,7 @@ namespace Prdb.Sdk.Generated.Models
         public Guid? UserId { get; set; }
         /// <summary>The videoId property</summary>
         public Guid? VideoId { get; set; }
-        /// <summary>The vttUrl property</summary>
+        /// <summary>Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? VttUrl { get; set; }

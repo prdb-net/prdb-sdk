@@ -12,7 +12,7 @@ type SearchPreDbByVideoResponse struct {
     additionalData map[string]any
     // The items property
     items []PreDbVideoGroupDtoable
-    // The totalGroups property
+    // Number of distinct videos in the result set (capped at 500).
     totalGroups *int32
 }
 // NewSearchPreDbByVideoResponse instantiates a new SearchPreDbByVideoResponse and sets the default values.
@@ -69,7 +69,7 @@ func (m *SearchPreDbByVideoResponse) GetFieldDeserializers()(map[string]func(i87
 func (m *SearchPreDbByVideoResponse) GetItems()([]PreDbVideoGroupDtoable) {
     return m.items
 }
-// GetTotalGroups gets the totalGroups property value. The totalGroups property
+// GetTotalGroups gets the totalGroups property value. Number of distinct videos in the result set (capped at 500).
 // returns a *int32 when successful
 func (m *SearchPreDbByVideoResponse) GetTotalGroups()(*int32) {
     return m.totalGroups
@@ -110,7 +110,7 @@ func (m *SearchPreDbByVideoResponse) SetAdditionalData(value map[string]any)() {
 func (m *SearchPreDbByVideoResponse) SetItems(value []PreDbVideoGroupDtoable)() {
     m.items = value
 }
-// SetTotalGroups sets the totalGroups property value. The totalGroups property
+// SetTotalGroups sets the totalGroups property value. Number of distinct videos in the result set (capped at 500).
 func (m *SearchPreDbByVideoResponse) SetTotalGroups(value *int32)() {
     m.totalGroups = value
 }

@@ -20,7 +20,7 @@ class VideoDetailActorDto(AdditionalDataHolder, Parsable):
     gender: Optional[int] = None
     # The id property
     id: Optional[UUID] = None
-    # The images property
+    # Images for this actor, ordered by ActorImageType VideoDetailActorImageDto.ImageType ascending(Thumbnail, Poster, Face), then oldest first, with the image ID as the tie-breaker. The orderis stable across requests.
     images: Optional[list[VideoDetailActorImageDto]] = None
     # The name property
     name: Optional[str] = None

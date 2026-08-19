@@ -7,18 +7,19 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// IdentifyVideoFileDto one file to identify.
 type IdentifyVideoFileDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The filename property
+    // File name without directory. Required — it carries the lowest rungs of the ladder.
     filename *string
-    // The filesize property
+    // Size of the file in bytes, if known.
     filesize *int64
-    // The osHash property
+    // OS hash of the file, 16 hexadecimal characters, if the client computed one.
     osHash *string
-    // The pHash property
+    // Perceptual hash of the file, 16 hexadecimal characters, if the client computed one.Compared for equality only, and only against values computed the way "Perceptual hashes"in the API description prescribes — send none rather than one from another procedure.
     pHash *string
-    // The ref property
+    // Client-assigned identifier, returned unchanged. Unique within the request.
     ref *string
 }
 // NewIdentifyVideoFileDto instantiates a new IdentifyVideoFileDto and sets the default values.
@@ -94,27 +95,27 @@ func (m *IdentifyVideoFileDto) GetFieldDeserializers()(map[string]func(i878a80d2
     }
     return res
 }
-// GetFilename gets the filename property value. The filename property
+// GetFilename gets the filename property value. File name without directory. Required — it carries the lowest rungs of the ladder.
 // returns a *string when successful
 func (m *IdentifyVideoFileDto) GetFilename()(*string) {
     return m.filename
 }
-// GetFilesize gets the filesize property value. The filesize property
+// GetFilesize gets the filesize property value. Size of the file in bytes, if known.
 // returns a *int64 when successful
 func (m *IdentifyVideoFileDto) GetFilesize()(*int64) {
     return m.filesize
 }
-// GetOsHash gets the osHash property value. The osHash property
+// GetOsHash gets the osHash property value. OS hash of the file, 16 hexadecimal characters, if the client computed one.
 // returns a *string when successful
 func (m *IdentifyVideoFileDto) GetOsHash()(*string) {
     return m.osHash
 }
-// GetPHash gets the pHash property value. The pHash property
+// GetPHash gets the pHash property value. Perceptual hash of the file, 16 hexadecimal characters, if the client computed one.Compared for equality only, and only against values computed the way "Perceptual hashes"in the API description prescribes — send none rather than one from another procedure.
 // returns a *string when successful
 func (m *IdentifyVideoFileDto) GetPHash()(*string) {
     return m.pHash
 }
-// GetRef gets the ref property value. The ref property
+// GetRef gets the ref property value. Client-assigned identifier, returned unchanged. Unique within the request.
 // returns a *string when successful
 func (m *IdentifyVideoFileDto) GetRef()(*string) {
     return m.ref
@@ -163,23 +164,23 @@ func (m *IdentifyVideoFileDto) Serialize(writer i878a80d2330e89d26896388a3f487ee
 func (m *IdentifyVideoFileDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetFilename sets the filename property value. The filename property
+// SetFilename sets the filename property value. File name without directory. Required — it carries the lowest rungs of the ladder.
 func (m *IdentifyVideoFileDto) SetFilename(value *string)() {
     m.filename = value
 }
-// SetFilesize sets the filesize property value. The filesize property
+// SetFilesize sets the filesize property value. Size of the file in bytes, if known.
 func (m *IdentifyVideoFileDto) SetFilesize(value *int64)() {
     m.filesize = value
 }
-// SetOsHash sets the osHash property value. The osHash property
+// SetOsHash sets the osHash property value. OS hash of the file, 16 hexadecimal characters, if the client computed one.
 func (m *IdentifyVideoFileDto) SetOsHash(value *string)() {
     m.osHash = value
 }
-// SetPHash sets the pHash property value. The pHash property
+// SetPHash sets the pHash property value. Perceptual hash of the file, 16 hexadecimal characters, if the client computed one.Compared for equality only, and only against values computed the way "Perceptual hashes"in the API description prescribes — send none rather than one from another procedure.
 func (m *IdentifyVideoFileDto) SetPHash(value *string)() {
     m.pHash = value
 }
-// SetRef sets the ref property value. The ref property
+// SetRef sets the ref property value. Client-assigned identifier, returned unchanged. Unique within the request.
 func (m *IdentifyVideoFileDto) SetRef(value *string)() {
     m.ref = value
 }

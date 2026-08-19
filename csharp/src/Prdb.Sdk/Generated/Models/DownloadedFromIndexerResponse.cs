@@ -7,16 +7,17 @@ using System.IO;
 using System;
 namespace Prdb.Sdk.Generated.Models
 {
+    /// <summary>
+    /// A downloaded-from-indexer entry for the current user.
+    /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
-    #pragma warning disable CS1591
     public partial class DownloadedFromIndexerResponse : IAdditionalDataHolder, IParsable
-    #pragma warning restore CS1591
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>The createdAtUtc property</summary>
+        /// <summary>When this entry was created.</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
-        /// <summary>The downloadIdentifier property</summary>
+        /// <summary>Download identifier returned by the indexer or download client.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? DownloadIdentifier { get; set; }
@@ -24,7 +25,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string DownloadIdentifier { get; set; }
 #endif
-        /// <summary>The filenames property</summary>
+        /// <summary>Filename rows recorded for this entry.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public List<global::Prdb.Sdk.Generated.Models.DownloadedFromIndexerFilenameDto>? Filenames { get; set; }
@@ -32,9 +33,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.DownloadedFromIndexerFilenameDto> Filenames { get; set; }
 #endif
-        /// <summary>The id property</summary>
+        /// <summary>ID of the downloaded-from-indexer entry.</summary>
         public Guid? Id { get; set; }
-        /// <summary>The indexerId property</summary>
+        /// <summary>Indexer-specific identifier for the download item.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? IndexerId { get; set; }
@@ -44,7 +45,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>Known values: DrunkenSlug (0), NzbFinder (1), NzbPorn (2).</summary>
         public int? IndexerSource { get; set; }
-        /// <summary>The nzbName property</summary>
+        /// <summary>NZB or release name.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? NzbName { get; set; }
@@ -52,7 +53,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string NzbName { get; set; }
 #endif
-        /// <summary>The nzbUrl property</summary>
+        /// <summary>NZB or release URL.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? NzbUrl { get; set; }
@@ -60,9 +61,9 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string NzbUrl { get; set; }
 #endif
-        /// <summary>The updatedAtUtc property</summary>
+        /// <summary>When this entry was last updated.</summary>
         public DateTimeOffset? UpdatedAtUtc { get; set; }
-        /// <summary>The videoId property</summary>
+        /// <summary>ID of the associated wanted video, or null when the download is not linked to a video.</summary>
         public Guid? VideoId { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.DownloadedFromIndexerResponse"/> and sets the default values.

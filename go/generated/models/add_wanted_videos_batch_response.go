@@ -7,14 +7,15 @@ import (
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
 
+// AddWantedVideosBatchResponse summary of a batch add-wanted-videos operation.
 type AddWantedVideosBatchResponse struct {
-    // The added property
+    // Number of entries newly added to the wanted list.
     added *int32
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // The alreadyExisted property
+    // Number of entries that were already on the wanted list.
     alreadyExisted *int32
-    // The notFound property
+    // Number of video IDs that were not found in the database.
     notFound *int32
 }
 // NewAddWantedVideosBatchResponse instantiates a new AddWantedVideosBatchResponse and sets the default values.
@@ -29,7 +30,7 @@ func NewAddWantedVideosBatchResponse()(*AddWantedVideosBatchResponse) {
 func CreateAddWantedVideosBatchResponseFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
     return NewAddWantedVideosBatchResponse(), nil
 }
-// GetAdded gets the added property value. The added property
+// GetAdded gets the added property value. Number of entries newly added to the wanted list.
 // returns a *int32 when successful
 func (m *AddWantedVideosBatchResponse) GetAdded()(*int32) {
     return m.added
@@ -39,7 +40,7 @@ func (m *AddWantedVideosBatchResponse) GetAdded()(*int32) {
 func (m *AddWantedVideosBatchResponse) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetAlreadyExisted gets the alreadyExisted property value. The alreadyExisted property
+// GetAlreadyExisted gets the alreadyExisted property value. Number of entries that were already on the wanted list.
 // returns a *int32 when successful
 func (m *AddWantedVideosBatchResponse) GetAlreadyExisted()(*int32) {
     return m.alreadyExisted
@@ -80,7 +81,7 @@ func (m *AddWantedVideosBatchResponse) GetFieldDeserializers()(map[string]func(i
     }
     return res
 }
-// GetNotFound gets the notFound property value. The notFound property
+// GetNotFound gets the notFound property value. Number of video IDs that were not found in the database.
 // returns a *int32 when successful
 func (m *AddWantedVideosBatchResponse) GetNotFound()(*int32) {
     return m.notFound
@@ -113,7 +114,7 @@ func (m *AddWantedVideosBatchResponse) Serialize(writer i878a80d2330e89d26896388
     }
     return nil
 }
-// SetAdded sets the added property value. The added property
+// SetAdded sets the added property value. Number of entries newly added to the wanted list.
 func (m *AddWantedVideosBatchResponse) SetAdded(value *int32)() {
     m.added = value
 }
@@ -121,11 +122,11 @@ func (m *AddWantedVideosBatchResponse) SetAdded(value *int32)() {
 func (m *AddWantedVideosBatchResponse) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetAlreadyExisted sets the alreadyExisted property value. The alreadyExisted property
+// SetAlreadyExisted sets the alreadyExisted property value. Number of entries that were already on the wanted list.
 func (m *AddWantedVideosBatchResponse) SetAlreadyExisted(value *int32)() {
     m.alreadyExisted = value
 }
-// SetNotFound sets the notFound property value. The notFound property
+// SetNotFound sets the notFound property value. Number of video IDs that were not found in the database.
 func (m *AddWantedVideosBatchResponse) SetNotFound(value *int32)() {
     m.notFound = value
 }
