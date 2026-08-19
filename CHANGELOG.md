@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-08-19
+
 ### Added
 
 - **Image URLs now use names that describe the values they carry.**
