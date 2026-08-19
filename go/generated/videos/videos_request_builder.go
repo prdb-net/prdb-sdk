@@ -107,6 +107,11 @@ func (m *VideosRequestBuilder) Get(ctx context.Context, requestConfiguration *i2
 func (m *VideosRequestBuilder) Identify()(*IdentifyRequestBuilder) {
     return NewIdentifyRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
+// Images the images property
+// returns a *ImagesRequestBuilder when successful
+func (m *VideosRequestBuilder) Images()(*ImagesRequestBuilder) {
+    return NewImagesRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
 // ToGetRequestInformation returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *VideosRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[VideosRequestBuilderGetQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {

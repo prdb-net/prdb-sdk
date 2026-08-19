@@ -4,7 +4,7 @@ Official client libraries for the [prdb Public API](https://apidocs.prdb.net/),
 in Python, TypeScript, Go and C#.
 
 All four are generated with [Kiota](https://learn.microsoft.com/openapi/kiota/)
-from the API's own OpenAPI document, so every language exposes the same 49
+from the API's own OpenAPI document, so every language exposes the same 53
 operations with the same shapes. The generated code is committed, so you can
 read it here on GitHub and build the SDKs without installing a generator.
 
@@ -80,14 +80,21 @@ details for that language.
 ## What the API offers
 
 Videos, actors and sites with their metadata; the scene pre-database; file
-hashes for videos and indexers; user-submitted preview images; and the per-user
-lists built on top of all of it — favourite actors and sites, wanted videos,
-and downloads recorded from indexers.
+hashes for videos and indexers; the images a site supplies for a video and the
+ones users submit; and the per-user lists built on top of all of it — favourite
+actors and sites, wanted videos, and downloads recorded from indexers.
 
 Endpoints named `/{resource}/changes` are delta feeds. They return the current
 state of rows changed since a cursor, including soft-deleted rows as tombstones,
 rather than a full history of every mutation — which makes them the right tool
-for keeping a local copy in sync.
+for keeping a local copy in sync. All of them page the same way, so one cursor
+loop drives any of them.
+
+`GET /videos/images/changes` is the exception to the tombstones: those rows are
+hard deleted, so its `eventType` is only ever `created` or `updated`, and a
+removed image stops appearing rather than arriving as a `deleted` event. A
+consumer that needs to notice removals has to reconcile against the images it
+already holds.
 
 Full reference: <https://apidocs.prdb.net/>
 

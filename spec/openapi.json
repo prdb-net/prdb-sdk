@@ -1695,6 +1695,141 @@
         ]
       }
     },
+    "/videos/images/changes": {
+      "get": {
+        "tags": [
+          "VideoImages"
+        ],
+        "summary": "Get incremental video image changes",
+        "description": "Returns a seek-paged delta feed of site-supplied video image rows ordered by updatedAtUtc ascending, then id ascending. Images are attached to a video long after the video itself is created, so a consumer paging /videos by createdAtUtc alone never learns about them; this feed carries them. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Removals are not represented: video image rows are hard-deleted, so eventType is never deleted and a row that disappears simply stops being returned. Requires API key authentication.",
+        "operationId": "GetVideoImageChanges",
+        "parameters": [
+          {
+            "name": "Since",
+            "in": "query",
+            "description": "Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "SinceId",
+            "in": "query",
+            "description": "Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 1000.",
+            "schema": {
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "VideoId",
+            "in": "query",
+            "description": "Optional. Restrict changes to a single video.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "SiteId",
+            "in": "query",
+            "description": "Optional. Restrict changes to videos on the specified site.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVideoImageChangesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
     "/videos/identify": {
       "post": {
         "tags": [
@@ -7852,6 +7987,47 @@
           }
         }
       },
+      "GetVideoImageChangesResponse": {
+        "required": [
+          "items",
+          "pageSize",
+          "hasMore",
+          "serverTimeUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoImageChangeDto"
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "The resolved page size for this response.",
+            "format": "int32"
+          },
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether additional rows exist after the current page."
+          },
+          "serverTimeUtc": {
+            "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "format": "date-time"
+          },
+          "nextCursor": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VideoImageChangesCursorDto"
+              }
+            ],
+            "description": "Seek cursor for continuing a video image change feed.",
+            "nullable": true
+          }
+        },
+        "description": "Paged delta feed of video image changes ordered by updated timestamp and ID."
+      },
       "GetVideosByIdsRequest": {
         "required": [
           "ids"
@@ -10235,6 +10411,75 @@
           }
         }
       },
+      "VideoImageChangeDto": {
+        "required": [
+          "eventType",
+          "image"
+        ],
+        "type": "object",
+        "properties": {
+          "eventType": {
+            "type": "string",
+            "description": "One of `created` or `updated`. Never `deleted`: video image rows carry no\nsoft-delete state, so a removed image leaves the feed silently instead of arriving as a\ntombstone."
+          },
+          "image": {
+            "$ref": "#/components/schemas/VideoImageChangeImageDto"
+          }
+        },
+        "description": "A single changed video image row in the incremental feed."
+      },
+      "VideoImageChangeImageDto": {
+        "required": [
+          "id",
+          "videoId",
+          "createdAtUtc",
+          "updatedAtUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "videoId": {
+            "type": "string",
+            "description": "The video this image belongs to.",
+            "format": "uuid"
+          },
+          "url": {
+            "type": "string",
+            "description": "Absolute URL for the image, if available: a complete URL including scheme and host, ready to\nrequest as-is.",
+            "nullable": true
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Current persisted state of a changed video image row."
+      },
+      "VideoImageChangesCursorDto": {
+        "required": [
+          "updatedAtUtc",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "description": "Seek cursor for continuing a video image change feed."
+      },
       "VideoQuality": {
         "enum": [
           0,
@@ -10709,6 +10954,10 @@
     {
       "name": "VideoFilehashSubmissions",
       "description": "Hash-to-video assignments submitted by the calling user. Write-only: submissions live apart from the aggregated hash set and change no read result."
+    },
+    {
+      "name": "VideoImages",
+      "description": "Site-supplied images for videos. A delta feed only: images are attached to a video days after the video row itself, so paging /videos by creation time never sees them."
     },
     {
       "name": "VideoUserImages",

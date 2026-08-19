@@ -8,6 +8,7 @@ using Prdb.Sdk.Generated.Videos.Batch;
 using Prdb.Sdk.Generated.Videos.FilehashSubmissions;
 using Prdb.Sdk.Generated.Videos.Filehashes;
 using Prdb.Sdk.Generated.Videos.Identify;
+using Prdb.Sdk.Generated.Videos.Images;
 using Prdb.Sdk.Generated.Videos.Item;
 using System.Collections.Generic;
 using System.IO;
@@ -41,6 +42,11 @@ namespace Prdb.Sdk.Generated.Videos
         public global::Prdb.Sdk.Generated.Videos.Identify.IdentifyRequestBuilder Identify
         {
             get => new global::Prdb.Sdk.Generated.Videos.Identify.IdentifyRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The images property</summary>
+        public global::Prdb.Sdk.Generated.Videos.Images.ImagesRequestBuilder Images
+        {
+            get => new global::Prdb.Sdk.Generated.Videos.Images.ImagesRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>Gets an item from the Prdb.Sdk.Generated.videos.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
