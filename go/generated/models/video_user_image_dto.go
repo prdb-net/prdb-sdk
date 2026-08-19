@@ -48,13 +48,13 @@ type VideoUserImageDto struct {
     spriteTileWidth *int32
     // The updatedAtUtc property
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // Resolved public CDN URL for the stored image object.
+    // Absolute URL for the stored image object: a complete URL including scheme and host, ready torequest as-is.
     url *string
     // The userId property
     userId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The videoId property
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.
+    // Absolute URL for the paired WebVTT metadata object when this image is a sprite sheet: acomplete URL including scheme and host, ready to request as-is.
     vttUrl *string
     // The width property
     width *int32
@@ -402,7 +402,7 @@ func (m *VideoUserImageDto) GetSpriteTileWidth()(*int32) {
 func (m *VideoUserImageDto) GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.updatedAtUtc
 }
-// GetUrl gets the url property value. Resolved public CDN URL for the stored image object.
+// GetUrl gets the url property value. Absolute URL for the stored image object: a complete URL including scheme and host, ready torequest as-is.
 // returns a *string when successful
 func (m *VideoUserImageDto) GetUrl()(*string) {
     return m.url
@@ -417,7 +417,7 @@ func (m *VideoUserImageDto) GetUserId()(*i561e97a8befe7661a44c8f54600992b4207a3a
 func (m *VideoUserImageDto) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
 }
-// GetVttUrl gets the vttUrl property value. Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.
+// GetVttUrl gets the vttUrl property value. Absolute URL for the paired WebVTT metadata object when this image is a sprite sheet: acomplete URL including scheme and host, ready to request as-is.
 // returns a *string when successful
 func (m *VideoUserImageDto) GetVttUrl()(*string) {
     return m.vttUrl
@@ -651,7 +651,7 @@ func (m *VideoUserImageDto) SetSpriteTileWidth(value *int32)() {
 func (m *VideoUserImageDto) SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.updatedAtUtc = value
 }
-// SetUrl sets the url property value. Resolved public CDN URL for the stored image object.
+// SetUrl sets the url property value. Absolute URL for the stored image object: a complete URL including scheme and host, ready torequest as-is.
 func (m *VideoUserImageDto) SetUrl(value *string)() {
     m.url = value
 }
@@ -663,7 +663,7 @@ func (m *VideoUserImageDto) SetUserId(value *i561e97a8befe7661a44c8f54600992b420
 func (m *VideoUserImageDto) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }
-// SetVttUrl sets the vttUrl property value. Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.
+// SetVttUrl sets the vttUrl property value. Absolute URL for the paired WebVTT metadata object when this image is a sprite sheet: acomplete URL including scheme and host, ready to request as-is.
 func (m *VideoUserImageDto) SetVttUrl(value *string)() {
     m.vttUrl = value
 }

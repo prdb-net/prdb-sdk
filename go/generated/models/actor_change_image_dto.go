@@ -17,7 +17,7 @@ type ActorChangeImageDto struct {
     imageType *int32
     // The imageTypeLabel property
     imageTypeLabel *string
-    // The url property
+    // Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is.
     url *string
 }
 // NewActorChangeImageDto instantiates a new ActorChangeImageDto and sets the default values.
@@ -98,7 +98,7 @@ func (m *ActorChangeImageDto) GetImageType()(*int32) {
 func (m *ActorChangeImageDto) GetImageTypeLabel()(*string) {
     return m.imageTypeLabel
 }
-// GetUrl gets the url property value. The url property
+// GetUrl gets the url property value. Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is.
 // returns a *string when successful
 func (m *ActorChangeImageDto) GetUrl()(*string) {
     return m.url
@@ -153,7 +153,7 @@ func (m *ActorChangeImageDto) SetImageType(value *int32)() {
 func (m *ActorChangeImageDto) SetImageTypeLabel(value *string)() {
     m.imageTypeLabel = value
 }
-// SetUrl sets the url property value. The url property
+// SetUrl sets the url property value. Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is.
 func (m *ActorChangeImageDto) SetUrl(value *string)() {
     m.url = value
 }

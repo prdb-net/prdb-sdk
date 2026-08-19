@@ -23,8 +23,11 @@ type WantedVideoSummaryDto struct {
     fulfillmentByApp *int32
     // External identifier from the fulfilling application, if applicable.
     fulfillmentExternalId *string
-    // Absolute CDN URL for the video's primary image, if available.
+    // Deprecated alias for `imageUrl`, carrying the identical value. The name claimed apath fragment that was never sent; read `imageUrl` instead. Removed in the next majorversion.
+    // Deprecated: 
     imageCdnPath *string
+    // Absolute URL for the video's primary image, if available: a complete URL including schemeand host, ready to request as-is.
+    imageUrl *string
     // Whether this wanted video has been fulfilled.
     isFulfilled *bool
     // Title of the site this video belongs to.
@@ -126,6 +129,16 @@ func (m *WantedVideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d
         }
         return nil
     }
+    res["imageUrl"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetImageUrl(val)
+        }
+        return nil
+    }
     res["isFulfilled"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetBoolValue()
         if err != nil {
@@ -218,10 +231,16 @@ func (m *WantedVideoSummaryDto) GetFulfillmentByApp()(*int32) {
 func (m *WantedVideoSummaryDto) GetFulfillmentExternalId()(*string) {
     return m.fulfillmentExternalId
 }
-// GetImageCdnPath gets the imageCdnPath property value. Absolute CDN URL for the video's primary image, if available.
+// GetImageCdnPath gets the imageCdnPath property value. Deprecated alias for `imageUrl`, carrying the identical value. The name claimed apath fragment that was never sent; read `imageUrl` instead. Removed in the next majorversion.
+// Deprecated: 
 // returns a *string when successful
 func (m *WantedVideoSummaryDto) GetImageCdnPath()(*string) {
     return m.imageCdnPath
+}
+// GetImageUrl gets the imageUrl property value. Absolute URL for the video's primary image, if available: a complete URL including schemeand host, ready to request as-is.
+// returns a *string when successful
+func (m *WantedVideoSummaryDto) GetImageUrl()(*string) {
+    return m.imageUrl
 }
 // GetIsFulfilled gets the isFulfilled property value. Whether this wanted video has been fulfilled.
 // returns a *bool when successful
@@ -292,6 +311,12 @@ func (m *WantedVideoSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487e
     }
     {
         err := writer.WriteStringValue("imageCdnPath", m.GetImageCdnPath())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("imageUrl", m.GetImageUrl())
         if err != nil {
             return err
         }
@@ -370,9 +395,14 @@ func (m *WantedVideoSummaryDto) SetFulfillmentByApp(value *int32)() {
 func (m *WantedVideoSummaryDto) SetFulfillmentExternalId(value *string)() {
     m.fulfillmentExternalId = value
 }
-// SetImageCdnPath sets the imageCdnPath property value. Absolute CDN URL for the video's primary image, if available.
+// SetImageCdnPath sets the imageCdnPath property value. Deprecated alias for `imageUrl`, carrying the identical value. The name claimed apath fragment that was never sent; read `imageUrl` instead. Removed in the next majorversion.
+// Deprecated: 
 func (m *WantedVideoSummaryDto) SetImageCdnPath(value *string)() {
     m.imageCdnPath = value
+}
+// SetImageUrl sets the imageUrl property value. Absolute URL for the video's primary image, if available: a complete URL including schemeand host, ready to request as-is.
+func (m *WantedVideoSummaryDto) SetImageUrl(value *string)() {
+    m.imageUrl = value
 }
 // SetIsFulfilled sets the isFulfilled property value. Whether this wanted video has been fulfilled.
 func (m *WantedVideoSummaryDto) SetIsFulfilled(value *bool)() {
@@ -411,6 +441,7 @@ type WantedVideoSummaryDtoable interface {
     GetFulfillmentByApp()(*int32)
     GetFulfillmentExternalId()(*string)
     GetImageCdnPath()(*string)
+    GetImageUrl()(*string)
     GetIsFulfilled()(*bool)
     GetSiteTitle()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
@@ -424,6 +455,7 @@ type WantedVideoSummaryDtoable interface {
     SetFulfillmentByApp(value *int32)()
     SetFulfillmentExternalId(value *string)()
     SetImageCdnPath(value *string)()
+    SetImageUrl(value *string)()
     SetIsFulfilled(value *bool)()
     SetSiteTitle(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()

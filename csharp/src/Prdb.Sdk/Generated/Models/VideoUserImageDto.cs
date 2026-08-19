@@ -74,7 +74,7 @@ namespace Prdb.Sdk.Generated.Models
         public int? SpriteTileWidth { get; set; }
         /// <summary>The updatedAtUtc property</summary>
         public DateTimeOffset? UpdatedAtUtc { get; set; }
-        /// <summary>Resolved public CDN URL for the stored image object.</summary>
+        /// <summary>Absolute URL for the stored image object: a complete URL including scheme and host, ready torequest as-is.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Url { get; set; }
@@ -86,7 +86,7 @@ namespace Prdb.Sdk.Generated.Models
         public Guid? UserId { get; set; }
         /// <summary>The videoId property</summary>
         public Guid? VideoId { get; set; }
-        /// <summary>Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.</summary>
+        /// <summary>Absolute URL for the paired WebVTT metadata object when this image is a sprite sheet: acomplete URL including scheme and host, ready to request as-is.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? VttUrl { get; set; }

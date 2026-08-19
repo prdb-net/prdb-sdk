@@ -32,7 +32,7 @@ class ActorSummaryDto(AdditionalDataHolder, Parsable):
     nationality: Optional[int] = None
     # Human-readable nationality label.
     nationality_label: Optional[str] = None
-    # Full CDN URL of the actor's profile image, if available.
+    # Absolute URL of the actor's profile image, if available: a complete URL including scheme andhost, ready to request as-is.
     profile_image_url: Optional[str] = None
     
     @staticmethod

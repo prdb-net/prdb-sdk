@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, ParseNode, SerializationWriter
 from typing import Any, Optional, TYPE_CHECKING, Union
 from uuid import UUID
+from warnings import warn
 
 @dataclass
 class FavoriteActorChangeFavoriteActorDto(AdditionalDataHolder, Parsable):
@@ -30,8 +31,10 @@ class FavoriteActorChangeFavoriteActorDto(AdditionalDataHolder, Parsable):
     name: Optional[str] = None
     # The nationality property
     nationality: Optional[str] = None
-    # The profileImageCdnPath property
+    # Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.
     profile_image_cdn_path: Optional[str] = None
+    # Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
+    profile_image_url: Optional[str] = None
     # The updatedAtUtc property
     updated_at_utc: Optional[datetime.datetime] = None
     
@@ -61,6 +64,7 @@ class FavoriteActorChangeFavoriteActorDto(AdditionalDataHolder, Parsable):
             "name": lambda n : setattr(self, 'name', n.get_str_value()),
             "nationality": lambda n : setattr(self, 'nationality', n.get_str_value()),
             "profileImageCdnPath": lambda n : setattr(self, 'profile_image_cdn_path', n.get_str_value()),
+            "profileImageUrl": lambda n : setattr(self, 'profile_image_url', n.get_str_value()),
             "updatedAtUtc": lambda n : setattr(self, 'updated_at_utc', n.get_datetime_value()),
         }
         return fields
@@ -82,6 +86,7 @@ class FavoriteActorChangeFavoriteActorDto(AdditionalDataHolder, Parsable):
         writer.write_str_value("name", self.name)
         writer.write_str_value("nationality", self.nationality)
         writer.write_str_value("profileImageCdnPath", self.profile_image_cdn_path)
+        writer.write_str_value("profileImageUrl", self.profile_image_url)
         writer.write_datetime_value("updatedAtUtc", self.updated_at_utc)
         writer.write_additional_data_value(self.additional_data)
     

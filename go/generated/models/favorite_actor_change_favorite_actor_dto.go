@@ -29,8 +29,11 @@ type FavoriteActorChangeFavoriteActorDto struct {
     name *string
     // The nationality property
     nationality *string
-    // The profileImageCdnPath property
+    // Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.
+    // Deprecated: 
     profileImageCdnPath *string
+    // Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
+    profileImageUrl *string
     // The updatedAtUtc property
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
@@ -160,6 +163,16 @@ func (m *FavoriteActorChangeFavoriteActorDto) GetFieldDeserializers()(map[string
         }
         return nil
     }
+    res["profileImageUrl"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetProfileImageUrl(val)
+        }
+        return nil
+    }
     res["updatedAtUtc"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetTimeValue()
         if err != nil {
@@ -197,10 +210,16 @@ func (m *FavoriteActorChangeFavoriteActorDto) GetName()(*string) {
 func (m *FavoriteActorChangeFavoriteActorDto) GetNationality()(*string) {
     return m.nationality
 }
-// GetProfileImageCdnPath gets the profileImageCdnPath property value. The profileImageCdnPath property
+// GetProfileImageCdnPath gets the profileImageCdnPath property value. Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.
+// Deprecated: 
 // returns a *string when successful
 func (m *FavoriteActorChangeFavoriteActorDto) GetProfileImageCdnPath()(*string) {
     return m.profileImageCdnPath
+}
+// GetProfileImageUrl gets the profileImageUrl property value. Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
+// returns a *string when successful
+func (m *FavoriteActorChangeFavoriteActorDto) GetProfileImageUrl()(*string) {
+    return m.profileImageUrl
 }
 // GetUpdatedAtUtc gets the updatedAtUtc property value. The updatedAtUtc property
 // returns a *Time when successful
@@ -264,6 +283,12 @@ func (m *FavoriteActorChangeFavoriteActorDto) Serialize(writer i878a80d2330e89d2
         }
     }
     {
+        err := writer.WriteStringValue("profileImageUrl", m.GetProfileImageUrl())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteTimeValue("updatedAtUtc", m.GetUpdatedAtUtc())
         if err != nil {
             return err
@@ -313,9 +338,14 @@ func (m *FavoriteActorChangeFavoriteActorDto) SetName(value *string)() {
 func (m *FavoriteActorChangeFavoriteActorDto) SetNationality(value *string)() {
     m.nationality = value
 }
-// SetProfileImageCdnPath sets the profileImageCdnPath property value. The profileImageCdnPath property
+// SetProfileImageCdnPath sets the profileImageCdnPath property value. Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.
+// Deprecated: 
 func (m *FavoriteActorChangeFavoriteActorDto) SetProfileImageCdnPath(value *string)() {
     m.profileImageCdnPath = value
+}
+// SetProfileImageUrl sets the profileImageUrl property value. Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
+func (m *FavoriteActorChangeFavoriteActorDto) SetProfileImageUrl(value *string)() {
+    m.profileImageUrl = value
 }
 // SetUpdatedAtUtc sets the updatedAtUtc property value. The updatedAtUtc property
 func (m *FavoriteActorChangeFavoriteActorDto) SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
@@ -333,6 +363,7 @@ type FavoriteActorChangeFavoriteActorDtoable interface {
     GetName()(*string)
     GetNationality()(*string)
     GetProfileImageCdnPath()(*string)
+    GetProfileImageUrl()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     SetDeletedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetEthnicity(value *string)()
@@ -343,5 +374,6 @@ type FavoriteActorChangeFavoriteActorDtoable interface {
     SetName(value *string)()
     SetNationality(value *string)()
     SetProfileImageCdnPath(value *string)()
+    SetProfileImageUrl(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
 }

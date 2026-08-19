@@ -30,7 +30,7 @@ type ActorSummaryDto struct {
     nationality *int32
     // Human-readable nationality label.
     nationalityLabel *string
-    // Full CDN URL of the actor's profile image, if available.
+    // Absolute URL of the actor's profile image, if available: a complete URL including scheme andhost, ready to request as-is.
     profileImageUrl *string
 }
 // NewActorSummaryDto instantiates a new ActorSummaryDto and sets the default values.
@@ -201,7 +201,7 @@ func (m *ActorSummaryDto) GetNationality()(*int32) {
 func (m *ActorSummaryDto) GetNationalityLabel()(*string) {
     return m.nationalityLabel
 }
-// GetProfileImageUrl gets the profileImageUrl property value. Full CDN URL of the actor's profile image, if available.
+// GetProfileImageUrl gets the profileImageUrl property value. Absolute URL of the actor's profile image, if available: a complete URL including scheme andhost, ready to request as-is.
 // returns a *string when successful
 func (m *ActorSummaryDto) GetProfileImageUrl()(*string) {
     return m.profileImageUrl
@@ -316,7 +316,7 @@ func (m *ActorSummaryDto) SetNationality(value *int32)() {
 func (m *ActorSummaryDto) SetNationalityLabel(value *string)() {
     m.nationalityLabel = value
 }
-// SetProfileImageUrl sets the profileImageUrl property value. Full CDN URL of the actor's profile image, if available.
+// SetProfileImageUrl sets the profileImageUrl property value. Absolute URL of the actor's profile image, if available: a complete URL including scheme andhost, ready to request as-is.
 func (m *ActorSummaryDto) SetProfileImageUrl(value *string)() {
     m.profileImageUrl = value
 }

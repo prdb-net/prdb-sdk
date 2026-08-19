@@ -51,13 +51,22 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Nationality { get; set; }
 #endif
-        /// <summary>CDN URL of the actor&apos;s face/profile image, if available.</summary>
+        /// <summary>Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.</summary>
+        [Obsolete("")]
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? ProfileImageCdnPath { get; set; }
 #nullable restore
 #else
         public string ProfileImageCdnPath { get; set; }
+#endif
+        /// <summary>Absolute URL of the actor&apos;s face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? ProfileImageUrl { get; set; }
+#nullable restore
+#else
+        public string ProfileImageUrl { get; set; }
 #endif
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.FavoriteActorSummaryDto"/> and sets the default values.
@@ -91,6 +100,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "nationality", n => { Nationality = n.GetStringValue(); } },
                 { "profileImageCdnPath", n => { ProfileImageCdnPath = n.GetStringValue(); } },
+                { "profileImageUrl", n => { ProfileImageUrl = n.GetStringValue(); } },
             };
         }
         /// <summary>
@@ -107,6 +117,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteStringValue("name", Name);
             writer.WriteStringValue("nationality", Nationality);
             writer.WriteStringValue("profileImageCdnPath", ProfileImageCdnPath);
+            writer.WriteStringValue("profileImageUrl", ProfileImageUrl);
             writer.WriteAdditionalData(AdditionalData);
         }
     }
