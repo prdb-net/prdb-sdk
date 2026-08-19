@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.6.2] - 2026-08-19
+
 ### Documented
 
 - **What every API model represents and what nearly every property means.** The
