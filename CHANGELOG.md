@@ -15,6 +15,21 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **Image URLs now use names that describe the values they carry.**
+  `VideoDetailImageDto` and `VideoDetailActorImageDto` gain `url`; favorite
+  actor summaries and changes gain `profileImageUrl`; wanted-video summaries
+  and changes gain `imageUrl`. All six properties are nullable complete URLs,
+  ready to request without prepending a CDN base.
+
+### Deprecated
+
+- **The six misleading path-named image properties remain as compatibility
+  aliases.** `cdnPath`, `profileImageCdnPath`, and `imageCdnPath` carry the same
+  values as their replacements and are deprecated for removal in the next
+  major API version.
+
 ## [0.6.2] - 2026-08-19
 
 ### Documented

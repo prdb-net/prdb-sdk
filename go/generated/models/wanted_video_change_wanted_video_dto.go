@@ -25,8 +25,11 @@ type WantedVideoChangeWantedVideoDto struct {
     fulfillmentByApp *int32
     // The fulfillmentExternalId property
     fulfillmentExternalId *string
-    // The imageCdnPath property
+    // Deprecated alias for `imageUrl`, carrying the identical value. The name claimed apath fragment that was never sent; read `imageUrl` instead. Removed in the next majorversion.
+    // Deprecated: 
     imageCdnPath *string
+    // Absolute URL for the video's primary image, if available: a complete URL including schemeand host, ready to request as-is.
+    imageUrl *string
     // The isDeleted property
     isDeleted *bool
     // The isFulfilled property
@@ -145,6 +148,16 @@ func (m *WantedVideoChangeWantedVideoDto) GetFieldDeserializers()(map[string]fun
         }
         return nil
     }
+    res["imageUrl"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetImageUrl(val)
+        }
+        return nil
+    }
     res["isDeleted"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetBoolValue()
         if err != nil {
@@ -247,10 +260,16 @@ func (m *WantedVideoChangeWantedVideoDto) GetFulfillmentByApp()(*int32) {
 func (m *WantedVideoChangeWantedVideoDto) GetFulfillmentExternalId()(*string) {
     return m.fulfillmentExternalId
 }
-// GetImageCdnPath gets the imageCdnPath property value. The imageCdnPath property
+// GetImageCdnPath gets the imageCdnPath property value. Deprecated alias for `imageUrl`, carrying the identical value. The name claimed apath fragment that was never sent; read `imageUrl` instead. Removed in the next majorversion.
+// Deprecated: 
 // returns a *string when successful
 func (m *WantedVideoChangeWantedVideoDto) GetImageCdnPath()(*string) {
     return m.imageCdnPath
+}
+// GetImageUrl gets the imageUrl property value. Absolute URL for the video's primary image, if available: a complete URL including schemeand host, ready to request as-is.
+// returns a *string when successful
+func (m *WantedVideoChangeWantedVideoDto) GetImageUrl()(*string) {
+    return m.imageUrl
 }
 // GetIsDeleted gets the isDeleted property value. The isDeleted property
 // returns a *bool when successful
@@ -332,6 +351,12 @@ func (m *WantedVideoChangeWantedVideoDto) Serialize(writer i878a80d2330e89d26896
     }
     {
         err := writer.WriteStringValue("imageCdnPath", m.GetImageCdnPath())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("imageUrl", m.GetImageUrl())
         if err != nil {
             return err
         }
@@ -420,9 +445,14 @@ func (m *WantedVideoChangeWantedVideoDto) SetFulfillmentByApp(value *int32)() {
 func (m *WantedVideoChangeWantedVideoDto) SetFulfillmentExternalId(value *string)() {
     m.fulfillmentExternalId = value
 }
-// SetImageCdnPath sets the imageCdnPath property value. The imageCdnPath property
+// SetImageCdnPath sets the imageCdnPath property value. Deprecated alias for `imageUrl`, carrying the identical value. The name claimed apath fragment that was never sent; read `imageUrl` instead. Removed in the next majorversion.
+// Deprecated: 
 func (m *WantedVideoChangeWantedVideoDto) SetImageCdnPath(value *string)() {
     m.imageCdnPath = value
+}
+// SetImageUrl sets the imageUrl property value. Absolute URL for the video's primary image, if available: a complete URL including schemeand host, ready to request as-is.
+func (m *WantedVideoChangeWantedVideoDto) SetImageUrl(value *string)() {
+    m.imageUrl = value
 }
 // SetIsDeleted sets the isDeleted property value. The isDeleted property
 func (m *WantedVideoChangeWantedVideoDto) SetIsDeleted(value *bool)() {
@@ -466,6 +496,7 @@ type WantedVideoChangeWantedVideoDtoable interface {
     GetFulfillmentByApp()(*int32)
     GetFulfillmentExternalId()(*string)
     GetImageCdnPath()(*string)
+    GetImageUrl()(*string)
     GetIsDeleted()(*bool)
     GetIsFulfilled()(*bool)
     GetSiteTitle()(*string)
@@ -481,6 +512,7 @@ type WantedVideoChangeWantedVideoDtoable interface {
     SetFulfillmentByApp(value *int32)()
     SetFulfillmentExternalId(value *string)()
     SetImageCdnPath(value *string)()
+    SetImageUrl(value *string)()
     SetIsDeleted(value *bool)()
     SetIsFulfilled(value *bool)()
     SetSiteTitle(value *string)()

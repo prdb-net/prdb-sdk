@@ -25,8 +25,11 @@ type FavoriteActorSummaryDto struct {
     name *string
     // Nationality label.
     nationality *string
-    // CDN URL of the actor's face/profile image, if available.
+    // Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.
+    // Deprecated: 
     profileImageCdnPath *string
+    // Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
+    profileImageUrl *string
 }
 // NewFavoriteActorSummaryDto instantiates a new FavoriteActorSummaryDto and sets the default values.
 func NewFavoriteActorSummaryDto()(*FavoriteActorSummaryDto) {
@@ -129,6 +132,16 @@ func (m *FavoriteActorSummaryDto) GetFieldDeserializers()(map[string]func(i878a8
         }
         return nil
     }
+    res["profileImageUrl"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetProfileImageUrl(val)
+        }
+        return nil
+    }
     return res
 }
 // GetGender gets the gender property value. Gender label (e.g. `Female`, `Male`, `Unknown`).
@@ -151,10 +164,16 @@ func (m *FavoriteActorSummaryDto) GetName()(*string) {
 func (m *FavoriteActorSummaryDto) GetNationality()(*string) {
     return m.nationality
 }
-// GetProfileImageCdnPath gets the profileImageCdnPath property value. CDN URL of the actor's face/profile image, if available.
+// GetProfileImageCdnPath gets the profileImageCdnPath property value. Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.
+// Deprecated: 
 // returns a *string when successful
 func (m *FavoriteActorSummaryDto) GetProfileImageCdnPath()(*string) {
     return m.profileImageCdnPath
+}
+// GetProfileImageUrl gets the profileImageUrl property value. Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
+// returns a *string when successful
+func (m *FavoriteActorSummaryDto) GetProfileImageUrl()(*string) {
+    return m.profileImageUrl
 }
 // Serialize serializes information the current object
 func (m *FavoriteActorSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
@@ -201,6 +220,12 @@ func (m *FavoriteActorSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f48
         }
     }
     {
+        err := writer.WriteStringValue("profileImageUrl", m.GetProfileImageUrl())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteAdditionalData(m.GetAdditionalData())
         if err != nil {
             return err
@@ -236,9 +261,14 @@ func (m *FavoriteActorSummaryDto) SetName(value *string)() {
 func (m *FavoriteActorSummaryDto) SetNationality(value *string)() {
     m.nationality = value
 }
-// SetProfileImageCdnPath sets the profileImageCdnPath property value. CDN URL of the actor's face/profile image, if available.
+// SetProfileImageCdnPath sets the profileImageCdnPath property value. Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.
+// Deprecated: 
 func (m *FavoriteActorSummaryDto) SetProfileImageCdnPath(value *string)() {
     m.profileImageCdnPath = value
+}
+// SetProfileImageUrl sets the profileImageUrl property value. Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
+func (m *FavoriteActorSummaryDto) SetProfileImageUrl(value *string)() {
+    m.profileImageUrl = value
 }
 type FavoriteActorSummaryDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
@@ -250,6 +280,7 @@ type FavoriteActorSummaryDtoable interface {
     GetName()(*string)
     GetNationality()(*string)
     GetProfileImageCdnPath()(*string)
+    GetProfileImageUrl()(*string)
     SetEthnicity(value *string)()
     SetFavoritedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetGender(value *string)()
@@ -257,4 +288,5 @@ type FavoriteActorSummaryDtoable interface {
     SetName(value *string)()
     SetNationality(value *string)()
     SetProfileImageCdnPath(value *string)()
+    SetProfileImageUrl(value *string)()
 }

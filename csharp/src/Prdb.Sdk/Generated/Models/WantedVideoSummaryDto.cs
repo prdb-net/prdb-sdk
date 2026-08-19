@@ -32,13 +32,22 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string FulfillmentExternalId { get; set; }
 #endif
-        /// <summary>Absolute CDN URL for the video&apos;s primary image, if available.</summary>
+        /// <summary>Deprecated alias for `imageUrl`, carrying the identical value. The name claimed apath fragment that was never sent; read `imageUrl` instead. Removed in the next majorversion.</summary>
+        [Obsolete("")]
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? ImageCdnPath { get; set; }
 #nullable restore
 #else
         public string ImageCdnPath { get; set; }
+#endif
+        /// <summary>Absolute URL for the video&apos;s primary image, if available: a complete URL including schemeand host, ready to request as-is.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? ImageUrl { get; set; }
+#nullable restore
+#else
+        public string ImageUrl { get; set; }
 #endif
         /// <summary>Whether this wanted video has been fulfilled.</summary>
         public bool? IsFulfilled { get; set; }
@@ -97,6 +106,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "fulfillmentByApp", n => { FulfillmentByApp = n.GetIntValue(); } },
                 { "fulfillmentExternalId", n => { FulfillmentExternalId = n.GetStringValue(); } },
                 { "imageCdnPath", n => { ImageCdnPath = n.GetStringValue(); } },
+                { "imageUrl", n => { ImageUrl = n.GetStringValue(); } },
                 { "isFulfilled", n => { IsFulfilled = n.GetBoolValue(); } },
                 { "siteTitle", n => { SiteTitle = n.GetStringValue(); } },
                 { "updatedAtUtc", n => { UpdatedAtUtc = n.GetDateTimeOffsetValue(); } },
@@ -119,6 +129,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteIntValue("fulfillmentByApp", FulfillmentByApp);
             writer.WriteStringValue("fulfillmentExternalId", FulfillmentExternalId);
             writer.WriteStringValue("imageCdnPath", ImageCdnPath);
+            writer.WriteStringValue("imageUrl", ImageUrl);
             writer.WriteBoolValue("isFulfilled", IsFulfilled);
             writer.WriteStringValue("siteTitle", SiteTitle);
             writer.WriteDateTimeOffsetValue("updatedAtUtc", UpdatedAtUtc);

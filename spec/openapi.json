@@ -6516,6 +6516,7 @@
           },
           "url": {
             "type": "string",
+            "description": "Absolute URL for the image, if available: a complete URL including scheme and host, ready to\nrequest as-is.",
             "nullable": true
           }
         }
@@ -6773,7 +6774,7 @@
           },
           "url": {
             "type": "string",
-            "description": "Full CDN URL for the image, if available.",
+            "description": "Absolute URL for the image, if available: a complete URL including scheme and host, ready to\nrequest as-is.",
             "nullable": true
           }
         }
@@ -6856,7 +6857,7 @@
           },
           "profileImageUrl": {
             "type": "string",
-            "description": "Full CDN URL of the actor's profile image, if available.",
+            "description": "Absolute URL of the actor's profile image, if available: a complete URL including scheme and\nhost, ready to request as-is.",
             "nullable": true
           }
         },
@@ -7209,9 +7210,16 @@
           "ethnicity": {
             "type": "string"
           },
+          "profileImageUrl": {
+            "type": "string",
+            "description": "Absolute URL of the actor's face/profile image, if available: a complete URL including\nscheme and host, ready to request as-is.",
+            "nullable": true
+          },
           "profileImageCdnPath": {
             "type": "string",
-            "nullable": true
+            "description": "Deprecated alias for `profileImageUrl`, carrying the identical value. The name\nclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed in\nthe next major version.",
+            "nullable": true,
+            "deprecated": true
           },
           "isDeleted": {
             "type": "boolean"
@@ -7280,10 +7288,16 @@
             "type": "string",
             "description": "Ethnicity label."
           },
+          "profileImageUrl": {
+            "type": "string",
+            "description": "Absolute URL of the actor's face/profile image, if available: a complete URL including\nscheme and host, ready to request as-is.",
+            "nullable": true
+          },
           "profileImageCdnPath": {
             "type": "string",
-            "description": "CDN URL of the actor's face/profile image, if available.",
-            "nullable": true
+            "description": "Deprecated alias for `profileImageUrl`, carrying the identical value. The name\nclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed in\nthe next major version.",
+            "nullable": true,
+            "deprecated": true
           },
           "favoritedAtUtc": {
             "type": "string",
@@ -9875,10 +9889,16 @@
             "type": "string",
             "format": "uuid"
           },
+          "url": {
+            "type": "string",
+            "description": "Absolute URL for the image, if available: a complete URL including scheme and host, ready to\nrequest as-is. The actor endpoints expose the same image under the same name.",
+            "nullable": true
+          },
           "cdnPath": {
             "type": "string",
-            "description": "Absolute CDN URL for the image, if available. Despite the field name this is a complete URL\nincluding scheme and host — it needs no base to be prepended and is ready to request as-is.\nThe same image is exposed as `url` by the actor endpoints.",
-            "nullable": true
+            "description": "Deprecated alias for `url`, carrying the identical value. The name claimed a path\nfragment that was never sent; read `url` instead. Removed in the next major version.",
+            "nullable": true,
+            "deprecated": true
           },
           "imageType": {
             "$ref": "#/components/schemas/ActorImageType"
@@ -9952,10 +9972,16 @@
             "type": "string",
             "format": "uuid"
           },
+          "url": {
+            "type": "string",
+            "description": "Absolute URL for the image, if available: a complete URL including scheme and host, ready to\nrequest as-is. This is the same value the deprecated `cdnPath` carries.",
+            "nullable": true
+          },
           "cdnPath": {
             "type": "string",
-            "description": "Absolute CDN URL for the image, if available. Despite the field name this is a complete URL\nincluding scheme and host — it needs no base to be prepended and is ready to request as-is.",
-            "nullable": true
+            "description": "Deprecated alias for `url`, carrying the identical value. The name claimed a path\nfragment that was never sent; read `url` instead. Removed in the next major version.",
+            "nullable": true,
+            "deprecated": true
           }
         }
       },
@@ -10377,14 +10403,14 @@
           },
           "url": {
             "type": "string",
-            "description": "Resolved public CDN URL for the stored image object."
+            "description": "Absolute URL for the stored image object: a complete URL including scheme and host, ready to\nrequest as-is."
           },
           "hasVtt": {
             "type": "boolean"
           },
           "vttUrl": {
             "type": "string",
-            "description": "Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.",
+            "description": "Absolute URL for the paired WebVTT metadata object when this image is a sprite sheet: a\ncomplete URL including scheme and host, ready to request as-is.",
             "nullable": true
           },
           "spriteTileCount": {
@@ -10508,9 +10534,16 @@
             "format": "date-time",
             "nullable": true
           },
+          "imageUrl": {
+            "type": "string",
+            "description": "Absolute URL for the video's primary image, if available: a complete URL including scheme\nand host, ready to request as-is.",
+            "nullable": true
+          },
           "imageCdnPath": {
             "type": "string",
-            "nullable": true
+            "description": "Deprecated alias for `imageUrl`, carrying the identical value. The name claimed a\npath fragment that was never sent; read `imageUrl` instead. Removed in the next major\nversion.",
+            "nullable": true,
+            "deprecated": true
           },
           "isDeleted": {
             "type": "boolean"
@@ -10597,10 +10630,16 @@
             "format": "date-time",
             "nullable": true
           },
+          "imageUrl": {
+            "type": "string",
+            "description": "Absolute URL for the video's primary image, if available: a complete URL including scheme\nand host, ready to request as-is.",
+            "nullable": true
+          },
           "imageCdnPath": {
             "type": "string",
-            "description": "Absolute CDN URL for the video's primary image, if available.",
-            "nullable": true
+            "description": "Deprecated alias for `imageUrl`, carrying the identical value. The name claimed a\npath fragment that was never sent; read `imageUrl` instead. Removed in the next major\nversion.",
+            "nullable": true,
+            "deprecated": true
           },
           "isFulfilled": {
             "type": "boolean",

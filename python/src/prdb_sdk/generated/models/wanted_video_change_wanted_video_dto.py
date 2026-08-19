@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, ParseNode, SerializationWriter
 from typing import Any, Optional, TYPE_CHECKING, Union
 from uuid import UUID
+from warnings import warn
 
 @dataclass
 class WantedVideoChangeWantedVideoDto(AdditionalDataHolder, Parsable):
@@ -26,8 +27,10 @@ class WantedVideoChangeWantedVideoDto(AdditionalDataHolder, Parsable):
     fulfillment_by_app: Optional[int] = None
     # The fulfillmentExternalId property
     fulfillment_external_id: Optional[str] = None
-    # The imageCdnPath property
+    # Deprecated alias for `imageUrl`, carrying the identical value. The name claimed apath fragment that was never sent; read `imageUrl` instead. Removed in the next majorversion.
     image_cdn_path: Optional[str] = None
+    # Absolute URL for the video's primary image, if available: a complete URL including schemeand host, ready to request as-is.
+    image_url: Optional[str] = None
     # The isDeleted property
     is_deleted: Optional[bool] = None
     # The isFulfilled property
@@ -69,6 +72,7 @@ class WantedVideoChangeWantedVideoDto(AdditionalDataHolder, Parsable):
             "fulfillmentByApp": lambda n : setattr(self, 'fulfillment_by_app', n.get_int_value()),
             "fulfillmentExternalId": lambda n : setattr(self, 'fulfillment_external_id', n.get_str_value()),
             "imageCdnPath": lambda n : setattr(self, 'image_cdn_path', n.get_str_value()),
+            "imageUrl": lambda n : setattr(self, 'image_url', n.get_str_value()),
             "isDeleted": lambda n : setattr(self, 'is_deleted', n.get_bool_value()),
             "isFulfilled": lambda n : setattr(self, 'is_fulfilled', n.get_bool_value()),
             "siteTitle": lambda n : setattr(self, 'site_title', n.get_str_value()),
@@ -95,6 +99,7 @@ class WantedVideoChangeWantedVideoDto(AdditionalDataHolder, Parsable):
         writer.write_int_value("fulfillmentByApp", self.fulfillment_by_app)
         writer.write_str_value("fulfillmentExternalId", self.fulfillment_external_id)
         writer.write_str_value("imageCdnPath", self.image_cdn_path)
+        writer.write_str_value("imageUrl", self.image_url)
         writer.write_bool_value("isDeleted", self.is_deleted)
         writer.write_bool_value("isFulfilled", self.is_fulfilled)
         writer.write_str_value("siteTitle", self.site_title)

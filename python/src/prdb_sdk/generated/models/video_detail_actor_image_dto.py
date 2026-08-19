@@ -4,18 +4,21 @@ from dataclasses import dataclass, field
 from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, ParseNode, SerializationWriter
 from typing import Any, Optional, TYPE_CHECKING, Union
 from uuid import UUID
+from warnings import warn
 
 @dataclass
 class VideoDetailActorImageDto(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.The same image is exposed as `url` by the actor endpoints.
+    # Deprecated alias for `url`, carrying the identical value. The name claimed a pathfragment that was never sent; read `url` instead. Removed in the next major version.
     cdn_path: Optional[str] = None
     # The id property
     id: Optional[UUID] = None
     # Known values: Thumbnail (1), Poster (2), Face (3).
     image_type: Optional[int] = None
+    # Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is. The actor endpoints expose the same image under the same name.
+    url: Optional[str] = None
     
     @staticmethod
     def create_from_discriminator_value(parse_node: ParseNode) -> VideoDetailActorImageDto:
@@ -37,6 +40,7 @@ class VideoDetailActorImageDto(AdditionalDataHolder, Parsable):
             "cdnPath": lambda n : setattr(self, 'cdn_path', n.get_str_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "imageType": lambda n : setattr(self, 'image_type', n.get_int_value()),
+            "url": lambda n : setattr(self, 'url', n.get_str_value()),
         }
         return fields
     
@@ -51,6 +55,7 @@ class VideoDetailActorImageDto(AdditionalDataHolder, Parsable):
         writer.write_str_value("cdnPath", self.cdn_path)
         writer.write_uuid_value("id", self.id)
         writer.write_int_value("imageType", self.image_type)
+        writer.write_str_value("url", self.url)
         writer.write_additional_data_value(self.additional_data)
     
 

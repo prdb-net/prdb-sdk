@@ -26,7 +26,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string ImageTypeLabel { get; set; }
 #endif
-        /// <summary>The url property</summary>
+        /// <summary>Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? Url { get; set; }

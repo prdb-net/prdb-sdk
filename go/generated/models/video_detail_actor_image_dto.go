@@ -11,12 +11,15 @@ import (
 type VideoDetailActorImageDto struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.The same image is exposed as `url` by the actor endpoints.
+    // Deprecated alias for `url`, carrying the identical value. The name claimed a pathfragment that was never sent; read `url` instead. Removed in the next major version.
+    // Deprecated: 
     cdnPath *string
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Known values: Thumbnail (1), Poster (2), Face (3).
     imageType *int32
+    // Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is. The actor endpoints expose the same image under the same name.
+    url *string
 }
 // NewVideoDetailActorImageDto instantiates a new VideoDetailActorImageDto and sets the default values.
 func NewVideoDetailActorImageDto()(*VideoDetailActorImageDto) {
@@ -35,7 +38,8 @@ func CreateVideoDetailActorImageDtoFromDiscriminatorValue(parseNode i878a80d2330
 func (m *VideoDetailActorImageDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
-// GetCdnPath gets the cdnPath property value. Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.The same image is exposed as `url` by the actor endpoints.
+// GetCdnPath gets the cdnPath property value. Deprecated alias for `url`, carrying the identical value. The name claimed a pathfragment that was never sent; read `url` instead. Removed in the next major version.
+// Deprecated: 
 // returns a *string when successful
 func (m *VideoDetailActorImageDto) GetCdnPath()(*string) {
     return m.cdnPath
@@ -74,6 +78,16 @@ func (m *VideoDetailActorImageDto) GetFieldDeserializers()(map[string]func(i878a
         }
         return nil
     }
+    res["url"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetUrl(val)
+        }
+        return nil
+    }
     return res
 }
 // GetId gets the id property value. The id property
@@ -85,6 +99,11 @@ func (m *VideoDetailActorImageDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207
 // returns a *int32 when successful
 func (m *VideoDetailActorImageDto) GetImageType()(*int32) {
     return m.imageType
+}
+// GetUrl gets the url property value. Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is. The actor endpoints expose the same image under the same name.
+// returns a *string when successful
+func (m *VideoDetailActorImageDto) GetUrl()(*string) {
+    return m.url
 }
 // Serialize serializes information the current object
 func (m *VideoDetailActorImageDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
@@ -107,6 +126,12 @@ func (m *VideoDetailActorImageDto) Serialize(writer i878a80d2330e89d26896388a3f4
         }
     }
     {
+        err := writer.WriteStringValue("url", m.GetUrl())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteAdditionalData(m.GetAdditionalData())
         if err != nil {
             return err
@@ -118,7 +143,8 @@ func (m *VideoDetailActorImageDto) Serialize(writer i878a80d2330e89d26896388a3f4
 func (m *VideoDetailActorImageDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetCdnPath sets the cdnPath property value. Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.The same image is exposed as `url` by the actor endpoints.
+// SetCdnPath sets the cdnPath property value. Deprecated alias for `url`, carrying the identical value. The name claimed a pathfragment that was never sent; read `url` instead. Removed in the next major version.
+// Deprecated: 
 func (m *VideoDetailActorImageDto) SetCdnPath(value *string)() {
     m.cdnPath = value
 }
@@ -130,13 +156,19 @@ func (m *VideoDetailActorImageDto) SetId(value *i561e97a8befe7661a44c8f54600992b
 func (m *VideoDetailActorImageDto) SetImageType(value *int32)() {
     m.imageType = value
 }
+// SetUrl sets the url property value. Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is. The actor endpoints expose the same image under the same name.
+func (m *VideoDetailActorImageDto) SetUrl(value *string)() {
+    m.url = value
+}
 type VideoDetailActorImageDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetCdnPath()(*string)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetImageType()(*int32)
+    GetUrl()(*string)
     SetCdnPath(value *string)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetImageType(value *int32)()
+    SetUrl(value *string)()
 }

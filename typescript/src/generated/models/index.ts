@@ -241,7 +241,7 @@ export interface ActorChangeImageDto extends AdditionalDataHolder, Parsable {
      */
     imageTypeLabel?: string | null;
     /**
-     * The url property
+     * Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is.
      */
     url?: string | null;
 }
@@ -427,7 +427,7 @@ export interface ActorImageDetailDto extends AdditionalDataHolder, Parsable {
      */
     imageTypeLabel?: string | null;
     /**
-     * Full CDN URL for the image, if available.
+     * Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is.
      */
     url?: string | null;
 }
@@ -486,7 +486,7 @@ export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
      */
     nationalityLabel?: string | null;
     /**
-     * Full CDN URL of the actor's profile image, if available.
+     * Absolute URL of the actor's profile image, if available: a complete URL including scheme andhost, ready to request as-is.
      */
     profileImageUrl?: string | null;
 }
@@ -1953,6 +1953,7 @@ export function deserializeIntoFavoriteActorChangeFavoriteActorDto(favoriteActor
         "name": n => { favoriteActorChangeFavoriteActorDto.name = n.getStringValue(); },
         "nationality": n => { favoriteActorChangeFavoriteActorDto.nationality = n.getStringValue(); },
         "profileImageCdnPath": n => { favoriteActorChangeFavoriteActorDto.profileImageCdnPath = n.getStringValue(); },
+        "profileImageUrl": n => { favoriteActorChangeFavoriteActorDto.profileImageUrl = n.getStringValue(); },
         "updatedAtUtc": n => { favoriteActorChangeFavoriteActorDto.updatedAtUtc = n.getDateValue(); },
     }
 }
@@ -1983,6 +1984,7 @@ export function deserializeIntoFavoriteActorSummaryDto(favoriteActorSummaryDto: 
         "name": n => { favoriteActorSummaryDto.name = n.getStringValue(); },
         "nationality": n => { favoriteActorSummaryDto.nationality = n.getStringValue(); },
         "profileImageCdnPath": n => { favoriteActorSummaryDto.profileImageCdnPath = n.getStringValue(); },
+        "profileImageUrl": n => { favoriteActorSummaryDto.profileImageUrl = n.getStringValue(); },
     }
 }
 /**
@@ -2982,6 +2984,7 @@ export function deserializeIntoVideoDetailActorImageDto(videoDetailActorImageDto
         "cdnPath": n => { videoDetailActorImageDto.cdnPath = n.getStringValue(); },
         "id": n => { videoDetailActorImageDto.id = n.getGuidValue(); },
         "imageType": n => { videoDetailActorImageDto.imageType = n.getNumberValue(); },
+        "url": n => { videoDetailActorImageDto.url = n.getStringValue(); },
     }
 }
 /**
@@ -3013,6 +3016,7 @@ export function deserializeIntoVideoDetailImageDto(videoDetailImageDto: Partial<
     return {
         "cdnPath": n => { videoDetailImageDto.cdnPath = n.getStringValue(); },
         "id": n => { videoDetailImageDto.id = n.getGuidValue(); },
+        "url": n => { videoDetailImageDto.url = n.getStringValue(); },
     }
 }
 /**
@@ -3257,6 +3261,7 @@ export function deserializeIntoWantedVideoChangeWantedVideoDto(wantedVideoChange
         "fulfillmentByApp": n => { wantedVideoChangeWantedVideoDto.fulfillmentByApp = n.getNumberValue(); },
         "fulfillmentExternalId": n => { wantedVideoChangeWantedVideoDto.fulfillmentExternalId = n.getStringValue(); },
         "imageCdnPath": n => { wantedVideoChangeWantedVideoDto.imageCdnPath = n.getStringValue(); },
+        "imageUrl": n => { wantedVideoChangeWantedVideoDto.imageUrl = n.getStringValue(); },
         "isDeleted": n => { wantedVideoChangeWantedVideoDto.isDeleted = n.getBooleanValue(); },
         "isFulfilled": n => { wantedVideoChangeWantedVideoDto.isFulfilled = n.getBooleanValue(); },
         "siteTitle": n => { wantedVideoChangeWantedVideoDto.siteTitle = n.getStringValue(); },
@@ -3281,6 +3286,7 @@ export function deserializeIntoWantedVideoSummaryDto(wantedVideoSummaryDto: Part
         "fulfillmentByApp": n => { wantedVideoSummaryDto.fulfillmentByApp = n.getNumberValue(); },
         "fulfillmentExternalId": n => { wantedVideoSummaryDto.fulfillmentExternalId = n.getStringValue(); },
         "imageCdnPath": n => { wantedVideoSummaryDto.imageCdnPath = n.getStringValue(); },
+        "imageUrl": n => { wantedVideoSummaryDto.imageUrl = n.getStringValue(); },
         "isFulfilled": n => { wantedVideoSummaryDto.isFulfilled = n.getBooleanValue(); },
         "siteTitle": n => { wantedVideoSummaryDto.siteTitle = n.getStringValue(); },
         "updatedAtUtc": n => { wantedVideoSummaryDto.updatedAtUtc = n.getDateValue(); },
@@ -3422,9 +3428,14 @@ export interface FavoriteActorChangeFavoriteActorDto extends AdditionalDataHolde
      */
     nationality?: string | null;
     /**
-     * The profileImageCdnPath property
+     * Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.
+     * @deprecated 
      */
     profileImageCdnPath?: string | null;
+    /**
+     * Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
+     */
+    profileImageUrl?: string | null;
     /**
      * The updatedAtUtc property
      */
@@ -3472,9 +3483,14 @@ export interface FavoriteActorSummaryDto extends AdditionalDataHolder, Parsable 
      */
     nationality?: string | null;
     /**
-     * CDN URL of the actor's face/profile image, if available.
+     * Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.
+     * @deprecated 
      */
     profileImageCdnPath?: string | null;
+    /**
+     * Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
+     */
+    profileImageUrl?: string | null;
 }
 /**
  * A single changed favorite site row in the incremental feed.
@@ -5053,6 +5069,7 @@ export function serializeFavoriteActorChangeFavoriteActorDto(writer: Serializati
     writer.writeStringValue("name", favoriteActorChangeFavoriteActorDto.name);
     writer.writeStringValue("nationality", favoriteActorChangeFavoriteActorDto.nationality);
     writer.writeStringValue("profileImageCdnPath", favoriteActorChangeFavoriteActorDto.profileImageCdnPath);
+    writer.writeStringValue("profileImageUrl", favoriteActorChangeFavoriteActorDto.profileImageUrl);
     writer.writeDateValue("updatedAtUtc", favoriteActorChangeFavoriteActorDto.updatedAtUtc);
     writer.writeAdditionalData(favoriteActorChangeFavoriteActorDto.additionalData);
 }
@@ -5085,6 +5102,7 @@ export function serializeFavoriteActorSummaryDto(writer: SerializationWriter, fa
     writer.writeStringValue("name", favoriteActorSummaryDto.name);
     writer.writeStringValue("nationality", favoriteActorSummaryDto.nationality);
     writer.writeStringValue("profileImageCdnPath", favoriteActorSummaryDto.profileImageCdnPath);
+    writer.writeStringValue("profileImageUrl", favoriteActorSummaryDto.profileImageUrl);
     writer.writeAdditionalData(favoriteActorSummaryDto.additionalData);
 }
 /**
@@ -6154,6 +6172,7 @@ export function serializeVideoDetailActorImageDto(writer: SerializationWriter, v
     writer.writeStringValue("cdnPath", videoDetailActorImageDto.cdnPath);
     writer.writeGuidValue("id", videoDetailActorImageDto.id);
     writer.writeNumberValue("imageType", videoDetailActorImageDto.imageType);
+    writer.writeStringValue("url", videoDetailActorImageDto.url);
     writer.writeAdditionalData(videoDetailActorImageDto.additionalData);
 }
 /**
@@ -6187,6 +6206,7 @@ export function serializeVideoDetailImageDto(writer: SerializationWriter, videoD
     if (!videoDetailImageDto || isSerializingDerivedType) { return; }
     writer.writeStringValue("cdnPath", videoDetailImageDto.cdnPath);
     writer.writeGuidValue("id", videoDetailImageDto.id);
+    writer.writeStringValue("url", videoDetailImageDto.url);
     writer.writeAdditionalData(videoDetailImageDto.additionalData);
 }
 /**
@@ -6447,6 +6467,7 @@ export function serializeWantedVideoChangeWantedVideoDto(writer: SerializationWr
     writer.writeNumberValue("fulfillmentByApp", wantedVideoChangeWantedVideoDto.fulfillmentByApp);
     writer.writeStringValue("fulfillmentExternalId", wantedVideoChangeWantedVideoDto.fulfillmentExternalId);
     writer.writeStringValue("imageCdnPath", wantedVideoChangeWantedVideoDto.imageCdnPath);
+    writer.writeStringValue("imageUrl", wantedVideoChangeWantedVideoDto.imageUrl);
     writer.writeBooleanValue("isDeleted", wantedVideoChangeWantedVideoDto.isDeleted);
     writer.writeBooleanValue("isFulfilled", wantedVideoChangeWantedVideoDto.isFulfilled);
     writer.writeStringValue("siteTitle", wantedVideoChangeWantedVideoDto.siteTitle);
@@ -6472,6 +6493,7 @@ export function serializeWantedVideoSummaryDto(writer: SerializationWriter, want
     writer.writeNumberValue("fulfillmentByApp", wantedVideoSummaryDto.fulfillmentByApp);
     writer.writeStringValue("fulfillmentExternalId", wantedVideoSummaryDto.fulfillmentExternalId);
     writer.writeStringValue("imageCdnPath", wantedVideoSummaryDto.imageCdnPath);
+    writer.writeStringValue("imageUrl", wantedVideoSummaryDto.imageUrl);
     writer.writeBooleanValue("isFulfilled", wantedVideoSummaryDto.isFulfilled);
     writer.writeStringValue("siteTitle", wantedVideoSummaryDto.siteTitle);
     writer.writeDateValue("updatedAtUtc", wantedVideoSummaryDto.updatedAtUtc);
@@ -6765,7 +6787,8 @@ export interface VideoDetailActorDto extends AdditionalDataHolder, Parsable {
 }
 export interface VideoDetailActorImageDto extends AdditionalDataHolder, Parsable {
     /**
-     * Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.The same image is exposed as `url` by the actor endpoints.
+     * Deprecated alias for `url`, carrying the identical value. The name claimed a pathfragment that was never sent; read `url` instead. Removed in the next major version.
+     * @deprecated 
      */
     cdnPath?: string | null;
     /**
@@ -6776,6 +6799,10 @@ export interface VideoDetailActorImageDto extends AdditionalDataHolder, Parsable
      * Known values: Thumbnail (1), Poster (2), Face (3).
      */
     imageType?: number | null;
+    /**
+     * Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is. The actor endpoints expose the same image under the same name.
+     */
+    url?: string | null;
 }
 export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
     /**
@@ -6817,13 +6844,18 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
 }
 export interface VideoDetailImageDto extends AdditionalDataHolder, Parsable {
     /**
-     * Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.
+     * Deprecated alias for `url`, carrying the identical value. The name claimed a pathfragment that was never sent; read `url` instead. Removed in the next major version.
+     * @deprecated 
      */
     cdnPath?: string | null;
     /**
      * The id property
      */
     id?: Guid | null;
+    /**
+     * Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is. This is the same value the deprecated `cdnPath` carries.
+     */
+    url?: string | null;
 }
 export interface VideoDetailNetworkDto extends AdditionalDataHolder, Parsable {
     /**
@@ -7138,7 +7170,7 @@ export interface VideoUserImageDto extends AdditionalDataHolder, Parsable {
      */
     updatedAtUtc?: Date | null;
     /**
-     * Resolved public CDN URL for the stored image object.
+     * Absolute URL for the stored image object: a complete URL including scheme and host, ready torequest as-is.
      */
     url?: string | null;
     /**
@@ -7150,7 +7182,7 @@ export interface VideoUserImageDto extends AdditionalDataHolder, Parsable {
      */
     videoId?: Guid | null;
     /**
-     * Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.
+     * Absolute URL for the paired WebVTT metadata object when this image is a sprite sheet: acomplete URL including scheme and host, ready to request as-is.
      */
     vttUrl?: string | null;
     /**
@@ -7213,9 +7245,14 @@ export interface WantedVideoChangeWantedVideoDto extends AdditionalDataHolder, P
      */
     fulfillmentExternalId?: string | null;
     /**
-     * The imageCdnPath property
+     * Deprecated alias for `imageUrl`, carrying the identical value. The name claimed apath fragment that was never sent; read `imageUrl` instead. Removed in the next majorversion.
+     * @deprecated 
      */
     imageCdnPath?: string | null;
+    /**
+     * Absolute URL for the video's primary image, if available: a complete URL including schemeand host, ready to request as-is.
+     */
+    imageUrl?: string | null;
     /**
      * The isDeleted property
      */
@@ -7274,9 +7311,14 @@ export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
      */
     fulfillmentExternalId?: string | null;
     /**
-     * Absolute CDN URL for the video's primary image, if available.
+     * Deprecated alias for `imageUrl`, carrying the identical value. The name claimed apath fragment that was never sent; read `imageUrl` instead. Removed in the next majorversion.
+     * @deprecated 
      */
     imageCdnPath?: string | null;
+    /**
+     * Absolute URL for the video's primary image, if available: a complete URL including schemeand host, ready to request as-is.
+     */
+    imageUrl?: string | null;
     /**
      * Whether this wanted video has been fulfilled.
      */

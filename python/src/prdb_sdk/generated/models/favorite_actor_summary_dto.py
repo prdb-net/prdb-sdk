@@ -5,6 +5,7 @@ from dataclasses import dataclass, field
 from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, ParseNode, SerializationWriter
 from typing import Any, Optional, TYPE_CHECKING, Union
 from uuid import UUID
+from warnings import warn
 
 @dataclass
 class FavoriteActorSummaryDto(AdditionalDataHolder, Parsable):
@@ -26,8 +27,10 @@ class FavoriteActorSummaryDto(AdditionalDataHolder, Parsable):
     name: Optional[str] = None
     # Nationality label.
     nationality: Optional[str] = None
-    # CDN URL of the actor's face/profile image, if available.
+    # Deprecated alias for `profileImageUrl`, carrying the identical value. The nameclaimed a path fragment that was never sent; read `profileImageUrl` instead. Removed inthe next major version.
     profile_image_cdn_path: Optional[str] = None
+    # Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
+    profile_image_url: Optional[str] = None
     
     @staticmethod
     def create_from_discriminator_value(parse_node: ParseNode) -> FavoriteActorSummaryDto:
@@ -53,6 +56,7 @@ class FavoriteActorSummaryDto(AdditionalDataHolder, Parsable):
             "name": lambda n : setattr(self, 'name', n.get_str_value()),
             "nationality": lambda n : setattr(self, 'nationality', n.get_str_value()),
             "profileImageCdnPath": lambda n : setattr(self, 'profile_image_cdn_path', n.get_str_value()),
+            "profileImageUrl": lambda n : setattr(self, 'profile_image_url', n.get_str_value()),
         }
         return fields
     
@@ -71,6 +75,7 @@ class FavoriteActorSummaryDto(AdditionalDataHolder, Parsable):
         writer.write_str_value("name", self.name)
         writer.write_str_value("nationality", self.nationality)
         writer.write_str_value("profileImageCdnPath", self.profile_image_cdn_path)
+        writer.write_str_value("profileImageUrl", self.profile_image_url)
         writer.write_additional_data_value(self.additional_data)
     
 

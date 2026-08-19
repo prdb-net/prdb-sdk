@@ -47,13 +47,13 @@ class VideoUserImageDto(AdditionalDataHolder, Parsable):
     sprite_tile_width: Optional[int] = None
     # The updatedAtUtc property
     updated_at_utc: Optional[datetime.datetime] = None
-    # Resolved public CDN URL for the stored image object.
+    # Absolute URL for the stored image object: a complete URL including scheme and host, ready torequest as-is.
     url: Optional[str] = None
     # The userId property
     user_id: Optional[UUID] = None
     # The videoId property
     video_id: Optional[UUID] = None
-    # Resolved public CDN URL for the paired WebVTT metadata object when this image is a sprite sheet.
+    # Absolute URL for the paired WebVTT metadata object when this image is a sprite sheet: acomplete URL including scheme and host, ready to request as-is.
     vtt_url: Optional[str] = None
     # The width property
     width: Optional[int] = None

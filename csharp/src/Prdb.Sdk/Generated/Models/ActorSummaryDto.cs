@@ -58,7 +58,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string NationalityLabel { get; set; }
 #endif
-        /// <summary>Full CDN URL of the actor&apos;s profile image, if available.</summary>
+        /// <summary>Absolute URL of the actor&apos;s profile image, if available: a complete URL including scheme andhost, ready to request as-is.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? ProfileImageUrl { get; set; }

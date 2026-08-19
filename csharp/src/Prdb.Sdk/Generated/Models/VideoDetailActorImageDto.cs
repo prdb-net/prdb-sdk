@@ -14,7 +14,8 @@ namespace Prdb.Sdk.Generated.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>Absolute CDN URL for the image, if available. Despite the field name this is a complete URLincluding scheme and host — it needs no base to be prepended and is ready to request as-is.The same image is exposed as `url` by the actor endpoints.</summary>
+        /// <summary>Deprecated alias for `url`, carrying the identical value. The name claimed a pathfragment that was never sent; read `url` instead. Removed in the next major version.</summary>
+        [Obsolete("")]
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
         public string? CdnPath { get; set; }
@@ -26,6 +27,14 @@ namespace Prdb.Sdk.Generated.Models
         public Guid? Id { get; set; }
         /// <summary>Known values: Thumbnail (1), Poster (2), Face (3).</summary>
         public int? ImageType { get; set; }
+        /// <summary>Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is. The actor endpoints expose the same image under the same name.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Url { get; set; }
+#nullable restore
+#else
+        public string Url { get; set; }
+#endif
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.VideoDetailActorImageDto"/> and sets the default values.
         /// </summary>
@@ -54,6 +63,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "cdnPath", n => { CdnPath = n.GetStringValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "imageType", n => { ImageType = n.GetIntValue(); } },
+                { "url", n => { Url = n.GetStringValue(); } },
             };
         }
         /// <summary>
@@ -66,6 +76,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteStringValue("cdnPath", CdnPath);
             writer.WriteGuidValue("id", Id);
             writer.WriteIntValue("imageType", ImageType);
+            writer.WriteStringValue("url", Url);
             writer.WriteAdditionalData(AdditionalData);
         }
     }
