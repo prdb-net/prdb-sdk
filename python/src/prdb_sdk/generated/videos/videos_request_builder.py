@@ -24,6 +24,7 @@ if TYPE_CHECKING:
     from .get_sort_by_query_parameter_type import GetSortByQueryParameterType
     from .get_sort_direction_query_parameter_type import GetSortDirectionQueryParameterType
     from .identify.identify_request_builder import IdentifyRequestBuilder
+    from .images.images_request_builder import ImagesRequestBuilder
     from .item.item_request_builder import ItemRequestBuilder
 
 class VideosRequestBuilder(BaseRequestBuilder):
@@ -133,6 +134,15 @@ class VideosRequestBuilder(BaseRequestBuilder):
         from .identify.identify_request_builder import IdentifyRequestBuilder
 
         return IdentifyRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
+    def images(self) -> ImagesRequestBuilder:
+        """
+        The images property
+        """
+        from .images.images_request_builder import ImagesRequestBuilder
+
+        return ImagesRequestBuilder(self.request_adapter, self.path_parameters)
     
     @dataclass
     class VideosRequestBuilderGetQueryParameters():

@@ -945,6 +945,15 @@ export function createGetVideoFilehashesByVideoIdsResponseFromDiscriminatorValue
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {GetVideoImageChangesResponse}
+ */
+// @ts-ignore
+export function createGetVideoImageChangesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoGetVideoImageChangesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {GetVideosByIdsRequest}
  */
 // @ts-ignore
@@ -1499,6 +1508,33 @@ export function createVideoFilehashDtoFromDiscriminatorValue(parseNode: ParseNod
 // @ts-ignore
 export function createVideoFilehashesByVideoIdDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoVideoFilehashesByVideoIdDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoImageChangeDto}
+ */
+// @ts-ignore
+export function createVideoImageChangeDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoImageChangeDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoImageChangeImageDto}
+ */
+// @ts-ignore
+export function createVideoImageChangeImageDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoImageChangeImageDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoImageChangesCursorDto}
+ */
+// @ts-ignore
+export function createVideoImageChangesCursorDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoImageChangesCursorDto;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -2228,6 +2264,21 @@ export function deserializeIntoGetVideoFilehashesByVideoIdsResponse(getVideoFile
     return {
         "items": n => { getVideoFilehashesByVideoIdsResponse.items = n.getCollectionOfObjectValues<VideoFilehashesByVideoIdDto>(createVideoFilehashesByVideoIdDtoFromDiscriminatorValue); },
         "notFoundVideoIds": n => { getVideoFilehashesByVideoIdsResponse.notFoundVideoIds = n.getCollectionOfPrimitiveValues<Guid>("string"); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param GetVideoImageChangesResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoGetVideoImageChangesResponse(getVideoImageChangesResponse: Partial<GetVideoImageChangesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "hasMore": n => { getVideoImageChangesResponse.hasMore = n.getBooleanValue(); },
+        "items": n => { getVideoImageChangesResponse.items = n.getCollectionOfObjectValues<VideoImageChangeDto>(createVideoImageChangeDtoFromDiscriminatorValue); },
+        "nextCursor": n => { getVideoImageChangesResponse.nextCursor = n.getObjectValue<VideoImageChangesCursorDto>(createVideoImageChangesCursorDtoFromDiscriminatorValue); },
+        "pageSize": n => { getVideoImageChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getVideoImageChangesResponse.serverTimeUtc = n.getDateValue(); },
     }
 }
 /**
@@ -3138,6 +3189,45 @@ export function deserializeIntoVideoFilehashesByVideoIdDto(videoFilehashesByVide
 }
 /**
  * The deserialization information for the current model
+ * @param VideoImageChangeDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoImageChangeDto(videoImageChangeDto: Partial<VideoImageChangeDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "eventType": n => { videoImageChangeDto.eventType = n.getStringValue(); },
+        "image": n => { videoImageChangeDto.image = n.getObjectValue<VideoImageChangeImageDto>(createVideoImageChangeImageDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoImageChangeImageDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoImageChangeImageDto(videoImageChangeImageDto: Partial<VideoImageChangeImageDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "createdAtUtc": n => { videoImageChangeImageDto.createdAtUtc = n.getDateValue(); },
+        "id": n => { videoImageChangeImageDto.id = n.getGuidValue(); },
+        "updatedAtUtc": n => { videoImageChangeImageDto.updatedAtUtc = n.getDateValue(); },
+        "url": n => { videoImageChangeImageDto.url = n.getStringValue(); },
+        "videoId": n => { videoImageChangeImageDto.videoId = n.getGuidValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoImageChangesCursorDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoImageChangesCursorDto(videoImageChangesCursorDto: Partial<VideoImageChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { videoImageChangesCursorDto.id = n.getGuidValue(); },
+        "updatedAtUtc": n => { videoImageChangesCursorDto.updatedAtUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param VideoSummaryActorDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3824,6 +3914,31 @@ export interface GetVideoFilehashesByVideoIdsResponse extends AdditionalDataHold
      * The notFoundVideoIds property
      */
     notFoundVideoIds?: Guid[] | null;
+}
+/**
+ * Paged delta feed of video image changes ordered by updated timestamp and ID.
+ */
+export interface GetVideoImageChangesResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * Whether additional rows exist after the current page.
+     */
+    hasMore?: boolean | null;
+    /**
+     * The items property
+     */
+    items?: VideoImageChangeDto[] | null;
+    /**
+     * Seek cursor for continuing a video image change feed.
+     */
+    nextCursor?: VideoImageChangesCursorDto | null;
+    /**
+     * The resolved page size for this response.
+     */
+    pageSize?: number | null;
+    /**
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     */
+    serverTimeUtc?: Date | null;
 }
 export interface GetVideosByIdsRequest extends AdditionalDataHolder, Parsable {
     /**
@@ -5368,6 +5483,22 @@ export function serializeGetVideoFilehashesByVideoIdsResponse(writer: Serializat
 }
 /**
  * Serializes information the current object
+ * @param GetVideoImageChangesResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeGetVideoImageChangesResponse(writer: SerializationWriter, getVideoImageChangesResponse: Partial<GetVideoImageChangesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!getVideoImageChangesResponse || isSerializingDerivedType) { return; }
+    writer.writeBooleanValue("hasMore", getVideoImageChangesResponse.hasMore);
+    writer.writeCollectionOfObjectValues<VideoImageChangeDto>("items", getVideoImageChangesResponse.items, serializeVideoImageChangeDto);
+    writer.writeObjectValue<VideoImageChangesCursorDto>("nextCursor", getVideoImageChangesResponse.nextCursor, serializeVideoImageChangesCursorDto);
+    writer.writeNumberValue("pageSize", getVideoImageChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getVideoImageChangesResponse.serverTimeUtc);
+    writer.writeAdditionalData(getVideoImageChangesResponse.additionalData);
+}
+/**
+ * Serializes information the current object
  * @param GetVideosByIdsRequest The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -6337,6 +6468,48 @@ export function serializeVideoFilehashesByVideoIdDto(writer: SerializationWriter
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoImageChangeDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoImageChangeDto(writer: SerializationWriter, videoImageChangeDto: Partial<VideoImageChangeDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoImageChangeDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("eventType", videoImageChangeDto.eventType);
+    writer.writeObjectValue<VideoImageChangeImageDto>("image", videoImageChangeDto.image, serializeVideoImageChangeImageDto);
+    writer.writeAdditionalData(videoImageChangeDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoImageChangeImageDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoImageChangeImageDto(writer: SerializationWriter, videoImageChangeImageDto: Partial<VideoImageChangeImageDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoImageChangeImageDto || isSerializingDerivedType) { return; }
+    writer.writeDateValue("createdAtUtc", videoImageChangeImageDto.createdAtUtc);
+    writer.writeGuidValue("id", videoImageChangeImageDto.id);
+    writer.writeDateValue("updatedAtUtc", videoImageChangeImageDto.updatedAtUtc);
+    writer.writeStringValue("url", videoImageChangeImageDto.url);
+    writer.writeGuidValue("videoId", videoImageChangeImageDto.videoId);
+    writer.writeAdditionalData(videoImageChangeImageDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoImageChangesCursorDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoImageChangesCursorDto(writer: SerializationWriter, videoImageChangesCursorDto: Partial<VideoImageChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoImageChangesCursorDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", videoImageChangesCursorDto.id);
+    writer.writeDateValue("updatedAtUtc", videoImageChangesCursorDto.updatedAtUtc);
+    writer.writeAdditionalData(videoImageChangesCursorDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param VideoSummaryActorDto The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -7029,6 +7202,57 @@ export interface VideoFilehashesByVideoIdDto extends AdditionalDataHolder, Parsa
      * The videoId property
      */
     videoId?: Guid | null;
+}
+/**
+ * A single changed video image row in the incremental feed.
+ */
+export interface VideoImageChangeDto extends AdditionalDataHolder, Parsable {
+    /**
+     * One of `created` or `updated`. Never `deleted`: video image rows carry nosoft-delete state, so a removed image leaves the feed silently instead of arriving as atombstone.
+     */
+    eventType?: string | null;
+    /**
+     * Current persisted state of a changed video image row.
+     */
+    image?: VideoImageChangeImageDto | null;
+}
+/**
+ * Current persisted state of a changed video image row.
+ */
+export interface VideoImageChangeImageDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The createdAtUtc property
+     */
+    createdAtUtc?: Date | null;
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
+    /**
+     * Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is.
+     */
+    url?: string | null;
+    /**
+     * The video this image belongs to.
+     */
+    videoId?: Guid | null;
+}
+/**
+ * Seek cursor for continuing a video image change feed.
+ */
+export interface VideoImageChangesCursorDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
 }
 /**
  * Minimal actor summary included in a video list item.

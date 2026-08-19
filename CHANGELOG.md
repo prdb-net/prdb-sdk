@@ -15,6 +15,45 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **`GET /videos/images/changes`** — a delta feed for the images a site supplies
+  for a video, the eighth of them. Images are attached days after the video row
+  itself, and the video row is not touched when it happens, so a consumer paging
+  `/videos` by `createdAtUtc` meets each video exactly once — while it still has
+  no images — and had no way to find them afterwards. This feed closes that gap.
+
+  ```python
+  page = await client.videos.images.changes.get()
+  ```
+
+  The builder follows the route, as everywhere else here, so it sits on `videos`
+  next to `filehashes`: `client.Videos.Images.Changes` in C#,
+  `client.Videos().Images().Changes()` in Go. It is **not**
+  `/video-user-images/changes`, which carries user submissions with their
+  moderation state — different table, different lifecycle, different builder.
+  Query parameters are the usual `since`, `sinceId` and `pageSize`, plus
+  `videoId` and `siteId` to narrow the feed to one video or one site. Each item
+  carries the image's `id`, `videoId`, `url`, `createdAtUtc` and `updatedAtUtc`;
+  `url` is nullable and, when present, a complete URL ready to request as-is.
+
+  The cursor is shaped like the other seven feeds', so an existing generic
+  paging loop drives this one unchanged.
+
+- New models `GetVideoImageChangesResponse`, `VideoImageChangeDto`,
+  `VideoImageChangeImageDto` and `VideoImageChangesCursorDto`. No existing
+  model, operation or status code changed.
+
+### Known limitations
+
+- **This feed's `eventType` is only ever `created` or `updated`.** Video image
+  rows are hard deleted rather than soft deleted, so a removed image stops being
+  returned instead of arriving as a `deleted` tombstone the way removals do on
+  the other seven feeds. An exhaustive switch over event types will never reach
+  its third branch here, and a consumer that has to notice removals must
+  reconcile against the images it already holds. `eventType` is a plain string
+  in all four SDKs, as on every feed, so nothing in the generated code says so.
+
 ## [0.7.0] - 2026-08-19
 
 ### Added
