@@ -26,10 +26,6 @@ from prdb_sdk import (
     create_anonymous_client,
     create_client,
 )
-from prdb_sdk.generated.models.add_downloaded_from_indexer_request import (
-    AddDownloadedFromIndexerRequest,
-)
-
 API_ORIGIN = "https://api.example.test"
 OTHER_ORIGIN = "https://elsewhere.example.test"
 
@@ -222,46 +218,29 @@ async def test_does_not_retry_when_retrying_is_disabled(recorder: Recorder) -> N
     assert len(recorder.requests) == 1
 
 
-ENTRY_BODY = {
-    "id": "00000000-0000-0000-0000-000000000100",
-    "indexerId": "indexer-entry-id",
-}
-
-
-def add_entry(client, status: ResponseStatusOption):
-    """POST /downloaded-from-indexers, reporting the status it answered with."""
-    return client.downloaded_from_indexers.post(
-        AddDownloadedFromIndexerRequest(indexer_id="indexer-entry-id"),
+def get_health(client, status: ResponseStatusOption):
+    """GET /health, reporting the status it answered with."""
+    return client.health.get(
         request_configuration=RequestConfiguration(options=[status]),
     )
 
 
-@pytest.mark.parametrize("status_code", [201, 200])
 async def test_reports_the_success_status_alongside_the_typed_result(
-    recorder: Recorder, status_code: int
+    recorder: Recorder,
 ) -> None:
-    """Both halves at once.
-
-    ``POST /downloaded-from-indexers`` answers 201 when it created the entry and
-    200 when an equivalent one already existed, and the bodies are the same
-    shape, so a caller who has to tell them apart has nothing else to go on.
-    Kiota's ``NativeResponseHandler`` surfaces the response but suppresses
-    deserialisation, so it cannot serve both.
-    """
+    """Keep the typed result while reporting the response status."""
     client = create_client(
         "secret-key",
         base_url=API_ORIGIN,
-        http_client=recorder.client(
-            lambda _: httpx.Response(status_code, json=ENTRY_BODY)
-        ),
+        http_client=recorder.client(lambda _: httpx.Response(200, json=HEALTH_BODY)),
     )
     status = ResponseStatusOption()
 
-    entry = await add_entry(client, status)
+    health = await get_health(client, status)
 
-    assert entry is not None
-    assert entry.indexer_id == "indexer-entry-id"
-    assert status.status_code == status_code
+    assert health is not None
+    assert health.status == "healthy"
+    assert status.status_code == 200
 
 
 async def test_reports_the_last_attempt_when_a_refusal_is_retried(
@@ -272,7 +251,7 @@ async def test_reports_the_last_attempt_when_a_refusal_is_retried(
     def refuse_once(_: httpx.Request) -> httpx.Response:
         if len(recorder.requests) == 1:
             return httpx.Response(503)
-        return httpx.Response(201, json=ENTRY_BODY)
+        return httpx.Response(200, json=HEALTH_BODY)
 
     client = create_client(
         "secret-key",
@@ -282,10 +261,10 @@ async def test_reports_the_last_attempt_when_a_refusal_is_retried(
     )
     status = ResponseStatusOption()
 
-    await add_entry(client, status)
+    await get_health(client, status)
 
     assert len(recorder.requests) == 2
-    assert status.status_code == 201
+    assert status.status_code == 200
 
 
 async def test_reports_the_status_when_the_api_refuses(recorder: Recorder) -> None:
@@ -303,7 +282,7 @@ async def test_reports_the_status_when_the_api_refuses(recorder: Recorder) -> No
     status = ResponseStatusOption()
 
     with pytest.raises(APIError):
-        await add_entry(client, status)
+        await get_health(client, status)
 
     assert status.status_code == 403
 

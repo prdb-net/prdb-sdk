@@ -7,10 +7,14 @@ can be built from it alone, without reading anyone else's source.
 Endpoints that take these values:
 
 - `POST /videos/filehashes/lookup`
-- `POST /indexer-filehashes/lookup`
 - `POST /videos/identify`
 - `POST /videos/filehash-submissions`
-- `POST /downloaded-from-indexers/{id}/filenames`
+
+Clients contribute hash-to-video assignments through
+`POST /videos/filehash-submissions`. Accepted, non-conflicted submissions can
+be promoted into the aggregated hash set once enough distinct users agree;
+read that set through `GET /videos/filehashes/latest` or follow its delta feed
+at `GET /videos/filehashes/changes`. None of those operations names an indexer.
 
 ## Why this is written down
 

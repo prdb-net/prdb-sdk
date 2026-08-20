@@ -114,24 +114,24 @@ pipeline does not run for it — configure retrying on that client instead.
 
 ## Reading the response status
 
-A typed call returns the deserialised body, which is all you need until an
-operation answers with more than one success status. `POST
-/downloaded-from-indexers` is the one that does: **201** when it created the
-entry, **200** when an equivalent one already existed and is being returned
-unchanged. The bodies are the same shape, so the status is the only thing that
-tells the two apart.
+A typed call returns the deserialised body but not the response status. Pass a
+`ResponseStatusOption` when the status itself matters; the conditional-request
+example below uses it to distinguish a **304 Not Modified** response from other
+responses with no body.
 
 Pass a `ResponseStatusOption` to read it:
 
 ```go
 import (
+	"fmt"
+
 	abstractions "github.com/microsoft/kiota-abstractions-go"
 	prdb "github.com/prdb-net/prdb-sdk/go"
 )
 
 status := prdb.NewResponseStatusOption()
 
-entry, err := client.DownloadedFromIndexers().Post(ctx, body,
+health, err := client.Health().Get(ctx,
 	&abstractions.RequestConfiguration[abstractions.DefaultQueryParameters]{
 		Options: []abstractions.RequestOption{status},
 	})
@@ -139,15 +139,12 @@ if err != nil {
 	return err
 }
 
-if status.StatusCode == http.StatusOK {
-	// An equivalent entry already existed; entry is the one the API has.
-}
+fmt.Println(health, status.StatusCode)
 ```
 
-Kiota's own native response handler cannot serve this: it surfaces the raw
-response but suppresses deserialisation while doing so, so the typed result
-comes back nil. The option is the other half — the call returns its model as
-usual, and the status is on the option afterwards.
+Kiota's own native response handler surfaces the raw response but suppresses
+deserialisation while doing so. This option keeps the typed result and records
+the status alongside it.
 
 ## Reading the rate limit
 

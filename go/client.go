@@ -62,23 +62,19 @@ type Options struct {
 // ResponseStatusOption reports which status code the API answered a typed call
 // with.
 //
-// A generated method returns the deserialised body and nothing else, which is a
-// problem when an operation answers with more than one success status. POST
-// /downloaded-from-indexers is the one that does: 201 when it created the
-// entry, 200 when an equivalent one already existed and is being returned
-// unchanged. The bodies are the same shape, so the status is the only thing
-// that tells the two apart.
+// A generated method returns the deserialised body and nothing else. That is
+// not enough when the status itself matters, for example when a conditional
+// GET /sites returns 304 with no body.
 //
 // Pass one per call, in the request configuration's Options:
 //
 //	status := prdb.NewResponseStatusOption()
-//	entry, err := client.DownloadedFromIndexers().Post(ctx, body,
+//	health, err := client.Health().Get(ctx,
 //	    &abstractions.RequestConfiguration[abstractions.DefaultQueryParameters]{
 //	        Options: []abstractions.RequestOption{status},
 //	    })
-//	if status.StatusCode == http.StatusOK {
-//	    // An equivalent entry already existed and was returned unchanged.
-//	}
+//	if err != nil { return err }
+//	fmt.Println(health, status.StatusCode)
 //
 // One instance per call: it is written when the response arrives, so sharing
 // one across concurrent calls means whichever finishes last wins.

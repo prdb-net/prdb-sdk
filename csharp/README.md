@@ -201,34 +201,29 @@ response and keep the typed error.
 
 ## Reading the response status
 
-A typed call returns the deserialised body, which is all you need until an
-operation answers with more than one success status. `POST
-/downloaded-from-indexers` is the one that does: **201** when it created the
-entry, **200** when an equivalent one already existed and is being returned
-unchanged. The bodies are the same shape, so the status is the only thing that
-tells the two apart.
+A typed call returns the deserialised body but not the response status. Pass a
+`ResponseStatusOption` when the status itself matters; the conditional-request
+example below uses it to distinguish a **304 Not Modified** response from other
+responses with no body.
 
 Pass a `ResponseStatusOption` to read it:
 
 ```csharp
+using System.Diagnostics;
 using System.Net;
 
 var status = new ResponseStatusOption();
 
-var entry = await client.DownloadedFromIndexers.PostAsync(
-    body,
+var health = await client.Health.GetAsync(
     config => config.Options.Add(status));
 
-if (status.StatusCode == HttpStatusCode.OK)
-{
-    // An equivalent entry already existed; entry is the one the API has.
-}
+Debug.Assert(health?.Status == "healthy");
+Debug.Assert(status.StatusCode == HttpStatusCode.OK);
 ```
 
-Kiota's own `NativeResponseHandler` cannot serve this: it surfaces the raw
-`HttpResponseMessage` but suppresses deserialisation while doing so, so the
-typed result comes back null. The option is the other half — the call returns
-its model as usual, and the status is on the option afterwards.
+Kiota's own `NativeResponseHandler` surfaces the raw `HttpResponseMessage` but
+suppresses deserialisation while doing so. This option keeps the typed result
+and records the status alongside it.
 
 Use one instance per call. It is written when the response arrives, so sharing
 one across concurrent calls means whichever finishes last wins.

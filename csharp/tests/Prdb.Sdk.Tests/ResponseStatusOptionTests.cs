@@ -9,11 +9,6 @@ namespace Prdb.Sdk.Tests;
 /// Tests for <see cref="ResponseStatusOption"/>: a typed call that also reports which status
 /// the API answered with.
 /// </summary>
-/// <remarks>
-/// <c>POST /downloaded-from-indexers</c> is the operation that needs this — <c>201</c> when it
-/// created the entry, <c>200</c> when an equivalent one already existed — and the bodies are
-/// the same shape, so a caller who has to tell the two apart has nothing else to go on.
-/// </remarks>
 public class ResponseStatusOptionTests
 {
     private const string ApiOrigin = "https://api.example.test";
@@ -23,20 +18,16 @@ public class ResponseStatusOptionTests
     /// surfaces the raw response but suppresses deserialisation, so the typed result comes back
     /// null.
     /// </summary>
-    [Theory]
-    [InlineData(HttpStatusCode.Created)]
-    [InlineData(HttpStatusCode.OK)]
-    public async Task Post_ReportsTheSuccessStatus_AlongsideTheTypedResult(HttpStatusCode status)
+    [Fact]
+    public async Task Get_ReportsTheSuccessStatus_AlongsideTheTypedResult()
     {
-        var client = NewClient(new Recorder(request => Entry(request, status)));
+        var client = NewClient(new Recorder());
         var option = new ResponseStatusOption();
 
-        var entry = await client.DownloadedFromIndexers.PostAsync(
-            new AddDownloadedFromIndexerRequest { IndexerId = "indexer-entry-id" },
-            config => config.Options.Add(option));
+        var health = await client.Health.GetAsync(config => config.Options.Add(option));
 
-        Assert.Equal("indexer-entry-id", entry?.IndexerId);
-        Assert.Equal(status, option.StatusCode);
+        Assert.Equal("healthy", health?.Status);
+        Assert.Equal(HttpStatusCode.OK, option.StatusCode);
     }
 
     /// <summary>
@@ -49,18 +40,16 @@ public class ResponseStatusOptionTests
     /// the SDK's middleware — so this covers that case too.
     /// </remarks>
     [Fact]
-    public async Task Post_ReportsTheLastAttempt_WhenARefusalIsRetried()
+    public async Task Get_ReportsTheLastAttempt_WhenARefusalIsRetried()
     {
-        var recorder = new Recorder(RefuseOnceThenCreate());
+        var recorder = new Recorder(RefuseOnceThenSucceed());
         var client = NewClient(recorder, new PrdbRetryOptions { MaxRetries = 1, Delay = TimeSpan.Zero });
         var option = new ResponseStatusOption();
 
-        await client.DownloadedFromIndexers.PostAsync(
-            new AddDownloadedFromIndexerRequest { IndexerId = "indexer-entry-id" },
-            config => config.Options.Add(option));
+        await client.Health.GetAsync(config => config.Options.Add(option));
 
         Assert.Equal(2, recorder.Requests.Count);
-        Assert.Equal(HttpStatusCode.Created, option.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, option.StatusCode);
     }
 
     /// <summary>Likewise for a redirect the SDK followed: the destination answered, not the 307.</summary>
@@ -121,12 +110,12 @@ public class ResponseStatusOptionTests
         PrdbRetryOptions? retry = null) =>
         PrdbClientFactory.Create("secret-key", ApiOrigin, transport, retry);
 
-    private static Func<HttpRequestMessage, HttpResponseMessage> RefuseOnceThenCreate()
+    private static Func<HttpRequestMessage, HttpResponseMessage> RefuseOnceThenSucceed()
     {
         var served = 0;
         return request => served++ == 0
             ? new HttpResponseMessage(HttpStatusCode.ServiceUnavailable) { RequestMessage = request }
-            : Entry(request, HttpStatusCode.Created);
+            : Healthy(request);
     }
 
     private static HttpResponseMessage RedirectWithinTheApi(HttpRequestMessage request) =>
@@ -149,9 +138,6 @@ public class ResponseStatusOptionTests
         response.Headers.Location = new Uri(location);
         return response;
     }
-
-    private static HttpResponseMessage Entry(HttpRequestMessage request, HttpStatusCode status) =>
-        Json(request, status, """{"id":"00000000-0000-0000-0000-000000000100","indexerId":"indexer-entry-id"}""");
 
     private static HttpResponseMessage Healthy(HttpRequestMessage request) =>
         Json(request, HttpStatusCode.OK, """{"status":"healthy","timestamp":"2026-08-07T12:00:00Z"}""");

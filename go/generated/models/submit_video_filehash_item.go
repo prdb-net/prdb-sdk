@@ -20,6 +20,8 @@ type SubmitVideoFilehashItem struct {
     osHash *string
     // Perceptual hash of the file, 16 hexadecimal characters, if the client computed one. It mustbe computed as "Perceptual hashes" in the API description prescribes; a submission carryinga value from another procedure contributes a row nothing can match.
     pHash *string
+    // The scene release name the file came in, if the client knows one. Optional. It is a releasename, not a file name: send it when the acquisition carried one, and leave it out otherwise.
+    releaseName *string
     // Known values: UserConfirmed (0), ClientDetected (1).
     source *int32
     // The video this file is. Required — a hash observation without an assignment is not accepted.
@@ -86,6 +88,16 @@ func (m *SubmitVideoFilehashItem) GetFieldDeserializers()(map[string]func(i878a8
         }
         return nil
     }
+    res["releaseName"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetReleaseName(val)
+        }
+        return nil
+    }
     res["source"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetInt32Value()
         if err != nil {
@@ -128,6 +140,11 @@ func (m *SubmitVideoFilehashItem) GetOsHash()(*string) {
 func (m *SubmitVideoFilehashItem) GetPHash()(*string) {
     return m.pHash
 }
+// GetReleaseName gets the releaseName property value. The scene release name the file came in, if the client knows one. Optional. It is a releasename, not a file name: send it when the acquisition carried one, and leave it out otherwise.
+// returns a *string when successful
+func (m *SubmitVideoFilehashItem) GetReleaseName()(*string) {
+    return m.releaseName
+}
 // GetSource gets the source property value. Known values: UserConfirmed (0), ClientDetected (1).
 // returns a *int32 when successful
 func (m *SubmitVideoFilehashItem) GetSource()(*int32) {
@@ -160,6 +177,12 @@ func (m *SubmitVideoFilehashItem) Serialize(writer i878a80d2330e89d26896388a3f48
     }
     {
         err := writer.WriteStringValue("pHash", m.GetPHash())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("releaseName", m.GetReleaseName())
         if err != nil {
             return err
         }
@@ -204,6 +227,10 @@ func (m *SubmitVideoFilehashItem) SetOsHash(value *string)() {
 func (m *SubmitVideoFilehashItem) SetPHash(value *string)() {
     m.pHash = value
 }
+// SetReleaseName sets the releaseName property value. The scene release name the file came in, if the client knows one. Optional. It is a releasename, not a file name: send it when the acquisition carried one, and leave it out otherwise.
+func (m *SubmitVideoFilehashItem) SetReleaseName(value *string)() {
+    m.releaseName = value
+}
 // SetSource sets the source property value. Known values: UserConfirmed (0), ClientDetected (1).
 func (m *SubmitVideoFilehashItem) SetSource(value *int32)() {
     m.source = value
@@ -219,12 +246,14 @@ type SubmitVideoFilehashItemable interface {
     GetFilesize()(*int64)
     GetOsHash()(*string)
     GetPHash()(*string)
+    GetReleaseName()(*string)
     GetSource()(*int32)
     GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     SetFilename(value *string)()
     SetFilesize(value *int64)()
     SetOsHash(value *string)()
     SetPHash(value *string)()
+    SetReleaseName(value *string)()
     SetSource(value *int32)()
     SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
 }

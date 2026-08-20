@@ -45,12 +45,9 @@ class CrossOriginRedirectError(RuntimeError):
 class ResponseStatusOption(RequestOption):
     """Per-request option reporting which status code the API answered with.
 
-    A generated method returns the deserialised body and nothing else, which is
-    a problem when an operation answers with more than one success status.
-    ``POST /downloaded-from-indexers`` is the one that does: ``201`` when it
-    created the entry, ``200`` when an equivalent one already existed and is
-    being returned unchanged. The bodies are the same shape, so the status is
-    the only thing that tells the two apart.
+    A generated method returns the deserialised body and nothing else. That is
+    not enough when the status itself matters, for example when a conditional
+    ``GET /sites`` returns ``304`` with no body.
 
     Kiota's own way of reaching the response, ``NativeResponseHandler``,
     suppresses deserialisation while it does so -- you get the raw response or
@@ -60,11 +57,11 @@ class ResponseStatusOption(RequestOption):
         from kiota_abstractions.base_request_configuration import RequestConfiguration
 
         status = ResponseStatusOption()
-        entry = await client.downloaded_from_indexers.post(
-            body, request_configuration=RequestConfiguration(options=[status])
+        health = await client.health.get(
+            request_configuration=RequestConfiguration(options=[status])
         )
-        if status.status_code == 200:
-            ...  # an equivalent entry already existed and was returned unchanged
+        assert health.status == "healthy"
+        assert status.status_code == 200
 
     Use one instance per call: it is written when the response arrives, so
     sharing one across concurrent calls means whichever finishes last wins.

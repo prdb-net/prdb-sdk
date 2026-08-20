@@ -16,11 +16,9 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
     from .actors.actors_request_builder import ActorsRequestBuilder
-    from .downloaded_from_indexers.downloaded_from_indexers_request_builder import DownloadedFromIndexersRequestBuilder
     from .favorite_actors.favorite_actors_request_builder import FavoriteActorsRequestBuilder
     from .favorite_sites.favorite_sites_request_builder import FavoriteSitesRequestBuilder
     from .health.health_request_builder import HealthRequestBuilder
-    from .indexer_filehashes.indexer_filehashes_request_builder import IndexerFilehashesRequestBuilder
     from .predb.predb_request_builder import PredbRequestBuilder
     from .rate_limit.rate_limit_request_builder import RateLimitRequestBuilder
     from .sites.sites_request_builder import SitesRequestBuilder
@@ -63,15 +61,6 @@ class PrdbClient(BaseRequestBuilder):
         return ActorsRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
-    def downloaded_from_indexers(self) -> DownloadedFromIndexersRequestBuilder:
-        """
-        The downloadedFromIndexers property
-        """
-        from .downloaded_from_indexers.downloaded_from_indexers_request_builder import DownloadedFromIndexersRequestBuilder
-
-        return DownloadedFromIndexersRequestBuilder(self.request_adapter, self.path_parameters)
-    
-    @property
     def favorite_actors(self) -> FavoriteActorsRequestBuilder:
         """
         The favoriteActors property
@@ -97,15 +86,6 @@ class PrdbClient(BaseRequestBuilder):
         from .health.health_request_builder import HealthRequestBuilder
 
         return HealthRequestBuilder(self.request_adapter, self.path_parameters)
-    
-    @property
-    def indexer_filehashes(self) -> IndexerFilehashesRequestBuilder:
-        """
-        The indexerFilehashes property
-        """
-        from .indexer_filehashes.indexer_filehashes_request_builder import IndexerFilehashesRequestBuilder
-
-        return IndexerFilehashesRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
     def predb(self) -> PredbRequestBuilder:

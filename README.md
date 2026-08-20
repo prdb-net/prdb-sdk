@@ -80,9 +80,16 @@ details for that language.
 ## What the API offers
 
 Videos, actors and sites with their metadata; the scene pre-database; file
-hashes for videos and indexers; the images a site supplies for a video and the
-ones users submit; and the per-user lists built on top of all of it — favourite
-actors and sites, wanted videos, and downloads recorded from indexers.
+hashes for videos; the images a site supplies for a video and the ones users
+submit; and the per-user lists built on top of all of it — favourite actors and
+sites, and wanted videos.
+
+Clients contribute hash-to-video assignments through
+`POST /videos/filehash-submissions`. Non-conflicted submissions are aggregated
+once enough distinct users agree, and the resulting set is available through
+`GET /videos/filehashes/latest` and `/changes`; no indexer is named in that
+loop. A `UserConfirmed` contribution must be opt-in and off by default, while a
+`ClientDetected` contribution may default on but must be switchable off.
 
 Endpoints named `/{resource}/changes` are delta feeds. They return the current
 state of rows changed since a cursor, including soft-deleted rows as tombstones,
