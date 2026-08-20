@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-08-20
+
 ### Added
 
 - **`SubmitVideoFilehashItem.releaseName`** — an optional scene release name,

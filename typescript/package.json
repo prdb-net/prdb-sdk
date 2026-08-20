@@ -1,6 +1,6 @@
 {
   "name": "@prdb/sdk",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "TypeScript SDK for the prdb Public API",
   "license": "MIT",
   "repository": {
