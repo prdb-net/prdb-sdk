@@ -69,12 +69,9 @@ export const RESPONSE_STATUS_OPTION_KEY = "prdb.responseStatus";
 /**
  * Per-request option reporting which status code the API answered with.
  *
- * A generated method returns the deserialised body and nothing else, which is a
- * problem when an operation answers with more than one success status. `POST
- * /downloaded-from-indexers` is the one that does: `201` when it created the
- * entry, `200` when an equivalent one already existed and is being returned
- * unchanged. The bodies are the same shape, so the status is the only thing
- * that tells the two apart.
+ * A generated method returns the deserialised body and nothing else. That is
+ * not enough when the status itself matters, for example when a conditional
+ * `GET /sites` returns `304` with no body.
  *
  * Kiota's own way of reaching the response is a native response handler, which
  * suppresses deserialisation while it does so — you get the raw response or the
@@ -84,13 +81,12 @@ export const RESPONSE_STATUS_OPTION_KEY = "prdb.responseStatus";
  * ```ts
  * const status = new ResponseStatusOption();
  *
- * const entry = await client.downloadedFromIndexers.post(body, {
+ * const health = await client.health.get({
  * 	options: [status],
  * });
  *
- * if (status.statusCode === 200) {
- * 	// An equivalent entry already existed and was returned unchanged.
- * }
+ * console.assert(health?.status === "healthy");
+ * console.assert(status.statusCode === 200);
  * ```
  *
  * Use one instance per call: it is written when the response arrives, so

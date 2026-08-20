@@ -91,12 +91,10 @@ const client = createClient({
 
 ## Reading the response status
 
-A typed call returns the deserialised body, which is all you need until an
-operation answers with more than one success status. `POST
-/downloaded-from-indexers` is the one that does: **201** when it created the
-entry, **200** when an equivalent one already existed and is being returned
-unchanged. The bodies are the same shape, so the status is the only thing that
-tells the two apart.
+A typed call returns the deserialised body but not the response status. Pass a
+`ResponseStatusOption` when the status itself matters; the conditional-request
+example below uses it to distinguish a **304 Not Modified** response from other
+responses with no body.
 
 Pass a `ResponseStatusOption` to read it:
 
@@ -105,19 +103,17 @@ import { ResponseStatusOption } from "@prdb/sdk";
 
 const status = new ResponseStatusOption();
 
-const entry = await client.downloadedFromIndexers.post(body, {
+const health = await client.health.get({
   options: [status],
 });
 
-if (status.statusCode === 200) {
-  // An equivalent entry already existed; entry is the one the API has.
-}
+console.assert(health?.status === "healthy");
+console.assert(status.statusCode === 200);
 ```
 
-Kiota's own native response handler cannot serve this: it surfaces the raw
-`Response` but suppresses deserialisation while doing so, so the typed result
-comes back `undefined`. The option is the other half — the call returns its
-model as usual, and the status is on the option afterwards.
+Kiota's own native response handler surfaces the raw `Response` but suppresses
+deserialisation while doing so. This option keeps the typed result and records
+the status alongside it.
 
 ## Reading the rate limit
 

@@ -41,6 +41,14 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string PHash { get; set; }
 #endif
+        /// <summary>The scene release name the file came in, if the client knows one. Optional. It is a releasename, not a file name: send it when the acquisition carried one, and leave it out otherwise.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? ReleaseName { get; set; }
+#nullable restore
+#else
+        public string ReleaseName { get; set; }
+#endif
         /// <summary>Known values: UserConfirmed (0), ClientDetected (1).</summary>
         public int? Source { get; set; }
         /// <summary>The video this file is. Required — a hash observation without an assignment is not accepted.</summary>
@@ -74,6 +82,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "filesize", n => { Filesize = n.GetLongValue(); } },
                 { "osHash", n => { OsHash = n.GetStringValue(); } },
                 { "pHash", n => { PHash = n.GetStringValue(); } },
+                { "releaseName", n => { ReleaseName = n.GetStringValue(); } },
                 { "source", n => { Source = n.GetIntValue(); } },
                 { "videoId", n => { VideoId = n.GetGuidValue(); } },
             };
@@ -89,6 +98,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteLongValue("filesize", Filesize);
             writer.WriteStringValue("osHash", OsHash);
             writer.WriteStringValue("pHash", PHash);
+            writer.WriteStringValue("releaseName", ReleaseName);
             writer.WriteIntValue("source", Source);
             writer.WriteGuidValue("videoId", VideoId);
             writer.WriteAdditionalData(AdditionalData);

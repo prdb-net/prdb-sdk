@@ -7,11 +7,9 @@ using Microsoft.Kiota.Serialization.Json;
 using Microsoft.Kiota.Serialization.Multipart;
 using Microsoft.Kiota.Serialization.Text;
 using Prdb.Sdk.Generated.Actors;
-using Prdb.Sdk.Generated.DownloadedFromIndexers;
 using Prdb.Sdk.Generated.FavoriteActors;
 using Prdb.Sdk.Generated.FavoriteSites;
 using Prdb.Sdk.Generated.Health;
-using Prdb.Sdk.Generated.IndexerFilehashes;
 using Prdb.Sdk.Generated.Predb;
 using Prdb.Sdk.Generated.RateLimit;
 using Prdb.Sdk.Generated.Sites;
@@ -36,11 +34,6 @@ namespace Prdb.Sdk.Generated
         {
             get => new global::Prdb.Sdk.Generated.Actors.ActorsRequestBuilder(PathParameters, RequestAdapter);
         }
-        /// <summary>The downloadedFromIndexers property</summary>
-        public global::Prdb.Sdk.Generated.DownloadedFromIndexers.DownloadedFromIndexersRequestBuilder DownloadedFromIndexers
-        {
-            get => new global::Prdb.Sdk.Generated.DownloadedFromIndexers.DownloadedFromIndexersRequestBuilder(PathParameters, RequestAdapter);
-        }
         /// <summary>The favoriteActors property</summary>
         public global::Prdb.Sdk.Generated.FavoriteActors.FavoriteActorsRequestBuilder FavoriteActors
         {
@@ -55,11 +48,6 @@ namespace Prdb.Sdk.Generated
         public global::Prdb.Sdk.Generated.Health.HealthRequestBuilder Health
         {
             get => new global::Prdb.Sdk.Generated.Health.HealthRequestBuilder(PathParameters, RequestAdapter);
-        }
-        /// <summary>The indexerFilehashes property</summary>
-        public global::Prdb.Sdk.Generated.IndexerFilehashes.IndexerFilehashesRequestBuilder IndexerFilehashes
-        {
-            get => new global::Prdb.Sdk.Generated.IndexerFilehashes.IndexerFilehashesRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The predb property</summary>
         public global::Prdb.Sdk.Generated.Predb.PredbRequestBuilder Predb

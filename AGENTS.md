@@ -89,7 +89,7 @@ authentication and the base URL. They are deliberately the same shape:
 - validation that rejects an empty key, a non-absolute base URL, and — for the
   authenticated constructor only — a base URL that is not `https`
 - a per-request option reporting the response status, because a typed call
-  otherwise cannot tell 201 from 200 on `POST /downloaded-from-indexers`. It is
+  otherwise cannot distinguish a `304` from another response with no body. It is
   recorded at the outer end of the pipeline, above the retry and redirect
   handlers, so it is the status the caller's result was built from. Go does it
   with a `RoundTripper` instead of Kiota middleware, so that a caller-supplied

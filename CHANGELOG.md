@@ -15,6 +15,36 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **`SubmitVideoFilehashItem.releaseName`** — an optional scene release name,
+  limited to 2000 characters. It is distinct from the optional file name and
+  may be omitted independently.
+
+### Removed
+
+- **BREAKING — the public indexer surface.** Nine operations under
+  `IndexerFilehashes` and `DownloadedFromIndexers`, their two request-builder
+  groups, their request and response models, and the `IndexerSlug` enum are no
+  longer generated because the API no longer publishes them. This makes the
+  next C# package release breaking. The change-feed count drops from eight to
+  seven.
+
+  Submit hash-to-video assignments through
+  `POST /videos/filehash-submissions`, then read the aggregated set through
+  `GET /videos/filehashes/latest` or follow
+  `GET /videos/filehashes/changes`. No indexer is named in this path.
+  porganizer, the only known consumer of the removed operations, must migrate
+  to that path; its work is tracked in `porganizer/porganizer#42`.
+
+### Changed
+
+- **Filehash submissions now document their aggregation behaviour and client
+  controls.** Every non-conflicted submission can contribute to the aggregated
+  hash set, with `UserConfirmed` and `ClientDetected` weighted alike. A
+  `UserConfirmed` submission must be opt-in and off by default;
+  `ClientDetected` may be on by default but must be switchable off.
+
 ## [0.8.0] - 2026-08-19
 
 ### Added

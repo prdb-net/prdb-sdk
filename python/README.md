@@ -109,12 +109,10 @@ client = create_client("...", retry=RetryOptions(max_retries=5, delay=1.0))
 
 ## Reading the response status
 
-A typed call returns the deserialised body, which is all you need until an
-operation answers with more than one success status. `POST
-/downloaded-from-indexers` is the one that does: **201** when it created the
-entry, **200** when an equivalent one already existed and is being returned
-unchanged. The bodies are the same shape, so the status is the only thing that
-tells the two apart.
+A typed call returns the deserialised body but not the response status. Pass a
+`ResponseStatusOption` when the status itself matters; the conditional-request
+example below uses it to distinguish a **304 Not Modified** response from other
+responses with no body.
 
 Pass a `ResponseStatusOption` to read it:
 
@@ -125,18 +123,17 @@ from prdb_sdk import ResponseStatusOption
 
 status = ResponseStatusOption()
 
-entry = await client.downloaded_from_indexers.post(
-    body, request_configuration=RequestConfiguration(options=[status])
+health = await client.health.get(
+    request_configuration=RequestConfiguration(options=[status])
 )
 
-if status.status_code == 200:
-    ...  # an equivalent entry already existed; entry is the one the API has
+assert health.status == "healthy"
+assert status.status_code == 200
 ```
 
-Kiota's own `NativeResponseHandler` cannot serve this: it surfaces the raw
-response but suppresses deserialisation while doing so, so the typed result
-comes back `None`. The option is the other half — the call returns its model as
-usual, and the status is on the option afterwards.
+Kiota's own `NativeResponseHandler` surfaces the raw response but suppresses
+deserialisation while doing so. This option keeps the typed result and records
+the status alongside it.
 
 ## Reading the rate limit
 

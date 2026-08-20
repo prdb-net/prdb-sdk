@@ -4,15 +4,11 @@
 // @ts-ignore
 import { ActorsRequestBuilderNavigationMetadata, ActorsRequestBuilderRequestsMetadata, type ActorsRequestBuilder } from './actors/index.js';
 // @ts-ignore
-import { DownloadedFromIndexersRequestBuilderNavigationMetadata, DownloadedFromIndexersRequestBuilderRequestsMetadata, type DownloadedFromIndexersRequestBuilder } from './downloadedFromIndexers/index.js';
-// @ts-ignore
 import { FavoriteActorsRequestBuilderNavigationMetadata, FavoriteActorsRequestBuilderRequestsMetadata, type FavoriteActorsRequestBuilder } from './favoriteActors/index.js';
 // @ts-ignore
 import { FavoriteSitesRequestBuilderNavigationMetadata, FavoriteSitesRequestBuilderRequestsMetadata, type FavoriteSitesRequestBuilder } from './favoriteSites/index.js';
 // @ts-ignore
 import { HealthRequestBuilderRequestsMetadata, type HealthRequestBuilder } from './health/index.js';
-// @ts-ignore
-import { IndexerFilehashesRequestBuilderNavigationMetadata, type IndexerFilehashesRequestBuilder } from './indexerFilehashes/index.js';
 // @ts-ignore
 import { PredbRequestBuilderNavigationMetadata, PredbRequestBuilderRequestsMetadata, type PredbRequestBuilder } from './predb/index.js';
 // @ts-ignore
@@ -81,10 +77,6 @@ export interface PrdbClient extends BaseRequestBuilder<PrdbClient> {
      */
     get actors(): ActorsRequestBuilder;
     /**
-     * The downloadedFromIndexers property
-     */
-    get downloadedFromIndexers(): DownloadedFromIndexersRequestBuilder;
-    /**
      * The favoriteActors property
      */
     get favoriteActors(): FavoriteActorsRequestBuilder;
@@ -96,10 +88,6 @@ export interface PrdbClient extends BaseRequestBuilder<PrdbClient> {
      * The health property
      */
     get health(): HealthRequestBuilder;
-    /**
-     * The indexerFilehashes property
-     */
-    get indexerFilehashes(): IndexerFilehashesRequestBuilder;
     /**
      * The predb property
      */
@@ -141,10 +129,6 @@ export const PrdbClientNavigationMetadata: Record<Exclude<keyof PrdbClient, Keys
         requestsMetadata: ActorsRequestBuilderRequestsMetadata,
         navigationMetadata: ActorsRequestBuilderNavigationMetadata,
     },
-    downloadedFromIndexers: {
-        requestsMetadata: DownloadedFromIndexersRequestBuilderRequestsMetadata,
-        navigationMetadata: DownloadedFromIndexersRequestBuilderNavigationMetadata,
-    },
     favoriteActors: {
         requestsMetadata: FavoriteActorsRequestBuilderRequestsMetadata,
         navigationMetadata: FavoriteActorsRequestBuilderNavigationMetadata,
@@ -155,9 +139,6 @@ export const PrdbClientNavigationMetadata: Record<Exclude<keyof PrdbClient, Keys
     },
     health: {
         requestsMetadata: HealthRequestBuilderRequestsMetadata,
-    },
-    indexerFilehashes: {
-        navigationMetadata: IndexerFilehashesRequestBuilderNavigationMetadata,
     },
     predb: {
         requestsMetadata: PredbRequestBuilderRequestsMetadata,

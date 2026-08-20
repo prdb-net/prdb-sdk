@@ -490,54 +490,6 @@ export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
      */
     profileImageUrl?: string | null;
 }
-export interface AddDownloadedFromIndexerFilenameRequest extends AdditionalDataHolder, Parsable {
-    /**
-     * The filename as reported by the indexer/download source.
-     */
-    filename?: string | null;
-    /**
-     * File size in bytes.
-     */
-    filesize?: number | null;
-    /**
-     * Optional OS hash value as a 16-character fixed-length string.
-     */
-    osHash?: string | null;
-    /**
-     * Optional perceptual hash value, 16 hexadecimal characters. It must be computed as"Perceptual hashes" in the API description prescribes; a value from another procedureis stored but can never be matched.
-     */
-    pHash?: string | null;
-}
-export interface AddDownloadedFromIndexerRequest extends AdditionalDataHolder, Parsable {
-    /**
-     * Download identifier returned by the indexer or download client.
-     */
-    downloadIdentifier?: string | null;
-    /**
-     * Optional filename rows to create together with the parent entry.
-     */
-    filenames?: AddDownloadedFromIndexerFilenameRequest[] | null;
-    /**
-     * Indexer-specific identifier for the download item.
-     */
-    indexerId?: string | null;
-    /**
-     * Known values: DrunkenSlug (0), NzbFinder (1), NzbPorn (2).
-     */
-    indexerSource?: number | null;
-    /**
-     * NZB or release name.
-     */
-    nzbName?: string | null;
-    /**
-     * NZB or release URL.
-     */
-    nzbUrl?: string | null;
-    /**
-     * Optional ID of the wanted video this download belongs to. Pass null when the download is not linked to a video yet.
-     */
-    videoId?: Guid | null;
-}
 /**
  * Request body for batch-adding wanted videos.
  */
@@ -693,24 +645,6 @@ export function createActorSummaryDtoFromDiscriminatorValue(parseNode: ParseNode
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {AddDownloadedFromIndexerFilenameRequest}
- */
-// @ts-ignore
-export function createAddDownloadedFromIndexerFilenameRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoAddDownloadedFromIndexerFilenameRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {AddDownloadedFromIndexerRequest}
- */
-// @ts-ignore
-export function createAddDownloadedFromIndexerRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoAddDownloadedFromIndexerRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {AddWantedVideosBatchRequest}
  */
 // @ts-ignore
@@ -725,24 +659,6 @@ export function createAddWantedVideosBatchRequestFromDiscriminatorValue(parseNod
 // @ts-ignore
 export function createAddWantedVideosBatchResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoAddWantedVideosBatchResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {DownloadedFromIndexerFilenameDto}
- */
-// @ts-ignore
-export function createDownloadedFromIndexerFilenameDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoDownloadedFromIndexerFilenameDto;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {DownloadedFromIndexerResponse}
- */
-// @ts-ignore
-export function createDownloadedFromIndexerResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoDownloadedFromIndexerResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -900,15 +816,6 @@ export function createGetHealthResponseFromDiscriminatorValue(parseNode: ParseNo
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {GetIndexerFilehashChangesResponse}
- */
-// @ts-ignore
-export function createGetIndexerFilehashChangesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoGetIndexerFilehashChangesResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {GetRateLimitResponse}
  */
 // @ts-ignore
@@ -1026,60 +933,6 @@ export function createIdentifyVideosResponseFromDiscriminatorValue(parseNode: Pa
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {IndexerFilehashChangeDto}
- */
-// @ts-ignore
-export function createIndexerFilehashChangeDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoIndexerFilehashChangeDto;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {IndexerFilehashChangeFilehashDto}
- */
-// @ts-ignore
-export function createIndexerFilehashChangeFilehashDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoIndexerFilehashChangeFilehashDto;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {IndexerFilehashChangesCursorDto}
- */
-// @ts-ignore
-export function createIndexerFilehashChangesCursorDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoIndexerFilehashChangesCursorDto;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {IndexerFilehashDto}
- */
-// @ts-ignore
-export function createIndexerFilehashDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoIndexerFilehashDto;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {IndexerFilehashLookupKeyDto}
- */
-// @ts-ignore
-export function createIndexerFilehashLookupKeyDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoIndexerFilehashLookupKeyDto;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {LatestIndexerFilehashesResponse}
- */
-// @ts-ignore
-export function createLatestIndexerFilehashesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoLatestIndexerFilehashesResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {LatestPreDbItemDto}
  */
 // @ts-ignore
@@ -1184,24 +1037,6 @@ export function createListVideosResponseFromDiscriminatorValue(parseNode: ParseN
 // @ts-ignore
 export function createListWantedVideosResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoListWantedVideosResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {LookupIndexerFilehashesRequest}
- */
-// @ts-ignore
-export function createLookupIndexerFilehashesRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoLookupIndexerFilehashesRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {LookupIndexerFilehashesResponse}
- */
-// @ts-ignore
-export function createLookupIndexerFilehashesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoLookupIndexerFilehashesResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1355,24 +1190,6 @@ export function createSubmitVideoUserImageResponseFromDiscriminatorValue(parseNo
 // @ts-ignore
 export function createUnlinkedVideoFilehashesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoUnlinkedVideoFilehashesResponse;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateDownloadedFromIndexerFilenameRequest}
- */
-// @ts-ignore
-export function createUpdateDownloadedFromIndexerFilenameRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateDownloadedFromIndexerFilenameRequest;
-}
-/**
- * Creates a new instance of the appropriate class based on discriminator value
- * @param parseNode The parse node to use to read the discriminator value and create the object
- * @returns {UpdateDownloadedFromIndexerRequest}
- */
-// @ts-ignore
-export function createUpdateDownloadedFromIndexerRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
-    return deserializeIntoUpdateDownloadedFromIndexerRequest;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1869,37 +1686,6 @@ export function deserializeIntoActorSummaryDto(actorSummaryDto: Partial<ActorSum
 }
 /**
  * The deserialization information for the current model
- * @param AddDownloadedFromIndexerFilenameRequest The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoAddDownloadedFromIndexerFilenameRequest(addDownloadedFromIndexerFilenameRequest: Partial<AddDownloadedFromIndexerFilenameRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "filename": n => { addDownloadedFromIndexerFilenameRequest.filename = n.getStringValue(); },
-        "filesize": n => { addDownloadedFromIndexerFilenameRequest.filesize = n.getNumberValue(); },
-        "osHash": n => { addDownloadedFromIndexerFilenameRequest.osHash = n.getStringValue(); },
-        "pHash": n => { addDownloadedFromIndexerFilenameRequest.pHash = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param AddDownloadedFromIndexerRequest The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoAddDownloadedFromIndexerRequest(addDownloadedFromIndexerRequest: Partial<AddDownloadedFromIndexerRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "downloadIdentifier": n => { addDownloadedFromIndexerRequest.downloadIdentifier = n.getStringValue(); },
-        "filenames": n => { addDownloadedFromIndexerRequest.filenames = n.getCollectionOfObjectValues<AddDownloadedFromIndexerFilenameRequest>(createAddDownloadedFromIndexerFilenameRequestFromDiscriminatorValue); },
-        "indexerId": n => { addDownloadedFromIndexerRequest.indexerId = n.getStringValue(); },
-        "indexerSource": n => { addDownloadedFromIndexerRequest.indexerSource = n.getNumberValue(); },
-        "nzbName": n => { addDownloadedFromIndexerRequest.nzbName = n.getStringValue(); },
-        "nzbUrl": n => { addDownloadedFromIndexerRequest.nzbUrl = n.getStringValue(); },
-        "videoId": n => { addDownloadedFromIndexerRequest.videoId = n.getGuidValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
  * @param AddWantedVideosBatchRequest The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -1920,44 +1706,6 @@ export function deserializeIntoAddWantedVideosBatchResponse(addWantedVideosBatch
         "added": n => { addWantedVideosBatchResponse.added = n.getNumberValue(); },
         "alreadyExisted": n => { addWantedVideosBatchResponse.alreadyExisted = n.getNumberValue(); },
         "notFound": n => { addWantedVideosBatchResponse.notFound = n.getNumberValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param DownloadedFromIndexerFilenameDto The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoDownloadedFromIndexerFilenameDto(downloadedFromIndexerFilenameDto: Partial<DownloadedFromIndexerFilenameDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "createdAtUtc": n => { downloadedFromIndexerFilenameDto.createdAtUtc = n.getDateValue(); },
-        "downloadedFromIndexerId": n => { downloadedFromIndexerFilenameDto.downloadedFromIndexerId = n.getGuidValue(); },
-        "filename": n => { downloadedFromIndexerFilenameDto.filename = n.getStringValue(); },
-        "filesize": n => { downloadedFromIndexerFilenameDto.filesize = n.getNumberValue(); },
-        "id": n => { downloadedFromIndexerFilenameDto.id = n.getGuidValue(); },
-        "osHash": n => { downloadedFromIndexerFilenameDto.osHash = n.getStringValue(); },
-        "pHash": n => { downloadedFromIndexerFilenameDto.pHash = n.getStringValue(); },
-        "updatedAtUtc": n => { downloadedFromIndexerFilenameDto.updatedAtUtc = n.getDateValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param DownloadedFromIndexerResponse The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoDownloadedFromIndexerResponse(downloadedFromIndexerResponse: Partial<DownloadedFromIndexerResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "createdAtUtc": n => { downloadedFromIndexerResponse.createdAtUtc = n.getDateValue(); },
-        "downloadIdentifier": n => { downloadedFromIndexerResponse.downloadIdentifier = n.getStringValue(); },
-        "filenames": n => { downloadedFromIndexerResponse.filenames = n.getCollectionOfObjectValues<DownloadedFromIndexerFilenameDto>(createDownloadedFromIndexerFilenameDtoFromDiscriminatorValue); },
-        "id": n => { downloadedFromIndexerResponse.id = n.getGuidValue(); },
-        "indexerId": n => { downloadedFromIndexerResponse.indexerId = n.getStringValue(); },
-        "indexerSource": n => { downloadedFromIndexerResponse.indexerSource = n.getNumberValue(); },
-        "nzbName": n => { downloadedFromIndexerResponse.nzbName = n.getStringValue(); },
-        "nzbUrl": n => { downloadedFromIndexerResponse.nzbUrl = n.getStringValue(); },
-        "updatedAtUtc": n => { downloadedFromIndexerResponse.updatedAtUtc = n.getDateValue(); },
-        "videoId": n => { downloadedFromIndexerResponse.videoId = n.getGuidValue(); },
     }
 }
 /**
@@ -2202,21 +1950,6 @@ export function deserializeIntoGetHealthResponse(getHealthResponse: Partial<GetH
 }
 /**
  * The deserialization information for the current model
- * @param GetIndexerFilehashChangesResponse The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoGetIndexerFilehashChangesResponse(getIndexerFilehashChangesResponse: Partial<GetIndexerFilehashChangesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "hasMore": n => { getIndexerFilehashChangesResponse.hasMore = n.getBooleanValue(); },
-        "items": n => { getIndexerFilehashChangesResponse.items = n.getCollectionOfObjectValues<IndexerFilehashChangeDto>(createIndexerFilehashChangeDtoFromDiscriminatorValue); },
-        "nextCursor": n => { getIndexerFilehashChangesResponse.nextCursor = n.getObjectValue<IndexerFilehashChangesCursorDto>(createIndexerFilehashChangesCursorDtoFromDiscriminatorValue); },
-        "pageSize": n => { getIndexerFilehashChangesResponse.pageSize = n.getNumberValue(); },
-        "serverTimeUtc": n => { getIndexerFilehashChangesResponse.serverTimeUtc = n.getDateValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
  * @param GetRateLimitResponse The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2388,102 +2121,6 @@ export function deserializeIntoIdentifyVideosRequest(identifyVideosRequest: Part
 export function deserializeIntoIdentifyVideosResponse(identifyVideosResponse: Partial<IdentifyVideosResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "results": n => { identifyVideosResponse.results = n.getCollectionOfObjectValues<IdentifyVideoResultDto>(createIdentifyVideoResultDtoFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param IndexerFilehashChangeDto The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoIndexerFilehashChangeDto(indexerFilehashChangeDto: Partial<IndexerFilehashChangeDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "eventType": n => { indexerFilehashChangeDto.eventType = n.getStringValue(); },
-        "filehash": n => { indexerFilehashChangeDto.filehash = n.getObjectValue<IndexerFilehashChangeFilehashDto>(createIndexerFilehashChangeFilehashDtoFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param IndexerFilehashChangeFilehashDto The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoIndexerFilehashChangeFilehashDto(indexerFilehashChangeFilehashDto: Partial<IndexerFilehashChangeFilehashDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "createdAtUtc": n => { indexerFilehashChangeFilehashDto.createdAtUtc = n.getDateValue(); },
-        "deletedAtUtc": n => { indexerFilehashChangeFilehashDto.deletedAtUtc = n.getDateValue(); },
-        "filename": n => { indexerFilehashChangeFilehashDto.filename = n.getStringValue(); },
-        "filesize": n => { indexerFilehashChangeFilehashDto.filesize = n.getNumberValue(); },
-        "id": n => { indexerFilehashChangeFilehashDto.id = n.getGuidValue(); },
-        "indexerId": n => { indexerFilehashChangeFilehashDto.indexerId = n.getStringValue(); },
-        "indexerSource": n => { indexerFilehashChangeFilehashDto.indexerSource = n.getStringValue(); },
-        "isDeleted": n => { indexerFilehashChangeFilehashDto.isDeleted = n.getBooleanValue(); },
-        "isVerified": n => { indexerFilehashChangeFilehashDto.isVerified = n.getBooleanValue(); },
-        "osHash": n => { indexerFilehashChangeFilehashDto.osHash = n.getStringValue(); },
-        "pHash": n => { indexerFilehashChangeFilehashDto.pHash = n.getStringValue(); },
-        "submissionCount": n => { indexerFilehashChangeFilehashDto.submissionCount = n.getNumberValue(); },
-        "updatedAtUtc": n => { indexerFilehashChangeFilehashDto.updatedAtUtc = n.getDateValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param IndexerFilehashChangesCursorDto The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoIndexerFilehashChangesCursorDto(indexerFilehashChangesCursorDto: Partial<IndexerFilehashChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "id": n => { indexerFilehashChangesCursorDto.id = n.getGuidValue(); },
-        "updatedAtUtc": n => { indexerFilehashChangesCursorDto.updatedAtUtc = n.getDateValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param IndexerFilehashDto The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoIndexerFilehashDto(indexerFilehashDto: Partial<IndexerFilehashDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "createdAtUtc": n => { indexerFilehashDto.createdAtUtc = n.getDateValue(); },
-        "filename": n => { indexerFilehashDto.filename = n.getStringValue(); },
-        "filesize": n => { indexerFilehashDto.filesize = n.getNumberValue(); },
-        "id": n => { indexerFilehashDto.id = n.getGuidValue(); },
-        "indexerId": n => { indexerFilehashDto.indexerId = n.getStringValue(); },
-        "indexerSource": n => { indexerFilehashDto.indexerSource = n.getStringValue(); },
-        "isVerified": n => { indexerFilehashDto.isVerified = n.getBooleanValue(); },
-        "osHash": n => { indexerFilehashDto.osHash = n.getStringValue(); },
-        "pHash": n => { indexerFilehashDto.pHash = n.getStringValue(); },
-        "submissionCount": n => { indexerFilehashDto.submissionCount = n.getNumberValue(); },
-        "updatedAtUtc": n => { indexerFilehashDto.updatedAtUtc = n.getDateValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param IndexerFilehashLookupKeyDto The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoIndexerFilehashLookupKeyDto(indexerFilehashLookupKeyDto: Partial<IndexerFilehashLookupKeyDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "indexerId": n => { indexerFilehashLookupKeyDto.indexerId = n.getStringValue(); },
-        "indexerSource": n => { indexerFilehashLookupKeyDto.indexerSource = n.getEnumValue<IndexerFilehashLookupKeyDto_indexerSource>(IndexerFilehashLookupKeyDto_indexerSourceObject); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param LatestIndexerFilehashesResponse The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoLatestIndexerFilehashesResponse(latestIndexerFilehashesResponse: Partial<LatestIndexerFilehashesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "items": n => { latestIndexerFilehashesResponse.items = n.getCollectionOfObjectValues<IndexerFilehashDto>(createIndexerFilehashDtoFromDiscriminatorValue); },
-        "page": n => { latestIndexerFilehashesResponse.page = n.getNumberValue(); },
-        "pageSize": n => { latestIndexerFilehashesResponse.pageSize = n.getNumberValue(); },
-        "sortBy": n => { latestIndexerFilehashesResponse.sortBy = n.getStringValue(); },
-        "sortDirection": n => { latestIndexerFilehashesResponse.sortDirection = n.getStringValue(); },
-        "totalCount": n => { latestIndexerFilehashesResponse.totalCount = n.getNumberValue(); },
     }
 }
 /**
@@ -2674,33 +2311,6 @@ export function deserializeIntoListWantedVideosResponse(listWantedVideosResponse
 }
 /**
  * The deserialization information for the current model
- * @param LookupIndexerFilehashesRequest The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoLookupIndexerFilehashesRequest(lookupIndexerFilehashesRequest: Partial<LookupIndexerFilehashesRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "filenames": n => { lookupIndexerFilehashesRequest.filenames = n.getCollectionOfPrimitiveValues<string>("string"); },
-        "filesizes": n => { lookupIndexerFilehashesRequest.filesizes = n.getCollectionOfPrimitiveValues<number>("number"); },
-        "ids": n => { lookupIndexerFilehashesRequest.ids = n.getCollectionOfPrimitiveValues<Guid>("string"); },
-        "indexerKeys": n => { lookupIndexerFilehashesRequest.indexerKeys = n.getCollectionOfObjectValues<IndexerFilehashLookupKeyDto>(createIndexerFilehashLookupKeyDtoFromDiscriminatorValue); },
-        "osHashes": n => { lookupIndexerFilehashesRequest.osHashes = n.getCollectionOfPrimitiveValues<string>("string"); },
-        "pHashes": n => { lookupIndexerFilehashesRequest.pHashes = n.getCollectionOfPrimitiveValues<string>("string"); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param LookupIndexerFilehashesResponse The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoLookupIndexerFilehashesResponse(lookupIndexerFilehashesResponse: Partial<LookupIndexerFilehashesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "items": n => { lookupIndexerFilehashesResponse.items = n.getCollectionOfObjectValues<IndexerFilehashDto>(createIndexerFilehashDtoFromDiscriminatorValue); },
-    }
-}
-/**
- * The deserialization information for the current model
  * @param LookupVideoFilehashesRequest The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2887,6 +2497,7 @@ export function deserializeIntoSubmitVideoFilehashItem(submitVideoFilehashItem: 
         "filesize": n => { submitVideoFilehashItem.filesize = n.getNumberValue(); },
         "osHash": n => { submitVideoFilehashItem.osHash = n.getStringValue(); },
         "pHash": n => { submitVideoFilehashItem.pHash = n.getStringValue(); },
+        "releaseName": n => { submitVideoFilehashItem.releaseName = n.getStringValue(); },
         "source": n => { submitVideoFilehashItem.source = n.getNumberValue(); },
         "videoId": n => { submitVideoFilehashItem.videoId = n.getGuidValue(); },
     }
@@ -2932,35 +2543,6 @@ export function deserializeIntoUnlinkedVideoFilehashesResponse(unlinkedVideoFile
         "sortBy": n => { unlinkedVideoFilehashesResponse.sortBy = n.getStringValue(); },
         "sortDirection": n => { unlinkedVideoFilehashesResponse.sortDirection = n.getStringValue(); },
         "totalCount": n => { unlinkedVideoFilehashesResponse.totalCount = n.getNumberValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param UpdateDownloadedFromIndexerFilenameRequest The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateDownloadedFromIndexerFilenameRequest(updateDownloadedFromIndexerFilenameRequest: Partial<UpdateDownloadedFromIndexerFilenameRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "filename": n => { updateDownloadedFromIndexerFilenameRequest.filename = n.getStringValue(); },
-        "filesize": n => { updateDownloadedFromIndexerFilenameRequest.filesize = n.getNumberValue(); },
-        "osHash": n => { updateDownloadedFromIndexerFilenameRequest.osHash = n.getStringValue(); },
-        "pHash": n => { updateDownloadedFromIndexerFilenameRequest.pHash = n.getStringValue(); },
-    }
-}
-/**
- * The deserialization information for the current model
- * @param UpdateDownloadedFromIndexerRequest The instance to deserialize into.
- * @returns {Record<string, (node: ParseNode) => void>}
- */
-// @ts-ignore
-export function deserializeIntoUpdateDownloadedFromIndexerRequest(updateDownloadedFromIndexerRequest: Partial<UpdateDownloadedFromIndexerRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
-    return {
-        "downloadIdentifier": n => { updateDownloadedFromIndexerRequest.downloadIdentifier = n.getStringValue(); },
-        "indexerId": n => { updateDownloadedFromIndexerRequest.indexerId = n.getStringValue(); },
-        "indexerSource": n => { updateDownloadedFromIndexerRequest.indexerSource = n.getNumberValue(); },
-        "nzbName": n => { updateDownloadedFromIndexerRequest.nzbName = n.getStringValue(); },
-        "nzbUrl": n => { updateDownloadedFromIndexerRequest.nzbUrl = n.getStringValue(); },
     }
 }
 /**
@@ -3387,88 +2969,6 @@ export function deserializeIntoWantedVideoSummaryDto(wantedVideoSummaryDto: Part
     }
 }
 /**
- * A filename recorded for a downloaded-from-indexer entry.
- */
-export interface DownloadedFromIndexerFilenameDto extends AdditionalDataHolder, Parsable {
-    /**
-     * When this filename row was created.
-     */
-    createdAtUtc?: Date | null;
-    /**
-     * ID of the parent downloaded-from-indexer entry.
-     */
-    downloadedFromIndexerId?: Guid | null;
-    /**
-     * The filename as reported by the indexer/download source.
-     */
-    filename?: string | null;
-    /**
-     * File size in bytes.
-     */
-    filesize?: number | null;
-    /**
-     * ID of the filename row.
-     */
-    id?: Guid | null;
-    /**
-     * Optional OS hash value as a 16-character fixed-length string.
-     */
-    osHash?: string | null;
-    /**
-     * Optional perceptual hash value as a 16-character fixed-length string.
-     */
-    pHash?: string | null;
-    /**
-     * When this filename row was last updated.
-     */
-    updatedAtUtc?: Date | null;
-}
-/**
- * A downloaded-from-indexer entry for the current user.
- */
-export interface DownloadedFromIndexerResponse extends AdditionalDataHolder, Parsable {
-    /**
-     * When this entry was created.
-     */
-    createdAtUtc?: Date | null;
-    /**
-     * Download identifier returned by the indexer or download client.
-     */
-    downloadIdentifier?: string | null;
-    /**
-     * Filename rows recorded for this entry.
-     */
-    filenames?: DownloadedFromIndexerFilenameDto[] | null;
-    /**
-     * ID of the downloaded-from-indexer entry.
-     */
-    id?: Guid | null;
-    /**
-     * Indexer-specific identifier for the download item.
-     */
-    indexerId?: string | null;
-    /**
-     * Known values: DrunkenSlug (0), NzbFinder (1), NzbPorn (2).
-     */
-    indexerSource?: number | null;
-    /**
-     * NZB or release name.
-     */
-    nzbName?: string | null;
-    /**
-     * NZB or release URL.
-     */
-    nzbUrl?: string | null;
-    /**
-     * When this entry was last updated.
-     */
-    updatedAtUtc?: Date | null;
-    /**
-     * ID of the associated wanted video, or null when the download is not linked to a video.
-     */
-    videoId?: Guid | null;
-}
-/**
  * A single changed favorite actor row in the incremental feed.
  */
 export interface FavoriteActorChangeDto extends AdditionalDataHolder, Parsable {
@@ -3833,31 +3333,6 @@ export interface GetHealthResponse extends AdditionalDataHolder, Parsable {
     timestamp?: Date | null;
 }
 /**
- * Paged delta feed of indexer filehash changes ordered by updated timestamp and ID.
- */
-export interface GetIndexerFilehashChangesResponse extends AdditionalDataHolder, Parsable {
-    /**
-     * Whether additional rows exist after the current page.
-     */
-    hasMore?: boolean | null;
-    /**
-     * The items property
-     */
-    items?: IndexerFilehashChangeDto[] | null;
-    /**
-     * Seek cursor for continuing an indexer filehash change feed.
-     */
-    nextCursor?: IndexerFilehashChangesCursorDto | null;
-    /**
-     * The resolved page size for this response.
-     */
-    pageSize?: number | null;
-    /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
-     */
-    serverTimeUtc?: Date | null;
-}
-/**
  * Current rate limit status for the authenticated user.
  */
 export interface GetRateLimitResponse extends AdditionalDataHolder, Parsable {
@@ -4089,178 +3564,6 @@ export interface IdentifyVideosResponse extends AdditionalDataHolder, Parsable {
      * One result per input file, in input order.
      */
     results?: IdentifyVideoResultDto[] | null;
-}
-/**
- * A single changed indexer filehash row in the incremental feed.
- */
-export interface IndexerFilehashChangeDto extends AdditionalDataHolder, Parsable {
-    /**
-     * One of `created`, `updated`, or `deleted`.
-     */
-    eventType?: string | null;
-    /**
-     * Current persisted state of a changed indexer filehash row, including soft-delete fields.
-     */
-    filehash?: IndexerFilehashChangeFilehashDto | null;
-}
-/**
- * Current persisted state of a changed indexer filehash row, including soft-delete fields.
- */
-export interface IndexerFilehashChangeFilehashDto extends AdditionalDataHolder, Parsable {
-    /**
-     * The createdAtUtc property
-     */
-    createdAtUtc?: Date | null;
-    /**
-     * Timestamp when the row was soft-deleted, or null when still active.
-     */
-    deletedAtUtc?: Date | null;
-    /**
-     * Original filename submitted for this filehash record.
-     */
-    filename?: string | null;
-    /**
-     * File size in bytes.
-     */
-    filesize?: number | null;
-    /**
-     * The id property
-     */
-    id?: Guid | null;
-    /**
-     * Indexer-specific identifier for the release.
-     */
-    indexerId?: string | null;
-    /**
-     * Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.
-     */
-    indexerSource?: string | null;
-    /**
-     * Whether this row is soft-deleted.
-     */
-    isDeleted?: boolean | null;
-    /**
-     * Whether this filehash record has been verified.
-     */
-    isVerified?: boolean | null;
-    /**
-     * OS hash value as stored.
-     */
-    osHash?: string | null;
-    /**
-     * P hash value as stored, or null when not available.
-     */
-    pHash?: string | null;
-    /**
-     * Number of submissions merged into this filehash record.
-     */
-    submissionCount?: number | null;
-    /**
-     * The updatedAtUtc property
-     */
-    updatedAtUtc?: Date | null;
-}
-/**
- * Seek cursor for continuing an indexer filehash change feed.
- */
-export interface IndexerFilehashChangesCursorDto extends AdditionalDataHolder, Parsable {
-    /**
-     * The id property
-     */
-    id?: Guid | null;
-    /**
-     * The updatedAtUtc property
-     */
-    updatedAtUtc?: Date | null;
-}
-export interface IndexerFilehashDto extends AdditionalDataHolder, Parsable {
-    /**
-     * The createdAtUtc property
-     */
-    createdAtUtc?: Date | null;
-    /**
-     * Original filename submitted for this filehash record.
-     */
-    filename?: string | null;
-    /**
-     * File size in bytes.
-     */
-    filesize?: number | null;
-    /**
-     * The id property
-     */
-    id?: Guid | null;
-    /**
-     * Indexer-specific identifier for the release.
-     */
-    indexerId?: string | null;
-    /**
-     * Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`.
-     */
-    indexerSource?: string | null;
-    /**
-     * Whether this filehash record has been verified.
-     */
-    isVerified?: boolean | null;
-    /**
-     * OS hash value as stored.
-     */
-    osHash?: string | null;
-    /**
-     * P hash value as stored, or null when not available.
-     */
-    pHash?: string | null;
-    /**
-     * Number of submissions merged into this filehash record.
-     */
-    submissionCount?: number | null;
-    /**
-     * The updatedAtUtc property
-     */
-    updatedAtUtc?: Date | null;
-}
-/**
- * Combined indexer identity used to match filehashes by indexer source and indexer-specific ID.
- */
-export interface IndexerFilehashLookupKeyDto extends AdditionalDataHolder, Parsable {
-    /**
-     * Indexer-specific identifier for the release.
-     */
-    indexerId?: string | null;
-    /**
-     * Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
-     */
-    indexerSource?: IndexerFilehashLookupKeyDto_indexerSource | null;
-}
-export type IndexerFilehashLookupKeyDto_indexerSource = (typeof IndexerFilehashLookupKeyDto_indexerSourceObject)[keyof typeof IndexerFilehashLookupKeyDto_indexerSourceObject];
-/**
- * Paged list of the latest indexer filehash entries.
- */
-export interface LatestIndexerFilehashesResponse extends AdditionalDataHolder, Parsable {
-    /**
-     * The items property
-     */
-    items?: IndexerFilehashDto[] | null;
-    /**
-     * Current page number (1-based).
-     */
-    page?: number | null;
-    /**
-     * Number of items per page.
-     */
-    pageSize?: number | null;
-    /**
-     * Resolved sort field for the current query.
-     */
-    sortBy?: string | null;
-    /**
-     * Resolved sort direction for the current query.
-     */
-    sortDirection?: string | null;
-    /**
-     * Total number of filehash entries matching the current filters.
-     */
-    totalCount?: number | null;
 }
 export interface LatestPreDbItemDto extends AdditionalDataHolder, Parsable {
     /**
@@ -4576,41 +3879,6 @@ export interface ListWantedVideosResponse extends AdditionalDataHolder, Parsable
      * Total number of pages.
      */
     totalPages?: number | null;
-}
-export interface LookupIndexerFilehashesRequest extends AdditionalDataHolder, Parsable {
-    /**
-     * Optional exact filenames to match.
-     */
-    filenames?: string[] | null;
-    /**
-     * Optional exact file sizes to match.
-     */
-    filesizes?: number[] | null;
-    /**
-     * Optional filehash row IDs to match.
-     */
-    ids?: Guid[] | null;
-    /**
-     * Optional combined indexer source and indexer ID pairs to match.
-     */
-    indexerKeys?: IndexerFilehashLookupKeyDto[] | null;
-    /**
-     * Optional OS hash values to match.
-     */
-    osHashes?: string[] | null;
-    /**
-     * Optional perceptual hash values to match, 16 hexadecimal characters each. Matched forequality, so a value computed by any procedure other than the one under "Perceptualhashes" in the API description matches nothing rather than failing.
-     */
-    pHashes?: string[] | null;
-}
-/**
- * Flat indexer filehash lookup results.
- */
-export interface LookupIndexerFilehashesResponse extends AdditionalDataHolder, Parsable {
-    /**
-     * The items property
-     */
-    items?: IndexerFilehashDto[] | null;
 }
 export interface LookupVideoFilehashesRequest extends AdditionalDataHolder, Parsable {
     /**
@@ -5056,39 +4324,6 @@ export function serializeActorSummaryDto(writer: SerializationWriter, actorSumma
 }
 /**
  * Serializes information the current object
- * @param AddDownloadedFromIndexerFilenameRequest The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeAddDownloadedFromIndexerFilenameRequest(writer: SerializationWriter, addDownloadedFromIndexerFilenameRequest: Partial<AddDownloadedFromIndexerFilenameRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!addDownloadedFromIndexerFilenameRequest || isSerializingDerivedType) { return; }
-    writer.writeStringValue("filename", addDownloadedFromIndexerFilenameRequest.filename);
-    writer.writeNumberValue("filesize", addDownloadedFromIndexerFilenameRequest.filesize);
-    writer.writeStringValue("osHash", addDownloadedFromIndexerFilenameRequest.osHash);
-    writer.writeStringValue("pHash", addDownloadedFromIndexerFilenameRequest.pHash);
-    writer.writeAdditionalData(addDownloadedFromIndexerFilenameRequest.additionalData);
-}
-/**
- * Serializes information the current object
- * @param AddDownloadedFromIndexerRequest The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeAddDownloadedFromIndexerRequest(writer: SerializationWriter, addDownloadedFromIndexerRequest: Partial<AddDownloadedFromIndexerRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!addDownloadedFromIndexerRequest || isSerializingDerivedType) { return; }
-    writer.writeStringValue("downloadIdentifier", addDownloadedFromIndexerRequest.downloadIdentifier);
-    writer.writeCollectionOfObjectValues<AddDownloadedFromIndexerFilenameRequest>("filenames", addDownloadedFromIndexerRequest.filenames, serializeAddDownloadedFromIndexerFilenameRequest);
-    writer.writeStringValue("indexerId", addDownloadedFromIndexerRequest.indexerId);
-    writer.writeNumberValue("indexerSource", addDownloadedFromIndexerRequest.indexerSource);
-    writer.writeStringValue("nzbName", addDownloadedFromIndexerRequest.nzbName);
-    writer.writeStringValue("nzbUrl", addDownloadedFromIndexerRequest.nzbUrl);
-    writer.writeGuidValue("videoId", addDownloadedFromIndexerRequest.videoId);
-    writer.writeAdditionalData(addDownloadedFromIndexerRequest.additionalData);
-}
-/**
- * Serializes information the current object
  * @param AddWantedVideosBatchRequest The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -5112,46 +4347,6 @@ export function serializeAddWantedVideosBatchResponse(writer: SerializationWrite
     writer.writeNumberValue("alreadyExisted", addWantedVideosBatchResponse.alreadyExisted);
     writer.writeNumberValue("notFound", addWantedVideosBatchResponse.notFound);
     writer.writeAdditionalData(addWantedVideosBatchResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param DownloadedFromIndexerFilenameDto The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeDownloadedFromIndexerFilenameDto(writer: SerializationWriter, downloadedFromIndexerFilenameDto: Partial<DownloadedFromIndexerFilenameDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!downloadedFromIndexerFilenameDto || isSerializingDerivedType) { return; }
-    writer.writeDateValue("createdAtUtc", downloadedFromIndexerFilenameDto.createdAtUtc);
-    writer.writeGuidValue("downloadedFromIndexerId", downloadedFromIndexerFilenameDto.downloadedFromIndexerId);
-    writer.writeStringValue("filename", downloadedFromIndexerFilenameDto.filename);
-    writer.writeNumberValue("filesize", downloadedFromIndexerFilenameDto.filesize);
-    writer.writeGuidValue("id", downloadedFromIndexerFilenameDto.id);
-    writer.writeStringValue("osHash", downloadedFromIndexerFilenameDto.osHash);
-    writer.writeStringValue("pHash", downloadedFromIndexerFilenameDto.pHash);
-    writer.writeDateValue("updatedAtUtc", downloadedFromIndexerFilenameDto.updatedAtUtc);
-    writer.writeAdditionalData(downloadedFromIndexerFilenameDto.additionalData);
-}
-/**
- * Serializes information the current object
- * @param DownloadedFromIndexerResponse The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeDownloadedFromIndexerResponse(writer: SerializationWriter, downloadedFromIndexerResponse: Partial<DownloadedFromIndexerResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!downloadedFromIndexerResponse || isSerializingDerivedType) { return; }
-    writer.writeDateValue("createdAtUtc", downloadedFromIndexerResponse.createdAtUtc);
-    writer.writeStringValue("downloadIdentifier", downloadedFromIndexerResponse.downloadIdentifier);
-    writer.writeCollectionOfObjectValues<DownloadedFromIndexerFilenameDto>("filenames", downloadedFromIndexerResponse.filenames, serializeDownloadedFromIndexerFilenameDto);
-    writer.writeGuidValue("id", downloadedFromIndexerResponse.id);
-    writer.writeStringValue("indexerId", downloadedFromIndexerResponse.indexerId);
-    writer.writeNumberValue("indexerSource", downloadedFromIndexerResponse.indexerSource);
-    writer.writeStringValue("nzbName", downloadedFromIndexerResponse.nzbName);
-    writer.writeStringValue("nzbUrl", downloadedFromIndexerResponse.nzbUrl);
-    writer.writeDateValue("updatedAtUtc", downloadedFromIndexerResponse.updatedAtUtc);
-    writer.writeGuidValue("videoId", downloadedFromIndexerResponse.videoId);
-    writer.writeAdditionalData(downloadedFromIndexerResponse.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5412,22 +4607,6 @@ export function serializeGetHealthResponse(writer: SerializationWriter, getHealt
 }
 /**
  * Serializes information the current object
- * @param GetIndexerFilehashChangesResponse The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeGetIndexerFilehashChangesResponse(writer: SerializationWriter, getIndexerFilehashChangesResponse: Partial<GetIndexerFilehashChangesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!getIndexerFilehashChangesResponse || isSerializingDerivedType) { return; }
-    writer.writeBooleanValue("hasMore", getIndexerFilehashChangesResponse.hasMore);
-    writer.writeCollectionOfObjectValues<IndexerFilehashChangeDto>("items", getIndexerFilehashChangesResponse.items, serializeIndexerFilehashChangeDto);
-    writer.writeObjectValue<IndexerFilehashChangesCursorDto>("nextCursor", getIndexerFilehashChangesResponse.nextCursor, serializeIndexerFilehashChangesCursorDto);
-    writer.writeNumberValue("pageSize", getIndexerFilehashChangesResponse.pageSize);
-    writer.writeDateValue("serverTimeUtc", getIndexerFilehashChangesResponse.serverTimeUtc);
-    writer.writeAdditionalData(getIndexerFilehashChangesResponse.additionalData);
-}
-/**
- * Serializes information the current object
  * @param GetRateLimitResponse The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -5613,108 +4792,6 @@ export function serializeIdentifyVideosResponse(writer: SerializationWriter, ide
     if (!identifyVideosResponse || isSerializingDerivedType) { return; }
     writer.writeCollectionOfObjectValues<IdentifyVideoResultDto>("results", identifyVideosResponse.results, serializeIdentifyVideoResultDto);
     writer.writeAdditionalData(identifyVideosResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param IndexerFilehashChangeDto The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeIndexerFilehashChangeDto(writer: SerializationWriter, indexerFilehashChangeDto: Partial<IndexerFilehashChangeDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!indexerFilehashChangeDto || isSerializingDerivedType) { return; }
-    writer.writeStringValue("eventType", indexerFilehashChangeDto.eventType);
-    writer.writeObjectValue<IndexerFilehashChangeFilehashDto>("filehash", indexerFilehashChangeDto.filehash, serializeIndexerFilehashChangeFilehashDto);
-    writer.writeAdditionalData(indexerFilehashChangeDto.additionalData);
-}
-/**
- * Serializes information the current object
- * @param IndexerFilehashChangeFilehashDto The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeIndexerFilehashChangeFilehashDto(writer: SerializationWriter, indexerFilehashChangeFilehashDto: Partial<IndexerFilehashChangeFilehashDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!indexerFilehashChangeFilehashDto || isSerializingDerivedType) { return; }
-    writer.writeDateValue("createdAtUtc", indexerFilehashChangeFilehashDto.createdAtUtc);
-    writer.writeDateValue("deletedAtUtc", indexerFilehashChangeFilehashDto.deletedAtUtc);
-    writer.writeStringValue("filename", indexerFilehashChangeFilehashDto.filename);
-    writer.writeNumberValue("filesize", indexerFilehashChangeFilehashDto.filesize);
-    writer.writeGuidValue("id", indexerFilehashChangeFilehashDto.id);
-    writer.writeStringValue("indexerId", indexerFilehashChangeFilehashDto.indexerId);
-    writer.writeStringValue("indexerSource", indexerFilehashChangeFilehashDto.indexerSource);
-    writer.writeBooleanValue("isDeleted", indexerFilehashChangeFilehashDto.isDeleted);
-    writer.writeBooleanValue("isVerified", indexerFilehashChangeFilehashDto.isVerified);
-    writer.writeStringValue("osHash", indexerFilehashChangeFilehashDto.osHash);
-    writer.writeStringValue("pHash", indexerFilehashChangeFilehashDto.pHash);
-    writer.writeNumberValue("submissionCount", indexerFilehashChangeFilehashDto.submissionCount);
-    writer.writeDateValue("updatedAtUtc", indexerFilehashChangeFilehashDto.updatedAtUtc);
-    writer.writeAdditionalData(indexerFilehashChangeFilehashDto.additionalData);
-}
-/**
- * Serializes information the current object
- * @param IndexerFilehashChangesCursorDto The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeIndexerFilehashChangesCursorDto(writer: SerializationWriter, indexerFilehashChangesCursorDto: Partial<IndexerFilehashChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!indexerFilehashChangesCursorDto || isSerializingDerivedType) { return; }
-    writer.writeGuidValue("id", indexerFilehashChangesCursorDto.id);
-    writer.writeDateValue("updatedAtUtc", indexerFilehashChangesCursorDto.updatedAtUtc);
-    writer.writeAdditionalData(indexerFilehashChangesCursorDto.additionalData);
-}
-/**
- * Serializes information the current object
- * @param IndexerFilehashDto The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeIndexerFilehashDto(writer: SerializationWriter, indexerFilehashDto: Partial<IndexerFilehashDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!indexerFilehashDto || isSerializingDerivedType) { return; }
-    writer.writeDateValue("createdAtUtc", indexerFilehashDto.createdAtUtc);
-    writer.writeStringValue("filename", indexerFilehashDto.filename);
-    writer.writeNumberValue("filesize", indexerFilehashDto.filesize);
-    writer.writeGuidValue("id", indexerFilehashDto.id);
-    writer.writeStringValue("indexerId", indexerFilehashDto.indexerId);
-    writer.writeStringValue("indexerSource", indexerFilehashDto.indexerSource);
-    writer.writeBooleanValue("isVerified", indexerFilehashDto.isVerified);
-    writer.writeStringValue("osHash", indexerFilehashDto.osHash);
-    writer.writeStringValue("pHash", indexerFilehashDto.pHash);
-    writer.writeNumberValue("submissionCount", indexerFilehashDto.submissionCount);
-    writer.writeDateValue("updatedAtUtc", indexerFilehashDto.updatedAtUtc);
-    writer.writeAdditionalData(indexerFilehashDto.additionalData);
-}
-/**
- * Serializes information the current object
- * @param IndexerFilehashLookupKeyDto The instance to serialize from.
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeIndexerFilehashLookupKeyDto(writer: SerializationWriter, indexerFilehashLookupKeyDto: Partial<IndexerFilehashLookupKeyDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!indexerFilehashLookupKeyDto || isSerializingDerivedType) { return; }
-    writer.writeStringValue("indexerId", indexerFilehashLookupKeyDto.indexerId);
-    writer.writeEnumValue<IndexerFilehashLookupKeyDto_indexerSource>("indexerSource", indexerFilehashLookupKeyDto.indexerSource);
-    writer.writeAdditionalData(indexerFilehashLookupKeyDto.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param LatestIndexerFilehashesResponse The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeLatestIndexerFilehashesResponse(writer: SerializationWriter, latestIndexerFilehashesResponse: Partial<LatestIndexerFilehashesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!latestIndexerFilehashesResponse || isSerializingDerivedType) { return; }
-    writer.writeCollectionOfObjectValues<IndexerFilehashDto>("items", latestIndexerFilehashesResponse.items, serializeIndexerFilehashDto);
-    writer.writeNumberValue("page", latestIndexerFilehashesResponse.page);
-    writer.writeNumberValue("pageSize", latestIndexerFilehashesResponse.pageSize);
-    writer.writeStringValue("sortBy", latestIndexerFilehashesResponse.sortBy);
-    writer.writeStringValue("sortDirection", latestIndexerFilehashesResponse.sortDirection);
-    writer.writeNumberValue("totalCount", latestIndexerFilehashesResponse.totalCount);
-    writer.writeAdditionalData(latestIndexerFilehashesResponse.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5913,35 +4990,6 @@ export function serializeListWantedVideosResponse(writer: SerializationWriter, l
     writer.writeNumberValue("totalCount", listWantedVideosResponse.totalCount);
     writer.writeNumberValue("totalPages", listWantedVideosResponse.totalPages);
     writer.writeAdditionalData(listWantedVideosResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param LookupIndexerFilehashesRequest The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeLookupIndexerFilehashesRequest(writer: SerializationWriter, lookupIndexerFilehashesRequest: Partial<LookupIndexerFilehashesRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!lookupIndexerFilehashesRequest || isSerializingDerivedType) { return; }
-    writer.writeCollectionOfPrimitiveValues<string>("filenames", lookupIndexerFilehashesRequest.filenames);
-    writer.writeCollectionOfPrimitiveValues<number>("filesizes", lookupIndexerFilehashesRequest.filesizes);
-    writer.writeCollectionOfPrimitiveValues<Guid>("ids", lookupIndexerFilehashesRequest.ids);
-    writer.writeCollectionOfObjectValues<IndexerFilehashLookupKeyDto>("indexerKeys", lookupIndexerFilehashesRequest.indexerKeys, serializeIndexerFilehashLookupKeyDto);
-    writer.writeCollectionOfPrimitiveValues<string>("osHashes", lookupIndexerFilehashesRequest.osHashes);
-    writer.writeCollectionOfPrimitiveValues<string>("pHashes", lookupIndexerFilehashesRequest.pHashes);
-    writer.writeAdditionalData(lookupIndexerFilehashesRequest.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param LookupIndexerFilehashesResponse The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeLookupIndexerFilehashesResponse(writer: SerializationWriter, lookupIndexerFilehashesResponse: Partial<LookupIndexerFilehashesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!lookupIndexerFilehashesResponse || isSerializingDerivedType) { return; }
-    writer.writeCollectionOfObjectValues<IndexerFilehashDto>("items", lookupIndexerFilehashesResponse.items, serializeIndexerFilehashDto);
-    writer.writeAdditionalData(lookupIndexerFilehashesResponse.additionalData);
 }
 /**
  * Serializes information the current object
@@ -6145,6 +5193,7 @@ export function serializeSubmitVideoFilehashItem(writer: SerializationWriter, su
     writer.writeNumberValue("filesize", submitVideoFilehashItem.filesize);
     writer.writeStringValue("osHash", submitVideoFilehashItem.osHash);
     writer.writeStringValue("pHash", submitVideoFilehashItem.pHash);
+    writer.writeStringValue("releaseName", submitVideoFilehashItem.releaseName);
     writer.writeNumberValue("source", submitVideoFilehashItem.source);
     writer.writeGuidValue("videoId", submitVideoFilehashItem.videoId);
     writer.writeAdditionalData(submitVideoFilehashItem.additionalData);
@@ -6194,37 +5243,6 @@ export function serializeUnlinkedVideoFilehashesResponse(writer: SerializationWr
     writer.writeStringValue("sortDirection", unlinkedVideoFilehashesResponse.sortDirection);
     writer.writeNumberValue("totalCount", unlinkedVideoFilehashesResponse.totalCount);
     writer.writeAdditionalData(unlinkedVideoFilehashesResponse.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param UpdateDownloadedFromIndexerFilenameRequest The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateDownloadedFromIndexerFilenameRequest(writer: SerializationWriter, updateDownloadedFromIndexerFilenameRequest: Partial<UpdateDownloadedFromIndexerFilenameRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!updateDownloadedFromIndexerFilenameRequest || isSerializingDerivedType) { return; }
-    writer.writeStringValue("filename", updateDownloadedFromIndexerFilenameRequest.filename);
-    writer.writeNumberValue("filesize", updateDownloadedFromIndexerFilenameRequest.filesize);
-    writer.writeStringValue("osHash", updateDownloadedFromIndexerFilenameRequest.osHash);
-    writer.writeStringValue("pHash", updateDownloadedFromIndexerFilenameRequest.pHash);
-    writer.writeAdditionalData(updateDownloadedFromIndexerFilenameRequest.additionalData);
-}
-/**
- * Serializes information the current object
- * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
- * @param UpdateDownloadedFromIndexerRequest The instance to serialize from.
- * @param writer Serialization writer to use to serialize this model
- */
-// @ts-ignore
-export function serializeUpdateDownloadedFromIndexerRequest(writer: SerializationWriter, updateDownloadedFromIndexerRequest: Partial<UpdateDownloadedFromIndexerRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
-    if (!updateDownloadedFromIndexerRequest || isSerializingDerivedType) { return; }
-    writer.writeStringValue("downloadIdentifier", updateDownloadedFromIndexerRequest.downloadIdentifier);
-    writer.writeStringValue("indexerId", updateDownloadedFromIndexerRequest.indexerId);
-    writer.writeNumberValue("indexerSource", updateDownloadedFromIndexerRequest.indexerSource);
-    writer.writeStringValue("nzbName", updateDownloadedFromIndexerRequest.nzbName);
-    writer.writeStringValue("nzbUrl", updateDownloadedFromIndexerRequest.nzbUrl);
-    writer.writeAdditionalData(updateDownloadedFromIndexerRequest.additionalData);
 }
 /**
  * Serializes information the current object
@@ -6748,6 +5766,10 @@ export interface SubmitVideoFilehashItem extends AdditionalDataHolder, Parsable 
      */
     pHash?: string | null;
     /**
+     * The scene release name the file came in, if the client knows one. Optional. It is a releasename, not a file name: send it when the acquisition carried one, and leave it out otherwise.
+     */
+    releaseName?: string | null;
+    /**
      * Known values: UserConfirmed (0), ClientDetected (1).
      */
     source?: number | null;
@@ -6819,46 +5841,6 @@ export interface UnlinkedVideoFilehashesResponse extends AdditionalDataHolder, P
      * Total number of active unlinked filehash entries matching the current filters.
      */
     totalCount?: number | null;
-}
-export interface UpdateDownloadedFromIndexerFilenameRequest extends AdditionalDataHolder, Parsable {
-    /**
-     * The filename as reported by the indexer/download source.
-     */
-    filename?: string | null;
-    /**
-     * File size in bytes.
-     */
-    filesize?: number | null;
-    /**
-     * Optional OS hash value as a 16-character fixed-length string.
-     */
-    osHash?: string | null;
-    /**
-     * Optional perceptual hash value, 16 hexadecimal characters. It must be computed as"Perceptual hashes" in the API description prescribes; a value from another procedureis stored but can never be matched.
-     */
-    pHash?: string | null;
-}
-export interface UpdateDownloadedFromIndexerRequest extends AdditionalDataHolder, Parsable {
-    /**
-     * Download identifier returned by the indexer or download client.
-     */
-    downloadIdentifier?: string | null;
-    /**
-     * Indexer-specific identifier for the download item.
-     */
-    indexerId?: string | null;
-    /**
-     * Known values: DrunkenSlug (0), NzbFinder (1), NzbPorn (2).
-     */
-    indexerSource?: number | null;
-    /**
-     * NZB or release name.
-     */
-    nzbName?: string | null;
-    /**
-     * NZB or release URL.
-     */
-    nzbUrl?: string | null;
 }
 export interface UpdateWantedVideoRequest extends AdditionalDataHolder, Parsable {
     /**
@@ -7572,14 +6554,6 @@ export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
      */
     videoTitle?: string | null;
 }
-/**
- * Indexer source. Supported values: `DrunkenSlug`, `NzbFinder`, `NzbPorn`. Allowed values: DrunkenSlug, NzbFinder, NzbPorn.
- */
-export const IndexerFilehashLookupKeyDto_indexerSourceObject = {
-    DrunkenSlug: "DrunkenSlug",
-    NzbFinder: "NzbFinder",
-    NzbPorn: "NzbPorn",
-} as const;
 /**
  * Allowed values: NotRelatedToVideo, SpamOrPromotional, OffensiveOrProhibited, DuplicateOrLowQuality, MisleadingOrWrongPreview, CopyrightConcern, Other.
  */

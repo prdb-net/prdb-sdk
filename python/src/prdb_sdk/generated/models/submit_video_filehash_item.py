@@ -21,6 +21,8 @@ class SubmitVideoFilehashItem(AdditionalDataHolder, Parsable):
     os_hash: Optional[str] = None
     # Perceptual hash of the file, 16 hexadecimal characters, if the client computed one. It mustbe computed as "Perceptual hashes" in the API description prescribes; a submission carryinga value from another procedure contributes a row nothing can match.
     p_hash: Optional[str] = None
+    # The scene release name the file came in, if the client knows one. Optional. It is a releasename, not a file name: send it when the acquisition carried one, and leave it out otherwise.
+    release_name: Optional[str] = None
     # Known values: UserConfirmed (0), ClientDetected (1).
     source: Optional[int] = None
     # The video this file is. Required — a hash observation without an assignment is not accepted.
@@ -47,6 +49,7 @@ class SubmitVideoFilehashItem(AdditionalDataHolder, Parsable):
             "filesize": lambda n : setattr(self, 'filesize', n.get_int_value()),
             "osHash": lambda n : setattr(self, 'os_hash', n.get_str_value()),
             "pHash": lambda n : setattr(self, 'p_hash', n.get_str_value()),
+            "releaseName": lambda n : setattr(self, 'release_name', n.get_str_value()),
             "source": lambda n : setattr(self, 'source', n.get_int_value()),
             "videoId": lambda n : setattr(self, 'video_id', n.get_uuid_value()),
         }
@@ -64,6 +67,7 @@ class SubmitVideoFilehashItem(AdditionalDataHolder, Parsable):
         writer.write_int_value("filesize", self.filesize)
         writer.write_str_value("osHash", self.os_hash)
         writer.write_str_value("pHash", self.p_hash)
+        writer.write_str_value("releaseName", self.release_name)
         writer.write_int_value("source", self.source)
         writer.write_uuid_value("videoId", self.video_id)
         writer.write_additional_data_value(self.additional_data)

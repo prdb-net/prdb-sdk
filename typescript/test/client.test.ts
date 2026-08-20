@@ -248,53 +248,27 @@ describe("retrying", () => {
 });
 
 describe("ResponseStatusOption", () => {
-	const ENTRY_BODY = JSON.stringify({
-		id: "00000000-0000-0000-0000-000000000100",
-		indexerId: "indexer-entry-id",
-	});
-
-	function entry(status: number): Response {
-		return new Response(ENTRY_BODY, {
-			status,
-			headers: { "content-type": "application/json" },
-		});
-	}
-
-	function addEntry(
+	function getHealth(
 		client: ReturnType<typeof createClient>,
 		status: ResponseStatusOption,
 	) {
-		return client.downloadedFromIndexers.post(
-			{ indexerId: "indexer-entry-id" },
-			{ options: [status] },
-		);
+		return client.health.get({ options: [status] });
 	}
 
-	/**
-	 * Both halves at once.
-	 *
-	 * `POST /downloaded-from-indexers` answers 201 when it created the entry and
-	 * 200 when an equivalent one already existed, and the bodies are the same
-	 * shape, so a caller who has to tell them apart has nothing else to go on.
-	 * Kiota's native response handler surfaces the response but suppresses
-	 * deserialisation, so it cannot serve both.
-	 */
-	for (const status of [201, 200]) {
-		it(`reports ${status} alongside the typed result`, async () => {
-			const recorder = new Recorder();
-			const client = createClient({
-				apiKey: "secret-key",
-				baseUrl: API_ORIGIN,
-				customFetch: recorder.fetch(() => entry(status)),
-			});
-			const option = new ResponseStatusOption();
-
-			const result = await addEntry(client, option);
-
-			assert.equal(result?.indexerId, "indexer-entry-id");
-			assert.equal(option.statusCode, status);
+	it("reports the success status alongside the typed result", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: API_ORIGIN,
+			customFetch: recorder.fetch(healthy),
 		});
-	}
+		const option = new ResponseStatusOption();
+
+		const result = await getHealth(client, option);
+
+		assert.equal(result?.status, "healthy");
+		assert.equal(option.statusCode, 200);
+	});
 
 	// The handler sits above the retry handler, so the attempt that succeeded wins.
 	it("reports the last attempt when a refusal is retried", async () => {
@@ -305,16 +279,16 @@ describe("ResponseStatusOption", () => {
 			customFetch: recorder.fetch(() =>
 				recorder.requests.length === 1
 					? new Response(null, { status: 503 })
-					: entry(201),
+					: healthy(),
 			),
 			retry: { maxRetries: 1, delay: 0 },
 		});
 		const option = new ResponseStatusOption();
 
-		await addEntry(client, option);
+		await getHealth(client, option);
 
 		assert.equal(recorder.requests.length, 2);
-		assert.equal(option.statusCode, 201);
+		assert.equal(option.statusCode, 200);
 	});
 
 	// A refusal records too, for a caller that catches the error.
@@ -338,7 +312,7 @@ describe("ResponseStatusOption", () => {
 		});
 		const option = new ResponseStatusOption();
 
-		await assert.rejects(() => addEntry(client, option));
+		await assert.rejects(() => getHealth(client, option));
 
 		assert.equal(option.statusCode, 403);
 	});

@@ -8,11 +8,9 @@ namespace Prdb.Sdk;
 /// Per-request option that reports which status code the API answered a typed call with.
 /// </summary>
 /// <remarks>
-/// A generated method returns the deserialised body and nothing else, which is a problem when
-/// an operation answers with more than one success status. <c>POST /downloaded-from-indexers</c>
-/// is the one that does: <c>201</c> when it created the entry, <c>200</c> when an equivalent one
-/// already existed and is being returned unchanged. The bodies are the same shape, so the status
-/// is the only thing that tells the two apart.
+/// A generated method returns the deserialised body and nothing else. That is not enough when
+/// the status itself matters, for example when a conditional <c>GET /sites</c> returns <c>304</c>
+/// with no body.
 /// <para>
 /// Kiota's own way of reaching the response is <c>NativeResponseHandler</c>, which suppresses
 /// deserialisation while it does so — you get the raw response or the typed model, never both.
@@ -23,14 +21,9 @@ namespace Prdb.Sdk;
 /// <code>
 /// var status = new ResponseStatusOption();
 ///
-/// var entry = await client.DownloadedFromIndexers.PostAsync(
-///     body,
-///     config => config.Options.Add(status));
-///
-/// if (status.StatusCode == HttpStatusCode.OK)
-/// {
-///     // An equivalent entry already existed and was returned unchanged.
-/// }
+/// var health = await client.Health.GetAsync(config => config.Options.Add(status));
+/// Debug.Assert(health?.Status == "healthy");
+/// Debug.Assert(status.StatusCode == HttpStatusCode.OK);
 /// </code>
 /// </example>
 /// <para>

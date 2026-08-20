@@ -18,8 +18,6 @@ import (
     i537320b434a4af28e291891946f3da7ffd8423775347e57d6efe1289158a2669 "github.com/prdb-net/prdb-sdk/go/generated/videouserimages"
     i5a95aa2dd443c596b67eb6c935fdb7f19de9e95e212751ae2fa3fd39d8d15bb4 "github.com/prdb-net/prdb-sdk/go/generated/favoritesites"
     i5b1119c4dd8bd41e0de622c16680465b305b2206d3d142461e25bde5c3eda914 "github.com/prdb-net/prdb-sdk/go/generated/predb"
-    i72df271636b5480a7d6e197c7032e34cf3ba56531f32b22186194f8e619ce0e1 "github.com/prdb-net/prdb-sdk/go/generated/downloadedfromindexers"
-    i77fda11f35370ad3f91b60ff464e97565b77caa36ae0174f81056064cae4385a "github.com/prdb-net/prdb-sdk/go/generated/indexerfilehashes"
     ib501bb59d891d348a1fb3d04a5513f77c38964c34d017e5b23aeda26bfd9a7f2 "github.com/prdb-net/prdb-sdk/go/generated/sites"
     ibb80a02347ec409bec9803cc4cc4367ebec3877666fc8d006c680689a023a280 "github.com/prdb-net/prdb-sdk/go/generated/favoriteactors"
     if74dbd27953d29efb807ca48dd3c81a558dddda8573335a7c84e57f024f32144 "github.com/prdb-net/prdb-sdk/go/generated/ratelimit"
@@ -52,11 +50,6 @@ func NewPrdbClient(requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa5290
     m.BaseRequestBuilder.PathParameters["baseurl"] = m.BaseRequestBuilder.RequestAdapter.GetBaseUrl()
     return m
 }
-// DownloadedFromIndexers the downloadedFromIndexers property
-// returns a *DownloadedFromIndexersRequestBuilder when successful
-func (m *PrdbClient) DownloadedFromIndexers()(*i72df271636b5480a7d6e197c7032e34cf3ba56531f32b22186194f8e619ce0e1.DownloadedFromIndexersRequestBuilder) {
-    return i72df271636b5480a7d6e197c7032e34cf3ba56531f32b22186194f8e619ce0e1.NewDownloadedFromIndexersRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
-}
 // FavoriteActors the favoriteActors property
 // returns a *FavoriteActorsRequestBuilder when successful
 func (m *PrdbClient) FavoriteActors()(*ibb80a02347ec409bec9803cc4cc4367ebec3877666fc8d006c680689a023a280.FavoriteActorsRequestBuilder) {
@@ -71,11 +64,6 @@ func (m *PrdbClient) FavoriteSites()(*i5a95aa2dd443c596b67eb6c935fdb7f19de9e95e2
 // returns a *HealthRequestBuilder when successful
 func (m *PrdbClient) Health()(*i371e6e58f853fdf9b4c98cc455f8681d07ffc467ce06a232caf76e8a36df3ac1.HealthRequestBuilder) {
     return i371e6e58f853fdf9b4c98cc455f8681d07ffc467ce06a232caf76e8a36df3ac1.NewHealthRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
-}
-// IndexerFilehashes the indexerFilehashes property
-// returns a *IndexerFilehashesRequestBuilder when successful
-func (m *PrdbClient) IndexerFilehashes()(*i77fda11f35370ad3f91b60ff464e97565b77caa36ae0174f81056064cae4385a.IndexerFilehashesRequestBuilder) {
-    return i77fda11f35370ad3f91b60ff464e97565b77caa36ae0174f81056064cae4385a.NewIndexerFilehashesRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
 // Predb the predb property
 // returns a *PredbRequestBuilder when successful
