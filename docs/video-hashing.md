@@ -16,6 +16,11 @@ be promoted into the aggregated hash set once enough distinct users agree;
 read that set through `GET /videos/filehashes/latest` or follow its delta feed
 at `GET /videos/filehashes/changes`. None of those operations names an indexer.
 
+A submission may also carry the file's optional technical profile, field by
+field. The API stores those measurements for future duration and quality
+aggregation but does not read them back yet; sending them today contributes the
+input for that later work.
+
 ## Why this is written down
 
 The API validates `pHash` as sixteen hex digits and stores it in a `char(16)`

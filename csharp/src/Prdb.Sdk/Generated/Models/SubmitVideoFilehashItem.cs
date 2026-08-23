@@ -15,6 +15,28 @@ namespace Prdb.Sdk.Generated.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
+        /// <summary>Channel count of the audio stream.</summary>
+        public int? AudioChannels { get; set; }
+        /// <summary>Codec of the audio stream, as the probe names it (&quot;aac&quot;, &quot;mp3&quot;).</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? AudioCodec { get; set; }
+#nullable restore
+#else
+        public string AudioCodec { get; set; }
+#endif
+        /// <summary>Overall bit rate of the file in bits per second, across all streams.</summary>
+        public long? BitRate { get; set; }
+        /// <summary>Container of the file as the probe names it. Send it verbatim — it is usually a commaseparated list of the formats the demuxer covers (&quot;mov,mp4,m4a,3gp,3g2,mj2&quot;), not one token.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? ContainerFormat { get; set; }
+#nullable restore
+#else
+        public string ContainerFormat { get; set; }
+#endif
+        /// <summary>Duration of the file in milliseconds, if the client probed it. Optional, like every fieldbelow it: a client that cannot or will not probe submits without them.</summary>
+        public long? DurationMs { get; set; }
         /// <summary>File name without directory. Optional — a client may withhold it, and the endpoint works without it.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -25,6 +47,16 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>Size of the file in bytes.</summary>
         public long? Filesize { get; set; }
+        /// <summary>Average frame rate as the rational the probe reports, verbatim: &quot;24000/1001&quot;, not &quot;23.976&quot;.Rounding merges rates that are not the same one, and for a variable-rate file the largedenominator is the only sign that the value is an average rather than a rate.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? FrameRate { get; set; }
+#nullable restore
+#else
+        public string FrameRate { get; set; }
+#endif
+        /// <summary>Height of the video stream in pixels, as stored.</summary>
+        public int? Height { get; set; }
         /// <summary>OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -51,8 +83,18 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>Known values: UserConfirmed (0), ClientDetected (1).</summary>
         public int? Source { get; set; }
+        /// <summary>Codec of the video stream, as the probe names it (&quot;h264&quot;, &quot;hevc&quot;, &quot;av1&quot;).</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? VideoCodec { get; set; }
+#nullable restore
+#else
+        public string VideoCodec { get; set; }
+#endif
         /// <summary>The video this file is. Required — a hash observation without an assignment is not accepted.</summary>
         public Guid? VideoId { get; set; }
+        /// <summary>Width of the video stream in pixels, as stored. Do not reorder it with the height to make the file landscape.</summary>
+        public int? Width { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.SubmitVideoFilehashItem"/> and sets the default values.
         /// </summary>
@@ -78,13 +120,22 @@ namespace Prdb.Sdk.Generated.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "audioChannels", n => { AudioChannels = n.GetIntValue(); } },
+                { "audioCodec", n => { AudioCodec = n.GetStringValue(); } },
+                { "bitRate", n => { BitRate = n.GetLongValue(); } },
+                { "containerFormat", n => { ContainerFormat = n.GetStringValue(); } },
+                { "durationMs", n => { DurationMs = n.GetLongValue(); } },
                 { "filename", n => { Filename = n.GetStringValue(); } },
                 { "filesize", n => { Filesize = n.GetLongValue(); } },
+                { "frameRate", n => { FrameRate = n.GetStringValue(); } },
+                { "height", n => { Height = n.GetIntValue(); } },
                 { "osHash", n => { OsHash = n.GetStringValue(); } },
                 { "pHash", n => { PHash = n.GetStringValue(); } },
                 { "releaseName", n => { ReleaseName = n.GetStringValue(); } },
                 { "source", n => { Source = n.GetIntValue(); } },
+                { "videoCodec", n => { VideoCodec = n.GetStringValue(); } },
                 { "videoId", n => { VideoId = n.GetGuidValue(); } },
+                { "width", n => { Width = n.GetIntValue(); } },
             };
         }
         /// <summary>
@@ -94,13 +145,22 @@ namespace Prdb.Sdk.Generated.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteIntValue("audioChannels", AudioChannels);
+            writer.WriteStringValue("audioCodec", AudioCodec);
+            writer.WriteLongValue("bitRate", BitRate);
+            writer.WriteStringValue("containerFormat", ContainerFormat);
+            writer.WriteLongValue("durationMs", DurationMs);
             writer.WriteStringValue("filename", Filename);
             writer.WriteLongValue("filesize", Filesize);
+            writer.WriteStringValue("frameRate", FrameRate);
+            writer.WriteIntValue("height", Height);
             writer.WriteStringValue("osHash", OsHash);
             writer.WriteStringValue("pHash", PHash);
             writer.WriteStringValue("releaseName", ReleaseName);
             writer.WriteIntValue("source", Source);
+            writer.WriteStringValue("videoCodec", VideoCodec);
             writer.WriteGuidValue("videoId", VideoId);
+            writer.WriteIntValue("width", Width);
             writer.WriteAdditionalData(AdditionalData);
         }
     }
