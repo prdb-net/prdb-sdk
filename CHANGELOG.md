@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-08-23
+
 ### Added
 
 - **`SubmitVideoFilehashItem` can carry an optional technical profile.** The
