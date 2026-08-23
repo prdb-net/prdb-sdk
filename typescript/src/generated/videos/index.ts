@@ -51,7 +51,7 @@ export interface VideosRequestBuilder extends BaseRequestBuilder<VideosRequestBu
      */
      byId(id: Guid) : ItemRequestBuilder;
     /**
-     * Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
+     * Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<ListVideosResponse>}
      * @throws {ProblemDetails} error when the service returns a 400 status code
@@ -62,14 +62,14 @@ export interface VideosRequestBuilder extends BaseRequestBuilder<VideosRequestBu
      */
      get(requestConfiguration?: RequestConfiguration<VideosRequestBuilderGetQueryParameters> | undefined) : Promise<ListVideosResponse | undefined>;
     /**
-     * Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
+     * Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */
      toGetRequestInformation(requestConfiguration?: RequestConfiguration<VideosRequestBuilderGetQueryParameters> | undefined) : RequestInformation;
 }
 /**
- * Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
+ * Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.
  */
 export interface VideosRequestBuilderGetQueryParameters {
     /**

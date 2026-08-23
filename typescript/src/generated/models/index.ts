@@ -1221,6 +1221,15 @@ export function createUserIdentityResponseFromDiscriminatorValue(parseNode: Pars
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoCodecCountDto}
+ */
+// @ts-ignore
+export function createVideoCodecCountDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoCodecCountDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {VideoDetailActorDto}
  */
 // @ts-ignore
@@ -1352,6 +1361,24 @@ export function createVideoImageChangeImageDtoFromDiscriminatorValue(parseNode: 
 // @ts-ignore
 export function createVideoImageChangesCursorDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoVideoImageChangesCursorDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoQualityOverviewDto}
+ */
+// @ts-ignore
+export function createVideoQualityOverviewDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoQualityOverviewDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoResolutionCountDto}
+ */
+// @ts-ignore
+export function createVideoResolutionCountDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoResolutionCountDto;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -2601,6 +2628,18 @@ export function deserializeIntoUserIdentityResponse(userIdentityResponse: Partia
 }
 /**
  * The deserialization information for the current model
+ * @param VideoCodecCountDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoCodecCountDto(videoCodecCountDto: Partial<VideoCodecCountDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "codec": n => { videoCodecCountDto.codec = n.getStringValue(); },
+        "fileCount": n => { videoCodecCountDto.fileCount = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param VideoDetailActorDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2639,9 +2678,13 @@ export function deserializeIntoVideoDetailDto(videoDetailDto: Partial<VideoDetai
     return {
         "actors": n => { videoDetailDto.actors = n.getCollectionOfObjectValues<VideoDetailActorDto>(createVideoDetailActorDtoFromDiscriminatorValue); },
         "createdAtUtc": n => { videoDetailDto.createdAtUtc = n.getDateValue(); },
+        "durationFileCount": n => { videoDetailDto.durationFileCount = n.getNumberValue(); },
+        "durationMs": n => { videoDetailDto.durationMs = n.getNumberValue(); },
+        "durationSpreadMs": n => { videoDetailDto.durationSpreadMs = n.getNumberValue(); },
         "id": n => { videoDetailDto.id = n.getGuidValue(); },
         "images": n => { videoDetailDto.images = n.getCollectionOfObjectValues<VideoDetailImageDto>(createVideoDetailImageDtoFromDiscriminatorValue); },
         "preNames": n => { videoDetailDto.preNames = n.getCollectionOfObjectValues<VideoDetailPreNameDto>(createVideoDetailPreNameDtoFromDiscriminatorValue); },
+        "qualityOverview": n => { videoDetailDto.qualityOverview = n.getObjectValue<VideoQualityOverviewDto>(createVideoQualityOverviewDtoFromDiscriminatorValue); },
         "releaseDate": n => { videoDetailDto.releaseDate = n.getDateOnlyValue(); },
         "site": n => { videoDetailDto.site = n.getObjectValue<VideoDetailSiteDto>(createVideoDetailSiteDtoFromDiscriminatorValue); },
         "title": n => { videoDetailDto.title = n.getStringValue(); },
@@ -2720,10 +2763,17 @@ export function deserializeIntoVideoFilehashChangeDto(videoFilehashChangeDto: Pa
 // @ts-ignore
 export function deserializeIntoVideoFilehashChangeFilehashDto(videoFilehashChangeFilehashDto: Partial<VideoFilehashChangeFilehashDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "audioChannels": n => { videoFilehashChangeFilehashDto.audioChannels = n.getNumberValue(); },
+        "audioCodec": n => { videoFilehashChangeFilehashDto.audioCodec = n.getStringValue(); },
+        "bitRate": n => { videoFilehashChangeFilehashDto.bitRate = n.getNumberValue(); },
+        "containerFormat": n => { videoFilehashChangeFilehashDto.containerFormat = n.getStringValue(); },
         "createdAtUtc": n => { videoFilehashChangeFilehashDto.createdAtUtc = n.getDateValue(); },
         "deletedAtUtc": n => { videoFilehashChangeFilehashDto.deletedAtUtc = n.getDateValue(); },
+        "durationMs": n => { videoFilehashChangeFilehashDto.durationMs = n.getNumberValue(); },
         "filename": n => { videoFilehashChangeFilehashDto.filename = n.getStringValue(); },
         "filesize": n => { videoFilehashChangeFilehashDto.filesize = n.getNumberValue(); },
+        "frameRate": n => { videoFilehashChangeFilehashDto.frameRate = n.getStringValue(); },
+        "height": n => { videoFilehashChangeFilehashDto.height = n.getNumberValue(); },
         "id": n => { videoFilehashChangeFilehashDto.id = n.getGuidValue(); },
         "isDeleted": n => { videoFilehashChangeFilehashDto.isDeleted = n.getBooleanValue(); },
         "isVerified": n => { videoFilehashChangeFilehashDto.isVerified = n.getBooleanValue(); },
@@ -2731,7 +2781,9 @@ export function deserializeIntoVideoFilehashChangeFilehashDto(videoFilehashChang
         "pHash": n => { videoFilehashChangeFilehashDto.pHash = n.getStringValue(); },
         "submissionCount": n => { videoFilehashChangeFilehashDto.submissionCount = n.getNumberValue(); },
         "updatedAtUtc": n => { videoFilehashChangeFilehashDto.updatedAtUtc = n.getDateValue(); },
+        "videoCodec": n => { videoFilehashChangeFilehashDto.videoCodec = n.getStringValue(); },
         "videoId": n => { videoFilehashChangeFilehashDto.videoId = n.getGuidValue(); },
+        "width": n => { videoFilehashChangeFilehashDto.width = n.getNumberValue(); },
     }
 }
 /**
@@ -2754,16 +2806,25 @@ export function deserializeIntoVideoFilehashChangesCursorDto(videoFilehashChange
 // @ts-ignore
 export function deserializeIntoVideoFilehashDto(videoFilehashDto: Partial<VideoFilehashDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "audioChannels": n => { videoFilehashDto.audioChannels = n.getNumberValue(); },
+        "audioCodec": n => { videoFilehashDto.audioCodec = n.getStringValue(); },
+        "bitRate": n => { videoFilehashDto.bitRate = n.getNumberValue(); },
+        "containerFormat": n => { videoFilehashDto.containerFormat = n.getStringValue(); },
         "createdAtUtc": n => { videoFilehashDto.createdAtUtc = n.getDateValue(); },
+        "durationMs": n => { videoFilehashDto.durationMs = n.getNumberValue(); },
         "filename": n => { videoFilehashDto.filename = n.getStringValue(); },
         "filesize": n => { videoFilehashDto.filesize = n.getNumberValue(); },
+        "frameRate": n => { videoFilehashDto.frameRate = n.getStringValue(); },
+        "height": n => { videoFilehashDto.height = n.getNumberValue(); },
         "id": n => { videoFilehashDto.id = n.getGuidValue(); },
         "isVerified": n => { videoFilehashDto.isVerified = n.getBooleanValue(); },
         "osHash": n => { videoFilehashDto.osHash = n.getStringValue(); },
         "pHash": n => { videoFilehashDto.pHash = n.getStringValue(); },
         "submissionCount": n => { videoFilehashDto.submissionCount = n.getNumberValue(); },
         "updatedAtUtc": n => { videoFilehashDto.updatedAtUtc = n.getDateValue(); },
+        "videoCodec": n => { videoFilehashDto.videoCodec = n.getStringValue(); },
         "videoId": n => { videoFilehashDto.videoId = n.getGuidValue(); },
+        "width": n => { videoFilehashDto.width = n.getNumberValue(); },
     }
 }
 /**
@@ -2819,6 +2880,31 @@ export function deserializeIntoVideoImageChangesCursorDto(videoImageChangesCurso
 }
 /**
  * The deserialization information for the current model
+ * @param VideoQualityOverviewDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoQualityOverviewDto(videoQualityOverviewDto: Partial<VideoQualityOverviewDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "resolutions": n => { videoQualityOverviewDto.resolutions = n.getCollectionOfObjectValues<VideoResolutionCountDto>(createVideoResolutionCountDtoFromDiscriminatorValue); },
+        "videoCodecs": n => { videoQualityOverviewDto.videoCodecs = n.getCollectionOfObjectValues<VideoCodecCountDto>(createVideoCodecCountDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoResolutionCountDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoResolutionCountDto(videoResolutionCountDto: Partial<VideoResolutionCountDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "fileCount": n => { videoResolutionCountDto.fileCount = n.getNumberValue(); },
+        "height": n => { videoResolutionCountDto.height = n.getNumberValue(); },
+        "width": n => { videoResolutionCountDto.width = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param VideoSummaryActorDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2839,6 +2925,9 @@ export function deserializeIntoVideoSummaryDto(videoSummaryDto: Partial<VideoSum
     return {
         "actors": n => { videoSummaryDto.actors = n.getCollectionOfObjectValues<VideoSummaryActorDto>(createVideoSummaryActorDtoFromDiscriminatorValue); },
         "createdAtUtc": n => { videoSummaryDto.createdAtUtc = n.getDateValue(); },
+        "durationFileCount": n => { videoSummaryDto.durationFileCount = n.getNumberValue(); },
+        "durationMs": n => { videoSummaryDto.durationMs = n.getNumberValue(); },
+        "durationSpreadMs": n => { videoSummaryDto.durationSpreadMs = n.getNumberValue(); },
         "id": n => { videoSummaryDto.id = n.getGuidValue(); },
         "releaseDate": n => { videoSummaryDto.releaseDate = n.getDateOnlyValue(); },
         "siteId": n => { videoSummaryDto.siteId = n.getGuidValue(); },
@@ -5313,6 +5402,19 @@ export function serializeUserIdentityResponse(writer: SerializationWriter, userI
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoCodecCountDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoCodecCountDto(writer: SerializationWriter, videoCodecCountDto: Partial<VideoCodecCountDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoCodecCountDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("codec", videoCodecCountDto.codec);
+    writer.writeNumberValue("fileCount", videoCodecCountDto.fileCount);
+    writer.writeAdditionalData(videoCodecCountDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param VideoDetailActorDto The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -5353,9 +5455,13 @@ export function serializeVideoDetailDto(writer: SerializationWriter, videoDetail
     if (!videoDetailDto || isSerializingDerivedType) { return; }
     writer.writeCollectionOfObjectValues<VideoDetailActorDto>("actors", videoDetailDto.actors, serializeVideoDetailActorDto);
     writer.writeDateValue("createdAtUtc", videoDetailDto.createdAtUtc);
+    writer.writeNumberValue("durationFileCount", videoDetailDto.durationFileCount);
+    writer.writeNumberValue("durationMs", videoDetailDto.durationMs);
+    writer.writeNumberValue("durationSpreadMs", videoDetailDto.durationSpreadMs);
     writer.writeGuidValue("id", videoDetailDto.id);
     writer.writeCollectionOfObjectValues<VideoDetailImageDto>("images", videoDetailDto.images, serializeVideoDetailImageDto);
     writer.writeCollectionOfObjectValues<VideoDetailPreNameDto>("preNames", videoDetailDto.preNames, serializeVideoDetailPreNameDto);
+    writer.writeObjectValue<VideoQualityOverviewDto>("qualityOverview", videoDetailDto.qualityOverview, serializeVideoQualityOverviewDto);
     writer.writeDateOnlyValue("releaseDate", videoDetailDto.releaseDate);
     writer.writeObjectValue<VideoDetailSiteDto>("site", videoDetailDto.site, serializeVideoDetailSiteDto);
     writer.writeStringValue("title", videoDetailDto.title);
@@ -5440,10 +5546,17 @@ export function serializeVideoFilehashChangeDto(writer: SerializationWriter, vid
 // @ts-ignore
 export function serializeVideoFilehashChangeFilehashDto(writer: SerializationWriter, videoFilehashChangeFilehashDto: Partial<VideoFilehashChangeFilehashDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!videoFilehashChangeFilehashDto || isSerializingDerivedType) { return; }
+    writer.writeNumberValue("audioChannels", videoFilehashChangeFilehashDto.audioChannels);
+    writer.writeStringValue("audioCodec", videoFilehashChangeFilehashDto.audioCodec);
+    writer.writeNumberValue("bitRate", videoFilehashChangeFilehashDto.bitRate);
+    writer.writeStringValue("containerFormat", videoFilehashChangeFilehashDto.containerFormat);
     writer.writeDateValue("createdAtUtc", videoFilehashChangeFilehashDto.createdAtUtc);
     writer.writeDateValue("deletedAtUtc", videoFilehashChangeFilehashDto.deletedAtUtc);
+    writer.writeNumberValue("durationMs", videoFilehashChangeFilehashDto.durationMs);
     writer.writeStringValue("filename", videoFilehashChangeFilehashDto.filename);
     writer.writeNumberValue("filesize", videoFilehashChangeFilehashDto.filesize);
+    writer.writeStringValue("frameRate", videoFilehashChangeFilehashDto.frameRate);
+    writer.writeNumberValue("height", videoFilehashChangeFilehashDto.height);
     writer.writeGuidValue("id", videoFilehashChangeFilehashDto.id);
     writer.writeBooleanValue("isDeleted", videoFilehashChangeFilehashDto.isDeleted);
     writer.writeBooleanValue("isVerified", videoFilehashChangeFilehashDto.isVerified);
@@ -5451,7 +5564,9 @@ export function serializeVideoFilehashChangeFilehashDto(writer: SerializationWri
     writer.writeStringValue("pHash", videoFilehashChangeFilehashDto.pHash);
     writer.writeNumberValue("submissionCount", videoFilehashChangeFilehashDto.submissionCount);
     writer.writeDateValue("updatedAtUtc", videoFilehashChangeFilehashDto.updatedAtUtc);
+    writer.writeStringValue("videoCodec", videoFilehashChangeFilehashDto.videoCodec);
     writer.writeGuidValue("videoId", videoFilehashChangeFilehashDto.videoId);
+    writer.writeNumberValue("width", videoFilehashChangeFilehashDto.width);
     writer.writeAdditionalData(videoFilehashChangeFilehashDto.additionalData);
 }
 /**
@@ -5476,16 +5591,25 @@ export function serializeVideoFilehashChangesCursorDto(writer: SerializationWrit
 // @ts-ignore
 export function serializeVideoFilehashDto(writer: SerializationWriter, videoFilehashDto: Partial<VideoFilehashDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!videoFilehashDto || isSerializingDerivedType) { return; }
+    writer.writeNumberValue("audioChannels", videoFilehashDto.audioChannels);
+    writer.writeStringValue("audioCodec", videoFilehashDto.audioCodec);
+    writer.writeNumberValue("bitRate", videoFilehashDto.bitRate);
+    writer.writeStringValue("containerFormat", videoFilehashDto.containerFormat);
     writer.writeDateValue("createdAtUtc", videoFilehashDto.createdAtUtc);
+    writer.writeNumberValue("durationMs", videoFilehashDto.durationMs);
     writer.writeStringValue("filename", videoFilehashDto.filename);
     writer.writeNumberValue("filesize", videoFilehashDto.filesize);
+    writer.writeStringValue("frameRate", videoFilehashDto.frameRate);
+    writer.writeNumberValue("height", videoFilehashDto.height);
     writer.writeGuidValue("id", videoFilehashDto.id);
     writer.writeBooleanValue("isVerified", videoFilehashDto.isVerified);
     writer.writeStringValue("osHash", videoFilehashDto.osHash);
     writer.writeStringValue("pHash", videoFilehashDto.pHash);
     writer.writeNumberValue("submissionCount", videoFilehashDto.submissionCount);
     writer.writeDateValue("updatedAtUtc", videoFilehashDto.updatedAtUtc);
+    writer.writeStringValue("videoCodec", videoFilehashDto.videoCodec);
     writer.writeGuidValue("videoId", videoFilehashDto.videoId);
+    writer.writeNumberValue("width", videoFilehashDto.width);
     writer.writeAdditionalData(videoFilehashDto.additionalData);
 }
 /**
@@ -5546,6 +5670,33 @@ export function serializeVideoImageChangesCursorDto(writer: SerializationWriter,
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoQualityOverviewDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoQualityOverviewDto(writer: SerializationWriter, videoQualityOverviewDto: Partial<VideoQualityOverviewDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoQualityOverviewDto || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<VideoResolutionCountDto>("resolutions", videoQualityOverviewDto.resolutions, serializeVideoResolutionCountDto);
+    writer.writeCollectionOfObjectValues<VideoCodecCountDto>("videoCodecs", videoQualityOverviewDto.videoCodecs, serializeVideoCodecCountDto);
+    writer.writeAdditionalData(videoQualityOverviewDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoResolutionCountDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoResolutionCountDto(writer: SerializationWriter, videoResolutionCountDto: Partial<VideoResolutionCountDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoResolutionCountDto || isSerializingDerivedType) { return; }
+    writer.writeNumberValue("fileCount", videoResolutionCountDto.fileCount);
+    writer.writeNumberValue("height", videoResolutionCountDto.height);
+    writer.writeNumberValue("width", videoResolutionCountDto.width);
+    writer.writeAdditionalData(videoResolutionCountDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param VideoSummaryActorDto The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -5567,6 +5718,9 @@ export function serializeVideoSummaryDto(writer: SerializationWriter, videoSumma
     if (!videoSummaryDto || isSerializingDerivedType) { return; }
     writer.writeCollectionOfObjectValues<VideoSummaryActorDto>("actors", videoSummaryDto.actors, serializeVideoSummaryActorDto);
     writer.writeDateValue("createdAtUtc", videoSummaryDto.createdAtUtc);
+    writer.writeNumberValue("durationFileCount", videoSummaryDto.durationFileCount);
+    writer.writeNumberValue("durationMs", videoSummaryDto.durationMs);
+    writer.writeNumberValue("durationSpreadMs", videoSummaryDto.durationSpreadMs);
     writer.writeGuidValue("id", videoSummaryDto.id);
     writer.writeDateOnlyValue("releaseDate", videoSummaryDto.releaseDate);
     writer.writeGuidValue("siteId", videoSummaryDto.siteId);
@@ -5968,6 +6122,19 @@ export interface UserIdentityResponse extends AdditionalDataHolder, Parsable {
      */
     userHash?: string | null;
 }
+/**
+ * One video codec a video is known in, and how many of its files carry it.
+ */
+export interface VideoCodecCountDto extends AdditionalDataHolder, Parsable {
+    /**
+     * Codec name as the probing client reported it, lower-cased ("h264", "hevc", "av1").
+     */
+    codec?: string | null;
+    /**
+     * How many of the video's files use this codec.
+     */
+    fileCount?: number | null;
+}
 export interface VideoDetailActorDto extends AdditionalDataHolder, Parsable {
     /**
      * The birthday property
@@ -6023,6 +6190,18 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
      */
     createdAtUtc?: Date | null;
     /**
+     * How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.
+     */
+    durationFileCount?: number | null;
+    /**
+     * Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
+     */
+    durationMs?: number | null;
+    /**
+     * How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
+     */
+    durationSpreadMs?: number | null;
+    /**
      * The id property
      */
     id?: Guid | null;
@@ -6034,6 +6213,10 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
      * The preNames property
      */
     preNames?: VideoDetailPreNameDto[] | null;
+    /**
+     * What technical shapes a video is known to exist in, counted over the files prdb holds for it.
+     */
+    qualityOverview?: VideoQualityOverviewDto | null;
     /**
      * The releaseDate property
      */
@@ -6126,6 +6309,22 @@ export interface VideoFilehashChangeDto extends AdditionalDataHolder, Parsable {
  */
 export interface VideoFilehashChangeFilehashDto extends AdditionalDataHolder, Parsable {
     /**
+     * Channel count of the audio stream.
+     */
+    audioChannels?: number | null;
+    /**
+     * Codec of the audio stream, lower-cased ("aac", "mp3").
+     */
+    audioCodec?: string | null;
+    /**
+     * Overall bit rate in bits per second, across all streams.
+     */
+    bitRate?: number | null;
+    /**
+     * Container as the probe names it. Usually a comma separated list of the formats one demuxer covers ("mov,mp4,m4a,3gp,3g2,mj2"), not a single token.
+     */
+    containerFormat?: string | null;
+    /**
      * The createdAtUtc property
      */
     createdAtUtc?: Date | null;
@@ -6134,6 +6333,10 @@ export interface VideoFilehashChangeFilehashDto extends AdditionalDataHolder, Pa
      */
     deletedAtUtc?: Date | null;
     /**
+     * Duration of this file in milliseconds, as the submitting clients probed it, or null when none reported one.
+     */
+    durationMs?: number | null;
+    /**
      * Original filename submitted for this filehash record.
      */
     filename?: string | null;
@@ -6141,6 +6344,14 @@ export interface VideoFilehashChangeFilehashDto extends AdditionalDataHolder, Pa
      * File size in bytes.
      */
     filesize?: number | null;
+    /**
+     * Average frame rate as a rational, exactly as it was measured: "24000/1001", never a roundeddecimal. Rounding merges rates that are not the same one, and a variable-rate file carries aper-file average whose large denominator is what marks it as variable rather than as a rate.
+     */
+    frameRate?: string | null;
+    /**
+     * Height of the video stream in pixels, as stored.
+     */
+    height?: number | null;
     /**
      * The id property
      */
@@ -6170,9 +6381,17 @@ export interface VideoFilehashChangeFilehashDto extends AdditionalDataHolder, Pa
      */
     updatedAtUtc?: Date | null;
     /**
+     * Codec of the video stream, lower-cased ("h264", "hevc", "av1").
+     */
+    videoCodec?: string | null;
+    /**
      * The videoId property
      */
     videoId?: Guid | null;
+    /**
+     * Width of the video stream in pixels, as stored. Not necessarily the larger dimension: portrait video is ordinary.
+     */
+    width?: number | null;
 }
 /**
  * Seek cursor for continuing a video filehash change feed.
@@ -6189,9 +6408,29 @@ export interface VideoFilehashChangesCursorDto extends AdditionalDataHolder, Par
 }
 export interface VideoFilehashDto extends AdditionalDataHolder, Parsable {
     /**
+     * Channel count of the audio stream.
+     */
+    audioChannels?: number | null;
+    /**
+     * Codec of the audio stream, lower-cased ("aac", "mp3").
+     */
+    audioCodec?: string | null;
+    /**
+     * Overall bit rate in bits per second, across all streams.
+     */
+    bitRate?: number | null;
+    /**
+     * Container as the probe names it. Usually a comma separated list of the formats one demuxer covers ("mov,mp4,m4a,3gp,3g2,mj2"), not a single token.
+     */
+    containerFormat?: string | null;
+    /**
      * The createdAtUtc property
      */
     createdAtUtc?: Date | null;
+    /**
+     * Duration of this file in milliseconds, as the submitting clients probed it, or null when none reported one.
+     */
+    durationMs?: number | null;
     /**
      * Original filename submitted for this filehash record.
      */
@@ -6200,6 +6439,14 @@ export interface VideoFilehashDto extends AdditionalDataHolder, Parsable {
      * File size in bytes.
      */
     filesize?: number | null;
+    /**
+     * Average frame rate as a rational, exactly as it was measured: "24000/1001", never a roundeddecimal. Rounding merges rates that are not the same one, and a variable-rate file carries aper-file average whose large denominator is what marks it as variable rather than as a rate.
+     */
+    frameRate?: string | null;
+    /**
+     * Height of the video stream in pixels, as stored.
+     */
+    height?: number | null;
     /**
      * The id property
      */
@@ -6225,9 +6472,17 @@ export interface VideoFilehashDto extends AdditionalDataHolder, Parsable {
      */
     updatedAtUtc?: Date | null;
     /**
+     * Codec of the video stream, lower-cased ("h264", "hevc", "av1").
+     */
+    videoCodec?: string | null;
+    /**
      * The videoId property
      */
     videoId?: Guid | null;
+    /**
+     * Width of the video stream in pixels, as stored. Not necessarily the larger dimension: portrait video is ordinary.
+     */
+    width?: number | null;
 }
 export interface VideoFilehashesByVideoIdDto extends AdditionalDataHolder, Parsable {
     /**
@@ -6291,6 +6546,36 @@ export interface VideoImageChangesCursorDto extends AdditionalDataHolder, Parsab
     updatedAtUtc?: Date | null;
 }
 /**
+ * What technical shapes a video is known to exist in, counted over the files prdb holds for it.
+ */
+export interface VideoQualityOverviewDto extends AdditionalDataHolder, Parsable {
+    /**
+     * Resolutions the video is known in, most files first. Width and height are as stored, neverreordered — a portrait file has the smaller width, and treating the larger side as "theresolution" is wrong for a substantial share of real libraries.
+     */
+    resolutions?: VideoResolutionCountDto[] | null;
+    /**
+     * Video codecs the video is known in, most files first.
+     */
+    videoCodecs?: VideoCodecCountDto[] | null;
+}
+/**
+ * One resolution a video is known in, and how many of its files carry it.
+ */
+export interface VideoResolutionCountDto extends AdditionalDataHolder, Parsable {
+    /**
+     * How many of the video's files are in this resolution.
+     */
+    fileCount?: number | null;
+    /**
+     * Height in pixels, as stored.
+     */
+    height?: number | null;
+    /**
+     * Width in pixels, as stored.
+     */
+    width?: number | null;
+}
+/**
  * Minimal actor summary included in a video list item.
  */
 export interface VideoSummaryActorDto extends AdditionalDataHolder, Parsable {
@@ -6315,6 +6600,18 @@ export interface VideoSummaryDto extends AdditionalDataHolder, Parsable {
      * Timestamp when the video was created in PRDB.
      */
     createdAtUtc?: Date | null;
+    /**
+     * How many files the duration was taken over, without which the spread cannot be read.
+     */
+    durationFileCount?: number | null;
+    /**
+     * Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median over the video's files, so atrailer submitted under the same video does not move it.
+     */
+    durationMs?: number | null;
+    /**
+     * How far those files disagree about the duration, in milliseconds (median absolutedeviation). Zero means they agree; a large value means several versions are in circulation.
+     */
+    durationSpreadMs?: number | null;
     /**
      * Unique identifier of the video.
      */

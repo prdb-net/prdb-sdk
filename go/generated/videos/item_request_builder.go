@@ -31,7 +31,7 @@ func NewItemRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263371cb1
 func (m *ItemRequestBuilder) Filehashes()(*ItemFilehashesRequestBuilder) {
     return NewItemFilehashesRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
-// Get returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Requires API key authentication.
+// Get returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Carries the consensus duration across the files known for the video (durationMs, with durationSpreadMs and durationFileCount saying how far those files disagree and how many there were), and qualityOverview, which counts the video's files per resolution and per codec. The duration fields are null until enough independent submitters have reported one, and the overview is empty while no file has been probed. See Media metadata in the API description. Requires API key authentication.
 // returns a VideoDetailDtoable when successful
 // returns a ProblemDetails error when the service returns a 401 status code
 // returns a ProblemDetails error when the service returns a 403 status code
@@ -59,7 +59,7 @@ func (m *ItemRequestBuilder) Get(ctx context.Context, requestConfiguration *i2ae
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.VideoDetailDtoable), nil
 }
-// ToGetRequestInformation returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Requires API key authentication.
+// ToGetRequestInformation returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Carries the consensus duration across the files known for the video (durationMs, with durationSpreadMs and durationFileCount saying how far those files disagree and how many there were), and qualityOverview, which counts the video's files per resolution and per codec. The duration fields are null until enough independent submitters have reported one, and the overview is empty while no file has been probed. See Media metadata in the API description. Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *ItemRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.GET, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

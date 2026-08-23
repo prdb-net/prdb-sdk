@@ -14,8 +14,30 @@ namespace Prdb.Sdk.Generated.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
+        /// <summary>Channel count of the audio stream.</summary>
+        public int? AudioChannels { get; set; }
+        /// <summary>Codec of the audio stream, lower-cased (&quot;aac&quot;, &quot;mp3&quot;).</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? AudioCodec { get; set; }
+#nullable restore
+#else
+        public string AudioCodec { get; set; }
+#endif
+        /// <summary>Overall bit rate in bits per second, across all streams.</summary>
+        public long? BitRate { get; set; }
+        /// <summary>Container as the probe names it. Usually a comma separated list of the formats one demuxer covers (&quot;mov,mp4,m4a,3gp,3g2,mj2&quot;), not a single token.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? ContainerFormat { get; set; }
+#nullable restore
+#else
+        public string ContainerFormat { get; set; }
+#endif
         /// <summary>The createdAtUtc property</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
+        /// <summary>Duration of this file in milliseconds, as the submitting clients probed it, or null when none reported one.</summary>
+        public long? DurationMs { get; set; }
         /// <summary>Original filename submitted for this filehash record.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -26,6 +48,16 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>File size in bytes.</summary>
         public long? Filesize { get; set; }
+        /// <summary>Average frame rate as a rational, exactly as it was measured: &quot;24000/1001&quot;, never a roundeddecimal. Rounding merges rates that are not the same one, and a variable-rate file carries aper-file average whose large denominator is what marks it as variable rather than as a rate.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? FrameRate { get; set; }
+#nullable restore
+#else
+        public string FrameRate { get; set; }
+#endif
+        /// <summary>Height of the video stream in pixels, as stored.</summary>
+        public int? Height { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
         /// <summary>Whether this filehash record has been verified.</summary>
@@ -50,8 +82,18 @@ namespace Prdb.Sdk.Generated.Models
         public int? SubmissionCount { get; set; }
         /// <summary>The updatedAtUtc property</summary>
         public DateTimeOffset? UpdatedAtUtc { get; set; }
+        /// <summary>Codec of the video stream, lower-cased (&quot;h264&quot;, &quot;hevc&quot;, &quot;av1&quot;).</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? VideoCodec { get; set; }
+#nullable restore
+#else
+        public string VideoCodec { get; set; }
+#endif
         /// <summary>The videoId property</summary>
         public Guid? VideoId { get; set; }
+        /// <summary>Width of the video stream in pixels, as stored. Not necessarily the larger dimension: portrait video is ordinary.</summary>
+        public int? Width { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.VideoFilehashDto"/> and sets the default values.
         /// </summary>
@@ -77,16 +119,25 @@ namespace Prdb.Sdk.Generated.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "audioChannels", n => { AudioChannels = n.GetIntValue(); } },
+                { "audioCodec", n => { AudioCodec = n.GetStringValue(); } },
+                { "bitRate", n => { BitRate = n.GetLongValue(); } },
+                { "containerFormat", n => { ContainerFormat = n.GetStringValue(); } },
                 { "createdAtUtc", n => { CreatedAtUtc = n.GetDateTimeOffsetValue(); } },
+                { "durationMs", n => { DurationMs = n.GetLongValue(); } },
                 { "filename", n => { Filename = n.GetStringValue(); } },
                 { "filesize", n => { Filesize = n.GetLongValue(); } },
+                { "frameRate", n => { FrameRate = n.GetStringValue(); } },
+                { "height", n => { Height = n.GetIntValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "isVerified", n => { IsVerified = n.GetBoolValue(); } },
                 { "osHash", n => { OsHash = n.GetStringValue(); } },
                 { "pHash", n => { PHash = n.GetStringValue(); } },
                 { "submissionCount", n => { SubmissionCount = n.GetIntValue(); } },
                 { "updatedAtUtc", n => { UpdatedAtUtc = n.GetDateTimeOffsetValue(); } },
+                { "videoCodec", n => { VideoCodec = n.GetStringValue(); } },
                 { "videoId", n => { VideoId = n.GetGuidValue(); } },
+                { "width", n => { Width = n.GetIntValue(); } },
             };
         }
         /// <summary>
@@ -96,16 +147,25 @@ namespace Prdb.Sdk.Generated.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteIntValue("audioChannels", AudioChannels);
+            writer.WriteStringValue("audioCodec", AudioCodec);
+            writer.WriteLongValue("bitRate", BitRate);
+            writer.WriteStringValue("containerFormat", ContainerFormat);
             writer.WriteDateTimeOffsetValue("createdAtUtc", CreatedAtUtc);
+            writer.WriteLongValue("durationMs", DurationMs);
             writer.WriteStringValue("filename", Filename);
             writer.WriteLongValue("filesize", Filesize);
+            writer.WriteStringValue("frameRate", FrameRate);
+            writer.WriteIntValue("height", Height);
             writer.WriteGuidValue("id", Id);
             writer.WriteBoolValue("isVerified", IsVerified);
             writer.WriteStringValue("osHash", OsHash);
             writer.WriteStringValue("pHash", PHash);
             writer.WriteIntValue("submissionCount", SubmissionCount);
             writer.WriteDateTimeOffsetValue("updatedAtUtc", UpdatedAtUtc);
+            writer.WriteStringValue("videoCodec", VideoCodec);
             writer.WriteGuidValue("videoId", VideoId);
+            writer.WriteIntValue("width", Width);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

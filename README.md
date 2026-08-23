@@ -90,6 +90,10 @@ once enough distinct users agree, and the resulting set is available through
 `GET /videos/filehashes/latest` and `/changes`; no indexer is named in that
 loop. A `UserConfirmed` contribution must be opt-in and off by default, while a
 `ClientDetected` contribution may default on but must be switchable off.
+The optional technical profile submitted with an assignment comes back on every
+filehash payload and its change feed. Videos expose the resulting consensus
+duration and, in detail responses, counts of known files by stored resolution
+and video codec.
 
 Endpoints named `/{resource}/changes` are delta feeds. They return the current
 state of rows changed since a cursor, including soft-deleted rows as tombstones,

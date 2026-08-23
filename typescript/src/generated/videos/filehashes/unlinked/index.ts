@@ -13,7 +13,7 @@ export type GetSortDirectionQueryParameterType = (typeof GetSortDirectionQueryPa
  */
 export interface UnlinkedRequestBuilder extends BaseRequestBuilder<UnlinkedRequestBuilder> {
     /**
-     * Returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
+     * Returns a paged list of active filehash entries that are not linked to any video. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<UnlinkedVideoFilehashesResponse>}
      * @throws {ProblemDetails} error when the service returns a 400 status code
@@ -24,14 +24,14 @@ export interface UnlinkedRequestBuilder extends BaseRequestBuilder<UnlinkedReque
      */
      get(requestConfiguration?: RequestConfiguration<UnlinkedRequestBuilderGetQueryParameters> | undefined) : Promise<UnlinkedVideoFilehashesResponse | undefined>;
     /**
-     * Returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
+     * Returns a paged list of active filehash entries that are not linked to any video. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */
      toGetRequestInformation(requestConfiguration?: RequestConfiguration<UnlinkedRequestBuilderGetQueryParameters> | undefined) : RequestInformation;
 }
 /**
- * Returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
+ * Returns a paged list of active filehash entries that are not linked to any video. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
  */
 export interface UnlinkedRequestBuilderGetQueryParameters {
     /**

@@ -21,6 +21,12 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
     actors: Optional[list[VideoSummaryActorDto]] = None
     # Timestamp when the video was created in PRDB.
     created_at_utc: Optional[datetime.datetime] = None
+    # How many files the duration was taken over, without which the spread cannot be read.
+    duration_file_count: Optional[int] = None
+    # Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median over the video's files, so atrailer submitted under the same video does not move it.
+    duration_ms: Optional[int] = None
+    # How far those files disagree about the duration, in milliseconds (median absolutedeviation). Zero means they agree; a large value means several versions are in circulation.
+    duration_spread_ms: Optional[int] = None
     # Unique identifier of the video.
     id: Optional[UUID] = None
     # Release date of the video, if known.
@@ -55,6 +61,9 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         fields: dict[str, Callable[[Any], None]] = {
             "actors": lambda n : setattr(self, 'actors', n.get_collection_of_object_values(VideoSummaryActorDto)),
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
+            "durationFileCount": lambda n : setattr(self, 'duration_file_count', n.get_int_value()),
+            "durationMs": lambda n : setattr(self, 'duration_ms', n.get_int_value()),
+            "durationSpreadMs": lambda n : setattr(self, 'duration_spread_ms', n.get_int_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "releaseDate": lambda n : setattr(self, 'release_date', n.get_date_value()),
             "siteId": lambda n : setattr(self, 'site_id', n.get_uuid_value()),
@@ -73,6 +82,9 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_collection_of_object_values("actors", self.actors)
         writer.write_datetime_value("createdAtUtc", self.created_at_utc)
+        writer.write_int_value("durationFileCount", self.duration_file_count)
+        writer.write_int_value("durationMs", self.duration_ms)
+        writer.write_int_value("durationSpreadMs", self.duration_spread_ms)
         writer.write_uuid_value("id", self.id)
         writer.write_date_value("releaseDate", self.release_date)
         writer.write_uuid_value("siteId", self.site_id)

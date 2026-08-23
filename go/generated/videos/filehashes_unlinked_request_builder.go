@@ -14,7 +14,7 @@ import (
 type FilehashesUnlinkedRequestBuilder struct {
     i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.BaseRequestBuilder
 }
-// FilehashesUnlinkedRequestBuilderGetQueryParameters returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
+// FilehashesUnlinkedRequestBuilderGetQueryParameters returns a paged list of active filehash entries that are not linked to any video. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
 type FilehashesUnlinkedRequestBuilderGetQueryParameters struct {
     // Page number, starting at 1.
     Page *int32
@@ -38,7 +38,7 @@ func NewFilehashesUnlinkedRequestBuilder(rawUrl string, requestAdapter i2ae4187f
     urlParams["request-raw-url"] = rawUrl
     return NewFilehashesUnlinkedRequestBuilderInternal(urlParams, requestAdapter)
 }
-// Get returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
+// Get returns a paged list of active filehash entries that are not linked to any video. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
 // returns a UnlinkedVideoFilehashesResponseable when successful
 // returns a ProblemDetails error when the service returns a 400 status code
 // returns a ProblemDetails error when the service returns a 401 status code
@@ -66,7 +66,7 @@ func (m *FilehashesUnlinkedRequestBuilder) Get(ctx context.Context, requestConfi
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.UnlinkedVideoFilehashesResponseable), nil
 }
-// ToGetRequestInformation returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
+// ToGetRequestInformation returns a paged list of active filehash entries that are not linked to any video. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *FilehashesUnlinkedRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[FilehashesUnlinkedRequestBuilderGetQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.GET, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

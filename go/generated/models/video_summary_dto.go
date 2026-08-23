@@ -17,6 +17,12 @@ type VideoSummaryDto struct {
     additionalData map[string]any
     // Timestamp when the video was created in PRDB.
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // How many files the duration was taken over, without which the spread cannot be read.
+    durationFileCount *int32
+    // Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median over the video's files, so atrailer submitted under the same video does not move it.
+    durationMs *int64
+    // How far those files disagree about the duration, in milliseconds (median absolutedeviation). Zero means they agree; a large value means several versions are in circulation.
+    durationSpreadMs *int64
     // Unique identifier of the video.
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Release date of the video, if known.
@@ -55,6 +61,21 @@ func (m *VideoSummaryDto) GetAdditionalData()(map[string]any) {
 func (m *VideoSummaryDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
 }
+// GetDurationFileCount gets the durationFileCount property value. How many files the duration was taken over, without which the spread cannot be read.
+// returns a *int32 when successful
+func (m *VideoSummaryDto) GetDurationFileCount()(*int32) {
+    return m.durationFileCount
+}
+// GetDurationMs gets the durationMs property value. Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median over the video's files, so atrailer submitted under the same video does not move it.
+// returns a *int64 when successful
+func (m *VideoSummaryDto) GetDurationMs()(*int64) {
+    return m.durationMs
+}
+// GetDurationSpreadMs gets the durationSpreadMs property value. How far those files disagree about the duration, in milliseconds (median absolutedeviation). Zero means they agree; a large value means several versions are in circulation.
+// returns a *int64 when successful
+func (m *VideoSummaryDto) GetDurationSpreadMs()(*int64) {
+    return m.durationSpreadMs
+}
 // GetFieldDeserializers the deserialization information for the current model
 // returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
 func (m *VideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
@@ -82,6 +103,36 @@ func (m *VideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
         }
         if val != nil {
             m.SetCreatedAtUtc(val)
+        }
+        return nil
+    }
+    res["durationFileCount"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt32Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetDurationFileCount(val)
+        }
+        return nil
+    }
+    res["durationMs"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt64Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetDurationMs(val)
+        }
+        return nil
+    }
+    res["durationSpreadMs"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt64Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetDurationSpreadMs(val)
         }
         return nil
     }
@@ -183,6 +234,24 @@ func (m *VideoSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0
         }
     }
     {
+        err := writer.WriteInt32Value("durationFileCount", m.GetDurationFileCount())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteInt64Value("durationMs", m.GetDurationMs())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteInt64Value("durationSpreadMs", m.GetDurationSpreadMs())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteUUIDValue("id", m.GetId())
         if err != nil {
             return err
@@ -232,6 +301,18 @@ func (m *VideoSummaryDto) SetAdditionalData(value map[string]any)() {
 func (m *VideoSummaryDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
+// SetDurationFileCount sets the durationFileCount property value. How many files the duration was taken over, without which the spread cannot be read.
+func (m *VideoSummaryDto) SetDurationFileCount(value *int32)() {
+    m.durationFileCount = value
+}
+// SetDurationMs sets the durationMs property value. Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median over the video's files, so atrailer submitted under the same video does not move it.
+func (m *VideoSummaryDto) SetDurationMs(value *int64)() {
+    m.durationMs = value
+}
+// SetDurationSpreadMs sets the durationSpreadMs property value. How far those files disagree about the duration, in milliseconds (median absolutedeviation). Zero means they agree; a large value means several versions are in circulation.
+func (m *VideoSummaryDto) SetDurationSpreadMs(value *int64)() {
+    m.durationSpreadMs = value
+}
 // SetId sets the id property value. Unique identifier of the video.
 func (m *VideoSummaryDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
@@ -257,6 +338,9 @@ type VideoSummaryDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetActors()([]VideoSummaryActorDtoable)
     GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
+    GetDurationFileCount()(*int32)
+    GetDurationMs()(*int64)
+    GetDurationSpreadMs()(*int64)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)
     GetSiteId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
@@ -264,6 +348,9 @@ type VideoSummaryDtoable interface {
     GetTitle()(*string)
     SetActors(value []VideoSummaryActorDtoable)()
     SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
+    SetDurationFileCount(value *int32)()
+    SetDurationMs(value *int64)()
+    SetDurationSpreadMs(value *int64)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)()
     SetSiteId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()

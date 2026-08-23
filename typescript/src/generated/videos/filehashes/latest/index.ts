@@ -13,7 +13,7 @@ export type GetSortDirectionQueryParameterType = (typeof GetSortDirectionQueryPa
  */
 export interface LatestRequestBuilder extends BaseRequestBuilder<LatestRequestBuilder> {
     /**
-     * Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Requires API key authentication.
+     * Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<LatestVideoFilehashesResponse>}
      * @throws {ProblemDetails} error when the service returns a 400 status code
@@ -24,14 +24,14 @@ export interface LatestRequestBuilder extends BaseRequestBuilder<LatestRequestBu
      */
      get(requestConfiguration?: RequestConfiguration<LatestRequestBuilderGetQueryParameters> | undefined) : Promise<LatestVideoFilehashesResponse | undefined>;
     /**
-     * Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Requires API key authentication.
+     * Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */
      toGetRequestInformation(requestConfiguration?: RequestConfiguration<LatestRequestBuilderGetQueryParameters> | undefined) : RequestInformation;
 }
 /**
- * Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Requires API key authentication.
+ * Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
  */
 export interface LatestRequestBuilderGetQueryParameters {
     /**

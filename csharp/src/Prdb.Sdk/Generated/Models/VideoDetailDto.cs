@@ -25,6 +25,12 @@ namespace Prdb.Sdk.Generated.Models
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>The createdAtUtc property</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
+        /// <summary>How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.</summary>
+        public int? DurationFileCount { get; set; }
+        /// <summary>Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.</summary>
+        public long? DurationMs { get; set; }
+        /// <summary>How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.</summary>
+        public long? DurationSpreadMs { get; set; }
         /// <summary>The id property</summary>
         public Guid? Id { get; set; }
         /// <summary>Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.</summary>
@@ -42,6 +48,14 @@ namespace Prdb.Sdk.Generated.Models
 #nullable restore
 #else
         public List<global::Prdb.Sdk.Generated.Models.VideoDetailPreNameDto> PreNames { get; set; }
+#endif
+        /// <summary>What technical shapes a video is known to exist in, counted over the files prdb holds for it.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto? QualityOverview { get; set; }
+#nullable restore
+#else
+        public global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto QualityOverview { get; set; }
 #endif
         /// <summary>The releaseDate property</summary>
         public Date? ReleaseDate { get; set; }
@@ -90,9 +104,13 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "actors", n => { Actors = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailActorDto>(global::Prdb.Sdk.Generated.Models.VideoDetailActorDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "createdAtUtc", n => { CreatedAtUtc = n.GetDateTimeOffsetValue(); } },
+                { "durationFileCount", n => { DurationFileCount = n.GetIntValue(); } },
+                { "durationMs", n => { DurationMs = n.GetLongValue(); } },
+                { "durationSpreadMs", n => { DurationSpreadMs = n.GetLongValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "images", n => { Images = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailImageDto>(global::Prdb.Sdk.Generated.Models.VideoDetailImageDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "preNames", n => { PreNames = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailPreNameDto>(global::Prdb.Sdk.Generated.Models.VideoDetailPreNameDto.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "qualityOverview", n => { QualityOverview = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto>(global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto.CreateFromDiscriminatorValue); } },
                 { "releaseDate", n => { ReleaseDate = n.GetDateValue(); } },
                 { "site", n => { Site = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto>(global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto.CreateFromDiscriminatorValue); } },
                 { "title", n => { Title = n.GetStringValue(); } },
@@ -108,9 +126,13 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailActorDto>("actors", Actors);
             writer.WriteDateTimeOffsetValue("createdAtUtc", CreatedAtUtc);
+            writer.WriteIntValue("durationFileCount", DurationFileCount);
+            writer.WriteLongValue("durationMs", DurationMs);
+            writer.WriteLongValue("durationSpreadMs", DurationSpreadMs);
             writer.WriteGuidValue("id", Id);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailImageDto>("images", Images);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailPreNameDto>("preNames", PreNames);
+            writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto>("qualityOverview", QualityOverview);
             writer.WriteDateValue("releaseDate", ReleaseDate);
             writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto>("site", Site);
             writer.WriteStringValue("title", Title);

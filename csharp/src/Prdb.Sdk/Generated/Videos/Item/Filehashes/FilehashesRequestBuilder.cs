@@ -34,7 +34,7 @@ namespace Prdb.Sdk.Generated.Videos.Item.Filehashes
         {
         }
         /// <summary>
-        /// Returns all filehash entries for a single video ordered by newest first. Returns 404 when the video does not exist. Requires API key authentication.
+        /// Returns all filehash entries for a single video ordered by newest first. Returns 404 when the video does not exist. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         /// </summary>
         /// <returns>A List&lt;global::Prdb.Sdk.Generated.Models.VideoFilehashDto&gt;</returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -66,7 +66,7 @@ namespace Prdb.Sdk.Generated.Videos.Item.Filehashes
             return collectionResult?.AsList();
         }
         /// <summary>
-        /// Returns all filehash entries for a single video ordered by newest first. Returns 404 when the video does not exist. Requires API key authentication.
+        /// Returns all filehash entries for a single video ordered by newest first. Returns 404 when the video does not exist. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
