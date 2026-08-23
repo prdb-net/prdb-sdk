@@ -12,10 +12,24 @@ import (
 type SubmitVideoFilehashItem struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
+    // Channel count of the audio stream.
+    audioChannels *int32
+    // Codec of the audio stream, as the probe names it ("aac", "mp3").
+    audioCodec *string
+    // Overall bit rate of the file in bits per second, across all streams.
+    bitRate *int64
+    // Container of the file as the probe names it. Send it verbatim — it is usually a commaseparated list of the formats the demuxer covers ("mov,mp4,m4a,3gp,3g2,mj2"), not one token.
+    containerFormat *string
+    // Duration of the file in milliseconds, if the client probed it. Optional, like every fieldbelow it: a client that cannot or will not probe submits without them.
+    durationMs *int64
     // File name without directory. Optional — a client may withhold it, and the endpoint works without it.
     filename *string
     // Size of the file in bytes.
     filesize *int64
+    // Average frame rate as the rational the probe reports, verbatim: "24000/1001", not "23.976".Rounding merges rates that are not the same one, and for a variable-rate file the largedenominator is the only sign that the value is an average rather than a rate.
+    frameRate *string
+    // Height of the video stream in pixels, as stored.
+    height *int32
     // OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.
     osHash *string
     // Perceptual hash of the file, 16 hexadecimal characters, if the client computed one. It mustbe computed as "Perceptual hashes" in the API description prescribes; a submission carryinga value from another procedure contributes a row nothing can match.
@@ -24,8 +38,12 @@ type SubmitVideoFilehashItem struct {
     releaseName *string
     // Known values: UserConfirmed (0), ClientDetected (1).
     source *int32
+    // Codec of the video stream, as the probe names it ("h264", "hevc", "av1").
+    videoCodec *string
     // The video this file is. Required — a hash observation without an assignment is not accepted.
     videoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Width of the video stream in pixels, as stored. Do not reorder it with the height to make the file landscape.
+    width *int32
 }
 // NewSubmitVideoFilehashItem instantiates a new SubmitVideoFilehashItem and sets the default values.
 func NewSubmitVideoFilehashItem()(*SubmitVideoFilehashItem) {
@@ -44,10 +62,85 @@ func CreateSubmitVideoFilehashItemFromDiscriminatorValue(parseNode i878a80d2330e
 func (m *SubmitVideoFilehashItem) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
+// GetAudioChannels gets the audioChannels property value. Channel count of the audio stream.
+// returns a *int32 when successful
+func (m *SubmitVideoFilehashItem) GetAudioChannels()(*int32) {
+    return m.audioChannels
+}
+// GetAudioCodec gets the audioCodec property value. Codec of the audio stream, as the probe names it ("aac", "mp3").
+// returns a *string when successful
+func (m *SubmitVideoFilehashItem) GetAudioCodec()(*string) {
+    return m.audioCodec
+}
+// GetBitRate gets the bitRate property value. Overall bit rate of the file in bits per second, across all streams.
+// returns a *int64 when successful
+func (m *SubmitVideoFilehashItem) GetBitRate()(*int64) {
+    return m.bitRate
+}
+// GetContainerFormat gets the containerFormat property value. Container of the file as the probe names it. Send it verbatim — it is usually a commaseparated list of the formats the demuxer covers ("mov,mp4,m4a,3gp,3g2,mj2"), not one token.
+// returns a *string when successful
+func (m *SubmitVideoFilehashItem) GetContainerFormat()(*string) {
+    return m.containerFormat
+}
+// GetDurationMs gets the durationMs property value. Duration of the file in milliseconds, if the client probed it. Optional, like every fieldbelow it: a client that cannot or will not probe submits without them.
+// returns a *int64 when successful
+func (m *SubmitVideoFilehashItem) GetDurationMs()(*int64) {
+    return m.durationMs
+}
 // GetFieldDeserializers the deserialization information for the current model
 // returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
 func (m *SubmitVideoFilehashItem) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
     res := make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
+    res["audioChannels"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt32Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetAudioChannels(val)
+        }
+        return nil
+    }
+    res["audioCodec"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetAudioCodec(val)
+        }
+        return nil
+    }
+    res["bitRate"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt64Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetBitRate(val)
+        }
+        return nil
+    }
+    res["containerFormat"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetContainerFormat(val)
+        }
+        return nil
+    }
+    res["durationMs"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt64Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetDurationMs(val)
+        }
+        return nil
+    }
     res["filename"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -65,6 +158,26 @@ func (m *SubmitVideoFilehashItem) GetFieldDeserializers()(map[string]func(i878a8
         }
         if val != nil {
             m.SetFilesize(val)
+        }
+        return nil
+    }
+    res["frameRate"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetFrameRate(val)
+        }
+        return nil
+    }
+    res["height"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt32Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetHeight(val)
         }
         return nil
     }
@@ -108,6 +221,16 @@ func (m *SubmitVideoFilehashItem) GetFieldDeserializers()(map[string]func(i878a8
         }
         return nil
     }
+    res["videoCodec"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetVideoCodec(val)
+        }
+        return nil
+    }
     res["videoId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetUUIDValue()
         if err != nil {
@@ -115,6 +238,16 @@ func (m *SubmitVideoFilehashItem) GetFieldDeserializers()(map[string]func(i878a8
         }
         if val != nil {
             m.SetVideoId(val)
+        }
+        return nil
+    }
+    res["width"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt32Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetWidth(val)
         }
         return nil
     }
@@ -129,6 +262,16 @@ func (m *SubmitVideoFilehashItem) GetFilename()(*string) {
 // returns a *int64 when successful
 func (m *SubmitVideoFilehashItem) GetFilesize()(*int64) {
     return m.filesize
+}
+// GetFrameRate gets the frameRate property value. Average frame rate as the rational the probe reports, verbatim: "24000/1001", not "23.976".Rounding merges rates that are not the same one, and for a variable-rate file the largedenominator is the only sign that the value is an average rather than a rate.
+// returns a *string when successful
+func (m *SubmitVideoFilehashItem) GetFrameRate()(*string) {
+    return m.frameRate
+}
+// GetHeight gets the height property value. Height of the video stream in pixels, as stored.
+// returns a *int32 when successful
+func (m *SubmitVideoFilehashItem) GetHeight()(*int32) {
+    return m.height
 }
 // GetOsHash gets the osHash property value. OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.
 // returns a *string when successful
@@ -150,13 +293,53 @@ func (m *SubmitVideoFilehashItem) GetReleaseName()(*string) {
 func (m *SubmitVideoFilehashItem) GetSource()(*int32) {
     return m.source
 }
+// GetVideoCodec gets the videoCodec property value. Codec of the video stream, as the probe names it ("h264", "hevc", "av1").
+// returns a *string when successful
+func (m *SubmitVideoFilehashItem) GetVideoCodec()(*string) {
+    return m.videoCodec
+}
 // GetVideoId gets the videoId property value. The video this file is. Required — a hash observation without an assignment is not accepted.
 // returns a *UUID when successful
 func (m *SubmitVideoFilehashItem) GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.videoId
 }
+// GetWidth gets the width property value. Width of the video stream in pixels, as stored. Do not reorder it with the height to make the file landscape.
+// returns a *int32 when successful
+func (m *SubmitVideoFilehashItem) GetWidth()(*int32) {
+    return m.width
+}
 // Serialize serializes information the current object
 func (m *SubmitVideoFilehashItem) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
+    {
+        err := writer.WriteInt32Value("audioChannels", m.GetAudioChannels())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("audioCodec", m.GetAudioCodec())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteInt64Value("bitRate", m.GetBitRate())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("containerFormat", m.GetContainerFormat())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteInt64Value("durationMs", m.GetDurationMs())
+        if err != nil {
+            return err
+        }
+    }
     {
         err := writer.WriteStringValue("filename", m.GetFilename())
         if err != nil {
@@ -165,6 +348,18 @@ func (m *SubmitVideoFilehashItem) Serialize(writer i878a80d2330e89d26896388a3f48
     }
     {
         err := writer.WriteInt64Value("filesize", m.GetFilesize())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("frameRate", m.GetFrameRate())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteInt32Value("height", m.GetHeight())
         if err != nil {
             return err
         }
@@ -194,7 +389,19 @@ func (m *SubmitVideoFilehashItem) Serialize(writer i878a80d2330e89d26896388a3f48
         }
     }
     {
+        err := writer.WriteStringValue("videoCodec", m.GetVideoCodec())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteUUIDValue("videoId", m.GetVideoId())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteInt32Value("width", m.GetWidth())
         if err != nil {
             return err
         }
@@ -211,6 +418,26 @@ func (m *SubmitVideoFilehashItem) Serialize(writer i878a80d2330e89d26896388a3f48
 func (m *SubmitVideoFilehashItem) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
+// SetAudioChannels sets the audioChannels property value. Channel count of the audio stream.
+func (m *SubmitVideoFilehashItem) SetAudioChannels(value *int32)() {
+    m.audioChannels = value
+}
+// SetAudioCodec sets the audioCodec property value. Codec of the audio stream, as the probe names it ("aac", "mp3").
+func (m *SubmitVideoFilehashItem) SetAudioCodec(value *string)() {
+    m.audioCodec = value
+}
+// SetBitRate sets the bitRate property value. Overall bit rate of the file in bits per second, across all streams.
+func (m *SubmitVideoFilehashItem) SetBitRate(value *int64)() {
+    m.bitRate = value
+}
+// SetContainerFormat sets the containerFormat property value. Container of the file as the probe names it. Send it verbatim — it is usually a commaseparated list of the formats the demuxer covers ("mov,mp4,m4a,3gp,3g2,mj2"), not one token.
+func (m *SubmitVideoFilehashItem) SetContainerFormat(value *string)() {
+    m.containerFormat = value
+}
+// SetDurationMs sets the durationMs property value. Duration of the file in milliseconds, if the client probed it. Optional, like every fieldbelow it: a client that cannot or will not probe submits without them.
+func (m *SubmitVideoFilehashItem) SetDurationMs(value *int64)() {
+    m.durationMs = value
+}
 // SetFilename sets the filename property value. File name without directory. Optional — a client may withhold it, and the endpoint works without it.
 func (m *SubmitVideoFilehashItem) SetFilename(value *string)() {
     m.filename = value
@@ -218,6 +445,14 @@ func (m *SubmitVideoFilehashItem) SetFilename(value *string)() {
 // SetFilesize sets the filesize property value. Size of the file in bytes.
 func (m *SubmitVideoFilehashItem) SetFilesize(value *int64)() {
     m.filesize = value
+}
+// SetFrameRate sets the frameRate property value. Average frame rate as the rational the probe reports, verbatim: "24000/1001", not "23.976".Rounding merges rates that are not the same one, and for a variable-rate file the largedenominator is the only sign that the value is an average rather than a rate.
+func (m *SubmitVideoFilehashItem) SetFrameRate(value *string)() {
+    m.frameRate = value
+}
+// SetHeight sets the height property value. Height of the video stream in pixels, as stored.
+func (m *SubmitVideoFilehashItem) SetHeight(value *int32)() {
+    m.height = value
 }
 // SetOsHash sets the osHash property value. OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.
 func (m *SubmitVideoFilehashItem) SetOsHash(value *string)() {
@@ -235,25 +470,51 @@ func (m *SubmitVideoFilehashItem) SetReleaseName(value *string)() {
 func (m *SubmitVideoFilehashItem) SetSource(value *int32)() {
     m.source = value
 }
+// SetVideoCodec sets the videoCodec property value. Codec of the video stream, as the probe names it ("h264", "hevc", "av1").
+func (m *SubmitVideoFilehashItem) SetVideoCodec(value *string)() {
+    m.videoCodec = value
+}
 // SetVideoId sets the videoId property value. The video this file is. Required — a hash observation without an assignment is not accepted.
 func (m *SubmitVideoFilehashItem) SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.videoId = value
 }
+// SetWidth sets the width property value. Width of the video stream in pixels, as stored. Do not reorder it with the height to make the file landscape.
+func (m *SubmitVideoFilehashItem) SetWidth(value *int32)() {
+    m.width = value
+}
 type SubmitVideoFilehashItemable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
+    GetAudioChannels()(*int32)
+    GetAudioCodec()(*string)
+    GetBitRate()(*int64)
+    GetContainerFormat()(*string)
+    GetDurationMs()(*int64)
     GetFilename()(*string)
     GetFilesize()(*int64)
+    GetFrameRate()(*string)
+    GetHeight()(*int32)
     GetOsHash()(*string)
     GetPHash()(*string)
     GetReleaseName()(*string)
     GetSource()(*int32)
+    GetVideoCodec()(*string)
     GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
+    GetWidth()(*int32)
+    SetAudioChannels(value *int32)()
+    SetAudioCodec(value *string)()
+    SetBitRate(value *int64)()
+    SetContainerFormat(value *string)()
+    SetDurationMs(value *int64)()
     SetFilename(value *string)()
     SetFilesize(value *int64)()
+    SetFrameRate(value *string)()
+    SetHeight(value *int32)()
     SetOsHash(value *string)()
     SetPHash(value *string)()
     SetReleaseName(value *string)()
     SetSource(value *int32)()
+    SetVideoCodec(value *string)()
     SetVideoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
+    SetWidth(value *int32)()
 }

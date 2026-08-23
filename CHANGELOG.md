@@ -15,6 +15,21 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **`SubmitVideoFilehashItem` can carry an optional technical profile.** The
+  nine new fields are `durationMs`, `containerFormat`, `bitRate`, `videoCodec`,
+  `width`, `height`, `frameRate`, `audioCodec` and `audioChannels`. Each may be
+  omitted independently when it was not measured; non-positive numeric values
+  are not substitutes for missing measurements. `frameRate` remains the exact
+  rational reported by the probe, such as `24000/1001`, rather than a rounded
+  number, and stored width and height are not reordered for portrait video.
+
+  These fields are additive and do not change any existing operation or
+  property. The API stores them for future duration and quality aggregation but
+  does not read them back yet. Container tag data such as `encoder`, `comment`
+  and `title` is deliberately not accepted.
+
 ## [0.9.0] - 2026-08-20
 
 ### Added

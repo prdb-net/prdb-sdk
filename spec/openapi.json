@@ -2922,7 +2922,7 @@
           "VideoFilehashSubmissions"
         ],
         "summary": "Submit hash-to-video assignments",
-        "description": "Submits up to 200 assignments of a file hash to a video, on behalf of the authenticated user. This is the contribution path for both kinds of assignment: one a person confirmed in a client's UI (userConfirmed) and one the client made on its own (clientDetected). Each entry needs a videoId and an osHash; the osHash is the only aggregation key, so an entry carrying only a pHash cannot be used. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. The filename and the releaseName are optional and may be withheld; the endpoint works without either. Every entry gets its own outcome and the status stays 200: an unknown videoId is reported as videoNotFound, and an assignment that contradicts an existing one is stored as conflicted rather than overwriting it. Submissions are recorded in their own table and appear in no read endpoint. They do reach the aggregated hash set: the scraper's aggregation job counts every non-conflicted submission, weighing userConfirmed and clientDetected alike, and promotes an assignment once enough distinct users agree on it. A conflicted submission never counts towards one. The two sources carry different client-side obligations, which the API cannot enforce: a userConfirmed submission must be strictly opt-in and off by default, because a person is vouching for it; a clientDetected submission may be on by default but has to be switchable off. Requires API key authentication.",
+        "description": "Submits up to 200 assignments of a file hash to a video, on behalf of the authenticated user. This is the contribution path for both kinds of assignment: one a person confirmed in a client's UI (userConfirmed) and one the client made on its own (clientDetected). Each entry needs a videoId and an osHash; the osHash is the only aggregation key, so an entry carrying only a pHash cannot be used. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. The filename and the releaseName are optional and may be withheld; the endpoint works without either. The technical profile of the file is optional in the same way, field by field: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels. Send what the probe reported and leave out what it did not, rather than sending a zero or a guess. The frame rate goes as the rational it was measured as (24000/1001), not as a rounded number, and width and height go as stored, not reordered to make the file landscape; portrait files are ordinary. The container tag block is not accepted: encoder, comment and title are the submitter's data, not the file's, and the endpoint takes the numeric profile only. Nothing reads these values yet; they are recorded for the aggregation that is to derive a consensus duration and a quality overview from them. Every entry gets its own outcome and the status stays 200: an unknown videoId is reported as videoNotFound, and an assignment that contradicts an existing one is stored as conflicted rather than overwriting it. Submissions are recorded in their own table and appear in no read endpoint. They do reach the aggregated hash set: the scraper's aggregation job counts every non-conflicted submission, weighing userConfirmed and clientDetected alike, and promotes an assignment once enough distinct users agree on it. A conflicted submission never counts towards one. The two sources carry different client-side obligations, which the API cannot enforce: a userConfirmed submission must be strictly opt-in and off by default, because a person is vouching for it; a clientDetected submission may be on by default but has to be switchable off. Requires API key authentication.",
         "operationId": "SubmitVideoFilehashes",
         "requestBody": {
           "content": {
@@ -7954,6 +7954,60 @@
             "maxLength": 2000,
             "type": "string",
             "description": "The scene release name the file came in, if the client knows one. Optional. It is a release\nname, not a file name: send it when the acquisition carried one, and leave it out otherwise.",
+            "nullable": true
+          },
+          "durationMs": {
+            "type": "integer",
+            "description": "Duration of the file in milliseconds, if the client probed it. Optional, like every field\nbelow it: a client that cannot or will not probe submits without them.",
+            "format": "int64",
+            "nullable": true
+          },
+          "containerFormat": {
+            "maxLength": 100,
+            "type": "string",
+            "description": "Container of the file as the probe names it. Send it verbatim — it is usually a comma\nseparated list of the formats the demuxer covers (\"mov,mp4,m4a,3gp,3g2,mj2\"), not one token.",
+            "nullable": true
+          },
+          "bitRate": {
+            "type": "integer",
+            "description": "Overall bit rate of the file in bits per second, across all streams.",
+            "format": "int64",
+            "nullable": true
+          },
+          "videoCodec": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "Codec of the video stream, as the probe names it (\"h264\", \"hevc\", \"av1\").",
+            "nullable": true
+          },
+          "width": {
+            "type": "integer",
+            "description": "Width of the video stream in pixels, as stored. Do not reorder it with the height to make the file landscape.",
+            "format": "int32",
+            "nullable": true
+          },
+          "height": {
+            "type": "integer",
+            "description": "Height of the video stream in pixels, as stored.",
+            "format": "int32",
+            "nullable": true
+          },
+          "frameRate": {
+            "maxLength": 32,
+            "type": "string",
+            "description": "Average frame rate as the rational the probe reports, verbatim: \"24000/1001\", not \"23.976\".\nRounding merges rates that are not the same one, and for a variable-rate file the large\ndenominator is the only sign that the value is an average rather than a rate.",
+            "nullable": true
+          },
+          "audioCodec": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "Codec of the audio stream, as the probe names it (\"aac\", \"mp3\").",
+            "nullable": true
+          },
+          "audioChannels": {
+            "type": "integer",
+            "description": "Channel count of the audio stream.",
+            "format": "int32",
             "nullable": true
           },
           "source": {

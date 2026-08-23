@@ -2493,13 +2493,22 @@ export function deserializeIntoSubmitVideoFilehashesResponse(submitVideoFilehash
 // @ts-ignore
 export function deserializeIntoSubmitVideoFilehashItem(submitVideoFilehashItem: Partial<SubmitVideoFilehashItem> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "audioChannels": n => { submitVideoFilehashItem.audioChannels = n.getNumberValue(); },
+        "audioCodec": n => { submitVideoFilehashItem.audioCodec = n.getStringValue(); },
+        "bitRate": n => { submitVideoFilehashItem.bitRate = n.getNumberValue(); },
+        "containerFormat": n => { submitVideoFilehashItem.containerFormat = n.getStringValue(); },
+        "durationMs": n => { submitVideoFilehashItem.durationMs = n.getNumberValue(); },
         "filename": n => { submitVideoFilehashItem.filename = n.getStringValue(); },
         "filesize": n => { submitVideoFilehashItem.filesize = n.getNumberValue(); },
+        "frameRate": n => { submitVideoFilehashItem.frameRate = n.getStringValue(); },
+        "height": n => { submitVideoFilehashItem.height = n.getNumberValue(); },
         "osHash": n => { submitVideoFilehashItem.osHash = n.getStringValue(); },
         "pHash": n => { submitVideoFilehashItem.pHash = n.getStringValue(); },
         "releaseName": n => { submitVideoFilehashItem.releaseName = n.getStringValue(); },
         "source": n => { submitVideoFilehashItem.source = n.getNumberValue(); },
+        "videoCodec": n => { submitVideoFilehashItem.videoCodec = n.getStringValue(); },
         "videoId": n => { submitVideoFilehashItem.videoId = n.getGuidValue(); },
+        "width": n => { submitVideoFilehashItem.width = n.getNumberValue(); },
     }
 }
 /**
@@ -5189,13 +5198,22 @@ export function serializeSubmitVideoFilehashesResponse(writer: SerializationWrit
 // @ts-ignore
 export function serializeSubmitVideoFilehashItem(writer: SerializationWriter, submitVideoFilehashItem: Partial<SubmitVideoFilehashItem> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!submitVideoFilehashItem || isSerializingDerivedType) { return; }
+    writer.writeNumberValue("audioChannels", submitVideoFilehashItem.audioChannels);
+    writer.writeStringValue("audioCodec", submitVideoFilehashItem.audioCodec);
+    writer.writeNumberValue("bitRate", submitVideoFilehashItem.bitRate);
+    writer.writeStringValue("containerFormat", submitVideoFilehashItem.containerFormat);
+    writer.writeNumberValue("durationMs", submitVideoFilehashItem.durationMs);
     writer.writeStringValue("filename", submitVideoFilehashItem.filename);
     writer.writeNumberValue("filesize", submitVideoFilehashItem.filesize);
+    writer.writeStringValue("frameRate", submitVideoFilehashItem.frameRate);
+    writer.writeNumberValue("height", submitVideoFilehashItem.height);
     writer.writeStringValue("osHash", submitVideoFilehashItem.osHash);
     writer.writeStringValue("pHash", submitVideoFilehashItem.pHash);
     writer.writeStringValue("releaseName", submitVideoFilehashItem.releaseName);
     writer.writeNumberValue("source", submitVideoFilehashItem.source);
+    writer.writeStringValue("videoCodec", submitVideoFilehashItem.videoCodec);
     writer.writeGuidValue("videoId", submitVideoFilehashItem.videoId);
+    writer.writeNumberValue("width", submitVideoFilehashItem.width);
     writer.writeAdditionalData(submitVideoFilehashItem.additionalData);
 }
 /**
@@ -5750,6 +5768,26 @@ export interface SubmitVideoFilehashesResponse extends AdditionalDataHolder, Par
  */
 export interface SubmitVideoFilehashItem extends AdditionalDataHolder, Parsable {
     /**
+     * Channel count of the audio stream.
+     */
+    audioChannels?: number | null;
+    /**
+     * Codec of the audio stream, as the probe names it ("aac", "mp3").
+     */
+    audioCodec?: string | null;
+    /**
+     * Overall bit rate of the file in bits per second, across all streams.
+     */
+    bitRate?: number | null;
+    /**
+     * Container of the file as the probe names it. Send it verbatim — it is usually a commaseparated list of the formats the demuxer covers ("mov,mp4,m4a,3gp,3g2,mj2"), not one token.
+     */
+    containerFormat?: string | null;
+    /**
+     * Duration of the file in milliseconds, if the client probed it. Optional, like every fieldbelow it: a client that cannot or will not probe submits without them.
+     */
+    durationMs?: number | null;
+    /**
      * File name without directory. Optional — a client may withhold it, and the endpoint works without it.
      */
     filename?: string | null;
@@ -5757,6 +5795,14 @@ export interface SubmitVideoFilehashItem extends AdditionalDataHolder, Parsable 
      * Size of the file in bytes.
      */
     filesize?: number | null;
+    /**
+     * Average frame rate as the rational the probe reports, verbatim: "24000/1001", not "23.976".Rounding merges rates that are not the same one, and for a variable-rate file the largedenominator is the only sign that the value is an average rather than a rate.
+     */
+    frameRate?: string | null;
+    /**
+     * Height of the video stream in pixels, as stored.
+     */
+    height?: number | null;
     /**
      * OS hash of the file, 16 hexadecimal characters. Required; it is the only aggregation key.
      */
@@ -5774,9 +5820,17 @@ export interface SubmitVideoFilehashItem extends AdditionalDataHolder, Parsable 
      */
     source?: number | null;
     /**
+     * Codec of the video stream, as the probe names it ("h264", "hevc", "av1").
+     */
+    videoCodec?: string | null;
+    /**
      * The video this file is. Required — a hash observation without an assignment is not accepted.
      */
     videoId?: Guid | null;
+    /**
+     * Width of the video stream in pixels, as stored. Do not reorder it with the height to make the file landscape.
+     */
+    width?: number | null;
 }
 /**
  * What happened to one submitted assignment.

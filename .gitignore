@@ -1,5 +1,6 @@
 # Local, machine-specific agent instructions — never committed
 CLAUDE.local.md
+.firecrawl/
 
 # Kiota writes a generation log next to the output; it is noise, not source.
 .kiota.log
