@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "prdb Public API",
-    "description": "Read and write access to the prdb catalogue: videos, actors, sites, scene pre-database\nreleases, file hashes and the per-user lists built on top of them.\n\nAuthenticate every request except the health probe with an API key in the `X-Api-Key`\nheader. API access is part of the paid subscription tiers; requests are rate limited per\naccount and `GET /rate-limit` reports the remaining budget.\n\nEvery authenticated endpoint can answer `403` when the account has no subscription tier that\nincludes API access, `429` when the hourly or monthly budget is spent, and `503` while rate\nlimiting itself is unavailable. The API serves no content it cannot meter, so treat `503`\nas retryable rather than as a permission problem.\n\nEndpoints named `/{resource}/changes` are delta feeds: they return the current state of\nrows changed since a cursor, including soft-deleted rows as tombstones, rather than a full\nhistory of every mutation.\n\n### Perceptual hashes\n\nEvery endpoint that accepts a `pHash` expects a 64-bit perceptual hash as 16 hexadecimal\ncharacters, in either case; values are stored and returned uppercase. There is one\nprocedure for computing it — the one Stash uses — and a value produced any other way is\nnot comparable with the rest of the column, which nothing in the value itself reveals.\n\nSample 25 frames across the middle 90% of the runtime, one per timestamp, with the seek\nplaced **before** the input:\n`ffmpeg -loglevel error -y -ss <t> -i <file> -frames:v 1 -vf scale=160:-2 -c:v bmp -f rawvideo -`.\nAssemble them left to right and top to bottom into a 5x5 montage, scale that to 64x64 with\n`github.com/nfnt/resize`'s bilinear filter — whose support scales with the downscale\nfactor, so it is not four-neighbour interpolation and no other library substitutes for it\n— convert to luminance with 0.299/0.587/0.114, apply an unscaled DCT-II, and keep the\ntop-left 8x8 block row-major. Set the bit for every coefficient strictly above\n`goimagehash`'s `MedianOfPixels` threshold, most significant bit first, keeping the DC\ncoefficient. `0000000000000000` is a valid hash, not an error code.\n\n`pHash` values are matched for **equality**. Hamming-distance matching is not implemented.\n\nThe summary above is not enough to implement from, and it is not meant to be. The\nnormative specification — the exact resampler arithmetic, the threshold's quickselect\n(which is not a median), the DCT divisor tables, and test vectors at three levels — is\npublished at <https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing.md>, with\nthe vectors as data at\n<https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing-vectors.json>.\n\nFor .NET there is an implementation of it, the `Prdb.Hashing` package, which also computes\nthe `osHash`.",
+    "description": "Read and write access to the prdb catalogue: videos, actors, sites, scene pre-database\nreleases, file hashes and the per-user lists built on top of them.\n\nAuthenticate every request except the health probe with an API key in the `X-Api-Key`\nheader. API access is part of the paid subscription tiers; requests are rate limited per\naccount and `GET /rate-limit` reports the remaining budget.\n\nEvery authenticated endpoint can answer `403` when the account has no subscription tier that\nincludes API access, `429` when the hourly or monthly budget is spent, and `503` while rate\nlimiting itself is unavailable. The API serves no content it cannot meter, so treat `503`\nas retryable rather than as a permission problem.\n\nEndpoints named `/{resource}/changes` are delta feeds: they return the current state of\nrows changed since a cursor, including soft-deleted rows as tombstones, rather than a full\nhistory of every mutation.\n\n### Media metadata\n\nA file's technical profile — duration, container, bit rate, video and audio codec,\nresolution, frame rate and channel count — is submitted by the clients that probed the\nfile, aggregated per file, and returned on every filehash payload. Each field is\nindependently optional: a client may report the duration and withhold the frame rate, and\na field nobody has reported is `null` rather than zero.\n\nTwo properties of it are easy to get wrong when consuming or re-deriving them:\n\n- **`frameRate` is a rational as measured, never a decimal.** `24000/1001`, not `23.976`.\n  Rounding merges rates that are not the same one, and for a variable-rate file the value\n  is a per-file average whose large denominator is the only sign it is not a constant\n  rate. Treat a large denominator as \"variable\" rather than as a rate.\n- **`width` and `height` are as stored and are not ordered.** Portrait video is ordinary,\n  so the larger of the two is not \"the resolution\" and a quality label derived from it is\n  wrong for a substantial share of real files.\n\nOn a video, `durationMs` is the **consensus** across the files known for it: a median, not\nan average, because durations differ legitimately between cuts, re-encodes and trailers,\nand one short outlier would move an average off the value the real files agree on. It\ncomes with `durationSpreadMs` — the median absolute deviation, where a large value means\nseveral versions are in circulation — and `durationFileCount`, without which the spread\ncannot be read. All three are `null` until enough independent submitters have reported a\nduration.\n\nResolution, codec and bit rate deliberately have no video-level value. Their aggregate is\nthe distribution in `qualityOverview`, which counts a video's files per resolution and per\ncodec — \"known in 1080p and 2160p\" is a true statement where a single resolution on the\nvideo would be a guess.\n\n### Perceptual hashes\n\nEvery endpoint that accepts a `pHash` expects a 64-bit perceptual hash as 16 hexadecimal\ncharacters, in either case; values are stored and returned uppercase. There is one\nprocedure for computing it — the one Stash uses — and a value produced any other way is\nnot comparable with the rest of the column, which nothing in the value itself reveals.\n\nSample 25 frames across the middle 90% of the runtime, one per timestamp, with the seek\nplaced **before** the input:\n`ffmpeg -loglevel error -y -ss <t> -i <file> -frames:v 1 -vf scale=160:-2 -c:v bmp -f rawvideo -`.\nAssemble them left to right and top to bottom into a 5x5 montage, scale that to 64x64 with\n`github.com/nfnt/resize`'s bilinear filter — whose support scales with the downscale\nfactor, so it is not four-neighbour interpolation and no other library substitutes for it\n— convert to luminance with 0.299/0.587/0.114, apply an unscaled DCT-II, and keep the\ntop-left 8x8 block row-major. Set the bit for every coefficient strictly above\n`goimagehash`'s `MedianOfPixels` threshold, most significant bit first, keeping the DC\ncoefficient. `0000000000000000` is a valid hash, not an error code.\n\n`pHash` values are matched for **equality**. Hamming-distance matching is not implemented.\n\nThe summary above is not enough to implement from, and it is not meant to be. The\nnormative specification — the exact resampler arithmetic, the threshold's quickselect\n(which is not a median), the DCT divisor tables, and test vectors at three levels — is\npublished at <https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing.md>, with\nthe vectors as data at\n<https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing-vectors.json>.\n\nFor .NET there is an implementation of it, the `Prdb.Hashing` package, which also computes\nthe `osHash`.",
     "license": {
       "name": "Proprietary",
       "url": "https://prdb.net"
@@ -1518,7 +1518,7 @@
           "Videos"
         ],
         "summary": "List videos",
-        "description": "Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.",
+        "description": "Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.",
         "operationId": "ListVideos",
         "parameters": [
           {
@@ -1937,7 +1937,7 @@
           "Videos"
         ],
         "summary": "Get videos by IDs",
-        "description": "Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.",
+        "description": "Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Each video carries its consensus duration and its qualityOverview on the same terms as the single-video endpoint; see Media metadata in the API description. Requires API key authentication.",
         "operationId": "GetVideosByIds",
         "requestBody": {
           "content": {
@@ -2046,7 +2046,7 @@
           "Videos"
         ],
         "summary": "Get video by ID",
-        "description": "Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Requires API key authentication.",
+        "description": "Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Carries the consensus duration across the files known for the video (durationMs, with durationSpreadMs and durationFileCount saying how far those files disagree and how many there were), and qualityOverview, which counts the video's files per resolution and per codec. The duration fields are null until enough independent submitters have reported one, and the overview is empty while no file has been probed. See Media metadata in the API description. Requires API key authentication.",
         "operationId": "GetVideoById",
         "parameters": [
           {
@@ -2143,7 +2143,7 @@
           "VideoFilehashes"
         ],
         "summary": "Get unlinked video filehash entries",
-        "description": "Returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.",
+        "description": "Returns a paged list of active filehash entries that are not linked to any video. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.",
         "operationId": "ListUnlinkedVideoFilehashes",
         "parameters": [
           {
@@ -2283,7 +2283,7 @@
           "VideoFilehashes"
         ],
         "summary": "Lookup video filehash entries",
-        "description": "Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Requires API key authentication.",
+        "description": "Returns a flat list of active filehash entries matching any supplied IDs, video IDs, hashes, filenames, or file sizes. Results can include unlinked rows whose videoId is null. pHashes are matched for equality and must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure matches nothing. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.",
         "operationId": "LookupVideoFilehashes",
         "requestBody": {
           "content": {
@@ -2384,7 +2384,7 @@
           "VideoFilehashes"
         ],
         "summary": "Get latest video filehash entries",
-        "description": "Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Requires API key authentication.",
+        "description": "Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.",
         "operationId": "GetLatestVideoFilehashes",
         "parameters": [
           {
@@ -2586,7 +2586,7 @@
           "VideoFilehashes"
         ],
         "summary": "Get video filehashes by video IDs",
-        "description": "Returns all filehash entries for up to 100 requested video IDs grouped by video ID. Existing videos are included even when they have no filehashes; unknown video IDs are returned separately. Requires API key authentication.",
+        "description": "Returns all filehash entries for up to 100 requested video IDs grouped by video ID. Existing videos are included even when they have no filehashes; unknown video IDs are returned separately. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.",
         "operationId": "GetVideoFilehashesByVideoIds",
         "requestBody": {
           "content": {
@@ -2687,7 +2687,7 @@
           "VideoFilehashes"
         ],
         "summary": "Get video filehashes by video ID",
-        "description": "Returns all filehash entries for a single video ordered by newest first. Returns 404 when the video does not exist. Requires API key authentication.",
+        "description": "Returns all filehash entries for a single video ordered by newest first. Returns 404 when the video does not exist. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.",
         "operationId": "GetVideoFilehashesByVideoId",
         "parameters": [
           {
@@ -2787,7 +2787,7 @@
           "VideoFilehashes"
         ],
         "summary": "Get incremental video filehash changes",
-        "description": "Returns a seek-paged delta feed of video filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional video ID and site ID filters. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of video filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional video ID and site ID filters. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.",
         "operationId": "GetVideoFilehashChanges",
         "parameters": [
           {
@@ -8226,6 +8226,25 @@
         },
         "description": "Identity and subscription state for the authenticated user."
       },
+      "VideoCodecCountDto": {
+        "required": [
+          "codec",
+          "fileCount"
+        ],
+        "type": "object",
+        "properties": {
+          "codec": {
+            "type": "string",
+            "description": "Codec name as the probing client reported it, lower-cased (\"h264\", \"hevc\", \"av1\")."
+          },
+          "fileCount": {
+            "type": "integer",
+            "description": "How many of the video's files use this codec.",
+            "format": "int32"
+          }
+        },
+        "description": "One video codec a video is known in, and how many of its files carry it."
+      },
       "VideoDetailActorDto": {
         "required": [
           "id",
@@ -8297,6 +8316,7 @@
           "createdAtUtc",
           "updatedAtUtc",
           "site",
+          "qualityOverview",
           "images",
           "preNames",
           "actors"
@@ -8325,6 +8345,27 @@
           },
           "site": {
             "$ref": "#/components/schemas/VideoDetailSiteDto"
+          },
+          "durationMs": {
+            "type": "integer",
+            "description": "Consensus duration in milliseconds across the files prdb holds for this video, or null while\ntoo few independent submitters have reported one. A median, not an average: durations differ\nlegitimately — cuts, with and without an intro, re-encodes with padding — and one short\noutlier would drag an average off the value the real files agree on.",
+            "format": "int64",
+            "nullable": true
+          },
+          "durationSpreadMs": {
+            "type": "integer",
+            "description": "How far the files disagree about the duration, in milliseconds (median absolute deviation).\nZero means every file agrees; a large value means several versions are in circulation, which\nis the more useful of the two statements. Null exactly when `durationMs` is null.",
+            "format": "int64",
+            "nullable": true
+          },
+          "durationFileCount": {
+            "type": "integer",
+            "description": "How many files the duration was taken over. The spread cannot be read without it — one over\ntwo files says far less than one over twenty. Null exactly when `durationMs` is null.",
+            "format": "int32",
+            "nullable": true
+          },
+          "qualityOverview": {
+            "$ref": "#/components/schemas/VideoQualityOverviewDto"
           },
           "images": {
             "type": "array",
@@ -8502,6 +8543,56 @@
             "type": "boolean",
             "description": "Whether this filehash record has been verified."
           },
+          "durationMs": {
+            "type": "integer",
+            "description": "Duration of this file in milliseconds, as the submitting clients probed it, or null when none reported one.",
+            "format": "int64",
+            "nullable": true
+          },
+          "containerFormat": {
+            "type": "string",
+            "description": "Container as the probe names it. Usually a comma separated list of the formats one demuxer covers (\"mov,mp4,m4a,3gp,3g2,mj2\"), not a single token.",
+            "nullable": true
+          },
+          "bitRate": {
+            "type": "integer",
+            "description": "Overall bit rate in bits per second, across all streams.",
+            "format": "int64",
+            "nullable": true
+          },
+          "videoCodec": {
+            "type": "string",
+            "description": "Codec of the video stream, lower-cased (\"h264\", \"hevc\", \"av1\").",
+            "nullable": true
+          },
+          "width": {
+            "type": "integer",
+            "description": "Width of the video stream in pixels, as stored. Not necessarily the larger dimension: portrait video is ordinary.",
+            "format": "int32",
+            "nullable": true
+          },
+          "height": {
+            "type": "integer",
+            "description": "Height of the video stream in pixels, as stored.",
+            "format": "int32",
+            "nullable": true
+          },
+          "frameRate": {
+            "type": "string",
+            "description": "Average frame rate as a rational, exactly as it was measured: \"24000/1001\", never a rounded\ndecimal. Rounding merges rates that are not the same one, and a variable-rate file carries a\nper-file average whose large denominator is what marks it as variable rather than as a rate.",
+            "nullable": true
+          },
+          "audioCodec": {
+            "type": "string",
+            "description": "Codec of the audio stream, lower-cased (\"aac\", \"mp3\").",
+            "nullable": true
+          },
+          "audioChannels": {
+            "type": "integer",
+            "description": "Channel count of the audio stream.",
+            "format": "int32",
+            "nullable": true
+          },
           "isDeleted": {
             "type": "boolean",
             "description": "Whether this row is soft-deleted."
@@ -8590,6 +8681,56 @@
           "isVerified": {
             "type": "boolean",
             "description": "Whether this filehash record has been verified."
+          },
+          "durationMs": {
+            "type": "integer",
+            "description": "Duration of this file in milliseconds, as the submitting clients probed it, or null when none reported one.",
+            "format": "int64",
+            "nullable": true
+          },
+          "containerFormat": {
+            "type": "string",
+            "description": "Container as the probe names it. Usually a comma separated list of the formats one demuxer covers (\"mov,mp4,m4a,3gp,3g2,mj2\"), not a single token.",
+            "nullable": true
+          },
+          "bitRate": {
+            "type": "integer",
+            "description": "Overall bit rate in bits per second, across all streams.",
+            "format": "int64",
+            "nullable": true
+          },
+          "videoCodec": {
+            "type": "string",
+            "description": "Codec of the video stream, lower-cased (\"h264\", \"hevc\", \"av1\").",
+            "nullable": true
+          },
+          "width": {
+            "type": "integer",
+            "description": "Width of the video stream in pixels, as stored. Not necessarily the larger dimension: portrait video is ordinary.",
+            "format": "int32",
+            "nullable": true
+          },
+          "height": {
+            "type": "integer",
+            "description": "Height of the video stream in pixels, as stored.",
+            "format": "int32",
+            "nullable": true
+          },
+          "frameRate": {
+            "type": "string",
+            "description": "Average frame rate as a rational, exactly as it was measured: \"24000/1001\", never a rounded\ndecimal. Rounding merges rates that are not the same one, and a variable-rate file carries a\nper-file average whose large denominator is what marks it as variable rather than as a rate.",
+            "nullable": true
+          },
+          "audioCodec": {
+            "type": "string",
+            "description": "Codec of the audio stream, lower-cased (\"aac\", \"mp3\").",
+            "nullable": true
+          },
+          "audioChannels": {
+            "type": "integer",
+            "description": "Channel count of the audio stream.",
+            "format": "int32",
+            "nullable": true
           },
           "createdAtUtc": {
             "type": "string",
@@ -8698,6 +8839,56 @@
         "type": "integer",
         "description": "Known values: P720 (0), P1080 (1), P2160 (2)."
       },
+      "VideoQualityOverviewDto": {
+        "required": [
+          "resolutions",
+          "videoCodecs"
+        ],
+        "type": "object",
+        "properties": {
+          "resolutions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoResolutionCountDto"
+            },
+            "description": "Resolutions the video is known in, most files first. Width and height are as stored, never\nreordered — a portrait file has the smaller width, and treating the larger side as \"the\nresolution\" is wrong for a substantial share of real libraries."
+          },
+          "videoCodecs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoCodecCountDto"
+            },
+            "description": "Video codecs the video is known in, most files first."
+          }
+        },
+        "description": "What technical shapes a video is known to exist in, counted over the files prdb holds for it."
+      },
+      "VideoResolutionCountDto": {
+        "required": [
+          "width",
+          "height",
+          "fileCount"
+        ],
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "integer",
+            "description": "Width in pixels, as stored.",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "description": "Height in pixels, as stored.",
+            "format": "int32"
+          },
+          "fileCount": {
+            "type": "integer",
+            "description": "How many of the video's files are in this resolution.",
+            "format": "int32"
+          }
+        },
+        "description": "One resolution a video is known in, and how many of its files carry it."
+      },
       "VideoSummaryActorDto": {
         "required": [
           "id",
@@ -8756,6 +8947,24 @@
             "type": "string",
             "description": "Timestamp when the video was created in PRDB.",
             "format": "date-time"
+          },
+          "durationMs": {
+            "type": "integer",
+            "description": "Consensus duration in milliseconds across the files prdb holds for this video, or null while\ntoo few independent submitters have reported one. A median over the video's files, so a\ntrailer submitted under the same video does not move it.",
+            "format": "int64",
+            "nullable": true
+          },
+          "durationSpreadMs": {
+            "type": "integer",
+            "description": "How far those files disagree about the duration, in milliseconds (median absolute\ndeviation). Zero means they agree; a large value means several versions are in circulation.",
+            "format": "int64",
+            "nullable": true
+          },
+          "durationFileCount": {
+            "type": "integer",
+            "description": "How many files the duration was taken over, without which the spread cannot be read.",
+            "format": "int32",
+            "nullable": true
           },
           "actors": {
             "type": "array",

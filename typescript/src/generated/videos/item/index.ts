@@ -23,7 +23,7 @@ export interface ItemRequestBuilder extends BaseRequestBuilder<ItemRequestBuilde
      */
     get userImages(): UserImagesRequestBuilder;
     /**
-     * Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Requires API key authentication.
+     * Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Carries the consensus duration across the files known for the video (durationMs, with durationSpreadMs and durationFileCount saying how far those files disagree and how many there were), and qualityOverview, which counts the video's files per resolution and per codec. The duration fields are null until enough independent submitters have reported one, and the overview is empty while no file has been probed. See Media metadata in the API description. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<VideoDetailDto>}
      * @throws {ProblemDetails} error when the service returns a 401 status code
@@ -34,7 +34,7 @@ export interface ItemRequestBuilder extends BaseRequestBuilder<ItemRequestBuilde
      */
      get(requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<VideoDetailDto | undefined>;
     /**
-     * Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Requires API key authentication.
+     * Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Carries the consensus duration across the files known for the video (durationMs, with durationSpreadMs and durationFileCount saying how far those files disagree and how many there were), and qualityOverview, which counts the video's files per resolution and per codec. The duration fields are null until enough independent submitters have reported one, and the overview is empty while no file has been probed. See Media metadata in the API description. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */

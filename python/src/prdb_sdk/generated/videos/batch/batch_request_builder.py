@@ -33,7 +33,7 @@ class BatchRequestBuilder(BaseRequestBuilder):
     
     async def post(self,body: GetVideosByIdsRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[list[VideoDetailDto]]:
         """
-        Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+        Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Each video carries its consensus duration and its qualityOverview on the same terms as the single-video endpoint; see Media metadata in the API description. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[list[VideoDetailDto]]
@@ -60,7 +60,7 @@ class BatchRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,body: GetVideosByIdsRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+        Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Each video carries its consensus duration and its qualityOverview on the same terms as the single-video endpoint; see Media metadata in the API description. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation

@@ -34,7 +34,7 @@ namespace Prdb.Sdk.Generated.Videos.Filehashes.Batch
         {
         }
         /// <summary>
-        /// Returns all filehash entries for up to 100 requested video IDs grouped by video ID. Existing videos are included even when they have no filehashes; unknown video IDs are returned separately. Requires API key authentication.
+        /// Returns all filehash entries for up to 100 requested video IDs grouped by video ID. Existing videos are included even when they have no filehashes; unknown video IDs are returned separately. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.GetVideoFilehashesByVideoIdsResponse"/></returns>
         /// <param name="body">The request body</param>
@@ -67,7 +67,7 @@ namespace Prdb.Sdk.Generated.Videos.Filehashes.Batch
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.GetVideoFilehashesByVideoIdsResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.GetVideoFilehashesByVideoIdsResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns all filehash entries for up to 100 requested video IDs grouped by video ID. Existing videos are included even when they have no filehashes; unknown video IDs are returned separately. Requires API key authentication.
+        /// Returns all filehash entries for up to 100 requested video IDs grouped by video ID. Existing videos are included even when they have no filehashes; unknown video IDs are returned separately. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>

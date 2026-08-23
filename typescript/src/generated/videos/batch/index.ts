@@ -11,7 +11,7 @@ import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type Requ
  */
 export interface BatchRequestBuilder extends BaseRequestBuilder<BatchRequestBuilder> {
     /**
-     * Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+     * Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Each video carries its consensus duration and its qualityOverview on the same terms as the single-video endpoint; see Media metadata in the API description. Requires API key authentication.
      * @param body The request body
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<VideoDetailDto[]>}
@@ -23,7 +23,7 @@ export interface BatchRequestBuilder extends BaseRequestBuilder<BatchRequestBuil
      */
      post(body: GetVideosByIdsRequest, requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<VideoDetailDto[] | undefined>;
     /**
-     * Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+     * Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Each video carries its consensus duration and its qualityOverview on the same terms as the single-video endpoint; see Media metadata in the API description. Requires API key authentication.
      * @param body The request body
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}

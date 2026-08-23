@@ -26,6 +26,12 @@ namespace Prdb.Sdk.Generated.Models
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>Timestamp when the video was created in PRDB.</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
+        /// <summary>How many files the duration was taken over, without which the spread cannot be read.</summary>
+        public int? DurationFileCount { get; set; }
+        /// <summary>Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median over the video&apos;s files, so atrailer submitted under the same video does not move it.</summary>
+        public long? DurationMs { get; set; }
+        /// <summary>How far those files disagree about the duration, in milliseconds (median absolutedeviation). Zero means they agree; a large value means several versions are in circulation.</summary>
+        public long? DurationSpreadMs { get; set; }
         /// <summary>Unique identifier of the video.</summary>
         public Guid? Id { get; set; }
         /// <summary>Release date of the video, if known.</summary>
@@ -75,6 +81,9 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "actors", n => { Actors = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto>(global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "createdAtUtc", n => { CreatedAtUtc = n.GetDateTimeOffsetValue(); } },
+                { "durationFileCount", n => { DurationFileCount = n.GetIntValue(); } },
+                { "durationMs", n => { DurationMs = n.GetLongValue(); } },
+                { "durationSpreadMs", n => { DurationSpreadMs = n.GetLongValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "releaseDate", n => { ReleaseDate = n.GetDateValue(); } },
                 { "siteId", n => { SiteId = n.GetGuidValue(); } },
@@ -91,6 +100,9 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto>("actors", Actors);
             writer.WriteDateTimeOffsetValue("createdAtUtc", CreatedAtUtc);
+            writer.WriteIntValue("durationFileCount", DurationFileCount);
+            writer.WriteLongValue("durationMs", DurationMs);
+            writer.WriteLongValue("durationSpreadMs", DurationSpreadMs);
             writer.WriteGuidValue("id", Id);
             writer.WriteDateValue("releaseDate", ReleaseDate);
             writer.WriteGuidValue("siteId", SiteId);

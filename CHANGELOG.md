@@ -15,6 +15,24 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **The technical profile submitted for a file is now returned by the API.**
+  `VideoFilehashDto` and `VideoFilehashChangeFilehashDto` gain the same nine
+  independently nullable fields accepted by `SubmitVideoFilehashItem`:
+  `durationMs`, `containerFormat`, `bitRate`, `videoCodec`, `width`, `height`,
+  `frameRate`, `audioCodec` and `audioChannels`. They are available through all
+  filehash reads and the change feed. `frameRate` remains the exact rational
+  reported by the probe, and width and height remain in stored orientation.
+
+- **Videos now carry an aggregated duration and quality overview.**
+  `VideoSummaryDto` gains nullable `durationMs`, `durationSpreadMs` and
+  `durationFileCount`; `VideoDetailDto` gains those fields plus the required
+  `qualityOverview`. The duration is a median across known files, accompanied
+  by its median absolute deviation and contributing file count. The overview's
+  always-present `resolutions` and `videoCodecs` lists count known files by
+  stored dimensions and codec and may be empty.
+
 ## [0.10.0] - 2026-08-23
 
 ### Added

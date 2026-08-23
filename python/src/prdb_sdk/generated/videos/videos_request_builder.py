@@ -56,7 +56,7 @@ class VideosRequestBuilder(BaseRequestBuilder):
     
     async def get(self,request_configuration: Optional[RequestConfiguration[VideosRequestBuilderGetQueryParameters]] = None) -> Optional[ListVideosResponse]:
         """
-        Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
+        Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[ListVideosResponse]
         """
@@ -80,7 +80,7 @@ class VideosRequestBuilder(BaseRequestBuilder):
     
     def to_get_request_information(self,request_configuration: Optional[RequestConfiguration[VideosRequestBuilderGetQueryParameters]] = None) -> RequestInformation:
         """
-        Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
+        Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
@@ -147,7 +147,7 @@ class VideosRequestBuilder(BaseRequestBuilder):
     @dataclass
     class VideosRequestBuilderGetQueryParameters():
         """
-        Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
+        Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.
         """
         def get_query_parameter(self,original_name: str) -> str:
             """

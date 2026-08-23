@@ -36,7 +36,7 @@ class LatestRequestBuilder(BaseRequestBuilder):
     
     async def get(self,request_configuration: Optional[RequestConfiguration[LatestRequestBuilderGetQueryParameters]] = None) -> Optional[LatestVideoFilehashesResponse]:
         """
-        Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Requires API key authentication.
+        Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[LatestVideoFilehashesResponse]
         """
@@ -60,7 +60,7 @@ class LatestRequestBuilder(BaseRequestBuilder):
     
     def to_get_request_information(self,request_configuration: Optional[RequestConfiguration[LatestRequestBuilderGetQueryParameters]] = None) -> RequestInformation:
         """
-        Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Requires API key authentication.
+        Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
@@ -82,7 +82,7 @@ class LatestRequestBuilder(BaseRequestBuilder):
     @dataclass
     class LatestRequestBuilderGetQueryParameters():
         """
-        Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Requires API key authentication.
+        Returns a paged list of active video filehash entries, including rows linked to videos and rows whose videoId is null. Supports up to 5000 rows per request, sorting by createdAtUtc, updatedAtUtc, submissionCount, or filesize, and filtering by video ID, site ID, verification state, and inclusive created/updated date ranges. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         """
         def get_query_parameter(self,original_name: str) -> str:
             """

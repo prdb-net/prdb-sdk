@@ -34,7 +34,7 @@ namespace Prdb.Sdk.Generated.Videos.Batch
         {
         }
         /// <summary>
-        /// Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+        /// Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Each video carries its consensus duration and its qualityOverview on the same terms as the single-video endpoint; see Media metadata in the API description. Requires API key authentication.
         /// </summary>
         /// <returns>A List&lt;global::Prdb.Sdk.Generated.Models.VideoDetailDto&gt;</returns>
         /// <param name="body">The request body</param>
@@ -68,7 +68,7 @@ namespace Prdb.Sdk.Generated.Videos.Batch
             return collectionResult?.AsList();
         }
         /// <summary>
-        /// Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+        /// Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Each video carries its consensus duration and its qualityOverview on the same terms as the single-video endpoint; see Media metadata in the API description. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>

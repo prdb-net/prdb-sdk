@@ -17,9 +17,11 @@ read that set through `GET /videos/filehashes/latest` or follow its delta feed
 at `GET /videos/filehashes/changes`. None of those operations names an indexer.
 
 A submission may also carry the file's optional technical profile, field by
-field. The API stores those measurements for future duration and quality
-aggregation but does not read them back yet; sending them today contributes the
-input for that later work.
+field. The API aggregates those measurements per file and returns the resulting
+profile through every filehash endpoint, including the change feed. It also
+derives each video's consensus duration and quality overview from the files
+known for it. The duration is a median accompanied by its spread and contributing
+file count; the overview counts files by stored dimensions and video codec.
 
 ## Why this is written down
 

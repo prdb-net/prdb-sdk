@@ -16,12 +16,20 @@ type VideoDetailDto struct {
     additionalData map[string]any
     // The createdAtUtc property
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.
+    durationFileCount *int32
+    // Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
+    durationMs *int64
+    // How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
+    durationSpreadMs *int64
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.
     images []VideoDetailImageDtoable
     // The preNames property
     preNames []VideoDetailPreNameDtoable
+    // What technical shapes a video is known to exist in, counted over the files prdb holds for it.
+    qualityOverview VideoQualityOverviewDtoable
     // The releaseDate property
     releaseDate *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
     // The site property
@@ -58,6 +66,21 @@ func (m *VideoDetailDto) GetAdditionalData()(map[string]any) {
 func (m *VideoDetailDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
 }
+// GetDurationFileCount gets the durationFileCount property value. How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.
+// returns a *int32 when successful
+func (m *VideoDetailDto) GetDurationFileCount()(*int32) {
+    return m.durationFileCount
+}
+// GetDurationMs gets the durationMs property value. Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
+// returns a *int64 when successful
+func (m *VideoDetailDto) GetDurationMs()(*int64) {
+    return m.durationMs
+}
+// GetDurationSpreadMs gets the durationSpreadMs property value. How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
+// returns a *int64 when successful
+func (m *VideoDetailDto) GetDurationSpreadMs()(*int64) {
+    return m.durationSpreadMs
+}
 // GetFieldDeserializers the deserialization information for the current model
 // returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
 func (m *VideoDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
@@ -85,6 +108,36 @@ func (m *VideoDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         if val != nil {
             m.SetCreatedAtUtc(val)
+        }
+        return nil
+    }
+    res["durationFileCount"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt32Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetDurationFileCount(val)
+        }
+        return nil
+    }
+    res["durationMs"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt64Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetDurationMs(val)
+        }
+        return nil
+    }
+    res["durationSpreadMs"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt64Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetDurationSpreadMs(val)
         }
         return nil
     }
@@ -127,6 +180,16 @@ func (m *VideoDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
                 }
             }
             m.SetPreNames(res)
+        }
+        return nil
+    }
+    res["qualityOverview"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetObjectValue(CreateVideoQualityOverviewDtoFromDiscriminatorValue)
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetQualityOverview(val.(VideoQualityOverviewDtoable))
         }
         return nil
     }
@@ -187,6 +250,11 @@ func (m *VideoDetailDto) GetImages()([]VideoDetailImageDtoable) {
 func (m *VideoDetailDto) GetPreNames()([]VideoDetailPreNameDtoable) {
     return m.preNames
 }
+// GetQualityOverview gets the qualityOverview property value. What technical shapes a video is known to exist in, counted over the files prdb holds for it.
+// returns a VideoQualityOverviewDtoable when successful
+func (m *VideoDetailDto) GetQualityOverview()(VideoQualityOverviewDtoable) {
+    return m.qualityOverview
+}
 // GetReleaseDate gets the releaseDate property value. The releaseDate property
 // returns a *DateOnly when successful
 func (m *VideoDetailDto) GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly) {
@@ -228,6 +296,24 @@ func (m *VideoDetailDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
         }
     }
     {
+        err := writer.WriteInt32Value("durationFileCount", m.GetDurationFileCount())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteInt64Value("durationMs", m.GetDurationMs())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteInt64Value("durationSpreadMs", m.GetDurationSpreadMs())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteUUIDValue("id", m.GetId())
         if err != nil {
             return err
@@ -253,6 +339,12 @@ func (m *VideoDetailDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
             }
         }
         err := writer.WriteCollectionOfObjectValues("preNames", cast)
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteObjectValue("qualityOverview", m.GetQualityOverview())
         if err != nil {
             return err
         }
@@ -301,6 +393,18 @@ func (m *VideoDetailDto) SetAdditionalData(value map[string]any)() {
 func (m *VideoDetailDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
+// SetDurationFileCount sets the durationFileCount property value. How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.
+func (m *VideoDetailDto) SetDurationFileCount(value *int32)() {
+    m.durationFileCount = value
+}
+// SetDurationMs sets the durationMs property value. Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
+func (m *VideoDetailDto) SetDurationMs(value *int64)() {
+    m.durationMs = value
+}
+// SetDurationSpreadMs sets the durationSpreadMs property value. How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
+func (m *VideoDetailDto) SetDurationSpreadMs(value *int64)() {
+    m.durationSpreadMs = value
+}
 // SetId sets the id property value. The id property
 func (m *VideoDetailDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
@@ -312,6 +416,10 @@ func (m *VideoDetailDto) SetImages(value []VideoDetailImageDtoable)() {
 // SetPreNames sets the preNames property value. The preNames property
 func (m *VideoDetailDto) SetPreNames(value []VideoDetailPreNameDtoable)() {
     m.preNames = value
+}
+// SetQualityOverview sets the qualityOverview property value. What technical shapes a video is known to exist in, counted over the files prdb holds for it.
+func (m *VideoDetailDto) SetQualityOverview(value VideoQualityOverviewDtoable)() {
+    m.qualityOverview = value
 }
 // SetReleaseDate sets the releaseDate property value. The releaseDate property
 func (m *VideoDetailDto) SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)() {
@@ -334,18 +442,26 @@ type VideoDetailDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetActors()([]VideoDetailActorDtoable)
     GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
+    GetDurationFileCount()(*int32)
+    GetDurationMs()(*int64)
+    GetDurationSpreadMs()(*int64)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetImages()([]VideoDetailImageDtoable)
     GetPreNames()([]VideoDetailPreNameDtoable)
+    GetQualityOverview()(VideoQualityOverviewDtoable)
     GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)
     GetSite()(VideoDetailSiteDtoable)
     GetTitle()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     SetActors(value []VideoDetailActorDtoable)()
     SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
+    SetDurationFileCount(value *int32)()
+    SetDurationMs(value *int64)()
+    SetDurationSpreadMs(value *int64)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetImages(value []VideoDetailImageDtoable)()
     SetPreNames(value []VideoDetailPreNameDtoable)()
+    SetQualityOverview(value VideoQualityOverviewDtoable)()
     SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)()
     SetSite(value VideoDetailSiteDtoable)()
     SetTitle(value *string)()

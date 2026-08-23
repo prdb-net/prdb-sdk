@@ -46,7 +46,7 @@ namespace Prdb.Sdk.Generated.Videos.Item
         {
         }
         /// <summary>
-        /// Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Requires API key authentication.
+        /// Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Carries the consensus duration across the files known for the video (durationMs, with durationSpreadMs and durationFileCount saying how far those files disagree and how many there were), and qualityOverview, which counts the video&apos;s files per resolution and per codec. The duration fields are null until enough independent submitters have reported one, and the overview is empty while no file has been probed. See Media metadata in the API description. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.VideoDetailDto"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -77,7 +77,7 @@ namespace Prdb.Sdk.Generated.Videos.Item
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.VideoDetailDto>(requestInfo, global::Prdb.Sdk.Generated.Models.VideoDetailDto.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Requires API key authentication.
+        /// Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Carries the consensus duration across the files known for the video (durationMs, with durationSpreadMs and durationFileCount saying how far those files disagree and how many there were), and qualityOverview, which counts the video&apos;s files per resolution and per codec. The duration fields are null until enough independent submitters have reported one, and the overview is empty while no file has been probed. See Media metadata in the API description. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

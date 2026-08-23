@@ -77,7 +77,7 @@ namespace Prdb.Sdk.Generated.Videos
         {
         }
         /// <summary>
-        /// Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
+        /// Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.ListVideosResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -108,7 +108,7 @@ namespace Prdb.Sdk.Generated.Videos
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.ListVideosResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.ListVideosResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
+        /// Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -136,7 +136,7 @@ namespace Prdb.Sdk.Generated.Videos
             return new global::Prdb.Sdk.Generated.Videos.VideosRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
-        /// Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Requires API key authentication.
+        /// Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class VideosRequestBuilderGetQueryParameters 

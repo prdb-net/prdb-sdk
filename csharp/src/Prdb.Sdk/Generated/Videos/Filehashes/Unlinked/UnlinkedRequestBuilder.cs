@@ -34,7 +34,7 @@ namespace Prdb.Sdk.Generated.Videos.Filehashes.Unlinked
         {
         }
         /// <summary>
-        /// Returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
+        /// Returns a paged list of active filehash entries that are not linked to any video. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.UnlinkedVideoFilehashesResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -65,7 +65,7 @@ namespace Prdb.Sdk.Generated.Videos.Filehashes.Unlinked
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.UnlinkedVideoFilehashesResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.UnlinkedVideoFilehashesResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
+        /// Returns a paged list of active filehash entries that are not linked to any video. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -93,7 +93,7 @@ namespace Prdb.Sdk.Generated.Videos.Filehashes.Unlinked
             return new global::Prdb.Sdk.Generated.Videos.Filehashes.Unlinked.UnlinkedRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
-        /// Returns a paged list of active filehash entries that are not linked to any video. Requires API key authentication.
+        /// Returns a paged list of active filehash entries that are not linked to any video. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class UnlinkedRequestBuilderGetQueryParameters 

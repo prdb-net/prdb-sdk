@@ -33,7 +33,7 @@ class BatchRequestBuilder(BaseRequestBuilder):
     
     async def post(self,body: GetVideoFilehashesByVideoIdsRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[GetVideoFilehashesByVideoIdsResponse]:
         """
-        Returns all filehash entries for up to 100 requested video IDs grouped by video ID. Existing videos are included even when they have no filehashes; unknown video IDs are returned separately. Requires API key authentication.
+        Returns all filehash entries for up to 100 requested video IDs grouped by video ID. Existing videos are included even when they have no filehashes; unknown video IDs are returned separately. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[GetVideoFilehashesByVideoIdsResponse]
@@ -60,7 +60,7 @@ class BatchRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,body: GetVideoFilehashesByVideoIdsRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Returns all filehash entries for up to 100 requested video IDs grouped by video ID. Existing videos are included even when they have no filehashes; unknown video IDs are returned separately. Requires API key authentication.
+        Returns all filehash entries for up to 100 requested video IDs grouped by video ID. Existing videos are included even when they have no filehashes; unknown video IDs are returned separately. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
