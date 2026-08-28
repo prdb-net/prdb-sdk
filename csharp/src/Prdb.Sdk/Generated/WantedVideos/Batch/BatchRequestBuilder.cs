@@ -34,7 +34,7 @@ namespace Prdb.Sdk.Generated.WantedVideos.Batch
         {
         }
         /// <summary>
-        /// Adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.
+        /// Adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. The batch is rejected without changes if all valid new entries would exceed the current wanted video limit. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.AddWantedVideosBatchResponse"/></returns>
         /// <param name="body">Request body for batch-adding wanted videos.</param>
@@ -43,6 +43,7 @@ namespace Prdb.Sdk.Generated.WantedVideos.Batch
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 400 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 401 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 403 status code</exception>
+        /// <exception cref="global::Prdb.Sdk.Generated.Models.WantedVideoLimitProblemDetails">When receiving a 409 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 429 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 503 status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -61,13 +62,14 @@ namespace Prdb.Sdk.Generated.WantedVideos.Batch
                 { "400", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "401", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "403", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
+                { "409", global::Prdb.Sdk.Generated.Models.WantedVideoLimitProblemDetails.CreateFromDiscriminatorValue },
                 { "429", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "503", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
             };
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.AddWantedVideosBatchResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.AddWantedVideosBatchResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.
+        /// Adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. The batch is rejected without changes if all valid new entries would exceed the current wanted video limit. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">Request body for batch-adding wanted videos.</param>

@@ -50,10 +50,11 @@ func (m *WithVideoItemRequestBuilder) Delete(ctx context.Context, requestConfigu
     }
     return nil
 }
-// Post adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list. Returns 404 if the video does not exist. Requires API key authentication.
+// Post adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
 // returns a ProblemDetails error when the service returns a 401 status code
 // returns a ProblemDetails error when the service returns a 403 status code
 // returns a ProblemDetails error when the service returns a 404 status code
+// returns a WantedVideoLimitProblemDetails error when the service returns a 409 status code
 // returns a ProblemDetails error when the service returns a 429 status code
 // returns a ProblemDetails error when the service returns a 503 status code
 func (m *WithVideoItemRequestBuilder) Post(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(error) {
@@ -65,6 +66,7 @@ func (m *WithVideoItemRequestBuilder) Post(ctx context.Context, requestConfigura
         "401": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "403": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "404": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "409": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateWantedVideoLimitProblemDetailsFromDiscriminatorValue,
         "429": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "503": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
     }
@@ -112,7 +114,7 @@ func (m *WithVideoItemRequestBuilder) ToDeleteRequestInformation(ctx context.Con
     requestInfo.Headers.TryAdd("Accept", "application/json")
     return requestInfo, nil
 }
-// ToPostRequestInformation adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list. Returns 404 if the video does not exist. Requires API key authentication.
+// ToPostRequestInformation adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *WithVideoItemRequestBuilder) ToPostRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.POST, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

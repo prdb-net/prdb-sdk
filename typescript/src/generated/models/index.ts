@@ -1455,6 +1455,15 @@ export function createWantedVideoChangeWantedVideoDtoFromDiscriminatorValue(pars
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {WantedVideoLimitProblemDetails}
+ */
+// @ts-ignore
+export function createWantedVideoLimitProblemDetailsFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoWantedVideoLimitProblemDetails;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {WantedVideoSummaryDto}
  */
 // @ts-ignore
@@ -3040,6 +3049,25 @@ export function deserializeIntoWantedVideoChangeWantedVideoDto(wantedVideoChange
         "videoId": n => { wantedVideoChangeWantedVideoDto.videoId = n.getGuidValue(); },
         "videoReleaseDate": n => { wantedVideoChangeWantedVideoDto.videoReleaseDate = n.getDateOnlyValue(); },
         "videoTitle": n => { wantedVideoChangeWantedVideoDto.videoTitle = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param WantedVideoLimitProblemDetails The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoWantedVideoLimitProblemDetails(wantedVideoLimitProblemDetails: Partial<WantedVideoLimitProblemDetails> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "code": n => { wantedVideoLimitProblemDetails.code = n.getStringValue(); },
+        "detail": n => { wantedVideoLimitProblemDetails.detail = n.getStringValue(); },
+        "instance": n => { wantedVideoLimitProblemDetails.instance = n.getStringValue(); },
+        "limit": n => { wantedVideoLimitProblemDetails.limit = n.getNumberValue(); },
+        "remaining": n => { wantedVideoLimitProblemDetails.remaining = n.getNumberValue(); },
+        "status": n => { wantedVideoLimitProblemDetails.status = n.getNumberValue(); },
+        "title": n => { wantedVideoLimitProblemDetails.title = n.getStringValue(); },
+        "type": n => { wantedVideoLimitProblemDetails.type = n.getStringValue(); },
+        "used": n => { wantedVideoLimitProblemDetails.used = n.getNumberValue(); },
     }
 }
 /**
@@ -5844,6 +5872,26 @@ export function serializeWantedVideoChangeWantedVideoDto(writer: SerializationWr
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param WantedVideoLimitProblemDetails The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeWantedVideoLimitProblemDetails(writer: SerializationWriter, wantedVideoLimitProblemDetails: Partial<WantedVideoLimitProblemDetails> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!wantedVideoLimitProblemDetails || isSerializingDerivedType) { return; }
+    writer.writeStringValue("code", wantedVideoLimitProblemDetails.code);
+    writer.writeStringValue("detail", wantedVideoLimitProblemDetails.detail);
+    writer.writeStringValue("instance", wantedVideoLimitProblemDetails.instance);
+    writer.writeNumberValue("limit", wantedVideoLimitProblemDetails.limit);
+    writer.writeNumberValue("remaining", wantedVideoLimitProblemDetails.remaining);
+    writer.writeNumberValue("status", wantedVideoLimitProblemDetails.status);
+    writer.writeStringValue("title", wantedVideoLimitProblemDetails.title);
+    writer.writeStringValue("type", wantedVideoLimitProblemDetails.type);
+    writer.writeNumberValue("used", wantedVideoLimitProblemDetails.used);
+    writer.writeAdditionalData(wantedVideoLimitProblemDetails.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param WantedVideoSummaryDto The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -6842,6 +6890,47 @@ export interface WantedVideoChangeWantedVideoDto extends AdditionalDataHolder, P
      * The videoTitle property
      */
     videoTitle?: string | null;
+}
+/**
+ * Problem response returned when adding wanted videos would exceed the current limit.
+ */
+export interface WantedVideoLimitProblemDetails extends AdditionalDataHolder, ApiError, Parsable {
+    /**
+     * Stable machine-readable error code.
+     */
+    code?: string | null;
+    /**
+     * The detail property
+     */
+    detail?: string | null;
+    /**
+     * The instance property
+     */
+    instance?: string | null;
+    /**
+     * Current wanted video limit.
+     */
+    limit?: number | null;
+    /**
+     * Number of entries that can still be added.
+     */
+    remaining?: number | null;
+    /**
+     * The status property
+     */
+    status?: number | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+    /**
+     * The type property
+     */
+    type?: string | null;
+    /**
+     * Current number of non-deleted wanted videos.
+     */
+    used?: number | null;
 }
 /**
  * A wanted video entry for the current user.
