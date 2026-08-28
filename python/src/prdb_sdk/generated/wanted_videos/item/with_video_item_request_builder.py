@@ -17,6 +17,7 @@ if TYPE_CHECKING:
     from ...models.problem_details import ProblemDetails
     from ...models.update_wanted_video_request import UpdateWantedVideoRequest
     from ...models.update_wanted_video_response import UpdateWantedVideoResponse
+    from ...models.wanted_video_limit_problem_details import WantedVideoLimitProblemDetails
 
 class WithVideoItemRequestBuilder(BaseRequestBuilder):
     """
@@ -41,6 +42,7 @@ class WithVideoItemRequestBuilder(BaseRequestBuilder):
             request_configuration
         )
         from ...models.problem_details import ProblemDetails
+        from ...models.wanted_video_limit_problem_details import WantedVideoLimitProblemDetails
 
         error_mapping: dict[str, type[ParsableFactory]] = {
             "401": ProblemDetails,
@@ -55,7 +57,7 @@ class WithVideoItemRequestBuilder(BaseRequestBuilder):
     
     async def post(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> None:
         """
-        Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list. Returns 404 if the video does not exist. Requires API key authentication.
+        Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: None
         """
@@ -63,11 +65,13 @@ class WithVideoItemRequestBuilder(BaseRequestBuilder):
             request_configuration
         )
         from ...models.problem_details import ProblemDetails
+        from ...models.wanted_video_limit_problem_details import WantedVideoLimitProblemDetails
 
         error_mapping: dict[str, type[ParsableFactory]] = {
             "401": ProblemDetails,
             "403": ProblemDetails,
             "404": ProblemDetails,
+            "409": WantedVideoLimitProblemDetails,
             "429": ProblemDetails,
             "503": ProblemDetails,
         }
@@ -88,6 +92,7 @@ class WithVideoItemRequestBuilder(BaseRequestBuilder):
             body, request_configuration
         )
         from ...models.problem_details import ProblemDetails
+        from ...models.wanted_video_limit_problem_details import WantedVideoLimitProblemDetails
 
         error_mapping: dict[str, type[ParsableFactory]] = {
             "400": ProblemDetails,
@@ -116,7 +121,7 @@ class WithVideoItemRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list. Returns 404 if the video does not exist. Requires API key authentication.
+        Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """

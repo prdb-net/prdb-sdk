@@ -15,6 +15,17 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **Adding wanted videos beyond the account limit is now a typed error.**
+  `AddWantedVideo` and `AddWantedVideosBatch` declare an HTTP 409 response
+  mapped to the new `WantedVideoLimitProblemDetails`, so the capacity conflict
+  arrives as a typed error rather than an untyped failure. Besides the usual
+  problem-details members it always carries `code`, `used`, `limit` and
+  `remaining`, which is enough to tell the caller how much room is left. The
+  batch operation is rejected in full and adds nothing when it would exceed the
+  limit.
+
 ## [0.11.0] - 2026-08-23
 
 ### Added
