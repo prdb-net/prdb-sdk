@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-08-28
+
 ### Added
 
 - **Adding wanted videos beyond the account limit is now a typed error.**
