@@ -87,7 +87,19 @@ authentication and the base URL. They are deliberately the same shape:
 - a redirect to a different origin refused rather than followed, so the key
   cannot travel off the API host
 - validation that rejects an empty key, a non-absolute base URL, and — for the
-  authenticated constructor only — a base URL that is not `https`
+  authenticated constructor only — a base URL that is neither `https` nor a
+  plain-`http` loopback one. The loopback exemption is `localhost`, `127.0.0.1`
+  and `::1` and nothing else, matching what browsers treat as a secure context;
+  a request to one of them never reaches a wire the key could be read off. It is
+  those three names literally, never a name that merely resolves to them
+  — except that .NET rewrites the host `loopback` to `127.0.0.1` while parsing,
+  so C# accepts that spelling too and connects to the same address
+- a hand-written API key authentication provider in C# and Go, because Kiota's
+  own refuses every scheme but `https` and would reject a loopback base URL on
+  the first request. Ours is Kiota's logic with that one exemption; the host
+  binding — the key is attached on the base URL's host and nowhere else — is
+  unchanged. Python's provider checks no scheme and TypeScript's exempts the
+  same three names, so those two keep using Kiota's
 - a per-request option reporting the response status, because a typed call
   otherwise cannot distinguish a `304` from another response with no body. It is
   recorded at the outer end of the pipeline, above the retry and redirect

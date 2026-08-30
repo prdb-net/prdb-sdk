@@ -106,9 +106,54 @@ public class PrdbClientFactoryTests
     public void Create_RejectsAPlaintextBaseUrl()
     {
         var error = Assert.Throws<ArgumentException>(
-            () => PrdbClientFactory.Create("secret-key", "http://localhost:8080"));
+            () => PrdbClientFactory.Create("secret-key", "http://api.example.test:8080"));
 
         Assert.Contains("https", error.Message, StringComparison.Ordinal);
+    }
+
+    /// <summary>
+    /// A request to a loopback address never reaches a wire the key could be read off,
+    /// so the cleartext rule has nothing to protect there. Without this, testing against
+    /// a local stand-in for the API would need a certificate for a server that only ever
+    /// answers itself.
+    /// </summary>
+    [Theory]
+    [InlineData("http://localhost:8080")]
+    [InlineData("http://LOCALHOST:8080")]
+    [InlineData("http://127.0.0.1:8080")]
+    [InlineData("http://[::1]:8080")]
+    public void Create_AllowsAPlaintextLoopbackBaseUrl(string baseUrl)
+    {
+        Assert.NotNull(PrdbClientFactory.Create("secret-key", baseUrl));
+    }
+
+    /// <summary>
+    /// The exemption is for the three names browsers treat as a secure context, not for
+    /// everything <see cref="Uri.IsLoopback"/> accepts: the rest of <c>127.0.0.0/8</c> stays
+    /// out, so all four SDKs accept the same base URLs.
+    /// </summary>
+    [Theory]
+    [InlineData("http://127.0.0.2:8080")]
+    [InlineData("http://localhost.example.test:8080")]
+    [InlineData("http://127.0.0.1.example.test:8080")]
+    public void Create_RejectsAPlaintextBaseUrlThatIsMerelyLoopbackAdjacent(string baseUrl)
+    {
+        Assert.Throws<ArgumentException>(() => PrdbClientFactory.Create("secret-key", baseUrl));
+    }
+
+    /// <summary>
+    /// Construction succeeding is only half of it: Kiota's authentication provider gets its
+    /// own say on the scheme, so the key has to be shown actually arriving over plain http.
+    /// </summary>
+    [Fact]
+    public async Task Create_SendsTheApiKeyOverPlaintextLoopback()
+    {
+        var recorder = new Recorder();
+        var client = PrdbClientFactory.Create("secret-key", "http://127.0.0.1:8080", recorder);
+
+        await client.Health.GetAsync();
+
+        Assert.Equal("secret-key", recorder.Requests[0].ApiKey);
     }
 
     /// <summary>With no credential to protect, plain HTTP is the caller's business.</summary>

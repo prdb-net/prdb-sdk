@@ -15,6 +15,19 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **A loopback base URL may now use plain `http`.** The authenticated
+  constructors accept `http://localhost`, `http://127.0.0.1` and
+  `http://[::1]` alongside any `https` URL. A request to one of those never
+  leaves the machine, so there is no wire the API key could be observed on —
+  the same exemption browsers make when they treat `localhost` as a secure
+  context. Testing a client against a local stand-in for the API therefore no
+  longer needs a TLS certificate for a server that only ever answers itself.
+  Every other host still requires `https`, and the exemption is those three
+  names literally: not the rest of `127.0.0.0/8`, and not a name that merely
+  resolves to one of them.
+
 ## [0.12.0] - 2026-08-28
 
 ### Added

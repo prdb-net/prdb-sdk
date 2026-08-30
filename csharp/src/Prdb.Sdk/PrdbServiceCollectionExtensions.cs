@@ -57,9 +57,10 @@ public static class PrdbServiceCollectionExtensions
     /// attach their own message handlers.
     /// </returns>
     /// <exception cref="ArgumentException">
-    /// The configured base URL is not absolute, is not <c>https</c> while an API key is set, or
-    /// the retry or timeout settings are out of range. Thrown at registration, so a
-    /// misconfiguration fails at startup rather than on the first request.
+    /// The configured base URL is not absolute, is neither <c>https</c> nor a loopback
+    /// <c>http</c> URL while an API key is set, or the retry or timeout settings are out of
+    /// range. Thrown at registration, so a misconfiguration fails at startup rather than on
+    /// the first request.
     /// </exception>
     public static IHttpClientBuilder AddPrdbClient(
         this IServiceCollection services,

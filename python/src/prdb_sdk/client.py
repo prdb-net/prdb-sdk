@@ -32,6 +32,14 @@ API_KEY_HEADER = "X-Api-Key"
 #: Production base URL, also the default baked into the generated client.
 DEFAULT_BASE_URL = "https://api.prdb.net"
 
+#: Hosts a request never leaves the machine for, so the key travels over no wire and
+#: plain ``http`` is as safe as ``https``. The same exemption browsers make when they
+#: treat ``localhost`` as a secure context. It is these three names literally, not
+#: everything in ``127.0.0.0/8`` and not a name that merely resolves to one of them:
+#: what is checked is the URL, not what DNS makes of it. The other three SDKs exempt
+#: the same three, so all four accept the same base URLs.
+_LOOPBACK_HOSTS = frozenset({"localhost", "127.0.0.1", "::1"})
+
 
 class CrossOriginRedirectError(RuntimeError):
     """Raised when the API redirects to a different origin.
@@ -262,7 +270,10 @@ def create_client(
     Args:
         api_key: The API key, sent in the ``X-Api-Key`` header on every request.
         base_url: Override the API root. Useful for a staging deployment. Must
-            use ``https``, so the key never travels in cleartext.
+            use ``https``, so the key never travels in cleartext -- except for
+            a loopback address (``localhost``, ``127.0.0.1`` or ``::1``), where
+            plain ``http`` is accepted because the request never leaves the
+            machine.
         http_client: Supply your own ``httpx.AsyncClient`` to control timeouts,
             proxies or connection limits. One is created for you when omitted.
             The SDK does not modify the client you pass: it copies it and
@@ -280,8 +291,8 @@ def create_client(
         ``GET /videos/{id}`` is ``client.videos.by_id(video_id).get()``.
 
     Raises:
-        ValueError: If ``api_key`` is empty, or ``base_url`` is not an
-            absolute ``https`` URL.
+        ValueError: If ``api_key`` is empty, or ``base_url`` is neither an
+            absolute ``https`` URL nor a loopback ``http`` one.
     """
     if not api_key:
         raise ValueError("api_key must not be empty")
@@ -455,10 +466,15 @@ def _resolve_host(base_url: str, *, require_https: bool) -> str:
     if parsed.scheme not in ("http", "https") or not parsed.hostname:
         raise ValueError(f"base_url must be an absolute URL, got {base_url!r}")
 
-    if require_https and parsed.scheme != "https":
+    if (
+        require_https
+        and parsed.scheme != "https"
+        and parsed.hostname not in _LOOPBACK_HOSTS
+    ):
         raise ValueError(
             f"base_url must use https so the api key is not sent in cleartext, "
-            f"got {base_url!r}"
+            f"got {base_url!r}; plain http is accepted for a loopback address, "
+            f"which no request leaves the machine for"
         )
 
     return parsed.hostname

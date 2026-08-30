@@ -21,7 +21,9 @@ Every endpoint except `GET /health` requires an API key, sent in the
 `X-Api-Key` header. All four SDKs keep the key on the API host: a redirect to a
 different origin is refused rather than followed, so your credential is never
 handed to whoever answers there. They also require an `https` base URL, so it is
-never sent in cleartext.
+never sent in cleartext — except for a loopback address (`localhost`,
+`127.0.0.1` or `::1`), where plain `http` is accepted because the request never
+leaves the machine, so a local stand-in for the API needs no certificate.
 
 Neither the HTTP stacks nor Kiota do this for us — they strip only
 `Authorization` across origins, and `X-Api-Key` is a custom header. It is the

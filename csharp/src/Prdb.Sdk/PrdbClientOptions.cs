@@ -14,7 +14,9 @@ public sealed class PrdbClientOptions
 
     /// <summary>
     /// The API root. Useful for a staging deployment. Must use <c>https</c> whenever
-    /// <see cref="ApiKey"/> is set, so the key is never sent in cleartext.
+    /// <see cref="ApiKey"/> is set, so the key is never sent in cleartext — except for a
+    /// loopback address (<c>localhost</c>, <c>127.0.0.1</c> or <c>[::1]</c>), where plain
+    /// <c>http</c> is accepted because the request never leaves the machine.
     /// </summary>
     public string BaseUrl { get; set; } = PrdbClientFactory.DefaultBaseUrl;
 

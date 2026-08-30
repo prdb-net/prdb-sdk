@@ -14,6 +14,7 @@
 package prdb
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	nethttp "net/http"
@@ -305,10 +306,10 @@ func (o *RetryOptions) validate() error {
 // NewClient creates a client authenticated with an API key, which is sent in
 // the X-Api-Key header on every request.
 //
-// It returns an error if apiKey is empty, or opts.BaseURL is not an absolute
-// https URL. The https requirement keeps the key out of cleartext; it also
-// matches Kiota's own refusal to attach a key over plain http, but fails here
-// at construction rather than on the first request.
+// It returns an error if apiKey is empty, or opts.BaseURL is neither an
+// absolute https URL nor a loopback http one. The https requirement keeps the
+// key out of cleartext, and fails at construction rather than on the first
+// request; see isLoopbackHost for why a loopback address is exempt from it.
 func NewClient(apiKey string, opts ...Options) (*generated.PrdbClient, error) {
 	if apiKey == "" {
 		return nil, errors.New("prdb: api key must not be empty")
@@ -320,20 +321,15 @@ func NewClient(apiKey string, opts ...Options) (*generated.PrdbClient, error) {
 		return nil, err
 	}
 
-	// Restricting the key to the API host means Kiota will not attach it to a
-	// URL it builds for another host. It says nothing about redirects, which
-	// happen a layer below; buildClient handles those.
-	authProvider, err := auth.NewApiKeyAuthenticationProviderWithValidHosts(
-		apiKey,
-		APIKeyHeader,
-		auth.HEADER_KEYLOCATION,
-		[]string{host},
-	)
+	// Restricting the key to the API host means it is not attached to a URL
+	// built for another host. It says nothing about redirects, which happen a
+	// layer below; buildClient handles those.
+	validator, err := auth.NewAllowedHostsValidatorErrorCheck([]string{host})
 	if err != nil {
 		return nil, fmt.Errorf("prdb: building authentication provider: %w", err)
 	}
 
-	return buildClient(authProvider, baseURL, options)
+	return buildClient(&apiKeyProvider{apiKey: apiKey, validator: validator}, baseURL, options)
 }
 
 // NewAnonymousClient creates a client without credentials.
@@ -530,12 +526,77 @@ func resolveBaseURL(baseURL string, requireHTTPS bool) (resolved string, host st
 		return "", "", fmt.Errorf("prdb: base URL must be an absolute URL, got %q", baseURL)
 	}
 
-	if requireHTTPS && parsed.Scheme != "https" {
+	if requireHTTPS && parsed.Scheme != "https" && !isLoopbackHost(parsed) {
 		return "", "", fmt.Errorf(
-			"prdb: base URL must use https so the api key is not sent in cleartext, got %q", baseURL)
+			"prdb: base URL must use https so the api key is not sent in cleartext, got %q; "+
+				"plain http is accepted for a loopback address, which no request leaves "+
+				"the machine for", baseURL)
 	}
 
 	return baseURL, parsed.Hostname(), nil
+}
+
+// apiKeyProvider puts the API key in the X-Api-Key header of requests to the
+// API host, and leaves every other request alone.
+//
+// Kiota's own ApiKeyAuthenticationProvider does exactly this, except that it
+// refuses any scheme but https -- a loopback address included, where the
+// request never reaches a wire the key could be read off. Rather than let that
+// refusal surface on the first call to a local server, the wrapper carries the
+// same logic with the exemption isLoopbackHost describes.
+//
+// The host binding is Kiota's, unchanged: the validator holds the base URL's
+// host, and a request to anywhere else is returned unauthenticated rather than
+// rejected, so the key cannot be attached to a URL built for another host.
+type apiKeyProvider struct {
+	apiKey    string
+	validator *auth.AllowedHostsValidator
+}
+
+// AuthenticateRequest implements auth.AuthenticationProvider.
+func (p *apiKeyProvider) AuthenticateRequest(
+	ctx context.Context,
+	request *abs.RequestInformation,
+	additionalAuthenticationContext map[string]interface{},
+) error {
+	if request == nil {
+		return errors.New("prdb: request cannot be nil")
+	}
+
+	uri, err := request.GetUri()
+	if err != nil {
+		return err
+	}
+
+	if !p.validator.IsUrlHostValid(uri) {
+		return nil
+	}
+
+	if !strings.EqualFold(uri.Scheme, "https") && !isLoopbackHost(uri) {
+		return fmt.Errorf(
+			"prdb: refusing to send the api key to %q: plain http is accepted only for a "+
+				"loopback address", uri.String())
+	}
+
+	request.Headers.Add(APIKeyHeader, p.apiKey)
+
+	return nil
+}
+
+// isLoopbackHost reports whether a request to this URL stays on the machine, in
+// which case the key travels over no wire and plain http is as safe as https.
+// It is the same exemption browsers make when they treat localhost as a secure
+// context, and it is what makes a local stand-in for the API testable without
+// provisioning a certificate for a server that only ever answers itself.
+//
+// These three names literally, not everything in 127.0.0.0/8 and not a name
+// that merely resolves to one of them: what is checked is the URL, not what DNS
+// makes of it. The other three SDKs exempt the same three, so all four accept
+// the same base URLs.
+func isLoopbackHost(parsed *url.URL) bool {
+	host := parsed.Hostname()
+
+	return host == "127.0.0.1" || host == "::1" || strings.EqualFold(host, "localhost")
 }
 
 func firstOrZero(opts []Options) Options {
