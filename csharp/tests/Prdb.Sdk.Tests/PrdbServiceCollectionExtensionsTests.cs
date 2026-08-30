@@ -107,7 +107,7 @@ public class PrdbServiceCollectionExtensionsTests
         var error = Assert.Throws<ArgumentException>(() => services.AddPrdbClient(options =>
         {
             options.ApiKey = "secret-key";
-            options.BaseUrl = "http://localhost:8080";
+            options.BaseUrl = "http://api.example.test:8080";
         }));
 
         Assert.Contains("https", error.Message, StringComparison.Ordinal);
@@ -174,7 +174,7 @@ public class PrdbServiceCollectionExtensionsTests
         services.AddPrdbClient((_, options) =>
         {
             options.ApiKey = "secret-key";
-            options.BaseUrl = "http://localhost:8080";
+            options.BaseUrl = "http://api.example.test:8080";
         });
 
         using var provider = services.BuildServiceProvider();

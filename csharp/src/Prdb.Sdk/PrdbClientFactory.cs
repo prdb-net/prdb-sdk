@@ -38,8 +38,10 @@ public static class PrdbClientFactory
     /// </summary>
     /// <param name="apiKey">The API key, sent in the <c>X-Api-Key</c> header on every request.</param>
     /// <param name="baseUrl">
-    /// Override the API root. Useful for a staging deployment. Must use <c>https</c>,
-    /// so the key is never sent in cleartext.
+    /// Override the API root. Useful for a staging deployment. Must use <c>https</c>, so the
+    /// key is never sent in cleartext — except for a loopback address (<c>localhost</c>,
+    /// <c>127.0.0.1</c> or <c>[::1]</c>), where plain <c>http</c> is accepted because the
+    /// request never leaves the machine.
     /// </param>
     /// <param name="transport">
     /// Supply your own innermost <see cref="HttpMessageHandler"/> to control proxies or
@@ -60,8 +62,8 @@ public static class PrdbClientFactory
     /// </param>
     /// <exception cref="ArgumentException">
     /// <paramref name="apiKey"/> is empty, <paramref name="baseUrl"/> is not an absolute
-    /// <c>https</c> URL, <paramref name="transport"/> follows redirects, or
-    /// <paramref name="retry"/> or <paramref name="timeout"/> is out of range.
+    /// <c>https</c> URL or a loopback <c>http</c> one, <paramref name="transport"/> follows
+    /// redirects, or <paramref name="retry"/> or <paramref name="timeout"/> is out of range.
     /// </exception>
     public static PrdbClient Create(
         string apiKey,
@@ -77,11 +79,9 @@ public static class PrdbClientFactory
 
         var host = HostOf(baseUrl, nameof(baseUrl), requireHttps: true);
 
-        var authProvider = new ApiKeyAuthenticationProvider(
-            apiKey,
-            ApiKeyHeader,
-            ApiKeyAuthenticationProvider.KeyLocation.Header,
-            host);
+        // Kiota's own provider would refuse to attach the key over plain http even to a
+        // loopback address; ours makes that one exemption and is otherwise the same.
+        var authProvider = new ApiKeyHeaderAuthenticationProvider(apiKey, host);
 
         return Build(authProvider, baseUrl, transport, retry, timeout);
     }
@@ -328,13 +328,40 @@ public static class PrdbClientFactory
             throw new ArgumentException($"Base URL must be an absolute URL, got '{baseUrl}'.", paramName);
         }
 
-        if (requireHttps && uri.Scheme != Uri.UriSchemeHttps)
+        if (requireHttps && uri.Scheme != Uri.UriSchemeHttps && !IsLoopback(uri))
         {
             throw new ArgumentException(
-                $"Base URL must use https so the API key is not sent in cleartext, got '{baseUrl}'.",
+                $"Base URL must use https so the API key is not sent in cleartext, got '{baseUrl}'. "
+                + "Plain http is accepted for a loopback address, which no request leaves the "
+                + "machine for.",
                 paramName);
         }
 
         return uri.Host;
     }
+
+    /// <summary>
+    /// Whether a request to this URL stays on the machine, in which case the key travels over
+    /// no wire and plain <c>http</c> is as safe as <c>https</c>.
+    /// </summary>
+    /// <remarks>
+    /// The same exemption browsers make when they treat <c>localhost</c> as a secure context,
+    /// and it is what makes a local stand-in for the API testable without provisioning a
+    /// certificate for a server that only ever answers itself.
+    /// <para>
+    /// The three names are matched literally rather than through <see cref="Uri.IsLoopback"/>,
+    /// which also accepts the rest of <c>127.0.0.0/8</c>; the other three SDKs exempt exactly
+    /// these three names, and Kiota's TypeScript provider exempts no more than that either. A
+    /// host name that merely resolves to a loopback address is not one of them: what is checked
+    /// is the URL, not what DNS makes of it.
+    /// </para>
+    /// <para>
+    /// <c>http://loopback/</c> is accepted too, without being named here: <see cref="Uri"/>
+    /// rewrites that host to <c>127.0.0.1</c> while parsing, and it is the rewritten host that
+    /// <see cref="HttpClient"/> connects to.
+    /// </para>
+    /// </remarks>
+    internal static bool IsLoopback(Uri uri) =>
+        uri.Host is "127.0.0.1" or "[::1]"
+        || string.Equals(uri.Host, "localhost", StringComparison.OrdinalIgnoreCase);
 }

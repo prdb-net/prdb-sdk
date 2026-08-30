@@ -285,8 +285,10 @@ export interface ClientOptions {
 	/** The API key, sent in the `X-Api-Key` header on every request. */
 	apiKey: string;
 	/**
-	 * Override the API root. Useful for a staging deployment. Must use `https`,
-	 * so the key is never sent in cleartext.
+	 * Override the API root. Useful for a staging deployment. Must use `https`, so the
+	 * key is never sent in cleartext — except for a loopback address (`localhost`,
+	 * `127.0.0.1` or `[::1]`), where plain `http` is accepted because the request never
+	 * leaves the machine.
 	 */
 	baseUrl?: string;
 	/**
@@ -308,7 +310,8 @@ export type AnonymousClientOptions = Omit<ClientOptions, "apiKey">;
 /**
  * Create a client authenticated with an API key.
  *
- * @throws If `apiKey` is empty, or `baseUrl` is not an absolute `https` URL.
+ * @throws If `apiKey` is empty, or `baseUrl` is neither an absolute `https` URL nor a
+ * loopback `http` one.
  */
 export function createClient(options: ClientOptions): PrdbClient {
 	const { apiKey, baseUrl = DEFAULT_BASE_URL, customFetch, retry } = options;
@@ -508,12 +511,31 @@ function hostOf(
 	if (!url.host || (url.protocol !== "http:" && url.protocol !== "https:")) {
 		throw new Error(`baseUrl must be an absolute URL, got ${baseUrl}`);
 	}
-	if (requireHttps && url.protocol !== "https:") {
+	if (requireHttps && url.protocol !== "https:" && !isLoopback(url)) {
 		throw new Error(
-			`baseUrl must use https so the api key is not sent in cleartext, got ${baseUrl}`,
+			`baseUrl must use https so the api key is not sent in cleartext, got ${baseUrl}; ` +
+				"plain http is accepted for a loopback address, which no request leaves the machine for",
 		);
 	}
 	return url.host;
+}
+
+/**
+ * Hosts a request never leaves the machine for, so the key travels over no wire and plain
+ * `http` is as safe as `https` — the same exemption browsers make when they treat
+ * `localhost` as a secure context.
+ *
+ * These three names literally, not everything in `127.0.0.0/8` and not a name that merely
+ * resolves to one of them: what is checked is the URL, not what DNS makes of it. Kiota's
+ * authentication provider exempts the same three, so a base URL accepted here is one it will
+ * attach the key to, and the other three SDKs accept the same set.
+ */
+function isLoopback(url: URL): boolean {
+	return (
+		url.hostname === "localhost" ||
+		url.hostname === "127.0.0.1" ||
+		url.hostname === "[::1]"
+	);
 }
 
 export type { PrdbClient };

@@ -488,12 +488,64 @@ def test_rejects_a_relative_base_url(base_url: str) -> None:
 def test_rejects_a_plaintext_base_url() -> None:
     """An API key must not travel in cleartext.
 
-    The Go SDK's Kiota provider refuses this outright; the Python one does not,
-    so the wrapper enforces it to keep the four SDKs behaving alike. A staging
-    deployment therefore has to terminate TLS.
+    Kiota's Python provider does not enforce this, so the wrapper does, to keep
+    the four SDKs behaving alike. A staging deployment therefore has to
+    terminate TLS.
     """
     with pytest.raises(ValueError, match="https"):
-        create_client("secret-key", base_url="http://localhost:8080")
+        create_client("secret-key", base_url="http://api.example.test:8080")
+
+
+@pytest.mark.parametrize(
+    "base_url",
+    [
+        "http://localhost:8080",
+        "http://LOCALHOST:8080",
+        "http://127.0.0.1:8080",
+        "http://[::1]:8080",
+    ],
+)
+def test_allows_a_plaintext_loopback_base_url(base_url: str) -> None:
+    """A request to a loopback address never reaches a wire the key could be
+    read off, so the cleartext rule has nothing to protect there.
+
+    Without it, testing against a local stand-in for the API would need a
+    certificate for a server that only ever answers itself.
+    """
+    assert create_client("secret-key", base_url=base_url) is not None
+
+
+@pytest.mark.parametrize(
+    "base_url",
+    [
+        "http://127.0.0.2:8080",
+        "http://loopback:8080",
+        "http://localhost.example.test:8080",
+        "http://127.0.0.1.example.test:8080",
+    ],
+)
+def test_rejects_a_plaintext_base_url_that_is_merely_loopback_adjacent(
+    base_url: str,
+) -> None:
+    """The exemption is the three names browsers treat as a secure context, and
+    nothing that merely looks like one."""
+    with pytest.raises(ValueError, match="https"):
+        create_client("secret-key", base_url=base_url)
+
+
+async def test_sends_the_api_key_over_plaintext_loopback(recorder: Recorder) -> None:
+    """Construction succeeding is only half of it: the key has to be shown
+    actually arriving over plain http, which is what Kiota's C# and Go providers
+    refuse to do."""
+    client = create_client(
+        "secret-key",
+        base_url="http://127.0.0.1:8080",
+        http_client=recorder.client(health),
+    )
+
+    await client.health.get()
+
+    assert recorder.requests[0].headers[API_KEY_HEADER] == "secret-key"
 
 
 def test_anonymous_client_allows_plaintext() -> None:

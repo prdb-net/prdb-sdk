@@ -92,16 +92,66 @@ describe("createClient", () => {
 		});
 	}
 
-	// An API key must not travel in cleartext. The Go SDK's Kiota provider
-	// refuses this outright; the others do not, so the wrapper enforces it to
-	// keep the four SDKs behaving alike. A staging deployment has to terminate
-	// TLS.
+	// An API key must not travel in cleartext. The wrapper rejects it at
+	// construction, which is the earlier and clearer failure than one at request
+	// time and matches the other three SDKs. A staging deployment has to
+	// terminate TLS.
 	it("rejects a plaintext base url", () => {
 		assert.throws(
 			() =>
-				createClient({ apiKey: "secret-key", baseUrl: "http://localhost:8080" }),
+				createClient({
+					apiKey: "secret-key",
+					baseUrl: "http://api.example.test:8080",
+				}),
 			/https/,
 		);
+	});
+
+	// A request to a loopback address never reaches a wire the key could be read
+	// off, so the cleartext rule has nothing to protect there. Without this,
+	// testing against a local stand-in for the API would need a certificate for a
+	// server that only ever answers itself.
+	for (const baseUrl of [
+		"http://localhost:8080",
+		"http://LOCALHOST:8080",
+		"http://127.0.0.1:8080",
+		"http://[::1]:8080",
+	]) {
+		it(`allows the plaintext loopback base url ${baseUrl}`, () => {
+			assert.doesNotThrow(() => createClient({ apiKey: "secret-key", baseUrl }));
+		});
+	}
+
+	// The exemption is the three names browsers treat as a secure context, and
+	// nothing that merely looks like one.
+	for (const baseUrl of [
+		"http://127.0.0.2:8080",
+		"http://loopback:8080",
+		"http://localhost.example.test:8080",
+		"http://127.0.0.1.example.test:8080",
+	]) {
+		it(`rejects the loopback-adjacent base url ${baseUrl}`, () => {
+			assert.throws(
+				() => createClient({ apiKey: "secret-key", baseUrl }),
+				/https/,
+			);
+		});
+	}
+
+	// Construction succeeding is only half of it: Kiota's authentication provider
+	// gets its own say on the scheme, so the key has to be shown actually
+	// arriving over plain http.
+	it("sends the api key over plaintext loopback", async () => {
+		const recorder = new Recorder();
+		const client = createClient({
+			apiKey: "secret-key",
+			baseUrl: "http://127.0.0.1:8080",
+			customFetch: recorder.fetch(healthy),
+		});
+
+		await client.health.get();
+
+		assert.equal(recorder.requests[0]?.apiKey, "secret-key");
 	});
 });
 

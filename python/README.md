@@ -57,7 +57,10 @@ host: a redirect to a different origin raises `CrossOriginRedirectError` rather
 than handing your credential to whoever answers there. Redirects that stay on
 the same origin are followed normally.
 
-`base_url` must use `https`, so the key is never sent in cleartext.
+`base_url` must use `https`, so the key is never sent in cleartext. A loopback
+address (`localhost`, `127.0.0.1` or `::1`) is the exception: the request never
+leaves the machine, so plain `http` is accepted there and a local stand-in for
+the API needs no certificate.
 
 `GET /health` is the only endpoint that works without a key; use
 `create_anonymous_client()` for health probes. That one has no credential to

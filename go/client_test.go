@@ -74,17 +74,78 @@ func TestNewAnonymousClientSendsNoAPIKey(t *testing.T) {
 	}
 }
 
-// An API key must not travel in cleartext. Kiota refuses to attach one to an
-// http:// URL at request time; the wrapper rejects it at construction instead,
-// which is the earlier and clearer failure and matches the other three SDKs.
-// Worth pinning either way: a staging deployment has to terminate TLS.
+// An API key must not travel in cleartext. The wrapper rejects it at
+// construction, which is the earlier and clearer failure than one at request
+// time and matches the other three SDKs. Worth pinning either way: a staging
+// deployment has to terminate TLS.
 func TestAPIKeyRequiresHTTPS(t *testing.T) {
-	_, err := NewClient("secret-key", Options{BaseURL: "http://localhost:8080"})
+	_, err := NewClient("secret-key", Options{BaseURL: "http://api.example.test:8080"})
 	if err == nil {
 		t.Fatal("expected a plain HTTP base URL to be refused")
 	}
 	if !strings.Contains(err.Error(), "https") {
 		t.Errorf("error should say why: %v", err)
+	}
+}
+
+// A request to a loopback address never reaches a wire the key could be read
+// off, so the cleartext rule has nothing to protect there. Without this,
+// testing against a local stand-in for the API would need a certificate for a
+// server that only ever answers itself.
+func TestAPIKeyOverPlaintextLoopback(t *testing.T) {
+	var seen http.Header
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		seen = r.Header.Clone()
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"status":"healthy","timestamp":"2026-08-07T12:00:00Z"}`))
+	}))
+	t.Cleanup(server.Close)
+
+	// httptest listens on 127.0.0.1, so this exercises the whole path: the base
+	// URL check at construction and the authentication provider at request time,
+	// which is where Kiota's own provider would refuse the http scheme.
+	client, err := NewClient("secret-key", Options{
+		BaseURL:    server.URL,
+		HTTPClient: server.Client(),
+	})
+	if err != nil {
+		t.Fatalf("NewClient: %v", err)
+	}
+
+	if _, err := client.Health().Get(context.Background(), nil); err != nil {
+		t.Fatalf("Health().Get: %v", err)
+	}
+
+	if got := seen.Get(APIKeyHeader); got != "secret-key" {
+		t.Errorf("%s = %q, want %q", APIKeyHeader, got, "secret-key")
+	}
+}
+
+// The exemption is for the three names browsers treat as a secure context, and
+// for nothing that merely looks like one.
+func TestPlaintextIsAcceptedForLoopbackHostsOnly(t *testing.T) {
+	accepted := []string{
+		"http://localhost:8080",
+		"http://LOCALHOST:8080",
+		"http://127.0.0.1:8080",
+		"http://[::1]:8080",
+	}
+	for _, baseURL := range accepted {
+		if _, err := NewClient("secret-key", Options{BaseURL: baseURL}); err != nil {
+			t.Errorf("NewClient(%q) = %v, want it accepted", baseURL, err)
+		}
+	}
+
+	refused := []string{
+		"http://127.0.0.2:8080",
+		"http://loopback:8080",
+		"http://localhost.example.test:8080",
+		"http://127.0.0.1.example.test:8080",
+	}
+	for _, baseURL := range refused {
+		if _, err := NewClient("secret-key", Options{BaseURL: baseURL}); err == nil {
+			t.Errorf("NewClient(%q) = nil, want it refused", baseURL)
+		}
 	}
 }
 
