@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-08-30
+
 ### Added
 
 - **A loopback base URL may now use plain `http`.** The authenticated
