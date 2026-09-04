@@ -15,6 +15,8 @@ type IdentifyVideoFileDto struct {
     filename *string
     // Size of the file in bytes, if known.
     filesize *int64
+    // MD5 of the file, 32 hexadecimal characters, if the client computed one.
+    md5 *string
     // OS hash of the file, 16 hexadecimal characters, if the client computed one.
     osHash *string
     // Perceptual hash of the file, 16 hexadecimal characters, if the client computed one.Compared for equality only, and only against values computed the way "Perceptual hashes"in the API description prescribes — send none rather than one from another procedure.
@@ -63,6 +65,16 @@ func (m *IdentifyVideoFileDto) GetFieldDeserializers()(map[string]func(i878a80d2
         }
         return nil
     }
+    res["md5"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetMd5(val)
+        }
+        return nil
+    }
     res["osHash"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -105,6 +117,11 @@ func (m *IdentifyVideoFileDto) GetFilename()(*string) {
 func (m *IdentifyVideoFileDto) GetFilesize()(*int64) {
     return m.filesize
 }
+// GetMd5 gets the md5 property value. MD5 of the file, 32 hexadecimal characters, if the client computed one.
+// returns a *string when successful
+func (m *IdentifyVideoFileDto) GetMd5()(*string) {
+    return m.md5
+}
 // GetOsHash gets the osHash property value. OS hash of the file, 16 hexadecimal characters, if the client computed one.
 // returns a *string when successful
 func (m *IdentifyVideoFileDto) GetOsHash()(*string) {
@@ -130,6 +147,12 @@ func (m *IdentifyVideoFileDto) Serialize(writer i878a80d2330e89d26896388a3f487ee
     }
     {
         err := writer.WriteInt64Value("filesize", m.GetFilesize())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("md5", m.GetMd5())
         if err != nil {
             return err
         }
@@ -172,6 +195,10 @@ func (m *IdentifyVideoFileDto) SetFilename(value *string)() {
 func (m *IdentifyVideoFileDto) SetFilesize(value *int64)() {
     m.filesize = value
 }
+// SetMd5 sets the md5 property value. MD5 of the file, 32 hexadecimal characters, if the client computed one.
+func (m *IdentifyVideoFileDto) SetMd5(value *string)() {
+    m.md5 = value
+}
 // SetOsHash sets the osHash property value. OS hash of the file, 16 hexadecimal characters, if the client computed one.
 func (m *IdentifyVideoFileDto) SetOsHash(value *string)() {
     m.osHash = value
@@ -189,11 +216,13 @@ type IdentifyVideoFileDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetFilename()(*string)
     GetFilesize()(*int64)
+    GetMd5()(*string)
     GetOsHash()(*string)
     GetPHash()(*string)
     GetRef()(*string)
     SetFilename(value *string)()
     SetFilesize(value *int64)()
+    SetMd5(value *string)()
     SetOsHash(value *string)()
     SetPHash(value *string)()
     SetRef(value *string)()

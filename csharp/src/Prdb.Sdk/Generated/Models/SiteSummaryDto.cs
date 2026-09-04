@@ -19,6 +19,14 @@ namespace Prdb.Sdk.Generated.Models
         public DateTimeOffset? CreatedAtUtc { get; set; }
         /// <summary>Unique identifier of the site.</summary>
         public Guid? Id { get; set; }
+        /// <summary>Additional catalogue links. Provenance is intentionally not part of this contract.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public List<global::Prdb.Sdk.Generated.Models.SiteLinkDto>? Links { get; set; }
+#nullable restore
+#else
+        public List<global::Prdb.Sdk.Generated.Models.SiteLinkDto> Links { get; set; }
+#endif
         /// <summary>Unique identifier of the network this site belongs to, if any.</summary>
         public Guid? NetworkId { get; set; }
         /// <summary>Title of the network this site belongs to, if any.</summary>
@@ -74,6 +82,7 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "createdAtUtc", n => { CreatedAtUtc = n.GetDateTimeOffsetValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
+                { "links", n => { Links = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.SiteLinkDto>(global::Prdb.Sdk.Generated.Models.SiteLinkDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "networkId", n => { NetworkId = n.GetGuidValue(); } },
                 { "networkTitle", n => { NetworkTitle = n.GetStringValue(); } },
                 { "title", n => { Title = n.GetStringValue(); } },
@@ -90,6 +99,7 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteDateTimeOffsetValue("createdAtUtc", CreatedAtUtc);
             writer.WriteGuidValue("id", Id);
+            writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.SiteLinkDto>("links", Links);
             writer.WriteGuidValue("networkId", NetworkId);
             writer.WriteStringValue("networkTitle", NetworkTitle);
             writer.WriteStringValue("title", Title);

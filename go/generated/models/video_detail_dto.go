@@ -16,6 +16,8 @@ type VideoDetailDto struct {
     additionalData map[string]any
     // The createdAtUtc property
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Catalogue description of the video, if known.
+    description *string
     // How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.
     durationFileCount *int32
     // Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
@@ -34,6 +36,8 @@ type VideoDetailDto struct {
     releaseDate *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
     // The site property
     site VideoDetailSiteDtoable
+    // StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does notexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.
+    stashdbSceneId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The title property
     title *string
     // The updatedAtUtc property
@@ -65,6 +69,11 @@ func (m *VideoDetailDto) GetAdditionalData()(map[string]any) {
 // returns a *Time when successful
 func (m *VideoDetailDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
+}
+// GetDescription gets the description property value. Catalogue description of the video, if known.
+// returns a *string when successful
+func (m *VideoDetailDto) GetDescription()(*string) {
+    return m.description
 }
 // GetDurationFileCount gets the durationFileCount property value. How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.
 // returns a *int32 when successful
@@ -108,6 +117,16 @@ func (m *VideoDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         if val != nil {
             m.SetCreatedAtUtc(val)
+        }
+        return nil
+    }
+    res["description"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetDescription(val)
         }
         return nil
     }
@@ -213,6 +232,16 @@ func (m *VideoDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         return nil
     }
+    res["stashdbSceneId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetUUIDValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetStashdbSceneId(val)
+        }
+        return nil
+    }
     res["title"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -265,6 +294,11 @@ func (m *VideoDetailDto) GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0
 func (m *VideoDetailDto) GetSite()(VideoDetailSiteDtoable) {
     return m.site
 }
+// GetStashdbSceneId gets the stashdbSceneId property value. StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does notexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.
+// returns a *UUID when successful
+func (m *VideoDetailDto) GetStashdbSceneId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
+    return m.stashdbSceneId
+}
 // GetTitle gets the title property value. The title property
 // returns a *string when successful
 func (m *VideoDetailDto) GetTitle()(*string) {
@@ -291,6 +325,12 @@ func (m *VideoDetailDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
     }
     {
         err := writer.WriteTimeValue("createdAtUtc", m.GetCreatedAtUtc())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("description", m.GetDescription())
         if err != nil {
             return err
         }
@@ -362,6 +402,12 @@ func (m *VideoDetailDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
         }
     }
     {
+        err := writer.WriteUUIDValue("stashdbSceneId", m.GetStashdbSceneId())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteStringValue("title", m.GetTitle())
         if err != nil {
             return err
@@ -392,6 +438,10 @@ func (m *VideoDetailDto) SetAdditionalData(value map[string]any)() {
 // SetCreatedAtUtc sets the createdAtUtc property value. The createdAtUtc property
 func (m *VideoDetailDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
+}
+// SetDescription sets the description property value. Catalogue description of the video, if known.
+func (m *VideoDetailDto) SetDescription(value *string)() {
+    m.description = value
 }
 // SetDurationFileCount sets the durationFileCount property value. How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.
 func (m *VideoDetailDto) SetDurationFileCount(value *int32)() {
@@ -429,6 +479,10 @@ func (m *VideoDetailDto) SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef
 func (m *VideoDetailDto) SetSite(value VideoDetailSiteDtoable)() {
     m.site = value
 }
+// SetStashdbSceneId sets the stashdbSceneId property value. StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does notexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.
+func (m *VideoDetailDto) SetStashdbSceneId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
+    m.stashdbSceneId = value
+}
 // SetTitle sets the title property value. The title property
 func (m *VideoDetailDto) SetTitle(value *string)() {
     m.title = value
@@ -442,6 +496,7 @@ type VideoDetailDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetActors()([]VideoDetailActorDtoable)
     GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
+    GetDescription()(*string)
     GetDurationFileCount()(*int32)
     GetDurationMs()(*int64)
     GetDurationSpreadMs()(*int64)
@@ -451,10 +506,12 @@ type VideoDetailDtoable interface {
     GetQualityOverview()(VideoQualityOverviewDtoable)
     GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)
     GetSite()(VideoDetailSiteDtoable)
+    GetStashdbSceneId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetTitle()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     SetActors(value []VideoDetailActorDtoable)()
     SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
+    SetDescription(value *string)()
     SetDurationFileCount(value *int32)()
     SetDurationMs(value *int64)()
     SetDurationSpreadMs(value *int64)()
@@ -464,6 +521,7 @@ type VideoDetailDtoable interface {
     SetQualityOverview(value VideoQualityOverviewDtoable)()
     SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)()
     SetSite(value VideoDetailSiteDtoable)()
+    SetStashdbSceneId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetTitle(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
 }

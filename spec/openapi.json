@@ -1856,7 +1856,7 @@
           "Videos"
         ],
         "summary": "Identify files against the catalogue",
-        "description": "Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: OS hash, then perceptual hash (compared for equality), then a stored file name, then the file name without its extension as a scene release title, and finally the site read out of the file name. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure skips that rung silently rather than failing, so send none if in doubt. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. The whole request counts as one request against the rate limit. Nothing sent to this endpoint is stored. Requires API key authentication.",
+        "description": "Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: MD5, OS hash, perceptual hash (compared for equality), a stored file name, the file name without its extension as a scene release title, and finally the site read out of the file name. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure skips that rung silently rather than failing, so send none if in doubt. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. The whole request counts as one request against the rate limit. Nothing sent to this endpoint is stored. Requires API key authentication.",
         "operationId": "IdentifyVideos",
         "requestBody": {
           "content": {
@@ -6714,10 +6714,11 @@
           1,
           2,
           3,
-          4
+          4,
+          5
         ],
         "type": "integer",
-        "description": "Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4)."
+        "description": "Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5)."
       },
       "IdentifySiteDto": {
         "required": [
@@ -6766,6 +6767,11 @@
             "format": "int64",
             "nullable": true
           },
+          "md5": {
+            "type": "string",
+            "description": "MD5 of the file, 32 hexadecimal characters, if the client computed one.",
+            "nullable": true
+          },
           "osHash": {
             "type": "string",
             "description": "OS hash of the file, 16 hexadecimal characters, if the client computed one.",
@@ -6800,7 +6806,7 @@
                 "$ref": "#/components/schemas/IdentifyMatchKind"
               }
             ],
-            "description": "Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).",
+            "description": "Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).",
             "nullable": true
           },
           "videoId": {
@@ -7845,11 +7851,30 @@
           }
         }
       },
+      "SiteLinkDto": {
+        "required": [
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Human-readable link type, if known.",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "description": "Absolute external URL."
+          }
+        },
+        "description": "An additional link belonging to a Site."
+      },
       "SiteSummaryDto": {
         "required": [
           "id",
           "title",
           "url",
+          "links",
           "createdAtUtc",
           "updatedAtUtc"
         ],
@@ -7867,6 +7892,13 @@
           "url": {
             "type": "string",
             "description": "Site URL."
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SiteLinkDto"
+            },
+            "description": "Additional catalogue links. Provenance is intentionally not part of this contract."
           },
           "networkId": {
             "type": "string",
@@ -8349,6 +8381,17 @@
           },
           "title": {
             "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "description": "Catalogue description of the video, if known.",
+            "nullable": true
+          },
+          "stashdbSceneId": {
+            "type": "string",
+            "description": "StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does not\nexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.",
+            "format": "uuid",
+            "nullable": true
           },
           "releaseDate": {
             "type": "string",
@@ -8948,6 +8991,11 @@
             "type": "string",
             "description": "Video title."
           },
+          "description": {
+            "type": "string",
+            "description": "Catalogue description of the video, if known.",
+            "nullable": true
+          },
           "siteId": {
             "type": "string",
             "description": "Unique identifier of the site this video belongs to.",
@@ -8961,6 +9009,12 @@
             "type": "string",
             "description": "Release date of the video, if known.",
             "format": "date",
+            "nullable": true
+          },
+          "stashdbSceneId": {
+            "type": "string",
+            "description": "StashDB Scene UUID for a confirmed match. Clients resolve it directly with their own\nStashDB credentials; no match evidence or integration state is included.",
+            "format": "uuid",
             "nullable": true
           },
           "createdAtUtc": {

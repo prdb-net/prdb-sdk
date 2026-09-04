@@ -25,6 +25,14 @@ namespace Prdb.Sdk.Generated.Models
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>The createdAtUtc property</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
+        /// <summary>Catalogue description of the video, if known.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Description { get; set; }
+#nullable restore
+#else
+        public string Description { get; set; }
+#endif
         /// <summary>How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.</summary>
         public int? DurationFileCount { get; set; }
         /// <summary>Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.</summary>
@@ -67,6 +75,8 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto Site { get; set; }
 #endif
+        /// <summary>StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does notexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.</summary>
+        public Guid? StashdbSceneId { get; set; }
         /// <summary>The title property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -104,6 +114,7 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "actors", n => { Actors = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailActorDto>(global::Prdb.Sdk.Generated.Models.VideoDetailActorDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "createdAtUtc", n => { CreatedAtUtc = n.GetDateTimeOffsetValue(); } },
+                { "description", n => { Description = n.GetStringValue(); } },
                 { "durationFileCount", n => { DurationFileCount = n.GetIntValue(); } },
                 { "durationMs", n => { DurationMs = n.GetLongValue(); } },
                 { "durationSpreadMs", n => { DurationSpreadMs = n.GetLongValue(); } },
@@ -113,6 +124,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "qualityOverview", n => { QualityOverview = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto>(global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto.CreateFromDiscriminatorValue); } },
                 { "releaseDate", n => { ReleaseDate = n.GetDateValue(); } },
                 { "site", n => { Site = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto>(global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto.CreateFromDiscriminatorValue); } },
+                { "stashdbSceneId", n => { StashdbSceneId = n.GetGuidValue(); } },
                 { "title", n => { Title = n.GetStringValue(); } },
                 { "updatedAtUtc", n => { UpdatedAtUtc = n.GetDateTimeOffsetValue(); } },
             };
@@ -126,6 +138,7 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailActorDto>("actors", Actors);
             writer.WriteDateTimeOffsetValue("createdAtUtc", CreatedAtUtc);
+            writer.WriteStringValue("description", Description);
             writer.WriteIntValue("durationFileCount", DurationFileCount);
             writer.WriteLongValue("durationMs", DurationMs);
             writer.WriteLongValue("durationSpreadMs", DurationSpreadMs);
@@ -135,6 +148,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto>("qualityOverview", QualityOverview);
             writer.WriteDateValue("releaseDate", ReleaseDate);
             writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoDetailSiteDto>("site", Site);
+            writer.WriteGuidValue("stashdbSceneId", StashdbSceneId);
             writer.WriteStringValue("title", Title);
             writer.WriteDateTimeOffsetValue("updatedAtUtc", UpdatedAtUtc);
             writer.WriteAdditionalData(AdditionalData);

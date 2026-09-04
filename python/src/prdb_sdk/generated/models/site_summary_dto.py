@@ -6,6 +6,9 @@ from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, Par
 from typing import Any, Optional, TYPE_CHECKING, Union
 from uuid import UUID
 
+if TYPE_CHECKING:
+    from .site_link_dto import SiteLinkDto
+
 @dataclass
 class SiteSummaryDto(AdditionalDataHolder, Parsable):
     """
@@ -18,6 +21,8 @@ class SiteSummaryDto(AdditionalDataHolder, Parsable):
     created_at_utc: Optional[datetime.datetime] = None
     # Unique identifier of the site.
     id: Optional[UUID] = None
+    # Additional catalogue links. Provenance is intentionally not part of this contract.
+    links: Optional[list[SiteLinkDto]] = None
     # Unique identifier of the network this site belongs to, if any.
     network_id: Optional[UUID] = None
     # Title of the network this site belongs to, if any.
@@ -45,9 +50,14 @@ class SiteSummaryDto(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
+        from .site_link_dto import SiteLinkDto
+
+        from .site_link_dto import SiteLinkDto
+
         fields: dict[str, Callable[[Any], None]] = {
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
+            "links": lambda n : setattr(self, 'links', n.get_collection_of_object_values(SiteLinkDto)),
             "networkId": lambda n : setattr(self, 'network_id', n.get_uuid_value()),
             "networkTitle": lambda n : setattr(self, 'network_title', n.get_str_value()),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
@@ -66,6 +76,7 @@ class SiteSummaryDto(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_datetime_value("createdAtUtc", self.created_at_utc)
         writer.write_uuid_value("id", self.id)
+        writer.write_collection_of_object_values("links", self.links)
         writer.write_uuid_value("networkId", self.network_id)
         writer.write_str_value("networkTitle", self.network_title)
         writer.write_str_value("title", self.title)

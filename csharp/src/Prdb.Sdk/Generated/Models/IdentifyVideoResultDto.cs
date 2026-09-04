@@ -25,7 +25,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).</summary>
         public int? Confidence { get; set; }
-        /// <summary>Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).</summary>
+        /// <summary>Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).</summary>
         public int? MatchedBy { get; set; }
         /// <summary>The client-assigned identifier of the input file, returned unchanged.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
