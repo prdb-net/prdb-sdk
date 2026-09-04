@@ -16,6 +16,8 @@ class IdentifyVideoFileDto(AdditionalDataHolder, Parsable):
     filename: Optional[str] = None
     # Size of the file in bytes, if known.
     filesize: Optional[int] = None
+    # MD5 of the file, 32 hexadecimal characters, if the client computed one.
+    md5: Optional[str] = None
     # OS hash of the file, 16 hexadecimal characters, if the client computed one.
     os_hash: Optional[str] = None
     # Perceptual hash of the file, 16 hexadecimal characters, if the client computed one.Compared for equality only, and only against values computed the way "Perceptual hashes"in the API description prescribes — send none rather than one from another procedure.
@@ -42,6 +44,7 @@ class IdentifyVideoFileDto(AdditionalDataHolder, Parsable):
         fields: dict[str, Callable[[Any], None]] = {
             "filename": lambda n : setattr(self, 'filename', n.get_str_value()),
             "filesize": lambda n : setattr(self, 'filesize', n.get_int_value()),
+            "md5": lambda n : setattr(self, 'md5', n.get_str_value()),
             "osHash": lambda n : setattr(self, 'os_hash', n.get_str_value()),
             "pHash": lambda n : setattr(self, 'p_hash', n.get_str_value()),
             "ref": lambda n : setattr(self, 'ref', n.get_str_value()),
@@ -58,6 +61,7 @@ class IdentifyVideoFileDto(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_str_value("filename", self.filename)
         writer.write_int_value("filesize", self.filesize)
+        writer.write_str_value("md5", self.md5)
         writer.write_str_value("osHash", self.os_hash)
         writer.write_str_value("pHash", self.p_hash)
         writer.write_str_value("ref", self.ref)

@@ -26,6 +26,14 @@ namespace Prdb.Sdk.Generated.Models
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>Timestamp when the video was created in PRDB.</summary>
         public DateTimeOffset? CreatedAtUtc { get; set; }
+        /// <summary>Catalogue description of the video, if known.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? Description { get; set; }
+#nullable restore
+#else
+        public string Description { get; set; }
+#endif
         /// <summary>How many files the duration was taken over, without which the spread cannot be read.</summary>
         public int? DurationFileCount { get; set; }
         /// <summary>Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median over the video&apos;s files, so atrailer submitted under the same video does not move it.</summary>
@@ -46,6 +54,8 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string SiteTitle { get; set; }
 #endif
+        /// <summary>StashDB Scene UUID for a confirmed match. Clients resolve it directly with their ownStashDB credentials; no match evidence or integration state is included.</summary>
+        public Guid? StashdbSceneId { get; set; }
         /// <summary>Video title.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -81,6 +91,7 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "actors", n => { Actors = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto>(global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "createdAtUtc", n => { CreatedAtUtc = n.GetDateTimeOffsetValue(); } },
+                { "description", n => { Description = n.GetStringValue(); } },
                 { "durationFileCount", n => { DurationFileCount = n.GetIntValue(); } },
                 { "durationMs", n => { DurationMs = n.GetLongValue(); } },
                 { "durationSpreadMs", n => { DurationSpreadMs = n.GetLongValue(); } },
@@ -88,6 +99,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "releaseDate", n => { ReleaseDate = n.GetDateValue(); } },
                 { "siteId", n => { SiteId = n.GetGuidValue(); } },
                 { "siteTitle", n => { SiteTitle = n.GetStringValue(); } },
+                { "stashdbSceneId", n => { StashdbSceneId = n.GetGuidValue(); } },
                 { "title", n => { Title = n.GetStringValue(); } },
             };
         }
@@ -100,6 +112,7 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto>("actors", Actors);
             writer.WriteDateTimeOffsetValue("createdAtUtc", CreatedAtUtc);
+            writer.WriteStringValue("description", Description);
             writer.WriteIntValue("durationFileCount", DurationFileCount);
             writer.WriteLongValue("durationMs", DurationMs);
             writer.WriteLongValue("durationSpreadMs", DurationSpreadMs);
@@ -107,6 +120,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteDateValue("releaseDate", ReleaseDate);
             writer.WriteGuidValue("siteId", SiteId);
             writer.WriteStringValue("siteTitle", SiteTitle);
+            writer.WriteGuidValue("stashdbSceneId", StashdbSceneId);
             writer.WriteStringValue("title", Title);
             writer.WriteAdditionalData(AdditionalData);
         }

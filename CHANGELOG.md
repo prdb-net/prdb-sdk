@@ -15,6 +15,30 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **A file can now be identified by its MD5.** `IdentifyVideoFileDto` gains a
+  nullable `md5`, and `IdentifyMatchKind` gains `Md5` (5) to report it as the
+  rung that matched. MD5 is the *first* rung of the identification ladder, ahead
+  of `osHash`, so a file the catalogue knows by content hash is now resolved
+  before any of the weaker rungs are tried. Sending one is optional and nothing
+  else changes: a request without `md5` walks exactly the ladder it walked
+  before. Unlike `osHash` and `pHash` it needs no specification of its own —
+  it is MD5 over the whole file, 32 hexadecimal characters.
+
+- **Videos now carry a description and a StashDB scene id.** `VideoDetailDto`
+  and `VideoSummaryDto` both gain a nullable `description` and a nullable
+  `stashdbSceneId`, typed as a UUID in all four languages. The scene id is an
+  external identity and nothing more: prdb neither exposes what made the match
+  nor proxies StashDB, so a client that wants the scene behind the id resolves
+  it with its own StashDB credentials.
+
+- **Sites now carry additional links.** `SiteSummaryDto` gains a required
+  `links` array of the new `SiteLinkDto`, each an absolute `url` with an
+  optional human-readable `label`. It sits alongside the existing `url` rather
+  than replacing it, and it is a list the catalogue curates — where a link came
+  from is deliberately not part of the contract.
+
 ## [0.13.0] - 2026-08-30
 
 ### Added

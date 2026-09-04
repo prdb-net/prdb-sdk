@@ -21,7 +21,7 @@ class IdentifyVideoResultDto(AdditionalDataHolder, Parsable):
     candidates: Optional[list[UUID]] = None
     # How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
     confidence: Optional[int] = None
-    # Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4).
+    # Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
     matched_by: Optional[int] = None
     # The client-assigned identifier of the input file, returned unchanged.
     ref: Optional[str] = None

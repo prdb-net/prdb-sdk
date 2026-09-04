@@ -21,6 +21,8 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
     actors: Optional[list[VideoSummaryActorDto]] = None
     # Timestamp when the video was created in PRDB.
     created_at_utc: Optional[datetime.datetime] = None
+    # Catalogue description of the video, if known.
+    description: Optional[str] = None
     # How many files the duration was taken over, without which the spread cannot be read.
     duration_file_count: Optional[int] = None
     # Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median over the video's files, so atrailer submitted under the same video does not move it.
@@ -35,6 +37,8 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
     site_id: Optional[UUID] = None
     # Title of the site this video belongs to.
     site_title: Optional[str] = None
+    # StashDB Scene UUID for a confirmed match. Clients resolve it directly with their ownStashDB credentials; no match evidence or integration state is included.
+    stashdb_scene_id: Optional[UUID] = None
     # Video title.
     title: Optional[str] = None
     
@@ -61,6 +65,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         fields: dict[str, Callable[[Any], None]] = {
             "actors": lambda n : setattr(self, 'actors', n.get_collection_of_object_values(VideoSummaryActorDto)),
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
+            "description": lambda n : setattr(self, 'description', n.get_str_value()),
             "durationFileCount": lambda n : setattr(self, 'duration_file_count', n.get_int_value()),
             "durationMs": lambda n : setattr(self, 'duration_ms', n.get_int_value()),
             "durationSpreadMs": lambda n : setattr(self, 'duration_spread_ms', n.get_int_value()),
@@ -68,6 +73,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
             "releaseDate": lambda n : setattr(self, 'release_date', n.get_date_value()),
             "siteId": lambda n : setattr(self, 'site_id', n.get_uuid_value()),
             "siteTitle": lambda n : setattr(self, 'site_title', n.get_str_value()),
+            "stashdbSceneId": lambda n : setattr(self, 'stashdb_scene_id', n.get_uuid_value()),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
         }
         return fields
@@ -82,6 +88,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_collection_of_object_values("actors", self.actors)
         writer.write_datetime_value("createdAtUtc", self.created_at_utc)
+        writer.write_str_value("description", self.description)
         writer.write_int_value("durationFileCount", self.duration_file_count)
         writer.write_int_value("durationMs", self.duration_ms)
         writer.write_int_value("durationSpreadMs", self.duration_spread_ms)
@@ -89,6 +96,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         writer.write_date_value("releaseDate", self.release_date)
         writer.write_uuid_value("siteId", self.site_id)
         writer.write_str_value("siteTitle", self.site_title)
+        writer.write_uuid_value("stashdbSceneId", self.stashdb_scene_id)
         writer.write_str_value("title", self.title)
         writer.write_additional_data_value(self.additional_data)
     
