@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-09-04
+
 ### Added
 
 - **A file can now be identified by its MD5.** `IdentifyVideoFileDto` gains a
