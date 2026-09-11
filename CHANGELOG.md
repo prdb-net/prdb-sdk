@@ -127,8 +127,7 @@ changed type is, whichever language it landed in.
   `POST /videos/filehash-submissions`, then read the aggregated set through
   `GET /videos/filehashes/latest` or follow
   `GET /videos/filehashes/changes`. No indexer is named in this path.
-  porganizer, the only known consumer of the removed operations, must migrate
-  to that path; its work is tracked in `porganizer/porganizer#42`.
+  The only known consumer of the removed operations must migrate to that path.
 
 ### Changed
 
@@ -405,8 +404,8 @@ existing call site changes, and nothing was renamed, retyped or removed.
 
 ## [0.4.0] - 2026-08-08
 
-Shaped by porganizer's third adoption review, which ran against 0.3.0. Neither
-finding blocked the migration; one of them cost a workaround.
+Shaped by an integrator's third adoption review, which ran against 0.3.0.
+Neither finding blocked the migration; one of them cost a workaround.
 
 ### Added
 
@@ -471,9 +470,10 @@ version number, because the four are released together.
 
 ## [0.3.0] - 2026-08-08
 
-Shaped by porganizer's second adoption review, which ran against the published
-0.2.0 package. Both findings are C#, and both were blockers: between them they
-ruled out every way of pointing the SDK at an application's own connection pool.
+Shaped by an integrator's second adoption review, which ran against the
+published 0.2.0 package. Both findings are C#, and both were blockers: between
+them they ruled out every way of pointing the SDK at an application's own
+connection pool.
 
 ### Added
 
@@ -522,11 +522,9 @@ ruled out every way of pointing the SDK at an application's own connection pool.
 ## [0.2.0] - 2026-08-08
 
 The first release with a breaking change, and the first shaped by someone
-integrating the SDK rather than by us: porganizer's adoption review
-([porganizer#12]) produced both the contract changes below and the retry
-control. Reading actor changes needs a code change; nothing else does.
-
-[porganizer#12]: https://gitlab.com/porganizer/porganizer/-/issues/12
+integrating the SDK rather than by us: an integrator's adoption review
+produced both the contract changes below and the retry control. Reading actor
+changes needs a code change; nothing else does.
 
 ### Changed
 
