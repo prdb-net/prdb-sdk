@@ -64,7 +64,7 @@ namespace Prdb.Sdk.Generated.WantedVideos.Item
             await RequestAdapter.SendNoContentAsync(requestInfo, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
+        /// Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit (code wanted_video_limit_exceeded) or the user ignores the video&apos;s site (code site_ignored, a problem body without the quota fields). Requires API key authentication.
         /// </summary>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -150,7 +150,7 @@ namespace Prdb.Sdk.Generated.WantedVideos.Item
             return requestInfo;
         }
         /// <summary>
-        /// Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
+        /// Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit (code wanted_video_limit_exceeded) or the user ignores the video&apos;s site (code site_ignored, a problem body without the quota fields). Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

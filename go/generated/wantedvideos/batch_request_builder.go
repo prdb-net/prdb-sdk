@@ -26,7 +26,7 @@ func NewBatchRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263371cb
     urlParams["request-raw-url"] = rawUrl
     return NewBatchRequestBuilderInternal(urlParams, requestAdapter)
 }
-// Post adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. The batch is rejected without changes if all valid new entries would exceed the current wanted video limit. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.
+// Post adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. Videos of sites the user ignores are skipped and counted in ignoredSite. The batch is rejected without changes if all valid new entries would exceed the current wanted video limit. Returns counts of added, already-existed, not-found and ignored-site entries. Requires API key authentication.
 // returns a AddWantedVideosBatchResponseable when successful
 // returns a ProblemDetails error when the service returns a 400 status code
 // returns a ProblemDetails error when the service returns a 401 status code
@@ -56,7 +56,7 @@ func (m *BatchRequestBuilder) Post(ctx context.Context, body ibd6e645a776717494d
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.AddWantedVideosBatchResponseable), nil
 }
-// ToPostRequestInformation adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. The batch is rejected without changes if all valid new entries would exceed the current wanted video limit. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.
+// ToPostRequestInformation adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. Videos of sites the user ignores are skipped and counted in ignoredSite. The batch is rejected without changes if all valid new entries would exceed the current wanted video limit. Returns counts of added, already-existed, not-found and ignored-site entries. Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *BatchRequestBuilder) ToPostRequestInformation(ctx context.Context, body ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.AddWantedVideosBatchRequestable, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.POST, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

@@ -21,7 +21,7 @@ export interface WithVideoItemRequestBuilder extends BaseRequestBuilder<WithVide
      */
      delete(requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<void>;
     /**
-     * Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
+     * Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit (code wanted_video_limit_exceeded) or the user ignores the video's site (code site_ignored, a problem body without the quota fields). Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @throws {ProblemDetails} error when the service returns a 401 status code
      * @throws {ProblemDetails} error when the service returns a 403 status code
@@ -51,7 +51,7 @@ export interface WithVideoItemRequestBuilder extends BaseRequestBuilder<WithVide
      */
      toDeleteRequestInformation(requestConfiguration?: RequestConfiguration<object> | undefined) : RequestInformation;
     /**
-     * Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
+     * Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit (code wanted_video_limit_exceeded) or the user ignores the video's site (code site_ignored, a problem body without the quota fields). Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */

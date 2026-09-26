@@ -16,6 +16,8 @@ class AddWantedVideosBatchResponse(AdditionalDataHolder, Parsable):
     added: Optional[int] = None
     # Number of entries that were already on the wanted list.
     already_existed: Optional[int] = None
+    # Number of videos skipped because the user ignores their site.
+    ignored_site: Optional[int] = None
     # Number of video IDs that were not found in the database.
     not_found: Optional[int] = None
     
@@ -38,6 +40,7 @@ class AddWantedVideosBatchResponse(AdditionalDataHolder, Parsable):
         fields: dict[str, Callable[[Any], None]] = {
             "added": lambda n : setattr(self, 'added', n.get_int_value()),
             "alreadyExisted": lambda n : setattr(self, 'already_existed', n.get_int_value()),
+            "ignoredSite": lambda n : setattr(self, 'ignored_site', n.get_int_value()),
             "notFound": lambda n : setattr(self, 'not_found', n.get_int_value()),
         }
         return fields
@@ -52,6 +55,7 @@ class AddWantedVideosBatchResponse(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_int_value("added", self.added)
         writer.write_int_value("alreadyExisted", self.already_existed)
+        writer.write_int_value("ignoredSite", self.ignored_site)
         writer.write_int_value("notFound", self.not_found)
         writer.write_additional_data_value(self.additional_data)
     

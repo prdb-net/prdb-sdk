@@ -64,13 +64,14 @@ namespace Prdb.Sdk.Generated.FavoriteSites.Item
             await RequestAdapter.SendNoContentAsync(requestInfo, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Requires API key authentication.
+        /// Marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Returns 409 with code site_ignored if the user ignores the site. Requires API key authentication.
         /// </summary>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 401 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 403 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 404 status code</exception>
+        /// <exception cref="global::Prdb.Sdk.Generated.Models.SiteIgnoredProblemDetails">When receiving a 409 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 429 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 503 status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -88,6 +89,7 @@ namespace Prdb.Sdk.Generated.FavoriteSites.Item
                 { "401", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "403", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "404", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
+                { "409", global::Prdb.Sdk.Generated.Models.SiteIgnoredProblemDetails.CreateFromDiscriminatorValue },
                 { "429", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "503", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
             };
@@ -113,7 +115,7 @@ namespace Prdb.Sdk.Generated.FavoriteSites.Item
             return requestInfo;
         }
         /// <summary>
-        /// Marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Requires API key authentication.
+        /// Marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Returns 409 with code site_ignored if the user ignores the site. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

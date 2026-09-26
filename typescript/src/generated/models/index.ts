@@ -512,6 +512,10 @@ export interface AddWantedVideosBatchResponse extends AdditionalDataHolder, Pars
      */
     alreadyExisted?: number | null;
     /**
+     * Number of videos skipped because the user ignores their site.
+     */
+    ignoredSite?: number | null;
+    /**
      * Number of video IDs that were not found in the database.
      */
     notFound?: number | null;
@@ -816,6 +820,15 @@ export function createGetHealthResponseFromDiscriminatorValue(parseNode: ParseNo
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {GetIgnoredSiteChangesResponse}
+ */
+// @ts-ignore
+export function createGetIgnoredSiteChangesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoGetIgnoredSiteChangesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {GetRateLimitResponse}
  */
 // @ts-ignore
@@ -933,6 +946,51 @@ export function createIdentifyVideosResponseFromDiscriminatorValue(parseNode: Pa
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IgnoredSiteChangeDto}
+ */
+// @ts-ignore
+export function createIgnoredSiteChangeDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIgnoredSiteChangeDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IgnoredSiteChangeIgnoredSiteDto}
+ */
+// @ts-ignore
+export function createIgnoredSiteChangeIgnoredSiteDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIgnoredSiteChangeIgnoredSiteDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IgnoredSiteChangesCursorDto}
+ */
+// @ts-ignore
+export function createIgnoredSiteChangesCursorDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIgnoredSiteChangesCursorDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IgnoredSiteSummaryDto}
+ */
+// @ts-ignore
+export function createIgnoredSiteSummaryDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIgnoredSiteSummaryDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IgnoreSiteResponse}
+ */
+// @ts-ignore
+export function createIgnoreSiteResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIgnoreSiteResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {LatestPreDbItemDto}
  */
 // @ts-ignore
@@ -1001,6 +1059,15 @@ export function createListFavoriteActorsResponseFromDiscriminatorValue(parseNode
 // @ts-ignore
 export function createListFavoriteSitesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoListFavoriteSitesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ListIgnoredSitesResponse}
+ */
+// @ts-ignore
+export function createListIgnoredSitesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoListIgnoredSitesResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1127,6 +1194,15 @@ export function createReportVideoUserImageResponseFromDiscriminatorValue(parseNo
 // @ts-ignore
 export function createSearchPreDbByVideoResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoSearchPreDbByVideoResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SiteIgnoredProblemDetails}
+ */
+// @ts-ignore
+export function createSiteIgnoredProblemDetailsFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSiteIgnoredProblemDetails;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1750,6 +1826,7 @@ export function deserializeIntoAddWantedVideosBatchResponse(addWantedVideosBatch
     return {
         "added": n => { addWantedVideosBatchResponse.added = n.getNumberValue(); },
         "alreadyExisted": n => { addWantedVideosBatchResponse.alreadyExisted = n.getNumberValue(); },
+        "ignoredSite": n => { addWantedVideosBatchResponse.ignoredSite = n.getNumberValue(); },
         "notFound": n => { addWantedVideosBatchResponse.notFound = n.getNumberValue(); },
     }
 }
@@ -1995,6 +2072,21 @@ export function deserializeIntoGetHealthResponse(getHealthResponse: Partial<GetH
 }
 /**
  * The deserialization information for the current model
+ * @param GetIgnoredSiteChangesResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoGetIgnoredSiteChangesResponse(getIgnoredSiteChangesResponse: Partial<GetIgnoredSiteChangesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "hasMore": n => { getIgnoredSiteChangesResponse.hasMore = n.getBooleanValue(); },
+        "items": n => { getIgnoredSiteChangesResponse.items = n.getCollectionOfObjectValues<IgnoredSiteChangeDto>(createIgnoredSiteChangeDtoFromDiscriminatorValue); },
+        "nextCursor": n => { getIgnoredSiteChangesResponse.nextCursor = n.getObjectValue<IgnoredSiteChangesCursorDto>(createIgnoredSiteChangesCursorDtoFromDiscriminatorValue); },
+        "pageSize": n => { getIgnoredSiteChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getIgnoredSiteChangesResponse.serverTimeUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param GetRateLimitResponse The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2171,6 +2263,77 @@ export function deserializeIntoIdentifyVideosResponse(identifyVideosResponse: Pa
 }
 /**
  * The deserialization information for the current model
+ * @param IgnoredSiteChangeDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIgnoredSiteChangeDto(ignoredSiteChangeDto: Partial<IgnoredSiteChangeDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "eventType": n => { ignoredSiteChangeDto.eventType = n.getStringValue(); },
+        "ignoredSite": n => { ignoredSiteChangeDto.ignoredSite = n.getObjectValue<IgnoredSiteChangeIgnoredSiteDto>(createIgnoredSiteChangeIgnoredSiteDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IgnoredSiteChangeIgnoredSiteDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIgnoredSiteChangeIgnoredSiteDto(ignoredSiteChangeIgnoredSiteDto: Partial<IgnoredSiteChangeIgnoredSiteDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "deletedAtUtc": n => { ignoredSiteChangeIgnoredSiteDto.deletedAtUtc = n.getDateValue(); },
+        "id": n => { ignoredSiteChangeIgnoredSiteDto.id = n.getGuidValue(); },
+        "ignoredAtUtc": n => { ignoredSiteChangeIgnoredSiteDto.ignoredAtUtc = n.getDateValue(); },
+        "isDeleted": n => { ignoredSiteChangeIgnoredSiteDto.isDeleted = n.getBooleanValue(); },
+        "networkId": n => { ignoredSiteChangeIgnoredSiteDto.networkId = n.getGuidValue(); },
+        "networkTitle": n => { ignoredSiteChangeIgnoredSiteDto.networkTitle = n.getStringValue(); },
+        "title": n => { ignoredSiteChangeIgnoredSiteDto.title = n.getStringValue(); },
+        "updatedAtUtc": n => { ignoredSiteChangeIgnoredSiteDto.updatedAtUtc = n.getDateValue(); },
+        "url": n => { ignoredSiteChangeIgnoredSiteDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IgnoredSiteChangesCursorDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIgnoredSiteChangesCursorDto(ignoredSiteChangesCursorDto: Partial<IgnoredSiteChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { ignoredSiteChangesCursorDto.id = n.getGuidValue(); },
+        "updatedAtUtc": n => { ignoredSiteChangesCursorDto.updatedAtUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IgnoredSiteSummaryDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIgnoredSiteSummaryDto(ignoredSiteSummaryDto: Partial<IgnoredSiteSummaryDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { ignoredSiteSummaryDto.id = n.getGuidValue(); },
+        "ignoredAtUtc": n => { ignoredSiteSummaryDto.ignoredAtUtc = n.getDateValue(); },
+        "networkId": n => { ignoredSiteSummaryDto.networkId = n.getGuidValue(); },
+        "networkTitle": n => { ignoredSiteSummaryDto.networkTitle = n.getStringValue(); },
+        "title": n => { ignoredSiteSummaryDto.title = n.getStringValue(); },
+        "url": n => { ignoredSiteSummaryDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IgnoreSiteResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIgnoreSiteResponse(ignoreSiteResponse: Partial<IgnoreSiteResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "favoriteRemoved": n => { ignoreSiteResponse.favoriteRemoved = n.getBooleanValue(); },
+        "wantedRemovedCount": n => { ignoreSiteResponse.wantedRemovedCount = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param LatestPreDbItemDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2288,6 +2451,23 @@ export function deserializeIntoListFavoriteSitesResponse(listFavoriteSitesRespon
         "sortDirection": n => { listFavoriteSitesResponse.sortDirection = n.getStringValue(); },
         "totalCount": n => { listFavoriteSitesResponse.totalCount = n.getNumberValue(); },
         "totalPages": n => { listFavoriteSitesResponse.totalPages = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ListIgnoredSitesResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoListIgnoredSitesResponse(listIgnoredSitesResponse: Partial<ListIgnoredSitesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "items": n => { listIgnoredSitesResponse.items = n.getCollectionOfObjectValues<IgnoredSiteSummaryDto>(createIgnoredSiteSummaryDtoFromDiscriminatorValue); },
+        "page": n => { listIgnoredSitesResponse.page = n.getNumberValue(); },
+        "pageSize": n => { listIgnoredSitesResponse.pageSize = n.getNumberValue(); },
+        "sortBy": n => { listIgnoredSitesResponse.sortBy = n.getStringValue(); },
+        "sortDirection": n => { listIgnoredSitesResponse.sortDirection = n.getStringValue(); },
+        "totalCount": n => { listIgnoredSitesResponse.totalCount = n.getNumberValue(); },
+        "totalPages": n => { listIgnoredSitesResponse.totalPages = n.getNumberValue(); },
     }
 }
 /**
@@ -2490,6 +2670,22 @@ export function deserializeIntoSearchPreDbByVideoResponse(searchPreDbByVideoResp
     return {
         "items": n => { searchPreDbByVideoResponse.items = n.getCollectionOfObjectValues<PreDbVideoGroupDto>(createPreDbVideoGroupDtoFromDiscriminatorValue); },
         "totalGroups": n => { searchPreDbByVideoResponse.totalGroups = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param SiteIgnoredProblemDetails The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSiteIgnoredProblemDetails(siteIgnoredProblemDetails: Partial<SiteIgnoredProblemDetails> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "code": n => { siteIgnoredProblemDetails.code = n.getStringValue(); },
+        "detail": n => { siteIgnoredProblemDetails.detail = n.getStringValue(); },
+        "instance": n => { siteIgnoredProblemDetails.instance = n.getStringValue(); },
+        "status": n => { siteIgnoredProblemDetails.status = n.getNumberValue(); },
+        "title": n => { siteIgnoredProblemDetails.title = n.getStringValue(); },
+        "type": n => { siteIgnoredProblemDetails.type = n.getStringValue(); },
     }
 }
 /**
@@ -3486,6 +3682,31 @@ export interface GetHealthResponse extends AdditionalDataHolder, Parsable {
     timestamp?: Date | null;
 }
 /**
+ * Paged delta feed of ignored site changes ordered by updated timestamp and ID.
+ */
+export interface GetIgnoredSiteChangesResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The hasMore property
+     */
+    hasMore?: boolean | null;
+    /**
+     * The items property
+     */
+    items?: IgnoredSiteChangeDto[] | null;
+    /**
+     * Seek cursor for continuing a ignored site change feed.
+     */
+    nextCursor?: IgnoredSiteChangesCursorDto | null;
+    /**
+     * The pageSize property
+     */
+    pageSize?: number | null;
+    /**
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     */
+    serverTimeUtc?: Date | null;
+}
+/**
  * Current rate limit status for the authenticated user.
  */
 export interface GetRateLimitResponse extends AdditionalDataHolder, Parsable {
@@ -3722,6 +3943,115 @@ export interface IdentifyVideosResponse extends AdditionalDataHolder, Parsable {
      */
     results?: IdentifyVideoResultDto[] | null;
 }
+/**
+ * A single changed ignored site row in the incremental feed.
+ */
+export interface IgnoredSiteChangeDto extends AdditionalDataHolder, Parsable {
+    /**
+     * One of `created`, `updated`, or `deleted`.
+     */
+    eventType?: string | null;
+    /**
+     * Current-state payload for an ignored site row in the incremental feed.
+     */
+    ignoredSite?: IgnoredSiteChangeIgnoredSiteDto | null;
+}
+/**
+ * Current-state payload for an ignored site row in the incremental feed.
+ */
+export interface IgnoredSiteChangeIgnoredSiteDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The deletedAtUtc property
+     */
+    deletedAtUtc?: Date | null;
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The ignoredAtUtc property
+     */
+    ignoredAtUtc?: Date | null;
+    /**
+     * The isDeleted property
+     */
+    isDeleted?: boolean | null;
+    /**
+     * The networkId property
+     */
+    networkId?: Guid | null;
+    /**
+     * The networkTitle property
+     */
+    networkTitle?: string | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
+    /**
+     * The url property
+     */
+    url?: string | null;
+}
+/**
+ * Seek cursor for continuing a ignored site change feed.
+ */
+export interface IgnoredSiteChangesCursorDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
+}
+/**
+ * Summary of a site on the current user's ignore list.
+ */
+export interface IgnoredSiteSummaryDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * UTC timestamp when the user started ignoring this site.
+     */
+    ignoredAtUtc?: Date | null;
+    /**
+     * The networkId property
+     */
+    networkId?: Guid | null;
+    /**
+     * The networkTitle property
+     */
+    networkTitle?: string | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+    /**
+     * The url property
+     */
+    url?: string | null;
+}
+/**
+ * What ignoring the site removed from the user's lists.
+ */
+export interface IgnoreSiteResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * Whether the site was removed from the user's favorite sites.
+     */
+    favoriteRemoved?: boolean | null;
+    /**
+     * How many wanted-list entries for videos of the site were removed, fulfilled ones included.
+     */
+    wantedRemovedCount?: number | null;
+}
 export interface LatestPreDbItemDto extends AdditionalDataHolder, Parsable {
     /**
      * The createdAtUtc property
@@ -3910,6 +4240,39 @@ export interface ListFavoriteSitesResponse extends AdditionalDataHolder, Parsabl
     sortDirection?: string | null;
     /**
      * Total number of favorite sites matching the current query filters.
+     */
+    totalCount?: number | null;
+    /**
+     * Total number of pages.
+     */
+    totalPages?: number | null;
+}
+/**
+ * Paged list of the sites the current user ignores.
+ */
+export interface ListIgnoredSitesResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * Ignored site entries on the current page.
+     */
+    items?: IgnoredSiteSummaryDto[] | null;
+    /**
+     * Current page number (1-based).
+     */
+    page?: number | null;
+    /**
+     * Number of items per page.
+     */
+    pageSize?: number | null;
+    /**
+     * Field the results are sorted by.
+     */
+    sortBy?: string | null;
+    /**
+     * Sort direction applied: `asc` or `desc`.
+     */
+    sortDirection?: string | null;
+    /**
+     * Total number of ignored sites matching the current query filters.
      */
     totalCount?: number | null;
     /**
@@ -4502,6 +4865,7 @@ export function serializeAddWantedVideosBatchResponse(writer: SerializationWrite
     if (!addWantedVideosBatchResponse || isSerializingDerivedType) { return; }
     writer.writeNumberValue("added", addWantedVideosBatchResponse.added);
     writer.writeNumberValue("alreadyExisted", addWantedVideosBatchResponse.alreadyExisted);
+    writer.writeNumberValue("ignoredSite", addWantedVideosBatchResponse.ignoredSite);
     writer.writeNumberValue("notFound", addWantedVideosBatchResponse.notFound);
     writer.writeAdditionalData(addWantedVideosBatchResponse.additionalData);
 }
@@ -4764,6 +5128,22 @@ export function serializeGetHealthResponse(writer: SerializationWriter, getHealt
 }
 /**
  * Serializes information the current object
+ * @param GetIgnoredSiteChangesResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeGetIgnoredSiteChangesResponse(writer: SerializationWriter, getIgnoredSiteChangesResponse: Partial<GetIgnoredSiteChangesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!getIgnoredSiteChangesResponse || isSerializingDerivedType) { return; }
+    writer.writeBooleanValue("hasMore", getIgnoredSiteChangesResponse.hasMore);
+    writer.writeCollectionOfObjectValues<IgnoredSiteChangeDto>("items", getIgnoredSiteChangesResponse.items, serializeIgnoredSiteChangeDto);
+    writer.writeObjectValue<IgnoredSiteChangesCursorDto>("nextCursor", getIgnoredSiteChangesResponse.nextCursor, serializeIgnoredSiteChangesCursorDto);
+    writer.writeNumberValue("pageSize", getIgnoredSiteChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getIgnoredSiteChangesResponse.serverTimeUtc);
+    writer.writeAdditionalData(getIgnoredSiteChangesResponse.additionalData);
+}
+/**
+ * Serializes information the current object
  * @param GetRateLimitResponse The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -4953,6 +5333,82 @@ export function serializeIdentifyVideosResponse(writer: SerializationWriter, ide
 }
 /**
  * Serializes information the current object
+ * @param IgnoredSiteChangeDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIgnoredSiteChangeDto(writer: SerializationWriter, ignoredSiteChangeDto: Partial<IgnoredSiteChangeDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ignoredSiteChangeDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("eventType", ignoredSiteChangeDto.eventType);
+    writer.writeObjectValue<IgnoredSiteChangeIgnoredSiteDto>("ignoredSite", ignoredSiteChangeDto.ignoredSite, serializeIgnoredSiteChangeIgnoredSiteDto);
+    writer.writeAdditionalData(ignoredSiteChangeDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IgnoredSiteChangeIgnoredSiteDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIgnoredSiteChangeIgnoredSiteDto(writer: SerializationWriter, ignoredSiteChangeIgnoredSiteDto: Partial<IgnoredSiteChangeIgnoredSiteDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ignoredSiteChangeIgnoredSiteDto || isSerializingDerivedType) { return; }
+    writer.writeDateValue("deletedAtUtc", ignoredSiteChangeIgnoredSiteDto.deletedAtUtc);
+    writer.writeGuidValue("id", ignoredSiteChangeIgnoredSiteDto.id);
+    writer.writeDateValue("ignoredAtUtc", ignoredSiteChangeIgnoredSiteDto.ignoredAtUtc);
+    writer.writeBooleanValue("isDeleted", ignoredSiteChangeIgnoredSiteDto.isDeleted);
+    writer.writeGuidValue("networkId", ignoredSiteChangeIgnoredSiteDto.networkId);
+    writer.writeStringValue("networkTitle", ignoredSiteChangeIgnoredSiteDto.networkTitle);
+    writer.writeStringValue("title", ignoredSiteChangeIgnoredSiteDto.title);
+    writer.writeDateValue("updatedAtUtc", ignoredSiteChangeIgnoredSiteDto.updatedAtUtc);
+    writer.writeStringValue("url", ignoredSiteChangeIgnoredSiteDto.url);
+    writer.writeAdditionalData(ignoredSiteChangeIgnoredSiteDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IgnoredSiteChangesCursorDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIgnoredSiteChangesCursorDto(writer: SerializationWriter, ignoredSiteChangesCursorDto: Partial<IgnoredSiteChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ignoredSiteChangesCursorDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", ignoredSiteChangesCursorDto.id);
+    writer.writeDateValue("updatedAtUtc", ignoredSiteChangesCursorDto.updatedAtUtc);
+    writer.writeAdditionalData(ignoredSiteChangesCursorDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IgnoredSiteSummaryDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIgnoredSiteSummaryDto(writer: SerializationWriter, ignoredSiteSummaryDto: Partial<IgnoredSiteSummaryDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ignoredSiteSummaryDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", ignoredSiteSummaryDto.id);
+    writer.writeDateValue("ignoredAtUtc", ignoredSiteSummaryDto.ignoredAtUtc);
+    writer.writeGuidValue("networkId", ignoredSiteSummaryDto.networkId);
+    writer.writeStringValue("networkTitle", ignoredSiteSummaryDto.networkTitle);
+    writer.writeStringValue("title", ignoredSiteSummaryDto.title);
+    writer.writeStringValue("url", ignoredSiteSummaryDto.url);
+    writer.writeAdditionalData(ignoredSiteSummaryDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IgnoreSiteResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIgnoreSiteResponse(writer: SerializationWriter, ignoreSiteResponse: Partial<IgnoreSiteResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ignoreSiteResponse || isSerializingDerivedType) { return; }
+    writer.writeBooleanValue("favoriteRemoved", ignoreSiteResponse.favoriteRemoved);
+    writer.writeNumberValue("wantedRemovedCount", ignoreSiteResponse.wantedRemovedCount);
+    writer.writeAdditionalData(ignoreSiteResponse.additionalData);
+}
+/**
+ * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param LatestPreDbItemDto The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
@@ -5079,6 +5535,24 @@ export function serializeListFavoriteSitesResponse(writer: SerializationWriter, 
     writer.writeNumberValue("totalCount", listFavoriteSitesResponse.totalCount);
     writer.writeNumberValue("totalPages", listFavoriteSitesResponse.totalPages);
     writer.writeAdditionalData(listFavoriteSitesResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ListIgnoredSitesResponse The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeListIgnoredSitesResponse(writer: SerializationWriter, listIgnoredSitesResponse: Partial<ListIgnoredSitesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!listIgnoredSitesResponse || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<IgnoredSiteSummaryDto>("items", listIgnoredSitesResponse.items, serializeIgnoredSiteSummaryDto);
+    writer.writeNumberValue("page", listIgnoredSitesResponse.page);
+    writer.writeNumberValue("pageSize", listIgnoredSitesResponse.pageSize);
+    writer.writeStringValue("sortBy", listIgnoredSitesResponse.sortBy);
+    writer.writeStringValue("sortDirection", listIgnoredSitesResponse.sortDirection);
+    writer.writeNumberValue("totalCount", listIgnoredSitesResponse.totalCount);
+    writer.writeNumberValue("totalPages", listIgnoredSitesResponse.totalPages);
+    writer.writeAdditionalData(listIgnoredSitesResponse.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5295,6 +5769,23 @@ export function serializeSearchPreDbByVideoResponse(writer: SerializationWriter,
     writer.writeCollectionOfObjectValues<PreDbVideoGroupDto>("items", searchPreDbByVideoResponse.items, serializePreDbVideoGroupDto);
     writer.writeNumberValue("totalGroups", searchPreDbByVideoResponse.totalGroups);
     writer.writeAdditionalData(searchPreDbByVideoResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SiteIgnoredProblemDetails The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSiteIgnoredProblemDetails(writer: SerializationWriter, siteIgnoredProblemDetails: Partial<SiteIgnoredProblemDetails> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!siteIgnoredProblemDetails || isSerializingDerivedType) { return; }
+    writer.writeStringValue("code", siteIgnoredProblemDetails.code);
+    writer.writeStringValue("detail", siteIgnoredProblemDetails.detail);
+    writer.writeStringValue("instance", siteIgnoredProblemDetails.instance);
+    writer.writeNumberValue("status", siteIgnoredProblemDetails.status);
+    writer.writeStringValue("title", siteIgnoredProblemDetails.title);
+    writer.writeStringValue("type", siteIgnoredProblemDetails.type);
+    writer.writeAdditionalData(siteIgnoredProblemDetails.additionalData);
 }
 /**
  * Serializes information the current object
@@ -5963,6 +6454,35 @@ export function serializeWantedVideoSummaryDto(writer: SerializationWriter, want
     writer.writeDateOnlyValue("videoReleaseDate", wantedVideoSummaryDto.videoReleaseDate);
     writer.writeStringValue("videoTitle", wantedVideoSummaryDto.videoTitle);
     writer.writeAdditionalData(wantedVideoSummaryDto.additionalData);
+}
+/**
+ * Problem response returned when a favorite or wanted-list write involves a site the userignores. The string SiteIgnoredProblemDetails.Code `site_ignored` tells it apart from the other 409s thoseendpoints return, such as `wanted_video_limit_exceeded`.
+ */
+export interface SiteIgnoredProblemDetails extends AdditionalDataHolder, ApiError, Parsable {
+    /**
+     * Stable machine-readable error code: always `site_ignored`.
+     */
+    code?: string | null;
+    /**
+     * The detail property
+     */
+    detail?: string | null;
+    /**
+     * The instance property
+     */
+    instance?: string | null;
+    /**
+     * The status property
+     */
+    status?: number | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+    /**
+     * The type property
+     */
+    type?: string | null;
 }
 /**
  * An additional link belonging to a Site.
