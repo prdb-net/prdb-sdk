@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.15.0] - 2026-09-26
+
 ### Added
 
 - **Sites can now be ignored.** The new `IgnoredSites` resource keeps a
