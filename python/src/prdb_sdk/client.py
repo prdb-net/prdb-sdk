@@ -187,6 +187,21 @@ def _read_rate_limit_window(
     )
 
 
+#: Where kiota-http 1.14 and later keep a request's options. Earlier versions set
+#: them as a ``request.options`` attribute instead.
+_REQUEST_OPTIONS_EXTENSION = "kiota_request_options"
+
+
+def _request_options(request: httpx.Request) -> dict:
+    """The Kiota options a request carries, whichever kiota-http placed them."""
+    extensions = getattr(request, "extensions", None)
+    if isinstance(extensions, dict):
+        options = extensions.get(_REQUEST_OPTIONS_EXTENSION)
+        if options:
+            return options
+    return getattr(request, "options", None) or {}
+
+
 class _ResponseMetadataHandler(BaseMiddleware):
     """Records response metadata into the options a request carries.
 
@@ -201,7 +216,7 @@ class _ResponseMetadataHandler(BaseMiddleware):
         # Read before sending: the innermost middleware strips the options off
         # the request on its way to the transport, so afterwards there is
         # nothing left to look them up in.
-        options = getattr(request, "options", None) or {}
+        options = _request_options(request)
         status_option = options.get(ResponseStatusOption.get_key())
         rate_limit_option = options.get(RateLimitOption.get_key())
 

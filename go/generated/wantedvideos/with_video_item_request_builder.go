@@ -50,7 +50,7 @@ func (m *WithVideoItemRequestBuilder) Delete(ctx context.Context, requestConfigu
     }
     return nil
 }
-// Post adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
+// Post adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit (code wanted_video_limit_exceeded) or the user ignores the video's site (code site_ignored, a problem body without the quota fields). Requires API key authentication.
 // returns a ProblemDetails error when the service returns a 401 status code
 // returns a ProblemDetails error when the service returns a 403 status code
 // returns a ProblemDetails error when the service returns a 404 status code
@@ -114,7 +114,7 @@ func (m *WithVideoItemRequestBuilder) ToDeleteRequestInformation(ctx context.Con
     requestInfo.Headers.TryAdd("Accept", "application/json")
     return requestInfo, nil
 }
-// ToPostRequestInformation adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
+// ToPostRequestInformation adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit (code wanted_video_limit_exceeded) or the user ignores the video's site (code site_ignored, a problem body without the quota fields). Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *WithVideoItemRequestBuilder) ToPostRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.POST, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

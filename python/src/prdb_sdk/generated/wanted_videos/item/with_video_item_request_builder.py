@@ -57,7 +57,7 @@ class WithVideoItemRequestBuilder(BaseRequestBuilder):
     
     async def post(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> None:
         """
-        Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
+        Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit (code wanted_video_limit_exceeded) or the user ignores the video's site (code site_ignored, a problem body without the quota fields). Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: None
         """
@@ -121,7 +121,7 @@ class WithVideoItemRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.
+        Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit (code wanted_video_limit_exceeded) or the user ignores the video's site (code site_ignored, a problem body without the quota fields). Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """

@@ -19,6 +19,8 @@ namespace Prdb.Sdk.Generated.Models
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>Number of entries that were already on the wanted list.</summary>
         public int? AlreadyExisted { get; set; }
+        /// <summary>Number of videos skipped because the user ignores their site.</summary>
+        public int? IgnoredSite { get; set; }
         /// <summary>Number of video IDs that were not found in the database.</summary>
         public int? NotFound { get; set; }
         /// <summary>
@@ -48,6 +50,7 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "added", n => { Added = n.GetIntValue(); } },
                 { "alreadyExisted", n => { AlreadyExisted = n.GetIntValue(); } },
+                { "ignoredSite", n => { IgnoredSite = n.GetIntValue(); } },
                 { "notFound", n => { NotFound = n.GetIntValue(); } },
             };
         }
@@ -60,6 +63,7 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteIntValue("added", Added);
             writer.WriteIntValue("alreadyExisted", AlreadyExisted);
+            writer.WriteIntValue("ignoredSite", IgnoredSite);
             writer.WriteIntValue("notFound", NotFound);
             writer.WriteAdditionalData(AdditionalData);
         }

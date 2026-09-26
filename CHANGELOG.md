@@ -15,6 +15,36 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **Sites can now be ignored.** The new `IgnoredSites` resource keeps a
+  per-user ignore list: `ListIgnoredSites` (`GET /ignored-sites`, paged and
+  sortable by `ignoredAtUtc` or `title`), `GetIgnoredSiteChanges`
+  (`GET /ignored-sites/changes`, a cursor feed shaped like the other change
+  feeds), `IgnoreSite` (`POST /ignored-sites/{siteId}`) and `UnignoreSite`
+  (`DELETE /ignored-sites/{siteId}`, idempotent). Ignoring a site also removes
+  it from the user's favorite sites and removes every wanted-list entry for its
+  videos, fulfilled ones included; `IgnoreSiteResponse` reports what went
+  (`favoriteRemoved`, `wantedRemovedCount`). Unignoring restores none of it.
+
+- **Favorite and wanted-list writes can be refused for an ignored site.**
+  `AddFavoriteSite` now declares a `409` with the new `SiteIgnoredProblemDetails`
+  (`code: "site_ignored"`). `AddWantedVideo` can return the same `409`, but its
+  declared schema stays `WantedVideoLimitProblemDetails`, so branch on `code` to
+  tell `site_ignored` from `wanted_video_limit_exceeded`.
+
+- **`AddWantedVideosBatchResponse` gains a required `ignoredSite` count.** Videos
+  of an ignored site are skipped by the batch endpoint rather than failing it,
+  and are counted there.
+
+### Fixed
+
+- **Python: `ResponseStatusOption` and `RateLimitOption` stay empty with
+  kiota-http 1.14.** That release moved a request's options from
+  `request.options` into `request.extensions`, so the SDK's middleware no longer
+  found them and `status_code`, `hour` and `month` were left `None`. It now reads
+  both places, and works with every kiota-http the package accepts.
+
 ## [0.14.0] - 2026-09-04
 
 ### Added

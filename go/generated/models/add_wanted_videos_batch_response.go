@@ -15,6 +15,8 @@ type AddWantedVideosBatchResponse struct {
     additionalData map[string]any
     // Number of entries that were already on the wanted list.
     alreadyExisted *int32
+    // Number of videos skipped because the user ignores their site.
+    ignoredSite *int32
     // Number of video IDs that were not found in the database.
     notFound *int32
 }
@@ -69,6 +71,16 @@ func (m *AddWantedVideosBatchResponse) GetFieldDeserializers()(map[string]func(i
         }
         return nil
     }
+    res["ignoredSite"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt32Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetIgnoredSite(val)
+        }
+        return nil
+    }
     res["notFound"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetInt32Value()
         if err != nil {
@@ -80,6 +92,11 @@ func (m *AddWantedVideosBatchResponse) GetFieldDeserializers()(map[string]func(i
         return nil
     }
     return res
+}
+// GetIgnoredSite gets the ignoredSite property value. Number of videos skipped because the user ignores their site.
+// returns a *int32 when successful
+func (m *AddWantedVideosBatchResponse) GetIgnoredSite()(*int32) {
+    return m.ignoredSite
 }
 // GetNotFound gets the notFound property value. Number of video IDs that were not found in the database.
 // returns a *int32 when successful
@@ -96,6 +113,12 @@ func (m *AddWantedVideosBatchResponse) Serialize(writer i878a80d2330e89d26896388
     }
     {
         err := writer.WriteInt32Value("alreadyExisted", m.GetAlreadyExisted())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteInt32Value("ignoredSite", m.GetIgnoredSite())
         if err != nil {
             return err
         }
@@ -126,6 +149,10 @@ func (m *AddWantedVideosBatchResponse) SetAdditionalData(value map[string]any)()
 func (m *AddWantedVideosBatchResponse) SetAlreadyExisted(value *int32)() {
     m.alreadyExisted = value
 }
+// SetIgnoredSite sets the ignoredSite property value. Number of videos skipped because the user ignores their site.
+func (m *AddWantedVideosBatchResponse) SetIgnoredSite(value *int32)() {
+    m.ignoredSite = value
+}
 // SetNotFound sets the notFound property value. Number of video IDs that were not found in the database.
 func (m *AddWantedVideosBatchResponse) SetNotFound(value *int32)() {
     m.notFound = value
@@ -135,8 +162,10 @@ type AddWantedVideosBatchResponseable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetAdded()(*int32)
     GetAlreadyExisted()(*int32)
+    GetIgnoredSite()(*int32)
     GetNotFound()(*int32)
     SetAdded(value *int32)()
     SetAlreadyExisted(value *int32)()
+    SetIgnoredSite(value *int32)()
     SetNotFound(value *int32)()
 }

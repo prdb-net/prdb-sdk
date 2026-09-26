@@ -232,7 +232,7 @@
           "WantedVideos"
         ],
         "summary": "Add a wanted video",
-        "description": "Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit. Requires API key authentication.",
+        "description": "Adds the specified video to the wanted list for the currently authenticated user. Returns 204 if added or already on the wanted list, 404 if the video does not exist, and 409 if adding it would exceed the current wanted video limit (code wanted_video_limit_exceeded) or the user ignores the video's site (code site_ignored, a problem body without the quota fields). Requires API key authentication.",
         "operationId": "AddWantedVideo",
         "parameters": [
           {
@@ -730,7 +730,7 @@
           "WantedVideos"
         ],
         "summary": "Batch add wanted videos",
-        "description": "Adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. The batch is rejected without changes if all valid new entries would exceed the current wanted video limit. Returns counts of added, already-existed, and not-found entries. Requires API key authentication.",
+        "description": "Adds up to 50 videos to the wanted list for the currently authenticated user in a single request. Videos already on the wanted list are silently skipped. Unknown video IDs are silently omitted. Videos of sites the user ignores are skipped and counted in ignoredSite. The batch is rejected without changes if all valid new entries would exceed the current wanted video limit. Returns counts of added, already-existed, not-found and ignored-site entries. Requires API key authentication.",
         "operationId": "AddWantedVideosBatch",
         "requestBody": {
           "content": {
@@ -3756,6 +3756,438 @@
         ]
       }
     },
+    "/ignored-sites/{siteId}": {
+      "delete": {
+        "tags": [
+          "IgnoredSites"
+        ],
+        "summary": "Stop ignoring a site",
+        "description": "Removes the specified site from the currently authenticated user's ignore list. Favorites and wanted-list entries removed when the site was ignored are not restored. Idempotent: returns 204 whether or not the site was ignored. Requires API key authentication.",
+        "operationId": "UnignoreSite",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "IgnoredSites"
+        ],
+        "summary": "Ignore a site",
+        "description": "Adds the specified site to the currently authenticated user's ignore list and, in the same step, removes it from the user's favorite sites and removes every wanted-list entry for its videos, fulfilled ones included. Both removals appear in the favorite-sites and wanted-videos change feeds as deletions. Removing the ignore later restores none of them. Idempotent: ignoring an ignored site removes nothing further. Returns 404 if the site does not exist. Requires API key authentication.",
+        "operationId": "IgnoreSite",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IgnoreSiteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
+    "/ignored-sites": {
+      "get": {
+        "tags": [
+          "IgnoredSites"
+        ],
+        "summary": "List ignored sites",
+        "description": "Returns a paged, sortable list of the sites the currently authenticated user ignores. Videos of an ignored site are hidden from that user in the prdb web app. Supports filtering by search term. Requires API key authentication.",
+        "operationId": "ListIgnoredSites",
+        "parameters": [
+          {
+            "name": "Page",
+            "in": "query",
+            "description": "1-based page number. Defaults to 1.",
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 500.",
+            "schema": {
+              "maximum": 500,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "description": "Field to sort by. Supported values: `ignoredAtUtc`, `title`. Defaults to `ignoredAtUtc`.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortDirection",
+            "in": "query",
+            "description": "Sort direction: `asc` or `desc`. Defaults to `desc`.",
+            "schema": {
+              "pattern": "^(?i)(asc|desc)$",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string",
+              "description": "Allowed values: asc, desc."
+            }
+          },
+          {
+            "name": "Search",
+            "in": "query",
+            "description": "Optional search term matched against site title.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListIgnoredSitesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
+    "/ignored-sites/changes": {
+      "get": {
+        "tags": [
+          "IgnoredSites"
+        ],
+        "summary": "Get incremental ignored site changes",
+        "description": "Returns a seek-paged delta feed of ignored site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "operationId": "GetIgnoredSiteChanges",
+        "parameters": [
+          {
+            "name": "Since",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "SinceId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetIgnoredSiteChangesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
     "/health": {
       "get": {
         "tags": [
@@ -3876,7 +4308,7 @@
           "FavoriteSites"
         ],
         "summary": "Add a favorite site",
-        "description": "Marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Requires API key authentication.",
+        "description": "Marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Returns 409 with code site_ignored if the user ignores the site. Requires API key authentication.",
         "operationId": "AddFavoriteSite",
         "parameters": [
           {
@@ -3912,6 +4344,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SiteIgnoredProblemDetails"
                 }
               }
             }
@@ -5818,7 +6260,8 @@
         "required": [
           "added",
           "alreadyExisted",
-          "notFound"
+          "notFound",
+          "ignoredSite"
         ],
         "type": "object",
         "properties": {
@@ -5835,6 +6278,11 @@
           "notFound": {
             "type": "integer",
             "description": "Number of video IDs that were not found in the database.",
+            "format": "int32"
+          },
+          "ignoredSite": {
+            "type": "integer",
+            "description": "Number of videos skipped because the user ignores their site.",
             "format": "int32"
           }
         },
@@ -6444,6 +6892,45 @@
         },
         "description": "Health check response."
       },
+      "GetIgnoredSiteChangesResponse": {
+        "required": [
+          "items",
+          "pageSize",
+          "hasMore",
+          "serverTimeUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IgnoredSiteChangeDto"
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "serverTimeUtc": {
+            "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "format": "date-time"
+          },
+          "nextCursor": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IgnoredSiteChangesCursorDto"
+              }
+            ],
+            "description": "Seek cursor for continuing a ignored site change feed.",
+            "nullable": true
+          }
+        },
+        "description": "Paged delta feed of ignored site changes ordered by updated timestamp and ID."
+      },
       "GetRateLimitResponse": {
         "required": [
           "isEnforced",
@@ -6885,6 +7372,145 @@
         "type": "string",
         "format": "binary"
       },
+      "IgnoredSiteChangeDto": {
+        "required": [
+          "eventType",
+          "ignoredSite"
+        ],
+        "type": "object",
+        "properties": {
+          "eventType": {
+            "type": "string",
+            "description": "One of `created`, `updated`, or `deleted`."
+          },
+          "ignoredSite": {
+            "$ref": "#/components/schemas/IgnoredSiteChangeIgnoredSiteDto"
+          }
+        },
+        "description": "A single changed ignored site row in the incremental feed."
+      },
+      "IgnoredSiteChangeIgnoredSiteDto": {
+        "required": [
+          "id",
+          "title",
+          "url",
+          "isDeleted",
+          "ignoredAtUtc",
+          "updatedAtUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "networkId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "networkTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "deletedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ignoredAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Current-state payload for an ignored site row in the incremental feed."
+      },
+      "IgnoredSiteChangesCursorDto": {
+        "required": [
+          "updatedAtUtc",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "description": "Seek cursor for continuing a ignored site change feed."
+      },
+      "IgnoredSiteSummaryDto": {
+        "required": [
+          "id",
+          "title",
+          "url",
+          "ignoredAtUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "networkId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "networkTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "ignoredAtUtc": {
+            "type": "string",
+            "description": "UTC timestamp when the user started ignoring this site.",
+            "format": "date-time"
+          }
+        },
+        "description": "Summary of a site on the current user's ignore list."
+      },
+      "IgnoreSiteResponse": {
+        "required": [
+          "favoriteRemoved",
+          "wantedRemovedCount"
+        ],
+        "type": "object",
+        "properties": {
+          "favoriteRemoved": {
+            "type": "boolean",
+            "description": "Whether the site was removed from the user's favorite sites."
+          },
+          "wantedRemovedCount": {
+            "type": "integer",
+            "description": "How many wanted-list entries for videos of the site were removed, fulfilled ones included.",
+            "format": "int32"
+          }
+        },
+        "description": "What ignoring the site removed from the user's lists."
+      },
       "LatestPreDbItemDto": {
         "required": [
           "id",
@@ -7180,6 +7806,56 @@
           }
         },
         "description": "Paged list of the current user's favorite sites."
+      },
+      "ListIgnoredSitesResponse": {
+        "required": [
+          "items",
+          "totalCount",
+          "page",
+          "pageSize",
+          "totalPages",
+          "sortBy",
+          "sortDirection"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IgnoredSiteSummaryDto"
+            },
+            "description": "Ignored site entries on the current page."
+          },
+          "totalCount": {
+            "type": "integer",
+            "description": "Total number of ignored sites matching the current query filters.",
+            "format": "int32"
+          },
+          "page": {
+            "type": "integer",
+            "description": "Current page number (1-based).",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Number of items per page.",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "description": "Total number of pages.",
+            "format": "int32"
+          },
+          "sortBy": {
+            "type": "string",
+            "description": "Field the results are sorted by."
+          },
+          "sortDirection": {
+            "type": "string",
+            "description": "Sort direction applied: `asc` or `desc`."
+          }
+        },
+        "description": "Paged list of the sites the current user ignores."
       },
       "ListPreDbResponse": {
         "required": [
@@ -7850,6 +8526,40 @@
             "format": "int32"
           }
         }
+      },
+      "SiteIgnoredProblemDetails": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "description": "Stable machine-readable error code: always `site_ignored`."
+          }
+        },
+        "description": "Problem response returned when a favorite or wanted-list write involves a site the user\nignores. The string SiteIgnoredProblemDetails.Code `site_ignored` tells it apart from the other 409s those\nendpoints return, such as `wanted_video_limit_exceeded`."
       },
       "SiteLinkDto": {
         "required": [
@@ -9522,6 +10232,10 @@
     {
       "name": "FavoriteSites",
       "description": "The favorite sites of the user behind the calling API key."
+    },
+    {
+      "name": "IgnoredSites",
+      "description": "The sites the user behind the calling API key ignores. Ignoring a site removes it from the favorite sites and its videos from the wanted list, and blocks adding either back until the ignore is removed."
     },
     {
       "name": "WantedVideos",

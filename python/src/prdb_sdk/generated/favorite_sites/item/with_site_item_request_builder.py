@@ -15,6 +15,7 @@ from warnings import warn
 
 if TYPE_CHECKING:
     from ...models.problem_details import ProblemDetails
+    from ...models.site_ignored_problem_details import SiteIgnoredProblemDetails
 
 class WithSiteItemRequestBuilder(BaseRequestBuilder):
     """
@@ -39,6 +40,7 @@ class WithSiteItemRequestBuilder(BaseRequestBuilder):
             request_configuration
         )
         from ...models.problem_details import ProblemDetails
+        from ...models.site_ignored_problem_details import SiteIgnoredProblemDetails
 
         error_mapping: dict[str, type[ParsableFactory]] = {
             "401": ProblemDetails,
@@ -53,7 +55,7 @@ class WithSiteItemRequestBuilder(BaseRequestBuilder):
     
     async def post(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> None:
         """
-        Marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Requires API key authentication.
+        Marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Returns 409 with code site_ignored if the user ignores the site. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: None
         """
@@ -61,11 +63,13 @@ class WithSiteItemRequestBuilder(BaseRequestBuilder):
             request_configuration
         )
         from ...models.problem_details import ProblemDetails
+        from ...models.site_ignored_problem_details import SiteIgnoredProblemDetails
 
         error_mapping: dict[str, type[ParsableFactory]] = {
             "401": ProblemDetails,
             "403": ProblemDetails,
             "404": ProblemDetails,
+            "409": SiteIgnoredProblemDetails,
             "429": ProblemDetails,
             "503": ProblemDetails,
         }
@@ -86,7 +90,7 @@ class WithSiteItemRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Requires API key authentication.
+        Marks the specified site as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the site does not exist. Returns 409 with code site_ignored if the user ignores the site. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
