@@ -4,7 +4,7 @@ Official client libraries for the [prdb Public API](https://apidocs.prdb.net/),
 in Python, TypeScript, Go and C#.
 
 All four are generated with [Kiota](https://learn.microsoft.com/openapi/kiota/)
-from the API's own OpenAPI document, so every language exposes the same 53
+from the API's own OpenAPI document, so every language exposes the same 50
 operations with the same shapes. The generated code is committed, so you can
 read it here on GitHub and build the SDKs without installing a generator.
 
@@ -102,6 +102,11 @@ state of rows changed since a cursor, including soft-deleted rows as tombstones,
 rather than a full history of every mutation — which makes them the right tool
 for keeping a local copy in sync. All of them page the same way, so one cursor
 loop drives any of them.
+
+`GET /videos/changes` and `GET /sites/changes` include current catalogue
+content and minimal deletion tombstones. They support a full baseline and
+include edits to nested content. See [Catalogue synchronization](docs/catalog-sync.md)
+for cursor handling and the request builders in each language.
 
 `GET /videos/images/changes` is the exception to the tombstones: those rows are
 hard deleted, so its `eventType` is only ever `created` or `updated`, and a

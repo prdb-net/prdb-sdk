@@ -4,13 +4,19 @@
 // @ts-ignore
 import { createListSitesResponseFromDiscriminatorValue, createProblemDetailsFromDiscriminatorValue, type ListSitesResponse, type ProblemDetails } from '../models/index.js';
 // @ts-ignore
-import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
+import { ChangesRequestBuilderRequestsMetadata, type ChangesRequestBuilder } from './changes/index.js';
+// @ts-ignore
+import { type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
 
 export type GetSortDirectionQueryParameterType = (typeof GetSortDirectionQueryParameterTypeObject)[keyof typeof GetSortDirectionQueryParameterTypeObject];
 /**
  * Builds and executes requests for operations under /sites
  */
 export interface SitesRequestBuilder extends BaseRequestBuilder<SitesRequestBuilder> {
+    /**
+     * The changes property
+     */
+    get changes(): ChangesRequestBuilder;
     /**
      * Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
@@ -74,6 +80,14 @@ const SitesRequestBuilderGetQueryParametersMapper: Record<string, string> = {
     "search": "Search",
     "sortBy": "SortBy",
     "sortDirection": "SortDirection",
+};
+/**
+ * Metadata for all the navigation properties in the request builder.
+ */
+export const SitesRequestBuilderNavigationMetadata: Record<Exclude<keyof SitesRequestBuilder, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
+    changes: {
+        requestsMetadata: ChangesRequestBuilderRequestsMetadata,
+    },
 };
 /**
  * Metadata for all the requests in the request builder.
