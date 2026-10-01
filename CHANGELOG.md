@@ -15,6 +15,21 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.16.0] - 2026-10-01
+
+### Added
+
+- **Video and Site catalogue change feeds.** `GET /videos/changes`
+  (`GetVideoChanges`) and `GET /sites/changes` (`GetSiteChanges`) expose current
+  catalogue content and minimal deletion tombstones in all four SDKs. Video
+  items include the current detail payload and `mergedIntoId` for merge
+  deletions; Site items include current network and link content. Both feeds
+  support a full baseline with `Since=0001-01-01T00:00:00Z`, accept `SinceId`
+  and `PageSize` (1–1000), and return `hasMore`, `serverTimeUtc` and a nullable
+  `nextCursor`. Tombstones are retained indefinitely, with a guaranteed minimum
+  of 90 days. See [Catalogue synchronization](docs/catalog-sync.md) for paging
+  and deletion handling.
+
 ## [0.15.0] - 2026-09-26
 
 ### Added
