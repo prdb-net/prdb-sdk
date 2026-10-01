@@ -30,6 +30,16 @@ changed type is, whichever language it landed in.
   of 90 days. See [Catalogue synchronization](docs/catalog-sync.md) for paging
   and deletion handling.
 
+### Known limitations
+
+- **Go timestamp query configurations require a raw URL.** The pinned Kiota
+  runtime panics when serializing a typed `Since`. Call the generated change
+  builder's `WithUrl` method with a query encoded using `net/url`, then
+  `Get(ctx, nil)`. This retains typed responses, authentication and redirect
+  protection. The [Go README](go/README.md#catalogue-change-feeds) gives a
+  baseline example; a regression test covers baselines and resumed UUID cursors
+  with fractional seconds. Go remains supported from version 1.23.
+
 ## [0.15.0] - 2026-09-26
 
 ### Added

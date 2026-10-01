@@ -13,6 +13,52 @@ multi-language repository; the package name is `prdb`.
 
 ## Usage
 
+### Catalogue change feeds
+
+For timestamp query parameters, use `WithUrl`: the pinned Kiota Go runtime
+panics when passed a typed `Since` in the generated query configuration. The
+raw URL avoids that bug while retaining typed responses and the wrapper's
+authentication and redirect rules. This baseline example uses the default API
+origin; use your configured origin if it differs.
+
+```go
+package main
+
+import (
+    "context"
+    "log"
+    "net/url"
+
+    prdb "github.com/prdb-net/prdb-sdk/go"
+)
+
+func main() {
+    client, err := prdb.NewClient("...")
+    if err != nil {
+        log.Fatal(err)
+    }
+    query := url.Values{
+        "Since": {"0001-01-01T00:00:00Z"},
+        "PageSize": {"1000"},
+    }
+    page, err := client.Videos().Changes().WithUrl(
+        prdb.DefaultBaseURL + "/videos/changes?" + query.Encode(),
+    ).Get(context.Background(), nil)
+    if err != nil {
+        log.Fatal(err)
+    }
+    log.Printf("received %d changes", len(page.GetItems()))
+}
+```
+
+For Sites, replace `Videos()` and `/videos/changes` with `Sites()` and
+`/sites/changes`. To resume, set `Since` from `nextCursor.updatedAtUtc` and
+`SinceId` from `nextCursor.id`; use `time.RFC3339Nano` when formatting a Go
+timestamp. See [Catalogue synchronization](../docs/catalog-sync.md) for empty
+pages and deletion handling.
+
+### Videos
+
 ```go
 package main
 

@@ -7,7 +7,7 @@ SDK version 0.16.0 adds `GET /videos/changes` (`GetVideoChanges`) and
 |---|---|---|
 | Python | `client.videos.changes.get(...)` | `client.sites.changes.get(...)` |
 | TypeScript | `client.videos.changes.get(...)` | `client.sites.changes.get(...)` |
-| Go | `client.Videos().Changes().Get(ctx, config)` | `client.Sites().Changes().Get(ctx, config)` |
+| Go | `client.Videos().Changes().WithUrl(url).Get(ctx, nil)` | `client.Sites().Changes().WithUrl(url).Get(ctx, nil)` |
 | C# | `client.Videos.Changes.GetAsync(...)` | `client.Sites.Changes.GetAsync(...)` |
 
 ## Starting and continuing a feed
@@ -35,6 +35,21 @@ nullable `nextCursor`. Rows are ordered by `updatedAtUtc`, then UUID.
 
 Use UTC timestamps. In TypeScript, construct the baseline with the full ISO
 string above: the numeric `Date` constructor treats years 0 through 99 specially.
+
+## Go timestamp query parameters
+
+The pinned Go Kiota runtime panics when a generated query configuration contains
+a `time.Time` value. The latest runtime also omits that value from the URL, so
+upgrading it alone does not fix the call. Use the generated builder's `WithUrl`
+method and encode the query with `net/url`, leaving the query configuration nil.
+The response remains typed and the wrapper still applies authentication and its
+redirect rule. See the [Go example](../go/README.md#catalogue-change-feeds).
+
+Keep cursor timestamps as RFC 3339 strings, or format Go times with
+`time.RFC3339Nano`, to preserve fractional seconds. JavaScript `Date` has
+millisecond precision and Python `datetime` has microsecond precision; if a
+server cursor is more precise, retain its original timestamp from the response
+and use the raw-URL request builder for subsequent requests.
 
 ## Payloads and deletions
 
