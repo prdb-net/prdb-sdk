@@ -15,6 +15,31 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.16.0] - 2026-10-01
+
+### Added
+
+- **Video and Site catalogue change feeds.** `GET /videos/changes`
+  (`GetVideoChanges`) and `GET /sites/changes` (`GetSiteChanges`) expose current
+  catalogue content and minimal deletion tombstones in all four SDKs. Video
+  items include the current detail payload and `mergedIntoId` for merge
+  deletions; Site items include current network and link content. Both feeds
+  support a full baseline with `Since=0001-01-01T00:00:00Z`, accept `SinceId`
+  and `PageSize` (1–1000), and return `hasMore`, `serverTimeUtc` and a nullable
+  `nextCursor`. Tombstones are retained indefinitely, with a guaranteed minimum
+  of 90 days. See [Catalogue synchronization](docs/catalog-sync.md) for paging
+  and deletion handling.
+
+### Known limitations
+
+- **Go timestamp query configurations require a raw URL.** The pinned Kiota
+  runtime panics when serializing a typed `Since`. Call the generated change
+  builder's `WithUrl` method with a query encoded using `net/url`, then
+  `Get(ctx, nil)`. This retains typed responses, authentication and redirect
+  protection. The [Go README](go/README.md#catalogue-change-feeds) gives a
+  baseline example; a regression test covers baselines and resumed UUID cursors
+  with fractional seconds. Go remains supported from version 1.23.
+
 ## [0.15.0] - 2026-09-26
 
 ### Added

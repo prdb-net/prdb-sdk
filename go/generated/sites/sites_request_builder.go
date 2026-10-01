@@ -26,6 +26,11 @@ type SitesRequestBuilderGetQueryParameters struct {
     // Sort direction: `asc` (default) or `desc`.
     SortDirection *GetSortDirectionQueryParameterType
 }
+// Changes the changes property
+// returns a *ChangesRequestBuilder when successful
+func (m *SitesRequestBuilder) Changes()(*ChangesRequestBuilder) {
+    return NewChangesRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
 // NewSitesRequestBuilderInternal instantiates a new SitesRequestBuilder and sets the default values.
 func NewSitesRequestBuilderInternal(pathParameters map[string]string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*SitesRequestBuilder) {
     m := &SitesRequestBuilder{

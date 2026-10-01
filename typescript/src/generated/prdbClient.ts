@@ -16,7 +16,7 @@ import { PredbRequestBuilderNavigationMetadata, PredbRequestBuilderRequestsMetad
 // @ts-ignore
 import { RateLimitRequestBuilderRequestsMetadata, type RateLimitRequestBuilder } from './rateLimit/index.js';
 // @ts-ignore
-import { SitesRequestBuilderRequestsMetadata, type SitesRequestBuilder } from './sites/index.js';
+import { SitesRequestBuilderNavigationMetadata, SitesRequestBuilderRequestsMetadata, type SitesRequestBuilder } from './sites/index.js';
 // @ts-ignore
 import { type UserIdentityRequestBuilder, UserIdentityRequestBuilderRequestsMetadata } from './userIdentity/index.js';
 // @ts-ignore
@@ -159,6 +159,7 @@ export const PrdbClientNavigationMetadata: Record<Exclude<keyof PrdbClient, Keys
     },
     sites: {
         requestsMetadata: SitesRequestBuilderRequestsMetadata,
+        navigationMetadata: SitesRequestBuilderNavigationMetadata,
     },
     userIdentity: {
         requestsMetadata: UserIdentityRequestBuilderRequestsMetadata,

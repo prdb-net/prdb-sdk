@@ -838,6 +838,24 @@ export function createGetRateLimitResponseFromDiscriminatorValue(parseNode: Pars
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {GetSiteChangesResponse}
+ */
+// @ts-ignore
+export function createGetSiteChangesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoGetSiteChangesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {GetVideoChangesResponse}
+ */
+// @ts-ignore
+export function createGetVideoChangesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoGetVideoChangesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {GetVideoFilehashChangesResponse}
  */
 // @ts-ignore
@@ -1198,6 +1216,42 @@ export function createSearchPreDbByVideoResponseFromDiscriminatorValue(parseNode
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SiteChangeDto}
+ */
+// @ts-ignore
+export function createSiteChangeDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSiteChangeDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SiteChangeLinkDto}
+ */
+// @ts-ignore
+export function createSiteChangeLinkDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSiteChangeLinkDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SiteChangesCursorDto}
+ */
+// @ts-ignore
+export function createSiteChangesCursorDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSiteChangesCursorDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SiteChangeSiteDto}
+ */
+// @ts-ignore
+export function createSiteChangeSiteDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSiteChangeSiteDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {SiteIgnoredProblemDetails}
  */
 // @ts-ignore
@@ -1302,6 +1356,87 @@ export function createUpdateWantedVideoResponseFromDiscriminatorValue(parseNode:
 // @ts-ignore
 export function createUserIdentityResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoUserIdentityResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoChangeActorDto}
+ */
+// @ts-ignore
+export function createVideoChangeActorDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoChangeActorDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoChangeActorImageDto}
+ */
+// @ts-ignore
+export function createVideoChangeActorImageDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoChangeActorImageDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoChangeDto}
+ */
+// @ts-ignore
+export function createVideoChangeDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoChangeDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoChangeImageDto}
+ */
+// @ts-ignore
+export function createVideoChangeImageDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoChangeImageDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoChangeNetworkDto}
+ */
+// @ts-ignore
+export function createVideoChangeNetworkDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoChangeNetworkDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoChangePreNameDto}
+ */
+// @ts-ignore
+export function createVideoChangePreNameDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoChangePreNameDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoChangesCursorDto}
+ */
+// @ts-ignore
+export function createVideoChangesCursorDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoChangesCursorDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoChangeSiteDto}
+ */
+// @ts-ignore
+export function createVideoChangeSiteDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoChangeSiteDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoChangeVideoDto}
+ */
+// @ts-ignore
+export function createVideoChangeVideoDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoChangeVideoDto;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -2100,6 +2235,36 @@ export function deserializeIntoGetRateLimitResponse(getRateLimitResponse: Partia
 }
 /**
  * The deserialization information for the current model
+ * @param GetSiteChangesResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoGetSiteChangesResponse(getSiteChangesResponse: Partial<GetSiteChangesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "hasMore": n => { getSiteChangesResponse.hasMore = n.getBooleanValue(); },
+        "items": n => { getSiteChangesResponse.items = n.getCollectionOfObjectValues<SiteChangeDto>(createSiteChangeDtoFromDiscriminatorValue); },
+        "nextCursor": n => { getSiteChangesResponse.nextCursor = n.getObjectValue<SiteChangesCursorDto>(createSiteChangesCursorDtoFromDiscriminatorValue); },
+        "pageSize": n => { getSiteChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getSiteChangesResponse.serverTimeUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param GetVideoChangesResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoGetVideoChangesResponse(getVideoChangesResponse: Partial<GetVideoChangesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "hasMore": n => { getVideoChangesResponse.hasMore = n.getBooleanValue(); },
+        "items": n => { getVideoChangesResponse.items = n.getCollectionOfObjectValues<VideoChangeDto>(createVideoChangeDtoFromDiscriminatorValue); },
+        "nextCursor": n => { getVideoChangesResponse.nextCursor = n.getObjectValue<VideoChangesCursorDto>(createVideoChangesCursorDtoFromDiscriminatorValue); },
+        "pageSize": n => { getVideoChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getVideoChangesResponse.serverTimeUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param GetVideoFilehashChangesResponse The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2674,6 +2839,63 @@ export function deserializeIntoSearchPreDbByVideoResponse(searchPreDbByVideoResp
 }
 /**
  * The deserialization information for the current model
+ * @param SiteChangeDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSiteChangeDto(siteChangeDto: Partial<SiteChangeDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "eventType": n => { siteChangeDto.eventType = n.getStringValue(); },
+        "site": n => { siteChangeDto.site = n.getObjectValue<SiteChangeSiteDto>(createSiteChangeSiteDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param SiteChangeLinkDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSiteChangeLinkDto(siteChangeLinkDto: Partial<SiteChangeLinkDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "label": n => { siteChangeLinkDto.label = n.getStringValue(); },
+        "url": n => { siteChangeLinkDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param SiteChangesCursorDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSiteChangesCursorDto(siteChangesCursorDto: Partial<SiteChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { siteChangesCursorDto.id = n.getGuidValue(); },
+        "updatedAtUtc": n => { siteChangesCursorDto.updatedAtUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param SiteChangeSiteDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSiteChangeSiteDto(siteChangeSiteDto: Partial<SiteChangeSiteDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "createdAtUtc": n => { siteChangeSiteDto.createdAtUtc = n.getDateValue(); },
+        "deletedAtUtc": n => { siteChangeSiteDto.deletedAtUtc = n.getDateValue(); },
+        "id": n => { siteChangeSiteDto.id = n.getGuidValue(); },
+        "isDeleted": n => { siteChangeSiteDto.isDeleted = n.getBooleanValue(); },
+        "links": n => { siteChangeSiteDto.links = n.getCollectionOfObjectValues<SiteChangeLinkDto>(createSiteChangeLinkDtoFromDiscriminatorValue); },
+        "networkId": n => { siteChangeSiteDto.networkId = n.getGuidValue(); },
+        "networkTitle": n => { siteChangeSiteDto.networkTitle = n.getStringValue(); },
+        "networkUrl": n => { siteChangeSiteDto.networkUrl = n.getStringValue(); },
+        "title": n => { siteChangeSiteDto.title = n.getStringValue(); },
+        "updatedAtUtc": n => { siteChangeSiteDto.updatedAtUtc = n.getDateValue(); },
+        "url": n => { siteChangeSiteDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param SiteIgnoredProblemDetails The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2852,6 +3074,138 @@ export function deserializeIntoUserIdentityResponse(userIdentityResponse: Partia
     return {
         "activeSubscriptions": n => { userIdentityResponse.activeSubscriptions = n.getCollectionOfObjectValues<ActiveSubscriptionDto>(createActiveSubscriptionDtoFromDiscriminatorValue); },
         "userHash": n => { userIdentityResponse.userHash = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoChangeActorDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoChangeActorDto(videoChangeActorDto: Partial<VideoChangeActorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "birthday": n => { videoChangeActorDto.birthday = n.getDateOnlyValue(); },
+        "gender": n => { videoChangeActorDto.gender = n.getNumberValue(); },
+        "id": n => { videoChangeActorDto.id = n.getGuidValue(); },
+        "images": n => { videoChangeActorDto.images = n.getCollectionOfObjectValues<VideoChangeActorImageDto>(createVideoChangeActorImageDtoFromDiscriminatorValue); },
+        "name": n => { videoChangeActorDto.name = n.getStringValue(); },
+        "nationality": n => { videoChangeActorDto.nationality = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoChangeActorImageDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoChangeActorImageDto(videoChangeActorImageDto: Partial<VideoChangeActorImageDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { videoChangeActorImageDto.id = n.getGuidValue(); },
+        "imageType": n => { videoChangeActorImageDto.imageType = n.getNumberValue(); },
+        "url": n => { videoChangeActorImageDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoChangeDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoChangeDto(videoChangeDto: Partial<VideoChangeDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "eventType": n => { videoChangeDto.eventType = n.getStringValue(); },
+        "video": n => { videoChangeDto.video = n.getObjectValue<VideoChangeVideoDto>(createVideoChangeVideoDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoChangeImageDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoChangeImageDto(videoChangeImageDto: Partial<VideoChangeImageDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { videoChangeImageDto.id = n.getGuidValue(); },
+        "url": n => { videoChangeImageDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoChangeNetworkDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoChangeNetworkDto(videoChangeNetworkDto: Partial<VideoChangeNetworkDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { videoChangeNetworkDto.id = n.getGuidValue(); },
+        "title": n => { videoChangeNetworkDto.title = n.getStringValue(); },
+        "url": n => { videoChangeNetworkDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoChangePreNameDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoChangePreNameDto(videoChangePreNameDto: Partial<VideoChangePreNameDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { videoChangePreNameDto.id = n.getGuidValue(); },
+        "title": n => { videoChangePreNameDto.title = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoChangesCursorDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoChangesCursorDto(videoChangesCursorDto: Partial<VideoChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { videoChangesCursorDto.id = n.getGuidValue(); },
+        "updatedAtUtc": n => { videoChangesCursorDto.updatedAtUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoChangeSiteDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoChangeSiteDto(videoChangeSiteDto: Partial<VideoChangeSiteDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { videoChangeSiteDto.id = n.getGuidValue(); },
+        "network": n => { videoChangeSiteDto.network = n.getObjectValue<VideoChangeNetworkDto>(createVideoChangeNetworkDtoFromDiscriminatorValue); },
+        "title": n => { videoChangeSiteDto.title = n.getStringValue(); },
+        "url": n => { videoChangeSiteDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoChangeVideoDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoChangeVideoDto(videoChangeVideoDto: Partial<VideoChangeVideoDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "actors": n => { videoChangeVideoDto.actors = n.getCollectionOfObjectValues<VideoChangeActorDto>(createVideoChangeActorDtoFromDiscriminatorValue); },
+        "createdAtUtc": n => { videoChangeVideoDto.createdAtUtc = n.getDateValue(); },
+        "deletedAtUtc": n => { videoChangeVideoDto.deletedAtUtc = n.getDateValue(); },
+        "description": n => { videoChangeVideoDto.description = n.getStringValue(); },
+        "durationFileCount": n => { videoChangeVideoDto.durationFileCount = n.getNumberValue(); },
+        "durationMs": n => { videoChangeVideoDto.durationMs = n.getNumberValue(); },
+        "durationSpreadMs": n => { videoChangeVideoDto.durationSpreadMs = n.getNumberValue(); },
+        "id": n => { videoChangeVideoDto.id = n.getGuidValue(); },
+        "images": n => { videoChangeVideoDto.images = n.getCollectionOfObjectValues<VideoChangeImageDto>(createVideoChangeImageDtoFromDiscriminatorValue); },
+        "isDeleted": n => { videoChangeVideoDto.isDeleted = n.getBooleanValue(); },
+        "mergedIntoId": n => { videoChangeVideoDto.mergedIntoId = n.getGuidValue(); },
+        "preNames": n => { videoChangeVideoDto.preNames = n.getCollectionOfObjectValues<VideoChangePreNameDto>(createVideoChangePreNameDtoFromDiscriminatorValue); },
+        "qualityOverview": n => { videoChangeVideoDto.qualityOverview = n.getObjectValue<VideoQualityOverviewDto>(createVideoQualityOverviewDtoFromDiscriminatorValue); },
+        "releaseDate": n => { videoChangeVideoDto.releaseDate = n.getDateOnlyValue(); },
+        "site": n => { videoChangeVideoDto.site = n.getObjectValue<VideoChangeSiteDto>(createVideoChangeSiteDtoFromDiscriminatorValue); },
+        "stashdbSceneId": n => { videoChangeVideoDto.stashdbSceneId = n.getGuidValue(); },
+        "title": n => { videoChangeVideoDto.title = n.getStringValue(); },
+        "updatedAtUtc": n => { videoChangeVideoDto.updatedAtUtc = n.getDateValue(); },
     }
 }
 /**
@@ -3722,6 +4076,56 @@ export interface GetRateLimitResponse extends AdditionalDataHolder, Parsable {
      * Rate limit status for a single time window.
      */
     monthly?: RateLimitWindowStatus | null;
+}
+/**
+ * A seek-paged site delta feed ordered by updated timestamp and site ID.
+ */
+export interface GetSiteChangesResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The hasMore property
+     */
+    hasMore?: boolean | null;
+    /**
+     * The items property
+     */
+    items?: SiteChangeDto[] | null;
+    /**
+     * Seek cursor for continuing an site change feed.
+     */
+    nextCursor?: SiteChangesCursorDto | null;
+    /**
+     * The pageSize property
+     */
+    pageSize?: number | null;
+    /**
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     */
+    serverTimeUtc?: Date | null;
+}
+/**
+ * A seek-paged video delta feed ordered by updated timestamp and video ID.
+ */
+export interface GetVideoChangesResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The hasMore property
+     */
+    hasMore?: boolean | null;
+    /**
+     * The items property
+     */
+    items?: VideoChangeDto[] | null;
+    /**
+     * Seek cursor for continuing an video change feed.
+     */
+    nextCursor?: VideoChangesCursorDto | null;
+    /**
+     * The pageSize property
+     */
+    pageSize?: number | null;
+    /**
+     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     */
+    serverTimeUtc?: Date | null;
 }
 /**
  * Paged delta feed of video filehash changes ordered by updated timestamp and ID.
@@ -5158,6 +5562,38 @@ export function serializeGetRateLimitResponse(writer: SerializationWriter, getRa
 }
 /**
  * Serializes information the current object
+ * @param GetSiteChangesResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeGetSiteChangesResponse(writer: SerializationWriter, getSiteChangesResponse: Partial<GetSiteChangesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!getSiteChangesResponse || isSerializingDerivedType) { return; }
+    writer.writeBooleanValue("hasMore", getSiteChangesResponse.hasMore);
+    writer.writeCollectionOfObjectValues<SiteChangeDto>("items", getSiteChangesResponse.items, serializeSiteChangeDto);
+    writer.writeObjectValue<SiteChangesCursorDto>("nextCursor", getSiteChangesResponse.nextCursor, serializeSiteChangesCursorDto);
+    writer.writeNumberValue("pageSize", getSiteChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getSiteChangesResponse.serverTimeUtc);
+    writer.writeAdditionalData(getSiteChangesResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param GetVideoChangesResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeGetVideoChangesResponse(writer: SerializationWriter, getVideoChangesResponse: Partial<GetVideoChangesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!getVideoChangesResponse || isSerializingDerivedType) { return; }
+    writer.writeBooleanValue("hasMore", getVideoChangesResponse.hasMore);
+    writer.writeCollectionOfObjectValues<VideoChangeDto>("items", getVideoChangesResponse.items, serializeVideoChangeDto);
+    writer.writeObjectValue<VideoChangesCursorDto>("nextCursor", getVideoChangesResponse.nextCursor, serializeVideoChangesCursorDto);
+    writer.writeNumberValue("pageSize", getVideoChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getVideoChangesResponse.serverTimeUtc);
+    writer.writeAdditionalData(getVideoChangesResponse.additionalData);
+}
+/**
+ * Serializes information the current object
  * @param GetVideoFilehashChangesResponse The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -5773,6 +6209,67 @@ export function serializeSearchPreDbByVideoResponse(writer: SerializationWriter,
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SiteChangeDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSiteChangeDto(writer: SerializationWriter, siteChangeDto: Partial<SiteChangeDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!siteChangeDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("eventType", siteChangeDto.eventType);
+    writer.writeObjectValue<SiteChangeSiteDto>("site", siteChangeDto.site, serializeSiteChangeSiteDto);
+    writer.writeAdditionalData(siteChangeDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SiteChangeLinkDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSiteChangeLinkDto(writer: SerializationWriter, siteChangeLinkDto: Partial<SiteChangeLinkDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!siteChangeLinkDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("label", siteChangeLinkDto.label);
+    writer.writeStringValue("url", siteChangeLinkDto.url);
+    writer.writeAdditionalData(siteChangeLinkDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SiteChangesCursorDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSiteChangesCursorDto(writer: SerializationWriter, siteChangesCursorDto: Partial<SiteChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!siteChangesCursorDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", siteChangesCursorDto.id);
+    writer.writeDateValue("updatedAtUtc", siteChangesCursorDto.updatedAtUtc);
+    writer.writeAdditionalData(siteChangesCursorDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SiteChangeSiteDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSiteChangeSiteDto(writer: SerializationWriter, siteChangeSiteDto: Partial<SiteChangeSiteDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!siteChangeSiteDto || isSerializingDerivedType) { return; }
+    writer.writeDateValue("createdAtUtc", siteChangeSiteDto.createdAtUtc);
+    writer.writeDateValue("deletedAtUtc", siteChangeSiteDto.deletedAtUtc);
+    writer.writeGuidValue("id", siteChangeSiteDto.id);
+    writer.writeBooleanValue("isDeleted", siteChangeSiteDto.isDeleted);
+    writer.writeCollectionOfObjectValues<SiteChangeLinkDto>("links", siteChangeSiteDto.links, serializeSiteChangeLinkDto);
+    writer.writeGuidValue("networkId", siteChangeSiteDto.networkId);
+    writer.writeStringValue("networkTitle", siteChangeSiteDto.networkTitle);
+    writer.writeStringValue("networkUrl", siteChangeSiteDto.networkUrl);
+    writer.writeStringValue("title", siteChangeSiteDto.title);
+    writer.writeDateValue("updatedAtUtc", siteChangeSiteDto.updatedAtUtc);
+    writer.writeStringValue("url", siteChangeSiteDto.url);
+    writer.writeAdditionalData(siteChangeSiteDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param SiteIgnoredProblemDetails The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -5963,6 +6460,147 @@ export function serializeUserIdentityResponse(writer: SerializationWriter, userI
     writer.writeCollectionOfObjectValues<ActiveSubscriptionDto>("activeSubscriptions", userIdentityResponse.activeSubscriptions, serializeActiveSubscriptionDto);
     writer.writeStringValue("userHash", userIdentityResponse.userHash);
     writer.writeAdditionalData(userIdentityResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoChangeActorDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoChangeActorDto(writer: SerializationWriter, videoChangeActorDto: Partial<VideoChangeActorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoChangeActorDto || isSerializingDerivedType) { return; }
+    writer.writeDateOnlyValue("birthday", videoChangeActorDto.birthday);
+    writer.writeNumberValue("gender", videoChangeActorDto.gender);
+    writer.writeGuidValue("id", videoChangeActorDto.id);
+    writer.writeCollectionOfObjectValues<VideoChangeActorImageDto>("images", videoChangeActorDto.images, serializeVideoChangeActorImageDto);
+    writer.writeStringValue("name", videoChangeActorDto.name);
+    writer.writeNumberValue("nationality", videoChangeActorDto.nationality);
+    writer.writeAdditionalData(videoChangeActorDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoChangeActorImageDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoChangeActorImageDto(writer: SerializationWriter, videoChangeActorImageDto: Partial<VideoChangeActorImageDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoChangeActorImageDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", videoChangeActorImageDto.id);
+    writer.writeNumberValue("imageType", videoChangeActorImageDto.imageType);
+    writer.writeStringValue("url", videoChangeActorImageDto.url);
+    writer.writeAdditionalData(videoChangeActorImageDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoChangeDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoChangeDto(writer: SerializationWriter, videoChangeDto: Partial<VideoChangeDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoChangeDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("eventType", videoChangeDto.eventType);
+    writer.writeObjectValue<VideoChangeVideoDto>("video", videoChangeDto.video, serializeVideoChangeVideoDto);
+    writer.writeAdditionalData(videoChangeDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoChangeImageDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoChangeImageDto(writer: SerializationWriter, videoChangeImageDto: Partial<VideoChangeImageDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoChangeImageDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", videoChangeImageDto.id);
+    writer.writeStringValue("url", videoChangeImageDto.url);
+    writer.writeAdditionalData(videoChangeImageDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoChangeNetworkDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoChangeNetworkDto(writer: SerializationWriter, videoChangeNetworkDto: Partial<VideoChangeNetworkDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoChangeNetworkDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", videoChangeNetworkDto.id);
+    writer.writeStringValue("title", videoChangeNetworkDto.title);
+    writer.writeStringValue("url", videoChangeNetworkDto.url);
+    writer.writeAdditionalData(videoChangeNetworkDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoChangePreNameDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoChangePreNameDto(writer: SerializationWriter, videoChangePreNameDto: Partial<VideoChangePreNameDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoChangePreNameDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", videoChangePreNameDto.id);
+    writer.writeStringValue("title", videoChangePreNameDto.title);
+    writer.writeAdditionalData(videoChangePreNameDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoChangesCursorDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoChangesCursorDto(writer: SerializationWriter, videoChangesCursorDto: Partial<VideoChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoChangesCursorDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", videoChangesCursorDto.id);
+    writer.writeDateValue("updatedAtUtc", videoChangesCursorDto.updatedAtUtc);
+    writer.writeAdditionalData(videoChangesCursorDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoChangeSiteDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoChangeSiteDto(writer: SerializationWriter, videoChangeSiteDto: Partial<VideoChangeSiteDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoChangeSiteDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", videoChangeSiteDto.id);
+    writer.writeObjectValue<VideoChangeNetworkDto>("network", videoChangeSiteDto.network, serializeVideoChangeNetworkDto);
+    writer.writeStringValue("title", videoChangeSiteDto.title);
+    writer.writeStringValue("url", videoChangeSiteDto.url);
+    writer.writeAdditionalData(videoChangeSiteDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoChangeVideoDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoChangeVideoDto(writer: SerializationWriter, videoChangeVideoDto: Partial<VideoChangeVideoDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoChangeVideoDto || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<VideoChangeActorDto>("actors", videoChangeVideoDto.actors, serializeVideoChangeActorDto);
+    writer.writeDateValue("createdAtUtc", videoChangeVideoDto.createdAtUtc);
+    writer.writeDateValue("deletedAtUtc", videoChangeVideoDto.deletedAtUtc);
+    writer.writeStringValue("description", videoChangeVideoDto.description);
+    writer.writeNumberValue("durationFileCount", videoChangeVideoDto.durationFileCount);
+    writer.writeNumberValue("durationMs", videoChangeVideoDto.durationMs);
+    writer.writeNumberValue("durationSpreadMs", videoChangeVideoDto.durationSpreadMs);
+    writer.writeGuidValue("id", videoChangeVideoDto.id);
+    writer.writeCollectionOfObjectValues<VideoChangeImageDto>("images", videoChangeVideoDto.images, serializeVideoChangeImageDto);
+    writer.writeBooleanValue("isDeleted", videoChangeVideoDto.isDeleted);
+    writer.writeGuidValue("mergedIntoId", videoChangeVideoDto.mergedIntoId);
+    writer.writeCollectionOfObjectValues<VideoChangePreNameDto>("preNames", videoChangeVideoDto.preNames, serializeVideoChangePreNameDto);
+    writer.writeObjectValue<VideoQualityOverviewDto>("qualityOverview", videoChangeVideoDto.qualityOverview, serializeVideoQualityOverviewDto);
+    writer.writeDateOnlyValue("releaseDate", videoChangeVideoDto.releaseDate);
+    writer.writeObjectValue<VideoChangeSiteDto>("site", videoChangeVideoDto.site, serializeVideoChangeSiteDto);
+    writer.writeGuidValue("stashdbSceneId", videoChangeVideoDto.stashdbSceneId);
+    writer.writeStringValue("title", videoChangeVideoDto.title);
+    writer.writeDateValue("updatedAtUtc", videoChangeVideoDto.updatedAtUtc);
+    writer.writeAdditionalData(videoChangeVideoDto.additionalData);
 }
 /**
  * Serializes information the current object
@@ -6456,6 +7094,91 @@ export function serializeWantedVideoSummaryDto(writer: SerializationWriter, want
     writer.writeAdditionalData(wantedVideoSummaryDto.additionalData);
 }
 /**
+ * Summary of a single site.
+ */
+export interface SiteChangeDto extends AdditionalDataHolder, Parsable {
+    /**
+     * One of created, updated, or deleted.
+     */
+    eventType?: string | null;
+    /**
+     * The site property
+     */
+    site?: SiteChangeSiteDto | null;
+}
+/**
+ * An additional link belonging to a Site.
+ */
+export interface SiteChangeLinkDto extends AdditionalDataHolder, Parsable {
+    /**
+     * Human-readable link type, if known.
+     */
+    label?: string | null;
+    /**
+     * Absolute external URL.
+     */
+    url?: string | null;
+}
+/**
+ * Seek cursor for continuing an site change feed.
+ */
+export interface SiteChangesCursorDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
+}
+export interface SiteChangeSiteDto extends AdditionalDataHolder, Parsable {
+    /**
+     * When this site was created.
+     */
+    createdAtUtc?: Date | null;
+    /**
+     * The deletedAtUtc property
+     */
+    deletedAtUtc?: Date | null;
+    /**
+     * Unique identifier of the site.
+     */
+    id?: Guid | null;
+    /**
+     * The isDeleted property
+     */
+    isDeleted?: boolean | null;
+    /**
+     * Additional catalogue links. Provenance is intentionally not part of this contract.
+     */
+    links?: SiteChangeLinkDto[] | null;
+    /**
+     * Unique identifier of the network this site belongs to, if any.
+     */
+    networkId?: Guid | null;
+    /**
+     * Title of the network this site belongs to, if any.
+     */
+    networkTitle?: string | null;
+    /**
+     * The networkUrl property
+     */
+    networkUrl?: string | null;
+    /**
+     * Site title.
+     */
+    title?: string | null;
+    /**
+     * When this site was last changed.
+     */
+    updatedAtUtc?: Date | null;
+    /**
+     * Site URL.
+     */
+    url?: string | null;
+}
+/**
  * Problem response returned when a favorite or wanted-list write involves a site the userignores. The string SiteIgnoredProblemDetails.Code `site_ignored` tells it apart from the other 409s thoseendpoints return, such as `wanted_video_limit_exceeded`.
  */
 export interface SiteIgnoredProblemDetails extends AdditionalDataHolder, ApiError, Parsable {
@@ -6756,6 +7479,195 @@ export interface UserIdentityResponse extends AdditionalDataHolder, Parsable {
      * Stable HMAC-SHA256 hex digest derived from the user's immutable ID.Suitable as a durable public identifier — does not change unless the server secret rotates.
      */
     userHash?: string | null;
+}
+export interface VideoChangeActorDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The birthday property
+     */
+    birthday?: DateOnly | null;
+    /**
+     * Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).
+     */
+    gender?: number | null;
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * Images for this actor, ordered by ActorImageType VideoChangeActorImageDto.ImageType ascending(Thumbnail, Poster, Face), then oldest first, with the image ID as the tie-breaker. The orderis stable across requests.
+     */
+    images?: VideoChangeActorImageDto[] | null;
+    /**
+     * The name property
+     */
+    name?: string | null;
+    /**
+     * Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
+     */
+    nationality?: number | null;
+}
+export interface VideoChangeActorImageDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * Known values: Thumbnail (1), Poster (2), Face (3).
+     */
+    imageType?: number | null;
+    /**
+     * Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is. The actor endpoints expose the same image under the same name.
+     */
+    url?: string | null;
+}
+export interface VideoChangeDto extends AdditionalDataHolder, Parsable {
+    /**
+     * One of created, updated, or deleted.
+     */
+    eventType?: string | null;
+    /**
+     * The video property
+     */
+    video?: VideoChangeVideoDto | null;
+}
+export interface VideoChangeImageDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * Absolute URL for the image, if available: a complete URL including scheme and host, ready torequest as-is.
+     */
+    url?: string | null;
+}
+export interface VideoChangeNetworkDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+    /**
+     * The url property
+     */
+    url?: string | null;
+}
+export interface VideoChangePreNameDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+}
+/**
+ * Seek cursor for continuing an video change feed.
+ */
+export interface VideoChangesCursorDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
+}
+export interface VideoChangeSiteDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The network property
+     */
+    network?: VideoChangeNetworkDto | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+    /**
+     * The url property
+     */
+    url?: string | null;
+}
+export interface VideoChangeVideoDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The actors property
+     */
+    actors?: VideoChangeActorDto[] | null;
+    /**
+     * The createdAtUtc property
+     */
+    createdAtUtc?: Date | null;
+    /**
+     * The deletedAtUtc property
+     */
+    deletedAtUtc?: Date | null;
+    /**
+     * Catalogue description of the video, if known.
+     */
+    description?: string | null;
+    /**
+     * How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.
+     */
+    durationFileCount?: number | null;
+    /**
+     * Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
+     */
+    durationMs?: number | null;
+    /**
+     * How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
+     */
+    durationSpreadMs?: number | null;
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.
+     */
+    images?: VideoChangeImageDto[] | null;
+    /**
+     * The isDeleted property
+     */
+    isDeleted?: boolean | null;
+    /**
+     * Surviving video UUID when deleted by a merge; otherwise null.
+     */
+    mergedIntoId?: Guid | null;
+    /**
+     * The preNames property
+     */
+    preNames?: VideoChangePreNameDto[] | null;
+    /**
+     * What technical shapes a video is known to exist in, counted over the files prdb holds for it.
+     */
+    qualityOverview?: VideoQualityOverviewDto | null;
+    /**
+     * The releaseDate property
+     */
+    releaseDate?: DateOnly | null;
+    /**
+     * The site property
+     */
+    site?: VideoChangeSiteDto | null;
+    /**
+     * StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does notexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.
+     */
+    stashdbSceneId?: Guid | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
 }
 /**
  * One video codec a video is known in, and how many of its files carry it.

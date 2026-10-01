@@ -51,6 +51,11 @@ func (m *VideosRequestBuilder) ById(id i561e97a8befe7661a44c8f54600992b4207a3a0c
     urlTplParams["%2Did"] = id.String()
     return NewItemRequestBuilderInternal(urlTplParams, m.BaseRequestBuilder.RequestAdapter)
 }
+// Changes the changes property
+// returns a *ChangesRequestBuilder when successful
+func (m *VideosRequestBuilder) Changes()(*ChangesRequestBuilder) {
+    return NewChangesRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
 // NewVideosRequestBuilderInternal instantiates a new VideosRequestBuilder and sets the default values.
 func NewVideosRequestBuilderInternal(pathParameters map[string]string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*VideosRequestBuilder) {
     m := &VideosRequestBuilder{

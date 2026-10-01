@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from ..models.list_videos_response import ListVideosResponse
     from ..models.problem_details import ProblemDetails
     from .batch.batch_request_builder import BatchRequestBuilder
+    from .changes.changes_request_builder import ChangesRequestBuilder
     from .filehashes.filehashes_request_builder import FilehashesRequestBuilder
     from .filehash_submissions.filehash_submissions_request_builder import FilehashSubmissionsRequestBuilder
     from .get_sort_by_query_parameter_type import GetSortByQueryParameterType
@@ -107,6 +108,15 @@ class VideosRequestBuilder(BaseRequestBuilder):
         from .batch.batch_request_builder import BatchRequestBuilder
 
         return BatchRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
+    def changes(self) -> ChangesRequestBuilder:
+        """
+        The changes property
+        """
+        from .changes.changes_request_builder import ChangesRequestBuilder
+
+        return ChangesRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
     def filehash_submissions(self) -> FilehashSubmissionsRequestBuilder:

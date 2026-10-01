@@ -6,6 +6,8 @@ import { createListVideosResponseFromDiscriminatorValue, createProblemDetailsFro
 // @ts-ignore
 import { BatchRequestBuilderRequestsMetadata, type BatchRequestBuilder } from './batch/index.js';
 // @ts-ignore
+import { ChangesRequestBuilderRequestsMetadata, type ChangesRequestBuilder } from './changes/index.js';
+// @ts-ignore
 import { FilehashesRequestBuilderNavigationMetadata, type FilehashesRequestBuilder } from './filehashes/index.js';
 // @ts-ignore
 import { FilehashSubmissionsRequestBuilderRequestsMetadata, type FilehashSubmissionsRequestBuilder } from './filehashSubmissions/index.js';
@@ -28,6 +30,10 @@ export interface VideosRequestBuilder extends BaseRequestBuilder<VideosRequestBu
      * The batch property
      */
     get batch(): BatchRequestBuilder;
+    /**
+     * The changes property
+     */
+    get changes(): ChangesRequestBuilder;
     /**
      * The filehashes property
      */
@@ -153,6 +159,9 @@ export const VideosRequestBuilderNavigationMetadata: Record<Exclude<keyof Videos
     },
     batch: {
         requestsMetadata: BatchRequestBuilderRequestsMetadata,
+    },
+    changes: {
+        requestsMetadata: ChangesRequestBuilderRequestsMetadata,
     },
     filehashes: {
         navigationMetadata: FilehashesRequestBuilderNavigationMetadata,

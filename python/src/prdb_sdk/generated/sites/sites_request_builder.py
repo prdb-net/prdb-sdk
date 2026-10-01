@@ -16,6 +16,7 @@ from warnings import warn
 if TYPE_CHECKING:
     from ..models.list_sites_response import ListSitesResponse
     from ..models.problem_details import ProblemDetails
+    from .changes.changes_request_builder import ChangesRequestBuilder
     from .get_sort_direction_query_parameter_type import GetSortDirectionQueryParameterType
 
 class SitesRequestBuilder(BaseRequestBuilder):
@@ -75,6 +76,15 @@ class SitesRequestBuilder(BaseRequestBuilder):
         if raw_url is None:
             raise TypeError("raw_url cannot be null.")
         return SitesRequestBuilder(self.request_adapter, raw_url)
+    
+    @property
+    def changes(self) -> ChangesRequestBuilder:
+        """
+        The changes property
+        """
+        from .changes.changes_request_builder import ChangesRequestBuilder
+
+        return ChangesRequestBuilder(self.request_adapter, self.path_parameters)
     
     @dataclass
     class SitesRequestBuilderGetQueryParameters():

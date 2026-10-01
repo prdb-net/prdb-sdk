@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "prdb Public API",
-    "description": "Read and write access to the prdb catalogue: videos, actors, sites, scene pre-database\nreleases, file hashes and the per-user lists built on top of them.\n\nAuthenticate every request except the health probe with an API key in the `X-Api-Key`\nheader. API access is part of the paid subscription tiers; requests are rate limited per\naccount and `GET /rate-limit` reports the remaining budget.\n\nEvery authenticated endpoint can answer `403` when the account has no subscription tier that\nincludes API access, `429` when the hourly or monthly budget is spent, and `503` while rate\nlimiting itself is unavailable. The API serves no content it cannot meter, so treat `503`\nas retryable rather than as a permission problem.\n\nEndpoints named `/{resource}/changes` are delta feeds: they return the current state of\nrows changed since a cursor, including soft-deleted rows as tombstones, rather than a full\nhistory of every mutation.\n\n### Media metadata\n\nA file's technical profile — duration, container, bit rate, video and audio codec,\nresolution, frame rate and channel count — is submitted by the clients that probed the\nfile, aggregated per file, and returned on every filehash payload. Each field is\nindependently optional: a client may report the duration and withhold the frame rate, and\na field nobody has reported is `null` rather than zero.\n\nTwo properties of it are easy to get wrong when consuming or re-deriving them:\n\n- **`frameRate` is a rational as measured, never a decimal.** `24000/1001`, not `23.976`.\n  Rounding merges rates that are not the same one, and for a variable-rate file the value\n  is a per-file average whose large denominator is the only sign it is not a constant\n  rate. Treat a large denominator as \"variable\" rather than as a rate.\n- **`width` and `height` are as stored and are not ordered.** Portrait video is ordinary,\n  so the larger of the two is not \"the resolution\" and a quality label derived from it is\n  wrong for a substantial share of real files.\n\nOn a video, `durationMs` is the **consensus** across the files known for it: a median, not\nan average, because durations differ legitimately between cuts, re-encodes and trailers,\nand one short outlier would move an average off the value the real files agree on. It\ncomes with `durationSpreadMs` — the median absolute deviation, where a large value means\nseveral versions are in circulation — and `durationFileCount`, without which the spread\ncannot be read. All three are `null` until enough independent submitters have reported a\nduration.\n\nResolution, codec and bit rate deliberately have no video-level value. Their aggregate is\nthe distribution in `qualityOverview`, which counts a video's files per resolution and per\ncodec — \"known in 1080p and 2160p\" is a true statement where a single resolution on the\nvideo would be a guess.\n\n### Perceptual hashes\n\nEvery endpoint that accepts a `pHash` expects a 64-bit perceptual hash as 16 hexadecimal\ncharacters, in either case; values are stored and returned uppercase. There is one\nprocedure for computing it — the one Stash uses — and a value produced any other way is\nnot comparable with the rest of the column, which nothing in the value itself reveals.\n\nSample 25 frames across the middle 90% of the runtime, one per timestamp, with the seek\nplaced **before** the input:\n`ffmpeg -loglevel error -y -ss <t> -i <file> -frames:v 1 -vf scale=160:-2 -c:v bmp -f rawvideo -`.\nAssemble them left to right and top to bottom into a 5x5 montage, scale that to 64x64 with\n`github.com/nfnt/resize`'s bilinear filter — whose support scales with the downscale\nfactor, so it is not four-neighbour interpolation and no other library substitutes for it\n— convert to luminance with 0.299/0.587/0.114, apply an unscaled DCT-II, and keep the\ntop-left 8x8 block row-major. Set the bit for every coefficient strictly above\n`goimagehash`'s `MedianOfPixels` threshold, most significant bit first, keeping the DC\ncoefficient. `0000000000000000` is a valid hash, not an error code.\n\n`pHash` values are matched for **equality**. Hamming-distance matching is not implemented.\n\nThe summary above is not enough to implement from, and it is not meant to be. The\nnormative specification — the exact resampler arithmetic, the threshold's quickselect\n(which is not a median), the DCT divisor tables, and test vectors at three levels — is\npublished at <https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing.md>, with\nthe vectors as data at\n<https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing-vectors.json>.\n\nFor .NET there is an implementation of it, the `Prdb.Hashing` package, which also computes\nthe `osHash`.",
+    "description": "Read and write access to the prdb catalogue: videos, actors, sites, scene pre-database\nreleases, file hashes and the per-user lists built on top of them.\n\nAuthenticate every request except the health probe with an API key in the `X-Api-Key`\nheader. API access is part of the paid subscription tiers; requests are rate limited per\naccount and `GET /rate-limit` reports the remaining budget.\n\nEvery authenticated endpoint can answer `403` when the account has no subscription tier that\nincludes API access, `429` when the hourly or monthly budget is spent, and `503` while rate\nlimiting itself is unavailable. The API serves no content it cannot meter, so treat `503`\nas retryable rather than as a permission problem.\n\nEndpoints named `/{resource}/changes` are delta feeds: they return the current state of\nrows changed since a cursor, including deletion tombstones, rather than a full history of\nevery mutation. `/videos/changes` and `/sites/changes` support a full baseline with\n`since=0001-01-01T00:00:00Z` and include edits to nested catalog content. Their deletion\ntombstones are retained indefinitely (at least 90 days); a consumer older than any future\nfinite retention window must rebuild its baseline. Pass both fields of `nextCursor` back\nverbatim. When a page is empty, persist `serverTimeUtc` as `since` and clear `sinceId`.\n\n### Media metadata\n\nA file's technical profile — duration, container, bit rate, video and audio codec,\nresolution, frame rate and channel count — is submitted by the clients that probed the\nfile, aggregated per file, and returned on every filehash payload. Each field is\nindependently optional: a client may report the duration and withhold the frame rate, and\na field nobody has reported is `null` rather than zero.\n\nTwo properties of it are easy to get wrong when consuming or re-deriving them:\n\n- **`frameRate` is a rational as measured, never a decimal.** `24000/1001`, not `23.976`.\n  Rounding merges rates that are not the same one, and for a variable-rate file the value\n  is a per-file average whose large denominator is the only sign it is not a constant\n  rate. Treat a large denominator as \"variable\" rather than as a rate.\n- **`width` and `height` are as stored and are not ordered.** Portrait video is ordinary,\n  so the larger of the two is not \"the resolution\" and a quality label derived from it is\n  wrong for a substantial share of real files.\n\nOn a video, `durationMs` is the **consensus** across the files known for it: a median, not\nan average, because durations differ legitimately between cuts, re-encodes and trailers,\nand one short outlier would move an average off the value the real files agree on. It\ncomes with `durationSpreadMs` — the median absolute deviation, where a large value means\nseveral versions are in circulation — and `durationFileCount`, without which the spread\ncannot be read. All three are `null` until enough independent submitters have reported a\nduration.\n\nResolution, codec and bit rate deliberately have no video-level value. Their aggregate is\nthe distribution in `qualityOverview`, which counts a video's files per resolution and per\ncodec — \"known in 1080p and 2160p\" is a true statement where a single resolution on the\nvideo would be a guess.\n\n### Perceptual hashes\n\nEvery endpoint that accepts a `pHash` expects a 64-bit perceptual hash as 16 hexadecimal\ncharacters, in either case; values are stored and returned uppercase. There is one\nprocedure for computing it — the one Stash uses — and a value produced any other way is\nnot comparable with the rest of the column, which nothing in the value itself reveals.\n\nSample 25 frames across the middle 90% of the runtime, one per timestamp, with the seek\nplaced **before** the input:\n`ffmpeg -loglevel error -y -ss <t> -i <file> -frames:v 1 -vf scale=160:-2 -c:v bmp -f rawvideo -`.\nAssemble them left to right and top to bottom into a 5x5 montage, scale that to 64x64 with\n`github.com/nfnt/resize`'s bilinear filter — whose support scales with the downscale\nfactor, so it is not four-neighbour interpolation and no other library substitutes for it\n— convert to luminance with 0.299/0.587/0.114, apply an unscaled DCT-II, and keep the\ntop-left 8x8 block row-major. Set the bit for every coefficient strictly above\n`goimagehash`'s `MedianOfPixels` threshold, most significant bit first, keeping the DC\ncoefficient. `0000000000000000` is a valid hash, not an error code.\n\n`pHash` values are matched for **equality**. Hamming-distance matching is not implemented.\n\nThe summary above is not enough to implement from, and it is not meant to be. The\nnormative specification — the exact resampler arithmetic, the threshold's quickselect\n(which is not a median), the DCT divisor tables, and test vectors at three levels — is\npublished at <https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing.md>, with\nthe vectors as data at\n<https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing-vectors.json>.\n\nFor .NET there is an implementation of it, the `Prdb.Hashing` package, which also computes\nthe `osHash`.",
     "license": {
       "name": "Proprietary",
       "url": "https://prdb.net"
@@ -2936,6 +2936,129 @@
         ]
       }
     },
+    "/videos/changes": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "summary": "Get incremental video changes",
+        "description": "Returns a seek-paged delta feed of video rows ordered by updatedAtUtc ascending, then video ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "operationId": "GetVideoChanges",
+        "parameters": [
+          {
+            "name": "Since",
+            "in": "query",
+            "description": "Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "SinceId",
+            "in": "query",
+            "description": "Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 1000.",
+            "schema": {
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVideoChangesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
     "/videos/filehash-submissions": {
       "post": {
         "tags": [
@@ -3210,6 +3333,129 @@
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
+    "/sites/changes": {
+      "get": {
+        "tags": [
+          "Sites"
+        ],
+        "summary": "Get incremental site changes",
+        "description": "Returns a seek-paged delta feed of site rows ordered by updatedAtUtc ascending, then site ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "operationId": "GetSiteChanges",
+        "parameters": [
+          {
+            "name": "Since",
+            "in": "query",
+            "description": "Inclusive lower-bound timestamp for changes. Use together with `sinceId` to continue from an exact cursor.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "SinceId",
+            "in": "query",
+            "description": "Optional lower-bound ID tie-breaker for rows with the same `since` timestamp.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "description": "Number of items per page. Defaults to 100, max 1000.",
+            "schema": {
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSiteChangesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": { }
             }
           },
           "403": {
@@ -6952,6 +7198,84 @@
         },
         "description": "Current rate limit status for the authenticated user."
       },
+      "GetSiteChangesResponse": {
+        "required": [
+          "items",
+          "pageSize",
+          "hasMore",
+          "serverTimeUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SiteChangeDto"
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "serverTimeUtc": {
+            "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "format": "date-time"
+          },
+          "nextCursor": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SiteChangesCursorDto"
+              }
+            ],
+            "description": "Seek cursor for continuing an site change feed.",
+            "nullable": true
+          }
+        },
+        "description": "A seek-paged site delta feed ordered by updated timestamp and site ID."
+      },
+      "GetVideoChangesResponse": {
+        "required": [
+          "items",
+          "pageSize",
+          "hasMore",
+          "serverTimeUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoChangeDto"
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "serverTimeUtc": {
+            "type": "string",
+            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "format": "date-time"
+          },
+          "nextCursor": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VideoChangesCursorDto"
+              }
+            ],
+            "description": "Seek cursor for continuing an video change feed.",
+            "nullable": true
+          }
+        },
+        "description": "A seek-paged video delta feed ordered by updated timestamp and video ID."
+      },
       "GetVideoFilehashChangesResponse": {
         "required": [
           "items",
@@ -8527,6 +8851,130 @@
           }
         }
       },
+      "SiteChangeDto": {
+        "required": [
+          "eventType",
+          "site"
+        ],
+        "type": "object",
+        "properties": {
+          "eventType": {
+            "type": "string",
+            "description": "One of created, updated, or deleted."
+          },
+          "site": {
+            "$ref": "#/components/schemas/SiteChangeSiteDto"
+          }
+        },
+        "description": "Summary of a single site."
+      },
+      "SiteChangeLinkDto": {
+        "required": [
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "description": "Human-readable link type, if known.",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "description": "Absolute external URL."
+          }
+        },
+        "description": "An additional link belonging to a Site."
+      },
+      "SiteChangesCursorDto": {
+        "required": [
+          "updatedAtUtc",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "description": "Seek cursor for continuing an site change feed."
+      },
+      "SiteChangeSiteDto": {
+        "required": [
+          "isDeleted",
+          "deletedAtUtc",
+          "networkUrl",
+          "id",
+          "title",
+          "url",
+          "links",
+          "createdAtUtc",
+          "updatedAtUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "deletedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "networkUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the site.",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "description": "Site title.",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "description": "Site URL.",
+            "nullable": true
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SiteChangeLinkDto"
+            },
+            "description": "Additional catalogue links. Provenance is intentionally not part of this contract."
+          },
+          "networkId": {
+            "type": "string",
+            "description": "Unique identifier of the network this site belongs to, if any.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "networkTitle": {
+            "type": "string",
+            "description": "Title of the network this site belongs to, if any.",
+            "nullable": true
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "description": "When this site was created.",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "description": "When this site was last changed.",
+            "format": "date-time"
+          }
+        }
+      },
       "SiteIgnoredProblemDetails": {
         "required": [
           "code"
@@ -8987,6 +9435,292 @@
           }
         },
         "description": "Identity and subscription state for the authenticated user."
+      },
+      "VideoChangeActorDto": {
+        "required": [
+          "id",
+          "name",
+          "gender",
+          "nationality",
+          "images"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/ActorGender"
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "nationality": {
+            "$ref": "#/components/schemas/Nationality"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoChangeActorImageDto"
+            },
+            "description": "Images for this actor, ordered by ActorImageType VideoChangeActorImageDto.ImageType ascending\n(Thumbnail, Poster, Face), then oldest first, with the image ID as the tie-breaker. The order\nis stable across requests."
+          }
+        }
+      },
+      "VideoChangeActorImageDto": {
+        "required": [
+          "id",
+          "imageType"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "url": {
+            "type": "string",
+            "description": "Absolute URL for the image, if available: a complete URL including scheme and host, ready to\nrequest as-is. The actor endpoints expose the same image under the same name.",
+            "nullable": true
+          },
+          "imageType": {
+            "$ref": "#/components/schemas/ActorImageType"
+          }
+        }
+      },
+      "VideoChangeDto": {
+        "required": [
+          "eventType",
+          "video"
+        ],
+        "type": "object",
+        "properties": {
+          "eventType": {
+            "type": "string",
+            "description": "One of created, updated, or deleted."
+          },
+          "video": {
+            "$ref": "#/components/schemas/VideoChangeVideoDto"
+          }
+        }
+      },
+      "VideoChangeImageDto": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "url": {
+            "type": "string",
+            "description": "Absolute URL for the image, if available: a complete URL including scheme and host, ready to\nrequest as-is.",
+            "nullable": true
+          }
+        }
+      },
+      "VideoChangeNetworkDto": {
+        "required": [
+          "id",
+          "title",
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "VideoChangePreNameDto": {
+        "required": [
+          "id",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "VideoChangesCursorDto": {
+        "required": [
+          "updatedAtUtc",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "description": "Seek cursor for continuing an video change feed."
+      },
+      "VideoChangeSiteDto": {
+        "required": [
+          "id",
+          "title",
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "network": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VideoChangeNetworkDto"
+              }
+            ],
+            "nullable": true
+          }
+        }
+      },
+      "VideoChangeVideoDto": {
+        "required": [
+          "isDeleted",
+          "deletedAtUtc",
+          "mergedIntoId",
+          "id",
+          "title",
+          "createdAtUtc",
+          "updatedAtUtc",
+          "site",
+          "qualityOverview",
+          "images",
+          "preNames",
+          "actors"
+        ],
+        "type": "object",
+        "properties": {
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "deletedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "mergedIntoId": {
+            "type": "string",
+            "description": "Surviving video UUID when deleted by a merge; otherwise null.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Catalogue description of the video, if known.",
+            "nullable": true
+          },
+          "stashdbSceneId": {
+            "type": "string",
+            "description": "StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does not\nexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "releaseDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "site": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/VideoChangeSiteDto"
+              }
+            ],
+            "nullable": true
+          },
+          "durationMs": {
+            "type": "integer",
+            "description": "Consensus duration in milliseconds across the files prdb holds for this video, or null while\ntoo few independent submitters have reported one. A median, not an average: durations differ\nlegitimately — cuts, with and without an intro, re-encodes with padding — and one short\noutlier would drag an average off the value the real files agree on.",
+            "format": "int64",
+            "nullable": true
+          },
+          "durationSpreadMs": {
+            "type": "integer",
+            "description": "How far the files disagree about the duration, in milliseconds (median absolute deviation).\nZero means every file agrees; a large value means several versions are in circulation, which\nis the more useful of the two statements. Null exactly when `durationMs` is null.",
+            "format": "int64",
+            "nullable": true
+          },
+          "durationFileCount": {
+            "type": "integer",
+            "description": "How many files the duration was taken over. The spread cannot be read without it — one over\ntwo files says far less than one over twenty. Null exactly when `durationMs` is null.",
+            "format": "int32",
+            "nullable": true
+          },
+          "qualityOverview": {
+            "$ref": "#/components/schemas/VideoQualityOverviewDto"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoChangeImageDto"
+            },
+            "description": "Images for this video, ordered oldest first by the time they were added, with the image ID\nas the tie-breaker. The order is stable across requests."
+          },
+          "preNames": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoChangePreNameDto"
+            }
+          },
+          "actors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoChangeActorDto"
+            }
+          }
+        }
       },
       "VideoCodecCountDto": {
         "required": [
@@ -10199,7 +10933,7 @@
   "tags": [
     {
       "name": "Videos",
-      "description": "Video metadata: paged listing with filters, plus single and batch lookup by ID."
+      "description": "Follow /videos/changes for full current payloads and deletion tombstones. Tombstones are retained indefinitely, with a guaranteed minimum of 90 days. Video metadata: paged listing with filters, plus single and batch lookup by ID."
     },
     {
       "name": "VideoFilehashes",
@@ -10227,7 +10961,7 @@
     },
     {
       "name": "Sites",
-      "description": "Site and studio metadata."
+      "description": "Site and studio metadata. Follow /sites/changes for current-state updates and deletion tombstones. Tombstones are retained indefinitely, with a guaranteed minimum of 90 days."
     },
     {
       "name": "FavoriteSites",

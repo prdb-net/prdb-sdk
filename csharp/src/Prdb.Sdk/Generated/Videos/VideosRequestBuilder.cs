@@ -5,6 +5,7 @@ using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Abstractions;
 using Prdb.Sdk.Generated.Models;
 using Prdb.Sdk.Generated.Videos.Batch;
+using Prdb.Sdk.Generated.Videos.Changes;
 using Prdb.Sdk.Generated.Videos.FilehashSubmissions;
 using Prdb.Sdk.Generated.Videos.Filehashes;
 using Prdb.Sdk.Generated.Videos.Identify;
@@ -27,6 +28,11 @@ namespace Prdb.Sdk.Generated.Videos
         public global::Prdb.Sdk.Generated.Videos.Batch.BatchRequestBuilder Batch
         {
             get => new global::Prdb.Sdk.Generated.Videos.Batch.BatchRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The changes property</summary>
+        public global::Prdb.Sdk.Generated.Videos.Changes.ChangesRequestBuilder Changes
+        {
+            get => new global::Prdb.Sdk.Generated.Videos.Changes.ChangesRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The filehashes property</summary>
         public global::Prdb.Sdk.Generated.Videos.Filehashes.FilehashesRequestBuilder Filehashes

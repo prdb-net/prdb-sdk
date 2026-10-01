@@ -4,6 +4,7 @@ using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Abstractions;
 using Prdb.Sdk.Generated.Models;
+using Prdb.Sdk.Generated.Sites.Changes;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -17,6 +18,11 @@ namespace Prdb.Sdk.Generated.Sites
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class SitesRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The changes property</summary>
+        public global::Prdb.Sdk.Generated.Sites.Changes.ChangesRequestBuilder Changes
+        {
+            get => new global::Prdb.Sdk.Generated.Sites.Changes.ChangesRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Sites.SitesRequestBuilder"/> and sets the default values.
         /// </summary>
