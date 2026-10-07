@@ -15,6 +15,31 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.16.1] - 2026-10-07
+
+A regeneration that changes no type, field, method or status code. The API's
+change feeds behave differently, and the doc comments in all four languages now
+say how.
+
+### Documented
+
+- **Every change feed reads two minutes behind the server clock.** A page only
+  contains rows whose `updatedAtUtc` is at least two minutes old, and
+  `serverTimeUtc` is the server clock minus that delay, never older than a row
+  on the page. The server stamps a row before it commits it, so a feed reading
+  up to the present could hand out a cursor beyond a row that was not visible
+  yet, and that row was never returned. Changes now reach a consumer up to two
+  minutes later; persisting `serverTimeUtc` as the next `since` after an empty
+  page stays correct. A stored cursor newer than the bound gets empty pages
+  until the bound passes it. This applies to all ten `/…/changes` feeds; see
+  [Catalogue synchronization](docs/catalog-sync.md).
+
+- **`GET /video-user-images/changes` no longer exposes hidden images.** An image
+  that is deleted, or hidden, denied or removed in moderation, is reported with
+  `eventType: "deleted"`, an empty `url` and a null `vttUrl`; a restored image
+  reappears as `updated` with its URLs. `url` remains a non-nullable string, so
+  the generated types are unchanged; treat `""` as "no image".
+
 ## [0.16.0] - 2026-10-01
 
 ### Added
