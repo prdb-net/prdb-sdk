@@ -11,7 +11,7 @@ import { type BaseRequestBuilder, type Guid, type Parsable, type ParsableFactory
  */
 export interface ChangesRequestBuilder extends BaseRequestBuilder<ChangesRequestBuilder> {
     /**
-     * Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+     * Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<GetActorChangesResponse>}
      * @throws {ProblemDetails} error when the service returns a 400 status code
@@ -22,14 +22,14 @@ export interface ChangesRequestBuilder extends BaseRequestBuilder<ChangesRequest
      */
      get(requestConfiguration?: RequestConfiguration<ChangesRequestBuilderGetQueryParameters> | undefined) : Promise<GetActorChangesResponse | undefined>;
     /**
-     * Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+     * Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */
      toGetRequestInformation(requestConfiguration?: RequestConfiguration<ChangesRequestBuilderGetQueryParameters> | undefined) : RequestInformation;
 }
 /**
- * Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+ * Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
  */
 export interface ChangesRequestBuilderGetQueryParameters {
     /**

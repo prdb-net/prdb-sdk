@@ -20,7 +20,7 @@ type GetWantedVideoChangesResponse struct {
     nextCursor WantedVideoChangesCursorDtoable
     // The pageSize property
     pageSize *int32
-    // The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+    // The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
     serverTimeUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
 }
 // NewGetWantedVideoChangesResponse instantiates a new GetWantedVideoChangesResponse and sets the default values.
@@ -122,7 +122,7 @@ func (m *GetWantedVideoChangesResponse) GetNextCursor()(WantedVideoChangesCursor
 func (m *GetWantedVideoChangesResponse) GetPageSize()(*int32) {
     return m.pageSize
 }
-// GetServerTimeUtc gets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+// GetServerTimeUtc gets the serverTimeUtc property value. The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 // returns a *Time when successful
 func (m *GetWantedVideoChangesResponse) GetServerTimeUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.serverTimeUtc
@@ -193,7 +193,7 @@ func (m *GetWantedVideoChangesResponse) SetNextCursor(value WantedVideoChangesCu
 func (m *GetWantedVideoChangesResponse) SetPageSize(value *int32)() {
     m.pageSize = value
 }
-// SetServerTimeUtc sets the serverTimeUtc property value. The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+// SetServerTimeUtc sets the serverTimeUtc property value. The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
 func (m *GetWantedVideoChangesResponse) SetServerTimeUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.serverTimeUtc = value
 }

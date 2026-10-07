@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "prdb Public API",
-    "description": "Read and write access to the prdb catalogue: videos, actors, sites, scene pre-database\nreleases, file hashes and the per-user lists built on top of them.\n\nAuthenticate every request except the health probe with an API key in the `X-Api-Key`\nheader. API access is part of the paid subscription tiers; requests are rate limited per\naccount and `GET /rate-limit` reports the remaining budget.\n\nEvery authenticated endpoint can answer `403` when the account has no subscription tier that\nincludes API access, `429` when the hourly or monthly budget is spent, and `503` while rate\nlimiting itself is unavailable. The API serves no content it cannot meter, so treat `503`\nas retryable rather than as a permission problem.\n\nEndpoints named `/{resource}/changes` are delta feeds: they return the current state of\nrows changed since a cursor, including deletion tombstones, rather than a full history of\nevery mutation. `/videos/changes` and `/sites/changes` support a full baseline with\n`since=0001-01-01T00:00:00Z` and include edits to nested catalog content. Their deletion\ntombstones are retained indefinitely (at least 90 days); a consumer older than any future\nfinite retention window must rebuild its baseline. Pass both fields of `nextCursor` back\nverbatim. When a page is empty, persist `serverTimeUtc` as `since` and clear `sinceId`.\n\n### Media metadata\n\nA file's technical profile — duration, container, bit rate, video and audio codec,\nresolution, frame rate and channel count — is submitted by the clients that probed the\nfile, aggregated per file, and returned on every filehash payload. Each field is\nindependently optional: a client may report the duration and withhold the frame rate, and\na field nobody has reported is `null` rather than zero.\n\nTwo properties of it are easy to get wrong when consuming or re-deriving them:\n\n- **`frameRate` is a rational as measured, never a decimal.** `24000/1001`, not `23.976`.\n  Rounding merges rates that are not the same one, and for a variable-rate file the value\n  is a per-file average whose large denominator is the only sign it is not a constant\n  rate. Treat a large denominator as \"variable\" rather than as a rate.\n- **`width` and `height` are as stored and are not ordered.** Portrait video is ordinary,\n  so the larger of the two is not \"the resolution\" and a quality label derived from it is\n  wrong for a substantial share of real files.\n\nOn a video, `durationMs` is the **consensus** across the files known for it: a median, not\nan average, because durations differ legitimately between cuts, re-encodes and trailers,\nand one short outlier would move an average off the value the real files agree on. It\ncomes with `durationSpreadMs` — the median absolute deviation, where a large value means\nseveral versions are in circulation — and `durationFileCount`, without which the spread\ncannot be read. All three are `null` until enough independent submitters have reported a\nduration.\n\nResolution, codec and bit rate deliberately have no video-level value. Their aggregate is\nthe distribution in `qualityOverview`, which counts a video's files per resolution and per\ncodec — \"known in 1080p and 2160p\" is a true statement where a single resolution on the\nvideo would be a guess.\n\n### Perceptual hashes\n\nEvery endpoint that accepts a `pHash` expects a 64-bit perceptual hash as 16 hexadecimal\ncharacters, in either case; values are stored and returned uppercase. There is one\nprocedure for computing it — the one Stash uses — and a value produced any other way is\nnot comparable with the rest of the column, which nothing in the value itself reveals.\n\nSample 25 frames across the middle 90% of the runtime, one per timestamp, with the seek\nplaced **before** the input:\n`ffmpeg -loglevel error -y -ss <t> -i <file> -frames:v 1 -vf scale=160:-2 -c:v bmp -f rawvideo -`.\nAssemble them left to right and top to bottom into a 5x5 montage, scale that to 64x64 with\n`github.com/nfnt/resize`'s bilinear filter — whose support scales with the downscale\nfactor, so it is not four-neighbour interpolation and no other library substitutes for it\n— convert to luminance with 0.299/0.587/0.114, apply an unscaled DCT-II, and keep the\ntop-left 8x8 block row-major. Set the bit for every coefficient strictly above\n`goimagehash`'s `MedianOfPixels` threshold, most significant bit first, keeping the DC\ncoefficient. `0000000000000000` is a valid hash, not an error code.\n\n`pHash` values are matched for **equality**. Hamming-distance matching is not implemented.\n\nThe summary above is not enough to implement from, and it is not meant to be. The\nnormative specification — the exact resampler arithmetic, the threshold's quickselect\n(which is not a median), the DCT divisor tables, and test vectors at three levels — is\npublished at <https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing.md>, with\nthe vectors as data at\n<https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing-vectors.json>.\n\nFor .NET there is an implementation of it, the `Prdb.Hashing` package, which also computes\nthe `osHash`.",
+    "description": "Read and write access to the prdb catalogue: videos, actors, sites, scene pre-database\nreleases, file hashes and the per-user lists built on top of them.\n\nAuthenticate every request except the health probe with an API key in the `X-Api-Key`\nheader. API access is part of the paid subscription tiers; requests are rate limited per\naccount and `GET /rate-limit` reports the remaining budget.\n\nEvery authenticated endpoint can answer `403` when the account has no subscription tier that\nincludes API access, `429` when the hourly or monthly budget is spent, and `503` while rate\nlimiting itself is unavailable. The API serves no content it cannot meter, so treat `503`\nas retryable rather than as a permission problem.\n\nEndpoints named `/{resource}/changes` are delta feeds: they return the current state of\nrows changed since a cursor, including deletion tombstones, rather than a full history of\nevery mutation. `/videos/changes` and `/sites/changes` support a full baseline with\n`since=0001-01-01T00:00:00Z` and include edits to nested catalog content. Their deletion\ntombstones are retained indefinitely (at least 90 days); a consumer older than any future\nfinite retention window must rebuild its baseline. Pass both fields of `nextCursor` back\nverbatim. When a page is empty, persist `serverTimeUtc` as `since` and clear `sinceId`.\n\nEvery feed reads two minutes behind the server clock: a row is returned once its\n`updatedAtUtc` is at least that old, and `serverTimeUtc` is the server clock minus that\ndelay. A writer stamps a row before it commits it, so a feed that read up to the present\ncould hand out a cursor beyond a row that is not visible yet; the delay keeps such a row\nahead of every cursor as long as it commits within two minutes of its timestamp. Changes\ntherefore reach a consumer up to two minutes later than they are made.\n\n### Media metadata\n\nA file's technical profile — duration, container, bit rate, video and audio codec,\nresolution, frame rate and channel count — is submitted by the clients that probed the\nfile, aggregated per file, and returned on every filehash payload. Each field is\nindependently optional: a client may report the duration and withhold the frame rate, and\na field nobody has reported is `null` rather than zero.\n\nTwo properties of it are easy to get wrong when consuming or re-deriving them:\n\n- **`frameRate` is a rational as measured, never a decimal.** `24000/1001`, not `23.976`.\n  Rounding merges rates that are not the same one, and for a variable-rate file the value\n  is a per-file average whose large denominator is the only sign it is not a constant\n  rate. Treat a large denominator as \"variable\" rather than as a rate.\n- **`width` and `height` are as stored and are not ordered.** Portrait video is ordinary,\n  so the larger of the two is not \"the resolution\" and a quality label derived from it is\n  wrong for a substantial share of real files.\n\nOn a video, `durationMs` is the **consensus** across the files known for it: a median, not\nan average, because durations differ legitimately between cuts, re-encodes and trailers,\nand one short outlier would move an average off the value the real files agree on. It\ncomes with `durationSpreadMs` — the median absolute deviation, where a large value means\nseveral versions are in circulation — and `durationFileCount`, without which the spread\ncannot be read. All three are `null` until enough independent submitters have reported a\nduration.\n\nResolution, codec and bit rate deliberately have no video-level value. Their aggregate is\nthe distribution in `qualityOverview`, which counts a video's files per resolution and per\ncodec — \"known in 1080p and 2160p\" is a true statement where a single resolution on the\nvideo would be a guess.\n\n### Perceptual hashes\n\nEvery endpoint that accepts a `pHash` expects a 64-bit perceptual hash as 16 hexadecimal\ncharacters, in either case; values are stored and returned uppercase. There is one\nprocedure for computing it — the one Stash uses — and a value produced any other way is\nnot comparable with the rest of the column, which nothing in the value itself reveals.\n\nSample 25 frames across the middle 90% of the runtime, one per timestamp, with the seek\nplaced **before** the input:\n`ffmpeg -loglevel error -y -ss <t> -i <file> -frames:v 1 -vf scale=160:-2 -c:v bmp -f rawvideo -`.\nAssemble them left to right and top to bottom into a 5x5 montage, scale that to 64x64 with\n`github.com/nfnt/resize`'s bilinear filter — whose support scales with the downscale\nfactor, so it is not four-neighbour interpolation and no other library substitutes for it\n— convert to luminance with 0.299/0.587/0.114, apply an unscaled DCT-II, and keep the\ntop-left 8x8 block row-major. Set the bit for every coefficient strictly above\n`goimagehash`'s `MedianOfPixels` threshold, most significant bit first, keeping the DC\ncoefficient. `0000000000000000` is a valid hash, not an error code.\n\n`pHash` values are matched for **equality**. Hamming-distance matching is not implemented.\n\nThe summary above is not enough to implement from, and it is not meant to be. The\nnormative specification — the exact resampler arithmetic, the threshold's quickselect\n(which is not a median), the DCT divisor tables, and test vectors at three levels — is\npublished at <https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing.md>, with\nthe vectors as data at\n<https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing-vectors.json>.\n\nFor .NET there is an implementation of it, the `Prdb.Hashing` package, which also computes\nthe `osHash`.",
     "license": {
       "name": "Proprietary",
       "url": "https://prdb.net"
@@ -613,7 +613,7 @@
           "WantedVideos"
         ],
         "summary": "Get incremental wanted video changes",
-        "description": "Returns a seek-paged delta feed of wanted video rows for the currently authenticated user ordered by updatedAtUtc ascending, then videoId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of wanted video rows for the currently authenticated user ordered by updatedAtUtc ascending, then videoId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
         "operationId": "GetWantedVideoChanges",
         "parameters": [
           {
@@ -1424,7 +1424,7 @@
           "VideoUserImages"
         ],
         "summary": "Get incremental video user image changes",
-        "description": "Returns a seek-paged current-state delta feed of video user image rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, soft-deleted, and moderation-visibility updates as the current row payload. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged current-state delta feed of video user image rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, soft-deleted, and moderation-visibility updates as the current row payload. An image that is deleted or not active and public in moderation is reported with eventType deleted, an empty url and a null vttUrl; when moderation restores it, it reappears as updated with its URLs. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
         "operationId": "GetVideoUserImageChanges",
         "parameters": [
           {
@@ -1721,7 +1721,7 @@
           "VideoImages"
         ],
         "summary": "Get incremental video image changes",
-        "description": "Returns a seek-paged delta feed of site-supplied video image rows ordered by updatedAtUtc ascending, then id ascending. Images are attached to a video long after the video itself is created, so a consumer paging /videos by createdAtUtc alone never learns about them; this feed carries them. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Removals are not represented: video image rows are hard-deleted, so eventType is never deleted and a row that disappears simply stops being returned. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of site-supplied video image rows ordered by updatedAtUtc ascending, then id ascending. Images are attached to a video long after the video itself is created, so a consumer paging /videos by createdAtUtc alone never learns about them; this feed carries them. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Removals are not represented: video image rows are hard-deleted, so eventType is never deleted and a row that disappears simply stops being returned. Requires API key authentication.",
         "operationId": "GetVideoImageChanges",
         "parameters": [
           {
@@ -2807,7 +2807,7 @@
           "VideoFilehashes"
         ],
         "summary": "Get incremental video filehash changes",
-        "description": "Returns a seek-paged delta feed of video filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional video ID and site ID filters. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of video filehash rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Supports optional video ID and site ID filters. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Every filehash carries the technical profile aggregated from the clients that probed the file: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels, each null on its own where nothing was reported. The frame rate is a rational as measured (24000/1001), never a rounded decimal, and width and height are as stored rather than ordered — portrait video is ordinary. See Media metadata in the API description. Requires API key authentication.",
         "operationId": "GetVideoFilehashChanges",
         "parameters": [
           {
@@ -2942,7 +2942,7 @@
           "Videos"
         ],
         "summary": "Get incremental video changes",
-        "description": "Returns a seek-paged delta feed of video rows ordered by updatedAtUtc ascending, then video ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of video rows ordered by updatedAtUtc ascending, then video ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
         "operationId": "GetVideoChanges",
         "parameters": [
           {
@@ -3388,7 +3388,7 @@
           "Sites"
         ],
         "summary": "Get incremental site changes",
-        "description": "Returns a seek-paged delta feed of site rows ordered by updatedAtUtc ascending, then site ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of site rows ordered by updatedAtUtc ascending, then site ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
         "operationId": "GetSiteChanges",
         "parameters": [
           {
@@ -4326,7 +4326,7 @@
           "IgnoredSites"
         ],
         "summary": "Get incremental ignored site changes",
-        "description": "Returns a seek-paged delta feed of ignored site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of ignored site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
         "operationId": "GetIgnoredSiteChanges",
         "parameters": [
           {
@@ -4797,7 +4797,7 @@
           "FavoriteSites"
         ],
         "summary": "Get incremental favorite site changes",
-        "description": "Returns a seek-paged delta feed of favorite site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of favorite site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
         "operationId": "GetFavoriteSiteChanges",
         "parameters": [
           {
@@ -5235,7 +5235,7 @@
           "FavoriteActors"
         ],
         "summary": "Get incremental favorite actor changes",
-        "description": "Returns a seek-paged delta feed of favorite actor rows for the currently authenticated user ordered by updatedAtUtc ascending, then actorId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of favorite actor rows for the currently authenticated user ordered by updatedAtUtc ascending, then actorId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
         "operationId": "GetFavoriteActorChanges",
         "parameters": [
           {
@@ -5709,7 +5709,7 @@
           "Actors"
         ],
         "summary": "Get incremental actor changes",
-        "description": "Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
         "operationId": "GetActorChanges",
         "parameters": [
           {
@@ -7009,7 +7009,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
-            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "description": "The upper bound of this page: the server's clock minus the feed's settle delay (two\nminutes by default), read before the rows were queried. No row on the page is newer.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7065,7 +7065,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
-            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "description": "The upper bound of this page: the server's clock minus the feed's settle delay (two\nminutes by default), read before the rows were queried. No row on the page is newer.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7104,7 +7104,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
-            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "description": "The upper bound of this page: the server's clock minus the feed's settle delay (two\nminutes by default), read before the rows were queried. No row on the page is newer.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7162,7 +7162,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
-            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "description": "The upper bound of this page: the server's clock minus the feed's settle delay (two\nminutes by default), read before the rows were queried. No row on the page is newer.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7222,7 +7222,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
-            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "description": "The upper bound of this page: the server's clock minus the feed's settle delay (two\nminutes by default), read before the rows were queried. No row on the page is newer.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7261,7 +7261,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
-            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "description": "The upper bound of this page: the server's clock minus the feed's settle delay (two\nminutes by default), read before the rows were queried. No row on the page is newer.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7302,7 +7302,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
-            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "description": "The upper bound of this page: the server's clock minus the feed's settle delay (two\nminutes by default), read before the rows were queried. No row on the page is newer.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7382,7 +7382,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
-            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "description": "The upper bound of this page: the server's clock minus the feed's settle delay (two\nminutes by default), read before the rows were queried. No row on the page is newer.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7438,7 +7438,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
-            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "description": "The upper bound of this page: the server's clock minus the feed's settle delay (two\nminutes by default), read before the rows were queried. No row on the page is newer.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {
@@ -7475,7 +7475,7 @@
           },
           "serverTimeUtc": {
             "type": "string",
-            "description": "The server's clock when this page was produced, read before the rows were queried.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
+            "description": "The upper bound of this page: the server's clock minus the feed's settle delay (two\nminutes by default), read before the rows were queried. No row on the page is newer.\nSafe to persist as the next `since` when `items` is empty: an empty page\ncarries no row timestamp to continue from, and a client's own clock or the HTTP\n`Date` header are not sound substitutes for a value the server later reads back\nas a lower bound.",
             "format": "date-time"
           },
           "nextCursor": {

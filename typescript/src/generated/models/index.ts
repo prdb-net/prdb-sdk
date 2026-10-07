@@ -3962,7 +3962,7 @@ export interface GetActorChangesResponse extends AdditionalDataHolder, Parsable 
      */
     pageSize?: number | null;
     /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -3993,7 +3993,7 @@ export interface GetFavoriteActorChangesResponse extends AdditionalDataHolder, P
      */
     pageSize?: number | null;
     /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -4018,7 +4018,7 @@ export interface GetFavoriteSiteChangesResponse extends AdditionalDataHolder, Pa
      */
     pageSize?: number | null;
     /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -4056,7 +4056,7 @@ export interface GetIgnoredSiteChangesResponse extends AdditionalDataHolder, Par
      */
     pageSize?: number | null;
     /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -4098,7 +4098,7 @@ export interface GetSiteChangesResponse extends AdditionalDataHolder, Parsable {
      */
     pageSize?: number | null;
     /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -4123,7 +4123,7 @@ export interface GetVideoChangesResponse extends AdditionalDataHolder, Parsable 
      */
     pageSize?: number | null;
     /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -4148,7 +4148,7 @@ export interface GetVideoFilehashChangesResponse extends AdditionalDataHolder, P
      */
     pageSize?: number | null;
     /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -4189,7 +4189,7 @@ export interface GetVideoImageChangesResponse extends AdditionalDataHolder, Pars
      */
     pageSize?: number | null;
     /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -4217,7 +4217,7 @@ export interface GetVideoUserImageChangesResponse extends AdditionalDataHolder, 
      */
     pageSize?: number | null;
     /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }
@@ -4242,7 +4242,7 @@ export interface GetWantedVideoChangesResponse extends AdditionalDataHolder, Par
      */
     pageSize?: number | null;
     /**
-     * The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
      */
     serverTimeUtc?: Date | null;
 }

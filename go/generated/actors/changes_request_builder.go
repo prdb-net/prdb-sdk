@@ -15,7 +15,7 @@ import (
 type ChangesRequestBuilder struct {
     i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.BaseRequestBuilder
 }
-// ChangesRequestBuilderGetQueryParameters returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+// ChangesRequestBuilderGetQueryParameters returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
 type ChangesRequestBuilderGetQueryParameters struct {
     // Number of items per page. Defaults to 100, max 1000.
     PageSize *int32
@@ -37,7 +37,7 @@ func NewChangesRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263371
     urlParams["request-raw-url"] = rawUrl
     return NewChangesRequestBuilderInternal(urlParams, requestAdapter)
 }
-// Get returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+// Get returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
 // returns a GetActorChangesResponseable when successful
 // returns a ProblemDetails error when the service returns a 400 status code
 // returns a ProblemDetails error when the service returns a 401 status code
@@ -65,7 +65,7 @@ func (m *ChangesRequestBuilder) Get(ctx context.Context, requestConfiguration *i
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.GetActorChangesResponseable), nil
 }
-// ToGetRequestInformation returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+// ToGetRequestInformation returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *ChangesRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[ChangesRequestBuilderGetQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.GET, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

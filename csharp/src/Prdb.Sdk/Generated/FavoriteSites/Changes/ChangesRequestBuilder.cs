@@ -34,7 +34,7 @@ namespace Prdb.Sdk.Generated.FavoriteSites.Changes
         {
         }
         /// <summary>
-        /// Returns a seek-paged delta feed of favorite site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+        /// Returns a seek-paged delta feed of favorite site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.GetFavoriteSiteChangesResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -65,7 +65,7 @@ namespace Prdb.Sdk.Generated.FavoriteSites.Changes
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.GetFavoriteSiteChangesResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.GetFavoriteSiteChangesResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns a seek-paged delta feed of favorite site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+        /// Returns a seek-paged delta feed of favorite site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -93,7 +93,7 @@ namespace Prdb.Sdk.Generated.FavoriteSites.Changes
             return new global::Prdb.Sdk.Generated.FavoriteSites.Changes.ChangesRequestBuilder(rawUrl, RequestAdapter);
         }
         /// <summary>
-        /// Returns a seek-paged delta feed of favorite site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+        /// Returns a seek-paged delta feed of favorite site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class ChangesRequestBuilderGetQueryParameters 

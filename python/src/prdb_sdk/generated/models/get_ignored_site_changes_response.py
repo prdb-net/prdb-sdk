@@ -25,7 +25,7 @@ class GetIgnoredSiteChangesResponse(AdditionalDataHolder, Parsable):
     next_cursor: Optional[IgnoredSiteChangesCursorDto] = None
     # The pageSize property
     page_size: Optional[int] = None
-    # The server's clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+    # The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
     server_time_utc: Optional[datetime.datetime] = None
     
     @staticmethod
