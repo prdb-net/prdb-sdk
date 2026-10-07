@@ -34,7 +34,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     
     async def get(self,request_configuration: Optional[RequestConfiguration[ChangesRequestBuilderGetQueryParameters]] = None) -> Optional[GetVideoUserImageChangesResponse]:
         """
-        Returns a seek-paged current-state delta feed of video user image rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, soft-deleted, and moderation-visibility updates as the current row payload. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+        Returns a seek-paged current-state delta feed of video user image rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, soft-deleted, and moderation-visibility updates as the current row payload. An image that is deleted or not active and public in moderation is reported with eventType deleted, an empty url and a null vttUrl; when moderation restores it, it reappears as updated with its URLs. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[GetVideoUserImageChangesResponse]
         """
@@ -58,7 +58,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     
     def to_get_request_information(self,request_configuration: Optional[RequestConfiguration[ChangesRequestBuilderGetQueryParameters]] = None) -> RequestInformation:
         """
-        Returns a seek-paged current-state delta feed of video user image rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, soft-deleted, and moderation-visibility updates as the current row payload. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+        Returns a seek-paged current-state delta feed of video user image rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, soft-deleted, and moderation-visibility updates as the current row payload. An image that is deleted or not active and public in moderation is reported with eventType deleted, an empty url and a null vttUrl; when moderation restores it, it reappears as updated with its URLs. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
@@ -80,7 +80,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     @dataclass
     class ChangesRequestBuilderGetQueryParameters():
         """
-        Returns a seek-paged current-state delta feed of video user image rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, soft-deleted, and moderation-visibility updates as the current row payload. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+        Returns a seek-paged current-state delta feed of video user image rows ordered by updatedAtUtc ascending, then id ascending. Includes created, updated, soft-deleted, and moderation-visibility updates as the current row payload. An image that is deleted or not active and public in moderation is reported with eventType deleted, an empty url and a null vttUrl; when moderation restores it, it reappears as updated with its URLs. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
         """
         def get_query_parameter(self,original_name: str) -> str:
             """

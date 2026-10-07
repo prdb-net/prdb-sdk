@@ -34,7 +34,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     
     async def get(self,request_configuration: Optional[RequestConfiguration[ChangesRequestBuilderGetQueryParameters]] = None) -> Optional[GetSiteChangesResponse]:
         """
-        Returns a seek-paged delta feed of site rows ordered by updatedAtUtc ascending, then site ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+        Returns a seek-paged delta feed of site rows ordered by updatedAtUtc ascending, then site ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[GetSiteChangesResponse]
         """
@@ -58,7 +58,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     
     def to_get_request_information(self,request_configuration: Optional[RequestConfiguration[ChangesRequestBuilderGetQueryParameters]] = None) -> RequestInformation:
         """
-        Returns a seek-paged delta feed of site rows ordered by updatedAtUtc ascending, then site ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+        Returns a seek-paged delta feed of site rows ordered by updatedAtUtc ascending, then site ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
@@ -80,7 +80,7 @@ class ChangesRequestBuilder(BaseRequestBuilder):
     @dataclass
     class ChangesRequestBuilderGetQueryParameters():
         """
-        Returns a seek-paged delta feed of site rows ordered by updatedAtUtc ascending, then site ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+        Returns a seek-paged delta feed of site rows ordered by updatedAtUtc ascending, then site ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
         """
         def get_query_parameter(self,original_name: str) -> str:
             """

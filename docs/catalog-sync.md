@@ -33,6 +33,16 @@ nullable `nextCursor`. Rows are ordered by `updatedAtUtc`, then UUID.
 5. When a page is empty, persist `serverTimeUtc` as `Since` and clear `SinceId`.
    An empty page has no row cursor; the server clock supplies the next lower bound.
 
+Both feeds read two minutes behind the server clock. A row appears once its
+`updatedAtUtc` is at least two minutes old, and `serverTimeUtc` is the server
+clock minus that delay, never older than a row on the page. The server stamps a
+row before it commits it, so a feed reading up to the present could hand out a
+cursor beyond a row that was not yet visible, and that row would be skipped for
+good. Expect edits to arrive up to two minutes after they are made. A stored
+cursor newer than the current bound — one taken from an older server just
+before the delay was introduced — produces empty pages until the bound passes
+it; keep polling as usual.
+
 Use UTC timestamps. In TypeScript, construct the baseline with the full ISO
 string above: the numeric `Date` constructor treats years 0 through 99 specially.
 

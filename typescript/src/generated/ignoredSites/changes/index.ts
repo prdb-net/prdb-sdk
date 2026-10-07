@@ -11,7 +11,7 @@ import { type BaseRequestBuilder, type Guid, type Parsable, type ParsableFactory
  */
 export interface ChangesRequestBuilder extends BaseRequestBuilder<ChangesRequestBuilder> {
     /**
-     * Returns a seek-paged delta feed of ignored site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+     * Returns a seek-paged delta feed of ignored site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<GetIgnoredSiteChangesResponse>}
      * @throws {ProblemDetails} error when the service returns a 400 status code
@@ -22,14 +22,14 @@ export interface ChangesRequestBuilder extends BaseRequestBuilder<ChangesRequest
      */
      get(requestConfiguration?: RequestConfiguration<ChangesRequestBuilderGetQueryParameters> | undefined) : Promise<GetIgnoredSiteChangesResponse | undefined>;
     /**
-     * Returns a seek-paged delta feed of ignored site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+     * Returns a seek-paged delta feed of ignored site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */
      toGetRequestInformation(requestConfiguration?: RequestConfiguration<ChangesRequestBuilderGetQueryParameters> | undefined) : RequestInformation;
 }
 /**
- * Returns a seek-paged delta feed of ignored site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Every page carries serverTimeUtc, the server clock read when the page was produced; persist it as the next since when items is empty. Requires API key authentication.
+ * Returns a seek-paged delta feed of ignored site rows for the currently authenticated user ordered by updatedAtUtc ascending, then siteId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.
  */
 export interface ChangesRequestBuilderGetQueryParameters {
     pageSize?: number;

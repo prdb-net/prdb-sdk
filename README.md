@@ -103,6 +103,15 @@ rather than a full history of every mutation — which makes them the right tool
 for keeping a local copy in sync. All of them page the same way, so one cursor
 loop drives any of them.
 
+Every feed reads two minutes behind the server clock. A row is returned once its
+`updatedAtUtc` is at least that old, and a page's `serverTimeUtc` is the server
+clock minus that delay, never older than a row on the page. The server stamps a
+row before it commits it; reading up to the present could hand out a cursor
+beyond a row that was not visible yet, and that row would never be returned.
+So changes reach a consumer up to two minutes after they are made, and
+persisting `serverTimeUtc` as the next `since` after an empty page stays
+correct.
+
 `GET /videos/changes` and `GET /sites/changes` include current catalogue
 content and minimal deletion tombstones. They support a full baseline and
 include edits to nested content. See [Catalogue synchronization](docs/catalog-sync.md)
@@ -113,6 +122,12 @@ hard deleted, so its `eventType` is only ever `created` or `updated`, and a
 removed image stops appearing rather than arriving as a `deleted` event. A
 consumer that needs to notice removals has to reconcile against the images it
 already holds.
+
+`GET /video-user-images/changes` reports visibility rather than storage. An
+image that is deleted, or hidden, denied or removed in moderation, arrives as
+`deleted` with an empty `url` and a null `vttUrl`; if moderation restores it, it
+reappears as `updated` with its URLs. `url` stays a non-nullable string, so
+treat `""` as "no image" rather than as a URL to request.
 
 Full reference: <https://apidocs.prdb.net/>
 

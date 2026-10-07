@@ -35,7 +35,7 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>The resolved page size for this response.</summary>
         public int? PageSize { get; set; }
-        /// <summary>The server&apos;s clock when this page was produced, read before the rows were queried.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client&apos;s own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.</summary>
+        /// <summary>The upper bound of this page: the server&apos;s clock minus the feed&apos;s settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client&apos;s own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.</summary>
         public DateTimeOffset? ServerTimeUtc { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.GetVideoFilehashChangesResponse"/> and sets the default values.
