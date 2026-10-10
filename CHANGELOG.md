@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.17.0] - 2026-10-10
+
 ### Added
 
 - **Creator platforms and confirmed account relationships.** All four SDKs
