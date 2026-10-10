@@ -5,6 +5,7 @@ using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Abstractions;
 using Prdb.Sdk.Generated.Models;
 using Prdb.Sdk.Generated.Sites.Changes;
+using Prdb.Sdk.Generated.Sites.Item;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -23,12 +24,24 @@ namespace Prdb.Sdk.Generated.Sites
         {
             get => new global::Prdb.Sdk.Generated.Sites.Changes.ChangesRequestBuilder(PathParameters, RequestAdapter);
         }
+        /// <summary>Gets an item from the Prdb.Sdk.Generated.sites.item collection</summary>
+        /// <param name="position">Unique identifier of the item</param>
+        /// <returns>A <see cref="global::Prdb.Sdk.Generated.Sites.Item.SitesItemRequestBuilder"/></returns>
+        public global::Prdb.Sdk.Generated.Sites.Item.SitesItemRequestBuilder this[Guid position]
+        {
+            get
+            {
+                var urlTplParams = new Dictionary<string, object>(PathParameters);
+                urlTplParams.Add("id", position);
+                return new global::Prdb.Sdk.Generated.Sites.Item.SitesItemRequestBuilder(urlTplParams, RequestAdapter);
+            }
+        }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Sites.SitesRequestBuilder"/> and sets the default values.
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public SitesRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/sites{?Page*,PageSize*,Search*,SortBy*,SortDirection*}", pathParameters)
+        public SitesRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/sites{?ClassicOnly*,Page*,PageSize*,PlatformId*,Search*,SortBy*,SortDirection*}", pathParameters)
         {
         }
         /// <summary>
@@ -36,7 +49,7 @@ namespace Prdb.Sdk.Generated.Sites
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public SitesRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/sites{?Page*,PageSize*,Search*,SortBy*,SortDirection*}", rawUrl)
+        public SitesRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/sites{?ClassicOnly*,Page*,PageSize*,PlatformId*,Search*,SortBy*,SortDirection*}", rawUrl)
         {
         }
         /// <summary>
@@ -104,10 +117,14 @@ namespace Prdb.Sdk.Generated.Sites
         [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
         public partial class SitesRequestBuilderGetQueryParameters 
         {
-            /// <summary>1-based page number. Defaults to 1.</summary>
+            /// <summary>Restrict to classic sites without a publishing platform. Cannot be combined with platformId.</summary>
+            public bool? ClassicOnly { get; set; }
+            /// <summary>1-based page number.</summary>
             public int? Page { get; set; }
             /// <summary>Number of items per page. Defaults to 20, max 1000 — the full list fits in one page.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Restrict to one publishing platform UUID.</summary>
+            public Guid? PlatformId { get; set; }
             /// <summary>Optional search term matched against site title.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable

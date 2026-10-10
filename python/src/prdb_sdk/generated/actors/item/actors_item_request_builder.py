@@ -16,6 +16,7 @@ from warnings import warn
 if TYPE_CHECKING:
     from ...models.actor_detail_dto import ActorDetailDto
     from ...models.problem_details import ProblemDetails
+    from .accounts.accounts_request_builder import AccountsRequestBuilder
 
 class ActorsItemRequestBuilder(BaseRequestBuilder):
     """
@@ -74,6 +75,15 @@ class ActorsItemRequestBuilder(BaseRequestBuilder):
         if raw_url is None:
             raise TypeError("raw_url cannot be null.")
         return ActorsItemRequestBuilder(self.request_adapter, raw_url)
+    
+    @property
+    def accounts(self) -> AccountsRequestBuilder:
+        """
+        The accounts property
+        """
+        from .accounts.accounts_request_builder import AccountsRequestBuilder
+
+        return AccountsRequestBuilder(self.request_adapter, self.path_parameters)
     
     @dataclass
     class ActorsItemRequestBuilderGetRequestConfiguration(RequestConfiguration[QueryParameters]):

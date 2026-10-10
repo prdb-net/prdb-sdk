@@ -17,6 +17,8 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
+    # Public account handle, independent of the local Site UUID.
+    account_handle: Optional[str] = None
     # Actors appearing in this video.
     actors: Optional[list[VideoSummaryActorDto]] = None
     # Timestamp when the video was created in PRDB.
@@ -31,6 +33,12 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
     duration_spread_ms: Optional[int] = None
     # Unique identifier of the video.
     id: Optional[UUID] = None
+    # Publishing platform UUID; null for classic studio sites.
+    platform_id: Optional[UUID] = None
+    # Stable publishing platform key; null for classic sites.
+    platform_key: Optional[str] = None
+    # Publishing platform display title; null for classic sites.
+    platform_title: Optional[str] = None
     # Release date of the video, if known.
     release_date: Optional[datetime.date] = None
     # Unique identifier of the site this video belongs to.
@@ -63,6 +71,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         from .video_summary_actor_dto import VideoSummaryActorDto
 
         fields: dict[str, Callable[[Any], None]] = {
+            "accountHandle": lambda n : setattr(self, 'account_handle', n.get_str_value()),
             "actors": lambda n : setattr(self, 'actors', n.get_collection_of_object_values(VideoSummaryActorDto)),
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
             "description": lambda n : setattr(self, 'description', n.get_str_value()),
@@ -70,6 +79,9 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
             "durationMs": lambda n : setattr(self, 'duration_ms', n.get_int_value()),
             "durationSpreadMs": lambda n : setattr(self, 'duration_spread_ms', n.get_int_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
+            "platformId": lambda n : setattr(self, 'platform_id', n.get_uuid_value()),
+            "platformKey": lambda n : setattr(self, 'platform_key', n.get_str_value()),
+            "platformTitle": lambda n : setattr(self, 'platform_title', n.get_str_value()),
             "releaseDate": lambda n : setattr(self, 'release_date', n.get_date_value()),
             "siteId": lambda n : setattr(self, 'site_id', n.get_uuid_value()),
             "siteTitle": lambda n : setattr(self, 'site_title', n.get_str_value()),
@@ -86,6 +98,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         """
         if writer is None:
             raise TypeError("writer cannot be null.")
+        writer.write_str_value("accountHandle", self.account_handle)
         writer.write_collection_of_object_values("actors", self.actors)
         writer.write_datetime_value("createdAtUtc", self.created_at_utc)
         writer.write_str_value("description", self.description)
@@ -93,6 +106,9 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         writer.write_int_value("durationMs", self.duration_ms)
         writer.write_int_value("durationSpreadMs", self.duration_spread_ms)
         writer.write_uuid_value("id", self.id)
+        writer.write_uuid_value("platformId", self.platform_id)
+        writer.write_str_value("platformKey", self.platform_key)
+        writer.write_str_value("platformTitle", self.platform_title)
         writer.write_date_value("releaseDate", self.release_date)
         writer.write_uuid_value("siteId", self.site_id)
         writer.write_str_value("siteTitle", self.site_title)

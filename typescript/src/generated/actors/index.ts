@@ -8,7 +8,7 @@ import { BatchRequestBuilderRequestsMetadata, type BatchRequestBuilder } from '.
 // @ts-ignore
 import { ChangesRequestBuilderRequestsMetadata, type ChangesRequestBuilder } from './changes/index.js';
 // @ts-ignore
-import { ActorsItemRequestBuilderRequestsMetadata, type ActorsItemRequestBuilder } from './item/index.js';
+import { ActorsItemRequestBuilderNavigationMetadata, ActorsItemRequestBuilderRequestsMetadata, type ActorsItemRequestBuilder } from './item/index.js';
 // @ts-ignore
 import { type BaseRequestBuilder, type Guid, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
 
@@ -103,6 +103,7 @@ const ActorsRequestBuilderGetQueryParametersMapper: Record<string, string> = {
 export const ActorsRequestBuilderNavigationMetadata: Record<Exclude<keyof ActorsRequestBuilder, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
     byId: {
         requestsMetadata: ActorsItemRequestBuilderRequestsMetadata,
+        navigationMetadata: ActorsItemRequestBuilderNavigationMetadata,
         pathParametersMappings: ["id"],
     },
     batch: {

@@ -21,6 +21,7 @@ import (
     ib501bb59d891d348a1fb3d04a5513f77c38964c34d017e5b23aeda26bfd9a7f2 "github.com/prdb-net/prdb-sdk/go/generated/sites"
     ibb80a02347ec409bec9803cc4cc4367ebec3877666fc8d006c680689a023a280 "github.com/prdb-net/prdb-sdk/go/generated/favoriteactors"
     id780830cc889b7bcb2d031b01be37a43ad86e422b5fc4cc26d17a7eea366f65c "github.com/prdb-net/prdb-sdk/go/generated/ignoredsites"
+    ie41cecbb4349f58832154fde6fd628e18b93379ff741898911c43b5e182cccb4 "github.com/prdb-net/prdb-sdk/go/generated/platforms"
     if74dbd27953d29efb807ca48dd3c81a558dddda8573335a7c84e57f024f32144 "github.com/prdb-net/prdb-sdk/go/generated/ratelimit"
 )
 
@@ -70,6 +71,11 @@ func (m *PrdbClient) Health()(*i371e6e58f853fdf9b4c98cc455f8681d07ffc467ce06a232
 // returns a *IgnoredSitesRequestBuilder when successful
 func (m *PrdbClient) IgnoredSites()(*id780830cc889b7bcb2d031b01be37a43ad86e422b5fc4cc26d17a7eea366f65c.IgnoredSitesRequestBuilder) {
     return id780830cc889b7bcb2d031b01be37a43ad86e422b5fc4cc26d17a7eea366f65c.NewIgnoredSitesRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
+// Platforms the platforms property
+// returns a *PlatformsRequestBuilder when successful
+func (m *PrdbClient) Platforms()(*ie41cecbb4349f58832154fde6fd628e18b93379ff741898911c43b5e182cccb4.PlatformsRequestBuilder) {
+    return ie41cecbb4349f58832154fde6fd628e18b93379ff741898911c43b5e182cccb4.NewPlatformsRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
 // Predb the predb property
 // returns a *PredbRequestBuilder when successful

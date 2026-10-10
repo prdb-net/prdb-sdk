@@ -11,6 +11,8 @@ import (
 
 // VideoSummaryDto summary of a single video.
 type VideoSummaryDto struct {
+    // Public account handle, independent of the local Site UUID.
+    accountHandle *string
     // Actors appearing in this video.
     actors []VideoSummaryActorDtoable
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
@@ -27,6 +29,12 @@ type VideoSummaryDto struct {
     durationSpreadMs *int64
     // Unique identifier of the video.
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Publishing platform UUID; null for classic studio sites.
+    platformId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Stable publishing platform key; null for classic sites.
+    platformKey *string
+    // Publishing platform display title; null for classic sites.
+    platformTitle *string
     // Release date of the video, if known.
     releaseDate *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
     // Unique identifier of the site this video belongs to.
@@ -49,6 +57,11 @@ func NewVideoSummaryDto()(*VideoSummaryDto) {
 // returns a Parsable when successful
 func CreateVideoSummaryDtoFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
     return NewVideoSummaryDto(), nil
+}
+// GetAccountHandle gets the accountHandle property value. Public account handle, independent of the local Site UUID.
+// returns a *string when successful
+func (m *VideoSummaryDto) GetAccountHandle()(*string) {
+    return m.accountHandle
 }
 // GetActors gets the actors property value. Actors appearing in this video.
 // returns a []VideoSummaryActorDtoable when successful
@@ -89,6 +102,16 @@ func (m *VideoSummaryDto) GetDurationSpreadMs()(*int64) {
 // returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
 func (m *VideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
     res := make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
+    res["accountHandle"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetAccountHandle(val)
+        }
+        return nil
+    }
     res["actors"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetCollectionOfObjectValues(CreateVideoSummaryActorDtoFromDiscriminatorValue)
         if err != nil {
@@ -165,6 +188,36 @@ func (m *VideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
         }
         return nil
     }
+    res["platformId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetUUIDValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformId(val)
+        }
+        return nil
+    }
+    res["platformKey"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformKey(val)
+        }
+        return nil
+    }
+    res["platformTitle"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformTitle(val)
+        }
+        return nil
+    }
     res["releaseDate"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetDateOnlyValue()
         if err != nil {
@@ -222,6 +275,21 @@ func (m *VideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
 func (m *VideoSummaryDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
 }
+// GetPlatformId gets the platformId property value. Publishing platform UUID; null for classic studio sites.
+// returns a *UUID when successful
+func (m *VideoSummaryDto) GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
+    return m.platformId
+}
+// GetPlatformKey gets the platformKey property value. Stable publishing platform key; null for classic sites.
+// returns a *string when successful
+func (m *VideoSummaryDto) GetPlatformKey()(*string) {
+    return m.platformKey
+}
+// GetPlatformTitle gets the platformTitle property value. Publishing platform display title; null for classic sites.
+// returns a *string when successful
+func (m *VideoSummaryDto) GetPlatformTitle()(*string) {
+    return m.platformTitle
+}
 // GetReleaseDate gets the releaseDate property value. Release date of the video, if known.
 // returns a *DateOnly when successful
 func (m *VideoSummaryDto) GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly) {
@@ -249,6 +317,12 @@ func (m *VideoSummaryDto) GetTitle()(*string) {
 }
 // Serialize serializes information the current object
 func (m *VideoSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
+    {
+        err := writer.WriteStringValue("accountHandle", m.GetAccountHandle())
+        if err != nil {
+            return err
+        }
+    }
     if m.GetActors() != nil {
         cast := make([]i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, len(m.GetActors()))
         for i, v := range m.GetActors() {
@@ -298,6 +372,24 @@ func (m *VideoSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0
         }
     }
     {
+        err := writer.WriteUUIDValue("platformId", m.GetPlatformId())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("platformKey", m.GetPlatformKey())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("platformTitle", m.GetPlatformTitle())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteDateOnlyValue("releaseDate", m.GetReleaseDate())
         if err != nil {
             return err
@@ -335,6 +427,10 @@ func (m *VideoSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0
     }
     return nil
 }
+// SetAccountHandle sets the accountHandle property value. Public account handle, independent of the local Site UUID.
+func (m *VideoSummaryDto) SetAccountHandle(value *string)() {
+    m.accountHandle = value
+}
 // SetActors sets the actors property value. Actors appearing in this video.
 func (m *VideoSummaryDto) SetActors(value []VideoSummaryActorDtoable)() {
     m.actors = value
@@ -367,6 +463,18 @@ func (m *VideoSummaryDto) SetDurationSpreadMs(value *int64)() {
 func (m *VideoSummaryDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
+// SetPlatformId sets the platformId property value. Publishing platform UUID; null for classic studio sites.
+func (m *VideoSummaryDto) SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
+    m.platformId = value
+}
+// SetPlatformKey sets the platformKey property value. Stable publishing platform key; null for classic sites.
+func (m *VideoSummaryDto) SetPlatformKey(value *string)() {
+    m.platformKey = value
+}
+// SetPlatformTitle sets the platformTitle property value. Publishing platform display title; null for classic sites.
+func (m *VideoSummaryDto) SetPlatformTitle(value *string)() {
+    m.platformTitle = value
+}
 // SetReleaseDate sets the releaseDate property value. Release date of the video, if known.
 func (m *VideoSummaryDto) SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)() {
     m.releaseDate = value
@@ -390,6 +498,7 @@ func (m *VideoSummaryDto) SetTitle(value *string)() {
 type VideoSummaryDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
+    GetAccountHandle()(*string)
     GetActors()([]VideoSummaryActorDtoable)
     GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetDescription()(*string)
@@ -397,11 +506,15 @@ type VideoSummaryDtoable interface {
     GetDurationMs()(*int64)
     GetDurationSpreadMs()(*int64)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
+    GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
+    GetPlatformKey()(*string)
+    GetPlatformTitle()(*string)
     GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)
     GetSiteId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetSiteTitle()(*string)
     GetStashdbSceneId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetTitle()(*string)
+    SetAccountHandle(value *string)()
     SetActors(value []VideoSummaryActorDtoable)()
     SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetDescription(value *string)()
@@ -409,6 +522,9 @@ type VideoSummaryDtoable interface {
     SetDurationMs(value *int64)()
     SetDurationSpreadMs(value *int64)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
+    SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
+    SetPlatformKey(value *string)()
+    SetPlatformTitle(value *string)()
     SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)()
     SetSiteId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetSiteTitle(value *string)()

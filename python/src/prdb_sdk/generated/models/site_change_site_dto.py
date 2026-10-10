@@ -14,6 +14,8 @@ class SiteChangeSiteDto(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
+    # Public account handle, independent of the local Site UUID.
+    account_handle: Optional[str] = None
     # When this site was created.
     created_at_utc: Optional[datetime.datetime] = None
     # The deletedAtUtc property
@@ -30,6 +32,12 @@ class SiteChangeSiteDto(AdditionalDataHolder, Parsable):
     network_title: Optional[str] = None
     # The networkUrl property
     network_url: Optional[str] = None
+    # Publishing platform UUID; null for classic studio sites.
+    platform_id: Optional[UUID] = None
+    # Stable publishing platform key; null for classic sites.
+    platform_key: Optional[str] = None
+    # Publishing platform display title; null for classic sites.
+    platform_title: Optional[str] = None
     # Site title.
     title: Optional[str] = None
     # When this site was last changed.
@@ -58,6 +66,7 @@ class SiteChangeSiteDto(AdditionalDataHolder, Parsable):
         from .site_change_link_dto import SiteChangeLinkDto
 
         fields: dict[str, Callable[[Any], None]] = {
+            "accountHandle": lambda n : setattr(self, 'account_handle', n.get_str_value()),
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
             "deletedAtUtc": lambda n : setattr(self, 'deleted_at_utc', n.get_datetime_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
@@ -66,6 +75,9 @@ class SiteChangeSiteDto(AdditionalDataHolder, Parsable):
             "networkId": lambda n : setattr(self, 'network_id', n.get_uuid_value()),
             "networkTitle": lambda n : setattr(self, 'network_title', n.get_str_value()),
             "networkUrl": lambda n : setattr(self, 'network_url', n.get_str_value()),
+            "platformId": lambda n : setattr(self, 'platform_id', n.get_uuid_value()),
+            "platformKey": lambda n : setattr(self, 'platform_key', n.get_str_value()),
+            "platformTitle": lambda n : setattr(self, 'platform_title', n.get_str_value()),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
             "updatedAtUtc": lambda n : setattr(self, 'updated_at_utc', n.get_datetime_value()),
             "url": lambda n : setattr(self, 'url', n.get_str_value()),
@@ -80,6 +92,7 @@ class SiteChangeSiteDto(AdditionalDataHolder, Parsable):
         """
         if writer is None:
             raise TypeError("writer cannot be null.")
+        writer.write_str_value("accountHandle", self.account_handle)
         writer.write_datetime_value("createdAtUtc", self.created_at_utc)
         writer.write_datetime_value("deletedAtUtc", self.deleted_at_utc)
         writer.write_uuid_value("id", self.id)
@@ -88,6 +101,9 @@ class SiteChangeSiteDto(AdditionalDataHolder, Parsable):
         writer.write_uuid_value("networkId", self.network_id)
         writer.write_str_value("networkTitle", self.network_title)
         writer.write_str_value("networkUrl", self.network_url)
+        writer.write_uuid_value("platformId", self.platform_id)
+        writer.write_str_value("platformKey", self.platform_key)
+        writer.write_str_value("platformTitle", self.platform_title)
         writer.write_str_value("title", self.title)
         writer.write_datetime_value("updatedAtUtc", self.updated_at_utc)
         writer.write_str_value("url", self.url)

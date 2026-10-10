@@ -13,6 +13,14 @@ namespace Prdb.Sdk.Generated.Models
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class FavoriteSiteSummaryDto : IAdditionalDataHolder, IParsable
     {
+        /// <summary>Public account handle, independent of the local Site UUID.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? AccountHandle { get; set; }
+#nullable restore
+#else
+        public string AccountHandle { get; set; }
+#endif
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
         /// <summary>UTC timestamp when the user added this site to their favorites.</summary>
@@ -28,6 +36,24 @@ namespace Prdb.Sdk.Generated.Models
 #nullable restore
 #else
         public string NetworkTitle { get; set; }
+#endif
+        /// <summary>Publishing platform UUID; null for classic studio sites.</summary>
+        public Guid? PlatformId { get; set; }
+        /// <summary>Stable publishing platform key; null for classic sites.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? PlatformKey { get; set; }
+#nullable restore
+#else
+        public string PlatformKey { get; set; }
+#endif
+        /// <summary>Publishing platform display title; null for classic sites.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? PlatformTitle { get; set; }
+#nullable restore
+#else
+        public string PlatformTitle { get; set; }
 #endif
         /// <summary>The title property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -70,10 +96,14 @@ namespace Prdb.Sdk.Generated.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "accountHandle", n => { AccountHandle = n.GetStringValue(); } },
                 { "favoritedAtUtc", n => { FavoritedAtUtc = n.GetDateTimeOffsetValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "networkId", n => { NetworkId = n.GetGuidValue(); } },
                 { "networkTitle", n => { NetworkTitle = n.GetStringValue(); } },
+                { "platformId", n => { PlatformId = n.GetGuidValue(); } },
+                { "platformKey", n => { PlatformKey = n.GetStringValue(); } },
+                { "platformTitle", n => { PlatformTitle = n.GetStringValue(); } },
                 { "title", n => { Title = n.GetStringValue(); } },
                 { "url", n => { Url = n.GetStringValue(); } },
             };
@@ -85,10 +115,14 @@ namespace Prdb.Sdk.Generated.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteStringValue("accountHandle", AccountHandle);
             writer.WriteDateTimeOffsetValue("favoritedAtUtc", FavoritedAtUtc);
             writer.WriteGuidValue("id", Id);
             writer.WriteGuidValue("networkId", NetworkId);
             writer.WriteStringValue("networkTitle", NetworkTitle);
+            writer.WriteGuidValue("platformId", PlatformId);
+            writer.WriteStringValue("platformKey", PlatformKey);
+            writer.WriteStringValue("platformTitle", PlatformTitle);
             writer.WriteStringValue("title", Title);
             writer.WriteStringValue("url", Url);
             writer.WriteAdditionalData(AdditionalData);

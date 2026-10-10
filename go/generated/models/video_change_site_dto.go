@@ -9,12 +9,20 @@ import (
 )
 
 type VideoChangeSiteDto struct {
+    // Public account handle, independent of the local Site UUID.
+    accountHandle *string
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
     // The id property
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The network property
     network VideoChangeNetworkDtoable
+    // Publishing platform UUID; null for classic studio sites.
+    platformId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Stable publishing platform key; null for classic sites.
+    platformKey *string
+    // Publishing platform display title; null for classic sites.
+    platformTitle *string
     // The title property
     title *string
     // The url property
@@ -32,6 +40,11 @@ func NewVideoChangeSiteDto()(*VideoChangeSiteDto) {
 func CreateVideoChangeSiteDtoFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
     return NewVideoChangeSiteDto(), nil
 }
+// GetAccountHandle gets the accountHandle property value. Public account handle, independent of the local Site UUID.
+// returns a *string when successful
+func (m *VideoChangeSiteDto) GetAccountHandle()(*string) {
+    return m.accountHandle
+}
 // GetAdditionalData gets the AdditionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
 // returns a map[string]any when successful
 func (m *VideoChangeSiteDto) GetAdditionalData()(map[string]any) {
@@ -41,6 +54,16 @@ func (m *VideoChangeSiteDto) GetAdditionalData()(map[string]any) {
 // returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
 func (m *VideoChangeSiteDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
     res := make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
+    res["accountHandle"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetAccountHandle(val)
+        }
+        return nil
+    }
     res["id"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetUUIDValue()
         if err != nil {
@@ -58,6 +81,36 @@ func (m *VideoChangeSiteDto) GetFieldDeserializers()(map[string]func(i878a80d233
         }
         if val != nil {
             m.SetNetwork(val.(VideoChangeNetworkDtoable))
+        }
+        return nil
+    }
+    res["platformId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetUUIDValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformId(val)
+        }
+        return nil
+    }
+    res["platformKey"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformKey(val)
+        }
+        return nil
+    }
+    res["platformTitle"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformTitle(val)
         }
         return nil
     }
@@ -93,6 +146,21 @@ func (m *VideoChangeSiteDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf
 func (m *VideoChangeSiteDto) GetNetwork()(VideoChangeNetworkDtoable) {
     return m.network
 }
+// GetPlatformId gets the platformId property value. Publishing platform UUID; null for classic studio sites.
+// returns a *UUID when successful
+func (m *VideoChangeSiteDto) GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
+    return m.platformId
+}
+// GetPlatformKey gets the platformKey property value. Stable publishing platform key; null for classic sites.
+// returns a *string when successful
+func (m *VideoChangeSiteDto) GetPlatformKey()(*string) {
+    return m.platformKey
+}
+// GetPlatformTitle gets the platformTitle property value. Publishing platform display title; null for classic sites.
+// returns a *string when successful
+func (m *VideoChangeSiteDto) GetPlatformTitle()(*string) {
+    return m.platformTitle
+}
 // GetTitle gets the title property value. The title property
 // returns a *string when successful
 func (m *VideoChangeSiteDto) GetTitle()(*string) {
@@ -106,6 +174,12 @@ func (m *VideoChangeSiteDto) GetUrl()(*string) {
 // Serialize serializes information the current object
 func (m *VideoChangeSiteDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
     {
+        err := writer.WriteStringValue("accountHandle", m.GetAccountHandle())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteUUIDValue("id", m.GetId())
         if err != nil {
             return err
@@ -113,6 +187,24 @@ func (m *VideoChangeSiteDto) Serialize(writer i878a80d2330e89d26896388a3f487eef2
     }
     {
         err := writer.WriteObjectValue("network", m.GetNetwork())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteUUIDValue("platformId", m.GetPlatformId())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("platformKey", m.GetPlatformKey())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("platformTitle", m.GetPlatformTitle())
         if err != nil {
             return err
         }
@@ -137,6 +229,10 @@ func (m *VideoChangeSiteDto) Serialize(writer i878a80d2330e89d26896388a3f487eef2
     }
     return nil
 }
+// SetAccountHandle sets the accountHandle property value. Public account handle, independent of the local Site UUID.
+func (m *VideoChangeSiteDto) SetAccountHandle(value *string)() {
+    m.accountHandle = value
+}
 // SetAdditionalData sets the AdditionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
 func (m *VideoChangeSiteDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
@@ -149,6 +245,18 @@ func (m *VideoChangeSiteDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3
 func (m *VideoChangeSiteDto) SetNetwork(value VideoChangeNetworkDtoable)() {
     m.network = value
 }
+// SetPlatformId sets the platformId property value. Publishing platform UUID; null for classic studio sites.
+func (m *VideoChangeSiteDto) SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
+    m.platformId = value
+}
+// SetPlatformKey sets the platformKey property value. Stable publishing platform key; null for classic sites.
+func (m *VideoChangeSiteDto) SetPlatformKey(value *string)() {
+    m.platformKey = value
+}
+// SetPlatformTitle sets the platformTitle property value. Publishing platform display title; null for classic sites.
+func (m *VideoChangeSiteDto) SetPlatformTitle(value *string)() {
+    m.platformTitle = value
+}
 // SetTitle sets the title property value. The title property
 func (m *VideoChangeSiteDto) SetTitle(value *string)() {
     m.title = value
@@ -160,12 +268,20 @@ func (m *VideoChangeSiteDto) SetUrl(value *string)() {
 type VideoChangeSiteDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
+    GetAccountHandle()(*string)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetNetwork()(VideoChangeNetworkDtoable)
+    GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
+    GetPlatformKey()(*string)
+    GetPlatformTitle()(*string)
     GetTitle()(*string)
     GetUrl()(*string)
+    SetAccountHandle(value *string)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetNetwork(value VideoChangeNetworkDtoable)()
+    SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
+    SetPlatformKey(value *string)()
+    SetPlatformTitle(value *string)()
     SetTitle(value *string)()
     SetUrl(value *string)()
 }

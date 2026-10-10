@@ -6,6 +6,7 @@ package sites
 import (
     "context"
     i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f "github.com/microsoft/kiota-abstractions-go"
+    i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22 "github.com/google/uuid"
     ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9 "github.com/prdb-net/prdb-sdk/go/generated/models"
 )
 
@@ -15,16 +16,30 @@ type SitesRequestBuilder struct {
 }
 // SitesRequestBuilderGetQueryParameters returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
 type SitesRequestBuilderGetQueryParameters struct {
-    // 1-based page number. Defaults to 1.
+    // Restrict to classic sites without a publishing platform. Cannot be combined with platformId.
+    ClassicOnly *bool
+    // 1-based page number.
     Page *int32
     // Number of items per page. Defaults to 20, max 1000 — the full list fits in one page.
     PageSize *int32
+    // Restrict to one publishing platform UUID.
+    PlatformId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Optional search term matched against site title.
     Search *string
     // Field to sort by. Supported values: `title` (default).
     SortBy *string
     // Sort direction: `asc` (default) or `desc`.
     SortDirection *GetSortDirectionQueryParameterType
+}
+// ById gets an item from the github.com/prdb-net/prdb-sdk/go/generated.sites.item collection
+// returns a *SitesItemRequestBuilder when successful
+func (m *SitesRequestBuilder) ById(id i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)(*SitesItemRequestBuilder) {
+    urlTplParams := make(map[string]string)
+    for idx, item := range m.BaseRequestBuilder.PathParameters {
+        urlTplParams[idx] = item
+    }
+    urlTplParams["id"] = id.String()
+    return NewSitesItemRequestBuilderInternal(urlTplParams, m.BaseRequestBuilder.RequestAdapter)
 }
 // Changes the changes property
 // returns a *ChangesRequestBuilder when successful
@@ -34,7 +49,7 @@ func (m *SitesRequestBuilder) Changes()(*ChangesRequestBuilder) {
 // NewSitesRequestBuilderInternal instantiates a new SitesRequestBuilder and sets the default values.
 func NewSitesRequestBuilderInternal(pathParameters map[string]string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*SitesRequestBuilder) {
     m := &SitesRequestBuilder{
-        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/sites{?Page*,PageSize*,Search*,SortBy*,SortDirection*}", pathParameters),
+        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/sites{?ClassicOnly*,Page*,PageSize*,PlatformId*,Search*,SortBy*,SortDirection*}", pathParameters),
     }
     return m
 }

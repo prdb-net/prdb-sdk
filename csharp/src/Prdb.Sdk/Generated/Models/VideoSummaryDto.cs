@@ -14,6 +14,14 @@ namespace Prdb.Sdk.Generated.Models
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class VideoSummaryDto : IAdditionalDataHolder, IParsable
     {
+        /// <summary>Public account handle, independent of the local Site UUID.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? AccountHandle { get; set; }
+#nullable restore
+#else
+        public string AccountHandle { get; set; }
+#endif
         /// <summary>Actors appearing in this video.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -42,6 +50,24 @@ namespace Prdb.Sdk.Generated.Models
         public long? DurationSpreadMs { get; set; }
         /// <summary>Unique identifier of the video.</summary>
         public Guid? Id { get; set; }
+        /// <summary>Publishing platform UUID; null for classic studio sites.</summary>
+        public Guid? PlatformId { get; set; }
+        /// <summary>Stable publishing platform key; null for classic sites.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? PlatformKey { get; set; }
+#nullable restore
+#else
+        public string PlatformKey { get; set; }
+#endif
+        /// <summary>Publishing platform display title; null for classic sites.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? PlatformTitle { get; set; }
+#nullable restore
+#else
+        public string PlatformTitle { get; set; }
+#endif
         /// <summary>Release date of the video, if known.</summary>
         public Date? ReleaseDate { get; set; }
         /// <summary>Unique identifier of the site this video belongs to.</summary>
@@ -89,6 +115,7 @@ namespace Prdb.Sdk.Generated.Models
         {
             return new Dictionary<string, Action<IParseNode>>
             {
+                { "accountHandle", n => { AccountHandle = n.GetStringValue(); } },
                 { "actors", n => { Actors = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto>(global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "createdAtUtc", n => { CreatedAtUtc = n.GetDateTimeOffsetValue(); } },
                 { "description", n => { Description = n.GetStringValue(); } },
@@ -96,6 +123,9 @@ namespace Prdb.Sdk.Generated.Models
                 { "durationMs", n => { DurationMs = n.GetLongValue(); } },
                 { "durationSpreadMs", n => { DurationSpreadMs = n.GetLongValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
+                { "platformId", n => { PlatformId = n.GetGuidValue(); } },
+                { "platformKey", n => { PlatformKey = n.GetStringValue(); } },
+                { "platformTitle", n => { PlatformTitle = n.GetStringValue(); } },
                 { "releaseDate", n => { ReleaseDate = n.GetDateValue(); } },
                 { "siteId", n => { SiteId = n.GetGuidValue(); } },
                 { "siteTitle", n => { SiteTitle = n.GetStringValue(); } },
@@ -110,6 +140,7 @@ namespace Prdb.Sdk.Generated.Models
         public virtual void Serialize(ISerializationWriter writer)
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
+            writer.WriteStringValue("accountHandle", AccountHandle);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto>("actors", Actors);
             writer.WriteDateTimeOffsetValue("createdAtUtc", CreatedAtUtc);
             writer.WriteStringValue("description", Description);
@@ -117,6 +148,9 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteLongValue("durationMs", DurationMs);
             writer.WriteLongValue("durationSpreadMs", DurationSpreadMs);
             writer.WriteGuidValue("id", Id);
+            writer.WriteGuidValue("platformId", PlatformId);
+            writer.WriteStringValue("platformKey", PlatformKey);
+            writer.WriteStringValue("platformTitle", PlatformTitle);
             writer.WriteDateValue("releaseDate", ReleaseDate);
             writer.WriteGuidValue("siteId", SiteId);
             writer.WriteStringValue("siteTitle", SiteTitle);

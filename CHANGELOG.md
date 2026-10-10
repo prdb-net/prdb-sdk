@@ -15,6 +15,38 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.17.0] - 2026-10-10
+
+### Added
+
+- **Creator platforms and confirmed account relationships.** All four SDKs
+  now expose `GET /platforms`, `GET /actors/{id}/accounts` and
+  `GET /sites/{id}/owners`. Publishing platforms have stable UUIDs, keys and
+  titles and are separate from studio-group Networks. Account/owner reads
+  return up to 200 confirmed catalogue relationships in deterministic order;
+  guest credits do not imply ownership, and private source identities and
+  evidence are excluded.
+- **Platform metadata throughout the catalogue.** Site and Video payloads,
+  including nested sites, favorite/ignored sites and current-state change
+  feeds, gain nullable `platformId`, `platformKey`, `platformTitle` and
+  `accountHandle`. Classic sites carry null platform metadata. Platform and
+  owner changes advance the affected Site, Actor and Video feeds so consumers
+  can update existing IDs with their current cursors.
+- **Platform filters for Sites and Videos.** `GET /sites` and `GET /videos`
+  accept `PlatformId` or `ClassicOnly=true`; combining them returns the
+  existing validation problem response. Existing routes, operation IDs,
+  response status declarations and change-feed cursor shapes are preserved.
+
+### Known limitations
+
+- **Go filtered Video requests require a raw URL.** The existing Kiota
+  timestamp-query bug also visits unset `CreatedAfter` and `CreatedBefore`
+  fields, so a typed Video query configuration panics even when only a
+  platform filter is set. Use `Videos().WithUrl(url).Get(ctx, nil)` with
+  `net/url`-encoded filters. The [Go README](go/README.md#platform-filters)
+  includes a compiled example and a regression test covers both filters
+  through the authenticated wrapper.
+
 ## [0.16.1] - 2026-10-07
 
 A regeneration that changes no type, field, method or status code. The API's

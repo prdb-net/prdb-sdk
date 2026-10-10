@@ -12,6 +12,8 @@ import { HealthRequestBuilderRequestsMetadata, type HealthRequestBuilder } from 
 // @ts-ignore
 import { IgnoredSitesRequestBuilderNavigationMetadata, IgnoredSitesRequestBuilderRequestsMetadata, type IgnoredSitesRequestBuilder } from './ignoredSites/index.js';
 // @ts-ignore
+import { PlatformsRequestBuilderRequestsMetadata, type PlatformsRequestBuilder } from './platforms/index.js';
+// @ts-ignore
 import { PredbRequestBuilderNavigationMetadata, PredbRequestBuilderRequestsMetadata, type PredbRequestBuilder } from './predb/index.js';
 // @ts-ignore
 import { RateLimitRequestBuilderRequestsMetadata, type RateLimitRequestBuilder } from './rateLimit/index.js';
@@ -95,6 +97,10 @@ export interface PrdbClient extends BaseRequestBuilder<PrdbClient> {
      */
     get ignoredSites(): IgnoredSitesRequestBuilder;
     /**
+     * The platforms property
+     */
+    get platforms(): PlatformsRequestBuilder;
+    /**
      * The predb property
      */
     get predb(): PredbRequestBuilder;
@@ -149,6 +155,9 @@ export const PrdbClientNavigationMetadata: Record<Exclude<keyof PrdbClient, Keys
     ignoredSites: {
         requestsMetadata: IgnoredSitesRequestBuilderRequestsMetadata,
         navigationMetadata: IgnoredSitesRequestBuilderNavigationMetadata,
+    },
+    platforms: {
+        requestsMetadata: PlatformsRequestBuilderRequestsMetadata,
     },
     predb: {
         requestsMetadata: PredbRequestBuilderRequestsMetadata,

@@ -6,7 +6,9 @@ import { createListSitesResponseFromDiscriminatorValue, createProblemDetailsFrom
 // @ts-ignore
 import { ChangesRequestBuilderRequestsMetadata, type ChangesRequestBuilder } from './changes/index.js';
 // @ts-ignore
-import { type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
+import { SitesItemRequestBuilderNavigationMetadata, type SitesItemRequestBuilder } from './item/index.js';
+// @ts-ignore
+import { type BaseRequestBuilder, type Guid, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
 
 export type GetSortDirectionQueryParameterType = (typeof GetSortDirectionQueryParameterTypeObject)[keyof typeof GetSortDirectionQueryParameterTypeObject];
 /**
@@ -17,6 +19,12 @@ export interface SitesRequestBuilder extends BaseRequestBuilder<SitesRequestBuil
      * The changes property
      */
     get changes(): ChangesRequestBuilder;
+    /**
+     * Gets an item from the prdb-sdk.sites.item collection
+     * @param id Unique identifier of the item
+     * @returns {SitesItemRequestBuilder}
+     */
+     byId(id: Guid) : SitesItemRequestBuilder;
     /**
      * Returns a paged list of sites ordered by title ascending. Supports filtering by search term matched against site title. The full list fits in a single request at pageSize=1000. Every response carries a weak ETag covering the matched rows and the paging, sorting and search parameters; send it back as If-None-Match to get 304 Not Modified while nothing changed. Because the shared read-only output cache does not vary by If-None-Match, a request that hits the cache is answered with 200 and a body instead of 304 — that is expected, not an error. Sites carry no alias names, and matching a file name to a site happens exclusively server-side in POST /videos/identify. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
@@ -40,13 +48,21 @@ export interface SitesRequestBuilder extends BaseRequestBuilder<SitesRequestBuil
  */
 export interface SitesRequestBuilderGetQueryParameters {
     /**
-     * 1-based page number. Defaults to 1.
+     * Restrict to classic sites without a publishing platform. Cannot be combined with platformId.
+     */
+    classicOnly?: boolean;
+    /**
+     * 1-based page number.
      */
     page?: number;
     /**
      * Number of items per page. Defaults to 20, max 1000 — the full list fits in one page.
      */
     pageSize?: number;
+    /**
+     * Restrict to one publishing platform UUID.
+     */
+    platformId?: Guid;
     /**
      * Optional search term matched against site title.
      */
@@ -63,7 +79,7 @@ export interface SitesRequestBuilderGetQueryParameters {
 /**
  * Uri template for the request builder.
  */
-export const SitesRequestBuilderUriTemplate = "{+baseurl}/sites{?Page*,PageSize*,Search*,SortBy*,SortDirection*}";
+export const SitesRequestBuilderUriTemplate = "{+baseurl}/sites{?ClassicOnly*,Page*,PageSize*,PlatformId*,Search*,SortBy*,SortDirection*}";
 /**
  * Allowed values: asc, desc.
  */
@@ -75,8 +91,10 @@ export const GetSortDirectionQueryParameterTypeObject = {
  * Mapper for query parameters from symbol name to serialization name represented as a constant.
  */
 const SitesRequestBuilderGetQueryParametersMapper: Record<string, string> = {
+    "classicOnly": "ClassicOnly",
     "page": "Page",
     "pageSize": "PageSize",
+    "platformId": "PlatformId",
     "search": "Search",
     "sortBy": "SortBy",
     "sortDirection": "SortDirection",
@@ -85,6 +103,10 @@ const SitesRequestBuilderGetQueryParametersMapper: Record<string, string> = {
  * Metadata for all the navigation properties in the request builder.
  */
 export const SitesRequestBuilderNavigationMetadata: Record<Exclude<keyof SitesRequestBuilder, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
+    byId: {
+        navigationMetadata: SitesItemRequestBuilderNavigationMetadata,
+        pathParametersMappings: ["id"],
+    },
     changes: {
         requestsMetadata: ChangesRequestBuilderRequestsMetadata,
     },

@@ -20,6 +20,7 @@ if TYPE_CHECKING:
     from .favorite_sites.favorite_sites_request_builder import FavoriteSitesRequestBuilder
     from .health.health_request_builder import HealthRequestBuilder
     from .ignored_sites.ignored_sites_request_builder import IgnoredSitesRequestBuilder
+    from .platforms.platforms_request_builder import PlatformsRequestBuilder
     from .predb.predb_request_builder import PredbRequestBuilder
     from .rate_limit.rate_limit_request_builder import RateLimitRequestBuilder
     from .sites.sites_request_builder import SitesRequestBuilder
@@ -96,6 +97,15 @@ class PrdbClient(BaseRequestBuilder):
         from .ignored_sites.ignored_sites_request_builder import IgnoredSitesRequestBuilder
 
         return IgnoredSitesRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
+    def platforms(self) -> PlatformsRequestBuilder:
+        """
+        The platforms property
+        """
+        from .platforms.platforms_request_builder import PlatformsRequestBuilder
+
+        return PlatformsRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
     def predb(self) -> PredbRequestBuilder:

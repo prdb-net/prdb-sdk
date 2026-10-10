@@ -83,6 +83,10 @@ export interface VideosRequestBuilderGetQueryParameters {
      */
     actorId?: Guid;
     /**
+     * Restrict to classic sites without a publishing platform. Cannot be combined with platformId.
+     */
+    classicOnly?: boolean;
+    /**
      * Return only videos created strictly after this timestamp (exclusive).
      */
     createdAfter?: Date;
@@ -91,13 +95,17 @@ export interface VideosRequestBuilderGetQueryParameters {
      */
     createdBefore?: Date;
     /**
-     * 1-based page number. Defaults to 1.
+     * 1-based page number.
      */
     page?: number;
     /**
      * Number of items per page. Defaults to 20, max 100.
      */
     pageSize?: number;
+    /**
+     * Restrict to one publishing platform UUID.
+     */
+    platformId?: Guid;
     /**
      * Optional search term matched against video title and site title.
      */
@@ -118,7 +126,7 @@ export interface VideosRequestBuilderGetQueryParameters {
 /**
  * Uri template for the request builder.
  */
-export const VideosRequestBuilderUriTemplate = "{+baseurl}/videos{?ActorId*,CreatedAfter*,CreatedBefore*,Page*,PageSize*,Search*,SiteId*,SortBy*,SortDirection*}";
+export const VideosRequestBuilderUriTemplate = "{+baseurl}/videos{?ActorId*,ClassicOnly*,CreatedAfter*,CreatedBefore*,Page*,PageSize*,PlatformId*,Search*,SiteId*,SortBy*,SortDirection*}";
 /**
  * Allowed values: title, releaseDate, createdAtUtc.
  */
@@ -139,10 +147,12 @@ export const GetSortDirectionQueryParameterTypeObject = {
  */
 const VideosRequestBuilderGetQueryParametersMapper: Record<string, string> = {
     "actorId": "ActorId",
+    "classicOnly": "ClassicOnly",
     "createdAfter": "CreatedAfter",
     "createdBefore": "CreatedBefore",
     "page": "Page",
     "pageSize": "PageSize",
+    "platformId": "PlatformId",
     "search": "Search",
     "siteId": "SiteId",
     "sortBy": "SortBy",

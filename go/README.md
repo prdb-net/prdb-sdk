@@ -101,6 +101,50 @@ func main() {
 The request builders mirror the API's URL structure, so `GET /videos/{id}/filehashes`
 is `client.Videos().ById(videoID).Filehashes().Get(ctx, nil)`.
 
+### Platform filters
+
+`GET /sites` and `GET /videos` accept `PlatformId` for one publishing platform
+or `ClassicOnly=true` for the classic catalogue. Leave both unset to include
+both; do not combine them.
+
+Use `WithUrl` for filtered Video requests. The pinned Kiota runtime visits
+the `CreatedAfter` and `CreatedBefore` timestamp fields even when they are nil,
+so a typed Video query configuration panics when only `PlatformId` or
+`ClassicOnly` is set. The same raw-URL approach works for Sites and keeps
+authentication, redirect protection and typed responses.
+
+```go
+package main
+
+import (
+    "context"
+    "log"
+    "net/url"
+
+    prdb "github.com/prdb-net/prdb-sdk/go"
+)
+
+func main() {
+    client, err := prdb.NewClient("...")
+    if err != nil {
+        log.Fatal(err)
+    }
+    query := url.Values{
+        "PlatformId": {"00000000-0000-0000-0000-000000000001"},
+    }
+    page, err := client.Videos().WithUrl(
+        prdb.DefaultBaseURL + "/videos?" + query.Encode(),
+    ).Get(context.Background(), nil)
+    if err != nil {
+        log.Fatal(err)
+    }
+    log.Printf("received %d videos", len(page.GetItems()))
+}
+```
+
+For the classic catalogue, replace `PlatformId` with `ClassicOnly` and set
+its value to `"true"`. For Sites, use `Sites()` and `/sites`.
+
 ## Authentication
 
 `NewClient` sends the key in the `X-Api-Key` header, and keeps it on the API
