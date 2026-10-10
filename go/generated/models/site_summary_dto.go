@@ -11,6 +11,8 @@ import (
 
 // SiteSummaryDto summary of a single site.
 type SiteSummaryDto struct {
+    // Public account handle, independent of the local Site UUID.
+    accountHandle *string
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
     // When this site was created.
@@ -23,6 +25,12 @@ type SiteSummaryDto struct {
     networkId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Title of the network this site belongs to, if any.
     networkTitle *string
+    // Publishing platform UUID; null for classic studio sites.
+    platformId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Stable publishing platform key; null for classic sites.
+    platformKey *string
+    // Publishing platform display title; null for classic sites.
+    platformTitle *string
     // Site title.
     title *string
     // When this site was last changed.
@@ -42,6 +50,11 @@ func NewSiteSummaryDto()(*SiteSummaryDto) {
 func CreateSiteSummaryDtoFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
     return NewSiteSummaryDto(), nil
 }
+// GetAccountHandle gets the accountHandle property value. Public account handle, independent of the local Site UUID.
+// returns a *string when successful
+func (m *SiteSummaryDto) GetAccountHandle()(*string) {
+    return m.accountHandle
+}
 // GetAdditionalData gets the AdditionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
 // returns a map[string]any when successful
 func (m *SiteSummaryDto) GetAdditionalData()(map[string]any) {
@@ -56,6 +69,16 @@ func (m *SiteSummaryDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f
 // returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
 func (m *SiteSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
     res := make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
+    res["accountHandle"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetAccountHandle(val)
+        }
+        return nil
+    }
     res["createdAtUtc"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetTimeValue()
         if err != nil {
@@ -112,6 +135,36 @@ func (m *SiteSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         return nil
     }
+    res["platformId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetUUIDValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformId(val)
+        }
+        return nil
+    }
+    res["platformKey"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformKey(val)
+        }
+        return nil
+    }
+    res["platformTitle"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformTitle(val)
+        }
+        return nil
+    }
     res["title"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -164,6 +217,21 @@ func (m *SiteSummaryDto) GetNetworkId()(*i561e97a8befe7661a44c8f54600992b4207a3a
 func (m *SiteSummaryDto) GetNetworkTitle()(*string) {
     return m.networkTitle
 }
+// GetPlatformId gets the platformId property value. Publishing platform UUID; null for classic studio sites.
+// returns a *UUID when successful
+func (m *SiteSummaryDto) GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
+    return m.platformId
+}
+// GetPlatformKey gets the platformKey property value. Stable publishing platform key; null for classic sites.
+// returns a *string when successful
+func (m *SiteSummaryDto) GetPlatformKey()(*string) {
+    return m.platformKey
+}
+// GetPlatformTitle gets the platformTitle property value. Publishing platform display title; null for classic sites.
+// returns a *string when successful
+func (m *SiteSummaryDto) GetPlatformTitle()(*string) {
+    return m.platformTitle
+}
 // GetTitle gets the title property value. Site title.
 // returns a *string when successful
 func (m *SiteSummaryDto) GetTitle()(*string) {
@@ -181,6 +249,12 @@ func (m *SiteSummaryDto) GetUrl()(*string) {
 }
 // Serialize serializes information the current object
 func (m *SiteSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
+    {
+        err := writer.WriteStringValue("accountHandle", m.GetAccountHandle())
+        if err != nil {
+            return err
+        }
+    }
     {
         err := writer.WriteTimeValue("createdAtUtc", m.GetCreatedAtUtc())
         if err != nil {
@@ -218,6 +292,24 @@ func (m *SiteSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
         }
     }
     {
+        err := writer.WriteUUIDValue("platformId", m.GetPlatformId())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("platformKey", m.GetPlatformKey())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("platformTitle", m.GetPlatformTitle())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteStringValue("title", m.GetTitle())
         if err != nil {
             return err
@@ -243,6 +335,10 @@ func (m *SiteSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
     }
     return nil
 }
+// SetAccountHandle sets the accountHandle property value. Public account handle, independent of the local Site UUID.
+func (m *SiteSummaryDto) SetAccountHandle(value *string)() {
+    m.accountHandle = value
+}
 // SetAdditionalData sets the AdditionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
 func (m *SiteSummaryDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
@@ -267,6 +363,18 @@ func (m *SiteSummaryDto) SetNetworkId(value *i561e97a8befe7661a44c8f54600992b420
 func (m *SiteSummaryDto) SetNetworkTitle(value *string)() {
     m.networkTitle = value
 }
+// SetPlatformId sets the platformId property value. Publishing platform UUID; null for classic studio sites.
+func (m *SiteSummaryDto) SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
+    m.platformId = value
+}
+// SetPlatformKey sets the platformKey property value. Stable publishing platform key; null for classic sites.
+func (m *SiteSummaryDto) SetPlatformKey(value *string)() {
+    m.platformKey = value
+}
+// SetPlatformTitle sets the platformTitle property value. Publishing platform display title; null for classic sites.
+func (m *SiteSummaryDto) SetPlatformTitle(value *string)() {
+    m.platformTitle = value
+}
 // SetTitle sets the title property value. Site title.
 func (m *SiteSummaryDto) SetTitle(value *string)() {
     m.title = value
@@ -282,19 +390,27 @@ func (m *SiteSummaryDto) SetUrl(value *string)() {
 type SiteSummaryDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
+    GetAccountHandle()(*string)
     GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetLinks()([]SiteLinkDtoable)
     GetNetworkId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetNetworkTitle()(*string)
+    GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
+    GetPlatformKey()(*string)
+    GetPlatformTitle()(*string)
     GetTitle()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetUrl()(*string)
+    SetAccountHandle(value *string)()
     SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetLinks(value []SiteLinkDtoable)()
     SetNetworkId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetNetworkTitle(value *string)()
+    SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
+    SetPlatformKey(value *string)()
+    SetPlatformTitle(value *string)()
     SetTitle(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetUrl(value *string)()

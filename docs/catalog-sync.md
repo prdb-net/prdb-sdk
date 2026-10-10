@@ -68,6 +68,16 @@ network, actors, images, pre-names, description and quality overview. Each
 site item wraps current site, network and link content in `site`. Changes to
 nested catalogue content advance the owning row's timestamp.
 
+SDK version 0.17.0 adds nullable `platformId`, `platformKey`, `platformTitle`
+and `accountHandle` to site payloads, including a video's nested site. These
+fields also appear in Video list summaries and favorite/ignored Site reads
+and feeds. Classic sites have null platform metadata. Changes to platform
+metadata or confirmed account owners advance the affected Site, Actor and
+Video feeds, so apply updates to existing IDs as usual. Read confirmed
+relationships through `GET /actors/{id}/accounts` or `GET /sites/{id}/owners`;
+guest credits are not ownership. The cursor format and paging procedure stay
+the same.
+
 Deletion items retain the payload UUID, `isDeleted` and `deletedAtUtc` while
 content fields are null or empty. A video deleted by a merge also carries
 `mergedIntoId`, the surviving video's UUID. Treat deletion items as removals;

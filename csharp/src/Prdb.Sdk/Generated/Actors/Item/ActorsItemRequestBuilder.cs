@@ -3,6 +3,7 @@
 using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Abstractions;
+using Prdb.Sdk.Generated.Actors.Item.Accounts;
 using Prdb.Sdk.Generated.Models;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,11 @@ namespace Prdb.Sdk.Generated.Actors.Item
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class ActorsItemRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The accounts property</summary>
+        public global::Prdb.Sdk.Generated.Actors.Item.Accounts.AccountsRequestBuilder Accounts
+        {
+            get => new global::Prdb.Sdk.Generated.Actors.Item.Accounts.AccountsRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Actors.Item.ActorsItemRequestBuilder"/> and sets the default values.
         /// </summary>

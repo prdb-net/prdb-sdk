@@ -19,14 +19,18 @@ type VideosRequestBuilder struct {
 type VideosRequestBuilderGetQueryParameters struct {
     // Optional filter to return only videos featuring the specified actor.
     ActorId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Restrict to classic sites without a publishing platform. Cannot be combined with platformId.
+    ClassicOnly *bool
     // Return only videos created strictly after this timestamp (exclusive).
     CreatedAfter *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // Return only videos created strictly before this timestamp (exclusive).
     CreatedBefore *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // 1-based page number. Defaults to 1.
+    // 1-based page number.
     Page *int32
     // Number of items per page. Defaults to 20, max 100.
     PageSize *int32
+    // Restrict to one publishing platform UUID.
+    PlatformId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Optional search term matched against video title and site title.
     Search *string
     // Optional filter to return only videos belonging to the specified site.
@@ -59,7 +63,7 @@ func (m *VideosRequestBuilder) Changes()(*ChangesRequestBuilder) {
 // NewVideosRequestBuilderInternal instantiates a new VideosRequestBuilder and sets the default values.
 func NewVideosRequestBuilderInternal(pathParameters map[string]string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*VideosRequestBuilder) {
     m := &VideosRequestBuilder{
-        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/videos{?ActorId*,CreatedAfter*,CreatedBefore*,Page*,PageSize*,Search*,SiteId*,SortBy*,SortDirection*}", pathParameters),
+        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/videos{?ActorId*,ClassicOnly*,CreatedAfter*,CreatedBefore*,Page*,PageSize*,PlatformId*,Search*,SiteId*,SortBy*,SortDirection*}", pathParameters),
     }
     return m
 }

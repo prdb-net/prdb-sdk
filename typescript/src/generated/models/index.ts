@@ -667,6 +667,24 @@ export function createAddWantedVideosBatchResponseFromDiscriminatorValue(parseNo
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {CreatorAccountDto}
+ */
+// @ts-ignore
+export function createCreatorAccountDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoCreatorAccountDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {CreatorAccountsResponse}
+ */
+// @ts-ignore
+export function createCreatorAccountsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoCreatorAccountsResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {FavoriteActorChangeDto}
  */
 // @ts-ignore
@@ -1090,6 +1108,15 @@ export function createListIgnoredSitesResponseFromDiscriminatorValue(parseNode: 
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ListPlatformsResponse}
+ */
+// @ts-ignore
+export function createListPlatformsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoListPlatformsResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {ListPreDbResponse}
  */
 // @ts-ignore
@@ -1140,6 +1167,15 @@ export function createLookupVideoFilehashesRequestFromDiscriminatorValue(parseNo
 // @ts-ignore
 export function createLookupVideoFilehashesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoLookupVideoFilehashesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {PlatformDto}
+ */
+// @ts-ignore
+export function createPlatformDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoPlatformDto;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1691,6 +1727,53 @@ export function createWantedVideoSummaryDtoFromDiscriminatorValue(parseNode: Par
     return deserializeIntoWantedVideoSummaryDto;
 }
 /**
+ * Confirmed catalogue ownership. Credits and private source identities are excluded.
+ */
+export interface CreatorAccountDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The accountHandle property
+     */
+    accountHandle?: string | null;
+    /**
+     * The actorId property
+     */
+    actorId?: Guid | null;
+    /**
+     * The actorName property
+     */
+    actorName?: string | null;
+    /**
+     * The platformId property
+     */
+    platformId?: Guid | null;
+    /**
+     * The platformKey property
+     */
+    platformKey?: string | null;
+    /**
+     * The platformTitle property
+     */
+    platformTitle?: string | null;
+    /**
+     * The siteId property
+     */
+    siteId?: Guid | null;
+    /**
+     * The siteTitle property
+     */
+    siteTitle?: string | null;
+    /**
+     * The url property
+     */
+    url?: string | null;
+}
+export interface CreatorAccountsResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The items property
+     */
+    items?: CreatorAccountDto[] | null;
+}
+/**
  * The deserialization information for the current model
  * @param ActiveSubscriptionDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
@@ -1967,6 +2050,36 @@ export function deserializeIntoAddWantedVideosBatchResponse(addWantedVideosBatch
 }
 /**
  * The deserialization information for the current model
+ * @param CreatorAccountDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoCreatorAccountDto(creatorAccountDto: Partial<CreatorAccountDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "accountHandle": n => { creatorAccountDto.accountHandle = n.getStringValue(); },
+        "actorId": n => { creatorAccountDto.actorId = n.getGuidValue(); },
+        "actorName": n => { creatorAccountDto.actorName = n.getStringValue(); },
+        "platformId": n => { creatorAccountDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { creatorAccountDto.platformKey = n.getStringValue(); },
+        "platformTitle": n => { creatorAccountDto.platformTitle = n.getStringValue(); },
+        "siteId": n => { creatorAccountDto.siteId = n.getGuidValue(); },
+        "siteTitle": n => { creatorAccountDto.siteTitle = n.getStringValue(); },
+        "url": n => { creatorAccountDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param CreatorAccountsResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoCreatorAccountsResponse(creatorAccountsResponse: Partial<CreatorAccountsResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "items": n => { creatorAccountsResponse.items = n.getCollectionOfObjectValues<CreatorAccountDto>(createCreatorAccountDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param FavoriteActorChangeDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2048,12 +2161,16 @@ export function deserializeIntoFavoriteSiteChangeDto(favoriteSiteChangeDto: Part
 // @ts-ignore
 export function deserializeIntoFavoriteSiteChangeFavoriteSiteDto(favoriteSiteChangeFavoriteSiteDto: Partial<FavoriteSiteChangeFavoriteSiteDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "accountHandle": n => { favoriteSiteChangeFavoriteSiteDto.accountHandle = n.getStringValue(); },
         "deletedAtUtc": n => { favoriteSiteChangeFavoriteSiteDto.deletedAtUtc = n.getDateValue(); },
         "favoritedAtUtc": n => { favoriteSiteChangeFavoriteSiteDto.favoritedAtUtc = n.getDateValue(); },
         "id": n => { favoriteSiteChangeFavoriteSiteDto.id = n.getGuidValue(); },
         "isDeleted": n => { favoriteSiteChangeFavoriteSiteDto.isDeleted = n.getBooleanValue(); },
         "networkId": n => { favoriteSiteChangeFavoriteSiteDto.networkId = n.getGuidValue(); },
         "networkTitle": n => { favoriteSiteChangeFavoriteSiteDto.networkTitle = n.getStringValue(); },
+        "platformId": n => { favoriteSiteChangeFavoriteSiteDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { favoriteSiteChangeFavoriteSiteDto.platformKey = n.getStringValue(); },
+        "platformTitle": n => { favoriteSiteChangeFavoriteSiteDto.platformTitle = n.getStringValue(); },
         "title": n => { favoriteSiteChangeFavoriteSiteDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { favoriteSiteChangeFavoriteSiteDto.updatedAtUtc = n.getDateValue(); },
         "url": n => { favoriteSiteChangeFavoriteSiteDto.url = n.getStringValue(); },
@@ -2079,10 +2196,14 @@ export function deserializeIntoFavoriteSiteChangesCursorDto(favoriteSiteChangesC
 // @ts-ignore
 export function deserializeIntoFavoriteSiteSummaryDto(favoriteSiteSummaryDto: Partial<FavoriteSiteSummaryDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "accountHandle": n => { favoriteSiteSummaryDto.accountHandle = n.getStringValue(); },
         "favoritedAtUtc": n => { favoriteSiteSummaryDto.favoritedAtUtc = n.getDateValue(); },
         "id": n => { favoriteSiteSummaryDto.id = n.getGuidValue(); },
         "networkId": n => { favoriteSiteSummaryDto.networkId = n.getGuidValue(); },
         "networkTitle": n => { favoriteSiteSummaryDto.networkTitle = n.getStringValue(); },
+        "platformId": n => { favoriteSiteSummaryDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { favoriteSiteSummaryDto.platformKey = n.getStringValue(); },
+        "platformTitle": n => { favoriteSiteSummaryDto.platformTitle = n.getStringValue(); },
         "title": n => { favoriteSiteSummaryDto.title = n.getStringValue(); },
         "url": n => { favoriteSiteSummaryDto.url = n.getStringValue(); },
     }
@@ -2446,12 +2567,16 @@ export function deserializeIntoIgnoredSiteChangeDto(ignoredSiteChangeDto: Partia
 // @ts-ignore
 export function deserializeIntoIgnoredSiteChangeIgnoredSiteDto(ignoredSiteChangeIgnoredSiteDto: Partial<IgnoredSiteChangeIgnoredSiteDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "accountHandle": n => { ignoredSiteChangeIgnoredSiteDto.accountHandle = n.getStringValue(); },
         "deletedAtUtc": n => { ignoredSiteChangeIgnoredSiteDto.deletedAtUtc = n.getDateValue(); },
         "id": n => { ignoredSiteChangeIgnoredSiteDto.id = n.getGuidValue(); },
         "ignoredAtUtc": n => { ignoredSiteChangeIgnoredSiteDto.ignoredAtUtc = n.getDateValue(); },
         "isDeleted": n => { ignoredSiteChangeIgnoredSiteDto.isDeleted = n.getBooleanValue(); },
         "networkId": n => { ignoredSiteChangeIgnoredSiteDto.networkId = n.getGuidValue(); },
         "networkTitle": n => { ignoredSiteChangeIgnoredSiteDto.networkTitle = n.getStringValue(); },
+        "platformId": n => { ignoredSiteChangeIgnoredSiteDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { ignoredSiteChangeIgnoredSiteDto.platformKey = n.getStringValue(); },
+        "platformTitle": n => { ignoredSiteChangeIgnoredSiteDto.platformTitle = n.getStringValue(); },
         "title": n => { ignoredSiteChangeIgnoredSiteDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { ignoredSiteChangeIgnoredSiteDto.updatedAtUtc = n.getDateValue(); },
         "url": n => { ignoredSiteChangeIgnoredSiteDto.url = n.getStringValue(); },
@@ -2477,10 +2602,14 @@ export function deserializeIntoIgnoredSiteChangesCursorDto(ignoredSiteChangesCur
 // @ts-ignore
 export function deserializeIntoIgnoredSiteSummaryDto(ignoredSiteSummaryDto: Partial<IgnoredSiteSummaryDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "accountHandle": n => { ignoredSiteSummaryDto.accountHandle = n.getStringValue(); },
         "id": n => { ignoredSiteSummaryDto.id = n.getGuidValue(); },
         "ignoredAtUtc": n => { ignoredSiteSummaryDto.ignoredAtUtc = n.getDateValue(); },
         "networkId": n => { ignoredSiteSummaryDto.networkId = n.getGuidValue(); },
         "networkTitle": n => { ignoredSiteSummaryDto.networkTitle = n.getStringValue(); },
+        "platformId": n => { ignoredSiteSummaryDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { ignoredSiteSummaryDto.platformKey = n.getStringValue(); },
+        "platformTitle": n => { ignoredSiteSummaryDto.platformTitle = n.getStringValue(); },
         "title": n => { ignoredSiteSummaryDto.title = n.getStringValue(); },
         "url": n => { ignoredSiteSummaryDto.url = n.getStringValue(); },
     }
@@ -2637,6 +2766,17 @@ export function deserializeIntoListIgnoredSitesResponse(listIgnoredSitesResponse
 }
 /**
  * The deserialization information for the current model
+ * @param ListPlatformsResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoListPlatformsResponse(listPlatformsResponse: Partial<ListPlatformsResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "items": n => { listPlatformsResponse.items = n.getCollectionOfObjectValues<PlatformDto>(createPlatformDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param ListPreDbResponse The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2725,6 +2865,19 @@ export function deserializeIntoLookupVideoFilehashesRequest(lookupVideoFilehashe
 export function deserializeIntoLookupVideoFilehashesResponse(lookupVideoFilehashesResponse: Partial<LookupVideoFilehashesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "items": n => { lookupVideoFilehashesResponse.items = n.getCollectionOfObjectValues<VideoFilehashDto>(createVideoFilehashDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param PlatformDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoPlatformDto(platformDto: Partial<PlatformDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { platformDto.id = n.getGuidValue(); },
+        "key": n => { platformDto.key = n.getStringValue(); },
+        "title": n => { platformDto.title = n.getStringValue(); },
     }
 }
 /**
@@ -2881,6 +3034,7 @@ export function deserializeIntoSiteChangesCursorDto(siteChangesCursorDto: Partia
 // @ts-ignore
 export function deserializeIntoSiteChangeSiteDto(siteChangeSiteDto: Partial<SiteChangeSiteDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "accountHandle": n => { siteChangeSiteDto.accountHandle = n.getStringValue(); },
         "createdAtUtc": n => { siteChangeSiteDto.createdAtUtc = n.getDateValue(); },
         "deletedAtUtc": n => { siteChangeSiteDto.deletedAtUtc = n.getDateValue(); },
         "id": n => { siteChangeSiteDto.id = n.getGuidValue(); },
@@ -2889,6 +3043,9 @@ export function deserializeIntoSiteChangeSiteDto(siteChangeSiteDto: Partial<Site
         "networkId": n => { siteChangeSiteDto.networkId = n.getGuidValue(); },
         "networkTitle": n => { siteChangeSiteDto.networkTitle = n.getStringValue(); },
         "networkUrl": n => { siteChangeSiteDto.networkUrl = n.getStringValue(); },
+        "platformId": n => { siteChangeSiteDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { siteChangeSiteDto.platformKey = n.getStringValue(); },
+        "platformTitle": n => { siteChangeSiteDto.platformTitle = n.getStringValue(); },
         "title": n => { siteChangeSiteDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { siteChangeSiteDto.updatedAtUtc = n.getDateValue(); },
         "url": n => { siteChangeSiteDto.url = n.getStringValue(); },
@@ -2930,11 +3087,15 @@ export function deserializeIntoSiteLinkDto(siteLinkDto: Partial<SiteLinkDto> | u
 // @ts-ignore
 export function deserializeIntoSiteSummaryDto(siteSummaryDto: Partial<SiteSummaryDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "accountHandle": n => { siteSummaryDto.accountHandle = n.getStringValue(); },
         "createdAtUtc": n => { siteSummaryDto.createdAtUtc = n.getDateValue(); },
         "id": n => { siteSummaryDto.id = n.getGuidValue(); },
         "links": n => { siteSummaryDto.links = n.getCollectionOfObjectValues<SiteLinkDto>(createSiteLinkDtoFromDiscriminatorValue); },
         "networkId": n => { siteSummaryDto.networkId = n.getGuidValue(); },
         "networkTitle": n => { siteSummaryDto.networkTitle = n.getStringValue(); },
+        "platformId": n => { siteSummaryDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { siteSummaryDto.platformKey = n.getStringValue(); },
+        "platformTitle": n => { siteSummaryDto.platformTitle = n.getStringValue(); },
         "title": n => { siteSummaryDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { siteSummaryDto.updatedAtUtc = n.getDateValue(); },
         "url": n => { siteSummaryDto.url = n.getStringValue(); },
@@ -3174,8 +3335,12 @@ export function deserializeIntoVideoChangesCursorDto(videoChangesCursorDto: Part
 // @ts-ignore
 export function deserializeIntoVideoChangeSiteDto(videoChangeSiteDto: Partial<VideoChangeSiteDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "accountHandle": n => { videoChangeSiteDto.accountHandle = n.getStringValue(); },
         "id": n => { videoChangeSiteDto.id = n.getGuidValue(); },
         "network": n => { videoChangeSiteDto.network = n.getObjectValue<VideoChangeNetworkDto>(createVideoChangeNetworkDtoFromDiscriminatorValue); },
+        "platformId": n => { videoChangeSiteDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { videoChangeSiteDto.platformKey = n.getStringValue(); },
+        "platformTitle": n => { videoChangeSiteDto.platformTitle = n.getStringValue(); },
         "title": n => { videoChangeSiteDto.title = n.getStringValue(); },
         "url": n => { videoChangeSiteDto.url = n.getStringValue(); },
     }
@@ -3321,8 +3486,12 @@ export function deserializeIntoVideoDetailPreNameDto(videoDetailPreNameDto: Part
 // @ts-ignore
 export function deserializeIntoVideoDetailSiteDto(videoDetailSiteDto: Partial<VideoDetailSiteDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "accountHandle": n => { videoDetailSiteDto.accountHandle = n.getStringValue(); },
         "id": n => { videoDetailSiteDto.id = n.getGuidValue(); },
         "network": n => { videoDetailSiteDto.network = n.getObjectValue<VideoDetailNetworkDto>(createVideoDetailNetworkDtoFromDiscriminatorValue); },
+        "platformId": n => { videoDetailSiteDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { videoDetailSiteDto.platformKey = n.getStringValue(); },
+        "platformTitle": n => { videoDetailSiteDto.platformTitle = n.getStringValue(); },
         "title": n => { videoDetailSiteDto.title = n.getStringValue(); },
         "url": n => { videoDetailSiteDto.url = n.getStringValue(); },
     }
@@ -3507,6 +3676,7 @@ export function deserializeIntoVideoSummaryActorDto(videoSummaryActorDto: Partia
 // @ts-ignore
 export function deserializeIntoVideoSummaryDto(videoSummaryDto: Partial<VideoSummaryDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+        "accountHandle": n => { videoSummaryDto.accountHandle = n.getStringValue(); },
         "actors": n => { videoSummaryDto.actors = n.getCollectionOfObjectValues<VideoSummaryActorDto>(createVideoSummaryActorDtoFromDiscriminatorValue); },
         "createdAtUtc": n => { videoSummaryDto.createdAtUtc = n.getDateValue(); },
         "description": n => { videoSummaryDto.description = n.getStringValue(); },
@@ -3514,6 +3684,9 @@ export function deserializeIntoVideoSummaryDto(videoSummaryDto: Partial<VideoSum
         "durationMs": n => { videoSummaryDto.durationMs = n.getNumberValue(); },
         "durationSpreadMs": n => { videoSummaryDto.durationSpreadMs = n.getNumberValue(); },
         "id": n => { videoSummaryDto.id = n.getGuidValue(); },
+        "platformId": n => { videoSummaryDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { videoSummaryDto.platformKey = n.getStringValue(); },
+        "platformTitle": n => { videoSummaryDto.platformTitle = n.getStringValue(); },
         "releaseDate": n => { videoSummaryDto.releaseDate = n.getDateOnlyValue(); },
         "siteId": n => { videoSummaryDto.siteId = n.getGuidValue(); },
         "siteTitle": n => { videoSummaryDto.siteTitle = n.getStringValue(); },
@@ -3803,6 +3976,10 @@ export interface FavoriteSiteChangeDto extends AdditionalDataHolder, Parsable {
  */
 export interface FavoriteSiteChangeFavoriteSiteDto extends AdditionalDataHolder, Parsable {
     /**
+     * Public account handle, independent of the local Site UUID.
+     */
+    accountHandle?: string | null;
+    /**
      * The deletedAtUtc property
      */
     deletedAtUtc?: Date | null;
@@ -3826,6 +4003,18 @@ export interface FavoriteSiteChangeFavoriteSiteDto extends AdditionalDataHolder,
      * The networkTitle property
      */
     networkTitle?: string | null;
+    /**
+     * Publishing platform UUID; null for classic studio sites.
+     */
+    platformId?: Guid | null;
+    /**
+     * Stable publishing platform key; null for classic sites.
+     */
+    platformKey?: string | null;
+    /**
+     * Publishing platform display title; null for classic sites.
+     */
+    platformTitle?: string | null;
     /**
      * The title property
      */
@@ -3857,6 +4046,10 @@ export interface FavoriteSiteChangesCursorDto extends AdditionalDataHolder, Pars
  */
 export interface FavoriteSiteSummaryDto extends AdditionalDataHolder, Parsable {
     /**
+     * Public account handle, independent of the local Site UUID.
+     */
+    accountHandle?: string | null;
+    /**
      * UTC timestamp when the user added this site to their favorites.
      */
     favoritedAtUtc?: Date | null;
@@ -3872,6 +4065,18 @@ export interface FavoriteSiteSummaryDto extends AdditionalDataHolder, Parsable {
      * The networkTitle property
      */
     networkTitle?: string | null;
+    /**
+     * Publishing platform UUID; null for classic studio sites.
+     */
+    platformId?: Guid | null;
+    /**
+     * Stable publishing platform key; null for classic sites.
+     */
+    platformKey?: string | null;
+    /**
+     * Publishing platform display title; null for classic sites.
+     */
+    platformTitle?: string | null;
     /**
      * The title property
      */
@@ -4365,6 +4570,10 @@ export interface IgnoredSiteChangeDto extends AdditionalDataHolder, Parsable {
  */
 export interface IgnoredSiteChangeIgnoredSiteDto extends AdditionalDataHolder, Parsable {
     /**
+     * Public account handle, independent of the local Site UUID.
+     */
+    accountHandle?: string | null;
+    /**
      * The deletedAtUtc property
      */
     deletedAtUtc?: Date | null;
@@ -4388,6 +4597,18 @@ export interface IgnoredSiteChangeIgnoredSiteDto extends AdditionalDataHolder, P
      * The networkTitle property
      */
     networkTitle?: string | null;
+    /**
+     * Publishing platform UUID; null for classic studio sites.
+     */
+    platformId?: Guid | null;
+    /**
+     * Stable publishing platform key; null for classic sites.
+     */
+    platformKey?: string | null;
+    /**
+     * Publishing platform display title; null for classic sites.
+     */
+    platformTitle?: string | null;
     /**
      * The title property
      */
@@ -4419,6 +4640,10 @@ export interface IgnoredSiteChangesCursorDto extends AdditionalDataHolder, Parsa
  */
 export interface IgnoredSiteSummaryDto extends AdditionalDataHolder, Parsable {
     /**
+     * Public account handle, independent of the local Site UUID.
+     */
+    accountHandle?: string | null;
+    /**
      * The id property
      */
     id?: Guid | null;
@@ -4434,6 +4659,18 @@ export interface IgnoredSiteSummaryDto extends AdditionalDataHolder, Parsable {
      * The networkTitle property
      */
     networkTitle?: string | null;
+    /**
+     * Publishing platform UUID; null for classic studio sites.
+     */
+    platformId?: Guid | null;
+    /**
+     * Stable publishing platform key; null for classic sites.
+     */
+    platformKey?: string | null;
+    /**
+     * Publishing platform display title; null for classic sites.
+     */
+    platformTitle?: string | null;
     /**
      * The title property
      */
@@ -4684,6 +4921,12 @@ export interface ListIgnoredSitesResponse extends AdditionalDataHolder, Parsable
      */
     totalPages?: number | null;
 }
+export interface ListPlatformsResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The items property
+     */
+    items?: PlatformDto[] | null;
+}
 /**
  * Paged list of PreDb entries.
  */
@@ -4838,6 +5081,20 @@ export interface LookupVideoFilehashesResponse extends AdditionalDataHolder, Par
      * The items property
      */
     items?: VideoFilehashDto[] | null;
+}
+export interface PlatformDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The key property
+     */
+    key?: string | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
 }
 export interface PreDbItemDto extends AdditionalDataHolder, Parsable {
     /**
@@ -5275,6 +5532,38 @@ export function serializeAddWantedVideosBatchResponse(writer: SerializationWrite
 }
 /**
  * Serializes information the current object
+ * @param CreatorAccountDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeCreatorAccountDto(writer: SerializationWriter, creatorAccountDto: Partial<CreatorAccountDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!creatorAccountDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("accountHandle", creatorAccountDto.accountHandle);
+    writer.writeGuidValue("actorId", creatorAccountDto.actorId);
+    writer.writeStringValue("actorName", creatorAccountDto.actorName);
+    writer.writeGuidValue("platformId", creatorAccountDto.platformId);
+    writer.writeStringValue("platformKey", creatorAccountDto.platformKey);
+    writer.writeStringValue("platformTitle", creatorAccountDto.platformTitle);
+    writer.writeGuidValue("siteId", creatorAccountDto.siteId);
+    writer.writeStringValue("siteTitle", creatorAccountDto.siteTitle);
+    writer.writeStringValue("url", creatorAccountDto.url);
+    writer.writeAdditionalData(creatorAccountDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param CreatorAccountsResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeCreatorAccountsResponse(writer: SerializationWriter, creatorAccountsResponse: Partial<CreatorAccountsResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!creatorAccountsResponse || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<CreatorAccountDto>("items", creatorAccountsResponse.items, serializeCreatorAccountDto);
+    writer.writeAdditionalData(creatorAccountsResponse.additionalData);
+}
+/**
+ * Serializes information the current object
  * @param FavoriteActorChangeDto The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -5362,12 +5651,16 @@ export function serializeFavoriteSiteChangeDto(writer: SerializationWriter, favo
 // @ts-ignore
 export function serializeFavoriteSiteChangeFavoriteSiteDto(writer: SerializationWriter, favoriteSiteChangeFavoriteSiteDto: Partial<FavoriteSiteChangeFavoriteSiteDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!favoriteSiteChangeFavoriteSiteDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("accountHandle", favoriteSiteChangeFavoriteSiteDto.accountHandle);
     writer.writeDateValue("deletedAtUtc", favoriteSiteChangeFavoriteSiteDto.deletedAtUtc);
     writer.writeDateValue("favoritedAtUtc", favoriteSiteChangeFavoriteSiteDto.favoritedAtUtc);
     writer.writeGuidValue("id", favoriteSiteChangeFavoriteSiteDto.id);
     writer.writeBooleanValue("isDeleted", favoriteSiteChangeFavoriteSiteDto.isDeleted);
     writer.writeGuidValue("networkId", favoriteSiteChangeFavoriteSiteDto.networkId);
     writer.writeStringValue("networkTitle", favoriteSiteChangeFavoriteSiteDto.networkTitle);
+    writer.writeGuidValue("platformId", favoriteSiteChangeFavoriteSiteDto.platformId);
+    writer.writeStringValue("platformKey", favoriteSiteChangeFavoriteSiteDto.platformKey);
+    writer.writeStringValue("platformTitle", favoriteSiteChangeFavoriteSiteDto.platformTitle);
     writer.writeStringValue("title", favoriteSiteChangeFavoriteSiteDto.title);
     writer.writeDateValue("updatedAtUtc", favoriteSiteChangeFavoriteSiteDto.updatedAtUtc);
     writer.writeStringValue("url", favoriteSiteChangeFavoriteSiteDto.url);
@@ -5395,10 +5688,14 @@ export function serializeFavoriteSiteChangesCursorDto(writer: SerializationWrite
 // @ts-ignore
 export function serializeFavoriteSiteSummaryDto(writer: SerializationWriter, favoriteSiteSummaryDto: Partial<FavoriteSiteSummaryDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!favoriteSiteSummaryDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("accountHandle", favoriteSiteSummaryDto.accountHandle);
     writer.writeDateValue("favoritedAtUtc", favoriteSiteSummaryDto.favoritedAtUtc);
     writer.writeGuidValue("id", favoriteSiteSummaryDto.id);
     writer.writeGuidValue("networkId", favoriteSiteSummaryDto.networkId);
     writer.writeStringValue("networkTitle", favoriteSiteSummaryDto.networkTitle);
+    writer.writeGuidValue("platformId", favoriteSiteSummaryDto.platformId);
+    writer.writeStringValue("platformKey", favoriteSiteSummaryDto.platformKey);
+    writer.writeStringValue("platformTitle", favoriteSiteSummaryDto.platformTitle);
     writer.writeStringValue("title", favoriteSiteSummaryDto.title);
     writer.writeStringValue("url", favoriteSiteSummaryDto.url);
     writer.writeAdditionalData(favoriteSiteSummaryDto.additionalData);
@@ -5789,12 +6086,16 @@ export function serializeIgnoredSiteChangeDto(writer: SerializationWriter, ignor
 // @ts-ignore
 export function serializeIgnoredSiteChangeIgnoredSiteDto(writer: SerializationWriter, ignoredSiteChangeIgnoredSiteDto: Partial<IgnoredSiteChangeIgnoredSiteDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!ignoredSiteChangeIgnoredSiteDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("accountHandle", ignoredSiteChangeIgnoredSiteDto.accountHandle);
     writer.writeDateValue("deletedAtUtc", ignoredSiteChangeIgnoredSiteDto.deletedAtUtc);
     writer.writeGuidValue("id", ignoredSiteChangeIgnoredSiteDto.id);
     writer.writeDateValue("ignoredAtUtc", ignoredSiteChangeIgnoredSiteDto.ignoredAtUtc);
     writer.writeBooleanValue("isDeleted", ignoredSiteChangeIgnoredSiteDto.isDeleted);
     writer.writeGuidValue("networkId", ignoredSiteChangeIgnoredSiteDto.networkId);
     writer.writeStringValue("networkTitle", ignoredSiteChangeIgnoredSiteDto.networkTitle);
+    writer.writeGuidValue("platformId", ignoredSiteChangeIgnoredSiteDto.platformId);
+    writer.writeStringValue("platformKey", ignoredSiteChangeIgnoredSiteDto.platformKey);
+    writer.writeStringValue("platformTitle", ignoredSiteChangeIgnoredSiteDto.platformTitle);
     writer.writeStringValue("title", ignoredSiteChangeIgnoredSiteDto.title);
     writer.writeDateValue("updatedAtUtc", ignoredSiteChangeIgnoredSiteDto.updatedAtUtc);
     writer.writeStringValue("url", ignoredSiteChangeIgnoredSiteDto.url);
@@ -5822,10 +6123,14 @@ export function serializeIgnoredSiteChangesCursorDto(writer: SerializationWriter
 // @ts-ignore
 export function serializeIgnoredSiteSummaryDto(writer: SerializationWriter, ignoredSiteSummaryDto: Partial<IgnoredSiteSummaryDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!ignoredSiteSummaryDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("accountHandle", ignoredSiteSummaryDto.accountHandle);
     writer.writeGuidValue("id", ignoredSiteSummaryDto.id);
     writer.writeDateValue("ignoredAtUtc", ignoredSiteSummaryDto.ignoredAtUtc);
     writer.writeGuidValue("networkId", ignoredSiteSummaryDto.networkId);
     writer.writeStringValue("networkTitle", ignoredSiteSummaryDto.networkTitle);
+    writer.writeGuidValue("platformId", ignoredSiteSummaryDto.platformId);
+    writer.writeStringValue("platformKey", ignoredSiteSummaryDto.platformKey);
+    writer.writeStringValue("platformTitle", ignoredSiteSummaryDto.platformTitle);
     writer.writeStringValue("title", ignoredSiteSummaryDto.title);
     writer.writeStringValue("url", ignoredSiteSummaryDto.url);
     writer.writeAdditionalData(ignoredSiteSummaryDto.additionalData);
@@ -5993,6 +6298,18 @@ export function serializeListIgnoredSitesResponse(writer: SerializationWriter, l
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ListPlatformsResponse The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeListPlatformsResponse(writer: SerializationWriter, listPlatformsResponse: Partial<ListPlatformsResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!listPlatformsResponse || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<PlatformDto>("items", listPlatformsResponse.items, serializePlatformDto);
+    writer.writeAdditionalData(listPlatformsResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param ListPreDbResponse The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -6087,6 +6404,20 @@ export function serializeLookupVideoFilehashesResponse(writer: SerializationWrit
     if (!lookupVideoFilehashesResponse || isSerializingDerivedType) { return; }
     writer.writeCollectionOfObjectValues<VideoFilehashDto>("items", lookupVideoFilehashesResponse.items, serializeVideoFilehashDto);
     writer.writeAdditionalData(lookupVideoFilehashesResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param PlatformDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializePlatformDto(writer: SerializationWriter, platformDto: Partial<PlatformDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!platformDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", platformDto.id);
+    writer.writeStringValue("key", platformDto.key);
+    writer.writeStringValue("title", platformDto.title);
+    writer.writeAdditionalData(platformDto.additionalData);
 }
 /**
  * Serializes information the current object
@@ -6254,6 +6585,7 @@ export function serializeSiteChangesCursorDto(writer: SerializationWriter, siteC
 // @ts-ignore
 export function serializeSiteChangeSiteDto(writer: SerializationWriter, siteChangeSiteDto: Partial<SiteChangeSiteDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!siteChangeSiteDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("accountHandle", siteChangeSiteDto.accountHandle);
     writer.writeDateValue("createdAtUtc", siteChangeSiteDto.createdAtUtc);
     writer.writeDateValue("deletedAtUtc", siteChangeSiteDto.deletedAtUtc);
     writer.writeGuidValue("id", siteChangeSiteDto.id);
@@ -6262,6 +6594,9 @@ export function serializeSiteChangeSiteDto(writer: SerializationWriter, siteChan
     writer.writeGuidValue("networkId", siteChangeSiteDto.networkId);
     writer.writeStringValue("networkTitle", siteChangeSiteDto.networkTitle);
     writer.writeStringValue("networkUrl", siteChangeSiteDto.networkUrl);
+    writer.writeGuidValue("platformId", siteChangeSiteDto.platformId);
+    writer.writeStringValue("platformKey", siteChangeSiteDto.platformKey);
+    writer.writeStringValue("platformTitle", siteChangeSiteDto.platformTitle);
     writer.writeStringValue("title", siteChangeSiteDto.title);
     writer.writeDateValue("updatedAtUtc", siteChangeSiteDto.updatedAtUtc);
     writer.writeStringValue("url", siteChangeSiteDto.url);
@@ -6306,11 +6641,15 @@ export function serializeSiteLinkDto(writer: SerializationWriter, siteLinkDto: P
 // @ts-ignore
 export function serializeSiteSummaryDto(writer: SerializationWriter, siteSummaryDto: Partial<SiteSummaryDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!siteSummaryDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("accountHandle", siteSummaryDto.accountHandle);
     writer.writeDateValue("createdAtUtc", siteSummaryDto.createdAtUtc);
     writer.writeGuidValue("id", siteSummaryDto.id);
     writer.writeCollectionOfObjectValues<SiteLinkDto>("links", siteSummaryDto.links, serializeSiteLinkDto);
     writer.writeGuidValue("networkId", siteSummaryDto.networkId);
     writer.writeStringValue("networkTitle", siteSummaryDto.networkTitle);
+    writer.writeGuidValue("platformId", siteSummaryDto.platformId);
+    writer.writeStringValue("platformKey", siteSummaryDto.platformKey);
+    writer.writeStringValue("platformTitle", siteSummaryDto.platformTitle);
     writer.writeStringValue("title", siteSummaryDto.title);
     writer.writeDateValue("updatedAtUtc", siteSummaryDto.updatedAtUtc);
     writer.writeStringValue("url", siteSummaryDto.url);
@@ -6567,8 +6906,12 @@ export function serializeVideoChangesCursorDto(writer: SerializationWriter, vide
 // @ts-ignore
 export function serializeVideoChangeSiteDto(writer: SerializationWriter, videoChangeSiteDto: Partial<VideoChangeSiteDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!videoChangeSiteDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("accountHandle", videoChangeSiteDto.accountHandle);
     writer.writeGuidValue("id", videoChangeSiteDto.id);
     writer.writeObjectValue<VideoChangeNetworkDto>("network", videoChangeSiteDto.network, serializeVideoChangeNetworkDto);
+    writer.writeGuidValue("platformId", videoChangeSiteDto.platformId);
+    writer.writeStringValue("platformKey", videoChangeSiteDto.platformKey);
+    writer.writeStringValue("platformTitle", videoChangeSiteDto.platformTitle);
     writer.writeStringValue("title", videoChangeSiteDto.title);
     writer.writeStringValue("url", videoChangeSiteDto.url);
     writer.writeAdditionalData(videoChangeSiteDto.additionalData);
@@ -6723,8 +7066,12 @@ export function serializeVideoDetailPreNameDto(writer: SerializationWriter, vide
 // @ts-ignore
 export function serializeVideoDetailSiteDto(writer: SerializationWriter, videoDetailSiteDto: Partial<VideoDetailSiteDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!videoDetailSiteDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("accountHandle", videoDetailSiteDto.accountHandle);
     writer.writeGuidValue("id", videoDetailSiteDto.id);
     writer.writeObjectValue<VideoDetailNetworkDto>("network", videoDetailSiteDto.network, serializeVideoDetailNetworkDto);
+    writer.writeGuidValue("platformId", videoDetailSiteDto.platformId);
+    writer.writeStringValue("platformKey", videoDetailSiteDto.platformKey);
+    writer.writeStringValue("platformTitle", videoDetailSiteDto.platformTitle);
     writer.writeStringValue("title", videoDetailSiteDto.title);
     writer.writeStringValue("url", videoDetailSiteDto.url);
     writer.writeAdditionalData(videoDetailSiteDto.additionalData);
@@ -6921,6 +7268,7 @@ export function serializeVideoSummaryActorDto(writer: SerializationWriter, video
 // @ts-ignore
 export function serializeVideoSummaryDto(writer: SerializationWriter, videoSummaryDto: Partial<VideoSummaryDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!videoSummaryDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("accountHandle", videoSummaryDto.accountHandle);
     writer.writeCollectionOfObjectValues<VideoSummaryActorDto>("actors", videoSummaryDto.actors, serializeVideoSummaryActorDto);
     writer.writeDateValue("createdAtUtc", videoSummaryDto.createdAtUtc);
     writer.writeStringValue("description", videoSummaryDto.description);
@@ -6928,6 +7276,9 @@ export function serializeVideoSummaryDto(writer: SerializationWriter, videoSumma
     writer.writeNumberValue("durationMs", videoSummaryDto.durationMs);
     writer.writeNumberValue("durationSpreadMs", videoSummaryDto.durationSpreadMs);
     writer.writeGuidValue("id", videoSummaryDto.id);
+    writer.writeGuidValue("platformId", videoSummaryDto.platformId);
+    writer.writeStringValue("platformKey", videoSummaryDto.platformKey);
+    writer.writeStringValue("platformTitle", videoSummaryDto.platformTitle);
     writer.writeDateOnlyValue("releaseDate", videoSummaryDto.releaseDate);
     writer.writeGuidValue("siteId", videoSummaryDto.siteId);
     writer.writeStringValue("siteTitle", videoSummaryDto.siteTitle);
@@ -7134,6 +7485,10 @@ export interface SiteChangesCursorDto extends AdditionalDataHolder, Parsable {
 }
 export interface SiteChangeSiteDto extends AdditionalDataHolder, Parsable {
     /**
+     * Public account handle, independent of the local Site UUID.
+     */
+    accountHandle?: string | null;
+    /**
      * When this site was created.
      */
     createdAtUtc?: Date | null;
@@ -7165,6 +7520,18 @@ export interface SiteChangeSiteDto extends AdditionalDataHolder, Parsable {
      * The networkUrl property
      */
     networkUrl?: string | null;
+    /**
+     * Publishing platform UUID; null for classic studio sites.
+     */
+    platformId?: Guid | null;
+    /**
+     * Stable publishing platform key; null for classic sites.
+     */
+    platformKey?: string | null;
+    /**
+     * Publishing platform display title; null for classic sites.
+     */
+    platformTitle?: string | null;
     /**
      * Site title.
      */
@@ -7225,6 +7592,10 @@ export interface SiteLinkDto extends AdditionalDataHolder, Parsable {
  */
 export interface SiteSummaryDto extends AdditionalDataHolder, Parsable {
     /**
+     * Public account handle, independent of the local Site UUID.
+     */
+    accountHandle?: string | null;
+    /**
      * When this site was created.
      */
     createdAtUtc?: Date | null;
@@ -7244,6 +7615,18 @@ export interface SiteSummaryDto extends AdditionalDataHolder, Parsable {
      * Title of the network this site belongs to, if any.
      */
     networkTitle?: string | null;
+    /**
+     * Publishing platform UUID; null for classic studio sites.
+     */
+    platformId?: Guid | null;
+    /**
+     * Stable publishing platform key; null for classic sites.
+     */
+    platformKey?: string | null;
+    /**
+     * Publishing platform display title; null for classic sites.
+     */
+    platformTitle?: string | null;
     /**
      * Site title.
      */
@@ -7579,6 +7962,10 @@ export interface VideoChangesCursorDto extends AdditionalDataHolder, Parsable {
 }
 export interface VideoChangeSiteDto extends AdditionalDataHolder, Parsable {
     /**
+     * Public account handle, independent of the local Site UUID.
+     */
+    accountHandle?: string | null;
+    /**
      * The id property
      */
     id?: Guid | null;
@@ -7586,6 +7973,18 @@ export interface VideoChangeSiteDto extends AdditionalDataHolder, Parsable {
      * The network property
      */
     network?: VideoChangeNetworkDto | null;
+    /**
+     * Publishing platform UUID; null for classic studio sites.
+     */
+    platformId?: Guid | null;
+    /**
+     * Stable publishing platform key; null for classic sites.
+     */
+    platformKey?: string | null;
+    /**
+     * Publishing platform display title; null for classic sites.
+     */
+    platformTitle?: string | null;
     /**
      * The title property
      */
@@ -7830,6 +8229,10 @@ export interface VideoDetailPreNameDto extends AdditionalDataHolder, Parsable {
 }
 export interface VideoDetailSiteDto extends AdditionalDataHolder, Parsable {
     /**
+     * Public account handle, independent of the local Site UUID.
+     */
+    accountHandle?: string | null;
+    /**
      * The id property
      */
     id?: Guid | null;
@@ -7837,6 +8240,18 @@ export interface VideoDetailSiteDto extends AdditionalDataHolder, Parsable {
      * The network property
      */
     network?: VideoDetailNetworkDto | null;
+    /**
+     * Publishing platform UUID; null for classic studio sites.
+     */
+    platformId?: Guid | null;
+    /**
+     * Stable publishing platform key; null for classic sites.
+     */
+    platformKey?: string | null;
+    /**
+     * Publishing platform display title; null for classic sites.
+     */
+    platformTitle?: string | null;
     /**
      * The title property
      */
@@ -8148,6 +8563,10 @@ export interface VideoSummaryActorDto extends AdditionalDataHolder, Parsable {
  */
 export interface VideoSummaryDto extends AdditionalDataHolder, Parsable {
     /**
+     * Public account handle, independent of the local Site UUID.
+     */
+    accountHandle?: string | null;
+    /**
      * Actors appearing in this video.
      */
     actors?: VideoSummaryActorDto[] | null;
@@ -8175,6 +8594,18 @@ export interface VideoSummaryDto extends AdditionalDataHolder, Parsable {
      * Unique identifier of the video.
      */
     id?: Guid | null;
+    /**
+     * Publishing platform UUID; null for classic studio sites.
+     */
+    platformId?: Guid | null;
+    /**
+     * Stable publishing platform key; null for classic sites.
+     */
+    platformKey?: string | null;
+    /**
+     * Publishing platform display title; null for classic sites.
+     */
+    platformTitle?: string | null;
     /**
      * Release date of the video, if known.
      */

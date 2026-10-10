@@ -11,6 +11,8 @@ import (
 
 // IgnoredSiteChangeIgnoredSiteDto current-state payload for an ignored site row in the incremental feed.
 type IgnoredSiteChangeIgnoredSiteDto struct {
+    // Public account handle, independent of the local Site UUID.
+    accountHandle *string
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
     // The deletedAtUtc property
@@ -25,6 +27,12 @@ type IgnoredSiteChangeIgnoredSiteDto struct {
     networkId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The networkTitle property
     networkTitle *string
+    // Publishing platform UUID; null for classic studio sites.
+    platformId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Stable publishing platform key; null for classic sites.
+    platformKey *string
+    // Publishing platform display title; null for classic sites.
+    platformTitle *string
     // The title property
     title *string
     // The updatedAtUtc property
@@ -44,6 +52,11 @@ func NewIgnoredSiteChangeIgnoredSiteDto()(*IgnoredSiteChangeIgnoredSiteDto) {
 func CreateIgnoredSiteChangeIgnoredSiteDtoFromDiscriminatorValue(parseNode i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, error) {
     return NewIgnoredSiteChangeIgnoredSiteDto(), nil
 }
+// GetAccountHandle gets the accountHandle property value. Public account handle, independent of the local Site UUID.
+// returns a *string when successful
+func (m *IgnoredSiteChangeIgnoredSiteDto) GetAccountHandle()(*string) {
+    return m.accountHandle
+}
 // GetAdditionalData gets the AdditionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
 // returns a map[string]any when successful
 func (m *IgnoredSiteChangeIgnoredSiteDto) GetAdditionalData()(map[string]any) {
@@ -58,6 +71,16 @@ func (m *IgnoredSiteChangeIgnoredSiteDto) GetDeletedAtUtc()(*i336074805fc853987a
 // returns a map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error) when successful
 func (m *IgnoredSiteChangeIgnoredSiteDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error)) {
     res := make(map[string]func(i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode)(error))
+    res["accountHandle"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetAccountHandle(val)
+        }
+        return nil
+    }
     res["deletedAtUtc"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetTimeValue()
         if err != nil {
@@ -118,6 +141,36 @@ func (m *IgnoredSiteChangeIgnoredSiteDto) GetFieldDeserializers()(map[string]fun
         }
         return nil
     }
+    res["platformId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetUUIDValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformId(val)
+        }
+        return nil
+    }
+    res["platformKey"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformKey(val)
+        }
+        return nil
+    }
+    res["platformTitle"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPlatformTitle(val)
+        }
+        return nil
+    }
     res["title"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -175,6 +228,21 @@ func (m *IgnoredSiteChangeIgnoredSiteDto) GetNetworkId()(*i561e97a8befe7661a44c8
 func (m *IgnoredSiteChangeIgnoredSiteDto) GetNetworkTitle()(*string) {
     return m.networkTitle
 }
+// GetPlatformId gets the platformId property value. Publishing platform UUID; null for classic studio sites.
+// returns a *UUID when successful
+func (m *IgnoredSiteChangeIgnoredSiteDto) GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
+    return m.platformId
+}
+// GetPlatformKey gets the platformKey property value. Stable publishing platform key; null for classic sites.
+// returns a *string when successful
+func (m *IgnoredSiteChangeIgnoredSiteDto) GetPlatformKey()(*string) {
+    return m.platformKey
+}
+// GetPlatformTitle gets the platformTitle property value. Publishing platform display title; null for classic sites.
+// returns a *string when successful
+func (m *IgnoredSiteChangeIgnoredSiteDto) GetPlatformTitle()(*string) {
+    return m.platformTitle
+}
 // GetTitle gets the title property value. The title property
 // returns a *string when successful
 func (m *IgnoredSiteChangeIgnoredSiteDto) GetTitle()(*string) {
@@ -192,6 +260,12 @@ func (m *IgnoredSiteChangeIgnoredSiteDto) GetUrl()(*string) {
 }
 // Serialize serializes information the current object
 func (m *IgnoredSiteChangeIgnoredSiteDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
+    {
+        err := writer.WriteStringValue("accountHandle", m.GetAccountHandle())
+        if err != nil {
+            return err
+        }
+    }
     {
         err := writer.WriteTimeValue("deletedAtUtc", m.GetDeletedAtUtc())
         if err != nil {
@@ -229,6 +303,24 @@ func (m *IgnoredSiteChangeIgnoredSiteDto) Serialize(writer i878a80d2330e89d26896
         }
     }
     {
+        err := writer.WriteUUIDValue("platformId", m.GetPlatformId())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("platformKey", m.GetPlatformKey())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("platformTitle", m.GetPlatformTitle())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteStringValue("title", m.GetTitle())
         if err != nil {
             return err
@@ -253,6 +345,10 @@ func (m *IgnoredSiteChangeIgnoredSiteDto) Serialize(writer i878a80d2330e89d26896
         }
     }
     return nil
+}
+// SetAccountHandle sets the accountHandle property value. Public account handle, independent of the local Site UUID.
+func (m *IgnoredSiteChangeIgnoredSiteDto) SetAccountHandle(value *string)() {
+    m.accountHandle = value
 }
 // SetAdditionalData sets the AdditionalData property value. Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
 func (m *IgnoredSiteChangeIgnoredSiteDto) SetAdditionalData(value map[string]any)() {
@@ -282,6 +378,18 @@ func (m *IgnoredSiteChangeIgnoredSiteDto) SetNetworkId(value *i561e97a8befe7661a
 func (m *IgnoredSiteChangeIgnoredSiteDto) SetNetworkTitle(value *string)() {
     m.networkTitle = value
 }
+// SetPlatformId sets the platformId property value. Publishing platform UUID; null for classic studio sites.
+func (m *IgnoredSiteChangeIgnoredSiteDto) SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
+    m.platformId = value
+}
+// SetPlatformKey sets the platformKey property value. Stable publishing platform key; null for classic sites.
+func (m *IgnoredSiteChangeIgnoredSiteDto) SetPlatformKey(value *string)() {
+    m.platformKey = value
+}
+// SetPlatformTitle sets the platformTitle property value. Publishing platform display title; null for classic sites.
+func (m *IgnoredSiteChangeIgnoredSiteDto) SetPlatformTitle(value *string)() {
+    m.platformTitle = value
+}
 // SetTitle sets the title property value. The title property
 func (m *IgnoredSiteChangeIgnoredSiteDto) SetTitle(value *string)() {
     m.title = value
@@ -297,21 +405,29 @@ func (m *IgnoredSiteChangeIgnoredSiteDto) SetUrl(value *string)() {
 type IgnoredSiteChangeIgnoredSiteDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
+    GetAccountHandle()(*string)
     GetDeletedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetIgnoredAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetIsDeleted()(*bool)
     GetNetworkId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetNetworkTitle()(*string)
+    GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
+    GetPlatformKey()(*string)
+    GetPlatformTitle()(*string)
     GetTitle()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetUrl()(*string)
+    SetAccountHandle(value *string)()
     SetDeletedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetIgnoredAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetIsDeleted(value *bool)()
     SetNetworkId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetNetworkTitle(value *string)()
+    SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
+    SetPlatformKey(value *string)()
+    SetPlatformTitle(value *string)()
     SetTitle(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetUrl(value *string)()

@@ -13,10 +13,18 @@ class VideoDetailSiteDto(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
+    # Public account handle, independent of the local Site UUID.
+    account_handle: Optional[str] = None
     # The id property
     id: Optional[UUID] = None
     # The network property
     network: Optional[VideoDetailNetworkDto] = None
+    # Publishing platform UUID; null for classic studio sites.
+    platform_id: Optional[UUID] = None
+    # Stable publishing platform key; null for classic sites.
+    platform_key: Optional[str] = None
+    # Publishing platform display title; null for classic sites.
+    platform_title: Optional[str] = None
     # The title property
     title: Optional[str] = None
     # The url property
@@ -43,8 +51,12 @@ class VideoDetailSiteDto(AdditionalDataHolder, Parsable):
         from .video_detail_network_dto import VideoDetailNetworkDto
 
         fields: dict[str, Callable[[Any], None]] = {
+            "accountHandle": lambda n : setattr(self, 'account_handle', n.get_str_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "network": lambda n : setattr(self, 'network', n.get_object_value(VideoDetailNetworkDto)),
+            "platformId": lambda n : setattr(self, 'platform_id', n.get_uuid_value()),
+            "platformKey": lambda n : setattr(self, 'platform_key', n.get_str_value()),
+            "platformTitle": lambda n : setattr(self, 'platform_title', n.get_str_value()),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
             "url": lambda n : setattr(self, 'url', n.get_str_value()),
         }
@@ -58,8 +70,12 @@ class VideoDetailSiteDto(AdditionalDataHolder, Parsable):
         """
         if writer is None:
             raise TypeError("writer cannot be null.")
+        writer.write_str_value("accountHandle", self.account_handle)
         writer.write_uuid_value("id", self.id)
         writer.write_object_value("network", self.network)
+        writer.write_uuid_value("platformId", self.platform_id)
+        writer.write_str_value("platformKey", self.platform_key)
+        writer.write_str_value("platformTitle", self.platform_title)
         writer.write_str_value("title", self.title)
         writer.write_str_value("url", self.url)
         writer.write_additional_data_value(self.additional_data)

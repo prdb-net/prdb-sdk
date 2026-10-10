@@ -4,12 +4,18 @@
 // @ts-ignore
 import { createActorDetailDtoFromDiscriminatorValue, createProblemDetailsFromDiscriminatorValue, type ActorDetailDto, type ProblemDetails } from '../../models/index.js';
 // @ts-ignore
-import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
+import { AccountsRequestBuilderRequestsMetadata, type AccountsRequestBuilder } from './accounts/index.js';
+// @ts-ignore
+import { type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
 
 /**
  * Builds and executes requests for operations under /actors/{id}
  */
 export interface ActorsItemRequestBuilder extends BaseRequestBuilder<ActorsItemRequestBuilder> {
+    /**
+     * The accounts property
+     */
+    get accounts(): AccountsRequestBuilder;
     /**
      * Returns full details for a single actor including all attributes, images, aliases, external links, and bios. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
@@ -32,6 +38,14 @@ export interface ActorsItemRequestBuilder extends BaseRequestBuilder<ActorsItemR
  * Uri template for the request builder.
  */
 export const ActorsItemRequestBuilderUriTemplate = "{+baseurl}/actors/{id}";
+/**
+ * Metadata for all the navigation properties in the request builder.
+ */
+export const ActorsItemRequestBuilderNavigationMetadata: Record<Exclude<keyof ActorsItemRequestBuilder, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
+    accounts: {
+        requestsMetadata: AccountsRequestBuilderRequestsMetadata,
+    },
+};
 /**
  * Metadata for all the requests in the request builder.
  */

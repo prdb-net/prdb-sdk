@@ -4,7 +4,7 @@ Official client libraries for the [prdb Public API](https://apidocs.prdb.net/),
 in Python, TypeScript, Go and C#.
 
 All four are generated with [Kiota](https://learn.microsoft.com/openapi/kiota/)
-from the API's own OpenAPI document, so every language exposes the same 50
+from the API's own OpenAPI document, so every language exposes the same 53
 operations with the same shapes. The generated code is committed, so you can
 read it here on GitHub and build the SDKs without installing a generator.
 
@@ -128,6 +128,35 @@ image that is deleted, or hidden, denied or removed in moderation, arrives as
 `deleted` with an empty `url` and a null `vttUrl`; if moderation restores it, it
 reappears as `updated` with its URLs. `url` stays a non-nullable string, so
 treat `""` as "no image" rather than as a URL to request.
+
+## Creator platforms and accounts
+
+`GET /platforms` lists active publishing platforms with stable UUIDs, keys and
+titles. Platforms are separate from studio-group Networks. Site and Video
+catalogue payloads carry nullable `platformId`, `platformKey`, `platformTitle`
+and `accountHandle` fields, including nested sites, favorite/ignored sites and
+current-state change feeds. Classic sites have null platform metadata.
+
+`GET /sites` and `GET /videos` accept `PlatformId` to select one platform or
+`ClassicOnly=true` to select sites without a platform and their videos. Leave
+both unset for the full catalogue; combining the filters returns the existing
+validation problem response.
+
+In Go, use `WithUrl` for filtered Video requests: the pinned runtime also
+visits the unset timestamp fields in a typed Video query configuration and
+panics. See the [Go filter example](go/README.md#platform-filters).
+
+`GET /actors/{id}/accounts` and `GET /sites/{id}/owners` return confirmed
+creator account relationships, with at most 200 items in deterministic order.
+Guest credits do not imply ownership. All three new endpoints require an API
+key.
+
+| Language | Platforms | Actor accounts | Site owners |
+|---|---|---|---|
+| Python | `client.platforms.get()` | `client.actors.by_id(actor_id).accounts.get()` | `client.sites.by_id(site_id).owners.get()` |
+| TypeScript | `client.platforms.get()` | `client.actors.byId(actorId).accounts.get()` | `client.sites.byId(siteId).owners.get()` |
+| Go | `client.Platforms().Get(ctx, nil)` | `client.Actors().ById(actorID).Accounts().Get(ctx, nil)` | `client.Sites().ById(siteID).Owners().Get(ctx, nil)` |
+| C# | `client.Platforms.GetAsync()` | `client.Actors[actorId].Accounts.GetAsync()` | `client.Sites[siteId].Owners.GetAsync()` |
 
 Full reference: <https://apidocs.prdb.net/>
 

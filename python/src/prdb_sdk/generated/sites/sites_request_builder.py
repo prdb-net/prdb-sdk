@@ -11,6 +11,7 @@ from kiota_abstractions.request_information import RequestInformation
 from kiota_abstractions.request_option import RequestOption
 from kiota_abstractions.serialization import Parsable, ParsableFactory
 from typing import Any, Optional, TYPE_CHECKING, Union
+from uuid import UUID
 from warnings import warn
 
 if TYPE_CHECKING:
@@ -18,6 +19,7 @@ if TYPE_CHECKING:
     from ..models.problem_details import ProblemDetails
     from .changes.changes_request_builder import ChangesRequestBuilder
     from .get_sort_direction_query_parameter_type import GetSortDirectionQueryParameterType
+    from .item.sites_item_request_builder import SitesItemRequestBuilder
 
 class SitesRequestBuilder(BaseRequestBuilder):
     """
@@ -30,7 +32,21 @@ class SitesRequestBuilder(BaseRequestBuilder):
         param request_adapter: The request adapter to use to execute the requests.
         Returns: None
         """
-        super().__init__(request_adapter, "{+baseurl}/sites{?Page*,PageSize*,Search*,SortBy*,SortDirection*}", path_parameters)
+        super().__init__(request_adapter, "{+baseurl}/sites{?ClassicOnly*,Page*,PageSize*,PlatformId*,Search*,SortBy*,SortDirection*}", path_parameters)
+    
+    def by_id(self,id: UUID) -> SitesItemRequestBuilder:
+        """
+        Gets an item from the prdb_sdk.generated.sites.item collection
+        param id: Unique identifier of the item
+        Returns: SitesItemRequestBuilder
+        """
+        if id is None:
+            raise TypeError("id cannot be null.")
+        from .item.sites_item_request_builder import SitesItemRequestBuilder
+
+        url_tpl_params = get_path_parameters(self.path_parameters)
+        url_tpl_params["id"] = id
+        return SitesItemRequestBuilder(self.request_adapter, url_tpl_params)
     
     async def get(self,request_configuration: Optional[RequestConfiguration[SitesRequestBuilderGetQueryParameters]] = None) -> Optional[ListSitesResponse]:
         """
@@ -99,10 +115,14 @@ class SitesRequestBuilder(BaseRequestBuilder):
             """
             if original_name is None:
                 raise TypeError("original_name cannot be null.")
+            if original_name == "classic_only":
+                return "ClassicOnly"
             if original_name == "page":
                 return "Page"
             if original_name == "page_size":
                 return "PageSize"
+            if original_name == "platform_id":
+                return "PlatformId"
             if original_name == "search":
                 return "Search"
             if original_name == "sort_by":
@@ -111,11 +131,17 @@ class SitesRequestBuilder(BaseRequestBuilder):
                 return "SortDirection"
             return original_name
         
-        # 1-based page number. Defaults to 1.
+        # Restrict to classic sites without a publishing platform. Cannot be combined with platformId.
+        classic_only: Optional[bool] = None
+
+        # 1-based page number.
         page: Optional[int] = None
 
         # Number of items per page. Defaults to 20, max 1000 — the full list fits in one page.
         page_size: Optional[int] = None
+
+        # Restrict to one publishing platform UUID.
+        platform_id: Optional[UUID] = None
 
         # Optional search term matched against site title.
         search: Optional[str] = None

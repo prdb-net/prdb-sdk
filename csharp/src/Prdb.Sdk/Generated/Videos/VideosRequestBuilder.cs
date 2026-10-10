@@ -71,7 +71,7 @@ namespace Prdb.Sdk.Generated.Videos
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public VideosRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/videos{?ActorId*,CreatedAfter*,CreatedBefore*,Page*,PageSize*,Search*,SiteId*,SortBy*,SortDirection*}", pathParameters)
+        public VideosRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/videos{?ActorId*,ClassicOnly*,CreatedAfter*,CreatedBefore*,Page*,PageSize*,PlatformId*,Search*,SiteId*,SortBy*,SortDirection*}", pathParameters)
         {
         }
         /// <summary>
@@ -79,7 +79,7 @@ namespace Prdb.Sdk.Generated.Videos
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public VideosRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/videos{?ActorId*,CreatedAfter*,CreatedBefore*,Page*,PageSize*,Search*,SiteId*,SortBy*,SortDirection*}", rawUrl)
+        public VideosRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/videos{?ActorId*,ClassicOnly*,CreatedAfter*,CreatedBefore*,Page*,PageSize*,PlatformId*,Search*,SiteId*,SortBy*,SortDirection*}", rawUrl)
         {
         }
         /// <summary>
@@ -149,14 +149,18 @@ namespace Prdb.Sdk.Generated.Videos
         {
             /// <summary>Optional filter to return only videos featuring the specified actor.</summary>
             public Guid? ActorId { get; set; }
+            /// <summary>Restrict to classic sites without a publishing platform. Cannot be combined with platformId.</summary>
+            public bool? ClassicOnly { get; set; }
             /// <summary>Return only videos created strictly after this timestamp (exclusive).</summary>
             public DateTimeOffset? CreatedAfter { get; set; }
             /// <summary>Return only videos created strictly before this timestamp (exclusive).</summary>
             public DateTimeOffset? CreatedBefore { get; set; }
-            /// <summary>1-based page number. Defaults to 1.</summary>
+            /// <summary>1-based page number.</summary>
             public int? Page { get; set; }
             /// <summary>Number of items per page. Defaults to 20, max 100.</summary>
             public int? PageSize { get; set; }
+            /// <summary>Restrict to one publishing platform UUID.</summary>
+            public Guid? PlatformId { get; set; }
             /// <summary>Optional search term matched against video title and site title.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable

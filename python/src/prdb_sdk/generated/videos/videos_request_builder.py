@@ -39,7 +39,7 @@ class VideosRequestBuilder(BaseRequestBuilder):
         param request_adapter: The request adapter to use to execute the requests.
         Returns: None
         """
-        super().__init__(request_adapter, "{+baseurl}/videos{?ActorId*,CreatedAfter*,CreatedBefore*,Page*,PageSize*,Search*,SiteId*,SortBy*,SortDirection*}", path_parameters)
+        super().__init__(request_adapter, "{+baseurl}/videos{?ActorId*,ClassicOnly*,CreatedAfter*,CreatedBefore*,Page*,PageSize*,PlatformId*,Search*,SiteId*,SortBy*,SortDirection*}", path_parameters)
     
     def by_id(self,id: UUID) -> ItemRequestBuilder:
         """
@@ -169,6 +169,8 @@ class VideosRequestBuilder(BaseRequestBuilder):
                 raise TypeError("original_name cannot be null.")
             if original_name == "actor_id":
                 return "ActorId"
+            if original_name == "classic_only":
+                return "ClassicOnly"
             if original_name == "created_after":
                 return "CreatedAfter"
             if original_name == "created_before":
@@ -177,6 +179,8 @@ class VideosRequestBuilder(BaseRequestBuilder):
                 return "Page"
             if original_name == "page_size":
                 return "PageSize"
+            if original_name == "platform_id":
+                return "PlatformId"
             if original_name == "search":
                 return "Search"
             if original_name == "site_id":
@@ -190,17 +194,23 @@ class VideosRequestBuilder(BaseRequestBuilder):
         # Optional filter to return only videos featuring the specified actor.
         actor_id: Optional[UUID] = None
 
+        # Restrict to classic sites without a publishing platform. Cannot be combined with platformId.
+        classic_only: Optional[bool] = None
+
         # Return only videos created strictly after this timestamp (exclusive).
         created_after: Optional[datetime.datetime] = None
 
         # Return only videos created strictly before this timestamp (exclusive).
         created_before: Optional[datetime.datetime] = None
 
-        # 1-based page number. Defaults to 1.
+        # 1-based page number.
         page: Optional[int] = None
 
         # Number of items per page. Defaults to 20, max 100.
         page_size: Optional[int] = None
+
+        # Restrict to one publishing platform UUID.
+        platform_id: Optional[UUID] = None
 
         # Optional search term matched against video title and site title.
         search: Optional[str] = None

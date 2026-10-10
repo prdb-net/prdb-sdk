@@ -11,6 +11,7 @@ using Prdb.Sdk.Generated.FavoriteActors;
 using Prdb.Sdk.Generated.FavoriteSites;
 using Prdb.Sdk.Generated.Health;
 using Prdb.Sdk.Generated.IgnoredSites;
+using Prdb.Sdk.Generated.Platforms;
 using Prdb.Sdk.Generated.Predb;
 using Prdb.Sdk.Generated.RateLimit;
 using Prdb.Sdk.Generated.Sites;
@@ -54,6 +55,11 @@ namespace Prdb.Sdk.Generated
         public global::Prdb.Sdk.Generated.IgnoredSites.IgnoredSitesRequestBuilder IgnoredSites
         {
             get => new global::Prdb.Sdk.Generated.IgnoredSites.IgnoredSitesRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The platforms property</summary>
+        public global::Prdb.Sdk.Generated.Platforms.PlatformsRequestBuilder Platforms
+        {
+            get => new global::Prdb.Sdk.Generated.Platforms.PlatformsRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The predb property</summary>
         public global::Prdb.Sdk.Generated.Predb.PredbRequestBuilder Predb
