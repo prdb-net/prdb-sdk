@@ -31,7 +31,7 @@ class WithActorItemRequestBuilder(BaseRequestBuilder):
     
     async def delete(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> None:
         """
-        Unmarks the specified actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user's favourites. Requires API key authentication.
+        Resolves a retained merge ID to its active canonical actor and unmarks that actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user's favourites. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: None
         """
@@ -53,7 +53,7 @@ class WithActorItemRequestBuilder(BaseRequestBuilder):
     
     async def post(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> None:
         """
-        Marks the specified actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
+        Resolves a retained merge ID to its active canonical actor and marks that actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: None
         """
@@ -75,7 +75,7 @@ class WithActorItemRequestBuilder(BaseRequestBuilder):
     
     def to_delete_request_information(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Unmarks the specified actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user's favourites. Requires API key authentication.
+        Resolves a retained merge ID to its active canonical actor and unmarks that actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user's favourites. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
@@ -86,7 +86,7 @@ class WithActorItemRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Marks the specified actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
+        Resolves a retained merge ID to its active canonical actor and marks that actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """

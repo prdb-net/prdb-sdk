@@ -1,0 +1,205 @@
+{
+  "sourceId": "00000000-0000-0000-0000-000000000001",
+  "targetId": "00000000-0000-0000-0000-000000000002",
+  "ordinaryId": "00000000-0000-0000-0000-000000000003",
+  "detail": {
+    "id": "00000000-0000-0000-0000-000000000002",
+    "name": "Synthetic actor",
+    "images": [],
+    "aliases": [],
+    "links": [],
+    "bios": [],
+    "createdAtUtc": "2026-10-11T07:00:00Z",
+    "updatedAtUtc": "2026-10-11T07:00:00Z",
+    "gender": 0,
+    "genderLabel": "Unknown",
+    "haircolor": 0,
+    "haircolorLabel": "Unknown",
+    "eyecolor": 0,
+    "eyecolorLabel": "Unknown",
+    "breastType": 0,
+    "breastTypeLabel": "Unknown",
+    "nationality": 0,
+    "nationalityLabel": "Unknown",
+    "ethnicity": 0,
+    "ethnicityLabel": "Unknown",
+    "requestedIds": null
+  },
+  "batch": [
+    {
+      "id": "00000000-0000-0000-0000-000000000002",
+      "name": "Synthetic actor",
+      "images": [],
+      "aliases": [],
+      "links": [],
+      "bios": [],
+      "createdAtUtc": "2026-10-11T07:00:00Z",
+      "updatedAtUtc": "2026-10-11T07:00:00Z",
+      "gender": 0,
+      "genderLabel": "Unknown",
+      "haircolor": 0,
+      "haircolorLabel": "Unknown",
+      "eyecolor": 0,
+      "eyecolorLabel": "Unknown",
+      "breastType": 0,
+      "breastTypeLabel": "Unknown",
+      "nationality": 0,
+      "nationalityLabel": "Unknown",
+      "ethnicity": 0,
+      "ethnicityLabel": "Unknown",
+      "requestedIds": [
+        "00000000-0000-0000-0000-000000000001",
+        "00000000-0000-0000-0000-000000000002"
+      ]
+    }
+  ],
+  "actorChanges": {
+    "items": [
+      {
+        "eventType": "deleted",
+        "actor": {
+          "id": "00000000-0000-0000-0000-000000000001",
+          "name": "Synthetic actor",
+          "images": [],
+          "aliases": [],
+          "links": [],
+          "bios": [],
+          "createdAtUtc": "2026-10-11T07:00:00Z",
+          "updatedAtUtc": "2026-10-11T07:00:00Z",
+          "gender": 0,
+          "genderLabel": "Unknown",
+          "haircolor": 0,
+          "haircolorLabel": "Unknown",
+          "eyecolor": 0,
+          "eyecolorLabel": "Unknown",
+          "breastType": 0,
+          "breastTypeLabel": "Unknown",
+          "nationality": 0,
+          "nationalityLabel": "Unknown",
+          "ethnicity": 0,
+          "ethnicityLabel": "Unknown",
+          "isDeleted": true,
+          "deletedAtUtc": "2026-10-11T07:00:00Z",
+          "mergedIntoActorId": "00000000-0000-0000-0000-000000000002"
+        }
+      },
+      {
+        "eventType": "updated",
+        "actor": {
+          "id": "00000000-0000-0000-0000-000000000002",
+          "name": "Synthetic actor",
+          "images": [],
+          "aliases": [],
+          "links": [],
+          "bios": [],
+          "createdAtUtc": "2026-10-11T07:00:00Z",
+          "updatedAtUtc": "2026-10-11T07:00:00Z",
+          "gender": 0,
+          "genderLabel": "Unknown",
+          "haircolor": 0,
+          "haircolorLabel": "Unknown",
+          "eyecolor": 0,
+          "eyecolorLabel": "Unknown",
+          "breastType": 0,
+          "breastTypeLabel": "Unknown",
+          "nationality": 0,
+          "nationalityLabel": "Unknown",
+          "ethnicity": 0,
+          "ethnicityLabel": "Unknown",
+          "isDeleted": false,
+          "deletedAtUtc": null
+        }
+      },
+      {
+        "eventType": "deleted",
+        "actor": {
+          "id": "00000000-0000-0000-0000-000000000003",
+          "name": "Synthetic actor",
+          "images": [],
+          "aliases": [],
+          "links": [],
+          "bios": [],
+          "createdAtUtc": "2026-10-11T07:00:00Z",
+          "updatedAtUtc": "2026-10-11T07:00:00Z",
+          "gender": 0,
+          "genderLabel": "Unknown",
+          "haircolor": 0,
+          "haircolorLabel": "Unknown",
+          "eyecolor": 0,
+          "eyecolorLabel": "Unknown",
+          "breastType": 0,
+          "breastTypeLabel": "Unknown",
+          "nationality": 0,
+          "nationalityLabel": "Unknown",
+          "ethnicity": 0,
+          "ethnicityLabel": "Unknown",
+          "isDeleted": true,
+          "deletedAtUtc": "2026-10-11T07:00:00Z",
+          "mergedIntoActorId": null
+        }
+      }
+    ],
+    "pageSize": 100,
+    "hasMore": false,
+    "serverTimeUtc": "2026-10-11T07:00:00Z",
+    "nextCursor": {
+      "updatedAtUtc": "2026-10-11T07:00:00Z",
+      "id": "00000000-0000-0000-0000-000000000003"
+    }
+  },
+  "favoriteActorChanges": {
+    "items": [
+      {
+        "eventType": "deleted",
+        "favoriteActor": {
+          "id": "00000000-0000-0000-0000-000000000001",
+          "name": "Synthetic actor",
+          "gender": "Unknown",
+          "nationality": "Unknown",
+          "ethnicity": "Unknown",
+          "isDeleted": true,
+          "deletedAtUtc": "2026-10-11T07:00:00Z",
+          "favoritedAtUtc": "2026-10-11T07:00:00Z",
+          "updatedAtUtc": "2026-10-11T07:00:00Z",
+          "mergedIntoActorId": "00000000-0000-0000-0000-000000000002"
+        }
+      },
+      {
+        "eventType": "updated",
+        "favoriteActor": {
+          "id": "00000000-0000-0000-0000-000000000002",
+          "name": "Synthetic actor",
+          "gender": "Unknown",
+          "nationality": "Unknown",
+          "ethnicity": "Unknown",
+          "isDeleted": false,
+          "deletedAtUtc": null,
+          "favoritedAtUtc": "2026-10-11T07:00:00Z",
+          "updatedAtUtc": "2026-10-11T07:00:00Z"
+        }
+      },
+      {
+        "eventType": "deleted",
+        "favoriteActor": {
+          "id": "00000000-0000-0000-0000-000000000003",
+          "name": "Synthetic actor",
+          "gender": "Unknown",
+          "nationality": "Unknown",
+          "ethnicity": "Unknown",
+          "isDeleted": true,
+          "deletedAtUtc": "2026-10-11T07:00:00Z",
+          "favoritedAtUtc": "2026-10-11T07:00:00Z",
+          "updatedAtUtc": "2026-10-11T07:00:00Z",
+          "mergedIntoActorId": null
+        }
+      }
+    ],
+    "pageSize": 100,
+    "hasMore": false,
+    "serverTimeUtc": "2026-10-11T07:00:00Z",
+    "nextCursor": {
+      "updatedAtUtc": "2026-10-11T07:00:00Z",
+      "id": "00000000-0000-0000-0000-000000000003"
+    }
+  }
+}

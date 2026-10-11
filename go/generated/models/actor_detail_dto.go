@@ -75,6 +75,8 @@ type ActorDetailDto struct {
     nationalityLabel *string
     // The piercings property
     piercings *string
+    // Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.
+    requestedIds []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The tattoos property
     tattoos *string
     // The updatedAtUtc property
@@ -527,6 +529,22 @@ func (m *ActorDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         return nil
     }
+    res["requestedIds"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetCollectionOfPrimitiveValues("uuid")
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            res := make([]i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID, len(val))
+            for i, v := range val {
+                if v != nil {
+                    res[i] = *(v.(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID))
+                }
+            }
+            m.SetRequestedIds(res)
+        }
+        return nil
+    }
     res["tattoos"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -623,6 +641,11 @@ func (m *ActorDetailDto) GetNationalityLabel()(*string) {
 // returns a *string when successful
 func (m *ActorDetailDto) GetPiercings()(*string) {
     return m.piercings
+}
+// GetRequestedIds gets the requestedIds property value. Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.
+// returns a []UUID when successful
+func (m *ActorDetailDto) GetRequestedIds()([]i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
+    return m.requestedIds
 }
 // GetTattoos gets the tattoos property value. The tattoos property
 // returns a *string when successful
@@ -851,6 +874,12 @@ func (m *ActorDetailDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
             return err
         }
     }
+    if m.GetRequestedIds() != nil {
+        err := writer.WriteCollectionOfUUIDValues("requestedIds", m.GetRequestedIds())
+        if err != nil {
+            return err
+        }
+    }
     {
         err := writer.WriteStringValue("tattoos", m.GetTattoos())
         if err != nil {
@@ -1005,6 +1034,10 @@ func (m *ActorDetailDto) SetNationalityLabel(value *string)() {
 func (m *ActorDetailDto) SetPiercings(value *string)() {
     m.piercings = value
 }
+// SetRequestedIds sets the requestedIds property value. Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.
+func (m *ActorDetailDto) SetRequestedIds(value []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
+    m.requestedIds = value
+}
 // SetTattoos sets the tattoos property value. The tattoos property
 func (m *ActorDetailDto) SetTattoos(value *string)() {
     m.tattoos = value
@@ -1051,6 +1084,7 @@ type ActorDetailDtoable interface {
     GetNationality()(*int32)
     GetNationalityLabel()(*string)
     GetPiercings()(*string)
+    GetRequestedIds()([]i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetTattoos()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetWaistSize()(*int32)
@@ -1085,6 +1119,7 @@ type ActorDetailDtoable interface {
     SetNationality(value *int32)()
     SetNationalityLabel(value *string)()
     SetPiercings(value *string)()
+    SetRequestedIds(value []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetTattoos(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetWaistSize(value *int32)()

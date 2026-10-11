@@ -17,7 +17,7 @@ export interface ActorsItemRequestBuilder extends BaseRequestBuilder<ActorsItemR
      */
     get accounts(): AccountsRequestBuilder;
     /**
-     * Returns full details for a single actor including all attributes, images, aliases, external links, and bios. Requires API key authentication.
+     * Returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<ActorDetailDto>}
      * @throws {ProblemDetails} error when the service returns a 401 status code
@@ -28,7 +28,7 @@ export interface ActorsItemRequestBuilder extends BaseRequestBuilder<ActorsItemR
      */
      get(requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<ActorDetailDto | undefined>;
     /**
-     * Returns full details for a single actor including all attributes, images, aliases, external links, and bios. Requires API key authentication.
+     * Returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */

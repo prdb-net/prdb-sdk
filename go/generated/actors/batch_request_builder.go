@@ -26,7 +26,7 @@ func NewBatchRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263371cb
     urlParams["request-raw-url"] = rawUrl
     return NewBatchRequestBuilderInternal(urlParams, requestAdapter)
 }
-// Post returns full details for up to 50 actors by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+// Post returns full details for up to 50 actors by their IDs. Retained merge IDs resolve to active canonical actors, each returned once. requestedIds maps the supplied IDs to each result. Unknown, ordinary deleted IDs and deleted targets are silently omitted. Requires API key authentication.
 // returns a []ActorDetailDtoable when successful
 // returns a ProblemDetails error when the service returns a 400 status code
 // returns a ProblemDetails error when the service returns a 401 status code
@@ -57,7 +57,7 @@ func (m *BatchRequestBuilder) Post(ctx context.Context, body ibd6e645a776717494d
     }
     return val, nil
 }
-// ToPostRequestInformation returns full details for up to 50 actors by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+// ToPostRequestInformation returns full details for up to 50 actors by their IDs. Retained merge IDs resolve to active canonical actors, each returned once. requestedIds maps the supplied IDs to each result. Unknown, ordinary deleted IDs and deleted targets are silently omitted. Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *BatchRequestBuilder) ToPostRequestInformation(ctx context.Context, body ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.GetActorsByIdsRequestable, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.POST, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

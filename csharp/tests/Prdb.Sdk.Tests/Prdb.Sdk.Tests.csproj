@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../src/Prdb.Sdk/Prdb.Sdk.csproj" />
+    <None Include="../../../tests/fixtures/actor-merge.json" Link="actor-merge.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
