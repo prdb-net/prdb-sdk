@@ -5130,7 +5130,7 @@
           "FavoriteActors"
         ],
         "summary": "Remove a favorite actor",
-        "description": "Unmarks the specified actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user's favourites. Requires API key authentication.",
+        "description": "Resolves a retained merge ID to its active canonical actor and unmarks that actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user's favourites. Requires API key authentication.",
         "operationId": "RemoveFavoriteActor",
         "parameters": [
           {
@@ -5221,7 +5221,7 @@
           "FavoriteActors"
         ],
         "summary": "Add a favorite actor",
-        "description": "Marks the specified actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.",
+        "description": "Resolves a retained merge ID to its active canonical actor and marks that actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.",
         "operationId": "AddFavoriteActor",
         "parameters": [
           {
@@ -5454,7 +5454,7 @@
           "FavoriteActors"
         ],
         "summary": "Get incremental favorite actor changes",
-        "description": "Returns a seek-paged delta feed of favorite actor rows for the currently authenticated user ordered by updatedAtUtc ascending, then actorId ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of favorite actor rows for the currently authenticated user ordered by updatedAtUtc ascending, then actorId ascending. Includes created, updated, and soft-deleted rows as full payloads. Merged source favorites retain their old ID and mergedIntoActorId, alongside the current target favorite; no other user is included. Use since and the returned nextCursor to continue incrementally. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
         "operationId": "GetFavoriteActorChanges",
         "parameters": [
           {
@@ -5716,7 +5716,7 @@
           "Actors"
         ],
         "summary": "Get actors by IDs",
-        "description": "Returns full details for up to 50 actors by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.",
+        "description": "Returns full details for up to 50 actors by their IDs. Retained merge IDs resolve to active canonical actors, each returned once. requestedIds maps the supplied IDs to each result. Unknown, ordinary deleted IDs and deleted targets are silently omitted. Requires API key authentication.",
         "operationId": "GetActorsByIds",
         "requestBody": {
           "content": {
@@ -5825,7 +5825,7 @@
           "Actors"
         ],
         "summary": "Get actor by ID",
-        "description": "Returns full details for a single actor including all attributes, images, aliases, external links, and bios. Requires API key authentication.",
+        "description": "Returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.",
         "operationId": "GetActorById",
         "parameters": [
           {
@@ -6031,7 +6031,7 @@
           "Actors"
         ],
         "summary": "Get incremental actor changes",
-        "description": "Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of actor rows ordered by updatedAtUtc ascending, then actor ID ascending. Includes created, updated, and soft-deleted rows as full payloads. Merge tombstones retain their old ID and carry mergedIntoActorId; process them independently of the target update and page order. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
         "operationId": "GetActorChanges",
         "parameters": [
           {
@@ -6385,6 +6385,12 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          },
+          "mergedIntoActorId": {
+            "type": "string",
+            "description": "Permanent canonical target for a merge tombstone; null for an ordinary deletion. Retained if the target is later deleted.",
+            "format": "uuid",
+            "nullable": true
           }
         },
         "description": "Full current actor payload, including tombstone metadata."
@@ -6528,6 +6534,15 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "requestedIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.",
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -7039,6 +7054,12 @@
           "deletedAtUtc": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "mergedIntoActorId": {
+            "type": "string",
+            "description": "Canonical target when this favorite belongs to a merged source actor. The old favorite ID remains the cursor key.",
+            "format": "uuid",
             "nullable": true
           },
           "favoritedAtUtc": {

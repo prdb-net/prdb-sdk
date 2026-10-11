@@ -11,7 +11,7 @@ import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type Requ
  */
 export interface WithActorItemRequestBuilder extends BaseRequestBuilder<WithActorItemRequestBuilder> {
     /**
-     * Unmarks the specified actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user's favourites. Requires API key authentication.
+     * Resolves a retained merge ID to its active canonical actor and unmarks that actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user's favourites. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @throws {ProblemDetails} error when the service returns a 401 status code
      * @throws {ProblemDetails} error when the service returns a 403 status code
@@ -21,7 +21,7 @@ export interface WithActorItemRequestBuilder extends BaseRequestBuilder<WithActo
      */
      delete(requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<void>;
     /**
-     * Marks the specified actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
+     * Resolves a retained merge ID to its active canonical actor and marks that actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @throws {ProblemDetails} error when the service returns a 401 status code
      * @throws {ProblemDetails} error when the service returns a 403 status code
@@ -31,13 +31,13 @@ export interface WithActorItemRequestBuilder extends BaseRequestBuilder<WithActo
      */
      post(requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<void>;
     /**
-     * Unmarks the specified actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user's favourites. Requires API key authentication.
+     * Resolves a retained merge ID to its active canonical actor and unmarks that actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user's favourites. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */
      toDeleteRequestInformation(requestConfiguration?: RequestConfiguration<object> | undefined) : RequestInformation;
     /**
-     * Marks the specified actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
+     * Resolves a retained merge ID to its active canonical actor and marks that actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */

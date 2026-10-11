@@ -90,3 +90,29 @@ than that window, rebuild the baseline to avoid missing deletions.
 These feeds do not add canonical Site artwork. Sites still expose no logo or
 profile image; [issue #35](https://github.com/prdb-net/prdb-sdk/issues/35)
 tracks the API extension needed for that capability.
+
+## Actor merges
+
+SDK version 0.18.0 exposes optional nullable `mergedIntoActorId` in Actor and
+favorite-actor change payloads, and optional nullable `requestedIds` in Actor
+detail payloads. A retained old actor ID resolves to its active canonical actor
+with HTTP 200, without a redirect. Batch reads keep their array shape and return
+each canonical actor once; `requestedIds` lists the supplied IDs that resolved
+to that result. The mapping is batch-only and may be null or absent on detail
+reads. Unknown IDs, ordinary deletions and subsequently deleted targets still
+return 404 on detail reads and are omitted from batches. Favorite add/remove
+operations also resolve retained IDs to an active canonical actor.
+
+For both Actor and favorite-actor feeds, apply source tombstones using their
+original ID and store `mergedIntoActorId` separately as an identity mapping.
+An ordinary deletion has no merge target. Actor tombstones retain the mapping
+even if the target is later deleted; its presence does not prove the target is
+still active. Apply target updates independently: they may arrive before or
+after source tombstones and on different pages. Never remove a target merely
+because a source tombstone arrives later.
+
+A favorite source tombstone is a removal of the old favorite. Never infer an
+active target favorite from a merge mapping alone; use the target's current
+favorite row from the authenticated user's feed. Keep independent feed cursors
+and preserve source IDs as cursor keys. The cursor format, required fields and
+paging procedure are unchanged.

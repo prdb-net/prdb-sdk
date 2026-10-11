@@ -11,7 +11,7 @@ import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type Requ
  */
 export interface BatchRequestBuilder extends BaseRequestBuilder<BatchRequestBuilder> {
     /**
-     * Returns full details for up to 50 actors by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+     * Returns full details for up to 50 actors by their IDs. Retained merge IDs resolve to active canonical actors, each returned once. requestedIds maps the supplied IDs to each result. Unknown, ordinary deleted IDs and deleted targets are silently omitted. Requires API key authentication.
      * @param body The request body
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<ActorDetailDto[]>}
@@ -23,7 +23,7 @@ export interface BatchRequestBuilder extends BaseRequestBuilder<BatchRequestBuil
      */
      post(body: GetActorsByIdsRequest, requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<ActorDetailDto[] | undefined>;
     /**
-     * Returns full details for up to 50 actors by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+     * Returns full details for up to 50 actors by their IDs. Retained merge IDs resolve to active canonical actors, each returned once. requestedIds maps the supplied IDs to each result. Unknown, ordinary deleted IDs and deleted targets are silently omitted. Requires API key authentication.
      * @param body The request body
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}

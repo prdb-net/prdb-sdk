@@ -39,6 +39,8 @@ namespace Prdb.Sdk.Generated.Models
         public Guid? Id { get; set; }
         /// <summary>The isDeleted property</summary>
         public bool? IsDeleted { get; set; }
+        /// <summary>Canonical target when this favorite belongs to a merged source actor. The old favorite ID remains the cursor key.</summary>
+        public Guid? MergedIntoActorId { get; set; }
         /// <summary>The name property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -105,6 +107,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "gender", n => { Gender = n.GetStringValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "isDeleted", n => { IsDeleted = n.GetBoolValue(); } },
+                { "mergedIntoActorId", n => { MergedIntoActorId = n.GetGuidValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "nationality", n => { Nationality = n.GetStringValue(); } },
                 { "profileImageCdnPath", n => { ProfileImageCdnPath = n.GetStringValue(); } },
@@ -125,6 +128,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteStringValue("gender", Gender);
             writer.WriteGuidValue("id", Id);
             writer.WriteBoolValue("isDeleted", IsDeleted);
+            writer.WriteGuidValue("mergedIntoActorId", MergedIntoActorId);
             writer.WriteStringValue("name", Name);
             writer.WriteStringValue("nationality", Nationality);
             writer.WriteStringValue("profileImageCdnPath", ProfileImageCdnPath);

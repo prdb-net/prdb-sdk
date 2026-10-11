@@ -166,6 +166,10 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     links?: ActorChangeLinkDto[] | null;
     /**
+     * Permanent canonical target for a merge tombstone; null for an ordinary deletion. Retained if the target is later deleted.
+     */
+    mergedIntoActorId?: Guid | null;
+    /**
      * The name property
      */
     name?: string | null;
@@ -400,6 +404,10 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      * The piercings property
      */
     piercings?: string | null;
+    /**
+     * Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.
+     */
+    requestedIds?: Guid[] | null;
     /**
      * The tattoos property
      */
@@ -1848,6 +1856,7 @@ export function deserializeIntoActorChangeActorDto(actorChangeActorDto: Partial<
         "images": n => { actorChangeActorDto.images = n.getCollectionOfObjectValues<ActorChangeImageDto>(createActorChangeImageDtoFromDiscriminatorValue); },
         "isDeleted": n => { actorChangeActorDto.isDeleted = n.getBooleanValue(); },
         "links": n => { actorChangeActorDto.links = n.getCollectionOfObjectValues<ActorChangeLinkDto>(createActorChangeLinkDtoFromDiscriminatorValue); },
+        "mergedIntoActorId": n => { actorChangeActorDto.mergedIntoActorId = n.getGuidValue(); },
         "name": n => { actorChangeActorDto.name = n.getStringValue(); },
         "nationality": n => { actorChangeActorDto.nationality = n.getNumberValue(); },
         "nationalityLabel": n => { actorChangeActorDto.nationalityLabel = n.getStringValue(); },
@@ -1971,6 +1980,7 @@ export function deserializeIntoActorDetailDto(actorDetailDto: Partial<ActorDetai
         "nationality": n => { actorDetailDto.nationality = n.getNumberValue(); },
         "nationalityLabel": n => { actorDetailDto.nationalityLabel = n.getStringValue(); },
         "piercings": n => { actorDetailDto.piercings = n.getStringValue(); },
+        "requestedIds": n => { actorDetailDto.requestedIds = n.getCollectionOfPrimitiveValues<Guid>("string"); },
         "tattoos": n => { actorDetailDto.tattoos = n.getStringValue(); },
         "updatedAtUtc": n => { actorDetailDto.updatedAtUtc = n.getDateValue(); },
         "waistSize": n => { actorDetailDto.waistSize = n.getNumberValue(); },
@@ -2104,6 +2114,7 @@ export function deserializeIntoFavoriteActorChangeFavoriteActorDto(favoriteActor
         "gender": n => { favoriteActorChangeFavoriteActorDto.gender = n.getStringValue(); },
         "id": n => { favoriteActorChangeFavoriteActorDto.id = n.getGuidValue(); },
         "isDeleted": n => { favoriteActorChangeFavoriteActorDto.isDeleted = n.getBooleanValue(); },
+        "mergedIntoActorId": n => { favoriteActorChangeFavoriteActorDto.mergedIntoActorId = n.getGuidValue(); },
         "name": n => { favoriteActorChangeFavoriteActorDto.name = n.getStringValue(); },
         "nationality": n => { favoriteActorChangeFavoriteActorDto.nationality = n.getStringValue(); },
         "profileImageCdnPath": n => { favoriteActorChangeFavoriteActorDto.profileImageCdnPath = n.getStringValue(); },
@@ -3886,6 +3897,10 @@ export interface FavoriteActorChangeFavoriteActorDto extends AdditionalDataHolde
      */
     isDeleted?: boolean | null;
     /**
+     * Canonical target when this favorite belongs to a merged source actor. The old favorite ID remains the cursor key.
+     */
+    mergedIntoActorId?: Guid | null;
+    /**
      * The name property
      */
     name?: string | null;
@@ -5318,6 +5333,7 @@ export function serializeActorChangeActorDto(writer: SerializationWriter, actorC
     writer.writeCollectionOfObjectValues<ActorChangeImageDto>("images", actorChangeActorDto.images, serializeActorChangeImageDto);
     writer.writeBooleanValue("isDeleted", actorChangeActorDto.isDeleted);
     writer.writeCollectionOfObjectValues<ActorChangeLinkDto>("links", actorChangeActorDto.links, serializeActorChangeLinkDto);
+    writer.writeGuidValue("mergedIntoActorId", actorChangeActorDto.mergedIntoActorId);
     writer.writeStringValue("name", actorChangeActorDto.name);
     writer.writeNumberValue("nationality", actorChangeActorDto.nationality);
     writer.writeStringValue("nationalityLabel", actorChangeActorDto.nationalityLabel);
@@ -5448,6 +5464,7 @@ export function serializeActorDetailDto(writer: SerializationWriter, actorDetail
     writer.writeNumberValue("nationality", actorDetailDto.nationality);
     writer.writeStringValue("nationalityLabel", actorDetailDto.nationalityLabel);
     writer.writeStringValue("piercings", actorDetailDto.piercings);
+    writer.writeCollectionOfPrimitiveValues<Guid>("requestedIds", actorDetailDto.requestedIds);
     writer.writeStringValue("tattoos", actorDetailDto.tattoos);
     writer.writeDateValue("updatedAtUtc", actorDetailDto.updatedAtUtc);
     writer.writeNumberValue("waistSize", actorDetailDto.waistSize);
@@ -5590,6 +5607,7 @@ export function serializeFavoriteActorChangeFavoriteActorDto(writer: Serializati
     writer.writeStringValue("gender", favoriteActorChangeFavoriteActorDto.gender);
     writer.writeGuidValue("id", favoriteActorChangeFavoriteActorDto.id);
     writer.writeBooleanValue("isDeleted", favoriteActorChangeFavoriteActorDto.isDeleted);
+    writer.writeGuidValue("mergedIntoActorId", favoriteActorChangeFavoriteActorDto.mergedIntoActorId);
     writer.writeStringValue("name", favoriteActorChangeFavoriteActorDto.name);
     writer.writeStringValue("nationality", favoriteActorChangeFavoriteActorDto.nationality);
     writer.writeStringValue("profileImageCdnPath", favoriteActorChangeFavoriteActorDto.profileImageCdnPath);

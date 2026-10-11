@@ -34,7 +34,7 @@ namespace Prdb.Sdk.Generated.FavoriteActors.Item
         {
         }
         /// <summary>
-        /// Unmarks the specified actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user&apos;s favourites. Requires API key authentication.
+        /// Resolves a retained merge ID to its active canonical actor and unmarks that actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user&apos;s favourites. Requires API key authentication.
         /// </summary>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -64,7 +64,7 @@ namespace Prdb.Sdk.Generated.FavoriteActors.Item
             await RequestAdapter.SendNoContentAsync(requestInfo, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Marks the specified actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
+        /// Resolves a retained merge ID to its active canonical actor and marks that actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
         /// </summary>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -94,7 +94,7 @@ namespace Prdb.Sdk.Generated.FavoriteActors.Item
             await RequestAdapter.SendNoContentAsync(requestInfo, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Unmarks the specified actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user&apos;s favourites. Requires API key authentication.
+        /// Resolves a retained merge ID to its active canonical actor and unmarks that actor as a favourite for the currently authenticated user. Returns 404 if the actor was not in the user&apos;s favourites. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>
@@ -113,7 +113,7 @@ namespace Prdb.Sdk.Generated.FavoriteActors.Item
             return requestInfo;
         }
         /// <summary>
-        /// Marks the specified actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
+        /// Resolves a retained merge ID to its active canonical actor and marks that actor as a favourite for the currently authenticated user. Returns 204 if added or already a favourite. Returns 404 if the actor does not exist. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

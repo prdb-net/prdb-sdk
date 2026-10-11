@@ -33,7 +33,7 @@ class BatchRequestBuilder(BaseRequestBuilder):
     
     async def post(self,body: GetActorsByIdsRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[list[ActorDetailDto]]:
         """
-        Returns full details for up to 50 actors by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+        Returns full details for up to 50 actors by their IDs. Retained merge IDs resolve to active canonical actors, each returned once. requestedIds maps the supplied IDs to each result. Unknown, ordinary deleted IDs and deleted targets are silently omitted. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[list[ActorDetailDto]]
@@ -60,7 +60,7 @@ class BatchRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,body: GetActorsByIdsRequest, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Returns full details for up to 50 actors by their IDs. IDs that do not exist are silently omitted from the response. Requires API key authentication.
+        Returns full details for up to 50 actors by their IDs. Retained merge IDs resolve to active canonical actors, each returned once. requestedIds maps the supplied IDs to each result. Unknown, ordinary deleted IDs and deleted targets are silently omitted. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation

@@ -146,6 +146,8 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.ActorChangeLinkDto> Links { get; set; }
 #endif
+        /// <summary>Permanent canonical target for a merge tombstone; null for an ordinary deletion. Retained if the target is later deleted.</summary>
+        public Guid? MergedIntoActorId { get; set; }
         /// <summary>The name property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -238,6 +240,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "images", n => { Images = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.ActorChangeImageDto>(global::Prdb.Sdk.Generated.Models.ActorChangeImageDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "isDeleted", n => { IsDeleted = n.GetBoolValue(); } },
                 { "links", n => { Links = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.ActorChangeLinkDto>(global::Prdb.Sdk.Generated.Models.ActorChangeLinkDto.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "mergedIntoActorId", n => { MergedIntoActorId = n.GetGuidValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
                 { "nationality", n => { Nationality = n.GetIntValue(); } },
                 { "nationalityLabel", n => { NationalityLabel = n.GetStringValue(); } },
@@ -283,6 +286,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.ActorChangeImageDto>("images", Images);
             writer.WriteBoolValue("isDeleted", IsDeleted);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.ActorChangeLinkDto>("links", Links);
+            writer.WriteGuidValue("mergedIntoActorId", MergedIntoActorId);
             writer.WriteStringValue("name", Name);
             writer.WriteIntValue("nationality", Nationality);
             writer.WriteStringValue("nationalityLabel", NationalityLabel);

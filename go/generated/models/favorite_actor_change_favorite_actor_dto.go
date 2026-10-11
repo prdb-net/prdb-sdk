@@ -25,6 +25,8 @@ type FavoriteActorChangeFavoriteActorDto struct {
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The isDeleted property
     isDeleted *bool
+    // Canonical target when this favorite belongs to a merged source actor. The old favorite ID remains the cursor key.
+    mergedIntoActorId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The name property
     name *string
     // The nationality property
@@ -133,6 +135,16 @@ func (m *FavoriteActorChangeFavoriteActorDto) GetFieldDeserializers()(map[string
         }
         return nil
     }
+    res["mergedIntoActorId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetUUIDValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetMergedIntoActorId(val)
+        }
+        return nil
+    }
     res["name"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -200,6 +212,11 @@ func (m *FavoriteActorChangeFavoriteActorDto) GetId()(*i561e97a8befe7661a44c8f54
 func (m *FavoriteActorChangeFavoriteActorDto) GetIsDeleted()(*bool) {
     return m.isDeleted
 }
+// GetMergedIntoActorId gets the mergedIntoActorId property value. Canonical target when this favorite belongs to a merged source actor. The old favorite ID remains the cursor key.
+// returns a *UUID when successful
+func (m *FavoriteActorChangeFavoriteActorDto) GetMergedIntoActorId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
+    return m.mergedIntoActorId
+}
 // GetName gets the name property value. The name property
 // returns a *string when successful
 func (m *FavoriteActorChangeFavoriteActorDto) GetName()(*string) {
@@ -260,6 +277,12 @@ func (m *FavoriteActorChangeFavoriteActorDto) Serialize(writer i878a80d2330e89d2
     }
     {
         err := writer.WriteBoolValue("isDeleted", m.GetIsDeleted())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteUUIDValue("mergedIntoActorId", m.GetMergedIntoActorId())
         if err != nil {
             return err
         }
@@ -330,6 +353,10 @@ func (m *FavoriteActorChangeFavoriteActorDto) SetId(value *i561e97a8befe7661a44c
 func (m *FavoriteActorChangeFavoriteActorDto) SetIsDeleted(value *bool)() {
     m.isDeleted = value
 }
+// SetMergedIntoActorId sets the mergedIntoActorId property value. Canonical target when this favorite belongs to a merged source actor. The old favorite ID remains the cursor key.
+func (m *FavoriteActorChangeFavoriteActorDto) SetMergedIntoActorId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
+    m.mergedIntoActorId = value
+}
 // SetName sets the name property value. The name property
 func (m *FavoriteActorChangeFavoriteActorDto) SetName(value *string)() {
     m.name = value
@@ -360,6 +387,7 @@ type FavoriteActorChangeFavoriteActorDtoable interface {
     GetGender()(*string)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetIsDeleted()(*bool)
+    GetMergedIntoActorId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetName()(*string)
     GetNationality()(*string)
     GetProfileImageCdnPath()(*string)
@@ -371,6 +399,7 @@ type FavoriteActorChangeFavoriteActorDtoable interface {
     SetGender(value *string)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetIsDeleted(value *bool)()
+    SetMergedIntoActorId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetName(value *string)()
     SetNationality(value *string)()
     SetProfileImageCdnPath(value *string)()

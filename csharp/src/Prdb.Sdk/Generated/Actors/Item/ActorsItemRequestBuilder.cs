@@ -40,7 +40,7 @@ namespace Prdb.Sdk.Generated.Actors.Item
         {
         }
         /// <summary>
-        /// Returns full details for a single actor including all attributes, images, aliases, external links, and bios. Requires API key authentication.
+        /// Returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.ActorDetailDto"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -71,7 +71,7 @@ namespace Prdb.Sdk.Generated.Actors.Item
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.ActorDetailDto>(requestInfo, global::Prdb.Sdk.Generated.Models.ActorDetailDto.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns full details for a single actor including all attributes, images, aliases, external links, and bios. Requires API key authentication.
+        /// Returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

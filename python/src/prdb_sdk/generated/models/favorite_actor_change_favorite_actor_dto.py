@@ -27,6 +27,8 @@ class FavoriteActorChangeFavoriteActorDto(AdditionalDataHolder, Parsable):
     id: Optional[UUID] = None
     # The isDeleted property
     is_deleted: Optional[bool] = None
+    # Canonical target when this favorite belongs to a merged source actor. The old favorite ID remains the cursor key.
+    merged_into_actor_id: Optional[UUID] = None
     # The name property
     name: Optional[str] = None
     # The nationality property
@@ -61,6 +63,7 @@ class FavoriteActorChangeFavoriteActorDto(AdditionalDataHolder, Parsable):
             "gender": lambda n : setattr(self, 'gender', n.get_str_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "isDeleted": lambda n : setattr(self, 'is_deleted', n.get_bool_value()),
+            "mergedIntoActorId": lambda n : setattr(self, 'merged_into_actor_id', n.get_uuid_value()),
             "name": lambda n : setattr(self, 'name', n.get_str_value()),
             "nationality": lambda n : setattr(self, 'nationality', n.get_str_value()),
             "profileImageCdnPath": lambda n : setattr(self, 'profile_image_cdn_path', n.get_str_value()),
@@ -83,6 +86,7 @@ class FavoriteActorChangeFavoriteActorDto(AdditionalDataHolder, Parsable):
         writer.write_str_value("gender", self.gender)
         writer.write_uuid_value("id", self.id)
         writer.write_bool_value("isDeleted", self.is_deleted)
+        writer.write_uuid_value("mergedIntoActorId", self.merged_into_actor_id)
         writer.write_str_value("name", self.name)
         writer.write_str_value("nationality", self.nationality)
         writer.write_str_value("profileImageCdnPath", self.profile_image_cdn_path)

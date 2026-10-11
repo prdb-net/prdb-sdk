@@ -33,7 +33,7 @@ class ActorsItemRequestBuilder(BaseRequestBuilder):
     
     async def get(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[ActorDetailDto]:
         """
-        Returns full details for a single actor including all attributes, images, aliases, external links, and bios. Requires API key authentication.
+        Returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[ActorDetailDto]
         """
@@ -57,7 +57,7 @@ class ActorsItemRequestBuilder(BaseRequestBuilder):
     
     def to_get_request_information(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Returns full details for a single actor including all attributes, images, aliases, external links, and bios. Requires API key authentication.
+        Returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
