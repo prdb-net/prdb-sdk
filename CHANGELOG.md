@@ -15,6 +15,23 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.18.0] - 2026-10-11
+
+### Added
+
+- **Retained actor identities.** Actor reads resolve retained merge IDs to the
+  active canonical actor with HTTP 200 and no redirect. Batch reads still
+  return an array, with each canonical actor once and nullable `requestedIds`
+  identifying the supplied IDs that resolved to it. Unknown IDs, ordinary
+  deletions and deleted targets retain their existing 404/omission behavior.
+  Favorite add/remove operations also resolve retained IDs to the active actor.
+- **Actor merge feed metadata.** Actor and favorite-actor change payloads gain
+  optional nullable `mergedIntoActorId`. Source tombstones keep their old ID;
+  target updates can arrive before or after them, on different pages. A merge
+  mapping alone does not imply an active favorite. Existing operation IDs,
+  required fields and feed cursors are unchanged. See
+  [Catalogue synchronization](docs/catalog-sync.md#actor-merges).
+
 ## [0.17.0] - 2026-10-10
 
 ### Added
