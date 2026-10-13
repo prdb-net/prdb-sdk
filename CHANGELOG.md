@@ -15,6 +15,16 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.20.1] - 2026-10-13
+
+### Fixed
+
+- **TypeScript authentication with custom ports.** Newer Kiota dependency
+  resolutions validate hostnames without ports, while older ones validate the
+  complete host. Bind both representations so fresh installations retain API-key
+  authentication on supported loopback/staging URLs. Cross-origin redirects remain
+  refused. All SDK versions stay aligned; API and generated models are unchanged.
+
 ## [0.20.0] - 2026-10-13
 
 ### Added

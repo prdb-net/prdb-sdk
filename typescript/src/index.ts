@@ -326,7 +326,8 @@ export function createClient(options: ClientOptions): PrdbClient {
 		apiKey,
 		API_KEY_HEADER,
 		ApiKeyLocation.Header,
-		new Set([host]),
+		// Older Kiota validates URL.host (with port), newer releases URL.hostname.
+		new Set([host, new URL(baseUrl).hostname]),
 	);
 
 	return buildClient(authProvider, baseUrl, customFetch, retry);

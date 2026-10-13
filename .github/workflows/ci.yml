@@ -75,6 +75,14 @@ jobs:
           npm run typecheck
           npm test
           npm run build
+      - name: Verify a fresh dependency resolution
+        working-directory: typescript
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --package-lock=false
+          npm run typecheck
+          npm test
+          npm run build
 
   go:
     name: Go
