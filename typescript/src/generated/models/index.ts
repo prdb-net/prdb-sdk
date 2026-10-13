@@ -918,6 +918,15 @@ export function createGetVideoImageChangesResponseFromDiscriminatorValue(parseNo
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {GetVideoReleaseAssociationChangesResponse}
+ */
+// @ts-ignore
+export function createGetVideoReleaseAssociationChangesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoGetVideoReleaseAssociationChangesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {GetVideosByIdsRequest}
  */
 // @ts-ignore
@@ -1404,6 +1413,24 @@ export function createUserIdentityResponseFromDiscriminatorValue(parseNode: Pars
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ValidationProblemDetails_errors}
+ */
+// @ts-ignore
+export function createValidationProblemDetails_errorsFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoValidationProblemDetails_errors;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ValidationProblemDetails}
+ */
+// @ts-ignore
+export function createValidationProblemDetailsFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoValidationProblemDetails;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {VideoChangeActorDto}
  */
 // @ts-ignore
@@ -1634,6 +1661,33 @@ export function createVideoImageChangesCursorDtoFromDiscriminatorValue(parseNode
 // @ts-ignore
 export function createVideoQualityOverviewDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoVideoQualityOverviewDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoReleaseAssociationChangeDto}
+ */
+// @ts-ignore
+export function createVideoReleaseAssociationChangeDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoReleaseAssociationChangeDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoReleaseAssociationChangesCursorDto}
+ */
+// @ts-ignore
+export function createVideoReleaseAssociationChangesCursorDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoReleaseAssociationChangesCursorDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoReleaseAssociationDto}
+ */
+// @ts-ignore
+export function createVideoReleaseAssociationDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoReleaseAssociationDto;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -2450,6 +2504,21 @@ export function deserializeIntoGetVideoImageChangesResponse(getVideoImageChanges
 }
 /**
  * The deserialization information for the current model
+ * @param GetVideoReleaseAssociationChangesResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoGetVideoReleaseAssociationChangesResponse(getVideoReleaseAssociationChangesResponse: Partial<GetVideoReleaseAssociationChangesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "hasMore": n => { getVideoReleaseAssociationChangesResponse.hasMore = n.getBooleanValue(); },
+        "items": n => { getVideoReleaseAssociationChangesResponse.items = n.getCollectionOfObjectValues<VideoReleaseAssociationChangeDto>(createVideoReleaseAssociationChangeDtoFromDiscriminatorValue); },
+        "nextCursor": n => { getVideoReleaseAssociationChangesResponse.nextCursor = n.getObjectValue<VideoReleaseAssociationChangesCursorDto>(createVideoReleaseAssociationChangesCursorDtoFromDiscriminatorValue); },
+        "pageSize": n => { getVideoReleaseAssociationChangesResponse.pageSize = n.getNumberValue(); },
+        "serverTimeUtc": n => { getVideoReleaseAssociationChangesResponse.serverTimeUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param GetVideosByIdsRequest The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3250,6 +3319,32 @@ export function deserializeIntoUserIdentityResponse(userIdentityResponse: Partia
 }
 /**
  * The deserialization information for the current model
+ * @param ValidationProblemDetails The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoValidationProblemDetails(validationProblemDetails: Partial<ValidationProblemDetails> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "detail": n => { validationProblemDetails.detail = n.getStringValue(); },
+        "errors": n => { validationProblemDetails.errors = n.getObjectValue<ValidationProblemDetails_errors>(createValidationProblemDetails_errorsFromDiscriminatorValue); },
+        "instance": n => { validationProblemDetails.instance = n.getStringValue(); },
+        "status": n => { validationProblemDetails.status = n.getNumberValue(); },
+        "title": n => { validationProblemDetails.title = n.getStringValue(); },
+        "type": n => { validationProblemDetails.type = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ValidationProblemDetails_errors The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoValidationProblemDetails_errors(validationProblemDetails_errors: Partial<ValidationProblemDetails_errors> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param VideoChangeActorDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3652,6 +3747,54 @@ export function deserializeIntoVideoQualityOverviewDto(videoQualityOverviewDto: 
     return {
         "resolutions": n => { videoQualityOverviewDto.resolutions = n.getCollectionOfObjectValues<VideoResolutionCountDto>(createVideoResolutionCountDtoFromDiscriminatorValue); },
         "videoCodecs": n => { videoQualityOverviewDto.videoCodecs = n.getCollectionOfObjectValues<VideoCodecCountDto>(createVideoCodecCountDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoReleaseAssociationChangeDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoReleaseAssociationChangeDto(videoReleaseAssociationChangeDto: Partial<VideoReleaseAssociationChangeDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "eventType": n => { videoReleaseAssociationChangeDto.eventType = n.getEnumValue<VideoReleaseAssociationChangeDto_eventType>(VideoReleaseAssociationChangeDto_eventTypeObject); },
+        "videoReleaseAssociation": n => { videoReleaseAssociationChangeDto.videoReleaseAssociation = n.getObjectValue<VideoReleaseAssociationDto>(createVideoReleaseAssociationDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoReleaseAssociationChangesCursorDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoReleaseAssociationChangesCursorDto(videoReleaseAssociationChangesCursorDto: Partial<VideoReleaseAssociationChangesCursorDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { videoReleaseAssociationChangesCursorDto.id = n.getGuidValue(); },
+        "updatedAtUtc": n => { videoReleaseAssociationChangesCursorDto.updatedAtUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoReleaseAssociationDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoReleaseAssociationDto(videoReleaseAssociationDto: Partial<VideoReleaseAssociationDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "createdAtUtc": n => { videoReleaseAssociationDto.createdAtUtc = n.getDateValue(); },
+        "deletedAtUtc": n => { videoReleaseAssociationDto.deletedAtUtc = n.getDateValue(); },
+        "id": n => { videoReleaseAssociationDto.id = n.getGuidValue(); },
+        "isConfirmed": n => { videoReleaseAssociationDto.isConfirmed = n.getBooleanValue(); },
+        "isDeleted": n => { videoReleaseAssociationDto.isDeleted = n.getBooleanValue(); },
+        "platformId": n => { videoReleaseAssociationDto.platformId = n.getGuidValue(); },
+        "platformKey": n => { videoReleaseAssociationDto.platformKey = n.getStringValue(); },
+        "providerKey": n => { videoReleaseAssociationDto.providerKey = n.getEnumValue<VideoReleaseAssociationDto_providerKey>(VideoReleaseAssociationDto_providerKeyObject); },
+        "releaseName": n => { videoReleaseAssociationDto.releaseName = n.getStringValue(); },
+        "remoteEntryId": n => { videoReleaseAssociationDto.remoteEntryId = n.getGuidValue(); },
+        "siteId": n => { videoReleaseAssociationDto.siteId = n.getGuidValue(); },
+        "sourceAvailable": n => { videoReleaseAssociationDto.sourceAvailable = n.getBooleanValue(); },
+        "updatedAtUtc": n => { videoReleaseAssociationDto.updatedAtUtc = n.getDateValue(); },
+        "videoId": n => { videoReleaseAssociationDto.videoId = n.getGuidValue(); },
     }
 }
 /**
@@ -4410,6 +4553,28 @@ export interface GetVideoImageChangesResponse extends AdditionalDataHolder, Pars
     pageSize?: number | null;
     /**
      * The upper bound of this page: the server's clock minus the feed's settle delay (twominutes by default), read before the rows were queried. No row on the page is newer.Safe to persist as the next `since` when `items` is empty: an empty pagecarries no row timestamp to continue from, and a client's own clock or the HTTP`Date` header are not sound substitutes for a value the server later reads backas a lower bound.
+     */
+    serverTimeUtc?: Date | null;
+}
+export interface GetVideoReleaseAssociationChangesResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The hasMore property
+     */
+    hasMore?: boolean | null;
+    /**
+     * The items property
+     */
+    items?: VideoReleaseAssociationChangeDto[] | null;
+    /**
+     * The nextCursor property
+     */
+    nextCursor?: VideoReleaseAssociationChangesCursorDto | null;
+    /**
+     * The pageSize property
+     */
+    pageSize?: number | null;
+    /**
+     * Upper bound captured before querying, behind the clock by the configured settle delay.
      */
     serverTimeUtc?: Date | null;
 }
@@ -5966,6 +6131,22 @@ export function serializeGetVideoImageChangesResponse(writer: SerializationWrite
 }
 /**
  * Serializes information the current object
+ * @param GetVideoReleaseAssociationChangesResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeGetVideoReleaseAssociationChangesResponse(writer: SerializationWriter, getVideoReleaseAssociationChangesResponse: Partial<GetVideoReleaseAssociationChangesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!getVideoReleaseAssociationChangesResponse || isSerializingDerivedType) { return; }
+    writer.writeBooleanValue("hasMore", getVideoReleaseAssociationChangesResponse.hasMore);
+    writer.writeCollectionOfObjectValues<VideoReleaseAssociationChangeDto>("items", getVideoReleaseAssociationChangesResponse.items, serializeVideoReleaseAssociationChangeDto);
+    writer.writeObjectValue<VideoReleaseAssociationChangesCursorDto>("nextCursor", getVideoReleaseAssociationChangesResponse.nextCursor, serializeVideoReleaseAssociationChangesCursorDto);
+    writer.writeNumberValue("pageSize", getVideoReleaseAssociationChangesResponse.pageSize);
+    writer.writeDateValue("serverTimeUtc", getVideoReleaseAssociationChangesResponse.serverTimeUtc);
+    writer.writeAdditionalData(getVideoReleaseAssociationChangesResponse.additionalData);
+}
+/**
+ * Serializes information the current object
  * @param GetVideosByIdsRequest The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -6821,6 +7002,34 @@ export function serializeUserIdentityResponse(writer: SerializationWriter, userI
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ValidationProblemDetails The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeValidationProblemDetails(writer: SerializationWriter, validationProblemDetails: Partial<ValidationProblemDetails> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!validationProblemDetails || isSerializingDerivedType) { return; }
+    writer.writeStringValue("detail", validationProblemDetails.detail);
+    writer.writeObjectValue<ValidationProblemDetails_errors>("errors", validationProblemDetails.errors, serializeValidationProblemDetails_errors);
+    writer.writeStringValue("instance", validationProblemDetails.instance);
+    writer.writeNumberValue("status", validationProblemDetails.status);
+    writer.writeStringValue("title", validationProblemDetails.title);
+    writer.writeStringValue("type", validationProblemDetails.type);
+    writer.writeAdditionalData(validationProblemDetails.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ValidationProblemDetails_errors The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeValidationProblemDetails_errors(writer: SerializationWriter, validationProblemDetails_errors: Partial<ValidationProblemDetails_errors> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!validationProblemDetails_errors || isSerializingDerivedType) { return; }
+    writer.writeAdditionalData(validationProblemDetails_errors.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param VideoChangeActorDto The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -7249,6 +7458,57 @@ export function serializeVideoQualityOverviewDto(writer: SerializationWriter, vi
     writer.writeCollectionOfObjectValues<VideoResolutionCountDto>("resolutions", videoQualityOverviewDto.resolutions, serializeVideoResolutionCountDto);
     writer.writeCollectionOfObjectValues<VideoCodecCountDto>("videoCodecs", videoQualityOverviewDto.videoCodecs, serializeVideoCodecCountDto);
     writer.writeAdditionalData(videoQualityOverviewDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoReleaseAssociationChangeDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoReleaseAssociationChangeDto(writer: SerializationWriter, videoReleaseAssociationChangeDto: Partial<VideoReleaseAssociationChangeDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoReleaseAssociationChangeDto || isSerializingDerivedType) { return; }
+    writer.writeEnumValue<VideoReleaseAssociationChangeDto_eventType>("eventType", videoReleaseAssociationChangeDto.eventType);
+    writer.writeObjectValue<VideoReleaseAssociationDto>("videoReleaseAssociation", videoReleaseAssociationChangeDto.videoReleaseAssociation, serializeVideoReleaseAssociationDto);
+    writer.writeAdditionalData(videoReleaseAssociationChangeDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoReleaseAssociationChangesCursorDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoReleaseAssociationChangesCursorDto(writer: SerializationWriter, videoReleaseAssociationChangesCursorDto: Partial<VideoReleaseAssociationChangesCursorDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoReleaseAssociationChangesCursorDto || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", videoReleaseAssociationChangesCursorDto.id);
+    writer.writeDateValue("updatedAtUtc", videoReleaseAssociationChangesCursorDto.updatedAtUtc);
+    writer.writeAdditionalData(videoReleaseAssociationChangesCursorDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoReleaseAssociationDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoReleaseAssociationDto(writer: SerializationWriter, videoReleaseAssociationDto: Partial<VideoReleaseAssociationDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoReleaseAssociationDto || isSerializingDerivedType) { return; }
+    writer.writeDateValue("createdAtUtc", videoReleaseAssociationDto.createdAtUtc);
+    writer.writeDateValue("deletedAtUtc", videoReleaseAssociationDto.deletedAtUtc);
+    writer.writeGuidValue("id", videoReleaseAssociationDto.id);
+    writer.writeBooleanValue("isConfirmed", videoReleaseAssociationDto.isConfirmed);
+    writer.writeBooleanValue("isDeleted", videoReleaseAssociationDto.isDeleted);
+    writer.writeGuidValue("platformId", videoReleaseAssociationDto.platformId);
+    writer.writeStringValue("platformKey", videoReleaseAssociationDto.platformKey);
+    writer.writeEnumValue<VideoReleaseAssociationDto_providerKey>("providerKey", videoReleaseAssociationDto.providerKey);
+    writer.writeStringValue("releaseName", videoReleaseAssociationDto.releaseName);
+    writer.writeGuidValue("remoteEntryId", videoReleaseAssociationDto.remoteEntryId);
+    writer.writeGuidValue("siteId", videoReleaseAssociationDto.siteId);
+    writer.writeBooleanValue("sourceAvailable", videoReleaseAssociationDto.sourceAvailable);
+    writer.writeDateValue("updatedAtUtc", videoReleaseAssociationDto.updatedAtUtc);
+    writer.writeGuidValue("videoId", videoReleaseAssociationDto.videoId);
+    writer.writeAdditionalData(videoReleaseAssociationDto.additionalData);
 }
 /**
  * Serializes information the current object
@@ -7880,6 +8140,34 @@ export interface UserIdentityResponse extends AdditionalDataHolder, Parsable {
      * Stable HMAC-SHA256 hex digest derived from the user's immutable ID.Suitable as a durable public identifier — does not change unless the server secret rotates.
      */
     userHash?: string | null;
+}
+export interface ValidationProblemDetails extends AdditionalDataHolder, ApiError, Parsable {
+    /**
+     * The detail property
+     */
+    detail?: string | null;
+    /**
+     * The errors property
+     */
+    errors?: ValidationProblemDetails_errors | null;
+    /**
+     * The instance property
+     */
+    instance?: string | null;
+    /**
+     * The status property
+     */
+    status?: number | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+    /**
+     * The type property
+     */
+    type?: string | null;
+}
+export interface ValidationProblemDetails_errors extends AdditionalDataHolder, Parsable {
 }
 export interface VideoChangeActorDto extends AdditionalDataHolder, Parsable {
     /**
@@ -8546,6 +8834,89 @@ export interface VideoQualityOverviewDto extends AdditionalDataHolder, Parsable 
      */
     videoCodecs?: VideoCodecCountDto[] | null;
 }
+export interface VideoReleaseAssociationChangeDto extends AdditionalDataHolder, Parsable {
+    /**
+     * Allowed values: created, updated, deleted.
+     */
+    eventType?: VideoReleaseAssociationChangeDto_eventType | null;
+    /**
+     * Metadata identity only. The central entry is not a file ID or a download capability.
+     */
+    videoReleaseAssociation?: VideoReleaseAssociationDto | null;
+}
+export type VideoReleaseAssociationChangeDto_eventType = (typeof VideoReleaseAssociationChangeDto_eventTypeObject)[keyof typeof VideoReleaseAssociationChangeDto_eventTypeObject];
+export interface VideoReleaseAssociationChangesCursorDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
+}
+/**
+ * Metadata identity only. The central entry is not a file ID or a download capability.
+ */
+export interface VideoReleaseAssociationDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The createdAtUtc property
+     */
+    createdAtUtc?: Date | null;
+    /**
+     * The deletedAtUtc property
+     */
+    deletedAtUtc?: Date | null;
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * False when evidence needs re-evaluation. Withhold automation and preserve unrelated/manual choices.
+     */
+    isConfirmed?: boolean | null;
+    /**
+     * The isDeleted property
+     */
+    isDeleted?: boolean | null;
+    /**
+     * The platformId property
+     */
+    platformId?: Guid | null;
+    /**
+     * The platformKey property
+     */
+    platformKey?: string | null;
+    /**
+     * Allowed values: nzbcache.
+     */
+    providerKey?: VideoReleaseAssociationDto_providerKey | null;
+    /**
+     * The releaseName property
+     */
+    releaseName?: string | null;
+    /**
+     * Entry UUID in the administratively verified shared central origin. Never infer a FileId from it.
+     */
+    remoteEntryId?: Guid | null;
+    /**
+     * The siteId property
+     */
+    siteId?: Guid | null;
+    /**
+     * Availability of the metadata source entry, independently of confirmation and actual file delivery.
+     */
+    sourceAvailable?: boolean | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
+    /**
+     * The videoId property
+     */
+    videoId?: Guid | null;
+}
+export type VideoReleaseAssociationDto_providerKey = (typeof VideoReleaseAssociationDto_providerKeyObject)[keyof typeof VideoReleaseAssociationDto_providerKeyObject];
 /**
  * One resolution a video is known in, and how many of its files carry it.
  */
@@ -8969,6 +9340,20 @@ export const ReportVideoUserImageRequest_reasonObject = {
     MisleadingOrWrongPreview: "MisleadingOrWrongPreview",
     CopyrightConcern: "CopyrightConcern",
     Other: "Other",
+} as const;
+/**
+ * Allowed values: created, updated, deleted.
+ */
+export const VideoReleaseAssociationChangeDto_eventTypeObject = {
+    Created: "created",
+    Updated: "updated",
+    Deleted: "deleted",
+} as const;
+/**
+ * Allowed values: nzbcache.
+ */
+export const VideoReleaseAssociationDto_providerKeyObject = {
+    Nzbcache: "nzbcache",
 } as const;
 /* tslint:enable */
 /* eslint-enable */

@@ -1,0 +1,145 @@
+{
+  "pages": [
+    {
+      "items": [
+        {
+          "eventType": "created",
+          "videoReleaseAssociation": {
+            "id": "00000000-0000-0000-0000-000000000001",
+            "providerKey": "nzbcache",
+            "remoteEntryId": "00000000-0000-0000-0000-000000000005",
+            "videoId": "00000000-0000-0000-0000-000000000006",
+            "releaseName": "Synthetic.release.1080p",
+            "siteId": null,
+            "platformId": null,
+            "platformKey": null,
+            "sourceAvailable": true,
+            "isConfirmed": true,
+            "isDeleted": false,
+            "deletedAtUtc": null,
+            "createdAtUtc": "2026-10-13T12:00:00Z",
+            "updatedAtUtc": "2026-10-13T12:00:00Z"
+          }
+        },
+        {
+          "eventType": "created",
+          "videoReleaseAssociation": {
+            "id": "00000000-0000-0000-0000-000000000002",
+            "providerKey": "nzbcache",
+            "remoteEntryId": "00000000-0000-0000-0000-000000000005",
+            "videoId": "00000000-0000-0000-0000-000000000006",
+            "releaseName": "Synthetic.release.1080p",
+            "siteId": null,
+            "platformId": null,
+            "platformKey": null,
+            "sourceAvailable": true,
+            "isConfirmed": false,
+            "isDeleted": false,
+            "deletedAtUtc": null,
+            "createdAtUtc": "2026-10-13T12:00:00Z",
+            "updatedAtUtc": "2026-10-13T12:00:00Z"
+          }
+        },
+        {
+          "eventType": "created",
+          "videoReleaseAssociation": {
+            "id": "00000000-0000-0000-0000-000000000003",
+            "providerKey": "nzbcache",
+            "remoteEntryId": "00000000-0000-0000-0000-000000000005",
+            "videoId": "00000000-0000-0000-0000-000000000006",
+            "releaseName": "Synthetic.release.1080p",
+            "siteId": null,
+            "platformId": null,
+            "platformKey": null,
+            "sourceAvailable": false,
+            "isConfirmed": true,
+            "isDeleted": false,
+            "deletedAtUtc": null,
+            "createdAtUtc": "2026-10-13T12:00:00Z",
+            "updatedAtUtc": "2026-10-13T12:00:00Z"
+          }
+        },
+        {
+          "eventType": "deleted",
+          "videoReleaseAssociation": {
+            "id": "00000000-0000-0000-0000-000000000004",
+            "providerKey": "nzbcache",
+            "remoteEntryId": "00000000-0000-0000-0000-000000000005",
+            "videoId": "00000000-0000-0000-0000-000000000006",
+            "releaseName": "",
+            "siteId": null,
+            "platformId": null,
+            "platformKey": null,
+            "sourceAvailable": true,
+            "isConfirmed": false,
+            "isDeleted": true,
+            "deletedAtUtc": "2026-10-13T12:00:00Z",
+            "createdAtUtc": "2026-10-13T12:00:00Z",
+            "updatedAtUtc": "2026-10-13T12:00:00Z"
+          }
+        }
+      ],
+      "pageSize": 100,
+      "hasMore": false,
+      "serverTimeUtc": "2026-10-13T12:02:00Z",
+      "nextCursor": {
+        "updatedAtUtc": "2026-10-13T12:00:00Z",
+        "id": "00000000-0000-0000-0000-000000000004"
+      }
+    },
+    {
+      "items": [],
+      "pageSize": 100,
+      "hasMore": false,
+      "serverTimeUtc": "2026-10-13T12:02:00Z",
+      "nextCursor": {
+        "updatedAtUtc": "2026-10-13T12:00:00Z",
+        "id": "00000000-0000-0000-0000-000000000004"
+      }
+    },
+    {
+      "items": [
+        {
+          "eventType": "updated",
+          "videoReleaseAssociation": {
+            "id": "00000000-0000-0000-0000-000000000001",
+            "providerKey": "nzbcache",
+            "remoteEntryId": "00000000-0000-0000-0000-000000000005",
+            "videoId": "00000000-0000-0000-0000-000000000005",
+            "releaseName": "Synthetic.release.1080p",
+            "siteId": null,
+            "platformId": null,
+            "platformKey": null,
+            "sourceAvailable": true,
+            "isConfirmed": true,
+            "isDeleted": false,
+            "deletedAtUtc": null,
+            "createdAtUtc": "2026-10-13T12:00:00Z",
+            "updatedAtUtc": "2026-10-13T12:03:00Z"
+          }
+        }
+      ],
+      "pageSize": 100,
+      "hasMore": false,
+      "serverTimeUtc": "2026-10-13T12:05:00Z",
+      "nextCursor": {
+        "updatedAtUtc": "2026-10-13T12:03:00Z",
+        "id": "00000000-0000-0000-0000-000000000001"
+      }
+    }
+  ],
+  "invalidCursor": {
+    "title": "Invalid cursor",
+    "status": 400,
+    "errors": {
+      "since": [
+        "Retain cursor and retry later."
+      ]
+    }
+  },
+  "forbidden": {
+    "status": 403,
+    "title": "Forbidden",
+    "detail": "API access is unavailable."
+  }
+}
