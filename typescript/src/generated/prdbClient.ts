@@ -22,6 +22,8 @@ import { SitesRequestBuilderNavigationMetadata, SitesRequestBuilderRequestsMetad
 // @ts-ignore
 import { type UserIdentityRequestBuilder, UserIdentityRequestBuilderRequestsMetadata } from './userIdentity/index.js';
 // @ts-ignore
+import { type VideoReleaseAssociationsRequestBuilder, VideoReleaseAssociationsRequestBuilderNavigationMetadata } from './videoReleaseAssociations/index.js';
+// @ts-ignore
 import { type VideosRequestBuilder, VideosRequestBuilderNavigationMetadata, VideosRequestBuilderRequestsMetadata } from './videos/index.js';
 // @ts-ignore
 import { type VideoUserImagesRequestBuilder, VideoUserImagesRequestBuilderNavigationMetadata, VideoUserImagesRequestBuilderRequestsMetadata } from './videoUserImages/index.js';
@@ -117,6 +119,10 @@ export interface PrdbClient extends BaseRequestBuilder<PrdbClient> {
      */
     get userIdentity(): UserIdentityRequestBuilder;
     /**
+     * The videoReleaseAssociations property
+     */
+    get videoReleaseAssociations(): VideoReleaseAssociationsRequestBuilder;
+    /**
      * The videos property
      */
     get videos(): VideosRequestBuilder;
@@ -172,6 +178,9 @@ export const PrdbClientNavigationMetadata: Record<Exclude<keyof PrdbClient, Keys
     },
     userIdentity: {
         requestsMetadata: UserIdentityRequestBuilderRequestsMetadata,
+    },
+    videoReleaseAssociations: {
+        navigationMetadata: VideoReleaseAssociationsRequestBuilderNavigationMetadata,
     },
     videos: {
         requestsMetadata: VideosRequestBuilderRequestsMetadata,

@@ -3076,6 +3076,131 @@
         ]
       }
     },
+    "/video-release-associations/changes": {
+      "get": {
+        "tags": [
+          "VideoReleaseAssociations"
+        ],
+        "summary": "Get confirmed release association changes",
+        "description": "Seek-paged current-state release metadata ordered by updatedAtUtc then id. Start a baseline with since=0001-01-01T00:00:00Z. Includes held confirmation, unavailable source entries and explicit tombstones. Requires API key authentication and API subscription/quota access. Reads behind the clock by the configured settle delay (two minutes by default). A nonempty page continues through nextCursor; on an empty page persist serverTimeUtc as since with no sinceId. The always-present empty nextCursor preserves the requested position. A cursor ahead of the settled window returns 400; retain it and retry later. Row IDs are retained indefinitely; seek IDs need not still exist. Only the supported, administratively verified nzbcache provider namespace is exported. remoteEntryId identifies a central entry, never a file. File bindings, availability and delivery must be verified by the consumer in that shared origin; titles are display metadata. Private source evidence, file IDs, hashes and download URLs are excluded.",
+        "operationId": "GetVideoReleaseAssociationChanges",
+        "parameters": [
+          {
+            "name": "Since",
+            "in": "query",
+            "description": "UTC lower bound. Start a baseline with 0001-01-01T00:00:00Z.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "SinceId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVideoReleaseAssociationChangesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
     "/videos/filehash-submissions": {
       "post": {
         "tags": [
@@ -7852,6 +7977,39 @@
         },
         "description": "Paged delta feed of video image changes ordered by updated timestamp and ID."
       },
+      "GetVideoReleaseAssociationChangesResponse": {
+        "required": [
+          "items",
+          "pageSize",
+          "hasMore",
+          "serverTimeUtc",
+          "nextCursor"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoReleaseAssociationChangeDto"
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "serverTimeUtc": {
+            "type": "string",
+            "description": "Upper bound captured before querying, behind the clock by the configured settle delay.",
+            "format": "date-time"
+          },
+          "nextCursor": {
+            "$ref": "#/components/schemas/VideoReleaseAssociationChangesCursorDto"
+          }
+        }
+      },
       "GetVideosByIdsRequest": {
         "required": [
           "ids"
@@ -10025,6 +10183,41 @@
         },
         "description": "Identity and subscription state for the authenticated user."
       },
+      "ValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
       "VideoChangeActorDto": {
         "required": [
           "id",
@@ -11009,6 +11202,125 @@
         },
         "description": "What technical shapes a video is known to exist in, counted over the files prdb holds for it."
       },
+      "VideoReleaseAssociationChangeDto": {
+        "required": [
+          "eventType",
+          "videoReleaseAssociation"
+        ],
+        "type": "object",
+        "properties": {
+          "eventType": {
+            "pattern": "^(created|updated|deleted)$",
+            "enum": [
+              "created",
+              "updated",
+              "deleted"
+            ],
+            "type": "string",
+            "description": "Allowed values: created, updated, deleted."
+          },
+          "videoReleaseAssociation": {
+            "$ref": "#/components/schemas/VideoReleaseAssociationDto"
+          }
+        }
+      },
+      "VideoReleaseAssociationChangesCursorDto": {
+        "required": [
+          "updatedAtUtc",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "VideoReleaseAssociationDto": {
+        "required": [
+          "id",
+          "providerKey",
+          "remoteEntryId",
+          "videoId",
+          "releaseName",
+          "sourceAvailable",
+          "isConfirmed",
+          "isDeleted",
+          "createdAtUtc",
+          "updatedAtUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "providerKey": {
+            "pattern": "^(nzbcache)$",
+            "enum": [
+              "nzbcache"
+            ],
+            "type": "string",
+            "description": "Allowed values: nzbcache."
+          },
+          "remoteEntryId": {
+            "type": "string",
+            "description": "Entry UUID in the administratively verified shared central origin. Never infer a FileId from it.",
+            "format": "uuid"
+          },
+          "videoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "releaseName": {
+            "type": "string"
+          },
+          "siteId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "platformId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "platformKey": {
+            "type": "string",
+            "nullable": true
+          },
+          "sourceAvailable": {
+            "type": "boolean",
+            "description": "Availability of the metadata source entry, independently of confirmation and actual file delivery."
+          },
+          "isConfirmed": {
+            "type": "boolean",
+            "description": "False when evidence needs re-evaluation. Withhold automation and preserve unrelated/manual choices."
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "deletedAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Metadata identity only. The central entry is not a file ID or a download capability."
+      },
       "VideoResolutionCountDto": {
         "required": [
           "width",
@@ -11598,6 +11910,10 @@
     {
       "name": "Videos",
       "description": "Follow /videos/changes for full current payloads and deletion tombstones. Tombstones are retained indefinitely, with a guaranteed minimum of 90 days. Video metadata: paged listing with filters, plus single and batch lookup by ID."
+    },
+    {
+      "name": "VideoReleaseAssociations",
+      "description": "Confirmed central release-entry identities linked to Videos. A resumable baseline/current-state feed with independent confirmation, source availability and withdrawal states; no files or private source evidence. Tombstones are retained indefinitely."
     },
     {
       "name": "VideoFilehashes",

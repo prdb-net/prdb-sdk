@@ -26,6 +26,7 @@ if TYPE_CHECKING:
     from .sites.sites_request_builder import SitesRequestBuilder
     from .user_identity.user_identity_request_builder import UserIdentityRequestBuilder
     from .videos.videos_request_builder import VideosRequestBuilder
+    from .video_release_associations.video_release_associations_request_builder import VideoReleaseAssociationsRequestBuilder
     from .video_user_images.video_user_images_request_builder import VideoUserImagesRequestBuilder
     from .wanted_videos.wanted_videos_request_builder import WantedVideosRequestBuilder
 
@@ -142,6 +143,15 @@ class PrdbClient(BaseRequestBuilder):
         from .user_identity.user_identity_request_builder import UserIdentityRequestBuilder
 
         return UserIdentityRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
+    def video_release_associations(self) -> VideoReleaseAssociationsRequestBuilder:
+        """
+        The videoReleaseAssociations property
+        """
+        from .video_release_associations.video_release_associations_request_builder import VideoReleaseAssociationsRequestBuilder
+
+        return VideoReleaseAssociationsRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
     def video_user_images(self) -> VideoUserImagesRequestBuilder:

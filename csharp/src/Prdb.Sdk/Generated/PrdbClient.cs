@@ -16,6 +16,7 @@ using Prdb.Sdk.Generated.Predb;
 using Prdb.Sdk.Generated.RateLimit;
 using Prdb.Sdk.Generated.Sites;
 using Prdb.Sdk.Generated.UserIdentity;
+using Prdb.Sdk.Generated.VideoReleaseAssociations;
 using Prdb.Sdk.Generated.VideoUserImages;
 using Prdb.Sdk.Generated.Videos;
 using Prdb.Sdk.Generated.WantedVideos;
@@ -80,6 +81,11 @@ namespace Prdb.Sdk.Generated
         public global::Prdb.Sdk.Generated.UserIdentity.UserIdentityRequestBuilder UserIdentity
         {
             get => new global::Prdb.Sdk.Generated.UserIdentity.UserIdentityRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The videoReleaseAssociations property</summary>
+        public global::Prdb.Sdk.Generated.VideoReleaseAssociations.VideoReleaseAssociationsRequestBuilder VideoReleaseAssociations
+        {
+            get => new global::Prdb.Sdk.Generated.VideoReleaseAssociations.VideoReleaseAssociationsRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The videos property</summary>
         public global::Prdb.Sdk.Generated.Videos.VideosRequestBuilder Videos

@@ -11,6 +11,7 @@ import (
     i7294a22093d408fdca300f11b81a887d89c47b764af06c8b803e2323973fdb83 "github.com/microsoft/kiota-serialization-text-go"
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
     i067e13dde1f3720d8c9ad01b980ab82287ca8f5493b7e52173c8ca0880bb7fd2 "github.com/prdb-net/prdb-sdk/go/generated/wantedvideos"
+    i1223186c9ba3d6121f14288c17e2d64abaf307618a2bef2baa96656b033e6f2d "github.com/prdb-net/prdb-sdk/go/generated/videoreleaseassociations"
     i371e6e58f853fdf9b4c98cc455f8681d07ffc467ce06a232caf76e8a36df3ac1 "github.com/prdb-net/prdb-sdk/go/generated/health"
     i3e114e7c134ceb685be92298fc8eda2d4b30b417a043cca0f4551397539030b9 "github.com/prdb-net/prdb-sdk/go/generated/actors"
     i430eee13c7b27847bc54f24a2cdb282c92bc999a01e83f02595b06eac67ef6f0 "github.com/prdb-net/prdb-sdk/go/generated/videos"
@@ -96,6 +97,11 @@ func (m *PrdbClient) Sites()(*ib501bb59d891d348a1fb3d04a5513f77c38964c34d017e5b2
 // returns a *UserIdentityRequestBuilder when successful
 func (m *PrdbClient) UserIdentity()(*i43cdd21d7774d170bd3df3b5df04e0c58154e3b02ff0d58006ec64d2cec86cf1.UserIdentityRequestBuilder) {
     return i43cdd21d7774d170bd3df3b5df04e0c58154e3b02ff0d58006ec64d2cec86cf1.NewUserIdentityRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
+// VideoReleaseAssociations the videoReleaseAssociations property
+// returns a *VideoReleaseAssociationsRequestBuilder when successful
+func (m *PrdbClient) VideoReleaseAssociations()(*i1223186c9ba3d6121f14288c17e2d64abaf307618a2bef2baa96656b033e6f2d.VideoReleaseAssociationsRequestBuilder) {
+    return i1223186c9ba3d6121f14288c17e2d64abaf307618a2bef2baa96656b033e6f2d.NewVideoReleaseAssociationsRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
 // Videos the videos property
 // returns a *VideosRequestBuilder when successful
