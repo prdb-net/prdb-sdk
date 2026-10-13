@@ -408,6 +408,9 @@ func buildClient(
 // credential to whoever answered. Same-host redirects are still followed.
 func newHTTPClient(retry *RetryOptions) (*nethttp.Client, error) {
 	requestOptions := []abs.RequestOption{
+		// prdb accepts ordinary JSON, not gzip-encoded request bodies. Match
+		// the other three wrappers instead of Kiota Go's compression default.
+		khttp.NewCompressionOptionsReference(false),
 		&khttp.RedirectHandlerOptions{
 			MaxRedirects:   defaultMaxRedirects,
 			ShouldRedirect: sameHostOnly,

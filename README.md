@@ -117,6 +117,11 @@ content and minimal deletion tombstones. They support a full baseline and
 include edits to nested content. See [Catalogue synchronization](docs/catalog-sync.md)
 for cursor handling and the request builders in each language.
 
+`POST /releases/resolve` identifies single-video release metadata before acquisition,
+with typed decisions, Site/Actor context and recheck times. See
+[Release resolution](docs/release-resolution.md) for safe automatic selection,
+nullable fields and the distinction from file/hash identification.
+
 `GET /videos/images/changes` is the exception to the tombstones: those rows are
 hard deleted, so its `eventType` is only ever `created` or `updated`, and a
 removed image stops appearing rather than arriving as a `deleted` event. A

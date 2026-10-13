@@ -23,6 +23,7 @@ if TYPE_CHECKING:
     from .platforms.platforms_request_builder import PlatformsRequestBuilder
     from .predb.predb_request_builder import PredbRequestBuilder
     from .rate_limit.rate_limit_request_builder import RateLimitRequestBuilder
+    from .releases.releases_request_builder import ReleasesRequestBuilder
     from .sites.sites_request_builder import SitesRequestBuilder
     from .user_identity.user_identity_request_builder import UserIdentityRequestBuilder
     from .videos.videos_request_builder import VideosRequestBuilder
@@ -125,6 +126,15 @@ class PrdbClient(BaseRequestBuilder):
         from .rate_limit.rate_limit_request_builder import RateLimitRequestBuilder
 
         return RateLimitRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
+    def releases(self) -> ReleasesRequestBuilder:
+        """
+        The releases property
+        """
+        from .releases.releases_request_builder import ReleasesRequestBuilder
+
+        return ReleasesRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
     def sites(self) -> SitesRequestBuilder:

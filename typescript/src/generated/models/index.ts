@@ -1233,11 +1233,38 @@ export function createProblemDetailsFromDiscriminatorValue(parseNode: ParseNode 
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {RateLimitProblemResponse}
+ */
+// @ts-ignore
+export function createRateLimitProblemResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoRateLimitProblemResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {RateLimitWindowStatus}
  */
 // @ts-ignore
 export function createRateLimitWindowStatusFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoRateLimitWindowStatus;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ReleaseResolutionResult}
+ */
+// @ts-ignore
+export function createReleaseResolutionResultFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoReleaseResolutionResult;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ReleaseSourceState}
+ */
+// @ts-ignore
+export function createReleaseSourceStateFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoReleaseSourceState;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1256,6 +1283,51 @@ export function createReportVideoUserImageRequestFromDiscriminatorValue(parseNod
 // @ts-ignore
 export function createReportVideoUserImageResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoReportVideoUserImageResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ResolvedReleaseVideo}
+ */
+// @ts-ignore
+export function createResolvedReleaseVideoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoResolvedReleaseVideo;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ResolveReleaseInput}
+ */
+// @ts-ignore
+export function createResolveReleaseInputFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoResolveReleaseInput;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ResolveReleaseSource}
+ */
+// @ts-ignore
+export function createResolveReleaseSourceFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoResolveReleaseSource;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ResolveReleasesRequest}
+ */
+// @ts-ignore
+export function createResolveReleasesRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoResolveReleasesRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ResolveReleasesResponse}
+ */
+// @ts-ignore
+export function createResolveReleasesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoResolveReleasesResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -3020,6 +3092,19 @@ export function deserializeIntoProblemDetails(problemDetails: Partial<ProblemDet
 }
 /**
  * The deserialization information for the current model
+ * @param RateLimitProblemResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoRateLimitProblemResponse(rateLimitProblemResponse: Partial<RateLimitProblemResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "detail": n => { rateLimitProblemResponse.detail = n.getStringValue(); },
+        "status": n => { rateLimitProblemResponse.status = n.getNumberValue(); },
+        "title": n => { rateLimitProblemResponse.title = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param RateLimitWindowStatus The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3030,6 +3115,42 @@ export function deserializeIntoRateLimitWindowStatus(rateLimitWindowStatus: Part
         "remaining": n => { rateLimitWindowStatus.remaining = n.getNumberValue(); },
         "resetsInSeconds": n => { rateLimitWindowStatus.resetsInSeconds = n.getNumberValue(); },
         "used": n => { rateLimitWindowStatus.used = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ReleaseResolutionResult The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoReleaseResolutionResult(releaseResolutionResult: Partial<ReleaseResolutionResult> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "automationEligible": n => { releaseResolutionResult.automationEligible = n.getBooleanValue(); },
+        "candidates": n => { releaseResolutionResult.candidates = n.getCollectionOfPrimitiveValues<Guid>("string"); },
+        "candidatesTruncated": n => { releaseResolutionResult.candidatesTruncated = n.getBooleanValue(); },
+        "contentKind": n => { releaseResolutionResult.contentKind = n.getEnumValue<ReleaseContentKind>(ReleaseContentKindObject); },
+        "evidence": n => { releaseResolutionResult.evidence = n.getCollectionOfEnumValues<ReleaseEvidenceKind>(ReleaseEvidenceKindObject); },
+        "reasonCode": n => { releaseResolutionResult.reasonCode = n.getEnumValue<ReleaseResolutionReason>(ReleaseResolutionReasonObject); },
+        "recheckAfterUtc": n => { releaseResolutionResult.recheckAfterUtc = n.getDateValue(); },
+        "ref": n => { releaseResolutionResult.ref = n.getStringValue(); },
+        "resolutionVersion": n => { releaseResolutionResult.resolutionVersion = n.getStringValue(); },
+        "sourceState": n => { releaseResolutionResult.sourceState = n.getObjectValue<ReleaseSourceState>(createReleaseSourceStateFromDiscriminatorValue); },
+        "status": n => { releaseResolutionResult.status = n.getEnumValue<ReleaseResolutionStatus>(ReleaseResolutionStatusObject); },
+        "videoIds": n => { releaseResolutionResult.videoIds = n.getCollectionOfPrimitiveValues<Guid>("string"); },
+        "videos": n => { releaseResolutionResult.videos = n.getCollectionOfObjectValues<ResolvedReleaseVideo>(createResolvedReleaseVideoFromDiscriminatorValue); },
+        "warnings": n => { releaseResolutionResult.warnings = n.getCollectionOfEnumValues<ReleaseResolutionWarning>(ReleaseResolutionWarningObject); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ReleaseSourceState The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoReleaseSourceState(releaseSourceState: Partial<ReleaseSourceState> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "lastSuccessfulSyncAtUtc": n => { releaseSourceState.lastSuccessfulSyncAtUtc = n.getDateValue(); },
+        "state": n => { releaseSourceState.state = n.getEnumValue<ReleaseSourceFreshness>(ReleaseSourceFreshnessObject); },
     }
 }
 /**
@@ -3056,6 +3177,75 @@ export function deserializeIntoReportVideoUserImageResponse(reportVideoUserImage
         "status": n => { reportVideoUserImageResponse.status = n.getStringValue(); },
         "visibility": n => { reportVideoUserImageResponse.visibility = n.getStringValue(); },
         "weightedReportScore": n => { reportVideoUserImageResponse.weightedReportScore = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ResolvedReleaseVideo The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoResolvedReleaseVideo(resolvedReleaseVideo: Partial<ResolvedReleaseVideo> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "actorCreditsComplete": n => { resolvedReleaseVideo.actorCreditsComplete = n.getBooleanValue(); },
+        "actorIds": n => { resolvedReleaseVideo.actorIds = n.getCollectionOfPrimitiveValues<Guid>("string"); },
+        "catalogueUpdatedAtUtc": n => { resolvedReleaseVideo.catalogueUpdatedAtUtc = n.getDateValue(); },
+        "releaseDate": n => { resolvedReleaseVideo.releaseDate = n.getDateOnlyValue(); },
+        "siteId": n => { resolvedReleaseVideo.siteId = n.getGuidValue(); },
+        "videoId": n => { resolvedReleaseVideo.videoId = n.getGuidValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ResolveReleaseInput The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoResolveReleaseInput(resolveReleaseInput: Partial<ResolveReleaseInput> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "categories": n => { resolveReleaseInput.categories = n.getCollectionOfPrimitiveValues<string>("string"); },
+        "postedAtUtc": n => { resolveReleaseInput.postedAtUtc = n.getDateValue(); },
+        "ref": n => { resolveReleaseInput.ref = n.getStringValue(); },
+        "sizeBytes": n => { resolveReleaseInput.sizeBytes = n.getNumberValue(); },
+        "source": n => { resolveReleaseInput.source = n.getObjectValue<ResolveReleaseSource>(createResolveReleaseSourceFromDiscriminatorValue); },
+        "title": n => { resolveReleaseInput.title = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ResolveReleaseSource The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoResolveReleaseSource(resolveReleaseSource: Partial<ResolveReleaseSource> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "entryId": n => { resolveReleaseSource.entryId = n.getStringValue(); },
+        "kind": n => { resolveReleaseSource.kind = n.getEnumValue<ReleaseSourceKind>(ReleaseSourceKindObject); },
+        "origin": n => { resolveReleaseSource.origin = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ResolveReleasesRequest The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoResolveReleasesRequest(resolveReleasesRequest: Partial<ResolveReleasesRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "releases": n => { resolveReleasesRequest.releases = n.getCollectionOfObjectValues<ResolveReleaseInput>(createResolveReleaseInputFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ResolveReleasesResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoResolveReleasesResponse(resolveReleasesResponse: Partial<ResolveReleasesResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "evaluatedAtUtc": n => { resolveReleasesResponse.evaluatedAtUtc = n.getDateValue(); },
+        "resolverVersion": n => { resolveReleasesResponse.resolverVersion = n.getStringValue(); },
+        "results": n => { resolveReleasesResponse.results = n.getCollectionOfObjectValues<ReleaseResolutionResult>(createReleaseResolutionResultFromDiscriminatorValue); },
     }
 }
 /**
@@ -5360,6 +5550,23 @@ export interface ProblemDetails extends AdditionalDataHolder, ApiError, Parsable
     type?: string | null;
 }
 /**
+ * The refusals the rate limit gate can produce, in one place so that the middleware and`GET /rate-limit` answer a caller with the same status codes and the same body shape.
+ */
+export interface RateLimitProblemResponse extends AdditionalDataHolder, ApiError, Parsable {
+    /**
+     * Human-readable explanation for the client developer.
+     */
+    detail?: string | null;
+    /**
+     * HTTP status code, repeated in the body the way the global error handler does it.
+     */
+    status?: number | null;
+    /**
+     * Short, stable reason phrase.
+     */
+    title?: string | null;
+}
+/**
  * Rate limit status for a single time window.
  */
 export interface RateLimitWindowStatus extends AdditionalDataHolder, Parsable {
@@ -5379,6 +5586,81 @@ export interface RateLimitWindowStatus extends AdditionalDataHolder, Parsable {
      * Number of requests made within the current window.
      */
     used?: number | null;
+}
+export type ReleaseContentKind = (typeof ReleaseContentKindObject)[keyof typeof ReleaseContentKindObject];
+export type ReleaseEvidenceKind = (typeof ReleaseEvidenceKindObject)[keyof typeof ReleaseEvidenceKindObject];
+export type ReleaseResolutionReason = (typeof ReleaseResolutionReasonObject)[keyof typeof ReleaseResolutionReasonObject];
+export interface ReleaseResolutionResult extends AdditionalDataHolder, Parsable {
+    /**
+     * Identity is safe for automation; says nothing about rights, quality, availability or local ownership.
+     */
+    automationEligible?: boolean | null;
+    /**
+     * Alternative video identities, deterministically ordered, at most 20. Never pack membership.
+     */
+    candidates?: Guid[] | null;
+    /**
+     * The candidatesTruncated property
+     */
+    candidatesTruncated?: boolean | null;
+    /**
+     * Known values: Single (0), Unknown (2).
+     */
+    contentKind?: ReleaseContentKind | null;
+    /**
+     * Public evidence categories only; never private source/person provenance.
+     */
+    evidence?: ReleaseEvidenceKind[] | null;
+    /**
+     * Known values: ConfirmedSource (0), CanonicalReleaseName (1), HeuristicTitle (2), NameCollision (3), ContradictorySource (4), MissingOrigin (5), UnknownRelease (6), ExcludedReleaseKind (8), DeletedTarget (9), IncompleteSource (10), BudgetExhausted (11), InvalidField (12), UnverifiedSource (14), AmbiguousSuccessor (15), WithdrawnAssociation (16), UnsupportedPack (17).
+     */
+    reasonCode?: ReleaseResolutionReason | null;
+    /**
+     * Earliest recommended automatic recheck; null only for permanent invalid/unsupported input.
+     */
+    recheckAfterUtc?: Date | null;
+    /**
+     * The ref property
+     */
+    ref?: string | null;
+    /**
+     * Opaque equality token for relevant input, association and catalogue facts; not a sortable feed cursor.
+     */
+    resolutionVersion?: string | null;
+    /**
+     * The sourceState property
+     */
+    sourceState?: ReleaseSourceState | null;
+    /**
+     * Known values: Resolved (0), Candidate (1), Ambiguous (2), Unmatched (3), Conflict (4), Unsupported (5), RetryLater (6), Invalid (7).
+     */
+    status?: ReleaseResolutionStatus | null;
+    /**
+     * Confirmed active video IDs only. Empty unless resolved; a resolved result contains exactly one video.
+     */
+    videoIds?: Guid[] | null;
+    /**
+     * The videos property
+     */
+    videos?: ResolvedReleaseVideo[] | null;
+    /**
+     * The warnings property
+     */
+    warnings?: ReleaseResolutionWarning[] | null;
+}
+export type ReleaseResolutionStatus = (typeof ReleaseResolutionStatusObject)[keyof typeof ReleaseResolutionStatusObject];
+export type ReleaseResolutionWarning = (typeof ReleaseResolutionWarningObject)[keyof typeof ReleaseResolutionWarningObject];
+export type ReleaseSourceFreshness = (typeof ReleaseSourceFreshnessObject)[keyof typeof ReleaseSourceFreshnessObject];
+export type ReleaseSourceKind = (typeof ReleaseSourceKindObject)[keyof typeof ReleaseSourceKindObject];
+export interface ReleaseSourceState extends AdditionalDataHolder, Parsable {
+    /**
+     * The lastSuccessfulSyncAtUtc property
+     */
+    lastSuccessfulSyncAtUtc?: Date | null;
+    /**
+     * Known values: Current (0), Stale (1), Unknown (2), NotApplicable (3).
+     */
+    state?: ReleaseSourceFreshness | null;
 }
 export interface ReportVideoUserImageRequest extends AdditionalDataHolder, Parsable {
     /**
@@ -5408,6 +5690,98 @@ export interface ReportVideoUserImageResponse extends AdditionalDataHolder, Pars
      * The weightedReportScore property
      */
     weightedReportScore?: number | null;
+}
+export interface ResolvedReleaseVideo extends AdditionalDataHolder, Parsable {
+    /**
+     * False means missing actors cannot be treated as evidence of absence.
+     */
+    actorCreditsComplete?: boolean | null;
+    /**
+     * The actorIds property
+     */
+    actorIds?: Guid[] | null;
+    /**
+     * The catalogueUpdatedAtUtc property
+     */
+    catalogueUpdatedAtUtc?: Date | null;
+    /**
+     * The releaseDate property
+     */
+    releaseDate?: DateOnly | null;
+    /**
+     * The siteId property
+     */
+    siteId?: Guid | null;
+    /**
+     * The videoId property
+     */
+    videoId?: Guid | null;
+}
+/**
+ * A release title and optional source hints. Never a file or a claimed video assignment.
+ */
+export interface ResolveReleaseInput extends Parsable {
+    /**
+     * At most 20 origin-specific category hints, each at most 128 characters; never identity evidence.
+     */
+    categories?: string[] | null;
+    /**
+     * UTC indexer/Usenet posting instant, not the video's release date.
+     */
+    postedAtUtc?: Date | null;
+    /**
+     * Opaque caller correlation, 1–64 characters, unique within the batch; not identity evidence.
+     */
+    ref?: string | null;
+    /**
+     * Release size in bytes, a positive signed 64-bit integer; null means unknown.
+     */
+    sizeBytes?: number | null;
+    /**
+     * The source property
+     */
+    source?: ResolveReleaseSource | null;
+    /**
+     * Original indexer release title, 1–2000 characters; not a local file path.
+     */
+    title?: string | null;
+}
+export interface ResolveReleaseSource extends Parsable {
+    /**
+     * Opaque, case-sensitive provider key (max 512 characters); a central entry UUID for nzbcache.
+     */
+    entryId?: string | null;
+    /**
+     * Known values: Newznab (0), Nzbcache (1).
+     */
+    kind?: ReleaseSourceKind | null;
+    /**
+     * HTTPS service origin with optional stable base path; no userinfo, query or fragment. Never fetched.
+     */
+    origin?: string | null;
+}
+/**
+ * Local, read-only resolution of 1–200 release metadata records.
+ */
+export interface ResolveReleasesRequest extends AdditionalDataHolder, Parsable {
+    /**
+     * Release metadata, in the order results must be returned. Between 1 and 200 items.
+     */
+    releases?: ResolveReleaseInput[] | null;
+}
+export interface ResolveReleasesResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The evaluatedAtUtc property
+     */
+    evaluatedAtUtc?: Date | null;
+    /**
+     * The resolverVersion property
+     */
+    resolverVersion?: string | null;
+    /**
+     * Exactly one result per input ref, in input order.
+     */
+    results?: ReleaseResolutionResult[] | null;
 }
 export interface SearchPreDbByVideoResponse extends AdditionalDataHolder, Parsable {
     /**
@@ -6683,6 +7057,20 @@ export function serializeProblemDetails(writer: SerializationWriter, problemDeta
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param RateLimitProblemResponse The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeRateLimitProblemResponse(writer: SerializationWriter, rateLimitProblemResponse: Partial<RateLimitProblemResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!rateLimitProblemResponse || isSerializingDerivedType) { return; }
+    writer.writeStringValue("detail", rateLimitProblemResponse.detail);
+    writer.writeNumberValue("status", rateLimitProblemResponse.status);
+    writer.writeStringValue("title", rateLimitProblemResponse.title);
+    writer.writeAdditionalData(rateLimitProblemResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param RateLimitWindowStatus The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -6694,6 +7082,46 @@ export function serializeRateLimitWindowStatus(writer: SerializationWriter, rate
     writer.writeNumberValue("resetsInSeconds", rateLimitWindowStatus.resetsInSeconds);
     writer.writeNumberValue("used", rateLimitWindowStatus.used);
     writer.writeAdditionalData(rateLimitWindowStatus.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ReleaseResolutionResult The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeReleaseResolutionResult(writer: SerializationWriter, releaseResolutionResult: Partial<ReleaseResolutionResult> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!releaseResolutionResult || isSerializingDerivedType) { return; }
+    writer.writeBooleanValue("automationEligible", releaseResolutionResult.automationEligible);
+    writer.writeCollectionOfPrimitiveValues<Guid>("candidates", releaseResolutionResult.candidates);
+    writer.writeBooleanValue("candidatesTruncated", releaseResolutionResult.candidatesTruncated);
+    writer.writeEnumValue<ReleaseContentKind>("contentKind", releaseResolutionResult.contentKind);
+    if(releaseResolutionResult.evidence)
+    writer.writeCollectionOfEnumValues<ReleaseEvidenceKind>("evidence", releaseResolutionResult.evidence);
+    writer.writeEnumValue<ReleaseResolutionReason>("reasonCode", releaseResolutionResult.reasonCode);
+    writer.writeDateValue("recheckAfterUtc", releaseResolutionResult.recheckAfterUtc);
+    writer.writeStringValue("ref", releaseResolutionResult.ref);
+    writer.writeStringValue("resolutionVersion", releaseResolutionResult.resolutionVersion);
+    writer.writeObjectValue<ReleaseSourceState>("sourceState", releaseResolutionResult.sourceState, serializeReleaseSourceState);
+    writer.writeEnumValue<ReleaseResolutionStatus>("status", releaseResolutionResult.status);
+    writer.writeCollectionOfPrimitiveValues<Guid>("videoIds", releaseResolutionResult.videoIds);
+    writer.writeCollectionOfObjectValues<ResolvedReleaseVideo>("videos", releaseResolutionResult.videos, serializeResolvedReleaseVideo);
+    if(releaseResolutionResult.warnings)
+    writer.writeCollectionOfEnumValues<ReleaseResolutionWarning>("warnings", releaseResolutionResult.warnings);
+    writer.writeAdditionalData(releaseResolutionResult.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ReleaseSourceState The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeReleaseSourceState(writer: SerializationWriter, releaseSourceState: Partial<ReleaseSourceState> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!releaseSourceState || isSerializingDerivedType) { return; }
+    writer.writeDateValue("lastSuccessfulSyncAtUtc", releaseSourceState.lastSuccessfulSyncAtUtc);
+    writer.writeEnumValue<ReleaseSourceFreshness>("state", releaseSourceState.state);
+    writer.writeAdditionalData(releaseSourceState.additionalData);
 }
 /**
  * Serializes information the current object
@@ -6722,6 +7150,78 @@ export function serializeReportVideoUserImageResponse(writer: SerializationWrite
     writer.writeStringValue("visibility", reportVideoUserImageResponse.visibility);
     writer.writeNumberValue("weightedReportScore", reportVideoUserImageResponse.weightedReportScore);
     writer.writeAdditionalData(reportVideoUserImageResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ResolvedReleaseVideo The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeResolvedReleaseVideo(writer: SerializationWriter, resolvedReleaseVideo: Partial<ResolvedReleaseVideo> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!resolvedReleaseVideo || isSerializingDerivedType) { return; }
+    writer.writeBooleanValue("actorCreditsComplete", resolvedReleaseVideo.actorCreditsComplete);
+    writer.writeCollectionOfPrimitiveValues<Guid>("actorIds", resolvedReleaseVideo.actorIds);
+    writer.writeDateValue("catalogueUpdatedAtUtc", resolvedReleaseVideo.catalogueUpdatedAtUtc);
+    writer.writeDateOnlyValue("releaseDate", resolvedReleaseVideo.releaseDate);
+    writer.writeGuidValue("siteId", resolvedReleaseVideo.siteId);
+    writer.writeGuidValue("videoId", resolvedReleaseVideo.videoId);
+    writer.writeAdditionalData(resolvedReleaseVideo.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ResolveReleaseInput The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeResolveReleaseInput(writer: SerializationWriter, resolveReleaseInput: Partial<ResolveReleaseInput> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!resolveReleaseInput || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfPrimitiveValues<string>("categories", resolveReleaseInput.categories);
+    writer.writeDateValue("postedAtUtc", resolveReleaseInput.postedAtUtc);
+    writer.writeStringValue("ref", resolveReleaseInput.ref);
+    writer.writeNumberValue("sizeBytes", resolveReleaseInput.sizeBytes);
+    writer.writeObjectValue<ResolveReleaseSource>("source", resolveReleaseInput.source, serializeResolveReleaseSource);
+    writer.writeStringValue("title", resolveReleaseInput.title);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ResolveReleaseSource The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeResolveReleaseSource(writer: SerializationWriter, resolveReleaseSource: Partial<ResolveReleaseSource> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!resolveReleaseSource || isSerializingDerivedType) { return; }
+    writer.writeStringValue("entryId", resolveReleaseSource.entryId);
+    writer.writeEnumValue<ReleaseSourceKind>("kind", resolveReleaseSource.kind);
+    writer.writeStringValue("origin", resolveReleaseSource.origin);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ResolveReleasesRequest The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeResolveReleasesRequest(writer: SerializationWriter, resolveReleasesRequest: Partial<ResolveReleasesRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!resolveReleasesRequest || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<ResolveReleaseInput>("releases", resolveReleasesRequest.releases, serializeResolveReleaseInput);
+    writer.writeAdditionalData(resolveReleasesRequest.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ResolveReleasesResponse The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeResolveReleasesResponse(writer: SerializationWriter, resolveReleasesResponse: Partial<ResolveReleasesResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!resolveReleasesResponse || isSerializingDerivedType) { return; }
+    writer.writeDateValue("evaluatedAtUtc", resolveReleasesResponse.evaluatedAtUtc);
+    writer.writeStringValue("resolverVersion", resolveReleasesResponse.resolverVersion);
+    writer.writeCollectionOfObjectValues<ReleaseResolutionResult>("results", resolveReleasesResponse.results, serializeReleaseResolutionResult);
+    writer.writeAdditionalData(resolveReleasesResponse.additionalData);
 }
 /**
  * Serializes information the current object
@@ -9329,6 +9829,80 @@ export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
      */
     videoTitle?: string | null;
 }
+/**
+ * Known values: Single (0), Unknown (2).
+ */
+export const ReleaseContentKindObject = {
+    Single: "single",
+    Unknown: "unknown",
+} as const;
+/**
+ * Known values: ConfirmedEntryAssociation (0), CanonicalReleaseAssociation (1), HeuristicTitle (2).
+ */
+export const ReleaseEvidenceKindObject = {
+    ConfirmedEntryAssociation: "confirmedEntryAssociation",
+    CanonicalReleaseAssociation: "canonicalReleaseAssociation",
+    HeuristicTitle: "heuristicTitle",
+} as const;
+/**
+ * Known values: ConfirmedSource (0), CanonicalReleaseName (1), HeuristicTitle (2), NameCollision (3), ContradictorySource (4), MissingOrigin (5), UnknownRelease (6), ExcludedReleaseKind (8), DeletedTarget (9), IncompleteSource (10), BudgetExhausted (11), InvalidField (12), UnverifiedSource (14), AmbiguousSuccessor (15), WithdrawnAssociation (16), UnsupportedPack (17).
+ */
+export const ReleaseResolutionReasonObject = {
+    ConfirmedSource: "confirmedSource",
+    CanonicalReleaseName: "canonicalReleaseName",
+    HeuristicTitle: "heuristicTitle",
+    NameCollision: "nameCollision",
+    ContradictorySource: "contradictorySource",
+    MissingOrigin: "missingOrigin",
+    UnknownRelease: "unknownRelease",
+    ExcludedReleaseKind: "excludedReleaseKind",
+    DeletedTarget: "deletedTarget",
+    IncompleteSource: "incompleteSource",
+    BudgetExhausted: "budgetExhausted",
+    InvalidField: "invalidField",
+    UnverifiedSource: "unverifiedSource",
+    AmbiguousSuccessor: "ambiguousSuccessor",
+    WithdrawnAssociation: "withdrawnAssociation",
+    UnsupportedPack: "unsupportedPack",
+} as const;
+/**
+ * Known values: Resolved (0), Candidate (1), Ambiguous (2), Unmatched (3), Conflict (4), Unsupported (5), RetryLater (6), Invalid (7).
+ */
+export const ReleaseResolutionStatusObject = {
+    Resolved: "resolved",
+    Candidate: "candidate",
+    Ambiguous: "ambiguous",
+    Unmatched: "unmatched",
+    Conflict: "conflict",
+    Unsupported: "unsupported",
+    RetryLater: "retryLater",
+    Invalid: "invalid",
+} as const;
+/**
+ * Known values: UnverifiedSource (0), SourceStale (1), CreditsIncomplete (2), CandidatesTruncated (3).
+ */
+export const ReleaseResolutionWarningObject = {
+    UnverifiedSource: "unverifiedSource",
+    SourceStale: "sourceStale",
+    CreditsIncomplete: "creditsIncomplete",
+    CandidatesTruncated: "candidatesTruncated",
+} as const;
+/**
+ * Known values: Current (0), Stale (1), Unknown (2), NotApplicable (3).
+ */
+export const ReleaseSourceFreshnessObject = {
+    Current: "current",
+    Stale: "stale",
+    Unknown: "unknown",
+    NotApplicable: "notApplicable",
+} as const;
+/**
+ * Known values: Newznab (0), Nzbcache (1).
+ */
+export const ReleaseSourceKindObject = {
+    Newznab: "newznab",
+    Nzbcache: "nzbcache",
+} as const;
 /**
  * Allowed values: NotRelatedToVideo, SpamOrPromotional, OffensiveOrProhibited, DuplicateOrLowQuality, MisleadingOrWrongPreview, CopyrightConcern, Other.
  */

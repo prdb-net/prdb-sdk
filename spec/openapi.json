@@ -3767,6 +3767,182 @@
         ]
       }
     },
+    "/releases/resolve": {
+      "post": {
+        "tags": [
+          "Releases"
+        ],
+        "summary": "Resolve release metadata to single video identities",
+        "description": "Read-only local resolution of 1–200 release titles, with optional source namespace/key, positive 64-bit byte size, UTC posting instant and category hints. Returns exactly one result per unique ref in input order. Batch correlation/syntax errors return 400; other invalid entry fields return invalid alongside valid entries. Only resolved identities are automationEligible and carry one active Video plus Site/Actor IDs. Candidates are alternatives, capped at 20; packs are unsupported. Verified source/canonical evidence is required for automation. Unknown origins and heuristics never acquire entry authority. Versions bind relevant input/knowledge, not evaluation time or refs. Recheck unresolved cases after six hours, resolved pending acquisitions after 24 hours, and retryLater at the given time. Eligibility says nothing about content rights, quality, local ownership or availability. Incomplete credits do not prove an Actor's absence. No supplied URL is fetched, no canonical/user/review records are written and no file/hash confirmation is inferred. After download use real file hashes with videos/identify. JSON only, body at most 1 MiB. The whole batch consumes one normal request through the existing API-key/subscription/quota gate.",
+        "operationId": "ResolveReleases",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResolveReleasesRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResolveReleasesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResolveReleasesResponse"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResolveReleasesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitProblemResponse"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitProblemResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitProblemResponse"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitProblemResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitProblemResponse"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitProblemResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitProblemResponse"
+                }
+              },
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateLimitProblemResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
     "/rate-limit": {
       "get": {
         "tags": [
@@ -9445,6 +9621,30 @@
           }
         }
       },
+      "RateLimitProblemResponse": {
+        "required": [
+          "status",
+          "title",
+          "detail"
+        ],
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "HTTP status code, repeated in the body the way the global error handler does it.",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "description": "Short, stable reason phrase."
+          },
+          "detail": {
+            "type": "string",
+            "description": "Human-readable explanation for the client developer."
+          }
+        },
+        "description": "The refusals the rate limit gate can produce, in one place so that the middleware and\n`GET /rate-limit` answer a caller with the same status codes and the same body shape."
+      },
       "RateLimitWindowStatus": {
         "required": [
           "limit",
@@ -9476,6 +9676,186 @@
           }
         },
         "description": "Rate limit status for a single time window."
+      },
+      "ReleaseContentKind": {
+        "enum": [
+          "single",
+          "unknown"
+        ],
+        "description": "Known values: Single (0), Unknown (2)."
+      },
+      "ReleaseEvidenceKind": {
+        "enum": [
+          "confirmedEntryAssociation",
+          "canonicalReleaseAssociation",
+          "heuristicTitle"
+        ],
+        "description": "Known values: ConfirmedEntryAssociation (0), CanonicalReleaseAssociation (1), HeuristicTitle (2)."
+      },
+      "ReleaseResolutionReason": {
+        "enum": [
+          "confirmedSource",
+          "canonicalReleaseName",
+          "heuristicTitle",
+          "nameCollision",
+          "contradictorySource",
+          "missingOrigin",
+          "unknownRelease",
+          "excludedReleaseKind",
+          "deletedTarget",
+          "incompleteSource",
+          "budgetExhausted",
+          "invalidField",
+          "unverifiedSource",
+          "ambiguousSuccessor",
+          "withdrawnAssociation",
+          "unsupportedPack"
+        ],
+        "description": "Known values: ConfirmedSource (0), CanonicalReleaseName (1), HeuristicTitle (2), NameCollision (3), ContradictorySource (4), MissingOrigin (5), UnknownRelease (6), ExcludedReleaseKind (8), DeletedTarget (9), IncompleteSource (10), BudgetExhausted (11), InvalidField (12), UnverifiedSource (14), AmbiguousSuccessor (15), WithdrawnAssociation (16), UnsupportedPack (17)."
+      },
+      "ReleaseResolutionResult": {
+        "required": [
+          "ref",
+          "status",
+          "reasonCode",
+          "automationEligible",
+          "videoIds",
+          "contentKind",
+          "candidates",
+          "candidatesTruncated",
+          "evidence",
+          "videos",
+          "resolutionVersion",
+          "recheckAfterUtc",
+          "warnings",
+          "sourceState"
+        ],
+        "type": "object",
+        "properties": {
+          "ref": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ReleaseResolutionStatus"
+          },
+          "reasonCode": {
+            "$ref": "#/components/schemas/ReleaseResolutionReason"
+          },
+          "automationEligible": {
+            "type": "boolean",
+            "description": "Identity is safe for automation; says nothing about rights, quality, availability or local ownership."
+          },
+          "videoIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Confirmed active video IDs only. Empty unless resolved; a resolved result contains exactly one video."
+          },
+          "contentKind": {
+            "$ref": "#/components/schemas/ReleaseContentKind"
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Alternative video identities, deterministically ordered, at most 20. Never pack membership."
+          },
+          "candidatesTruncated": {
+            "type": "boolean"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReleaseEvidenceKind"
+            },
+            "description": "Public evidence categories only; never private source/person provenance."
+          },
+          "videos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResolvedReleaseVideo"
+            }
+          },
+          "resolutionVersion": {
+            "type": "string",
+            "description": "Opaque equality token for relevant input, association and catalogue facts; not a sortable feed cursor."
+          },
+          "recheckAfterUtc": {
+            "type": "string",
+            "description": "Earliest recommended automatic recheck; null only for permanent invalid/unsupported input.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReleaseResolutionWarning"
+            }
+          },
+          "sourceState": {
+            "$ref": "#/components/schemas/ReleaseSourceState"
+          }
+        }
+      },
+      "ReleaseResolutionStatus": {
+        "enum": [
+          "resolved",
+          "candidate",
+          "ambiguous",
+          "unmatched",
+          "conflict",
+          "unsupported",
+          "retryLater",
+          "invalid"
+        ],
+        "description": "Known values: Resolved (0), Candidate (1), Ambiguous (2), Unmatched (3), Conflict (4), Unsupported (5), RetryLater (6), Invalid (7)."
+      },
+      "ReleaseResolutionWarning": {
+        "enum": [
+          "unverifiedSource",
+          "sourceStale",
+          "creditsIncomplete",
+          "candidatesTruncated"
+        ],
+        "description": "Known values: UnverifiedSource (0), SourceStale (1), CreditsIncomplete (2), CandidatesTruncated (3)."
+      },
+      "ReleaseSourceFreshness": {
+        "enum": [
+          "current",
+          "stale",
+          "unknown",
+          "notApplicable"
+        ],
+        "description": "Known values: Current (0), Stale (1), Unknown (2), NotApplicable (3)."
+      },
+      "ReleaseSourceKind": {
+        "enum": [
+          "newznab",
+          "nzbcache",
+          null
+        ],
+        "description": "Known values: Newznab (0), Nzbcache (1)."
+      },
+      "ReleaseSourceState": {
+        "required": [
+          "state",
+          "lastSuccessfulSyncAtUtc"
+        ],
+        "type": "object",
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/ReleaseSourceFreshness"
+          },
+          "lastSuccessfulSyncAtUtc": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
       },
       "ReportVideoUserImageRequest": {
         "required": [
@@ -9525,6 +9905,178 @@
           "weightedReportScore": {
             "type": "number",
             "format": "double"
+          }
+        }
+      },
+      "ResolvedReleaseVideo": {
+        "required": [
+          "videoId",
+          "siteId",
+          "actorIds",
+          "releaseDate",
+          "catalogueUpdatedAtUtc",
+          "actorCreditsComplete"
+        ],
+        "type": "object",
+        "properties": {
+          "videoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "siteId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "actorIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "releaseDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "catalogueUpdatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actorCreditsComplete": {
+            "type": "boolean",
+            "description": "False means missing actors cannot be treated as evidence of absence."
+          }
+        }
+      },
+      "ResolveReleaseInput": {
+        "required": [
+          "ref",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "ref": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string",
+            "description": "Opaque caller correlation, 1–64 characters, unique within the batch; not identity evidence.",
+            "nullable": true
+          },
+          "title": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "type": "string",
+            "description": "Original indexer release title, 1–2000 characters; not a local file path.",
+            "nullable": true
+          },
+          "source": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ResolveReleaseSource"
+              }
+            ],
+            "nullable": true
+          },
+          "sizeBytes": {
+            "maximum": 9223372036854776000,
+            "minimum": 1,
+            "type": "integer",
+            "description": "Release size in bytes, a positive signed 64-bit integer; null means unknown.",
+            "format": "int64",
+            "nullable": true
+          },
+          "postedAtUtc": {
+            "type": "string",
+            "description": "UTC indexer/Usenet posting instant, not the video's release date.",
+            "format": "date-time",
+            "nullable": true
+          },
+          "categories": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "At most 20 origin-specific category hints, each at most 128 characters; never identity evidence.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "A release title and optional source hints. Never a file or a claimed video assignment."
+      },
+      "ResolveReleaseSource": {
+        "required": [
+          "kind",
+          "origin",
+          "entryId"
+        ],
+        "type": "object",
+        "properties": {
+          "kind": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ReleaseSourceKind"
+              }
+            ],
+            "description": "Known values: Newznab (0), Nzbcache (1).",
+            "nullable": true
+          },
+          "origin": {
+            "type": "string",
+            "description": "HTTPS service origin with optional stable base path; no userinfo, query or fragment. Never fetched.",
+            "nullable": true
+          },
+          "entryId": {
+            "maxLength": 512,
+            "minLength": 1,
+            "type": "string",
+            "description": "Opaque, case-sensitive provider key (max 512 characters); a central entry UUID for nzbcache.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResolveReleasesRequest": {
+        "required": [
+          "releases"
+        ],
+        "type": "object",
+        "properties": {
+          "releases": {
+            "maxItems": 200,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResolveReleaseInput"
+            },
+            "description": "Release metadata, in the order results must be returned. Between 1 and 200 items.",
+            "nullable": true
+          }
+        },
+        "description": "Local, read-only resolution of 1–200 release metadata records."
+      },
+      "ResolveReleasesResponse": {
+        "required": [
+          "results",
+          "evaluatedAtUtc",
+          "resolverVersion"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReleaseResolutionResult"
+            },
+            "description": "Exactly one result per input ref, in input order."
+          },
+          "evaluatedAtUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resolverVersion": {
+            "type": "string"
           }
         }
       },
@@ -11910,6 +12462,10 @@
     {
       "name": "Videos",
       "description": "Follow /videos/changes for full current payloads and deletion tombstones. Tombstones are retained indefinitely, with a guaranteed minimum of 90 days. Video metadata: paged listing with filters, plus single and batch lookup by ID."
+    },
+    {
+      "name": "Releases",
+      "description": "Resolve submitted release metadata to single Video identities using local confirmed knowledge. Read-only bounded batches, explicit automation/recheck decisions and no files, private source evidence or contribution writes."
     },
     {
       "name": "VideoReleaseAssociations",
