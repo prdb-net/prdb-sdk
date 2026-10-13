@@ -15,6 +15,31 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.20.0] - 2026-10-13
+
+### Added
+
+- **Release metadata resolution.** All four SDKs expose `POST /releases/resolve`
+  for read-only batches of 1–200 release titles and optional origin-bound source
+  identities, byte sizes, UTC posting dates and category hints. Ordered results
+  distinguish confirmed single videos from candidates, ambiguous/conflicting
+  evidence, misses, invalid fields, unsupported packs and temporary deferrals.
+- **Automatic selection and rechecks.** Confirmed results include Site/Actor IDs,
+  credit completeness, nullable dates, opaque equality versions and recommended
+  recheck times. Eligibility establishes identity only; ownership, quality,
+  rights and availability remain client decisions. No release guess confirms a
+  file hash or writes catalogue/user data.
+- **Typed refusal bodies.** The new operation maps 400/413/415/500 problems and
+  401/403/429/503 gate problems, with retry/quota metadata preserved by the
+  existing wrappers. Existing operations and file-identification confidences are
+  unchanged. See [Release resolution](docs/release-resolution.md).
+
+### Fixed
+
+- **Go JSON POST compatibility.** The wrapper now disables Kiota's automatic gzip
+  request compression, matching the plain JSON the API and other three SDKs use.
+  Redirect protection, retries and caller-owned transports are unchanged.
+
 ## [0.18.0] - 2026-10-11
 
 ### Added

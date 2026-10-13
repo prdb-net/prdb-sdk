@@ -23,6 +23,7 @@ import (
     ibb80a02347ec409bec9803cc4cc4367ebec3877666fc8d006c680689a023a280 "github.com/prdb-net/prdb-sdk/go/generated/favoriteactors"
     id780830cc889b7bcb2d031b01be37a43ad86e422b5fc4cc26d17a7eea366f65c "github.com/prdb-net/prdb-sdk/go/generated/ignoredsites"
     ie41cecbb4349f58832154fde6fd628e18b93379ff741898911c43b5e182cccb4 "github.com/prdb-net/prdb-sdk/go/generated/platforms"
+    if62d42b4893041e05604f3b6f4de8603dd3b440b69d504c8e33152684ed2bffd "github.com/prdb-net/prdb-sdk/go/generated/releases"
     if74dbd27953d29efb807ca48dd3c81a558dddda8573335a7c84e57f024f32144 "github.com/prdb-net/prdb-sdk/go/generated/ratelimit"
 )
 
@@ -87,6 +88,11 @@ func (m *PrdbClient) Predb()(*i5b1119c4dd8bd41e0de622c16680465b305b2206d3d142461
 // returns a *RateLimitRequestBuilder when successful
 func (m *PrdbClient) RateLimit()(*if74dbd27953d29efb807ca48dd3c81a558dddda8573335a7c84e57f024f32144.RateLimitRequestBuilder) {
     return if74dbd27953d29efb807ca48dd3c81a558dddda8573335a7c84e57f024f32144.NewRateLimitRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
+// Releases the releases property
+// returns a *ReleasesRequestBuilder when successful
+func (m *PrdbClient) Releases()(*if62d42b4893041e05604f3b6f4de8603dd3b440b69d504c8e33152684ed2bffd.ReleasesRequestBuilder) {
+    return if62d42b4893041e05604f3b6f4de8603dd3b440b69d504c8e33152684ed2bffd.NewReleasesRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
 // Sites the sites property
 // returns a *SitesRequestBuilder when successful
