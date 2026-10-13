@@ -1,0 +1,321 @@
+{
+  "fixtureVersion": 1,
+  "ids": {
+    "classic": "20000000-0000-0000-0000-000000000001",
+    "creator": "20000000-0000-0000-0000-000000000002",
+    "site": "10000000-0000-0000-0000-000000000001",
+    "creatorSite": "10000000-0000-0000-0000-000000000002",
+    "actor": "40000000-0000-0000-0000-000000000001"
+  },
+  "request": {
+    "releases": [
+      {
+        "ref": "owned",
+        "title": "Synthetic.Classic.1080p-GROUP",
+        "sizeBytes": 4294967296,
+        "postedAtUtc": "2026-10-13T14:00:00Z"
+      },
+      {
+        "ref": "creator",
+        "title": "OnlyFans.Synthetic.Creator.720p",
+        "source": {
+          "kind": "nzbcache",
+          "origin": "https://cache.example.invalid",
+          "entryId": "30000000-0000-0000-0000-000000000001"
+        }
+      },
+      {
+        "ref": "later",
+        "title": "Synthetic.NotYetKnown",
+        "source": {
+          "kind": "newznab",
+          "origin": "https://indexer.example.invalid",
+          "entryId": "opaque"
+        }
+      },
+      {
+        "ref": "invalid",
+        "title": "x",
+        "sizeBytes": 0
+      },
+      {
+        "ref": "pack",
+        "title": "Synthetic.Complete.Pack"
+      },
+      {
+        "ref": "candidate",
+        "title": "Synthetic.Studio.2026.10.01.Scene.One.720p"
+      },
+      {
+        "ref": "pending",
+        "title": "Synthetic.New.Knowledge"
+      }
+    ]
+  },
+  "response": {
+    "results": [
+      {
+        "ref": "owned",
+        "status": "resolved",
+        "reasonCode": "canonicalReleaseName",
+        "automationEligible": true,
+        "videoIds": [
+          "20000000-0000-0000-0000-000000000001"
+        ],
+        "contentKind": "single",
+        "candidates": [],
+        "candidatesTruncated": false,
+        "evidence": [
+          "canonicalReleaseAssociation"
+        ],
+        "videos": [
+          {
+            "videoId": "20000000-0000-0000-0000-000000000001",
+            "siteId": "10000000-0000-0000-0000-000000000001",
+            "actorIds": [
+              "40000000-0000-0000-0000-000000000001"
+            ],
+            "releaseDate": "2026-10-01",
+            "catalogueUpdatedAtUtc": "2026-10-13T14:00:00Z",
+            "actorCreditsComplete": false
+          }
+        ],
+        "resolutionVersion": "owned.v1",
+        "recheckAfterUtc": "2026-10-14T14:00:00Z",
+        "warnings": [
+          "creditsIncomplete"
+        ],
+        "sourceState": {
+          "state": "notApplicable",
+          "lastSuccessfulSyncAtUtc": null
+        }
+      },
+      {
+        "ref": "creator",
+        "status": "resolved",
+        "reasonCode": "confirmedSource",
+        "automationEligible": true,
+        "videoIds": [
+          "20000000-0000-0000-0000-000000000002"
+        ],
+        "contentKind": "single",
+        "candidates": [],
+        "candidatesTruncated": false,
+        "evidence": [
+          "confirmedEntryAssociation"
+        ],
+        "videos": [
+          {
+            "videoId": "20000000-0000-0000-0000-000000000002",
+            "siteId": "10000000-0000-0000-0000-000000000002",
+            "actorIds": [
+              "40000000-0000-0000-0000-000000000001"
+            ],
+            "releaseDate": null,
+            "catalogueUpdatedAtUtc": "2026-10-13T14:00:00Z",
+            "actorCreditsComplete": true
+          }
+        ],
+        "resolutionVersion": "creator.v1",
+        "recheckAfterUtc": "2026-10-14T14:00:00Z",
+        "warnings": [],
+        "sourceState": {
+          "state": "current",
+          "lastSuccessfulSyncAtUtc": "2026-10-13T14:00:00Z"
+        }
+      },
+      {
+        "ref": "later",
+        "status": "retryLater",
+        "reasonCode": "unverifiedSource",
+        "automationEligible": false,
+        "videoIds": [],
+        "contentKind": "unknown",
+        "candidates": [],
+        "candidatesTruncated": false,
+        "evidence": [],
+        "videos": [],
+        "resolutionVersion": "later.v1",
+        "recheckAfterUtc": "2026-10-13T14:05:00Z",
+        "warnings": [
+          "unverifiedSource"
+        ],
+        "sourceState": {
+          "state": "unknown",
+          "lastSuccessfulSyncAtUtc": null
+        }
+      },
+      {
+        "ref": "invalid",
+        "status": "invalid",
+        "reasonCode": "invalidField",
+        "automationEligible": false,
+        "videoIds": [],
+        "contentKind": "unknown",
+        "candidates": [],
+        "candidatesTruncated": false,
+        "evidence": [],
+        "videos": [],
+        "resolutionVersion": "invalid.v1",
+        "recheckAfterUtc": null,
+        "warnings": [],
+        "sourceState": {
+          "state": "notApplicable",
+          "lastSuccessfulSyncAtUtc": null
+        }
+      },
+      {
+        "ref": "pack",
+        "status": "unsupported",
+        "reasonCode": "unsupportedPack",
+        "automationEligible": false,
+        "videoIds": [],
+        "contentKind": "unknown",
+        "candidates": [],
+        "candidatesTruncated": false,
+        "evidence": [],
+        "videos": [],
+        "resolutionVersion": "pack.v1",
+        "recheckAfterUtc": null,
+        "warnings": [],
+        "sourceState": {
+          "state": "notApplicable",
+          "lastSuccessfulSyncAtUtc": null
+        }
+      },
+      {
+        "ref": "candidate",
+        "status": "candidate",
+        "reasonCode": "heuristicTitle",
+        "automationEligible": false,
+        "videoIds": [],
+        "contentKind": "unknown",
+        "candidates": [
+          "20000000-0000-0000-0000-000000000001"
+        ],
+        "candidatesTruncated": false,
+        "evidence": [
+          "heuristicTitle"
+        ],
+        "videos": [],
+        "resolutionVersion": "candidate.v1",
+        "recheckAfterUtc": "2026-10-13T20:00:00Z",
+        "warnings": [],
+        "sourceState": {
+          "state": "notApplicable",
+          "lastSuccessfulSyncAtUtc": null
+        }
+      },
+      {
+        "ref": "pending",
+        "status": "unmatched",
+        "reasonCode": "unknownRelease",
+        "automationEligible": false,
+        "videoIds": [],
+        "contentKind": "unknown",
+        "candidates": [],
+        "candidatesTruncated": false,
+        "evidence": [],
+        "videos": [],
+        "resolutionVersion": "pending.v1",
+        "recheckAfterUtc": "2026-10-13T20:00:00Z",
+        "warnings": [],
+        "sourceState": {
+          "state": "notApplicable",
+          "lastSuccessfulSyncAtUtc": null
+        }
+      }
+    ],
+    "evaluatedAtUtc": "2026-10-13T14:00:00Z",
+    "resolverVersion": "release-resolver-v1"
+  },
+  "recheck": {
+    "results": [
+      {
+        "ref": "pending",
+        "status": "resolved",
+        "reasonCode": "canonicalReleaseName",
+        "automationEligible": true,
+        "videoIds": [
+          "20000000-0000-0000-0000-000000000002"
+        ],
+        "contentKind": "single",
+        "candidates": [],
+        "candidatesTruncated": false,
+        "evidence": [
+          "canonicalReleaseAssociation"
+        ],
+        "videos": [
+          {
+            "videoId": "20000000-0000-0000-0000-000000000002",
+            "siteId": "10000000-0000-0000-0000-000000000002",
+            "actorIds": [
+              "40000000-0000-0000-0000-000000000001"
+            ],
+            "releaseDate": null,
+            "catalogueUpdatedAtUtc": "2026-10-13T14:00:00Z",
+            "actorCreditsComplete": false
+          }
+        ],
+        "resolutionVersion": "pending.v2",
+        "recheckAfterUtc": "2026-10-14T20:00:00Z",
+        "warnings": [
+          "creditsIncomplete"
+        ],
+        "sourceState": {
+          "state": "notApplicable",
+          "lastSuccessfulSyncAtUtc": null
+        }
+      }
+    ],
+    "evaluatedAtUtc": "2026-10-13T20:00:00Z",
+    "resolverVersion": "release-resolver-v1"
+  },
+  "problems": {
+    "400": {
+      "status": 400,
+      "title": "Synthetic refusal",
+      "detail": "Bounded synthetic problem.",
+      "errors": {
+        "releases": [
+          "Invalid correlation."
+        ]
+      }
+    },
+    "401": {
+      "status": 401,
+      "title": "Synthetic refusal",
+      "detail": "Bounded synthetic problem."
+    },
+    "403": {
+      "status": 403,
+      "title": "Synthetic refusal",
+      "detail": "Bounded synthetic problem."
+    },
+    "413": {
+      "status": 413,
+      "title": "Synthetic refusal",
+      "detail": "Bounded synthetic problem."
+    },
+    "415": {
+      "status": 415,
+      "title": "Synthetic refusal",
+      "detail": "Bounded synthetic problem."
+    },
+    "429": {
+      "status": 429,
+      "title": "Synthetic refusal",
+      "detail": "Bounded synthetic problem."
+    },
+    "500": {
+      "status": 500,
+      "title": "Synthetic refusal",
+      "detail": "Bounded synthetic problem."
+    },
+    "503": {
+      "status": 503,
+      "title": "Synthetic refusal",
+      "detail": "Bounded synthetic problem."
+    }
+  }
+}
