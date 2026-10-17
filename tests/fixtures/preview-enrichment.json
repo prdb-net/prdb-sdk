@@ -1,0 +1,331 @@
+{
+  "detail": {
+    "id": "00000000-0000-0000-0000-000000000001",
+    "title": "Synthetic video 1",
+    "description": null,
+    "stashdbSceneId": null,
+    "previewEnrichmentEligible": true,
+    "releaseDate": "2026-10-01",
+    "createdAtUtc": "2026-10-17T12:00:00Z",
+    "updatedAtUtc": "2026-10-17T12:00:00Z",
+    "site": {
+      "platformId": "00000000-0000-0000-0000-000000000090",
+      "platformKey": "onlyfans",
+      "platformTitle": "OnlyFans",
+      "accountHandle": "synthetic_creator",
+      "id": "00000000-0000-0000-0000-000000000091",
+      "title": "Synthetic Creator",
+      "url": "https://onlyfans.com/synthetic_creator",
+      "network": null
+    },
+    "durationMs": null,
+    "durationSpreadMs": null,
+    "durationFileCount": null,
+    "qualityOverview": {
+      "resolutions": [],
+      "videoCodecs": []
+    },
+    "images": [],
+    "preNames": [],
+    "actors": []
+  },
+  "detailFromOlderServer": {
+    "id": "00000000-0000-0000-0000-000000000001",
+    "title": "Synthetic video 1",
+    "description": null,
+    "stashdbSceneId": null,
+    "releaseDate": "2026-10-01",
+    "createdAtUtc": "2026-10-17T12:00:00Z",
+    "updatedAtUtc": "2026-10-17T12:00:00Z",
+    "site": {
+      "platformId": "00000000-0000-0000-0000-000000000090",
+      "platformKey": "onlyfans",
+      "platformTitle": "OnlyFans",
+      "accountHandle": "synthetic_creator",
+      "id": "00000000-0000-0000-0000-000000000091",
+      "title": "Synthetic Creator",
+      "url": "https://onlyfans.com/synthetic_creator",
+      "network": null
+    },
+    "durationMs": null,
+    "durationSpreadMs": null,
+    "durationFileCount": null,
+    "qualityOverview": {
+      "resolutions": [],
+      "videoCodecs": []
+    },
+    "images": [],
+    "preNames": [],
+    "actors": []
+  },
+  "batch": [
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "title": "Synthetic video 1",
+      "description": null,
+      "stashdbSceneId": null,
+      "previewEnrichmentEligible": true,
+      "releaseDate": "2026-10-01",
+      "createdAtUtc": "2026-10-17T12:00:00Z",
+      "updatedAtUtc": "2026-10-17T12:00:00Z",
+      "site": {
+        "platformId": "00000000-0000-0000-0000-000000000090",
+        "platformKey": "onlyfans",
+        "platformTitle": "OnlyFans",
+        "accountHandle": "synthetic_creator",
+        "id": "00000000-0000-0000-0000-000000000091",
+        "title": "Synthetic Creator",
+        "url": "https://onlyfans.com/synthetic_creator",
+        "network": null
+      },
+      "durationMs": null,
+      "durationSpreadMs": null,
+      "durationFileCount": null,
+      "qualityOverview": {
+        "resolutions": [],
+        "videoCodecs": []
+      },
+      "images": [],
+      "preNames": [],
+      "actors": []
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000002",
+      "title": "Synthetic video 2",
+      "description": null,
+      "stashdbSceneId": null,
+      "previewEnrichmentEligible": false,
+      "releaseDate": "2026-10-01",
+      "createdAtUtc": "2026-10-17T12:00:00Z",
+      "updatedAtUtc": "2026-10-17T12:00:00Z",
+      "site": {
+        "platformId": "00000000-0000-0000-0000-000000000090",
+        "platformKey": "onlyfans",
+        "platformTitle": "OnlyFans",
+        "accountHandle": "synthetic_creator",
+        "id": "00000000-0000-0000-0000-000000000091",
+        "title": "Synthetic Creator",
+        "url": "https://onlyfans.com/synthetic_creator",
+        "network": null
+      },
+      "durationMs": null,
+      "durationSpreadMs": null,
+      "durationFileCount": null,
+      "qualityOverview": {
+        "resolutions": [],
+        "videoCodecs": []
+      },
+      "images": [],
+      "preNames": [],
+      "actors": []
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000004",
+      "title": "Synthetic video 4",
+      "description": null,
+      "stashdbSceneId": null,
+      "releaseDate": "2026-10-01",
+      "createdAtUtc": "2026-10-17T12:00:00Z",
+      "updatedAtUtc": "2026-10-17T12:00:00Z",
+      "site": {
+        "platformId": "00000000-0000-0000-0000-000000000090",
+        "platformKey": "onlyfans",
+        "platformTitle": "OnlyFans",
+        "accountHandle": "synthetic_creator",
+        "id": "00000000-0000-0000-0000-000000000091",
+        "title": "Synthetic Creator",
+        "url": "https://onlyfans.com/synthetic_creator",
+        "network": null
+      },
+      "durationMs": null,
+      "durationSpreadMs": null,
+      "durationFileCount": null,
+      "qualityOverview": {
+        "resolutions": [],
+        "videoCodecs": []
+      },
+      "images": [],
+      "preNames": [],
+      "actors": []
+    }
+  ],
+  "pages": [
+    {
+      "items": [
+        {
+          "eventType": "created",
+          "video": {
+            "id": "00000000-0000-0000-0000-000000000001",
+            "title": "Synthetic video 1",
+            "description": null,
+            "stashdbSceneId": null,
+            "previewEnrichmentEligible": true,
+            "releaseDate": "2026-10-01",
+            "createdAtUtc": "2026-10-17T12:00:00Z",
+            "updatedAtUtc": "2026-10-17T12:00:00Z",
+            "site": {
+              "platformId": "00000000-0000-0000-0000-000000000090",
+              "platformKey": "onlyfans",
+              "platformTitle": "OnlyFans",
+              "accountHandle": "synthetic_creator",
+              "id": "00000000-0000-0000-0000-000000000091",
+              "title": "Synthetic Creator",
+              "url": "https://onlyfans.com/synthetic_creator",
+              "network": null
+            },
+            "durationMs": null,
+            "durationSpreadMs": null,
+            "durationFileCount": null,
+            "qualityOverview": {
+              "resolutions": [],
+              "videoCodecs": []
+            },
+            "images": [],
+            "preNames": [],
+            "actors": [],
+            "isDeleted": false,
+            "deletedAtUtc": null,
+            "mergedIntoId": null
+          }
+        },
+        {
+          "eventType": "updated",
+          "video": {
+            "id": "00000000-0000-0000-0000-000000000002",
+            "title": "Synthetic video 2",
+            "description": null,
+            "stashdbSceneId": null,
+            "previewEnrichmentEligible": false,
+            "releaseDate": "2026-10-01",
+            "createdAtUtc": "2026-10-17T12:00:00Z",
+            "updatedAtUtc": "2026-10-17T12:00:00Z",
+            "site": {
+              "platformId": "00000000-0000-0000-0000-000000000090",
+              "platformKey": "onlyfans",
+              "platformTitle": "OnlyFans",
+              "accountHandle": "synthetic_creator",
+              "id": "00000000-0000-0000-0000-000000000091",
+              "title": "Synthetic Creator",
+              "url": "https://onlyfans.com/synthetic_creator",
+              "network": null
+            },
+            "durationMs": null,
+            "durationSpreadMs": null,
+            "durationFileCount": null,
+            "qualityOverview": {
+              "resolutions": [],
+              "videoCodecs": []
+            },
+            "images": [],
+            "preNames": [],
+            "actors": [],
+            "isDeleted": false,
+            "deletedAtUtc": null,
+            "mergedIntoId": null
+          }
+        }
+      ],
+      "pageSize": 2,
+      "hasMore": true,
+      "serverTimeUtc": "2026-10-17T12:02:00Z",
+      "nextCursor": {
+        "updatedAtUtc": "2026-10-17T12:00:00Z",
+        "id": "00000000-0000-0000-0000-000000000002"
+      }
+    },
+    {
+      "items": [
+        {
+          "eventType": "deleted",
+          "video": {
+            "isDeleted": true,
+            "deletedAtUtc": "2026-10-17T12:00:00Z",
+            "mergedIntoId": null,
+            "id": "00000000-0000-0000-0000-000000000003",
+            "title": "",
+            "previewEnrichmentEligible": false,
+            "createdAtUtc": "2026-10-17T12:00:00Z",
+            "updatedAtUtc": "2026-10-17T12:00:00Z",
+            "site": null,
+            "qualityOverview": {
+              "resolutions": [],
+              "videoCodecs": []
+            },
+            "images": [],
+            "preNames": [],
+            "actors": []
+          }
+        }
+      ],
+      "pageSize": 2,
+      "hasMore": false,
+      "serverTimeUtc": "2026-10-17T12:02:00Z",
+      "nextCursor": {
+        "updatedAtUtc": "2026-10-17T12:00:00Z",
+        "id": "00000000-0000-0000-0000-000000000003"
+      }
+    },
+    {
+      "items": [
+        {
+          "eventType": "updated",
+          "video": {
+            "id": "00000000-0000-0000-0000-000000000001",
+            "title": "Synthetic video 1",
+            "description": null,
+            "stashdbSceneId": null,
+            "previewEnrichmentEligible": false,
+            "releaseDate": "2026-10-01",
+            "createdAtUtc": "2026-10-17T12:00:00Z",
+            "updatedAtUtc": "2026-10-17T12:05:00Z",
+            "site": {
+              "platformId": "00000000-0000-0000-0000-000000000090",
+              "platformKey": "onlyfans",
+              "platformTitle": "OnlyFans",
+              "accountHandle": "synthetic_creator",
+              "id": "00000000-0000-0000-0000-000000000091",
+              "title": "Synthetic Creator",
+              "url": "https://onlyfans.com/synthetic_creator",
+              "network": null
+            },
+            "durationMs": null,
+            "durationSpreadMs": null,
+            "durationFileCount": null,
+            "qualityOverview": {
+              "resolutions": [],
+              "videoCodecs": []
+            },
+            "images": [],
+            "preNames": [],
+            "actors": [],
+            "isDeleted": false,
+            "deletedAtUtc": null,
+            "mergedIntoId": null
+          }
+        }
+      ],
+      "pageSize": 2,
+      "hasMore": false,
+      "serverTimeUtc": "2026-10-17T12:07:00Z",
+      "nextCursor": {
+        "updatedAtUtc": "2026-10-17T12:05:00Z",
+        "id": "00000000-0000-0000-0000-000000000001"
+      }
+    }
+  ],
+  "notFound": {
+    "type": "https://tools.ietf.org/html/rfc9110#section-15.5.5",
+    "title": "Not Found",
+    "status": 404
+  },
+  "invalidCursor": {
+    "title": "Invalid cursor",
+    "status": 400,
+    "detail": "SinceId requires Since."
+  },
+  "forbidden": {
+    "status": 403,
+    "title": "Forbidden",
+    "detail": "API access is unavailable."
+  }
+}

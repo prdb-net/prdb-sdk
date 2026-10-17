@@ -36,6 +36,8 @@ type VideoChangeVideoDto struct {
     mergedIntoId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The preNames property
     preNames []VideoChangePreNameDtoable
+    // Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 2 says true only for an active OnlyFans video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
+    previewEnrichmentEligible *bool
     // What technical shapes a video is known to exist in, counted over the files prdb holds for it.
     qualityOverview VideoQualityOverviewDtoable
     // The releaseDate property
@@ -243,6 +245,16 @@ func (m *VideoChangeVideoDto) GetFieldDeserializers()(map[string]func(i878a80d23
         }
         return nil
     }
+    res["previewEnrichmentEligible"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetBoolValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPreviewEnrichmentEligible(val)
+        }
+        return nil
+    }
     res["qualityOverview"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetObjectValue(CreateVideoQualityOverviewDtoFromDiscriminatorValue)
         if err != nil {
@@ -329,6 +341,11 @@ func (m *VideoChangeVideoDto) GetMergedIntoId()(*i561e97a8befe7661a44c8f54600992
 // returns a []VideoChangePreNameDtoable when successful
 func (m *VideoChangeVideoDto) GetPreNames()([]VideoChangePreNameDtoable) {
     return m.preNames
+}
+// GetPreviewEnrichmentEligible gets the previewEnrichmentEligible property value. Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 2 says true only for an active OnlyFans video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
+// returns a *bool when successful
+func (m *VideoChangeVideoDto) GetPreviewEnrichmentEligible()(*bool) {
+    return m.previewEnrichmentEligible
 }
 // GetQualityOverview gets the qualityOverview property value. What technical shapes a video is known to exist in, counted over the files prdb holds for it.
 // returns a VideoQualityOverviewDtoable when successful
@@ -453,6 +470,12 @@ func (m *VideoChangeVideoDto) Serialize(writer i878a80d2330e89d26896388a3f487eef
         }
     }
     {
+        err := writer.WriteBoolValue("previewEnrichmentEligible", m.GetPreviewEnrichmentEligible())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteObjectValue("qualityOverview", m.GetQualityOverview())
         if err != nil {
             return err
@@ -548,6 +571,10 @@ func (m *VideoChangeVideoDto) SetMergedIntoId(value *i561e97a8befe7661a44c8f5460
 func (m *VideoChangeVideoDto) SetPreNames(value []VideoChangePreNameDtoable)() {
     m.preNames = value
 }
+// SetPreviewEnrichmentEligible sets the previewEnrichmentEligible property value. Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 2 says true only for an active OnlyFans video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
+func (m *VideoChangeVideoDto) SetPreviewEnrichmentEligible(value *bool)() {
+    m.previewEnrichmentEligible = value
+}
 // SetQualityOverview sets the qualityOverview property value. What technical shapes a video is known to exist in, counted over the files prdb holds for it.
 func (m *VideoChangeVideoDto) SetQualityOverview(value VideoQualityOverviewDtoable)() {
     m.qualityOverview = value
@@ -587,6 +614,7 @@ type VideoChangeVideoDtoable interface {
     GetIsDeleted()(*bool)
     GetMergedIntoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetPreNames()([]VideoChangePreNameDtoable)
+    GetPreviewEnrichmentEligible()(*bool)
     GetQualityOverview()(VideoQualityOverviewDtoable)
     GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)
     GetSite()(VideoChangeSiteDtoable)
@@ -605,6 +633,7 @@ type VideoChangeVideoDtoable interface {
     SetIsDeleted(value *bool)()
     SetMergedIntoId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetPreNames(value []VideoChangePreNameDtoable)()
+    SetPreviewEnrichmentEligible(value *bool)()
     SetQualityOverview(value VideoQualityOverviewDtoable)()
     SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)()
     SetSite(value VideoChangeSiteDtoable)()

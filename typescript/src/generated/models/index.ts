@@ -3661,6 +3661,7 @@ export function deserializeIntoVideoChangeVideoDto(videoChangeVideoDto: Partial<
         "isDeleted": n => { videoChangeVideoDto.isDeleted = n.getBooleanValue(); },
         "mergedIntoId": n => { videoChangeVideoDto.mergedIntoId = n.getGuidValue(); },
         "preNames": n => { videoChangeVideoDto.preNames = n.getCollectionOfObjectValues<VideoChangePreNameDto>(createVideoChangePreNameDtoFromDiscriminatorValue); },
+        "previewEnrichmentEligible": n => { videoChangeVideoDto.previewEnrichmentEligible = n.getBooleanValue(); },
         "qualityOverview": n => { videoChangeVideoDto.qualityOverview = n.getObjectValue<VideoQualityOverviewDto>(createVideoQualityOverviewDtoFromDiscriminatorValue); },
         "releaseDate": n => { videoChangeVideoDto.releaseDate = n.getDateOnlyValue(); },
         "site": n => { videoChangeVideoDto.site = n.getObjectValue<VideoChangeSiteDto>(createVideoChangeSiteDtoFromDiscriminatorValue); },
@@ -3728,6 +3729,7 @@ export function deserializeIntoVideoDetailDto(videoDetailDto: Partial<VideoDetai
         "id": n => { videoDetailDto.id = n.getGuidValue(); },
         "images": n => { videoDetailDto.images = n.getCollectionOfObjectValues<VideoDetailImageDto>(createVideoDetailImageDtoFromDiscriminatorValue); },
         "preNames": n => { videoDetailDto.preNames = n.getCollectionOfObjectValues<VideoDetailPreNameDto>(createVideoDetailPreNameDtoFromDiscriminatorValue); },
+        "previewEnrichmentEligible": n => { videoDetailDto.previewEnrichmentEligible = n.getBooleanValue(); },
         "qualityOverview": n => { videoDetailDto.qualityOverview = n.getObjectValue<VideoQualityOverviewDto>(createVideoQualityOverviewDtoFromDiscriminatorValue); },
         "releaseDate": n => { videoDetailDto.releaseDate = n.getDateOnlyValue(); },
         "site": n => { videoDetailDto.site = n.getObjectValue<VideoDetailSiteDto>(createVideoDetailSiteDtoFromDiscriminatorValue); },
@@ -7664,6 +7666,7 @@ export function serializeVideoChangeVideoDto(writer: SerializationWriter, videoC
     writer.writeBooleanValue("isDeleted", videoChangeVideoDto.isDeleted);
     writer.writeGuidValue("mergedIntoId", videoChangeVideoDto.mergedIntoId);
     writer.writeCollectionOfObjectValues<VideoChangePreNameDto>("preNames", videoChangeVideoDto.preNames, serializeVideoChangePreNameDto);
+    writer.writeBooleanValue("previewEnrichmentEligible", videoChangeVideoDto.previewEnrichmentEligible);
     writer.writeObjectValue<VideoQualityOverviewDto>("qualityOverview", videoChangeVideoDto.qualityOverview, serializeVideoQualityOverviewDto);
     writer.writeDateOnlyValue("releaseDate", videoChangeVideoDto.releaseDate);
     writer.writeObjectValue<VideoChangeSiteDto>("site", videoChangeVideoDto.site, serializeVideoChangeSiteDto);
@@ -7735,6 +7738,7 @@ export function serializeVideoDetailDto(writer: SerializationWriter, videoDetail
     writer.writeGuidValue("id", videoDetailDto.id);
     writer.writeCollectionOfObjectValues<VideoDetailImageDto>("images", videoDetailDto.images, serializeVideoDetailImageDto);
     writer.writeCollectionOfObjectValues<VideoDetailPreNameDto>("preNames", videoDetailDto.preNames, serializeVideoDetailPreNameDto);
+    writer.writeBooleanValue("previewEnrichmentEligible", videoDetailDto.previewEnrichmentEligible);
     writer.writeObjectValue<VideoQualityOverviewDto>("qualityOverview", videoDetailDto.qualityOverview, serializeVideoQualityOverviewDto);
     writer.writeDateOnlyValue("releaseDate", videoDetailDto.releaseDate);
     writer.writeObjectValue<VideoDetailSiteDto>("site", videoDetailDto.site, serializeVideoDetailSiteDto);
@@ -8850,6 +8854,10 @@ export interface VideoChangeVideoDto extends AdditionalDataHolder, Parsable {
      */
     preNames?: VideoChangePreNameDto[] | null;
     /**
+     * Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 2 says true only for an active OnlyFans video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
+     */
+    previewEnrichmentEligible?: boolean | null;
+    /**
      * What technical shapes a video is known to exist in, counted over the files prdb holds for it.
      */
     qualityOverview?: VideoQualityOverviewDto | null;
@@ -8969,6 +8977,10 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
      * The preNames property
      */
     preNames?: VideoDetailPreNameDto[] | null;
+    /**
+     * Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 2 says true only for an active OnlyFans video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
+     */
+    previewEnrichmentEligible?: boolean | null;
     /**
      * What technical shapes a video is known to exist in, counted over the files prdb holds for it.
      */

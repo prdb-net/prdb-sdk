@@ -117,6 +117,16 @@ content and minimal deletion tombstones. They support a full baseline and
 include edits to nested content. See [Catalogue synchronization](docs/catalog-sync.md)
 for cursor handling and the request builders in each language.
 
+`previewEnrichmentEligible` on video detail, `POST /videos/batch` and
+`GET /videos/changes` says whether prdb would welcome a preview image for the
+video from a client that already holds one of its files. It is a server-side
+selection hint only — not a download order and not evidence that a file belongs
+to the video. The value changes without the video being edited, and every change
+reaches the feed; tombstones carry `false`. Generated types make it nullable in
+every language, so a response from an older server that omits it reads as
+`null`/`None`/`nil`/`undefined`: treat that as unknown, never as eligible or as
+`false`.
+
 `POST /releases/resolve` identifies single-video release metadata before acquisition,
 with typed decisions, Site/Actor context and recheck times. See
 [Release resolution](docs/release-resolution.md) for safe automatic selection,

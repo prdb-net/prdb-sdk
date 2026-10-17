@@ -10975,6 +10975,7 @@
           "mergedIntoId",
           "id",
           "title",
+          "previewEnrichmentEligible",
           "createdAtUtc",
           "updatedAtUtc",
           "site",
@@ -11017,6 +11018,10 @@
             "description": "StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does not\nexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.",
             "format": "uuid",
             "nullable": true
+          },
+          "previewEnrichmentEligible": {
+            "type": "boolean",
+            "description": "Whether prdb would welcome a preview image for this video from a client that already holds\none of its files. Version 2 says true only for an active OnlyFans video whose identity is\nconfirmed — by a single FansDB scene, or by the release it was published from under the\ncreator's handle while that release is still confirmed and available — and that has no\npreview a client can show yet: no regular video image, and no publicly visible single-frame\nuser image (a sprite sheet alone does not count). It is a\nserver-side selection and nothing more — not a download order, not evidence that any file\nbelongs to the video, and it exposes none of the matching behind it. Moderation of an image\nalready submitted is a state of its own, not a reason to submit again. Every change of the\nvalue reaches `GET /videos/changes`; tombstones carry false. A client talking to an\nolder server that omits the field must read that as unknown, not as false."
           },
           "releaseDate": {
             "type": "string",
@@ -11168,6 +11173,7 @@
         "required": [
           "id",
           "title",
+          "previewEnrichmentEligible",
           "createdAtUtc",
           "updatedAtUtc",
           "site",
@@ -11195,6 +11201,10 @@
             "description": "StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does not\nexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.",
             "format": "uuid",
             "nullable": true
+          },
+          "previewEnrichmentEligible": {
+            "type": "boolean",
+            "description": "Whether prdb would welcome a preview image for this video from a client that already holds\none of its files. Version 2 says true only for an active OnlyFans video whose identity is\nconfirmed — by a single FansDB scene, or by the release it was published from under the\ncreator's handle while that release is still confirmed and available — and that has no\npreview a client can show yet: no regular video image, and no publicly visible single-frame\nuser image (a sprite sheet alone does not count). It is a\nserver-side selection and nothing more — not a download order, not evidence that any file\nbelongs to the video, and it exposes none of the matching behind it. Moderation of an image\nalready submitted is a state of its own, not a reason to submit again. Every change of the\nvalue reaches `GET /videos/changes`; tombstones carry false. A client talking to an\nolder server that omits the field must read that as unknown, not as false."
           },
           "releaseDate": {
             "type": "string",

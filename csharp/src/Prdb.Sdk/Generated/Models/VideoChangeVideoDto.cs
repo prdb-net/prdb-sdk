@@ -63,6 +63,8 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.VideoChangePreNameDto> PreNames { get; set; }
 #endif
+        /// <summary>Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 2 says true only for an active OnlyFans video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator&apos;s handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.</summary>
+        public bool? PreviewEnrichmentEligible { get; set; }
         /// <summary>What technical shapes a video is known to exist in, counted over the files prdb holds for it.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -130,6 +132,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "isDeleted", n => { IsDeleted = n.GetBoolValue(); } },
                 { "mergedIntoId", n => { MergedIntoId = n.GetGuidValue(); } },
                 { "preNames", n => { PreNames = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoChangePreNameDto>(global::Prdb.Sdk.Generated.Models.VideoChangePreNameDto.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "previewEnrichmentEligible", n => { PreviewEnrichmentEligible = n.GetBoolValue(); } },
                 { "qualityOverview", n => { QualityOverview = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto>(global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto.CreateFromDiscriminatorValue); } },
                 { "releaseDate", n => { ReleaseDate = n.GetDateValue(); } },
                 { "site", n => { Site = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoChangeSiteDto>(global::Prdb.Sdk.Generated.Models.VideoChangeSiteDto.CreateFromDiscriminatorValue); } },
@@ -157,6 +160,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteBoolValue("isDeleted", IsDeleted);
             writer.WriteGuidValue("mergedIntoId", MergedIntoId);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoChangePreNameDto>("preNames", PreNames);
+            writer.WriteBoolValue("previewEnrichmentEligible", PreviewEnrichmentEligible);
             writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto>("qualityOverview", QualityOverview);
             writer.WriteDateValue("releaseDate", ReleaseDate);
             writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoChangeSiteDto>("site", Site);

@@ -1,6 +1,6 @@
 {
   "name": "@prdb/sdk",
-  "version": "0.20.1",
+  "version": "0.21.0",
   "description": "TypeScript SDK for the prdb Public API",
   "license": "MIT",
   "repository": {
@@ -10,7 +10,12 @@
   },
   "homepage": "https://github.com/prdb-net/prdb-sdk#readme",
   "bugs": "https://github.com/prdb-net/prdb-sdk/issues",
-  "keywords": ["prdb", "sdk", "api", "client"],
+  "keywords": [
+    "prdb",
+    "sdk",
+    "api",
+    "client"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,7 +25,9 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "engines": {
     "node": ">=22"
   },
