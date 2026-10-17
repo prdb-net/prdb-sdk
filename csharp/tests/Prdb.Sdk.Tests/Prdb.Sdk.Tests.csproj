@@ -21,6 +21,7 @@
     <None Include="../../../tests/fixtures/actor-merge.json" Link="actor-merge.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../../../tests/fixtures/release-resolution.json" Link="release-resolution.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../../../tests/fixtures/release-associations.json" Link="release-associations.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../../tests/fixtures/preview-enrichment.json" Link="preview-enrichment.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

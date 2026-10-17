@@ -15,6 +15,23 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.21.0] - 2026-10-17
+
+### Added
+
+- **Preview-enrichment eligibility.** `VideoDetailDto` (`GET /videos/{id}`,
+  `POST /videos/batch`) and `VideoChangeVideoDto` (`GET /videos/changes`) carry
+  `previewEnrichmentEligible`: whether prdb would welcome a preview image for the
+  video from a client that already holds one of its files. It is a selection hint,
+  not a download instruction or proof of file identity. Eligibility can disappear
+  after an image is published, a mapping is withdrawn or the video is deleted;
+  every change reaches the feed and tombstones carry `false`. The property is
+  nullable in all four SDKs, so an older server that omits it reads as unknown
+  rather than `false`. The server rule was widened after the field first shipped
+  (version 2 also counts confirmed creator-handle releases) and flipped existing
+  videos without feed events, so take a full `/videos/changes` baseline when
+  adopting the field. No other schema or operation changed.
+
 ## [0.20.1] - 2026-10-13
 
 ### Fixed

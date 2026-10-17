@@ -36,6 +36,8 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
     images: Optional[list[VideoDetailImageDto]] = None
     # The preNames property
     pre_names: Optional[list[VideoDetailPreNameDto]] = None
+    # Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 2 says true only for an active OnlyFans video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
+    preview_enrichment_eligible: Optional[bool] = None
     # What technical shapes a video is known to exist in, counted over the files prdb holds for it.
     quality_overview: Optional[VideoQualityOverviewDto] = None
     # The releaseDate property
@@ -87,6 +89,7 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "images": lambda n : setattr(self, 'images', n.get_collection_of_object_values(VideoDetailImageDto)),
             "preNames": lambda n : setattr(self, 'pre_names', n.get_collection_of_object_values(VideoDetailPreNameDto)),
+            "previewEnrichmentEligible": lambda n : setattr(self, 'preview_enrichment_eligible', n.get_bool_value()),
             "qualityOverview": lambda n : setattr(self, 'quality_overview', n.get_object_value(VideoQualityOverviewDto)),
             "releaseDate": lambda n : setattr(self, 'release_date', n.get_date_value()),
             "site": lambda n : setattr(self, 'site', n.get_object_value(VideoDetailSiteDto)),
@@ -113,6 +116,7 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
         writer.write_uuid_value("id", self.id)
         writer.write_collection_of_object_values("images", self.images)
         writer.write_collection_of_object_values("preNames", self.pre_names)
+        writer.write_bool_value("previewEnrichmentEligible", self.preview_enrichment_eligible)
         writer.write_object_value("qualityOverview", self.quality_overview)
         writer.write_date_value("releaseDate", self.release_date)
         writer.write_object_value("site", self.site)
