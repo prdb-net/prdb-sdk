@@ -59,7 +59,7 @@ namespace Prdb.Sdk.Generated.VideoUserImages
         {
         }
         /// <summary>
-        /// Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Requires API key authentication.
+        /// Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Send an Idempotency-Key header to make retries safe: a repeated request with the same key and payload returns the image created first with its current moderation state instead of creating another one. Every 409 carries a stable code. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.SubmitVideoUserImageResponse"/></returns>
         /// <param name="body">The request body</param>
@@ -69,7 +69,7 @@ namespace Prdb.Sdk.Generated.VideoUserImages
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 401 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 403 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 404 status code</exception>
-        /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 409 status code</exception>
+        /// <exception cref="global::Prdb.Sdk.Generated.Models.SubmitVideoUserImageConflictProblemDetails">When receiving a 409 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 429 status code</exception>
         /// <exception cref="global::Prdb.Sdk.Generated.Models.ProblemDetails">When receiving a 503 status code</exception>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -89,14 +89,14 @@ namespace Prdb.Sdk.Generated.VideoUserImages
                 { "401", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "403", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "404", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
-                { "409", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
+                { "409", global::Prdb.Sdk.Generated.Models.SubmitVideoUserImageConflictProblemDetails.CreateFromDiscriminatorValue },
                 { "429", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
                 { "503", global::Prdb.Sdk.Generated.Models.ProblemDetails.CreateFromDiscriminatorValue },
             };
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.SubmitVideoUserImageResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.SubmitVideoUserImageResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Requires API key authentication.
+        /// Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Send an Idempotency-Key header to make retries safe: a repeated request with the same key and payload returns the image created first with its current moderation state instead of creating another one. Every 409 carries a stable code. Requires API key authentication.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="body">The request body</param>

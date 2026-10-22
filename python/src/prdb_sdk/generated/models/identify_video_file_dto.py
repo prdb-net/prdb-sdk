@@ -16,6 +16,8 @@ class IdentifyVideoFileDto(AdditionalDataHolder, Parsable):
     filename: Optional[str] = None
     # Size of the file in bytes, if known.
     filesize: Optional[int] = None
+    # Opaque proof returned by Identify with includeFreshness. Used only by /videos/identify/validate.
+    freshness_token: Optional[str] = None
     # MD5 of the file, 32 hexadecimal characters, if the client computed one.
     md5: Optional[str] = None
     # OS hash of the file, 16 hexadecimal characters, if the client computed one.
@@ -44,6 +46,7 @@ class IdentifyVideoFileDto(AdditionalDataHolder, Parsable):
         fields: dict[str, Callable[[Any], None]] = {
             "filename": lambda n : setattr(self, 'filename', n.get_str_value()),
             "filesize": lambda n : setattr(self, 'filesize', n.get_int_value()),
+            "freshnessToken": lambda n : setattr(self, 'freshness_token', n.get_str_value()),
             "md5": lambda n : setattr(self, 'md5', n.get_str_value()),
             "osHash": lambda n : setattr(self, 'os_hash', n.get_str_value()),
             "pHash": lambda n : setattr(self, 'p_hash', n.get_str_value()),
@@ -61,6 +64,7 @@ class IdentifyVideoFileDto(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_str_value("filename", self.filename)
         writer.write_int_value("filesize", self.filesize)
+        writer.write_str_value("freshnessToken", self.freshness_token)
         writer.write_str_value("md5", self.md5)
         writer.write_str_value("osHash", self.os_hash)
         writer.write_str_value("pHash", self.p_hash)

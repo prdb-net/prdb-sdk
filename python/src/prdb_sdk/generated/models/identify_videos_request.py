@@ -17,6 +17,8 @@ class IdentifyVideosRequest(AdditionalDataHolder, Parsable):
 
     # Files to identify. Between 1 and 200 entries.
     files: Optional[list[IdentifyVideoFileDto]] = None
+    # Opt in to expiring, account/tuple-bound Identification freshness proofs. Details have separate freshness.
+    include_freshness: Optional[bool] = None
     # When true, each matched result carries the full video document. Defaults to false.
     include_video_details: Optional[bool] = None
     
@@ -42,6 +44,7 @@ class IdentifyVideosRequest(AdditionalDataHolder, Parsable):
 
         fields: dict[str, Callable[[Any], None]] = {
             "files": lambda n : setattr(self, 'files', n.get_collection_of_object_values(IdentifyVideoFileDto)),
+            "includeFreshness": lambda n : setattr(self, 'include_freshness', n.get_bool_value()),
             "includeVideoDetails": lambda n : setattr(self, 'include_video_details', n.get_bool_value()),
         }
         return fields
@@ -55,6 +58,7 @@ class IdentifyVideosRequest(AdditionalDataHolder, Parsable):
         if writer is None:
             raise TypeError("writer cannot be null.")
         writer.write_collection_of_object_values("files", self.files)
+        writer.write_bool_value("includeFreshness", self.include_freshness)
         writer.write_bool_value("includeVideoDetails", self.include_video_details)
         writer.write_additional_data_value(self.additional_data)
     

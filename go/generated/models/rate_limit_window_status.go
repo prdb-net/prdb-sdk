@@ -11,13 +11,13 @@ import (
 type RateLimitWindowStatus struct {
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
-    // Maximum number of requests allowed within this window.
+    // Maximum number of shared account request-budget units allowed within this window.
     limit *int32
-    // Number of requests remaining before the limit is reached.
+    // Number of shared account request-budget units remaining before the limit is reached.
     remaining *int32
-    // Seconds until the oldest request in the window expires, reducing the used count by one.
+    // Seconds until the oldest request-budget unit expires, reducing the used count by one. This is not necessarily the wait needed for a multi-target MCP reservation.
     resetsInSeconds *int32
-    // Number of requests made within the current window.
+    // Number of request-budget units used by all API keys and MCP connections in the current window. REST calls cost one unit; MCP batch work counts its targets.
     used *int32
 }
 // NewRateLimitWindowStatus instantiates a new RateLimitWindowStatus and sets the default values.
@@ -83,22 +83,22 @@ func (m *RateLimitWindowStatus) GetFieldDeserializers()(map[string]func(i878a80d
     }
     return res
 }
-// GetLimit gets the limit property value. Maximum number of requests allowed within this window.
+// GetLimit gets the limit property value. Maximum number of shared account request-budget units allowed within this window.
 // returns a *int32 when successful
 func (m *RateLimitWindowStatus) GetLimit()(*int32) {
     return m.limit
 }
-// GetRemaining gets the remaining property value. Number of requests remaining before the limit is reached.
+// GetRemaining gets the remaining property value. Number of shared account request-budget units remaining before the limit is reached.
 // returns a *int32 when successful
 func (m *RateLimitWindowStatus) GetRemaining()(*int32) {
     return m.remaining
 }
-// GetResetsInSeconds gets the resetsInSeconds property value. Seconds until the oldest request in the window expires, reducing the used count by one.
+// GetResetsInSeconds gets the resetsInSeconds property value. Seconds until the oldest request-budget unit expires, reducing the used count by one. This is not necessarily the wait needed for a multi-target MCP reservation.
 // returns a *int32 when successful
 func (m *RateLimitWindowStatus) GetResetsInSeconds()(*int32) {
     return m.resetsInSeconds
 }
-// GetUsed gets the used property value. Number of requests made within the current window.
+// GetUsed gets the used property value. Number of request-budget units used by all API keys and MCP connections in the current window. REST calls cost one unit; MCP batch work counts its targets.
 // returns a *int32 when successful
 func (m *RateLimitWindowStatus) GetUsed()(*int32) {
     return m.used
@@ -141,19 +141,19 @@ func (m *RateLimitWindowStatus) Serialize(writer i878a80d2330e89d26896388a3f487e
 func (m *RateLimitWindowStatus) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
-// SetLimit sets the limit property value. Maximum number of requests allowed within this window.
+// SetLimit sets the limit property value. Maximum number of shared account request-budget units allowed within this window.
 func (m *RateLimitWindowStatus) SetLimit(value *int32)() {
     m.limit = value
 }
-// SetRemaining sets the remaining property value. Number of requests remaining before the limit is reached.
+// SetRemaining sets the remaining property value. Number of shared account request-budget units remaining before the limit is reached.
 func (m *RateLimitWindowStatus) SetRemaining(value *int32)() {
     m.remaining = value
 }
-// SetResetsInSeconds sets the resetsInSeconds property value. Seconds until the oldest request in the window expires, reducing the used count by one.
+// SetResetsInSeconds sets the resetsInSeconds property value. Seconds until the oldest request-budget unit expires, reducing the used count by one. This is not necessarily the wait needed for a multi-target MCP reservation.
 func (m *RateLimitWindowStatus) SetResetsInSeconds(value *int32)() {
     m.resetsInSeconds = value
 }
-// SetUsed sets the used property value. Number of requests made within the current window.
+// SetUsed sets the used property value. Number of request-budget units used by all API keys and MCP connections in the current window. REST calls cost one unit; MCP batch work counts its targets.
 func (m *RateLimitWindowStatus) SetUsed(value *int32)() {
     m.used = value
 }

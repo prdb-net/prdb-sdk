@@ -47,13 +47,13 @@ func NewVideoUserImagesRequestBuilder(rawUrl string, requestAdapter i2ae4187f7da
     urlParams["request-raw-url"] = rawUrl
     return NewVideoUserImagesRequestBuilderInternal(urlParams, requestAdapter)
 }
-// Post uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Requires API key authentication.
+// Post uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Send an Idempotency-Key header to make retries safe: a repeated request with the same key and payload returns the image created first with its current moderation state instead of creating another one. Every 409 carries a stable code. Requires API key authentication.
 // returns a SubmitVideoUserImageResponseable when successful
 // returns a ProblemDetails error when the service returns a 400 status code
 // returns a ProblemDetails error when the service returns a 401 status code
 // returns a ProblemDetails error when the service returns a 403 status code
 // returns a ProblemDetails error when the service returns a 404 status code
-// returns a ProblemDetails error when the service returns a 409 status code
+// returns a SubmitVideoUserImageConflictProblemDetails error when the service returns a 409 status code
 // returns a ProblemDetails error when the service returns a 429 status code
 // returns a ProblemDetails error when the service returns a 503 status code
 func (m *VideoUserImagesRequestBuilder) Post(ctx context.Context, body i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.MultipartBody, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.SubmitVideoUserImageResponseable, error) {
@@ -66,7 +66,7 @@ func (m *VideoUserImagesRequestBuilder) Post(ctx context.Context, body i2ae4187f
         "401": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "403": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "404": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
-        "409": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
+        "409": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateSubmitVideoUserImageConflictProblemDetailsFromDiscriminatorValue,
         "429": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
         "503": ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.CreateProblemDetailsFromDiscriminatorValue,
     }
@@ -79,7 +79,7 @@ func (m *VideoUserImagesRequestBuilder) Post(ctx context.Context, body i2ae4187f
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.SubmitVideoUserImageResponseable), nil
 }
-// ToPostRequestInformation uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Requires API key authentication.
+// ToPostRequestInformation uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Send an Idempotency-Key header to make retries safe: a repeated request with the same key and payload returns the image created first with its current moderation state instead of creating another one. Every 409 carries a stable code. Requires API key authentication.
 // returns a *RequestInformation when successful
 func (m *VideoUserImagesRequestBuilder) ToPostRequestInformation(ctx context.Context, body i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.MultipartBody, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.POST, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

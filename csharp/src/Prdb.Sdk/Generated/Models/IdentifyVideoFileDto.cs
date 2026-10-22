@@ -25,6 +25,14 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>Size of the file in bytes, if known.</summary>
         public long? Filesize { get; set; }
+        /// <summary>Opaque proof returned by Identify with includeFreshness. Used only by /videos/identify/validate.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? FreshnessToken { get; set; }
+#nullable restore
+#else
+        public string FreshnessToken { get; set; }
+#endif
         /// <summary>MD5 of the file, 32 hexadecimal characters, if the client computed one.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -84,6 +92,7 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "filename", n => { Filename = n.GetStringValue(); } },
                 { "filesize", n => { Filesize = n.GetLongValue(); } },
+                { "freshnessToken", n => { FreshnessToken = n.GetStringValue(); } },
                 { "md5", n => { Md5 = n.GetStringValue(); } },
                 { "osHash", n => { OsHash = n.GetStringValue(); } },
                 { "pHash", n => { PHash = n.GetStringValue(); } },
@@ -99,6 +108,7 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteStringValue("filename", Filename);
             writer.WriteLongValue("filesize", Filesize);
+            writer.WriteStringValue("freshnessToken", FreshnessToken);
             writer.WriteStringValue("md5", Md5);
             writer.WriteStringValue("osHash", OsHash);
             writer.WriteStringValue("pHash", PHash);

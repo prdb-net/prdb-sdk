@@ -34,7 +34,7 @@ namespace Prdb.Sdk.Generated.RateLimit
         {
         }
         /// <summary>
-        /// Returns the current rate limit counter for the authenticated user, including requests used, remaining, and seconds until the oldest request expires from the sliding window. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
+        /// Returns shared per-account API request-budget units used and remaining, plus seconds until the oldest unit expires from the sliding window. REST calls cost one unit; MCP batch work counts its targets and interrupted plans reuse their reserved units. All API keys and MCP connections share these counters. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
         /// </summary>
         /// <returns>A <see cref="global::Prdb.Sdk.Generated.Models.GetRateLimitResponse"/></returns>
         /// <param name="cancellationToken">Cancellation token to use when cancelling requests</param>
@@ -63,7 +63,7 @@ namespace Prdb.Sdk.Generated.RateLimit
             return await RequestAdapter.SendAsync<global::Prdb.Sdk.Generated.Models.GetRateLimitResponse>(requestInfo, global::Prdb.Sdk.Generated.Models.GetRateLimitResponse.CreateFromDiscriminatorValue, errorMapping, cancellationToken).ConfigureAwait(false);
         }
         /// <summary>
-        /// Returns the current rate limit counter for the authenticated user, including requests used, remaining, and seconds until the oldest request expires from the sliding window. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
+        /// Returns shared per-account API request-budget units used and remaining, plus seconds until the oldest unit expires from the sliding window. REST calls cost one unit; MCP batch work counts its targets and interrupted plans reuse their reserved units. All API keys and MCP connections share these counters. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
         /// </summary>
         /// <returns>A <see cref="RequestInformation"/></returns>
         /// <param name="requestConfiguration">Configuration for the request such as headers, query parameters, and middleware options.</param>

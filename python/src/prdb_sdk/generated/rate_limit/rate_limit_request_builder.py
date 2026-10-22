@@ -32,7 +32,7 @@ class RateLimitRequestBuilder(BaseRequestBuilder):
     
     async def get(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[GetRateLimitResponse]:
         """
-        Returns the current rate limit counter for the authenticated user, including requests used, remaining, and seconds until the oldest request expires from the sliding window. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
+        Returns shared per-account API request-budget units used and remaining, plus seconds until the oldest unit expires from the sliding window. REST calls cost one unit; MCP batch work counts its targets and interrupted plans reuse their reserved units. All API keys and MCP connections share these counters. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[GetRateLimitResponse]
         """
@@ -55,7 +55,7 @@ class RateLimitRequestBuilder(BaseRequestBuilder):
     
     def to_get_request_information(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Returns the current rate limit counter for the authenticated user, including requests used, remaining, and seconds until the oldest request expires from the sliding window. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
+        Returns shared per-account API request-budget units used and remaining, plus seconds until the oldest unit expires from the sliding window. REST calls cost one unit; MCP batch work counts its targets and interrupted plans reuse their reserved units. All API keys and MCP connections share these counters. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """

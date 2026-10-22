@@ -11,7 +11,7 @@ import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type Requ
  */
 export interface RateLimitRequestBuilder extends BaseRequestBuilder<RateLimitRequestBuilder> {
     /**
-     * Returns the current rate limit counter for the authenticated user, including requests used, remaining, and seconds until the oldest request expires from the sliding window. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
+     * Returns shared per-account API request-budget units used and remaining, plus seconds until the oldest unit expires from the sliding window. REST calls cost one unit; MCP batch work counts its targets and interrupted plans reuse their reserved units. All API keys and MCP connections share these counters. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<GetRateLimitResponse>}
      * @throws {ProblemDetails} error when the service returns a 401 status code
@@ -21,7 +21,7 @@ export interface RateLimitRequestBuilder extends BaseRequestBuilder<RateLimitReq
      */
      get(requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<GetRateLimitResponse | undefined>;
     /**
-     * Returns the current rate limit counter for the authenticated user, including requests used, remaining, and seconds until the oldest request expires from the sliding window. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
+     * Returns shared per-account API request-budget units used and remaining, plus seconds until the oldest unit expires from the sliding window. REST calls cost one unit; MCP batch work counts its targets and interrupted plans reuse their reserved units. All API keys and MCP connections share these counters. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
      */

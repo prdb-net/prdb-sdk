@@ -18,6 +18,7 @@ from warnings import warn
 if TYPE_CHECKING:
     from ..models.list_videos_response import ListVideosResponse
     from ..models.problem_details import ProblemDetails
+    from .baseline.baseline_request_builder import BaselineRequestBuilder
     from .batch.batch_request_builder import BatchRequestBuilder
     from .changes.changes_request_builder import ChangesRequestBuilder
     from .filehashes.filehashes_request_builder import FilehashesRequestBuilder
@@ -99,6 +100,15 @@ class VideosRequestBuilder(BaseRequestBuilder):
         if raw_url is None:
             raise TypeError("raw_url cannot be null.")
         return VideosRequestBuilder(self.request_adapter, raw_url)
+    
+    @property
+    def baseline(self) -> BaselineRequestBuilder:
+        """
+        The baseline property
+        """
+        from .baseline.baseline_request_builder import BaselineRequestBuilder
+
+        return BaselineRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
     def batch(self) -> BatchRequestBuilder:

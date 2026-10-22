@@ -529,6 +529,23 @@ export interface AddWantedVideosBatchResponse extends AdditionalDataHolder, Pars
     notFound?: number | null;
 }
 /**
+ * Fetch this single document through GET /videos/{videoId}, persist it, then resume.
+ */
+export interface BaselineDocumentTooLargeResponse extends AdditionalDataHolder, ApiError, Parsable {
+    /**
+     * The changesSince property
+     */
+    changesSince?: Date | null;
+    /**
+     * The nextCursor property
+     */
+    nextCursor?: string | null;
+    /**
+     * The videoId property
+     */
+    videoId?: Guid | null;
+}
+/**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {ActiveSubscriptionDto}
@@ -671,6 +688,15 @@ export function createAddWantedVideosBatchRequestFromDiscriminatorValue(parseNod
 // @ts-ignore
 export function createAddWantedVideosBatchResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoAddWantedVideosBatchResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {BaselineDocumentTooLargeResponse}
+ */
+// @ts-ignore
+export function createBaselineDocumentTooLargeResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoBaselineDocumentTooLargeResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -950,6 +976,24 @@ export function createGetVideoUserImageChangesResponseFromDiscriminatorValue(par
 // @ts-ignore
 export function createGetWantedVideoChangesResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoGetWantedVideoChangesResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IdentifyFreshnessResponse}
+ */
+// @ts-ignore
+export function createIdentifyFreshnessResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIdentifyFreshnessResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IdentifyFreshnessResultDto}
+ */
+// @ts-ignore
+export function createIdentifyFreshnessResultDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIdentifyFreshnessResultDto;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1440,6 +1484,15 @@ export function createSubmitVideoFilehashResultDtoFromDiscriminatorValue(parseNo
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SubmitVideoUserImageConflictProblemDetails}
+ */
+// @ts-ignore
+export function createSubmitVideoUserImageConflictProblemDetailsFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSubmitVideoUserImageConflictProblemDetails;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {SubmitVideoUserImageResponse}
  */
 // @ts-ignore
@@ -1485,6 +1538,15 @@ export function createUserIdentityResponseFromDiscriminatorValue(parseNode: Pars
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ValidateIdentificationRequest}
+ */
+// @ts-ignore
+export function createValidateIdentificationRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoValidateIdentificationRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {ValidationProblemDetails_errors}
  */
 // @ts-ignore
@@ -1499,6 +1561,15 @@ export function createValidationProblemDetails_errorsFromDiscriminatorValue(pars
 // @ts-ignore
 export function createValidationProblemDetailsFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoValidationProblemDetails;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoBaselineResponse}
+ */
+// @ts-ignore
+export function createVideoBaselineResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoBaselineResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -2186,6 +2257,19 @@ export function deserializeIntoAddWantedVideosBatchResponse(addWantedVideosBatch
 }
 /**
  * The deserialization information for the current model
+ * @param BaselineDocumentTooLargeResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoBaselineDocumentTooLargeResponse(baselineDocumentTooLargeResponse: Partial<BaselineDocumentTooLargeResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "changesSince": n => { baselineDocumentTooLargeResponse.changesSince = n.getDateValue(); },
+        "nextCursor": n => { baselineDocumentTooLargeResponse.nextCursor = n.getStringValue(); },
+        "videoId": n => { baselineDocumentTooLargeResponse.videoId = n.getGuidValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param CreatorAccountDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2632,6 +2716,30 @@ export function deserializeIntoGetWantedVideoChangesResponse(getWantedVideoChang
 }
 /**
  * The deserialization information for the current model
+ * @param IdentifyFreshnessResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIdentifyFreshnessResponse(identifyFreshnessResponse: Partial<IdentifyFreshnessResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "results": n => { identifyFreshnessResponse.results = n.getCollectionOfObjectValues<IdentifyFreshnessResultDto>(createIdentifyFreshnessResultDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IdentifyFreshnessResultDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIdentifyFreshnessResultDto(identifyFreshnessResultDto: Partial<IdentifyFreshnessResultDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "ref": n => { identifyFreshnessResultDto.ref = n.getStringValue(); },
+        "result": n => { identifyFreshnessResultDto.result = n.getObjectValue<IdentifyVideoResultDto>(createIdentifyVideoResultDtoFromDiscriminatorValue); },
+        "status": n => { identifyFreshnessResultDto.status = n.getEnumValue<IdentifyFreshnessResultDto_status>(IdentifyFreshnessResultDto_statusObject); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param IdentifySiteDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -2653,6 +2761,7 @@ export function deserializeIntoIdentifyVideoFileDto(identifyVideoFileDto: Partia
     return {
         "filename": n => { identifyVideoFileDto.filename = n.getStringValue(); },
         "filesize": n => { identifyVideoFileDto.filesize = n.getNumberValue(); },
+        "freshnessToken": n => { identifyVideoFileDto.freshnessToken = n.getStringValue(); },
         "md5": n => { identifyVideoFileDto.md5 = n.getStringValue(); },
         "osHash": n => { identifyVideoFileDto.osHash = n.getStringValue(); },
         "pHash": n => { identifyVideoFileDto.pHash = n.getStringValue(); },
@@ -2669,6 +2778,8 @@ export function deserializeIntoIdentifyVideoResultDto(identifyVideoResultDto: Pa
     return {
         "candidates": n => { identifyVideoResultDto.candidates = n.getCollectionOfPrimitiveValues<Guid>("string"); },
         "confidence": n => { identifyVideoResultDto.confidence = n.getNumberValue(); },
+        "freshnessExpiresAtUtc": n => { identifyVideoResultDto.freshnessExpiresAtUtc = n.getDateValue(); },
+        "freshnessToken": n => { identifyVideoResultDto.freshnessToken = n.getStringValue(); },
         "matchedBy": n => { identifyVideoResultDto.matchedBy = n.getNumberValue(); },
         "ref": n => { identifyVideoResultDto.ref = n.getStringValue(); },
         "site": n => { identifyVideoResultDto.site = n.getObjectValue<IdentifySiteDto>(createIdentifySiteDtoFromDiscriminatorValue); },
@@ -2685,6 +2796,7 @@ export function deserializeIntoIdentifyVideoResultDto(identifyVideoResultDto: Pa
 export function deserializeIntoIdentifyVideosRequest(identifyVideosRequest: Partial<IdentifyVideosRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "files": n => { identifyVideosRequest.files = n.getCollectionOfObjectValues<IdentifyVideoFileDto>(createIdentifyVideoFileDtoFromDiscriminatorValue); },
+        "includeFreshness": n => { identifyVideosRequest.includeFreshness = n.getBooleanValue(); },
         "includeVideoDetails": n => { identifyVideosRequest.includeVideoDetails = n.getBooleanValue(); },
     }
 }
@@ -3434,6 +3546,22 @@ export function deserializeIntoSubmitVideoFilehashResultDto(submitVideoFilehashR
 }
 /**
  * The deserialization information for the current model
+ * @param SubmitVideoUserImageConflictProblemDetails The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSubmitVideoUserImageConflictProblemDetails(submitVideoUserImageConflictProblemDetails: Partial<SubmitVideoUserImageConflictProblemDetails> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "code": n => { submitVideoUserImageConflictProblemDetails.code = n.getStringValue(); },
+        "detail": n => { submitVideoUserImageConflictProblemDetails.detail = n.getStringValue(); },
+        "instance": n => { submitVideoUserImageConflictProblemDetails.instance = n.getStringValue(); },
+        "status": n => { submitVideoUserImageConflictProblemDetails.status = n.getNumberValue(); },
+        "title": n => { submitVideoUserImageConflictProblemDetails.title = n.getStringValue(); },
+        "type": n => { submitVideoUserImageConflictProblemDetails.type = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param SubmitVideoUserImageResponse The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3509,6 +3637,20 @@ export function deserializeIntoUserIdentityResponse(userIdentityResponse: Partia
 }
 /**
  * The deserialization information for the current model
+ * @param ValidateIdentificationRequest The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoValidateIdentificationRequest(validateIdentificationRequest: Partial<ValidateIdentificationRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "files": n => { validateIdentificationRequest.files = n.getCollectionOfObjectValues<IdentifyVideoFileDto>(createIdentifyVideoFileDtoFromDiscriminatorValue); },
+        "includeFreshness": n => { validateIdentificationRequest.includeFreshness = n.getBooleanValue(); },
+        "includeVideoDetails": n => { validateIdentificationRequest.includeVideoDetails = n.getBooleanValue(); },
+        "reidentify": n => { validateIdentificationRequest.reidentify = n.getBooleanValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param ValidationProblemDetails The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3531,6 +3673,21 @@ export function deserializeIntoValidationProblemDetails(validationProblemDetails
 // @ts-ignore
 export function deserializeIntoValidationProblemDetails_errors(validationProblemDetails_errors: Partial<ValidationProblemDetails_errors> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoBaselineResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoBaselineResponse(videoBaselineResponse: Partial<VideoBaselineResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "changesSince": n => { videoBaselineResponse.changesSince = n.getDateValue(); },
+        "hasMore": n => { videoBaselineResponse.hasMore = n.getBooleanValue(); },
+        "items": n => { videoBaselineResponse.items = n.getCollectionOfObjectValues<VideoDetailDto>(createVideoDetailDtoFromDiscriminatorValue); },
+        "nextCursor": n => { videoBaselineResponse.nextCursor = n.getStringValue(); },
+        "pageSize": n => { videoBaselineResponse.pageSize = n.getNumberValue(); },
     }
 }
 /**
@@ -4823,6 +4980,27 @@ export interface GetWantedVideoChangesResponse extends AdditionalDataHolder, Par
      */
     serverTimeUtc?: Date | null;
 }
+export interface IdentifyFreshnessResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The results property
+     */
+    results?: IdentifyFreshnessResultDto[] | null;
+}
+export interface IdentifyFreshnessResultDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The ref property
+     */
+    ref?: string | null;
+    /**
+     * What the identification ladder made of one file.
+     */
+    result?: IdentifyVideoResultDto | null;
+    /**
+     * unchanged: reuse retained Identification, not Video details; identified: replace with result; reidentify: no proof. Allowed values: unchanged, identified, reidentify.
+     */
+    status?: IdentifyFreshnessResultDto_status | null;
+}
+export type IdentifyFreshnessResultDto_status = (typeof IdentifyFreshnessResultDto_statusObject)[keyof typeof IdentifyFreshnessResultDto_statusObject];
 /**
  * The site a file could be attributed to.
  */
@@ -4853,6 +5031,10 @@ export interface IdentifyVideoFileDto extends AdditionalDataHolder, Parsable {
      */
     filesize?: number | null;
     /**
+     * Opaque proof returned by Identify with includeFreshness. Used only by /videos/identify/validate.
+     */
+    freshnessToken?: string | null;
+    /**
      * MD5 of the file, 32 hexadecimal characters, if the client computed one.
      */
     md5?: string | null;
@@ -4882,6 +5064,14 @@ export interface IdentifyVideoResultDto extends AdditionalDataHolder, Parsable {
      */
     confidence?: number | null;
     /**
+     * Server expiry of the proof; validation never extends it.
+     */
+    freshnessExpiresAtUtc?: Date | null;
+    /**
+     * Opaque proof for this complete input tuple and Identification answer; absent when validity could not be proved.
+     */
+    freshnessToken?: string | null;
+    /**
      * Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
      */
     matchedBy?: number | null;
@@ -4910,6 +5100,10 @@ export interface IdentifyVideosRequest extends AdditionalDataHolder, Parsable {
      * Files to identify. Between 1 and 200 entries.
      */
     files?: IdentifyVideoFileDto[] | null;
+    /**
+     * Opt in to expiring, account/tuple-bound Identification freshness proofs. Details have separate freshness.
+     */
+    includeFreshness?: boolean | null;
     /**
      * When true, each matched result carries the full video document. Defaults to false.
      */
@@ -5573,19 +5767,19 @@ export interface RateLimitProblemResponse extends AdditionalDataHolder, ApiError
  */
 export interface RateLimitWindowStatus extends AdditionalDataHolder, Parsable {
     /**
-     * Maximum number of requests allowed within this window.
+     * Maximum number of shared account request-budget units allowed within this window.
      */
     limit?: number | null;
     /**
-     * Number of requests remaining before the limit is reached.
+     * Number of shared account request-budget units remaining before the limit is reached.
      */
     remaining?: number | null;
     /**
-     * Seconds until the oldest request in the window expires, reducing the used count by one.
+     * Seconds until the oldest request-budget unit expires, reducing the used count by one. This is not necessarily the wait needed for a multi-target MCP reservation.
      */
     resetsInSeconds?: number | null;
     /**
-     * Number of requests made within the current window.
+     * Number of request-budget units used by all API keys and MCP connections in the current window. REST calls cost one unit; MCP batch work counts its targets.
      */
     used?: number | null;
 }
@@ -6090,6 +6284,20 @@ export function serializeAddWantedVideosBatchResponse(writer: SerializationWrite
 }
 /**
  * Serializes information the current object
+ * @param BaselineDocumentTooLargeResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeBaselineDocumentTooLargeResponse(writer: SerializationWriter, baselineDocumentTooLargeResponse: Partial<BaselineDocumentTooLargeResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!baselineDocumentTooLargeResponse || isSerializingDerivedType) { return; }
+    writer.writeDateValue("changesSince", baselineDocumentTooLargeResponse.changesSince);
+    writer.writeStringValue("nextCursor", baselineDocumentTooLargeResponse.nextCursor);
+    writer.writeGuidValue("videoId", baselineDocumentTooLargeResponse.videoId);
+    writer.writeAdditionalData(baselineDocumentTooLargeResponse.additionalData);
+}
+/**
+ * Serializes information the current object
  * @param CreatorAccountDto The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -6567,6 +6775,32 @@ export function serializeGetWantedVideoChangesResponse(writer: SerializationWrit
 }
 /**
  * Serializes information the current object
+ * @param IdentifyFreshnessResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIdentifyFreshnessResponse(writer: SerializationWriter, identifyFreshnessResponse: Partial<IdentifyFreshnessResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!identifyFreshnessResponse || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<IdentifyFreshnessResultDto>("results", identifyFreshnessResponse.results, serializeIdentifyFreshnessResultDto);
+    writer.writeAdditionalData(identifyFreshnessResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IdentifyFreshnessResultDto The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIdentifyFreshnessResultDto(writer: SerializationWriter, identifyFreshnessResultDto: Partial<IdentifyFreshnessResultDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!identifyFreshnessResultDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("ref", identifyFreshnessResultDto.ref);
+    writer.writeObjectValue<IdentifyVideoResultDto>("result", identifyFreshnessResultDto.result, serializeIdentifyVideoResultDto);
+    writer.writeEnumValue<IdentifyFreshnessResultDto_status>("status", identifyFreshnessResultDto.status);
+    writer.writeAdditionalData(identifyFreshnessResultDto.additionalData);
+}
+/**
+ * Serializes information the current object
  * @param IdentifySiteDto The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -6590,6 +6824,7 @@ export function serializeIdentifyVideoFileDto(writer: SerializationWriter, ident
     if (!identifyVideoFileDto || isSerializingDerivedType) { return; }
     writer.writeStringValue("filename", identifyVideoFileDto.filename);
     writer.writeNumberValue("filesize", identifyVideoFileDto.filesize);
+    writer.writeStringValue("freshnessToken", identifyVideoFileDto.freshnessToken);
     writer.writeStringValue("md5", identifyVideoFileDto.md5);
     writer.writeStringValue("osHash", identifyVideoFileDto.osHash);
     writer.writeStringValue("pHash", identifyVideoFileDto.pHash);
@@ -6607,6 +6842,8 @@ export function serializeIdentifyVideoResultDto(writer: SerializationWriter, ide
     if (!identifyVideoResultDto || isSerializingDerivedType) { return; }
     writer.writeCollectionOfPrimitiveValues<Guid>("candidates", identifyVideoResultDto.candidates);
     writer.writeNumberValue("confidence", identifyVideoResultDto.confidence);
+    writer.writeDateValue("freshnessExpiresAtUtc", identifyVideoResultDto.freshnessExpiresAtUtc);
+    writer.writeStringValue("freshnessToken", identifyVideoResultDto.freshnessToken);
     writer.writeNumberValue("matchedBy", identifyVideoResultDto.matchedBy);
     writer.writeStringValue("ref", identifyVideoResultDto.ref);
     writer.writeObjectValue<IdentifySiteDto>("site", identifyVideoResultDto.site, serializeIdentifySiteDto);
@@ -6624,6 +6861,7 @@ export function serializeIdentifyVideoResultDto(writer: SerializationWriter, ide
 export function serializeIdentifyVideosRequest(writer: SerializationWriter, identifyVideosRequest: Partial<IdentifyVideosRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!identifyVideosRequest || isSerializingDerivedType) { return; }
     writer.writeCollectionOfObjectValues<IdentifyVideoFileDto>("files", identifyVideosRequest.files, serializeIdentifyVideoFileDto);
+    writer.writeBooleanValue("includeFreshness", identifyVideosRequest.includeFreshness);
     writer.writeBooleanValue("includeVideoDetails", identifyVideosRequest.includeVideoDetails);
     writer.writeAdditionalData(identifyVideosRequest.additionalData);
 }
@@ -7424,6 +7662,23 @@ export function serializeSubmitVideoFilehashResultDto(writer: SerializationWrite
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SubmitVideoUserImageConflictProblemDetails The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSubmitVideoUserImageConflictProblemDetails(writer: SerializationWriter, submitVideoUserImageConflictProblemDetails: Partial<SubmitVideoUserImageConflictProblemDetails> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!submitVideoUserImageConflictProblemDetails || isSerializingDerivedType) { return; }
+    writer.writeStringValue("code", submitVideoUserImageConflictProblemDetails.code);
+    writer.writeStringValue("detail", submitVideoUserImageConflictProblemDetails.detail);
+    writer.writeStringValue("instance", submitVideoUserImageConflictProblemDetails.instance);
+    writer.writeNumberValue("status", submitVideoUserImageConflictProblemDetails.status);
+    writer.writeStringValue("title", submitVideoUserImageConflictProblemDetails.title);
+    writer.writeStringValue("type", submitVideoUserImageConflictProblemDetails.type);
+    writer.writeAdditionalData(submitVideoUserImageConflictProblemDetails.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param SubmitVideoUserImageResponse The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -7504,6 +7759,21 @@ export function serializeUserIdentityResponse(writer: SerializationWriter, userI
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ValidateIdentificationRequest The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeValidateIdentificationRequest(writer: SerializationWriter, validateIdentificationRequest: Partial<ValidateIdentificationRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!validateIdentificationRequest || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<IdentifyVideoFileDto>("files", validateIdentificationRequest.files, serializeIdentifyVideoFileDto);
+    writer.writeBooleanValue("includeFreshness", validateIdentificationRequest.includeFreshness);
+    writer.writeBooleanValue("includeVideoDetails", validateIdentificationRequest.includeVideoDetails);
+    writer.writeBooleanValue("reidentify", validateIdentificationRequest.reidentify);
+    writer.writeAdditionalData(validateIdentificationRequest.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param ValidationProblemDetails The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -7528,6 +7798,22 @@ export function serializeValidationProblemDetails(writer: SerializationWriter, v
 export function serializeValidationProblemDetails_errors(writer: SerializationWriter, validationProblemDetails_errors: Partial<ValidationProblemDetails_errors> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!validationProblemDetails_errors || isSerializingDerivedType) { return; }
     writer.writeAdditionalData(validationProblemDetails_errors.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoBaselineResponse The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoBaselineResponse(writer: SerializationWriter, videoBaselineResponse: Partial<VideoBaselineResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoBaselineResponse || isSerializingDerivedType) { return; }
+    writer.writeDateValue("changesSince", videoBaselineResponse.changesSince);
+    writer.writeBooleanValue("hasMore", videoBaselineResponse.hasMore);
+    writer.writeCollectionOfObjectValues<VideoDetailDto>("items", videoBaselineResponse.items, serializeVideoDetailDto);
+    writer.writeStringValue("nextCursor", videoBaselineResponse.nextCursor);
+    writer.writeNumberValue("pageSize", videoBaselineResponse.pageSize);
+    writer.writeAdditionalData(videoBaselineResponse.additionalData);
 }
 /**
  * Serializes information the current object
@@ -8526,6 +8812,35 @@ export interface SubmitVideoFilehashResultDto extends AdditionalDataHolder, Pars
      */
     videoId?: Guid | null;
 }
+/**
+ * Problem response returned when a video user image submission conflicts with existing state.
+ */
+export interface SubmitVideoUserImageConflictProblemDetails extends AdditionalDataHolder, ApiError, Parsable {
+    /**
+     * Stable machine-readable error code. `video_user_image_user_limit_reached`: the calleralready has the maximum of active images of this type for the video or osHash.`video_user_image_target_limit_reached`: the video or osHash already has the maximum ofactive images of this type from all users. `idempotency_key_reused`: the`Idempotency-Key` was already used by this caller for a different submission.
+     */
+    code?: string | null;
+    /**
+     * The detail property
+     */
+    detail?: string | null;
+    /**
+     * The instance property
+     */
+    instance?: string | null;
+    /**
+     * The status property
+     */
+    status?: number | null;
+    /**
+     * The title property
+     */
+    title?: string | null;
+    /**
+     * The type property
+     */
+    type?: string | null;
+}
 export interface SubmitVideoUserImageResponse extends AdditionalDataHolder, Parsable {
     /**
      * The moderationStatus property
@@ -8645,6 +8960,24 @@ export interface UserIdentityResponse extends AdditionalDataHolder, Parsable {
      */
     userHash?: string | null;
 }
+export interface ValidateIdentificationRequest extends AdditionalDataHolder, Parsable {
+    /**
+     * Files to identify. Between 1 and 200 entries.
+     */
+    files?: IdentifyVideoFileDto[] | null;
+    /**
+     * Opt in to expiring, account/tuple-bound Identification freshness proofs. Details have separate freshness.
+     */
+    includeFreshness?: boolean | null;
+    /**
+     * When true, each matched result carries the full video document. Defaults to false.
+     */
+    includeVideoDetails?: boolean | null;
+    /**
+     * Re-identify invalid/missing/expired proofs in one bounded batch. False returns reidentify instead.
+     */
+    reidentify?: boolean | null;
+}
 export interface ValidationProblemDetails extends AdditionalDataHolder, ApiError, Parsable {
     /**
      * The detail property
@@ -8672,6 +9005,28 @@ export interface ValidationProblemDetails extends AdditionalDataHolder, ApiError
     type?: string | null;
 }
 export interface ValidationProblemDetails_errors extends AdditionalDataHolder, Parsable {
+}
+export interface VideoBaselineResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * Inclusive start watermark for GET /videos/changes?since=... WITHOUT sinceId.
+     */
+    changesSince?: Date | null;
+    /**
+     * The hasMore property
+     */
+    hasMore?: boolean | null;
+    /**
+     * The items property
+     */
+    items?: VideoDetailDto[] | null;
+    /**
+     * The nextCursor property
+     */
+    nextCursor?: string | null;
+    /**
+     * The pageSize property
+     */
+    pageSize?: number | null;
 }
 export interface VideoChangeActorDto extends AdditionalDataHolder, Parsable {
     /**
@@ -9841,6 +10196,14 @@ export interface WantedVideoSummaryDto extends AdditionalDataHolder, Parsable {
      */
     videoTitle?: string | null;
 }
+/**
+ * unchanged: reuse retained Identification, not Video details; identified: replace with result; reidentify: no proof. Allowed values: unchanged, identified, reidentify.
+ */
+export const IdentifyFreshnessResultDto_statusObject = {
+    Unchanged: "unchanged",
+    Identified: "identified",
+    Reidentify: "reidentify",
+} as const;
 /**
  * Known values: Single (0), Unknown (2).
  */

@@ -841,8 +841,19 @@
           "VideoUserImages"
         ],
         "summary": "Submit a video user image",
-        "description": "Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Requires API key authentication.",
+        "description": "Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Send an Idempotency-Key header to make retries safe: a repeated request with the same key and payload returns the image created first with its current moderation state instead of creating another one. Every 409 carries a stable code. Requires API key authentication.",
         "operationId": "SubmitVideoUserImage",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "description": "Optional key that makes the submission safe to retry. 1 to 128 printable ASCII characters, compared case-sensitively and scoped to the calling user. A retry with the same key and the same payload (osHash, videoId, previewImageType, displayOrder, JPEG and VTT bytes) answers 201 with the image created first, its current moderation state and the response header `Idempotent-Replayed: true`, and uploads nothing. The same key with a different payload answers 409 with code `idempotency_key_reused`. A key stays bound to its image for the image's lifetime, including after the image was hidden, denied or deleted.",
+            "schema": {
+              "pattern": "^[\\x20-\\x7E]{1,128}$",
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "description": "Optional existing video link. Omit this to submit images grouped only by BasedOnFileWithOsHash.",
           "content": {
@@ -883,6 +894,14 @@
         "responses": {
           "201": {
             "description": "Created",
+            "headers": {
+              "Idempotent-Replayed": {
+                "description": "`true` when the response replays the image an earlier request with the same `Idempotency-Key` created. Absent otherwise.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -936,7 +955,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
+                  "$ref": "#/components/schemas/SubmitVideoUserImageConflictProblemDetails"
                 }
               }
             }
@@ -1873,7 +1892,7 @@
           "Videos"
         ],
         "summary": "Identify files against the catalogue",
-        "description": "Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: MD5, OS hash, perceptual hash (compared for equality), a stored file name, the file name without its extension as a scene release title, and finally the site read out of the file name. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure skips that rung silently rather than failing, so send none if in doubt. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. The whole request counts as one request against the rate limit. Nothing sent to this endpoint is stored. Requires API key authentication.",
+        "description": "Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: MD5, OS hash, perceptual hash (compared for equality), a stored file name, the file name without its extension as a scene release title, and finally the site read out of the file name. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure skips that rung silently rather than failing, so send none if in doubt. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. Opt in with includeFreshness=true to receive opaque expiring freshnessToken handles for later /videos/identify/validate calls, bound to the account and complete input tuple. Proofs cover Identification including negative and Site-only answers, not Video detail freshness; changing evidence or the matching algorithm invalidates them. A proof may be absent when concurrent changes prevent validation. The whole request counts as one request against the rate limit. Full filenames and hashes are not stored. Opt-in freshness stores only an expiring tuple digest and private dependency revisions. Requires API key authentication.",
         "operationId": "IdentifyVideos",
         "requestBody": {
           "content": {
@@ -1919,6 +1938,119 @@
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
+    "/videos/identify/validate": {
+      "post": {
+        "tags": [
+          "Videos"
+        ],
+        "summary": "Validate retained Identification answers",
+        "description": "Checks up to 200 opaque freshnessToken handles against their complete original input tuples and the current matching evidence. Example: {\"reidentify\":true,\"files\":[{\"ref\":\"r1\",\"filename\":\"Example.Scene.mp4\",\"freshnessToken\":\"opaque-handle\"}]}. Returns unchanged with no payload when the retained Identification is reusable; this never asserts Video detail freshness. Missing, expired, wrong-account, changed-tuple, changed-evidence or changed-algorithm proofs are re-identified in one bounded batch by default, returning identified and a replacement result. Set reidentify=false to receive reidentify without running the ladder. includeVideoDetails applies only to replacement results. Proofs expire after six hours by default and are not extended by validation; cache eviction also requires re-identification. Each request costs one existing hourly/monthly request unit. This route is uncached and uses the normal fail-closed subscription/quota gate. Persist each replacement result and its proof atomically. Requires API key authentication.",
+        "operationId": "ValidateIdentificationFreshness",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidateIdentificationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ValidateIdentificationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentifyFreshnessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": { }
             }
           },
           "403": {
@@ -3076,6 +3208,148 @@
         ]
       }
     },
+    "/videos/baseline": {
+      "get": {
+        "tags": [
+          "Videos"
+        ],
+        "summary": "Read a bounded full-document video baseline",
+        "description": "Returns complete Video detail documents ordered by (createdAtUtc, id). Example: /videos/baseline?createdFrom=2026-10-01T00:00:00Z&createdBefore=2026-10-22T00:00:00Z&pageSize=1000. The half-open creation range is at most 90 days. Persist each page and opaque nextCursor atomically; retain the same range on resume. Up to 1000 documents, 4 MiB JSON and 20000 related rows per page; a single document is limited to 2 MiB and 2000 related rows. A 413 identifies an exceptional document: fetch it with GET /videos/{videoId}, persist it, then use the supplied nextCursor. This is a mutable bounded scan, not an immutable snapshot. After completion, read /videos/changes from changesSince (inclusive, without sinceId), including tombstones and merges, until caught up. Apply only newer revisions by ID, filter live rows to the creation range, and follow merge survivors. Changes arriving during the scan are reconciled there. The handoff inherits the feed's settle-delay and writer timestamp/commit assumptions. Each page costs one existing hourly/monthly request unit; it is not quota-exempt. Requires API key authentication.",
+        "operationId": "GetVideoBaseline",
+        "parameters": [
+          {
+            "name": "CreatedFrom",
+            "in": "query",
+            "description": "Inclusive catalogue creation lower bound. Keep unchanged on resume.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "CreatedBefore",
+            "in": "query",
+            "description": "Exclusive catalogue creation upper bound. Keep unchanged on resume.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Cursor",
+            "in": "query",
+            "description": "Opaque continuation from the preceding page; persist with its documents.",
+            "schema": {
+              "maxLength": 2048,
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "description": "Maximum documents, 1–1000; byte and work caps may produce a shorter page.",
+            "schema": {
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VideoBaselineResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Payload Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaselineDocumentTooLargeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
     "/video-release-associations/changes": {
       "get": {
         "tags": [
@@ -3773,7 +4047,7 @@
           "Releases"
         ],
         "summary": "Resolve release metadata to single video identities",
-        "description": "Read-only local resolution of 1–200 release titles, with optional source namespace/key, positive 64-bit byte size, UTC posting instant and category hints. Returns exactly one result per unique ref in input order. Batch correlation/syntax errors return 400; other invalid entry fields return invalid alongside valid entries. Only resolved identities are automationEligible and carry one active Video plus Site/Actor IDs. Candidates are alternatives, capped at 20; packs are unsupported. Verified source/canonical evidence is required for automation. Unknown origins and heuristics never acquire entry authority. Versions bind relevant input/knowledge, not evaluation time or refs. Recheck unresolved cases after six hours, resolved pending acquisitions after 24 hours, and retryLater at the given time. Eligibility says nothing about content rights, quality, local ownership or availability. Incomplete credits do not prove an Actor's absence. No supplied URL is fetched, no canonical/user/review records are written and no file/hash confirmation is inferred. After download use real file hashes with videos/identify. JSON only, body at most 1 MiB. The whole batch consumes one normal request through the existing API-key/subscription/quota gate.",
+        "description": "Read-only local resolution of 1–200 release titles, with optional source namespace/key, positive 64-bit byte size, UTC posting instant and category hints. Returns exactly one result per unique ref in input order. Batch correlation/syntax errors return 400; other invalid entry fields return invalid alongside valid entries. Only resolved identities are automationEligible and carry one active Video plus Site/Actor IDs. Candidates are alternatives, capped at 20; packs are unsupported. Verified source/canonical evidence is required for automation. Unknown origins and heuristics never acquire entry authority. Versions bind relevant input/knowledge, not evaluation time or refs. Recheck at recheckAfterUtc: unresolved cases after six hours, an unknown OnlyFans/Fansly release posted within the last 24 hours after 30 minutes, resolved pending acquisitions after 24 hours, and retryLater at the given time. Eligibility says nothing about content rights, quality, local ownership or availability. Incomplete credits do not prove an Actor's absence. No supplied URL is fetched, no canonical/user/review records are written and no file/hash confirmation is inferred. After download use real file hashes with videos/identify. JSON only, body at most 1 MiB. The whole batch consumes one normal request through the existing API-key/subscription/quota gate.",
         "operationId": "ResolveReleases",
         "requestBody": {
           "content": {
@@ -3949,7 +4223,7 @@
           "RateLimit"
         ],
         "summary": "Get rate limit status",
-        "description": "Returns the current rate limit counter for the authenticated user, including requests used, remaining, and seconds until the oldest request expires from the sliding window. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.",
+        "description": "Returns shared per-account API request-budget units used and remaining, plus seconds until the oldest unit expires from the sliding window. REST calls cost one unit; MCP batch work counts its targets and interrupted plans reuse their reserved units. All API keys and MCP connections share these counters. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.",
         "operationId": "GetRateLimit",
         "responses": {
           "200": {
@@ -7172,6 +7446,28 @@
         },
         "description": "Summary of a batch add-wanted-videos operation."
       },
+      "BaselineDocumentTooLargeResponse": {
+        "required": [
+          "videoId",
+          "nextCursor",
+          "changesSince"
+        ],
+        "type": "object",
+        "properties": {
+          "videoId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nextCursor": {
+            "type": "string"
+          },
+          "changesSince": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Fetch this single document through GET /videos/{videoId}, persist it, then resume."
+      },
       "BirthdayType": {
         "enum": [
           1,
@@ -8308,6 +8604,52 @@
         "type": "integer",
         "description": "How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5)."
       },
+      "IdentifyFreshnessResponse": {
+        "required": [
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentifyFreshnessResultDto"
+            }
+          }
+        }
+      },
+      "IdentifyFreshnessResultDto": {
+        "required": [
+          "ref",
+          "status",
+          "result"
+        ],
+        "type": "object",
+        "properties": {
+          "ref": {
+            "type": "string"
+          },
+          "status": {
+            "pattern": "^(unchanged|identified|reidentify)$",
+            "enum": [
+              "unchanged",
+              "identified",
+              "reidentify"
+            ],
+            "type": "string",
+            "description": "unchanged: reuse retained Identification, not Video details; identified: replace with result; reidentify: no proof. Allowed values: unchanged, identified, reidentify."
+          },
+          "result": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IdentifyVideoResultDto"
+              }
+            ],
+            "description": "What the identification ladder made of one file.",
+            "nullable": true
+          }
+        }
+      },
       "IdentifyMatchKind": {
         "enum": [
           0,
@@ -8361,6 +8703,12 @@
             "type": "string",
             "description": "File name without directory. Required — it carries the lowest rungs of the ladder."
           },
+          "freshnessToken": {
+            "maxLength": 64,
+            "type": "string",
+            "description": "Opaque proof returned by Identify with includeFreshness. Used only by /videos/identify/validate.",
+            "nullable": true
+          },
           "filesize": {
             "type": "integer",
             "description": "Size of the file in bytes, if known.",
@@ -8396,6 +8744,17 @@
           "ref": {
             "type": "string",
             "description": "The client-assigned identifier of the input file, returned unchanged."
+          },
+          "freshnessToken": {
+            "type": "string",
+            "description": "Opaque proof for this complete input tuple and Identification answer; absent when validity could not be proved.",
+            "nullable": true
+          },
+          "freshnessExpiresAtUtc": {
+            "type": "string",
+            "description": "Server expiry of the proof; validation never extends it.",
+            "format": "date-time",
+            "nullable": true
           },
           "confidence": {
             "$ref": "#/components/schemas/IdentifyConfidence"
@@ -8461,6 +8820,10 @@
           "includeVideoDetails": {
             "type": "boolean",
             "description": "When true, each matched result carries the full video document. Defaults to false."
+          },
+          "includeFreshness": {
+            "type": "boolean",
+            "description": "Opt in to expiring, account/tuple-bound Identification freshness proofs. Details have separate freshness."
           }
         },
         "description": "Request body for identifying local files against the prdb catalogue."
@@ -9656,22 +10019,22 @@
         "properties": {
           "limit": {
             "type": "integer",
-            "description": "Maximum number of requests allowed within this window.",
+            "description": "Maximum number of shared account request-budget units allowed within this window.",
             "format": "int32"
           },
           "used": {
             "type": "integer",
-            "description": "Number of requests made within the current window.",
+            "description": "Number of request-budget units used by all API keys and MCP connections in the current window. REST calls cost one unit; MCP batch work counts its targets.",
             "format": "int32"
           },
           "remaining": {
             "type": "integer",
-            "description": "Number of requests remaining before the limit is reached.",
+            "description": "Number of shared account request-budget units remaining before the limit is reached.",
             "format": "int32"
           },
           "resetsInSeconds": {
             "type": "integer",
-            "description": "Seconds until the oldest request in the window expires, reducing the used count by one.",
+            "description": "Seconds until the oldest request-budget unit expires, reducing the used count by one. This is not necessarily the wait needed for a multi-target MCP reservation.",
             "format": "int32"
           }
         },
@@ -10548,6 +10911,40 @@
         },
         "description": "What happened to one submitted assignment."
       },
+      "SubmitVideoUserImageConflictProblemDetails": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
+            "description": "Stable machine-readable error code. `video_user_image_user_limit_reached`: the caller\nalready has the maximum of active images of this type for the video or osHash.\n`video_user_image_target_limit_reached`: the video or osHash already has the maximum of\nactive images of this type from all users. `idempotency_key_reused`: the\n`Idempotency-Key` was already used by this caller for a different submission."
+          }
+        },
+        "description": "Problem response returned when a video user image submission conflicts with existing state."
+      },
       "SubmitVideoUserImageResponse": {
         "required": [
           "videoUserImageId",
@@ -10735,6 +11132,35 @@
         },
         "description": "Identity and subscription state for the authenticated user."
       },
+      "ValidateIdentificationRequest": {
+        "required": [
+          "files"
+        ],
+        "type": "object",
+        "properties": {
+          "reidentify": {
+            "type": "boolean",
+            "description": "Re-identify invalid/missing/expired proofs in one bounded batch. False returns reidentify instead."
+          },
+          "files": {
+            "maxItems": 200,
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentifyVideoFileDto"
+            },
+            "description": "Files to identify. Between 1 and 200 entries."
+          },
+          "includeVideoDetails": {
+            "type": "boolean",
+            "description": "When true, each matched result carries the full video document. Defaults to false."
+          },
+          "includeFreshness": {
+            "type": "boolean",
+            "description": "Opt in to expiring, account/tuple-bound Identification freshness proofs. Details have separate freshness."
+          }
+        }
+      },
       "ValidationProblemDetails": {
         "type": "object",
         "properties": {
@@ -10767,6 +11193,40 @@
                 "type": "string"
               }
             }
+          }
+        }
+      },
+      "VideoBaselineResponse": {
+        "required": [
+          "items",
+          "pageSize",
+          "hasMore",
+          "nextCursor",
+          "changesSince"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoDetailDto"
+            }
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "nextCursor": {
+            "type": "string",
+            "nullable": true
+          },
+          "changesSince": {
+            "type": "string",
+            "description": "Inclusive start watermark for GET /videos/changes?since=... WITHOUT sinceId.",
+            "format": "date-time"
           }
         }
       },

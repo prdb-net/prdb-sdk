@@ -23,6 +23,8 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.IdentifyVideoFileDto> Files { get; set; }
 #endif
+        /// <summary>Opt in to expiring, account/tuple-bound Identification freshness proofs. Details have separate freshness.</summary>
+        public bool? IncludeFreshness { get; set; }
         /// <summary>When true, each matched result carries the full video document. Defaults to false.</summary>
         public bool? IncludeVideoDetails { get; set; }
         /// <summary>
@@ -51,6 +53,7 @@ namespace Prdb.Sdk.Generated.Models
             return new Dictionary<string, Action<IParseNode>>
             {
                 { "files", n => { Files = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.IdentifyVideoFileDto>(global::Prdb.Sdk.Generated.Models.IdentifyVideoFileDto.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "includeFreshness", n => { IncludeFreshness = n.GetBoolValue(); } },
                 { "includeVideoDetails", n => { IncludeVideoDetails = n.GetBoolValue(); } },
             };
         }
@@ -62,6 +65,7 @@ namespace Prdb.Sdk.Generated.Models
         {
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.IdentifyVideoFileDto>("files", Files);
+            writer.WriteBoolValue("includeFreshness", IncludeFreshness);
             writer.WriteBoolValue("includeVideoDetails", IncludeVideoDetails);
             writer.WriteAdditionalData(AdditionalData);
         }

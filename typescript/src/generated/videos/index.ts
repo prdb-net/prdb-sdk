@@ -4,6 +4,8 @@
 // @ts-ignore
 import { createListVideosResponseFromDiscriminatorValue, createProblemDetailsFromDiscriminatorValue, type ListVideosResponse, type ProblemDetails } from '../models/index.js';
 // @ts-ignore
+import { BaselineRequestBuilderRequestsMetadata, type BaselineRequestBuilder } from './baseline/index.js';
+// @ts-ignore
 import { BatchRequestBuilderRequestsMetadata, type BatchRequestBuilder } from './batch/index.js';
 // @ts-ignore
 import { ChangesRequestBuilderRequestsMetadata, type ChangesRequestBuilder } from './changes/index.js';
@@ -12,7 +14,7 @@ import { FilehashesRequestBuilderNavigationMetadata, type FilehashesRequestBuild
 // @ts-ignore
 import { FilehashSubmissionsRequestBuilderRequestsMetadata, type FilehashSubmissionsRequestBuilder } from './filehashSubmissions/index.js';
 // @ts-ignore
-import { IdentifyRequestBuilderRequestsMetadata, type IdentifyRequestBuilder } from './identify/index.js';
+import { IdentifyRequestBuilderNavigationMetadata, IdentifyRequestBuilderRequestsMetadata, type IdentifyRequestBuilder } from './identify/index.js';
 // @ts-ignore
 import { ImagesRequestBuilderNavigationMetadata, type ImagesRequestBuilder } from './images/index.js';
 // @ts-ignore
@@ -26,6 +28,10 @@ export type GetSortDirectionQueryParameterType = (typeof GetSortDirectionQueryPa
  * Builds and executes requests for operations under /videos
  */
 export interface VideosRequestBuilder extends BaseRequestBuilder<VideosRequestBuilder> {
+    /**
+     * The baseline property
+     */
+    get baseline(): BaselineRequestBuilder;
     /**
      * The batch property
      */
@@ -167,6 +173,9 @@ export const VideosRequestBuilderNavigationMetadata: Record<Exclude<keyof Videos
         navigationMetadata: ItemRequestBuilderNavigationMetadata,
         pathParametersMappings: ["%2Did"],
     },
+    baseline: {
+        requestsMetadata: BaselineRequestBuilderRequestsMetadata,
+    },
     batch: {
         requestsMetadata: BatchRequestBuilderRequestsMetadata,
     },
@@ -181,6 +190,7 @@ export const VideosRequestBuilderNavigationMetadata: Record<Exclude<keyof Videos
     },
     identify: {
         requestsMetadata: IdentifyRequestBuilderRequestsMetadata,
+        navigationMetadata: IdentifyRequestBuilderNavigationMetadata,
     },
     images: {
         navigationMetadata: ImagesRequestBuilderNavigationMetadata,

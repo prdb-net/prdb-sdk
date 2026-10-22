@@ -15,6 +15,8 @@ type IdentifyVideoFileDto struct {
     filename *string
     // Size of the file in bytes, if known.
     filesize *int64
+    // Opaque proof returned by Identify with includeFreshness. Used only by /videos/identify/validate.
+    freshnessToken *string
     // MD5 of the file, 32 hexadecimal characters, if the client computed one.
     md5 *string
     // OS hash of the file, 16 hexadecimal characters, if the client computed one.
@@ -62,6 +64,16 @@ func (m *IdentifyVideoFileDto) GetFieldDeserializers()(map[string]func(i878a80d2
         }
         if val != nil {
             m.SetFilesize(val)
+        }
+        return nil
+    }
+    res["freshnessToken"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetFreshnessToken(val)
         }
         return nil
     }
@@ -117,6 +129,11 @@ func (m *IdentifyVideoFileDto) GetFilename()(*string) {
 func (m *IdentifyVideoFileDto) GetFilesize()(*int64) {
     return m.filesize
 }
+// GetFreshnessToken gets the freshnessToken property value. Opaque proof returned by Identify with includeFreshness. Used only by /videos/identify/validate.
+// returns a *string when successful
+func (m *IdentifyVideoFileDto) GetFreshnessToken()(*string) {
+    return m.freshnessToken
+}
 // GetMd5 gets the md5 property value. MD5 of the file, 32 hexadecimal characters, if the client computed one.
 // returns a *string when successful
 func (m *IdentifyVideoFileDto) GetMd5()(*string) {
@@ -147,6 +164,12 @@ func (m *IdentifyVideoFileDto) Serialize(writer i878a80d2330e89d26896388a3f487ee
     }
     {
         err := writer.WriteInt64Value("filesize", m.GetFilesize())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("freshnessToken", m.GetFreshnessToken())
         if err != nil {
             return err
         }
@@ -195,6 +218,10 @@ func (m *IdentifyVideoFileDto) SetFilename(value *string)() {
 func (m *IdentifyVideoFileDto) SetFilesize(value *int64)() {
     m.filesize = value
 }
+// SetFreshnessToken sets the freshnessToken property value. Opaque proof returned by Identify with includeFreshness. Used only by /videos/identify/validate.
+func (m *IdentifyVideoFileDto) SetFreshnessToken(value *string)() {
+    m.freshnessToken = value
+}
 // SetMd5 sets the md5 property value. MD5 of the file, 32 hexadecimal characters, if the client computed one.
 func (m *IdentifyVideoFileDto) SetMd5(value *string)() {
     m.md5 = value
@@ -216,12 +243,14 @@ type IdentifyVideoFileDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetFilename()(*string)
     GetFilesize()(*int64)
+    GetFreshnessToken()(*string)
     GetMd5()(*string)
     GetOsHash()(*string)
     GetPHash()(*string)
     GetRef()(*string)
     SetFilename(value *string)()
     SetFilesize(value *int64)()
+    SetFreshnessToken(value *string)()
     SetMd5(value *string)()
     SetOsHash(value *string)()
     SetPHash(value *string)()
