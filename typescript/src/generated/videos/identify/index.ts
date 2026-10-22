@@ -4,14 +4,20 @@
 // @ts-ignore
 import { createIdentifyVideosResponseFromDiscriminatorValue, createProblemDetailsFromDiscriminatorValue, serializeIdentifyVideosRequest, serializeIdentifyVideosResponse, type IdentifyVideosRequest, type IdentifyVideosResponse, type ProblemDetails } from '../../models/index.js';
 // @ts-ignore
-import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
+import { type ValidateRequestBuilder, ValidateRequestBuilderRequestsMetadata } from './validate/index.js';
+// @ts-ignore
+import { type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
 
 /**
  * Builds and executes requests for operations under /videos/identify
  */
 export interface IdentifyRequestBuilder extends BaseRequestBuilder<IdentifyRequestBuilder> {
     /**
-     * Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: MD5, OS hash, perceptual hash (compared for equality), a stored file name, the file name without its extension as a scene release title, and finally the site read out of the file name. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure skips that rung silently rather than failing, so send none if in doubt. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. The whole request counts as one request against the rate limit. Nothing sent to this endpoint is stored. Requires API key authentication.
+     * The validate property
+     */
+    get validate(): ValidateRequestBuilder;
+    /**
+     * Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: MD5, OS hash, perceptual hash (compared for equality), a stored file name, the file name without its extension as a scene release title, and finally the site read out of the file name. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure skips that rung silently rather than failing, so send none if in doubt. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. Opt in with includeFreshness=true to receive opaque expiring freshnessToken handles for later /videos/identify/validate calls, bound to the account and complete input tuple. Proofs cover Identification including negative and Site-only answers, not Video detail freshness; changing evidence or the matching algorithm invalidates them. A proof may be absent when concurrent changes prevent validation. The whole request counts as one request against the rate limit. Full filenames and hashes are not stored. Opt-in freshness stores only an expiring tuple digest and private dependency revisions. Requires API key authentication.
      * @param body Request body for identifying local files against the prdb catalogue.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<IdentifyVideosResponse>}
@@ -23,7 +29,7 @@ export interface IdentifyRequestBuilder extends BaseRequestBuilder<IdentifyReque
      */
      post(body: IdentifyVideosRequest, requestConfiguration?: RequestConfiguration<object> | undefined) : Promise<IdentifyVideosResponse | undefined>;
     /**
-     * Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: MD5, OS hash, perceptual hash (compared for equality), a stored file name, the file name without its extension as a scene release title, and finally the site read out of the file name. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure skips that rung silently rather than failing, so send none if in doubt. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. The whole request counts as one request against the rate limit. Nothing sent to this endpoint is stored. Requires API key authentication.
+     * Identifies up to 200 local files in one request and returns one result per file, mapped back by the client-assigned ref and in input order. Each file walks an identification ladder and the first rung that matches wins: MD5, OS hash, perceptual hash (compared for equality), a stored file name, the file name without its extension as a scene release title, and finally the site read out of the file name. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure skips that rung silently rather than failing, so send none if in doubt. matchedBy names the rung and confidence says how far the result can be trusted, so a client can decide which files it may file automatically and which it must show to a person. When a rung matches several videos equally well, the server does not guess: videoId is null, confidence is ambiguous and every candidate is listed. A file that matches nothing is a result with confidence none, not an error. Set includeVideoDetails to receive the full video document per matched file; it is off by default because 200 full documents is a large response. Opt in with includeFreshness=true to receive opaque expiring freshnessToken handles for later /videos/identify/validate calls, bound to the account and complete input tuple. Proofs cover Identification including negative and Site-only answers, not Video detail freshness; changing evidence or the matching algorithm invalidates them. A proof may be absent when concurrent changes prevent validation. The whole request counts as one request against the rate limit. Full filenames and hashes are not stored. Opt-in freshness stores only an expiring tuple digest and private dependency revisions. Requires API key authentication.
      * @param body Request body for identifying local files against the prdb catalogue.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {RequestInformation}
@@ -34,6 +40,14 @@ export interface IdentifyRequestBuilder extends BaseRequestBuilder<IdentifyReque
  * Uri template for the request builder.
  */
 export const IdentifyRequestBuilderUriTemplate = "{+baseurl}/videos/identify";
+/**
+ * Metadata for all the navigation properties in the request builder.
+ */
+export const IdentifyRequestBuilderNavigationMetadata: Record<Exclude<keyof IdentifyRequestBuilder, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
+    validate: {
+        requestsMetadata: ValidateRequestBuilderRequestsMetadata,
+    },
+};
 /**
  * Metadata for all the requests in the request builder.
  */

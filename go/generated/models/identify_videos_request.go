@@ -13,6 +13,8 @@ type IdentifyVideosRequest struct {
     additionalData map[string]any
     // Files to identify. Between 1 and 200 entries.
     files []IdentifyVideoFileDtoable
+    // Opt in to expiring, account/tuple-bound Identification freshness proofs. Details have separate freshness.
+    includeFreshness *bool
     // When true, each matched result carries the full video document. Defaults to false.
     includeVideoDetails *bool
 }
@@ -53,6 +55,16 @@ func (m *IdentifyVideosRequest) GetFieldDeserializers()(map[string]func(i878a80d
         }
         return nil
     }
+    res["includeFreshness"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetBoolValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetIncludeFreshness(val)
+        }
+        return nil
+    }
     res["includeVideoDetails"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetBoolValue()
         if err != nil {
@@ -70,6 +82,11 @@ func (m *IdentifyVideosRequest) GetFieldDeserializers()(map[string]func(i878a80d
 func (m *IdentifyVideosRequest) GetFiles()([]IdentifyVideoFileDtoable) {
     return m.files
 }
+// GetIncludeFreshness gets the includeFreshness property value. Opt in to expiring, account/tuple-bound Identification freshness proofs. Details have separate freshness.
+// returns a *bool when successful
+func (m *IdentifyVideosRequest) GetIncludeFreshness()(*bool) {
+    return m.includeFreshness
+}
 // GetIncludeVideoDetails gets the includeVideoDetails property value. When true, each matched result carries the full video document. Defaults to false.
 // returns a *bool when successful
 func (m *IdentifyVideosRequest) GetIncludeVideoDetails()(*bool) {
@@ -85,6 +102,12 @@ func (m *IdentifyVideosRequest) Serialize(writer i878a80d2330e89d26896388a3f487e
             }
         }
         err := writer.WriteCollectionOfObjectValues("files", cast)
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteBoolValue("includeFreshness", m.GetIncludeFreshness())
         if err != nil {
             return err
         }
@@ -111,6 +134,10 @@ func (m *IdentifyVideosRequest) SetAdditionalData(value map[string]any)() {
 func (m *IdentifyVideosRequest) SetFiles(value []IdentifyVideoFileDtoable)() {
     m.files = value
 }
+// SetIncludeFreshness sets the includeFreshness property value. Opt in to expiring, account/tuple-bound Identification freshness proofs. Details have separate freshness.
+func (m *IdentifyVideosRequest) SetIncludeFreshness(value *bool)() {
+    m.includeFreshness = value
+}
 // SetIncludeVideoDetails sets the includeVideoDetails property value. When true, each matched result carries the full video document. Defaults to false.
 func (m *IdentifyVideosRequest) SetIncludeVideoDetails(value *bool)() {
     m.includeVideoDetails = value
@@ -119,7 +146,9 @@ type IdentifyVideosRequestable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetFiles()([]IdentifyVideoFileDtoable)
+    GetIncludeFreshness()(*bool)
     GetIncludeVideoDetails()(*bool)
     SetFiles(value []IdentifyVideoFileDtoable)()
+    SetIncludeFreshness(value *bool)()
     SetIncludeVideoDetails(value *bool)()
 }

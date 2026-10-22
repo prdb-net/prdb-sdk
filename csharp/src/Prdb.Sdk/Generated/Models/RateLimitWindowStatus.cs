@@ -15,13 +15,13 @@ namespace Prdb.Sdk.Generated.Models
     {
         /// <summary>Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.</summary>
         public IDictionary<string, object> AdditionalData { get; set; }
-        /// <summary>Maximum number of requests allowed within this window.</summary>
+        /// <summary>Maximum number of shared account request-budget units allowed within this window.</summary>
         public int? Limit { get; set; }
-        /// <summary>Number of requests remaining before the limit is reached.</summary>
+        /// <summary>Number of shared account request-budget units remaining before the limit is reached.</summary>
         public int? Remaining { get; set; }
-        /// <summary>Seconds until the oldest request in the window expires, reducing the used count by one.</summary>
+        /// <summary>Seconds until the oldest request-budget unit expires, reducing the used count by one. This is not necessarily the wait needed for a multi-target MCP reservation.</summary>
         public int? ResetsInSeconds { get; set; }
-        /// <summary>Number of requests made within the current window.</summary>
+        /// <summary>Number of request-budget units used by all API keys and MCP connections in the current window. REST calls cost one unit; MCP batch work counts its targets.</summary>
         public int? Used { get; set; }
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.RateLimitWindowStatus"/> and sets the default values.

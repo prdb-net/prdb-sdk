@@ -4,6 +4,7 @@ using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Abstractions;
 using Prdb.Sdk.Generated.Models;
+using Prdb.Sdk.Generated.Videos.Baseline;
 using Prdb.Sdk.Generated.Videos.Batch;
 using Prdb.Sdk.Generated.Videos.Changes;
 using Prdb.Sdk.Generated.Videos.FilehashSubmissions;
@@ -24,6 +25,11 @@ namespace Prdb.Sdk.Generated.Videos
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class VideosRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The baseline property</summary>
+        public global::Prdb.Sdk.Generated.Videos.Baseline.BaselineRequestBuilder Baseline
+        {
+            get => new global::Prdb.Sdk.Generated.Videos.Baseline.BaselineRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The batch property</summary>
         public global::Prdb.Sdk.Generated.Videos.Batch.BatchRequestBuilder Batch
         {

@@ -17,6 +17,7 @@ from warnings import warn
 
 if TYPE_CHECKING:
     from ..models.problem_details import ProblemDetails
+    from ..models.submit_video_user_image_conflict_problem_details import SubmitVideoUserImageConflictProblemDetails
     from ..models.submit_video_user_image_response import SubmitVideoUserImageResponse
     from .by_os_hash.by_os_hash_request_builder import ByOsHashRequestBuilder
     from .changes.changes_request_builder import ChangesRequestBuilder
@@ -51,7 +52,7 @@ class VideoUserImagesRequestBuilder(BaseRequestBuilder):
     
     async def post(self,body: MultipartBody, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[SubmitVideoUserImageResponse]:
         """
-        Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Requires API key authentication.
+        Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Send an Idempotency-Key header to make retries safe: a repeated request with the same key and payload returns the image created first with its current moderation state instead of creating another one. Every 409 carries a stable code. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: Optional[SubmitVideoUserImageResponse]
@@ -62,13 +63,14 @@ class VideoUserImagesRequestBuilder(BaseRequestBuilder):
             body, request_configuration
         )
         from ..models.problem_details import ProblemDetails
+        from ..models.submit_video_user_image_conflict_problem_details import SubmitVideoUserImageConflictProblemDetails
 
         error_mapping: dict[str, type[ParsableFactory]] = {
             "400": ProblemDetails,
             "401": ProblemDetails,
             "403": ProblemDetails,
             "404": ProblemDetails,
-            "409": ProblemDetails,
+            "409": SubmitVideoUserImageConflictProblemDetails,
             "429": ProblemDetails,
             "503": ProblemDetails,
         }
@@ -80,7 +82,7 @@ class VideoUserImagesRequestBuilder(BaseRequestBuilder):
     
     def to_post_request_information(self,body: MultipartBody, request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Requires API key authentication.
+        Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Send an Idempotency-Key header to make retries safe: a repeated request with the same key and payload returns the image created first with its current moderation state instead of creating another one. Every 409 carries a stable code. Requires API key authentication.
         param body: The request body
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation

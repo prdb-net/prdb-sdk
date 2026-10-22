@@ -12,13 +12,13 @@ class RateLimitWindowStatus(AdditionalDataHolder, Parsable):
     # Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additional_data: dict[str, Any] = field(default_factory=dict)
 
-    # Maximum number of requests allowed within this window.
+    # Maximum number of shared account request-budget units allowed within this window.
     limit: Optional[int] = None
-    # Number of requests remaining before the limit is reached.
+    # Number of shared account request-budget units remaining before the limit is reached.
     remaining: Optional[int] = None
-    # Seconds until the oldest request in the window expires, reducing the used count by one.
+    # Seconds until the oldest request-budget unit expires, reducing the used count by one. This is not necessarily the wait needed for a multi-target MCP reservation.
     resets_in_seconds: Optional[int] = None
-    # Number of requests made within the current window.
+    # Number of request-budget units used by all API keys and MCP connections in the current window. REST calls cost one unit; MCP batch work counts its targets.
     used: Optional[int] = None
     
     @staticmethod

@@ -40,6 +40,11 @@ type VideosRequestBuilderGetQueryParameters struct {
     // Sort direction: `asc` (default) or `desc`.
     SortDirection *GetSortDirectionQueryParameterType
 }
+// Baseline the baseline property
+// returns a *BaselineRequestBuilder when successful
+func (m *VideosRequestBuilder) Baseline()(*BaselineRequestBuilder) {
+    return NewBaselineRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
 // Batch the batch property
 // returns a *BatchRequestBuilder when successful
 func (m *VideosRequestBuilder) Batch()(*BatchRequestBuilder) {

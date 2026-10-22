@@ -1,4 +1,5 @@
 from __future__ import annotations
+import datetime
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from kiota_abstractions.serialization import AdditionalDataHolder, Parsable, ParseNode, SerializationWriter
@@ -21,6 +22,10 @@ class IdentifyVideoResultDto(AdditionalDataHolder, Parsable):
     candidates: Optional[list[UUID]] = None
     # How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
     confidence: Optional[int] = None
+    # Server expiry of the proof; validation never extends it.
+    freshness_expires_at_utc: Optional[datetime.datetime] = None
+    # Opaque proof for this complete input tuple and Identification answer; absent when validity could not be proved.
+    freshness_token: Optional[str] = None
     # Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
     matched_by: Optional[int] = None
     # The client-assigned identifier of the input file, returned unchanged.
@@ -57,6 +62,8 @@ class IdentifyVideoResultDto(AdditionalDataHolder, Parsable):
         fields: dict[str, Callable[[Any], None]] = {
             "candidates": lambda n : setattr(self, 'candidates', n.get_collection_of_primitive_values(UUID)),
             "confidence": lambda n : setattr(self, 'confidence', n.get_int_value()),
+            "freshnessExpiresAtUtc": lambda n : setattr(self, 'freshness_expires_at_utc', n.get_datetime_value()),
+            "freshnessToken": lambda n : setattr(self, 'freshness_token', n.get_str_value()),
             "matchedBy": lambda n : setattr(self, 'matched_by', n.get_int_value()),
             "ref": lambda n : setattr(self, 'ref', n.get_str_value()),
             "site": lambda n : setattr(self, 'site', n.get_object_value(IdentifySiteDto)),
@@ -75,6 +82,8 @@ class IdentifyVideoResultDto(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_collection_of_primitive_values("candidates", self.candidates)
         writer.write_int_value("confidence", self.confidence)
+        writer.write_datetime_value("freshnessExpiresAtUtc", self.freshness_expires_at_utc)
+        writer.write_str_value("freshnessToken", self.freshness_token)
         writer.write_int_value("matchedBy", self.matched_by)
         writer.write_str_value("ref", self.ref)
         writer.write_object_value("site", self.site)

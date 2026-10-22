@@ -25,6 +25,16 @@ namespace Prdb.Sdk.Generated.Models
 #endif
         /// <summary>How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).</summary>
         public int? Confidence { get; set; }
+        /// <summary>Server expiry of the proof; validation never extends it.</summary>
+        public DateTimeOffset? FreshnessExpiresAtUtc { get; set; }
+        /// <summary>Opaque proof for this complete input tuple and Identification answer; absent when validity could not be proved.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? FreshnessToken { get; set; }
+#nullable restore
+#else
+        public string FreshnessToken { get; set; }
+#endif
         /// <summary>Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).</summary>
         public int? MatchedBy { get; set; }
         /// <summary>The client-assigned identifier of the input file, returned unchanged.</summary>
@@ -80,6 +90,8 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "candidates", n => { Candidates = n.GetCollectionOfPrimitiveValues<Guid?>()?.AsList(); } },
                 { "confidence", n => { Confidence = n.GetIntValue(); } },
+                { "freshnessExpiresAtUtc", n => { FreshnessExpiresAtUtc = n.GetDateTimeOffsetValue(); } },
+                { "freshnessToken", n => { FreshnessToken = n.GetStringValue(); } },
                 { "matchedBy", n => { MatchedBy = n.GetIntValue(); } },
                 { "ref", n => { Ref = n.GetStringValue(); } },
                 { "site", n => { Site = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.IdentifySiteDto>(global::Prdb.Sdk.Generated.Models.IdentifySiteDto.CreateFromDiscriminatorValue); } },
@@ -96,6 +108,8 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteCollectionOfPrimitiveValues<Guid?>("candidates", Candidates);
             writer.WriteIntValue("confidence", Confidence);
+            writer.WriteDateTimeOffsetValue("freshnessExpiresAtUtc", FreshnessExpiresAtUtc);
+            writer.WriteStringValue("freshnessToken", FreshnessToken);
             writer.WriteIntValue("matchedBy", MatchedBy);
             writer.WriteStringValue("ref", Ref);
             writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.IdentifySiteDto>("site", Site);

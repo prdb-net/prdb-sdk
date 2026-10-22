@@ -26,7 +26,7 @@ func NewRateLimitRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee2633
     urlParams["request-raw-url"] = rawUrl
     return NewRateLimitRequestBuilderInternal(urlParams, requestAdapter)
 }
-// Get returns the current rate limit counter for the authenticated user, including requests used, remaining, and seconds until the oldest request expires from the sliding window. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
+// Get returns shared per-account API request-budget units used and remaining, plus seconds until the oldest unit expires from the sliding window. REST calls cost one unit; MCP batch work counts its targets and interrupted plans reuse their reserved units. All API keys and MCP connections share these counters. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
 // returns a GetRateLimitResponseable when successful
 // returns a ProblemDetails error when the service returns a 401 status code
 // returns a ProblemDetails error when the service returns a 403 status code
@@ -52,7 +52,7 @@ func (m *RateLimitRequestBuilder) Get(ctx context.Context, requestConfiguration 
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.GetRateLimitResponseable), nil
 }
-// ToGetRequestInformation returns the current rate limit counter for the authenticated user, including requests used, remaining, and seconds until the oldest request expires from the sliding window. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
+// ToGetRequestInformation returns shared per-account API request-budget units used and remaining, plus seconds until the oldest unit expires from the sliding window. REST calls cost one unit; MCP batch work counts its targets and interrupted plans reuse their reserved units. All API keys and MCP connections share these counters. Answers 403 for accounts without API access and 503 while rate limiting itself is unavailable.
 // returns a *RequestInformation when successful
 func (m *RateLimitRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.GET, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)

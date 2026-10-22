@@ -4,6 +4,7 @@
 package models
 
 import (
+    i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e "time"
     i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22 "github.com/google/uuid"
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91 "github.com/microsoft/kiota-abstractions-go/serialization"
 )
@@ -16,6 +17,10 @@ type IdentifyVideoResultDto struct {
     candidates []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // How much the match can be trusted. Drives whether a client files a file automatically. Known values: None (0), Partial (1), Probable (2), Strong (3), Exact (4), Ambiguous (5).
     confidence *int32
+    // Server expiry of the proof; validation never extends it.
+    freshnessExpiresAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
+    // Opaque proof for this complete input tuple and Identification answer; absent when validity could not be proved.
+    freshnessToken *string
     // Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
     matchedBy *int32
     // The client-assigned identifier of the input file, returned unchanged.
@@ -84,6 +89,26 @@ func (m *IdentifyVideoResultDto) GetFieldDeserializers()(map[string]func(i878a80
         }
         return nil
     }
+    res["freshnessExpiresAtUtc"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetTimeValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetFreshnessExpiresAtUtc(val)
+        }
+        return nil
+    }
+    res["freshnessToken"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetFreshnessToken(val)
+        }
+        return nil
+    }
     res["matchedBy"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetInt32Value()
         if err != nil {
@@ -136,6 +161,16 @@ func (m *IdentifyVideoResultDto) GetFieldDeserializers()(map[string]func(i878a80
     }
     return res
 }
+// GetFreshnessExpiresAtUtc gets the freshnessExpiresAtUtc property value. Server expiry of the proof; validation never extends it.
+// returns a *Time when successful
+func (m *IdentifyVideoResultDto) GetFreshnessExpiresAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
+    return m.freshnessExpiresAtUtc
+}
+// GetFreshnessToken gets the freshnessToken property value. Opaque proof for this complete input tuple and Identification answer; absent when validity could not be proved.
+// returns a *string when successful
+func (m *IdentifyVideoResultDto) GetFreshnessToken()(*string) {
+    return m.freshnessToken
+}
 // GetMatchedBy gets the matchedBy property value. Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
 // returns a *int32 when successful
 func (m *IdentifyVideoResultDto) GetMatchedBy()(*int32) {
@@ -171,6 +206,18 @@ func (m *IdentifyVideoResultDto) Serialize(writer i878a80d2330e89d26896388a3f487
     }
     {
         err := writer.WriteInt32Value("confidence", m.GetConfidence())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteTimeValue("freshnessExpiresAtUtc", m.GetFreshnessExpiresAtUtc())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("freshnessToken", m.GetFreshnessToken())
         if err != nil {
             return err
         }
@@ -225,6 +272,14 @@ func (m *IdentifyVideoResultDto) SetCandidates(value []i561e97a8befe7661a44c8f54
 func (m *IdentifyVideoResultDto) SetConfidence(value *int32)() {
     m.confidence = value
 }
+// SetFreshnessExpiresAtUtc sets the freshnessExpiresAtUtc property value. Server expiry of the proof; validation never extends it.
+func (m *IdentifyVideoResultDto) SetFreshnessExpiresAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
+    m.freshnessExpiresAtUtc = value
+}
+// SetFreshnessToken sets the freshnessToken property value. Opaque proof for this complete input tuple and Identification answer; absent when validity could not be proved.
+func (m *IdentifyVideoResultDto) SetFreshnessToken(value *string)() {
+    m.freshnessToken = value
+}
 // SetMatchedBy sets the matchedBy property value. Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
 func (m *IdentifyVideoResultDto) SetMatchedBy(value *int32)() {
     m.matchedBy = value
@@ -250,6 +305,8 @@ type IdentifyVideoResultDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetCandidates()([]i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetConfidence()(*int32)
+    GetFreshnessExpiresAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
+    GetFreshnessToken()(*string)
     GetMatchedBy()(*int32)
     GetRef()(*string)
     GetSite()(IdentifySiteDtoable)
@@ -257,6 +314,8 @@ type IdentifyVideoResultDtoable interface {
     GetVideoId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     SetCandidates(value []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetConfidence(value *int32)()
+    SetFreshnessExpiresAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
+    SetFreshnessToken(value *string)()
     SetMatchedBy(value *int32)()
     SetRef(value *string)()
     SetSite(value IdentifySiteDtoable)()
