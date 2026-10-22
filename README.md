@@ -234,3 +234,9 @@ Released changes are listed in [CHANGELOG.md](CHANGELOG.md).
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Efficient synchronization
+
+Version 0.22.0 adds the bounded Video baseline and Identification freshness
+validation in all four SDKs. See [sync adoption](docs/sync-adoption.md) for the
+shared contract, restart safety, older-server fallback and quota behavior.

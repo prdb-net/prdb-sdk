@@ -15,6 +15,31 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.22.0] - 2026-10-22
+
+### Added
+
+- **Bounded Video baseline.** `GET /videos/baseline` returns full documents in a
+  fixed creation window, an opaque continuation and the changes-feed start
+  watermark. The typed 413 error carries the exceptional Video ID and resume
+  cursor. See [sync adoption](docs/sync-adoption.md) for durable checkpoints,
+  catch-up, tombstones and quota costs.
+- **Identification freshness.** Opt in with `includeFreshness`, retain the
+  original tuple and proof, then validate batches of up to 200. Typed results
+  distinguish `unchanged`, `identified` and `reidentify`. Missing/expired proofs
+  remain normal; older servers remain compatible with ordinary Identify.
+- Refresh the complete published spec, including image-upload idempotency and
+  typed conflict codes, and clarified shared rolling-quota descriptions.
+
+### Compatibility notes
+
+- Go callers must use the documented `WithUrl` baseline form for date query
+  parameters: the pinned Kiota runtime panics on typed date parameters, and
+  newer versions still drop them. The tested raw-URL form retains typed
+  responses and errors. Runtime floors and the generator remain unchanged.
+- TypeScript materializes a null model result as an empty object. Switch on the
+  freshness status and only read `result` for `identified`.
+
 ## [0.21.0] - 2026-10-17
 
 ### Added

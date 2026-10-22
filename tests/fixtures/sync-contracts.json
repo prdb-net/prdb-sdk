@@ -1,0 +1,60 @@
+{
+  "baseline": {
+    "items": [
+      {
+        "id": "00000000-0000-0000-0000-000000000001",
+        "title": "Synthetic video",
+        "description": "Full document",
+        "images": [],
+        "actors": []
+      }
+    ],
+    "pageSize": 1000,
+    "hasMore": true,
+    "nextCursor": "opaque+/=",
+    "changesSince": "2026-10-22T10:00:00Z"
+  },
+  "oversized": {
+    "videoId": "00000000-0000-0000-0000-000000000001",
+    "nextCursor": "after-large",
+    "changesSince": "2026-10-22T10:00:00Z"
+  },
+  "identify": {
+    "results": [
+      {
+        "ref": "r1",
+        "freshnessToken": "proof",
+        "freshnessExpiresAtUtc": "2026-10-22T16:00:00Z"
+      }
+    ]
+  },
+  "legacy": {
+    "results": [
+      {
+        "ref": "r1"
+      }
+    ]
+  },
+  "validation": {
+    "results": [
+      {
+        "ref": "r1",
+        "status": "unchanged",
+        "result": null
+      },
+      {
+        "ref": "r2",
+        "status": "identified",
+        "result": {
+          "ref": "r2",
+          "freshnessToken": "replacement"
+        }
+      },
+      {
+        "ref": "r3",
+        "status": "reidentify",
+        "result": null
+      }
+    ]
+  }
+}
