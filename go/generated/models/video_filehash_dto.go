@@ -26,7 +26,7 @@ type VideoFilehashDto struct {
     durationMs *int64
     // Original filename submitted for this filehash record.
     filename *string
-    // File size in bytes.
+    // File size in bytes, or 0 when the file is known only through a preview image, which carries no size.
     filesize *int64
     // Average frame rate as a rational, exactly as it was measured: "24000/1001", never a roundeddecimal. Rounding merges rates that are not the same one, and a variable-rate file carries aper-file average whose large denominator is what marks it as variable rather than as a rate.
     frameRate *string
@@ -40,7 +40,7 @@ type VideoFilehashDto struct {
     osHash *string
     // P hash value as stored, or null when not available.
     pHash *string
-    // Number of submissions merged into this filehash record.
+    // Number of distinct users whose submissions or linked preview images support this filehash record.
     submissionCount *int32
     // The updatedAtUtc property
     updatedAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
@@ -299,7 +299,7 @@ func (m *VideoFilehashDto) GetFieldDeserializers()(map[string]func(i878a80d2330e
 func (m *VideoFilehashDto) GetFilename()(*string) {
     return m.filename
 }
-// GetFilesize gets the filesize property value. File size in bytes.
+// GetFilesize gets the filesize property value. File size in bytes, or 0 when the file is known only through a preview image, which carries no size.
 // returns a *int64 when successful
 func (m *VideoFilehashDto) GetFilesize()(*int64) {
     return m.filesize
@@ -334,7 +334,7 @@ func (m *VideoFilehashDto) GetOsHash()(*string) {
 func (m *VideoFilehashDto) GetPHash()(*string) {
     return m.pHash
 }
-// GetSubmissionCount gets the submissionCount property value. Number of submissions merged into this filehash record.
+// GetSubmissionCount gets the submissionCount property value. Number of distinct users whose submissions or linked preview images support this filehash record.
 // returns a *int32 when successful
 func (m *VideoFilehashDto) GetSubmissionCount()(*int32) {
     return m.submissionCount
@@ -515,7 +515,7 @@ func (m *VideoFilehashDto) SetDurationMs(value *int64)() {
 func (m *VideoFilehashDto) SetFilename(value *string)() {
     m.filename = value
 }
-// SetFilesize sets the filesize property value. File size in bytes.
+// SetFilesize sets the filesize property value. File size in bytes, or 0 when the file is known only through a preview image, which carries no size.
 func (m *VideoFilehashDto) SetFilesize(value *int64)() {
     m.filesize = value
 }
@@ -543,7 +543,7 @@ func (m *VideoFilehashDto) SetOsHash(value *string)() {
 func (m *VideoFilehashDto) SetPHash(value *string)() {
     m.pHash = value
 }
-// SetSubmissionCount sets the submissionCount property value. Number of submissions merged into this filehash record.
+// SetSubmissionCount sets the submissionCount property value. Number of distinct users whose submissions or linked preview images support this filehash record.
 func (m *VideoFilehashDto) SetSubmissionCount(value *int32)() {
     m.submissionCount = value
 }

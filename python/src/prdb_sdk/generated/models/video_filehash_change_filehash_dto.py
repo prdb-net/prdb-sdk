@@ -30,7 +30,7 @@ class VideoFilehashChangeFilehashDto(AdditionalDataHolder, Parsable):
     duration_ms: Optional[int] = None
     # Original filename submitted for this filehash record.
     filename: Optional[str] = None
-    # File size in bytes.
+    # File size in bytes, or 0 when the file is known only through a preview image, which carries no size.
     filesize: Optional[int] = None
     # Average frame rate as a rational, exactly as it was measured: "24000/1001", never a roundeddecimal. Rounding merges rates that are not the same one, and a variable-rate file carries aper-file average whose large denominator is what marks it as variable rather than as a rate.
     frame_rate: Optional[str] = None
@@ -46,7 +46,7 @@ class VideoFilehashChangeFilehashDto(AdditionalDataHolder, Parsable):
     os_hash: Optional[str] = None
     # P hash value as stored, or null when not available.
     p_hash: Optional[str] = None
-    # Number of submissions merged into this filehash record.
+    # Number of distinct users whose submissions or linked preview images support this filehash record.
     submission_count: Optional[int] = None
     # The updatedAtUtc property
     updated_at_utc: Optional[datetime.datetime] = None

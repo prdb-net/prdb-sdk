@@ -21,7 +21,7 @@ type IdentifyVideoResultDto struct {
     freshnessExpiresAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
     // Opaque proof for this complete input tuple and Identification answer; absent when validity could not be proved.
     freshnessToken *string
-    // Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
+    // Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5), SiteDateTitle (6).
     matchedBy *int32
     // The client-assigned identifier of the input file, returned unchanged.
     ref *string
@@ -171,7 +171,7 @@ func (m *IdentifyVideoResultDto) GetFreshnessExpiresAtUtc()(*i336074805fc853987a
 func (m *IdentifyVideoResultDto) GetFreshnessToken()(*string) {
     return m.freshnessToken
 }
-// GetMatchedBy gets the matchedBy property value. Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
+// GetMatchedBy gets the matchedBy property value. Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5), SiteDateTitle (6).
 // returns a *int32 when successful
 func (m *IdentifyVideoResultDto) GetMatchedBy()(*int32) {
     return m.matchedBy
@@ -280,7 +280,7 @@ func (m *IdentifyVideoResultDto) SetFreshnessExpiresAtUtc(value *i336074805fc853
 func (m *IdentifyVideoResultDto) SetFreshnessToken(value *string)() {
     m.freshnessToken = value
 }
-// SetMatchedBy sets the matchedBy property value. Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
+// SetMatchedBy sets the matchedBy property value. Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5), SiteDateTitle (6).
 func (m *IdentifyVideoResultDto) SetMatchedBy(value *int32)() {
     m.matchedBy = value
 }

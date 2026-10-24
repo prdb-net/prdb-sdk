@@ -49,7 +49,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Filename { get; set; }
 #endif
-        /// <summary>File size in bytes.</summary>
+        /// <summary>File size in bytes, or 0 when the file is known only through a preview image, which carries no size.</summary>
         public long? Filesize { get; set; }
         /// <summary>Average frame rate as a rational, exactly as it was measured: &quot;24000/1001&quot;, never a roundeddecimal. Rounding merges rates that are not the same one, and a variable-rate file carries aper-file average whose large denominator is what marks it as variable rather than as a rate.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
@@ -83,7 +83,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string PHash { get; set; }
 #endif
-        /// <summary>Number of submissions merged into this filehash record.</summary>
+        /// <summary>Number of distinct users whose submissions or linked preview images support this filehash record.</summary>
         public int? SubmissionCount { get; set; }
         /// <summary>The updatedAtUtc property</summary>
         public DateTimeOffset? UpdatedAtUtc { get; set; }

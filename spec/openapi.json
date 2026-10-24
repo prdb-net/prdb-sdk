@@ -841,7 +841,7 @@
           "VideoUserImages"
         ],
         "summary": "Submit a video user image",
-        "description": "Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Send an Idempotency-Key header to make retries safe: a repeated request with the same key and payload returns the image created first with its current moderation state instead of creating another one. Every 409 carries a stable code. Requires API key authentication.",
+        "description": "Uploads a JPEG preview image to BunnyCDN, optionally linked to an existing video. When videoId is omitted, images are grouped by basedOnFileWithOsHash. When videoId is given, the image also vouches for the file it was cut from: the aggregation counts basedOnFileWithOsHash as one filehash submission of the uploader for that video, so the hash enters the video's file hashes like a submitted one, and it is withdrawn again (reported as deleted by the filehash change feed) once moderation hides or denies the image and nothing else supports it. Send basedOnFileWithOsHash for the file actually shown and videoId only for the video that file is. A paired WebVTT file is required when PreviewImageType is SpriteSheet. Creates the VideoUserImage row and initial moderation state through shared moderation orchestration. Send an Idempotency-Key header to make retries safe: a repeated request with the same key and payload returns the image created first with its current moderation state instead of creating another one. Every 409 carries a stable code. Requires API key authentication.",
         "operationId": "SubmitVideoUserImage",
         "parameters": [
           {
@@ -3481,7 +3481,7 @@
           "VideoFilehashSubmissions"
         ],
         "summary": "Submit hash-to-video assignments",
-        "description": "Submits up to 200 assignments of a file hash to a video, on behalf of the authenticated user. This is the contribution path for both kinds of assignment: one a person confirmed in a client's UI (userConfirmed) and one the client made on its own (clientDetected). Each entry needs a videoId and an osHash; the osHash is the only aggregation key, so an entry carrying only a pHash cannot be used. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. The filename and the releaseName are optional and may be withheld; the endpoint works without either. The technical profile of the file is optional in the same way, field by field: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels. Send what the probe reported and leave out what it did not, rather than sending a zero or a guess. The frame rate goes as the rational it was measured as (24000/1001), not as a rounded number, and width and height go as stored, not reordered to make the file landscape; portrait files are ordinary. The container tag block is not accepted: encoder, comment and title are the submitter's data, not the file's, and the endpoint takes the numeric profile only. Nothing reads these values yet; they are recorded for the aggregation that is to derive a consensus duration and a quality overview from them. Every entry gets its own outcome and the status stays 200: an unknown videoId is reported as videoNotFound, and an assignment that contradicts an existing one is stored as conflicted rather than overwriting it. Submissions are recorded in their own table and appear in no read endpoint. They do reach the aggregated hash set: the scraper's aggregation job counts every non-conflicted submission, weighing userConfirmed and clientDetected alike, and promotes an assignment once enough distinct users agree on it. A conflicted submission never counts towards one. The two sources carry different client-side obligations, which the API cannot enforce: a userConfirmed submission must be strictly opt-in and off by default, because a person is vouching for it; a clientDetected submission may be on by default but has to be switchable off. Requires API key authentication.",
+        "description": "Submits up to 200 assignments of a file hash to a video, on behalf of the authenticated user. This is the contribution path for both kinds of assignment: one a person confirmed in a client's UI (userConfirmed) and one the client made on its own (clientDetected). Each entry needs a videoId and an osHash; the osHash is the only aggregation key, so an entry carrying only a pHash cannot be used. A pHash must be computed exactly as described under Perceptual hashes in the API description; a value from any other procedure is stored but can never be matched. The filename and the releaseName are optional and may be withheld; the endpoint works without either. The technical profile of the file is optional in the same way, field by field: durationMs, containerFormat, bitRate, videoCodec, width, height, frameRate, audioCodec and audioChannels. Send what the probe reported and leave out what it did not, rather than sending a zero or a guess. The frame rate goes as the rational it was measured as (24000/1001), not as a rounded number, and width and height go as stored, not reordered to make the file landscape; portrait files are ordinary. The container tag block is not accepted: encoder, comment and title are the submitter's data, not the file's, and the endpoint takes the numeric profile only. Nothing reads these values yet; they are recorded for the aggregation that is to derive a consensus duration and a quality overview from them. Every entry gets its own outcome and the status stays 200: an unknown videoId is reported as videoNotFound, and an assignment that contradicts an existing one is stored as conflicted rather than overwriting it. Submissions are recorded in their own table and appear in no read endpoint. They do reach the aggregated hash set: the scraper's aggregation job counts every non-conflicted submission, weighing userConfirmed and clientDetected alike, and promotes an assignment once enough distinct users agree on it. A preview image submitted for a video counts there as one more submission of its uploader for its basedOnFileWithOsHash, for as long as moderation lets it stand. A conflicted submission never counts towards one. The two sources carry different client-side obligations, which the API cannot enforce: a userConfirmed submission must be strictly opt-in and off by default, because a person is vouching for it; a clientDetected submission may be on by default but has to be switchable off. Requires API key authentication.",
         "operationId": "SubmitVideoFilehashes",
         "requestBody": {
           "content": {
@@ -8657,10 +8657,11 @@
           2,
           3,
           4,
-          5
+          5,
+          6
         ],
         "type": "integer",
-        "description": "Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5)."
+        "description": "Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5), SiteDateTitle (6)."
       },
       "IdentifySiteDto": {
         "required": [
@@ -8765,7 +8766,7 @@
                 "$ref": "#/components/schemas/IdentifyMatchKind"
               }
             ],
-            "description": "Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).",
+            "description": "Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5), SiteDateTitle (6).",
             "nullable": true
           },
           "videoId": {
@@ -11892,12 +11893,12 @@
           },
           "filesize": {
             "type": "integer",
-            "description": "File size in bytes.",
+            "description": "File size in bytes, or 0 when the file is known only through a preview image, which carries no size.",
             "format": "int64"
           },
           "submissionCount": {
             "type": "integer",
-            "description": "Number of submissions merged into this filehash record.",
+            "description": "Number of distinct users whose submissions or linked preview images support this filehash record.",
             "format": "int32"
           },
           "isVerified": {
@@ -12031,12 +12032,12 @@
           },
           "filesize": {
             "type": "integer",
-            "description": "File size in bytes.",
+            "description": "File size in bytes, or 0 when the file is known only through a preview image, which carries no size.",
             "format": "int64"
           },
           "submissionCount": {
             "type": "integer",
-            "description": "Number of submissions merged into this filehash record.",
+            "description": "Number of distinct users whose submissions or linked preview images support this filehash record.",
             "format": "int32"
           },
           "isVerified": {
