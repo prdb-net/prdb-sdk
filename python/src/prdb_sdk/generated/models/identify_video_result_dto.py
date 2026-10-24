@@ -26,7 +26,7 @@ class IdentifyVideoResultDto(AdditionalDataHolder, Parsable):
     freshness_expires_at_utc: Optional[datetime.datetime] = None
     # Opaque proof for this complete input tuple and Identification answer; absent when validity could not be proved.
     freshness_token: Optional[str] = None
-    # Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
+    # Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5), SiteDateTitle (6).
     matched_by: Optional[int] = None
     # The client-assigned identifier of the input file, returned unchanged.
     ref: Optional[str] = None

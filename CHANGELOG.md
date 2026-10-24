@@ -15,6 +15,20 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+### Added
+
+- **A sixth identification rung.** `IdentifyMatchKind` (`matchedBy` on
+  `IdentifyVideoResultDto`) gains `SiteDateTitle` (6): the file name carries the
+  site, the release date and the whole title of exactly one of that site's
+  videos released that day. It comes with `confidence` `Probable` (2), or
+  `Ambiguous` (5) with candidates when several videos of that day match.
+  `matchedBy` stays a plain integer in all four SDKs, so only its documentation
+  changes; code that handles unknown values keeps working. No field, route or
+  status code changed.
+- Refresh the complete published spec, including clarified descriptions of how
+  a preview image submitted for a video counts as a filehash submission of its
+  uploader, and of `filesize` and `submissionCount` on filehash records.
+
 ## [0.22.0] - 2026-10-22
 
 ### Added

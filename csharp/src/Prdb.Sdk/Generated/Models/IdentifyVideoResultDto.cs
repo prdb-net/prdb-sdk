@@ -35,7 +35,7 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string FreshnessToken { get; set; }
 #endif
-        /// <summary>Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).</summary>
+        /// <summary>Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5), SiteDateTitle (6).</summary>
         public int? MatchedBy { get; set; }
         /// <summary>The client-assigned identifier of the input file, returned unchanged.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER

@@ -5072,7 +5072,7 @@ export interface IdentifyVideoResultDto extends AdditionalDataHolder, Parsable {
      */
     freshnessToken?: string | null;
     /**
-     * Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5).
+     * Known values: OsHash (0), PHash (1), Filename (2), ReleaseName (3), Site (4), Md5 (5), SiteDateTitle (6).
      */
     matchedBy?: number | null;
     /**
@@ -9484,7 +9484,7 @@ export interface VideoFilehashChangeFilehashDto extends AdditionalDataHolder, Pa
      */
     filename?: string | null;
     /**
-     * File size in bytes.
+     * File size in bytes, or 0 when the file is known only through a preview image, which carries no size.
      */
     filesize?: number | null;
     /**
@@ -9516,7 +9516,7 @@ export interface VideoFilehashChangeFilehashDto extends AdditionalDataHolder, Pa
      */
     pHash?: string | null;
     /**
-     * Number of submissions merged into this filehash record.
+     * Number of distinct users whose submissions or linked preview images support this filehash record.
      */
     submissionCount?: number | null;
     /**
@@ -9579,7 +9579,7 @@ export interface VideoFilehashDto extends AdditionalDataHolder, Parsable {
      */
     filename?: string | null;
     /**
-     * File size in bytes.
+     * File size in bytes, or 0 when the file is known only through a preview image, which carries no size.
      */
     filesize?: number | null;
     /**
@@ -9607,7 +9607,7 @@ export interface VideoFilehashDto extends AdditionalDataHolder, Parsable {
      */
     pHash?: string | null;
     /**
-     * Number of submissions merged into this filehash record.
+     * Number of distinct users whose submissions or linked preview images support this filehash record.
      */
     submissionCount?: number | null;
     /**
