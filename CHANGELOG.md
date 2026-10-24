@@ -15,6 +15,8 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.23.0] - 2026-10-24
+
 ### Added
 
 - **A sixth identification rung.** `IdentifyMatchKind` (`matchedBy` on
