@@ -82,6 +82,8 @@ class ActorDetailDto(AdditionalDataHolder, Parsable):
     nationality_label: Optional[str] = None
     # The piercings property
     piercings: Optional[str] = None
+    # Stable public identifier (A00000043); GUID id remains the technical identity.
+    public_id: Optional[str] = None
     # Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.
     requested_ids: Optional[list[UUID]] = None
     # The tattoos property
@@ -149,6 +151,7 @@ class ActorDetailDto(AdditionalDataHolder, Parsable):
             "nationality": lambda n : setattr(self, 'nationality', n.get_int_value()),
             "nationalityLabel": lambda n : setattr(self, 'nationality_label', n.get_str_value()),
             "piercings": lambda n : setattr(self, 'piercings', n.get_str_value()),
+            "publicId": lambda n : setattr(self, 'public_id', n.get_str_value()),
             "requestedIds": lambda n : setattr(self, 'requested_ids', n.get_collection_of_primitive_values(UUID)),
             "tattoos": lambda n : setattr(self, 'tattoos', n.get_str_value()),
             "updatedAtUtc": lambda n : setattr(self, 'updated_at_utc', n.get_datetime_value()),
@@ -195,6 +198,7 @@ class ActorDetailDto(AdditionalDataHolder, Parsable):
         writer.write_int_value("nationality", self.nationality)
         writer.write_str_value("nationalityLabel", self.nationality_label)
         writer.write_str_value("piercings", self.piercings)
+        writer.write_str_value("publicId", self.public_id)
         writer.write_collection_of_primitive_values("requestedIds", self.requested_ids)
         writer.write_str_value("tattoos", self.tattoos)
         writer.write_datetime_value("updatedAtUtc", self.updated_at_utc)

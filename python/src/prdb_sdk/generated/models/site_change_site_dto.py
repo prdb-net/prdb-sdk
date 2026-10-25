@@ -38,6 +38,8 @@ class SiteChangeSiteDto(AdditionalDataHolder, Parsable):
     platform_key: Optional[str] = None
     # Publishing platform display title; null for classic sites.
     platform_title: Optional[str] = None
+    # Stable public catalogue identifier; GUID id remains the technical identity. Null for sites deleted before numbering was introduced.
+    public_id: Optional[str] = None
     # Site title.
     title: Optional[str] = None
     # When this site was last changed.
@@ -78,6 +80,7 @@ class SiteChangeSiteDto(AdditionalDataHolder, Parsable):
             "platformId": lambda n : setattr(self, 'platform_id', n.get_uuid_value()),
             "platformKey": lambda n : setattr(self, 'platform_key', n.get_str_value()),
             "platformTitle": lambda n : setattr(self, 'platform_title', n.get_str_value()),
+            "publicId": lambda n : setattr(self, 'public_id', n.get_str_value()),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
             "updatedAtUtc": lambda n : setattr(self, 'updated_at_utc', n.get_datetime_value()),
             "url": lambda n : setattr(self, 'url', n.get_str_value()),
@@ -104,6 +107,7 @@ class SiteChangeSiteDto(AdditionalDataHolder, Parsable):
         writer.write_uuid_value("platformId", self.platform_id)
         writer.write_str_value("platformKey", self.platform_key)
         writer.write_str_value("platformTitle", self.platform_title)
+        writer.write_str_value("publicId", self.public_id)
         writer.write_str_value("title", self.title)
         writer.write_datetime_value("updatedAtUtc", self.updated_at_utc)
         writer.write_str_value("url", self.url)

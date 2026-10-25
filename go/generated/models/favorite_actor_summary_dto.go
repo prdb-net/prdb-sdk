@@ -30,6 +30,8 @@ type FavoriteActorSummaryDto struct {
     profileImageCdnPath *string
     // Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
     profileImageUrl *string
+    // Stable public catalogue identifier; GUID id remains the technical identity.
+    publicId *string
 }
 // NewFavoriteActorSummaryDto instantiates a new FavoriteActorSummaryDto and sets the default values.
 func NewFavoriteActorSummaryDto()(*FavoriteActorSummaryDto) {
@@ -142,6 +144,16 @@ func (m *FavoriteActorSummaryDto) GetFieldDeserializers()(map[string]func(i878a8
         }
         return nil
     }
+    res["publicId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPublicId(val)
+        }
+        return nil
+    }
     return res
 }
 // GetGender gets the gender property value. Gender label (e.g. `Female`, `Male`, `Unknown`).
@@ -174,6 +186,11 @@ func (m *FavoriteActorSummaryDto) GetProfileImageCdnPath()(*string) {
 // returns a *string when successful
 func (m *FavoriteActorSummaryDto) GetProfileImageUrl()(*string) {
     return m.profileImageUrl
+}
+// GetPublicId gets the publicId property value. Stable public catalogue identifier; GUID id remains the technical identity.
+// returns a *string when successful
+func (m *FavoriteActorSummaryDto) GetPublicId()(*string) {
+    return m.publicId
 }
 // Serialize serializes information the current object
 func (m *FavoriteActorSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
@@ -226,6 +243,12 @@ func (m *FavoriteActorSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f48
         }
     }
     {
+        err := writer.WriteStringValue("publicId", m.GetPublicId())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteAdditionalData(m.GetAdditionalData())
         if err != nil {
             return err
@@ -270,6 +293,10 @@ func (m *FavoriteActorSummaryDto) SetProfileImageCdnPath(value *string)() {
 func (m *FavoriteActorSummaryDto) SetProfileImageUrl(value *string)() {
     m.profileImageUrl = value
 }
+// SetPublicId sets the publicId property value. Stable public catalogue identifier; GUID id remains the technical identity.
+func (m *FavoriteActorSummaryDto) SetPublicId(value *string)() {
+    m.publicId = value
+}
 type FavoriteActorSummaryDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
@@ -281,6 +308,7 @@ type FavoriteActorSummaryDtoable interface {
     GetNationality()(*string)
     GetProfileImageCdnPath()(*string)
     GetProfileImageUrl()(*string)
+    GetPublicId()(*string)
     SetEthnicity(value *string)()
     SetFavoritedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetGender(value *string)()
@@ -289,4 +317,5 @@ type FavoriteActorSummaryDtoable interface {
     SetNationality(value *string)()
     SetProfileImageCdnPath(value *string)()
     SetProfileImageUrl(value *string)()
+    SetPublicId(value *string)()
 }

@@ -186,6 +186,10 @@ export interface ActorChangeActorDto extends AdditionalDataHolder, Parsable {
      */
     piercings?: string | null;
     /**
+     * Stable public catalogue identifier; GUID id remains the technical identity.
+     */
+    publicId?: string | null;
+    /**
      * The tattoos property
      */
     tattoos?: string | null;
@@ -405,6 +409,10 @@ export interface ActorDetailDto extends AdditionalDataHolder, Parsable {
      */
     piercings?: string | null;
     /**
+     * Stable public identifier (A00000043); GUID id remains the technical identity.
+     */
+    publicId?: string | null;
+    /**
      * Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.
      */
     requestedIds?: Guid[] | null;
@@ -497,6 +505,10 @@ export interface ActorSummaryDto extends AdditionalDataHolder, Parsable {
      * Absolute URL of the actor's profile image, if available: a complete URL including scheme andhost, ready to request as-is.
      */
     profileImageUrl?: string | null;
+    /**
+     * Stable public identifier (A00000043); GUID id remains the technical identity.
+     */
+    publicId?: string | null;
 }
 /**
  * Request body for batch-adding wanted videos.
@@ -2058,6 +2070,7 @@ export function deserializeIntoActorChangeActorDto(actorChangeActorDto: Partial<
         "nationality": n => { actorChangeActorDto.nationality = n.getNumberValue(); },
         "nationalityLabel": n => { actorChangeActorDto.nationalityLabel = n.getStringValue(); },
         "piercings": n => { actorChangeActorDto.piercings = n.getStringValue(); },
+        "publicId": n => { actorChangeActorDto.publicId = n.getStringValue(); },
         "tattoos": n => { actorChangeActorDto.tattoos = n.getStringValue(); },
         "updatedAtUtc": n => { actorChangeActorDto.updatedAtUtc = n.getDateValue(); },
         "waistSize": n => { actorChangeActorDto.waistSize = n.getNumberValue(); },
@@ -2177,6 +2190,7 @@ export function deserializeIntoActorDetailDto(actorDetailDto: Partial<ActorDetai
         "nationality": n => { actorDetailDto.nationality = n.getNumberValue(); },
         "nationalityLabel": n => { actorDetailDto.nationalityLabel = n.getStringValue(); },
         "piercings": n => { actorDetailDto.piercings = n.getStringValue(); },
+        "publicId": n => { actorDetailDto.publicId = n.getStringValue(); },
         "requestedIds": n => { actorDetailDto.requestedIds = n.getCollectionOfPrimitiveValues<Guid>("string"); },
         "tattoos": n => { actorDetailDto.tattoos = n.getStringValue(); },
         "updatedAtUtc": n => { actorDetailDto.updatedAtUtc = n.getDateValue(); },
@@ -2228,6 +2242,7 @@ export function deserializeIntoActorSummaryDto(actorSummaryDto: Partial<ActorSum
         "nationality": n => { actorSummaryDto.nationality = n.getNumberValue(); },
         "nationalityLabel": n => { actorSummaryDto.nationalityLabel = n.getStringValue(); },
         "profileImageUrl": n => { actorSummaryDto.profileImageUrl = n.getStringValue(); },
+        "publicId": n => { actorSummaryDto.publicId = n.getStringValue(); },
     }
 }
 /**
@@ -2329,6 +2344,7 @@ export function deserializeIntoFavoriteActorChangeFavoriteActorDto(favoriteActor
         "nationality": n => { favoriteActorChangeFavoriteActorDto.nationality = n.getStringValue(); },
         "profileImageCdnPath": n => { favoriteActorChangeFavoriteActorDto.profileImageCdnPath = n.getStringValue(); },
         "profileImageUrl": n => { favoriteActorChangeFavoriteActorDto.profileImageUrl = n.getStringValue(); },
+        "publicId": n => { favoriteActorChangeFavoriteActorDto.publicId = n.getStringValue(); },
         "updatedAtUtc": n => { favoriteActorChangeFavoriteActorDto.updatedAtUtc = n.getDateValue(); },
     }
 }
@@ -2360,6 +2376,7 @@ export function deserializeIntoFavoriteActorSummaryDto(favoriteActorSummaryDto: 
         "nationality": n => { favoriteActorSummaryDto.nationality = n.getStringValue(); },
         "profileImageCdnPath": n => { favoriteActorSummaryDto.profileImageCdnPath = n.getStringValue(); },
         "profileImageUrl": n => { favoriteActorSummaryDto.profileImageUrl = n.getStringValue(); },
+        "publicId": n => { favoriteActorSummaryDto.publicId = n.getStringValue(); },
     }
 }
 /**
@@ -2392,6 +2409,7 @@ export function deserializeIntoFavoriteSiteChangeFavoriteSiteDto(favoriteSiteCha
         "platformId": n => { favoriteSiteChangeFavoriteSiteDto.platformId = n.getGuidValue(); },
         "platformKey": n => { favoriteSiteChangeFavoriteSiteDto.platformKey = n.getStringValue(); },
         "platformTitle": n => { favoriteSiteChangeFavoriteSiteDto.platformTitle = n.getStringValue(); },
+        "publicId": n => { favoriteSiteChangeFavoriteSiteDto.publicId = n.getStringValue(); },
         "title": n => { favoriteSiteChangeFavoriteSiteDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { favoriteSiteChangeFavoriteSiteDto.updatedAtUtc = n.getDateValue(); },
         "url": n => { favoriteSiteChangeFavoriteSiteDto.url = n.getStringValue(); },
@@ -2425,6 +2443,7 @@ export function deserializeIntoFavoriteSiteSummaryDto(favoriteSiteSummaryDto: Pa
         "platformId": n => { favoriteSiteSummaryDto.platformId = n.getGuidValue(); },
         "platformKey": n => { favoriteSiteSummaryDto.platformKey = n.getStringValue(); },
         "platformTitle": n => { favoriteSiteSummaryDto.platformTitle = n.getStringValue(); },
+        "publicId": n => { favoriteSiteSummaryDto.publicId = n.getStringValue(); },
         "title": n => { favoriteSiteSummaryDto.title = n.getStringValue(); },
         "url": n => { favoriteSiteSummaryDto.url = n.getStringValue(); },
     }
@@ -2841,6 +2860,7 @@ export function deserializeIntoIgnoredSiteChangeIgnoredSiteDto(ignoredSiteChange
         "platformId": n => { ignoredSiteChangeIgnoredSiteDto.platformId = n.getGuidValue(); },
         "platformKey": n => { ignoredSiteChangeIgnoredSiteDto.platformKey = n.getStringValue(); },
         "platformTitle": n => { ignoredSiteChangeIgnoredSiteDto.platformTitle = n.getStringValue(); },
+        "publicId": n => { ignoredSiteChangeIgnoredSiteDto.publicId = n.getStringValue(); },
         "title": n => { ignoredSiteChangeIgnoredSiteDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { ignoredSiteChangeIgnoredSiteDto.updatedAtUtc = n.getDateValue(); },
         "url": n => { ignoredSiteChangeIgnoredSiteDto.url = n.getStringValue(); },
@@ -2874,6 +2894,7 @@ export function deserializeIntoIgnoredSiteSummaryDto(ignoredSiteSummaryDto: Part
         "platformId": n => { ignoredSiteSummaryDto.platformId = n.getGuidValue(); },
         "platformKey": n => { ignoredSiteSummaryDto.platformKey = n.getStringValue(); },
         "platformTitle": n => { ignoredSiteSummaryDto.platformTitle = n.getStringValue(); },
+        "publicId": n => { ignoredSiteSummaryDto.publicId = n.getStringValue(); },
         "title": n => { ignoredSiteSummaryDto.title = n.getStringValue(); },
         "url": n => { ignoredSiteSummaryDto.url = n.getStringValue(); },
     }
@@ -3428,6 +3449,7 @@ export function deserializeIntoSiteChangeSiteDto(siteChangeSiteDto: Partial<Site
         "platformId": n => { siteChangeSiteDto.platformId = n.getGuidValue(); },
         "platformKey": n => { siteChangeSiteDto.platformKey = n.getStringValue(); },
         "platformTitle": n => { siteChangeSiteDto.platformTitle = n.getStringValue(); },
+        "publicId": n => { siteChangeSiteDto.publicId = n.getStringValue(); },
         "title": n => { siteChangeSiteDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { siteChangeSiteDto.updatedAtUtc = n.getDateValue(); },
         "url": n => { siteChangeSiteDto.url = n.getStringValue(); },
@@ -3478,6 +3500,7 @@ export function deserializeIntoSiteSummaryDto(siteSummaryDto: Partial<SiteSummar
         "platformId": n => { siteSummaryDto.platformId = n.getGuidValue(); },
         "platformKey": n => { siteSummaryDto.platformKey = n.getStringValue(); },
         "platformTitle": n => { siteSummaryDto.platformTitle = n.getStringValue(); },
+        "publicId": n => { siteSummaryDto.publicId = n.getStringValue(); },
         "title": n => { siteSummaryDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { siteSummaryDto.updatedAtUtc = n.getDateValue(); },
         "url": n => { siteSummaryDto.url = n.getStringValue(); },
@@ -3704,6 +3727,7 @@ export function deserializeIntoVideoChangeActorDto(videoChangeActorDto: Partial<
         "images": n => { videoChangeActorDto.images = n.getCollectionOfObjectValues<VideoChangeActorImageDto>(createVideoChangeActorImageDtoFromDiscriminatorValue); },
         "name": n => { videoChangeActorDto.name = n.getStringValue(); },
         "nationality": n => { videoChangeActorDto.nationality = n.getNumberValue(); },
+        "publicId": n => { videoChangeActorDto.publicId = n.getStringValue(); },
     }
 }
 /**
@@ -3794,6 +3818,7 @@ export function deserializeIntoVideoChangeSiteDto(videoChangeSiteDto: Partial<Vi
         "platformId": n => { videoChangeSiteDto.platformId = n.getGuidValue(); },
         "platformKey": n => { videoChangeSiteDto.platformKey = n.getStringValue(); },
         "platformTitle": n => { videoChangeSiteDto.platformTitle = n.getStringValue(); },
+        "publicId": n => { videoChangeSiteDto.publicId = n.getStringValue(); },
         "title": n => { videoChangeSiteDto.title = n.getStringValue(); },
         "url": n => { videoChangeSiteDto.url = n.getStringValue(); },
     }
@@ -3853,6 +3878,7 @@ export function deserializeIntoVideoDetailActorDto(videoDetailActorDto: Partial<
         "images": n => { videoDetailActorDto.images = n.getCollectionOfObjectValues<VideoDetailActorImageDto>(createVideoDetailActorImageDtoFromDiscriminatorValue); },
         "name": n => { videoDetailActorDto.name = n.getStringValue(); },
         "nationality": n => { videoDetailActorDto.nationality = n.getNumberValue(); },
+        "publicId": n => { videoDetailActorDto.publicId = n.getStringValue(); },
     }
 }
 /**
@@ -3947,6 +3973,7 @@ export function deserializeIntoVideoDetailSiteDto(videoDetailSiteDto: Partial<Vi
         "platformId": n => { videoDetailSiteDto.platformId = n.getGuidValue(); },
         "platformKey": n => { videoDetailSiteDto.platformKey = n.getStringValue(); },
         "platformTitle": n => { videoDetailSiteDto.platformTitle = n.getStringValue(); },
+        "publicId": n => { videoDetailSiteDto.publicId = n.getStringValue(); },
         "title": n => { videoDetailSiteDto.title = n.getStringValue(); },
         "url": n => { videoDetailSiteDto.url = n.getStringValue(); },
     }
@@ -4169,6 +4196,7 @@ export function deserializeIntoVideoSummaryActorDto(videoSummaryActorDto: Partia
     return {
         "id": n => { videoSummaryActorDto.id = n.getGuidValue(); },
         "name": n => { videoSummaryActorDto.name = n.getStringValue(); },
+        "publicId": n => { videoSummaryActorDto.publicId = n.getStringValue(); },
     }
 }
 /**
@@ -4192,6 +4220,7 @@ export function deserializeIntoVideoSummaryDto(videoSummaryDto: Partial<VideoSum
         "platformTitle": n => { videoSummaryDto.platformTitle = n.getStringValue(); },
         "releaseDate": n => { videoSummaryDto.releaseDate = n.getDateOnlyValue(); },
         "siteId": n => { videoSummaryDto.siteId = n.getGuidValue(); },
+        "sitePublicId": n => { videoSummaryDto.sitePublicId = n.getStringValue(); },
         "siteTitle": n => { videoSummaryDto.siteTitle = n.getStringValue(); },
         "stashdbSceneId": n => { videoSummaryDto.stashdbSceneId = n.getGuidValue(); },
         "title": n => { videoSummaryDto.title = n.getStringValue(); },
@@ -4410,6 +4439,10 @@ export interface FavoriteActorChangeFavoriteActorDto extends AdditionalDataHolde
      */
     profileImageUrl?: string | null;
     /**
+     * Stable public catalogue identifier.
+     */
+    publicId?: string | null;
+    /**
      * The updatedAtUtc property
      */
     updatedAtUtc?: Date | null;
@@ -4464,6 +4497,10 @@ export interface FavoriteActorSummaryDto extends AdditionalDataHolder, Parsable 
      * Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
      */
     profileImageUrl?: string | null;
+    /**
+     * Stable public catalogue identifier; GUID id remains the technical identity.
+     */
+    publicId?: string | null;
 }
 /**
  * A single changed favorite site row in the incremental feed.
@@ -4522,6 +4559,10 @@ export interface FavoriteSiteChangeFavoriteSiteDto extends AdditionalDataHolder,
      * Publishing platform display title; null for classic sites.
      */
     platformTitle?: string | null;
+    /**
+     * Stable public catalogue identifier.
+     */
+    publicId?: string | null;
     /**
      * The title property
      */
@@ -4584,6 +4625,10 @@ export interface FavoriteSiteSummaryDto extends AdditionalDataHolder, Parsable {
      * Publishing platform display title; null for classic sites.
      */
     platformTitle?: string | null;
+    /**
+     * Stable public catalogue identifier; GUID id remains the technical identity.
+     */
+    publicId?: string | null;
     /**
      * The title property
      */
@@ -5176,6 +5221,10 @@ export interface IgnoredSiteChangeIgnoredSiteDto extends AdditionalDataHolder, P
      */
     platformTitle?: string | null;
     /**
+     * Stable public catalogue identifier.
+     */
+    publicId?: string | null;
+    /**
      * The title property
      */
     title?: string | null;
@@ -5237,6 +5286,10 @@ export interface IgnoredSiteSummaryDto extends AdditionalDataHolder, Parsable {
      * Publishing platform display title; null for classic sites.
      */
     platformTitle?: string | null;
+    /**
+     * Stable public catalogue identifier; GUID id remains the technical identity.
+     */
+    publicId?: string | null;
     /**
      * The title property
      */
@@ -6073,6 +6126,7 @@ export function serializeActorChangeActorDto(writer: SerializationWriter, actorC
     writer.writeNumberValue("nationality", actorChangeActorDto.nationality);
     writer.writeStringValue("nationalityLabel", actorChangeActorDto.nationalityLabel);
     writer.writeStringValue("piercings", actorChangeActorDto.piercings);
+    writer.writeStringValue("publicId", actorChangeActorDto.publicId);
     writer.writeStringValue("tattoos", actorChangeActorDto.tattoos);
     writer.writeDateValue("updatedAtUtc", actorChangeActorDto.updatedAtUtc);
     writer.writeNumberValue("waistSize", actorChangeActorDto.waistSize);
@@ -6199,6 +6253,7 @@ export function serializeActorDetailDto(writer: SerializationWriter, actorDetail
     writer.writeNumberValue("nationality", actorDetailDto.nationality);
     writer.writeStringValue("nationalityLabel", actorDetailDto.nationalityLabel);
     writer.writeStringValue("piercings", actorDetailDto.piercings);
+    writer.writeStringValue("publicId", actorDetailDto.publicId);
     writer.writeCollectionOfPrimitiveValues<Guid>("requestedIds", actorDetailDto.requestedIds);
     writer.writeStringValue("tattoos", actorDetailDto.tattoos);
     writer.writeDateValue("updatedAtUtc", actorDetailDto.updatedAtUtc);
@@ -6253,6 +6308,7 @@ export function serializeActorSummaryDto(writer: SerializationWriter, actorSumma
     writer.writeNumberValue("nationality", actorSummaryDto.nationality);
     writer.writeStringValue("nationalityLabel", actorSummaryDto.nationalityLabel);
     writer.writeStringValue("profileImageUrl", actorSummaryDto.profileImageUrl);
+    writer.writeStringValue("publicId", actorSummaryDto.publicId);
     writer.writeAdditionalData(actorSummaryDto.additionalData);
 }
 /**
@@ -6361,6 +6417,7 @@ export function serializeFavoriteActorChangeFavoriteActorDto(writer: Serializati
     writer.writeStringValue("nationality", favoriteActorChangeFavoriteActorDto.nationality);
     writer.writeStringValue("profileImageCdnPath", favoriteActorChangeFavoriteActorDto.profileImageCdnPath);
     writer.writeStringValue("profileImageUrl", favoriteActorChangeFavoriteActorDto.profileImageUrl);
+    writer.writeStringValue("publicId", favoriteActorChangeFavoriteActorDto.publicId);
     writer.writeDateValue("updatedAtUtc", favoriteActorChangeFavoriteActorDto.updatedAtUtc);
     writer.writeAdditionalData(favoriteActorChangeFavoriteActorDto.additionalData);
 }
@@ -6394,6 +6451,7 @@ export function serializeFavoriteActorSummaryDto(writer: SerializationWriter, fa
     writer.writeStringValue("nationality", favoriteActorSummaryDto.nationality);
     writer.writeStringValue("profileImageCdnPath", favoriteActorSummaryDto.profileImageCdnPath);
     writer.writeStringValue("profileImageUrl", favoriteActorSummaryDto.profileImageUrl);
+    writer.writeStringValue("publicId", favoriteActorSummaryDto.publicId);
     writer.writeAdditionalData(favoriteActorSummaryDto.additionalData);
 }
 /**
@@ -6428,6 +6486,7 @@ export function serializeFavoriteSiteChangeFavoriteSiteDto(writer: Serialization
     writer.writeGuidValue("platformId", favoriteSiteChangeFavoriteSiteDto.platformId);
     writer.writeStringValue("platformKey", favoriteSiteChangeFavoriteSiteDto.platformKey);
     writer.writeStringValue("platformTitle", favoriteSiteChangeFavoriteSiteDto.platformTitle);
+    writer.writeStringValue("publicId", favoriteSiteChangeFavoriteSiteDto.publicId);
     writer.writeStringValue("title", favoriteSiteChangeFavoriteSiteDto.title);
     writer.writeDateValue("updatedAtUtc", favoriteSiteChangeFavoriteSiteDto.updatedAtUtc);
     writer.writeStringValue("url", favoriteSiteChangeFavoriteSiteDto.url);
@@ -6463,6 +6522,7 @@ export function serializeFavoriteSiteSummaryDto(writer: SerializationWriter, fav
     writer.writeGuidValue("platformId", favoriteSiteSummaryDto.platformId);
     writer.writeStringValue("platformKey", favoriteSiteSummaryDto.platformKey);
     writer.writeStringValue("platformTitle", favoriteSiteSummaryDto.platformTitle);
+    writer.writeStringValue("publicId", favoriteSiteSummaryDto.publicId);
     writer.writeStringValue("title", favoriteSiteSummaryDto.title);
     writer.writeStringValue("url", favoriteSiteSummaryDto.url);
     writer.writeAdditionalData(favoriteSiteSummaryDto.additionalData);
@@ -6909,6 +6969,7 @@ export function serializeIgnoredSiteChangeIgnoredSiteDto(writer: SerializationWr
     writer.writeGuidValue("platformId", ignoredSiteChangeIgnoredSiteDto.platformId);
     writer.writeStringValue("platformKey", ignoredSiteChangeIgnoredSiteDto.platformKey);
     writer.writeStringValue("platformTitle", ignoredSiteChangeIgnoredSiteDto.platformTitle);
+    writer.writeStringValue("publicId", ignoredSiteChangeIgnoredSiteDto.publicId);
     writer.writeStringValue("title", ignoredSiteChangeIgnoredSiteDto.title);
     writer.writeDateValue("updatedAtUtc", ignoredSiteChangeIgnoredSiteDto.updatedAtUtc);
     writer.writeStringValue("url", ignoredSiteChangeIgnoredSiteDto.url);
@@ -6944,6 +7005,7 @@ export function serializeIgnoredSiteSummaryDto(writer: SerializationWriter, igno
     writer.writeGuidValue("platformId", ignoredSiteSummaryDto.platformId);
     writer.writeStringValue("platformKey", ignoredSiteSummaryDto.platformKey);
     writer.writeStringValue("platformTitle", ignoredSiteSummaryDto.platformTitle);
+    writer.writeStringValue("publicId", ignoredSiteSummaryDto.publicId);
     writer.writeStringValue("title", ignoredSiteSummaryDto.title);
     writer.writeStringValue("url", ignoredSiteSummaryDto.url);
     writer.writeAdditionalData(ignoredSiteSummaryDto.additionalData);
@@ -7536,6 +7598,7 @@ export function serializeSiteChangeSiteDto(writer: SerializationWriter, siteChan
     writer.writeGuidValue("platformId", siteChangeSiteDto.platformId);
     writer.writeStringValue("platformKey", siteChangeSiteDto.platformKey);
     writer.writeStringValue("platformTitle", siteChangeSiteDto.platformTitle);
+    writer.writeStringValue("publicId", siteChangeSiteDto.publicId);
     writer.writeStringValue("title", siteChangeSiteDto.title);
     writer.writeDateValue("updatedAtUtc", siteChangeSiteDto.updatedAtUtc);
     writer.writeStringValue("url", siteChangeSiteDto.url);
@@ -7589,6 +7652,7 @@ export function serializeSiteSummaryDto(writer: SerializationWriter, siteSummary
     writer.writeGuidValue("platformId", siteSummaryDto.platformId);
     writer.writeStringValue("platformKey", siteSummaryDto.platformKey);
     writer.writeStringValue("platformTitle", siteSummaryDto.platformTitle);
+    writer.writeStringValue("publicId", siteSummaryDto.publicId);
     writer.writeStringValue("title", siteSummaryDto.title);
     writer.writeDateValue("updatedAtUtc", siteSummaryDto.updatedAtUtc);
     writer.writeStringValue("url", siteSummaryDto.url);
@@ -7830,6 +7894,7 @@ export function serializeVideoChangeActorDto(writer: SerializationWriter, videoC
     writer.writeCollectionOfObjectValues<VideoChangeActorImageDto>("images", videoChangeActorDto.images, serializeVideoChangeActorImageDto);
     writer.writeStringValue("name", videoChangeActorDto.name);
     writer.writeNumberValue("nationality", videoChangeActorDto.nationality);
+    writer.writeStringValue("publicId", videoChangeActorDto.publicId);
     writer.writeAdditionalData(videoChangeActorDto.additionalData);
 }
 /**
@@ -7927,6 +7992,7 @@ export function serializeVideoChangeSiteDto(writer: SerializationWriter, videoCh
     writer.writeGuidValue("platformId", videoChangeSiteDto.platformId);
     writer.writeStringValue("platformKey", videoChangeSiteDto.platformKey);
     writer.writeStringValue("platformTitle", videoChangeSiteDto.platformTitle);
+    writer.writeStringValue("publicId", videoChangeSiteDto.publicId);
     writer.writeStringValue("title", videoChangeSiteDto.title);
     writer.writeStringValue("url", videoChangeSiteDto.url);
     writer.writeAdditionalData(videoChangeSiteDto.additionalData);
@@ -7989,6 +8055,7 @@ export function serializeVideoDetailActorDto(writer: SerializationWriter, videoD
     writer.writeCollectionOfObjectValues<VideoDetailActorImageDto>("images", videoDetailActorDto.images, serializeVideoDetailActorImageDto);
     writer.writeStringValue("name", videoDetailActorDto.name);
     writer.writeNumberValue("nationality", videoDetailActorDto.nationality);
+    writer.writeStringValue("publicId", videoDetailActorDto.publicId);
     writer.writeAdditionalData(videoDetailActorDto.additionalData);
 }
 /**
@@ -8089,6 +8156,7 @@ export function serializeVideoDetailSiteDto(writer: SerializationWriter, videoDe
     writer.writeGuidValue("platformId", videoDetailSiteDto.platformId);
     writer.writeStringValue("platformKey", videoDetailSiteDto.platformKey);
     writer.writeStringValue("platformTitle", videoDetailSiteDto.platformTitle);
+    writer.writeStringValue("publicId", videoDetailSiteDto.publicId);
     writer.writeStringValue("title", videoDetailSiteDto.title);
     writer.writeStringValue("url", videoDetailSiteDto.url);
     writer.writeAdditionalData(videoDetailSiteDto.additionalData);
@@ -8325,6 +8393,7 @@ export function serializeVideoSummaryActorDto(writer: SerializationWriter, video
     if (!videoSummaryActorDto || isSerializingDerivedType) { return; }
     writer.writeGuidValue("id", videoSummaryActorDto.id);
     writer.writeStringValue("name", videoSummaryActorDto.name);
+    writer.writeStringValue("publicId", videoSummaryActorDto.publicId);
     writer.writeAdditionalData(videoSummaryActorDto.additionalData);
 }
 /**
@@ -8349,6 +8418,7 @@ export function serializeVideoSummaryDto(writer: SerializationWriter, videoSumma
     writer.writeStringValue("platformTitle", videoSummaryDto.platformTitle);
     writer.writeDateOnlyValue("releaseDate", videoSummaryDto.releaseDate);
     writer.writeGuidValue("siteId", videoSummaryDto.siteId);
+    writer.writeStringValue("sitePublicId", videoSummaryDto.sitePublicId);
     writer.writeStringValue("siteTitle", videoSummaryDto.siteTitle);
     writer.writeGuidValue("stashdbSceneId", videoSummaryDto.stashdbSceneId);
     writer.writeStringValue("title", videoSummaryDto.title);
@@ -8601,6 +8671,10 @@ export interface SiteChangeSiteDto extends AdditionalDataHolder, Parsable {
      */
     platformTitle?: string | null;
     /**
+     * Stable public catalogue identifier; GUID id remains the technical identity. Null for sites deleted before numbering was introduced.
+     */
+    publicId?: string | null;
+    /**
      * Site title.
      */
     title?: string | null;
@@ -8695,6 +8769,10 @@ export interface SiteSummaryDto extends AdditionalDataHolder, Parsable {
      * Publishing platform display title; null for classic sites.
      */
     platformTitle?: string | null;
+    /**
+     * Stable public identifier (S000002); GUID id remains the technical identity.
+     */
+    publicId?: string | null;
     /**
      * Site title.
      */
@@ -9053,6 +9131,10 @@ export interface VideoChangeActorDto extends AdditionalDataHolder, Parsable {
      * Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
      */
     nationality?: number | null;
+    /**
+     * Stable public catalogue identifier; GUID id remains the technical identity.
+     */
+    publicId?: string | null;
 }
 export interface VideoChangeActorImageDto extends AdditionalDataHolder, Parsable {
     /**
@@ -9150,6 +9232,10 @@ export interface VideoChangeSiteDto extends AdditionalDataHolder, Parsable {
      * Publishing platform display title; null for classic sites.
      */
     platformTitle?: string | null;
+    /**
+     * Stable public catalogue identifier; GUID id remains the technical identity.
+     */
+    publicId?: string | null;
     /**
      * The title property
      */
@@ -9275,6 +9361,10 @@ export interface VideoDetailActorDto extends AdditionalDataHolder, Parsable {
      * Known values: Unknown (0), Afghan (1), Albanian (2), Algerian (3), Andorran (4), Angolan (5), Antiguan (6), Argentine (7), Armenian (8), Australian (9), Austrian (10), Azerbaijani (11), Bahamian (12), Bahraini (13), Bangladeshi (14), Barbadian (15), Belarusian (16), Belgian (17), Belizean (18), Beninese (19), Bhutanese (20), Bolivian (21), Bosnian (22), Botswanan (23), Brazilian (24), British (25), Bruneian (26), Bulgarian (27), Burkinabe (28), Burundian (29), Cambodian (30), Cameroonian (31), Canadian (32), CapeVerdean (33), CentralAfrican (34), Chadian (35), Chilean (36), Chinese (37), Colombian (38), Comorian (39), Congolese (40), CongoleseDRC (41), CostaRican (42), Croatian (43), Cuban (44), Cypriot (45), Czech (46), Danish (47), Djiboutian (48), Dominican (49), Dutch (50), Ecuadorian (51), Egyptian (52), Emirati (53), EquatorialGuinean (54), Eritrean (55), Estonian (56), Ethiopian (57), Fijian (58), Filipino (59), Finnish (60), French (61), Gabonese (62), Gambian (63), Georgian (64), German (65), Ghanaian (66), Greek (67), Grenadian (68), Guatemalan (69), Guinean (70), GuineaBissauan (71), Guyanese (72), Haitian (73), Honduran (74), Hungarian (75), Icelandic (76), Indian (77), Indonesian (78), Iranian (79), Iraqi (80), Irish (81), Israeli (82), Italian (83), Jamaican (84), Japanese (85), Jordanian (86), Kazakhstani (87), Kenyan (88), Kiribatian (89), Kosovar (90), Kuwaiti (91), Kyrgyz (92), Laotian (93), Latvian (94), Lebanese (95), Liberian (96), Libyan (97), Liechtensteiner (98), Lithuanian (99), Luxembourgish (100), Malagasy (101), Malawian (102), Malaysian (103), Maldivian (104), Malian (105), Maltese (106), Marshallese (107), Mauritanian (108), Mauritian (109), Mexican (110), Micronesian (111), Moldovan (112), Monegasque (113), Mongolian (114), Montenegrin (115), Moroccan (116), Mozambican (117), Burmese (118), Namibian (119), Nauruan (120), Nepali (121), NewZealander (122), Nicaraguan (123), Nigerian (124), Nigerien (125), NorthKorean (126), Norwegian (127), Omani (128), Pakistani (129), Palauan (130), Palestinian (131), Panamanian (132), PapuaNewGuinean (133), Paraguayan (134), Peruvian (135), Polish (136), Portuguese (137), Qatari (138), Romanian (139), Russian (140), Rwandan (141), SaintLucian (142), Salvadoran (143), Sammarinese (144), Samoan (145), SaoTomean (146), Saudi (147), Scottish (148), Senegalese (149), Serbian (150), Seychellois (151), SierraLeonean (152), Singaporean (153), Slovak (154), Slovenian (155), SolomonIslander (156), Somali (157), SouthAfrican (158), SouthKorean (159), SouthSudanese (160), Spanish (161), SriLankan (162), Sudanese (163), Surinamese (164), Swazi (165), Swedish (166), Swiss (167), Syrian (168), Taiwanese (169), Tajik (170), Tanzanian (171), Thai (172), Timorese (173), Togolese (174), Tongan (175), Trinidadian (176), Tunisian (177), Turkish (178), Turkmen (179), Tuvaluan (180), Ugandan (181), Ukrainian (182), Uruguayan (183), Uzbek (184), Vanuatuan (185), Venezuelan (186), Vietnamese (187), Vincentian (188), Welsh (189), Yemeni (190), Zambian (191), Zimbabwean (192).
      */
     nationality?: number | null;
+    /**
+     * Stable public catalogue identifier; GUID id remains the technical identity.
+     */
+    publicId?: string | null;
 }
 export interface VideoDetailActorImageDto extends AdditionalDataHolder, Parsable {
     /**
@@ -9425,6 +9515,10 @@ export interface VideoDetailSiteDto extends AdditionalDataHolder, Parsable {
      * Publishing platform display title; null for classic sites.
      */
     platformTitle?: string | null;
+    /**
+     * Stable public catalogue identifier; GUID id remains the technical identity.
+     */
+    publicId?: string | null;
     /**
      * The title property
      */
@@ -9813,6 +9907,10 @@ export interface VideoSummaryActorDto extends AdditionalDataHolder, Parsable {
      * Actor name.
      */
     name?: string | null;
+    /**
+     * Stable public catalogue identifier; GUID id remains the technical identity.
+     */
+    publicId?: string | null;
 }
 /**
  * Summary of a single video.
@@ -9870,6 +9968,10 @@ export interface VideoSummaryDto extends AdditionalDataHolder, Parsable {
      * Unique identifier of the site this video belongs to.
      */
     siteId?: Guid | null;
+    /**
+     * Stable public identifier of the site.
+     */
+    sitePublicId?: string | null;
     /**
      * Title of the site this video belongs to.
      */

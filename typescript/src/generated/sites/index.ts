@@ -64,7 +64,7 @@ export interface SitesRequestBuilderGetQueryParameters {
      */
     platformId?: Guid;
     /**
-     * Optional search term matched against site title.
+     * Optional search term matched against site title, or an exact public ID such as S000002.
      */
     search?: string;
     /**

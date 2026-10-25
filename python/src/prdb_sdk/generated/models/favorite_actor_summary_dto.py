@@ -31,6 +31,8 @@ class FavoriteActorSummaryDto(AdditionalDataHolder, Parsable):
     profile_image_cdn_path: Optional[str] = None
     # Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
     profile_image_url: Optional[str] = None
+    # Stable public catalogue identifier; GUID id remains the technical identity.
+    public_id: Optional[str] = None
     
     @staticmethod
     def create_from_discriminator_value(parse_node: ParseNode) -> FavoriteActorSummaryDto:
@@ -57,6 +59,7 @@ class FavoriteActorSummaryDto(AdditionalDataHolder, Parsable):
             "nationality": lambda n : setattr(self, 'nationality', n.get_str_value()),
             "profileImageCdnPath": lambda n : setattr(self, 'profile_image_cdn_path', n.get_str_value()),
             "profileImageUrl": lambda n : setattr(self, 'profile_image_url', n.get_str_value()),
+            "publicId": lambda n : setattr(self, 'public_id', n.get_str_value()),
         }
         return fields
     
@@ -76,6 +79,7 @@ class FavoriteActorSummaryDto(AdditionalDataHolder, Parsable):
         writer.write_str_value("nationality", self.nationality)
         writer.write_str_value("profileImageCdnPath", self.profile_image_cdn_path)
         writer.write_str_value("profileImageUrl", self.profile_image_url)
+        writer.write_str_value("publicId", self.public_id)
         writer.write_additional_data_value(self.additional_data)
     
 

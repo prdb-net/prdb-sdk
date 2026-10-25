@@ -66,6 +66,14 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string ProfileImageUrl { get; set; }
 #endif
+        /// <summary>Stable public identifier (A00000043); GUID id remains the technical identity.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? PublicId { get; set; }
+#nullable restore
+#else
+        public string PublicId { get; set; }
+#endif
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.ActorSummaryDto"/> and sets the default values.
         /// </summary>
@@ -101,6 +109,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "nationality", n => { Nationality = n.GetIntValue(); } },
                 { "nationalityLabel", n => { NationalityLabel = n.GetStringValue(); } },
                 { "profileImageUrl", n => { ProfileImageUrl = n.GetStringValue(); } },
+                { "publicId", n => { PublicId = n.GetStringValue(); } },
             };
         }
         /// <summary>
@@ -120,6 +129,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteIntValue("nationality", Nationality);
             writer.WriteStringValue("nationalityLabel", NationalityLabel);
             writer.WriteStringValue("profileImageUrl", ProfileImageUrl);
+            writer.WriteStringValue("publicId", PublicId);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

@@ -25,7 +25,7 @@ type ActorsRequestBuilderGetQueryParameters struct {
     Page *int32
     // Number of items per page. Defaults to 100, max 500.
     PageSize *int32
-    // Optional search term matched against actor name and aliases.
+    // Optional search term matched against actor name and aliases, or an exact public ID such as A00000043 (including retained merge IDs).
     Search *string
     // Field to sort by. Supported values: "name" (default), "createdAtUtc".
     SortBy *string

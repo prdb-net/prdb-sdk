@@ -74,6 +74,14 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string PlatformTitle { get; set; }
 #endif
+        /// <summary>Stable public catalogue identifier; GUID id remains the technical identity. Null for sites deleted before numbering was introduced.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? PublicId { get; set; }
+#nullable restore
+#else
+        public string PublicId { get; set; }
+#endif
         /// <summary>Site title.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -129,6 +137,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "platformId", n => { PlatformId = n.GetGuidValue(); } },
                 { "platformKey", n => { PlatformKey = n.GetStringValue(); } },
                 { "platformTitle", n => { PlatformTitle = n.GetStringValue(); } },
+                { "publicId", n => { PublicId = n.GetStringValue(); } },
                 { "title", n => { Title = n.GetStringValue(); } },
                 { "updatedAtUtc", n => { UpdatedAtUtc = n.GetDateTimeOffsetValue(); } },
                 { "url", n => { Url = n.GetStringValue(); } },
@@ -153,6 +162,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteGuidValue("platformId", PlatformId);
             writer.WriteStringValue("platformKey", PlatformKey);
             writer.WriteStringValue("platformTitle", PlatformTitle);
+            writer.WriteStringValue("publicId", PublicId);
             writer.WriteStringValue("title", Title);
             writer.WriteDateTimeOffsetValue("updatedAtUtc", UpdatedAtUtc);
             writer.WriteStringValue("url", Url);

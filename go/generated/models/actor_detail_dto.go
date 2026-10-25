@@ -75,6 +75,8 @@ type ActorDetailDto struct {
     nationalityLabel *string
     // The piercings property
     piercings *string
+    // Stable public identifier (A00000043); GUID id remains the technical identity.
+    publicId *string
     // Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.
     requestedIds []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // The tattoos property
@@ -529,6 +531,16 @@ func (m *ActorDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         return nil
     }
+    res["publicId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPublicId(val)
+        }
+        return nil
+    }
     res["requestedIds"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetCollectionOfPrimitiveValues("uuid")
         if err != nil {
@@ -641,6 +653,11 @@ func (m *ActorDetailDto) GetNationalityLabel()(*string) {
 // returns a *string when successful
 func (m *ActorDetailDto) GetPiercings()(*string) {
     return m.piercings
+}
+// GetPublicId gets the publicId property value. Stable public identifier (A00000043); GUID id remains the technical identity.
+// returns a *string when successful
+func (m *ActorDetailDto) GetPublicId()(*string) {
+    return m.publicId
 }
 // GetRequestedIds gets the requestedIds property value. Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.
 // returns a []UUID when successful
@@ -874,6 +891,12 @@ func (m *ActorDetailDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
             return err
         }
     }
+    {
+        err := writer.WriteStringValue("publicId", m.GetPublicId())
+        if err != nil {
+            return err
+        }
+    }
     if m.GetRequestedIds() != nil {
         err := writer.WriteCollectionOfUUIDValues("requestedIds", m.GetRequestedIds())
         if err != nil {
@@ -1034,6 +1057,10 @@ func (m *ActorDetailDto) SetNationalityLabel(value *string)() {
 func (m *ActorDetailDto) SetPiercings(value *string)() {
     m.piercings = value
 }
+// SetPublicId sets the publicId property value. Stable public identifier (A00000043); GUID id remains the technical identity.
+func (m *ActorDetailDto) SetPublicId(value *string)() {
+    m.publicId = value
+}
 // SetRequestedIds sets the requestedIds property value. Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.
 func (m *ActorDetailDto) SetRequestedIds(value []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.requestedIds = value
@@ -1084,6 +1111,7 @@ type ActorDetailDtoable interface {
     GetNationality()(*int32)
     GetNationalityLabel()(*string)
     GetPiercings()(*string)
+    GetPublicId()(*string)
     GetRequestedIds()([]i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetTattoos()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
@@ -1119,6 +1147,7 @@ type ActorDetailDtoable interface {
     SetNationality(value *int32)()
     SetNationalityLabel(value *string)()
     SetPiercings(value *string)()
+    SetPublicId(value *string)()
     SetRequestedIds(value []i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetTattoos(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()

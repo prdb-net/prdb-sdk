@@ -153,7 +153,7 @@ class ActorsRequestBuilder(BaseRequestBuilder):
         # Number of items per page. Defaults to 100, max 500.
         page_size: Optional[int] = None
 
-        # Optional search term matched against actor name and aliases.
+        # Optional search term matched against actor name and aliases, or an exact public ID such as A00000043 (including retained merge IDs).
         search: Optional[str] = None
 
         # Field to sort by. Supported values: "name" (default), "createdAtUtc".

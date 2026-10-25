@@ -36,6 +36,8 @@ type SiteChangeSiteDto struct {
     platformKey *string
     // Publishing platform display title; null for classic sites.
     platformTitle *string
+    // Stable public catalogue identifier; GUID id remains the technical identity. Null for sites deleted before numbering was introduced.
+    publicId *string
     // Site title.
     title *string
     // When this site was last changed.
@@ -205,6 +207,16 @@ func (m *SiteChangeSiteDto) GetFieldDeserializers()(map[string]func(i878a80d2330
         }
         return nil
     }
+    res["publicId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPublicId(val)
+        }
+        return nil
+    }
     res["title"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -281,6 +293,11 @@ func (m *SiteChangeSiteDto) GetPlatformKey()(*string) {
 // returns a *string when successful
 func (m *SiteChangeSiteDto) GetPlatformTitle()(*string) {
     return m.platformTitle
+}
+// GetPublicId gets the publicId property value. Stable public catalogue identifier; GUID id remains the technical identity. Null for sites deleted before numbering was introduced.
+// returns a *string when successful
+func (m *SiteChangeSiteDto) GetPublicId()(*string) {
+    return m.publicId
 }
 // GetTitle gets the title property value. Site title.
 // returns a *string when successful
@@ -378,6 +395,12 @@ func (m *SiteChangeSiteDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27
         }
     }
     {
+        err := writer.WriteStringValue("publicId", m.GetPublicId())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteStringValue("title", m.GetTitle())
         if err != nil {
             return err
@@ -455,6 +478,10 @@ func (m *SiteChangeSiteDto) SetPlatformKey(value *string)() {
 func (m *SiteChangeSiteDto) SetPlatformTitle(value *string)() {
     m.platformTitle = value
 }
+// SetPublicId sets the publicId property value. Stable public catalogue identifier; GUID id remains the technical identity. Null for sites deleted before numbering was introduced.
+func (m *SiteChangeSiteDto) SetPublicId(value *string)() {
+    m.publicId = value
+}
 // SetTitle sets the title property value. Site title.
 func (m *SiteChangeSiteDto) SetTitle(value *string)() {
     m.title = value
@@ -482,6 +509,7 @@ type SiteChangeSiteDtoable interface {
     GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetPlatformKey()(*string)
     GetPlatformTitle()(*string)
+    GetPublicId()(*string)
     GetTitle()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetUrl()(*string)
@@ -497,6 +525,7 @@ type SiteChangeSiteDtoable interface {
     SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetPlatformKey(value *string)()
     SetPlatformTitle(value *string)()
+    SetPublicId(value *string)()
     SetTitle(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetUrl(value *string)()

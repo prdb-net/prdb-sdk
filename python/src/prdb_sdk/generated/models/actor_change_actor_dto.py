@@ -88,6 +88,8 @@ class ActorChangeActorDto(AdditionalDataHolder, Parsable):
     nationality_label: Optional[str] = None
     # The piercings property
     piercings: Optional[str] = None
+    # Stable public catalogue identifier; GUID id remains the technical identity.
+    public_id: Optional[str] = None
     # The tattoos property
     tattoos: Optional[str] = None
     # The updatedAtUtc property
@@ -156,6 +158,7 @@ class ActorChangeActorDto(AdditionalDataHolder, Parsable):
             "nationality": lambda n : setattr(self, 'nationality', n.get_int_value()),
             "nationalityLabel": lambda n : setattr(self, 'nationality_label', n.get_str_value()),
             "piercings": lambda n : setattr(self, 'piercings', n.get_str_value()),
+            "publicId": lambda n : setattr(self, 'public_id', n.get_str_value()),
             "tattoos": lambda n : setattr(self, 'tattoos', n.get_str_value()),
             "updatedAtUtc": lambda n : setattr(self, 'updated_at_utc', n.get_datetime_value()),
             "waistSize": lambda n : setattr(self, 'waist_size', n.get_int_value()),
@@ -204,6 +207,7 @@ class ActorChangeActorDto(AdditionalDataHolder, Parsable):
         writer.write_int_value("nationality", self.nationality)
         writer.write_str_value("nationalityLabel", self.nationality_label)
         writer.write_str_value("piercings", self.piercings)
+        writer.write_str_value("publicId", self.public_id)
         writer.write_str_value("tattoos", self.tattoos)
         writer.write_datetime_value("updatedAtUtc", self.updated_at_utc)
         writer.write_int_value("waistSize", self.waist_size)
