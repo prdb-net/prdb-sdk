@@ -129,7 +129,7 @@ namespace Prdb.Sdk.Generated.Actors
             public int? Page { get; set; }
             /// <summary>Number of items per page. Defaults to 100, max 500.</summary>
             public int? PageSize { get; set; }
-            /// <summary>Optional search term matched against actor name and aliases.</summary>
+            /// <summary>Optional search term matched against actor name and aliases, or an exact public ID such as A00000043 (including retained merge IDs).</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? Search { get; set; }

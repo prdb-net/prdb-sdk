@@ -143,7 +143,7 @@ class SitesRequestBuilder(BaseRequestBuilder):
         # Restrict to one publishing platform UUID.
         platform_id: Optional[UUID] = None
 
-        # Optional search term matched against site title.
+        # Optional search term matched against site title, or an exact public ID such as S000002.
         search: Optional[str] = None
 
         # Field to sort by. Supported values: `title` (default).

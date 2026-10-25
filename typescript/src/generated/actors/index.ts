@@ -68,7 +68,7 @@ export interface ActorsRequestBuilderGetQueryParameters {
      */
     pageSize?: number;
     /**
-     * Optional search term matched against actor name and aliases.
+     * Optional search term matched against actor name and aliases, or an exact public ID such as A00000043 (including retained merge IDs).
      */
     search?: string;
     /**

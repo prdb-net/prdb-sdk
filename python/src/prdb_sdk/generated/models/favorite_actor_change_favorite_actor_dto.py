@@ -37,6 +37,8 @@ class FavoriteActorChangeFavoriteActorDto(AdditionalDataHolder, Parsable):
     profile_image_cdn_path: Optional[str] = None
     # Absolute URL of the actor's face/profile image, if available: a complete URL includingscheme and host, ready to request as-is.
     profile_image_url: Optional[str] = None
+    # Stable public catalogue identifier.
+    public_id: Optional[str] = None
     # The updatedAtUtc property
     updated_at_utc: Optional[datetime.datetime] = None
     
@@ -68,6 +70,7 @@ class FavoriteActorChangeFavoriteActorDto(AdditionalDataHolder, Parsable):
             "nationality": lambda n : setattr(self, 'nationality', n.get_str_value()),
             "profileImageCdnPath": lambda n : setattr(self, 'profile_image_cdn_path', n.get_str_value()),
             "profileImageUrl": lambda n : setattr(self, 'profile_image_url', n.get_str_value()),
+            "publicId": lambda n : setattr(self, 'public_id', n.get_str_value()),
             "updatedAtUtc": lambda n : setattr(self, 'updated_at_utc', n.get_datetime_value()),
         }
         return fields
@@ -91,6 +94,7 @@ class FavoriteActorChangeFavoriteActorDto(AdditionalDataHolder, Parsable):
         writer.write_str_value("nationality", self.nationality)
         writer.write_str_value("profileImageCdnPath", self.profile_image_cdn_path)
         writer.write_str_value("profileImageUrl", self.profile_image_url)
+        writer.write_str_value("publicId", self.public_id)
         writer.write_datetime_value("updatedAtUtc", self.updated_at_utc)
         writer.write_additional_data_value(self.additional_data)
     

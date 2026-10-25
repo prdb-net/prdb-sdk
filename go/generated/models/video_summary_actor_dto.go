@@ -16,6 +16,8 @@ type VideoSummaryActorDto struct {
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Actor name.
     name *string
+    // Stable public catalogue identifier; GUID id remains the technical identity.
+    publicId *string
 }
 // NewVideoSummaryActorDto instantiates a new VideoSummaryActorDto and sets the default values.
 func NewVideoSummaryActorDto()(*VideoSummaryActorDto) {
@@ -58,6 +60,16 @@ func (m *VideoSummaryActorDto) GetFieldDeserializers()(map[string]func(i878a80d2
         }
         return nil
     }
+    res["publicId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPublicId(val)
+        }
+        return nil
+    }
     return res
 }
 // GetId gets the id property value. Unique identifier of the actor.
@@ -70,6 +82,11 @@ func (m *VideoSummaryActorDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0
 func (m *VideoSummaryActorDto) GetName()(*string) {
     return m.name
 }
+// GetPublicId gets the publicId property value. Stable public catalogue identifier; GUID id remains the technical identity.
+// returns a *string when successful
+func (m *VideoSummaryActorDto) GetPublicId()(*string) {
+    return m.publicId
+}
 // Serialize serializes information the current object
 func (m *VideoSummaryActorDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
     {
@@ -80,6 +97,12 @@ func (m *VideoSummaryActorDto) Serialize(writer i878a80d2330e89d26896388a3f487ee
     }
     {
         err := writer.WriteStringValue("name", m.GetName())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("publicId", m.GetPublicId())
         if err != nil {
             return err
         }
@@ -104,11 +127,17 @@ func (m *VideoSummaryActorDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207
 func (m *VideoSummaryActorDto) SetName(value *string)() {
     m.name = value
 }
+// SetPublicId sets the publicId property value. Stable public catalogue identifier; GUID id remains the technical identity.
+func (m *VideoSummaryActorDto) SetPublicId(value *string)() {
+    m.publicId = value
+}
 type VideoSummaryActorDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetName()(*string)
+    GetPublicId()(*string)
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetName(value *string)()
+    SetPublicId(value *string)()
 }

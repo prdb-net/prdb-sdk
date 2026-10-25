@@ -33,6 +33,8 @@ type FavoriteSiteChangeFavoriteSiteDto struct {
     platformKey *string
     // Publishing platform display title; null for classic sites.
     platformTitle *string
+    // Stable public catalogue identifier.
+    publicId *string
     // The title property
     title *string
     // The updatedAtUtc property
@@ -176,6 +178,16 @@ func (m *FavoriteSiteChangeFavoriteSiteDto) GetFieldDeserializers()(map[string]f
         }
         return nil
     }
+    res["publicId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPublicId(val)
+        }
+        return nil
+    }
     res["title"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -242,6 +254,11 @@ func (m *FavoriteSiteChangeFavoriteSiteDto) GetPlatformKey()(*string) {
 // returns a *string when successful
 func (m *FavoriteSiteChangeFavoriteSiteDto) GetPlatformTitle()(*string) {
     return m.platformTitle
+}
+// GetPublicId gets the publicId property value. Stable public catalogue identifier.
+// returns a *string when successful
+func (m *FavoriteSiteChangeFavoriteSiteDto) GetPublicId()(*string) {
+    return m.publicId
 }
 // GetTitle gets the title property value. The title property
 // returns a *string when successful
@@ -321,6 +338,12 @@ func (m *FavoriteSiteChangeFavoriteSiteDto) Serialize(writer i878a80d2330e89d268
         }
     }
     {
+        err := writer.WriteStringValue("publicId", m.GetPublicId())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteStringValue("title", m.GetTitle())
         if err != nil {
             return err
@@ -390,6 +413,10 @@ func (m *FavoriteSiteChangeFavoriteSiteDto) SetPlatformKey(value *string)() {
 func (m *FavoriteSiteChangeFavoriteSiteDto) SetPlatformTitle(value *string)() {
     m.platformTitle = value
 }
+// SetPublicId sets the publicId property value. Stable public catalogue identifier.
+func (m *FavoriteSiteChangeFavoriteSiteDto) SetPublicId(value *string)() {
+    m.publicId = value
+}
 // SetTitle sets the title property value. The title property
 func (m *FavoriteSiteChangeFavoriteSiteDto) SetTitle(value *string)() {
     m.title = value
@@ -415,6 +442,7 @@ type FavoriteSiteChangeFavoriteSiteDtoable interface {
     GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetPlatformKey()(*string)
     GetPlatformTitle()(*string)
+    GetPublicId()(*string)
     GetTitle()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetUrl()(*string)
@@ -428,6 +456,7 @@ type FavoriteSiteChangeFavoriteSiteDtoable interface {
     SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetPlatformKey(value *string)()
     SetPlatformTitle(value *string)()
+    SetPublicId(value *string)()
     SetTitle(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetUrl(value *string)()

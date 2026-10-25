@@ -24,7 +24,7 @@ type SitesRequestBuilderGetQueryParameters struct {
     PageSize *int32
     // Restrict to one publishing platform UUID.
     PlatformId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
-    // Optional search term matched against site title.
+    // Optional search term matched against site title, or an exact public ID such as S000002.
     Search *string
     // Field to sort by. Supported values: `title` (default).
     SortBy *string

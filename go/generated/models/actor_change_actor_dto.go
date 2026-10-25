@@ -81,6 +81,8 @@ type ActorChangeActorDto struct {
     nationalityLabel *string
     // The piercings property
     piercings *string
+    // Stable public catalogue identifier; GUID id remains the technical identity.
+    publicId *string
     // The tattoos property
     tattoos *string
     // The updatedAtUtc property
@@ -568,6 +570,16 @@ func (m *ActorChangeActorDto) GetFieldDeserializers()(map[string]func(i878a80d23
         }
         return nil
     }
+    res["publicId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPublicId(val)
+        }
+        return nil
+    }
     res["tattoos"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -674,6 +686,11 @@ func (m *ActorChangeActorDto) GetNationalityLabel()(*string) {
 // returns a *string when successful
 func (m *ActorChangeActorDto) GetPiercings()(*string) {
     return m.piercings
+}
+// GetPublicId gets the publicId property value. Stable public catalogue identifier; GUID id remains the technical identity.
+// returns a *string when successful
+func (m *ActorChangeActorDto) GetPublicId()(*string) {
+    return m.publicId
 }
 // GetTattoos gets the tattoos property value. The tattoos property
 // returns a *string when successful
@@ -921,6 +938,12 @@ func (m *ActorChangeActorDto) Serialize(writer i878a80d2330e89d26896388a3f487eef
         }
     }
     {
+        err := writer.WriteStringValue("publicId", m.GetPublicId())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteStringValue("tattoos", m.GetTattoos())
         if err != nil {
             return err
@@ -1086,6 +1109,10 @@ func (m *ActorChangeActorDto) SetNationalityLabel(value *string)() {
 func (m *ActorChangeActorDto) SetPiercings(value *string)() {
     m.piercings = value
 }
+// SetPublicId sets the publicId property value. Stable public catalogue identifier; GUID id remains the technical identity.
+func (m *ActorChangeActorDto) SetPublicId(value *string)() {
+    m.publicId = value
+}
 // SetTattoos sets the tattoos property value. The tattoos property
 func (m *ActorChangeActorDto) SetTattoos(value *string)() {
     m.tattoos = value
@@ -1135,6 +1162,7 @@ type ActorChangeActorDtoable interface {
     GetNationality()(*int32)
     GetNationalityLabel()(*string)
     GetPiercings()(*string)
+    GetPublicId()(*string)
     GetTattoos()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetWaistSize()(*int32)
@@ -1172,6 +1200,7 @@ type ActorChangeActorDtoable interface {
     SetNationality(value *int32)()
     SetNationalityLabel(value *string)()
     SetPiercings(value *string)()
+    SetPublicId(value *string)()
     SetTattoos(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetWaistSize(value *int32)()

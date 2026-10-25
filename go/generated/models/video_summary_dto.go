@@ -39,6 +39,8 @@ type VideoSummaryDto struct {
     releaseDate *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly
     // Unique identifier of the site this video belongs to.
     siteId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Stable public identifier of the site.
+    sitePublicId *string
     // Title of the site this video belongs to.
     siteTitle *string
     // StashDB Scene UUID for a confirmed match. Clients resolve it directly with their ownStashDB credentials; no match evidence or integration state is included.
@@ -238,6 +240,16 @@ func (m *VideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
         }
         return nil
     }
+    res["sitePublicId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetSitePublicId(val)
+        }
+        return nil
+    }
     res["siteTitle"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -299,6 +311,11 @@ func (m *VideoSummaryDto) GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b
 // returns a *UUID when successful
 func (m *VideoSummaryDto) GetSiteId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.siteId
+}
+// GetSitePublicId gets the sitePublicId property value. Stable public identifier of the site.
+// returns a *string when successful
+func (m *VideoSummaryDto) GetSitePublicId()(*string) {
+    return m.sitePublicId
 }
 // GetSiteTitle gets the siteTitle property value. Title of the site this video belongs to.
 // returns a *string when successful
@@ -402,6 +419,12 @@ func (m *VideoSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0
         }
     }
     {
+        err := writer.WriteStringValue("sitePublicId", m.GetSitePublicId())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteStringValue("siteTitle", m.GetSiteTitle())
         if err != nil {
             return err
@@ -483,6 +506,10 @@ func (m *VideoSummaryDto) SetReleaseDate(value *i878a80d2330e89d26896388a3f487ee
 func (m *VideoSummaryDto) SetSiteId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.siteId = value
 }
+// SetSitePublicId sets the sitePublicId property value. Stable public identifier of the site.
+func (m *VideoSummaryDto) SetSitePublicId(value *string)() {
+    m.sitePublicId = value
+}
 // SetSiteTitle sets the siteTitle property value. Title of the site this video belongs to.
 func (m *VideoSummaryDto) SetSiteTitle(value *string)() {
     m.siteTitle = value
@@ -511,6 +538,7 @@ type VideoSummaryDtoable interface {
     GetPlatformTitle()(*string)
     GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)
     GetSiteId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
+    GetSitePublicId()(*string)
     GetSiteTitle()(*string)
     GetStashdbSceneId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetTitle()(*string)
@@ -527,6 +555,7 @@ type VideoSummaryDtoable interface {
     SetPlatformTitle(value *string)()
     SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)()
     SetSiteId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
+    SetSitePublicId(value *string)()
     SetSiteTitle(value *string)()
     SetStashdbSceneId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetTitle(value *string)()

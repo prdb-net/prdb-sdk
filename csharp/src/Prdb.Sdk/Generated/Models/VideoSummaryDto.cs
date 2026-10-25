@@ -72,6 +72,14 @@ namespace Prdb.Sdk.Generated.Models
         public Date? ReleaseDate { get; set; }
         /// <summary>Unique identifier of the site this video belongs to.</summary>
         public Guid? SiteId { get; set; }
+        /// <summary>Stable public identifier of the site.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? SitePublicId { get; set; }
+#nullable restore
+#else
+        public string SitePublicId { get; set; }
+#endif
         /// <summary>Title of the site this video belongs to.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -128,6 +136,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "platformTitle", n => { PlatformTitle = n.GetStringValue(); } },
                 { "releaseDate", n => { ReleaseDate = n.GetDateValue(); } },
                 { "siteId", n => { SiteId = n.GetGuidValue(); } },
+                { "sitePublicId", n => { SitePublicId = n.GetStringValue(); } },
                 { "siteTitle", n => { SiteTitle = n.GetStringValue(); } },
                 { "stashdbSceneId", n => { StashdbSceneId = n.GetGuidValue(); } },
                 { "title", n => { Title = n.GetStringValue(); } },
@@ -153,6 +162,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteStringValue("platformTitle", PlatformTitle);
             writer.WriteDateValue("releaseDate", ReleaseDate);
             writer.WriteGuidValue("siteId", SiteId);
+            writer.WriteStringValue("sitePublicId", SitePublicId);
             writer.WriteStringValue("siteTitle", SiteTitle);
             writer.WriteGuidValue("stashdbSceneId", StashdbSceneId);
             writer.WriteStringValue("title", Title);

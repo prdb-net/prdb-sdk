@@ -23,6 +23,8 @@ type VideoChangeSiteDto struct {
     platformKey *string
     // Publishing platform display title; null for classic sites.
     platformTitle *string
+    // Stable public catalogue identifier; GUID id remains the technical identity.
+    publicId *string
     // The title property
     title *string
     // The url property
@@ -114,6 +116,16 @@ func (m *VideoChangeSiteDto) GetFieldDeserializers()(map[string]func(i878a80d233
         }
         return nil
     }
+    res["publicId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPublicId(val)
+        }
+        return nil
+    }
     res["title"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -161,6 +173,11 @@ func (m *VideoChangeSiteDto) GetPlatformKey()(*string) {
 func (m *VideoChangeSiteDto) GetPlatformTitle()(*string) {
     return m.platformTitle
 }
+// GetPublicId gets the publicId property value. Stable public catalogue identifier; GUID id remains the technical identity.
+// returns a *string when successful
+func (m *VideoChangeSiteDto) GetPublicId()(*string) {
+    return m.publicId
+}
 // GetTitle gets the title property value. The title property
 // returns a *string when successful
 func (m *VideoChangeSiteDto) GetTitle()(*string) {
@@ -205,6 +222,12 @@ func (m *VideoChangeSiteDto) Serialize(writer i878a80d2330e89d26896388a3f487eef2
     }
     {
         err := writer.WriteStringValue("platformTitle", m.GetPlatformTitle())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("publicId", m.GetPublicId())
         if err != nil {
             return err
         }
@@ -257,6 +280,10 @@ func (m *VideoChangeSiteDto) SetPlatformKey(value *string)() {
 func (m *VideoChangeSiteDto) SetPlatformTitle(value *string)() {
     m.platformTitle = value
 }
+// SetPublicId sets the publicId property value. Stable public catalogue identifier; GUID id remains the technical identity.
+func (m *VideoChangeSiteDto) SetPublicId(value *string)() {
+    m.publicId = value
+}
 // SetTitle sets the title property value. The title property
 func (m *VideoChangeSiteDto) SetTitle(value *string)() {
     m.title = value
@@ -274,6 +301,7 @@ type VideoChangeSiteDtoable interface {
     GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetPlatformKey()(*string)
     GetPlatformTitle()(*string)
+    GetPublicId()(*string)
     GetTitle()(*string)
     GetUrl()(*string)
     SetAccountHandle(value *string)()
@@ -282,6 +310,7 @@ type VideoChangeSiteDtoable interface {
     SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetPlatformKey(value *string)()
     SetPlatformTitle(value *string)()
+    SetPublicId(value *string)()
     SetTitle(value *string)()
     SetUrl(value *string)()
 }

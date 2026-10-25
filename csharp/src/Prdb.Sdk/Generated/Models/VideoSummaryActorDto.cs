@@ -25,6 +25,14 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Name { get; set; }
 #endif
+        /// <summary>Stable public catalogue identifier; GUID id remains the technical identity.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? PublicId { get; set; }
+#nullable restore
+#else
+        public string PublicId { get; set; }
+#endif
         /// <summary>
         /// Instantiates a new <see cref="global::Prdb.Sdk.Generated.Models.VideoSummaryActorDto"/> and sets the default values.
         /// </summary>
@@ -52,6 +60,7 @@ namespace Prdb.Sdk.Generated.Models
             {
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "name", n => { Name = n.GetStringValue(); } },
+                { "publicId", n => { PublicId = n.GetStringValue(); } },
             };
         }
         /// <summary>
@@ -63,6 +72,7 @@ namespace Prdb.Sdk.Generated.Models
             if(ReferenceEquals(writer, null)) throw new ArgumentNullException(nameof(writer));
             writer.WriteGuidValue("id", Id);
             writer.WriteStringValue("name", Name);
+            writer.WriteStringValue("publicId", PublicId);
             writer.WriteAdditionalData(AdditionalData);
         }
     }

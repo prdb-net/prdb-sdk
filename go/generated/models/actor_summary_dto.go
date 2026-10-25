@@ -32,6 +32,8 @@ type ActorSummaryDto struct {
     nationalityLabel *string
     // Absolute URL of the actor's profile image, if available: a complete URL including scheme andhost, ready to request as-is.
     profileImageUrl *string
+    // Stable public identifier (A00000043); GUID id remains the technical identity.
+    publicId *string
 }
 // NewActorSummaryDto instantiates a new ActorSummaryDto and sets the default values.
 func NewActorSummaryDto()(*ActorSummaryDto) {
@@ -169,6 +171,16 @@ func (m *ActorSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
         }
         return nil
     }
+    res["publicId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPublicId(val)
+        }
+        return nil
+    }
     return res
 }
 // GetGender gets the gender property value. Known values: Unknown (0), Female (1), Male (2), Intersex (3), Transmale (4), Transfemale (5), NonBinary (6).
@@ -205,6 +217,11 @@ func (m *ActorSummaryDto) GetNationalityLabel()(*string) {
 // returns a *string when successful
 func (m *ActorSummaryDto) GetProfileImageUrl()(*string) {
     return m.profileImageUrl
+}
+// GetPublicId gets the publicId property value. Stable public identifier (A00000043); GUID id remains the technical identity.
+// returns a *string when successful
+func (m *ActorSummaryDto) GetPublicId()(*string) {
+    return m.publicId
 }
 // Serialize serializes information the current object
 func (m *ActorSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.SerializationWriter)(error) {
@@ -269,6 +286,12 @@ func (m *ActorSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0
         }
     }
     {
+        err := writer.WriteStringValue("publicId", m.GetPublicId())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteAdditionalData(m.GetAdditionalData())
         if err != nil {
             return err
@@ -320,6 +343,10 @@ func (m *ActorSummaryDto) SetNationalityLabel(value *string)() {
 func (m *ActorSummaryDto) SetProfileImageUrl(value *string)() {
     m.profileImageUrl = value
 }
+// SetPublicId sets the publicId property value. Stable public identifier (A00000043); GUID id remains the technical identity.
+func (m *ActorSummaryDto) SetPublicId(value *string)() {
+    m.publicId = value
+}
 type ActorSummaryDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
@@ -333,6 +360,7 @@ type ActorSummaryDtoable interface {
     GetNationality()(*int32)
     GetNationalityLabel()(*string)
     GetProfileImageUrl()(*string)
+    GetPublicId()(*string)
     SetBirthday(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)()
     SetEthnicity(value *int32)()
     SetEthnicityLabel(value *string)()
@@ -343,4 +371,5 @@ type ActorSummaryDtoable interface {
     SetNationality(value *int32)()
     SetNationalityLabel(value *string)()
     SetProfileImageUrl(value *string)()
+    SetPublicId(value *string)()
 }

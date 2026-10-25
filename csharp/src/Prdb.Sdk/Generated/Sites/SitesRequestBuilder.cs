@@ -125,7 +125,7 @@ namespace Prdb.Sdk.Generated.Sites
             public int? PageSize { get; set; }
             /// <summary>Restrict to one publishing platform UUID.</summary>
             public Guid? PlatformId { get; set; }
-            /// <summary>Optional search term matched against site title.</summary>
+            /// <summary>Optional search term matched against site title, or an exact public ID such as S000002.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
             public string? Search { get; set; }

@@ -17,6 +17,8 @@ class VideoSummaryActorDto(AdditionalDataHolder, Parsable):
     id: Optional[UUID] = None
     # Actor name.
     name: Optional[str] = None
+    # Stable public catalogue identifier; GUID id remains the technical identity.
+    public_id: Optional[str] = None
     
     @staticmethod
     def create_from_discriminator_value(parse_node: ParseNode) -> VideoSummaryActorDto:
@@ -37,6 +39,7 @@ class VideoSummaryActorDto(AdditionalDataHolder, Parsable):
         fields: dict[str, Callable[[Any], None]] = {
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "name": lambda n : setattr(self, 'name', n.get_str_value()),
+            "publicId": lambda n : setattr(self, 'public_id', n.get_str_value()),
         }
         return fields
     
@@ -50,6 +53,7 @@ class VideoSummaryActorDto(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_uuid_value("id", self.id)
         writer.write_str_value("name", self.name)
+        writer.write_str_value("publicId", self.public_id)
         writer.write_additional_data_value(self.additional_data)
     
 

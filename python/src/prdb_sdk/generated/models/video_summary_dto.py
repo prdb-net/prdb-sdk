@@ -43,6 +43,8 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
     release_date: Optional[datetime.date] = None
     # Unique identifier of the site this video belongs to.
     site_id: Optional[UUID] = None
+    # Stable public identifier of the site.
+    site_public_id: Optional[str] = None
     # Title of the site this video belongs to.
     site_title: Optional[str] = None
     # StashDB Scene UUID for a confirmed match. Clients resolve it directly with their ownStashDB credentials; no match evidence or integration state is included.
@@ -84,6 +86,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
             "platformTitle": lambda n : setattr(self, 'platform_title', n.get_str_value()),
             "releaseDate": lambda n : setattr(self, 'release_date', n.get_date_value()),
             "siteId": lambda n : setattr(self, 'site_id', n.get_uuid_value()),
+            "sitePublicId": lambda n : setattr(self, 'site_public_id', n.get_str_value()),
             "siteTitle": lambda n : setattr(self, 'site_title', n.get_str_value()),
             "stashdbSceneId": lambda n : setattr(self, 'stashdb_scene_id', n.get_uuid_value()),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
@@ -111,6 +114,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         writer.write_str_value("platformTitle", self.platform_title)
         writer.write_date_value("releaseDate", self.release_date)
         writer.write_uuid_value("siteId", self.site_id)
+        writer.write_str_value("sitePublicId", self.site_public_id)
         writer.write_str_value("siteTitle", self.site_title)
         writer.write_uuid_value("stashdbSceneId", self.stashdb_scene_id)
         writer.write_str_value("title", self.title)

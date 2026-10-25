@@ -168,6 +168,14 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public string Piercings { get; set; }
 #endif
+        /// <summary>Stable public identifier (A00000043); GUID id remains the technical identity.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? PublicId { get; set; }
+#nullable restore
+#else
+        public string PublicId { get; set; }
+#endif
         /// <summary>Batch-only mapping: requested IDs that resolved to this canonical actor. Each actor appears once.</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -244,6 +252,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "nationality", n => { Nationality = n.GetIntValue(); } },
                 { "nationalityLabel", n => { NationalityLabel = n.GetStringValue(); } },
                 { "piercings", n => { Piercings = n.GetStringValue(); } },
+                { "publicId", n => { PublicId = n.GetStringValue(); } },
                 { "requestedIds", n => { RequestedIds = n.GetCollectionOfPrimitiveValues<Guid?>()?.AsList(); } },
                 { "tattoos", n => { Tattoos = n.GetStringValue(); } },
                 { "updatedAtUtc", n => { UpdatedAtUtc = n.GetDateTimeOffsetValue(); } },
@@ -288,6 +297,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteIntValue("nationality", Nationality);
             writer.WriteStringValue("nationalityLabel", NationalityLabel);
             writer.WriteStringValue("piercings", Piercings);
+            writer.WriteStringValue("publicId", PublicId);
             writer.WriteCollectionOfPrimitiveValues<Guid?>("requestedIds", RequestedIds);
             writer.WriteStringValue("tattoos", Tattoos);
             writer.WriteDateTimeOffsetValue("updatedAtUtc", UpdatedAtUtc);

@@ -31,6 +31,8 @@ type SiteSummaryDto struct {
     platformKey *string
     // Publishing platform display title; null for classic sites.
     platformTitle *string
+    // Stable public identifier (S000002); GUID id remains the technical identity.
+    publicId *string
     // Site title.
     title *string
     // When this site was last changed.
@@ -165,6 +167,16 @@ func (m *SiteSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         return nil
     }
+    res["publicId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetPublicId(val)
+        }
+        return nil
+    }
     res["title"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -231,6 +243,11 @@ func (m *SiteSummaryDto) GetPlatformKey()(*string) {
 // returns a *string when successful
 func (m *SiteSummaryDto) GetPlatformTitle()(*string) {
     return m.platformTitle
+}
+// GetPublicId gets the publicId property value. Stable public identifier (S000002); GUID id remains the technical identity.
+// returns a *string when successful
+func (m *SiteSummaryDto) GetPublicId()(*string) {
+    return m.publicId
 }
 // GetTitle gets the title property value. Site title.
 // returns a *string when successful
@@ -310,6 +327,12 @@ func (m *SiteSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
         }
     }
     {
+        err := writer.WriteStringValue("publicId", m.GetPublicId())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteStringValue("title", m.GetTitle())
         if err != nil {
             return err
@@ -375,6 +398,10 @@ func (m *SiteSummaryDto) SetPlatformKey(value *string)() {
 func (m *SiteSummaryDto) SetPlatformTitle(value *string)() {
     m.platformTitle = value
 }
+// SetPublicId sets the publicId property value. Stable public identifier (S000002); GUID id remains the technical identity.
+func (m *SiteSummaryDto) SetPublicId(value *string)() {
+    m.publicId = value
+}
 // SetTitle sets the title property value. Site title.
 func (m *SiteSummaryDto) SetTitle(value *string)() {
     m.title = value
@@ -399,6 +426,7 @@ type SiteSummaryDtoable interface {
     GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetPlatformKey()(*string)
     GetPlatformTitle()(*string)
+    GetPublicId()(*string)
     GetTitle()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetUrl()(*string)
@@ -411,6 +439,7 @@ type SiteSummaryDtoable interface {
     SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetPlatformKey(value *string)()
     SetPlatformTitle(value *string)()
+    SetPublicId(value *string)()
     SetTitle(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetUrl(value *string)()

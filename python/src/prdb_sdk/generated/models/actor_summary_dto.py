@@ -34,6 +34,8 @@ class ActorSummaryDto(AdditionalDataHolder, Parsable):
     nationality_label: Optional[str] = None
     # Absolute URL of the actor's profile image, if available: a complete URL including scheme andhost, ready to request as-is.
     profile_image_url: Optional[str] = None
+    # Stable public identifier (A00000043); GUID id remains the technical identity.
+    public_id: Optional[str] = None
     
     @staticmethod
     def create_from_discriminator_value(parse_node: ParseNode) -> ActorSummaryDto:
@@ -62,6 +64,7 @@ class ActorSummaryDto(AdditionalDataHolder, Parsable):
             "nationality": lambda n : setattr(self, 'nationality', n.get_int_value()),
             "nationalityLabel": lambda n : setattr(self, 'nationality_label', n.get_str_value()),
             "profileImageUrl": lambda n : setattr(self, 'profile_image_url', n.get_str_value()),
+            "publicId": lambda n : setattr(self, 'public_id', n.get_str_value()),
         }
         return fields
     
@@ -83,6 +86,7 @@ class ActorSummaryDto(AdditionalDataHolder, Parsable):
         writer.write_int_value("nationality", self.nationality)
         writer.write_str_value("nationalityLabel", self.nationality_label)
         writer.write_str_value("profileImageUrl", self.profile_image_url)
+        writer.write_str_value("publicId", self.public_id)
         writer.write_additional_data_value(self.additional_data)
     
 
