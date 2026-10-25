@@ -15,6 +15,31 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.24.0] - 2026-10-25
+
+### Added
+
+- **Stable Actor and Site public IDs.** Actor and Site list/detail models,
+  nested Video Actor/Site models, favourites, ignored sites and their change
+  payloads expose `publicId`. Video summaries expose `sitePublicId` alongside
+  `siteId`. Actor IDs use `A` followed by at least eight decimal digits (for
+  example, `A00000043`); Site IDs use `S` followed by at least six (for example,
+  `S000002`). Larger numbers grow without truncation. These are strings; retain
+  their prefix and leading zeroes.
+- Actor and Site list `search` parameters accept exact public IDs. Retained
+  merged Actor IDs resolve to the active canonical Actor. Existing Actor/Site
+  rows are stamped by the migration so their IDs reach change-feed consumers.
+
+### Compatibility notes
+
+- Existing GUID identities, routes, request bodies and status codes remain
+  unchanged. Public IDs supplement the GUIDs.
+- `SiteChangeSiteDto.publicId` is required but nullable: a Site deleted before
+  numbering was introduced has no assigned public ID. Other catalogue public
+  IDs are non-null in the API contract. The generated SDKs retain Kiota's
+  optional model properties, so an older server omitting a field can still be
+  read.
+
 ## [0.23.0] - 2026-10-24
 
 ### Added
