@@ -15,6 +15,21 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.25.0] - 2026-11-01
+
+### Added
+
+- **Site logo URLs.** `SiteSummaryDto` (`GET /sites`) and `SiteChangeSiteDto`
+  (`GET /sites/changes`, `items[].site`) gain `logoUrl`: an absolute CDN URL of
+  the studio's logo, or null. It is set for classic studio sites whose logo is
+  known; creator accounts carry none, and a deleted site in the change feed
+  always reports null. It is a plain nullable string in all four SDKs.
+
+### Compatibility notes
+
+- Additive only. No route, request body, status code or change-feed cursor
+  changed, so existing callers keep working without updating.
+
 ## [0.24.0] - 2026-10-25
 
 ### Added
