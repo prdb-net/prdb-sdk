@@ -21,6 +21,8 @@ type SiteSummaryDto struct {
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Additional catalogue links. Provenance is intentionally not part of this contract.
     links []SiteLinkDtoable
+    // Absolute CDN URL of the studio's logo, or null when the site has none. Classic studio sites only; creatoraccounts carry no logo.
+    logoUrl *string
     // Unique identifier of the network this site belongs to, if any.
     networkId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Title of the network this site belongs to, if any.
@@ -114,6 +116,16 @@ func (m *SiteSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
                 }
             }
             m.SetLinks(res)
+        }
+        return nil
+    }
+    res["logoUrl"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetLogoUrl(val)
         }
         return nil
     }
@@ -219,6 +231,11 @@ func (m *SiteSummaryDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770
 func (m *SiteSummaryDto) GetLinks()([]SiteLinkDtoable) {
     return m.links
 }
+// GetLogoUrl gets the logoUrl property value. Absolute CDN URL of the studio's logo, or null when the site has none. Classic studio sites only; creatoraccounts carry no logo.
+// returns a *string when successful
+func (m *SiteSummaryDto) GetLogoUrl()(*string) {
+    return m.logoUrl
+}
 // GetNetworkId gets the networkId property value. Unique identifier of the network this site belongs to, if any.
 // returns a *UUID when successful
 func (m *SiteSummaryDto) GetNetworkId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
@@ -292,6 +309,12 @@ func (m *SiteSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
             }
         }
         err := writer.WriteCollectionOfObjectValues("links", cast)
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteStringValue("logoUrl", m.GetLogoUrl())
         if err != nil {
             return err
         }
@@ -378,6 +401,10 @@ func (m *SiteSummaryDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf
 func (m *SiteSummaryDto) SetLinks(value []SiteLinkDtoable)() {
     m.links = value
 }
+// SetLogoUrl sets the logoUrl property value. Absolute CDN URL of the studio's logo, or null when the site has none. Classic studio sites only; creatoraccounts carry no logo.
+func (m *SiteSummaryDto) SetLogoUrl(value *string)() {
+    m.logoUrl = value
+}
 // SetNetworkId sets the networkId property value. Unique identifier of the network this site belongs to, if any.
 func (m *SiteSummaryDto) SetNetworkId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.networkId = value
@@ -421,6 +448,7 @@ type SiteSummaryDtoable interface {
     GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetLinks()([]SiteLinkDtoable)
+    GetLogoUrl()(*string)
     GetNetworkId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetNetworkTitle()(*string)
     GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
@@ -434,6 +462,7 @@ type SiteSummaryDtoable interface {
     SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetLinks(value []SiteLinkDtoable)()
+    SetLogoUrl(value *string)()
     SetNetworkId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetNetworkTitle(value *string)()
     SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
