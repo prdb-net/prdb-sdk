@@ -3443,6 +3443,7 @@ export function deserializeIntoSiteChangeSiteDto(siteChangeSiteDto: Partial<Site
         "id": n => { siteChangeSiteDto.id = n.getGuidValue(); },
         "isDeleted": n => { siteChangeSiteDto.isDeleted = n.getBooleanValue(); },
         "links": n => { siteChangeSiteDto.links = n.getCollectionOfObjectValues<SiteChangeLinkDto>(createSiteChangeLinkDtoFromDiscriminatorValue); },
+        "logoUrl": n => { siteChangeSiteDto.logoUrl = n.getStringValue(); },
         "networkId": n => { siteChangeSiteDto.networkId = n.getGuidValue(); },
         "networkTitle": n => { siteChangeSiteDto.networkTitle = n.getStringValue(); },
         "networkUrl": n => { siteChangeSiteDto.networkUrl = n.getStringValue(); },
@@ -3495,6 +3496,7 @@ export function deserializeIntoSiteSummaryDto(siteSummaryDto: Partial<SiteSummar
         "createdAtUtc": n => { siteSummaryDto.createdAtUtc = n.getDateValue(); },
         "id": n => { siteSummaryDto.id = n.getGuidValue(); },
         "links": n => { siteSummaryDto.links = n.getCollectionOfObjectValues<SiteLinkDto>(createSiteLinkDtoFromDiscriminatorValue); },
+        "logoUrl": n => { siteSummaryDto.logoUrl = n.getStringValue(); },
         "networkId": n => { siteSummaryDto.networkId = n.getGuidValue(); },
         "networkTitle": n => { siteSummaryDto.networkTitle = n.getStringValue(); },
         "platformId": n => { siteSummaryDto.platformId = n.getGuidValue(); },
@@ -7592,6 +7594,7 @@ export function serializeSiteChangeSiteDto(writer: SerializationWriter, siteChan
     writer.writeGuidValue("id", siteChangeSiteDto.id);
     writer.writeBooleanValue("isDeleted", siteChangeSiteDto.isDeleted);
     writer.writeCollectionOfObjectValues<SiteChangeLinkDto>("links", siteChangeSiteDto.links, serializeSiteChangeLinkDto);
+    writer.writeStringValue("logoUrl", siteChangeSiteDto.logoUrl);
     writer.writeGuidValue("networkId", siteChangeSiteDto.networkId);
     writer.writeStringValue("networkTitle", siteChangeSiteDto.networkTitle);
     writer.writeStringValue("networkUrl", siteChangeSiteDto.networkUrl);
@@ -7647,6 +7650,7 @@ export function serializeSiteSummaryDto(writer: SerializationWriter, siteSummary
     writer.writeDateValue("createdAtUtc", siteSummaryDto.createdAtUtc);
     writer.writeGuidValue("id", siteSummaryDto.id);
     writer.writeCollectionOfObjectValues<SiteLinkDto>("links", siteSummaryDto.links, serializeSiteLinkDto);
+    writer.writeStringValue("logoUrl", siteSummaryDto.logoUrl);
     writer.writeGuidValue("networkId", siteSummaryDto.networkId);
     writer.writeStringValue("networkTitle", siteSummaryDto.networkTitle);
     writer.writeGuidValue("platformId", siteSummaryDto.platformId);
@@ -8647,6 +8651,10 @@ export interface SiteChangeSiteDto extends AdditionalDataHolder, Parsable {
      */
     links?: SiteChangeLinkDto[] | null;
     /**
+     * Absolute CDN URL of the studio's logo, or null when the site has none or is deleted. Classic studio sites only; creatoraccounts carry no logo.
+     */
+    logoUrl?: string | null;
+    /**
      * Unique identifier of the network this site belongs to, if any.
      */
     networkId?: Guid | null;
@@ -8749,6 +8757,10 @@ export interface SiteSummaryDto extends AdditionalDataHolder, Parsable {
      * Additional catalogue links. Provenance is intentionally not part of this contract.
      */
     links?: SiteLinkDto[] | null;
+    /**
+     * Absolute CDN URL of the studio's logo, or null when the site has none. Classic studio sites only; creatoraccounts carry no logo.
+     */
+    logoUrl?: string | null;
     /**
      * Unique identifier of the network this site belongs to, if any.
      */

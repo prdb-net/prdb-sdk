@@ -25,6 +25,8 @@ class SiteSummaryDto(AdditionalDataHolder, Parsable):
     id: Optional[UUID] = None
     # Additional catalogue links. Provenance is intentionally not part of this contract.
     links: Optional[list[SiteLinkDto]] = None
+    # Absolute CDN URL of the studio's logo, or null when the site has none. Classic studio sites only; creatoraccounts carry no logo.
+    logo_url: Optional[str] = None
     # Unique identifier of the network this site belongs to, if any.
     network_id: Optional[UUID] = None
     # Title of the network this site belongs to, if any.
@@ -69,6 +71,7 @@ class SiteSummaryDto(AdditionalDataHolder, Parsable):
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "links": lambda n : setattr(self, 'links', n.get_collection_of_object_values(SiteLinkDto)),
+            "logoUrl": lambda n : setattr(self, 'logo_url', n.get_str_value()),
             "networkId": lambda n : setattr(self, 'network_id', n.get_uuid_value()),
             "networkTitle": lambda n : setattr(self, 'network_title', n.get_str_value()),
             "platformId": lambda n : setattr(self, 'platform_id', n.get_uuid_value()),
@@ -93,6 +96,7 @@ class SiteSummaryDto(AdditionalDataHolder, Parsable):
         writer.write_datetime_value("createdAtUtc", self.created_at_utc)
         writer.write_uuid_value("id", self.id)
         writer.write_collection_of_object_values("links", self.links)
+        writer.write_str_value("logoUrl", self.logo_url)
         writer.write_uuid_value("networkId", self.network_id)
         writer.write_str_value("networkTitle", self.network_title)
         writer.write_uuid_value("platformId", self.platform_id)

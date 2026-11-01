@@ -35,6 +35,14 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.SiteLinkDto> Links { get; set; }
 #endif
+        /// <summary>Absolute CDN URL of the studio&apos;s logo, or null when the site has none. Classic studio sites only; creatoraccounts carry no logo.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? LogoUrl { get; set; }
+#nullable restore
+#else
+        public string LogoUrl { get; set; }
+#endif
         /// <summary>Unique identifier of the network this site belongs to, if any.</summary>
         public Guid? NetworkId { get; set; }
         /// <summary>Title of the network this site belongs to, if any.</summary>
@@ -118,6 +126,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "createdAtUtc", n => { CreatedAtUtc = n.GetDateTimeOffsetValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "links", n => { Links = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.SiteLinkDto>(global::Prdb.Sdk.Generated.Models.SiteLinkDto.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "logoUrl", n => { LogoUrl = n.GetStringValue(); } },
                 { "networkId", n => { NetworkId = n.GetGuidValue(); } },
                 { "networkTitle", n => { NetworkTitle = n.GetStringValue(); } },
                 { "platformId", n => { PlatformId = n.GetGuidValue(); } },
@@ -140,6 +149,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteDateTimeOffsetValue("createdAtUtc", CreatedAtUtc);
             writer.WriteGuidValue("id", Id);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.SiteLinkDto>("links", Links);
+            writer.WriteStringValue("logoUrl", LogoUrl);
             writer.WriteGuidValue("networkId", NetworkId);
             writer.WriteStringValue("networkTitle", NetworkTitle);
             writer.WriteGuidValue("platformId", PlatformId);

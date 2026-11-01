@@ -10641,6 +10641,11 @@
             },
             "description": "Additional catalogue links. Provenance is intentionally not part of this contract."
           },
+          "logoUrl": {
+            "type": "string",
+            "description": "Absolute CDN URL of the studio's logo, or null when the site has none or is deleted. Classic studio sites only; creator\naccounts carry no logo.",
+            "nullable": true
+          },
           "networkId": {
             "type": "string",
             "description": "Unique identifier of the network this site belongs to, if any.",
@@ -10776,6 +10781,11 @@
               "$ref": "#/components/schemas/SiteLinkDto"
             },
             "description": "Additional catalogue links. Provenance is intentionally not part of this contract."
+          },
+          "logoUrl": {
+            "type": "string",
+            "description": "Absolute CDN URL of the studio's logo, or null when the site has none. Classic studio sites only; creator\naccounts carry no logo.",
+            "nullable": true
           },
           "networkId": {
             "type": "string",

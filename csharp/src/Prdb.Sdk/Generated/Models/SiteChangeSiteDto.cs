@@ -38,6 +38,14 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.SiteChangeLinkDto> Links { get; set; }
 #endif
+        /// <summary>Absolute CDN URL of the studio&apos;s logo, or null when the site has none or is deleted. Classic studio sites only; creatoraccounts carry no logo.</summary>
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
+#nullable enable
+        public string? LogoUrl { get; set; }
+#nullable restore
+#else
+        public string LogoUrl { get; set; }
+#endif
         /// <summary>Unique identifier of the network this site belongs to, if any.</summary>
         public Guid? NetworkId { get; set; }
         /// <summary>Title of the network this site belongs to, if any.</summary>
@@ -131,6 +139,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "isDeleted", n => { IsDeleted = n.GetBoolValue(); } },
                 { "links", n => { Links = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.SiteChangeLinkDto>(global::Prdb.Sdk.Generated.Models.SiteChangeLinkDto.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "logoUrl", n => { LogoUrl = n.GetStringValue(); } },
                 { "networkId", n => { NetworkId = n.GetGuidValue(); } },
                 { "networkTitle", n => { NetworkTitle = n.GetStringValue(); } },
                 { "networkUrl", n => { NetworkUrl = n.GetStringValue(); } },
@@ -156,6 +165,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteGuidValue("id", Id);
             writer.WriteBoolValue("isDeleted", IsDeleted);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.SiteChangeLinkDto>("links", Links);
+            writer.WriteStringValue("logoUrl", LogoUrl);
             writer.WriteGuidValue("networkId", NetworkId);
             writer.WriteStringValue("networkTitle", NetworkTitle);
             writer.WriteStringValue("networkUrl", NetworkUrl);
