@@ -15,6 +15,37 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.26.0] - 2026-11-13
+
+### Added
+
+- **Authenticated ratings.** All four SDKs expose 13 new operations: separate
+  Actor/Video rating summaries, own-rating reads, star updates, immutable review
+  submissions, review/rating deletions and the filtered `/ratings/mine`
+  collection. Includes nullable owner models, safe review states, typed problem
+  responses, accepted `202` receipts and bodyless `204` deletions. See
+  [Ratings](docs/ratings.md) for idempotency, pagination and runtime details.
+- Refresh the complete published spec, including `ExternalSite` value
+  `Fansly` (6) and preview-enrichment eligibility version 3, which includes
+  confirmed Fansly videos alongside OnlyFans videos.
+
+### Compatibility notes
+
+- **Actor builder rename.** The new `actorId` path parameters cause the pinned
+  Kiota generator to rename Actor item access: Python `by_id` becomes
+  `by_actor_id`, TypeScript `byId` becomes `byActorId`, and Go `ById` becomes
+  `ByActorId`. This also applies to existing Actor detail/account calls. The
+  concrete builder is now `ActorItemRequestBuilder` instead of
+  `ActorsItemRequestBuilder`. C# keeps `client.Actors[id]`; Video access is
+  unchanged. Update direct builder imports and explicit type annotations too.
+- Ratings are separate from catalogue/list/batch/search/change-feed payloads.
+  Existing HTTP routes and cursor contracts remain unchanged; no catalogue
+  resync or downstream ratings adoption is required.
+- TypeScript's pinned JSON runtime reads null object fields as empty objects:
+  check `rating?.id` and `review?.id` for absence. Go callers must use `WithUrl`
+  for `/ratings/mine`, because the pinned runtime cannot handle its typed date
+  query parameters, even when unset. Both cases are covered by contract tests.
+
 ## [0.25.0] - 2026-11-01
 
 ### Added
