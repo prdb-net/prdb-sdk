@@ -8,7 +8,7 @@ import { BatchRequestBuilderRequestsMetadata, type BatchRequestBuilder } from '.
 // @ts-ignore
 import { ChangesRequestBuilderRequestsMetadata, type ChangesRequestBuilder } from './changes/index.js';
 // @ts-ignore
-import { ActorsItemRequestBuilderNavigationMetadata, ActorsItemRequestBuilderRequestsMetadata, type ActorsItemRequestBuilder } from './item/index.js';
+import { ActorItemRequestBuilderNavigationMetadata, ActorItemRequestBuilderRequestsMetadata, type ActorItemRequestBuilder } from './item/index.js';
 // @ts-ignore
 import { type BaseRequestBuilder, type Guid, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
 
@@ -26,10 +26,10 @@ export interface ActorsRequestBuilder extends BaseRequestBuilder<ActorsRequestBu
     get changes(): ChangesRequestBuilder;
     /**
      * Gets an item from the prdb-sdk.actors.item collection
-     * @param id Unique identifier of the item
-     * @returns {ActorsItemRequestBuilder}
+     * @param actorId Unique identifier of the item
+     * @returns {ActorItemRequestBuilder}
      */
-     byId(id: Guid) : ActorsItemRequestBuilder;
+     byActorId(actorId: Guid) : ActorItemRequestBuilder;
     /**
      * Returns a paged list of actors. Supports free-text search by name or alias, and sorting by name or creation date. Default page size is 100, maximum is 500. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
@@ -101,10 +101,10 @@ const ActorsRequestBuilderGetQueryParametersMapper: Record<string, string> = {
  * Metadata for all the navigation properties in the request builder.
  */
 export const ActorsRequestBuilderNavigationMetadata: Record<Exclude<keyof ActorsRequestBuilder, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
-    byId: {
-        requestsMetadata: ActorsItemRequestBuilderRequestsMetadata,
-        navigationMetadata: ActorsItemRequestBuilderNavigationMetadata,
-        pathParametersMappings: ["id"],
+    byActorId: {
+        requestsMetadata: ActorItemRequestBuilderRequestsMetadata,
+        navigationMetadata: ActorItemRequestBuilderNavigationMetadata,
+        pathParametersMappings: ["actor%2Did"],
     },
     batch: {
         requestsMetadata: BatchRequestBuilderRequestsMetadata,

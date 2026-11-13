@@ -4,7 +4,7 @@ Official client libraries for the [prdb Public API](https://apidocs.prdb.net/),
 in Python, TypeScript, Go and C#.
 
 All four are generated with [Kiota](https://learn.microsoft.com/openapi/kiota/)
-from the API's own OpenAPI document, so every language exposes the same 53
+from the API's own OpenAPI document, so every language exposes the same 70
 operations with the same shapes. The generated code is committed, so you can
 read it here on GitHub and build the SDKs without installing a generator.
 
@@ -168,12 +168,24 @@ key.
 
 | Language | Platforms | Actor accounts | Site owners |
 |---|---|---|---|
-| Python | `client.platforms.get()` | `client.actors.by_id(actor_id).accounts.get()` | `client.sites.by_id(site_id).owners.get()` |
-| TypeScript | `client.platforms.get()` | `client.actors.byId(actorId).accounts.get()` | `client.sites.byId(siteId).owners.get()` |
-| Go | `client.Platforms().Get(ctx, nil)` | `client.Actors().ById(actorID).Accounts().Get(ctx, nil)` | `client.Sites().ById(siteID).Owners().Get(ctx, nil)` |
+| Python | `client.platforms.get()` | `client.actors.by_actor_id(actor_id).accounts.get()` | `client.sites.by_id(site_id).owners.get()` |
+| TypeScript | `client.platforms.get()` | `client.actors.byActorId(actorId).accounts.get()` | `client.sites.byId(siteId).owners.get()` |
+| Go | `client.Platforms().Get(ctx, nil)` | `client.Actors().ByActorId(actorID).Accounts().Get(ctx, nil)` | `client.Sites().ById(siteID).Owners().Get(ctx, nil)` |
 | C# | `client.Platforms.GetAsync()` | `client.Actors[actorId].Accounts.GetAsync()` | `client.Sites[siteId].Owners.GetAsync()` |
 
 Full reference: <https://apidocs.prdb.net/>
+
+## Ratings
+
+All four SDKs support separate Actor/Video rating summaries, the authenticated
+account's own stars and immutable review text, and the paginated
+`GET /ratings/mine` collection. All 13 operations require an API key; existing
+catalogue and change-feed payloads do not include ratings or review text.
+
+See [Ratings](docs/ratings.md) for request builders, idempotency keys, safe review
+states and pagination. Version 0.26.0 renames Actor item access to Python
+`by_actor_id`, TypeScript `byActorId` and Go `ByActorId`, including existing
+Actor detail/account calls. C# keeps its indexer.
 
 ## Video hashing
 

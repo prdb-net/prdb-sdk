@@ -18,6 +18,8 @@ import { PredbRequestBuilderNavigationMetadata, PredbRequestBuilderRequestsMetad
 // @ts-ignore
 import { RateLimitRequestBuilderRequestsMetadata, type RateLimitRequestBuilder } from './rateLimit/index.js';
 // @ts-ignore
+import { RatingsRequestBuilderNavigationMetadata, type RatingsRequestBuilder } from './ratings/index.js';
+// @ts-ignore
 import { ReleasesRequestBuilderNavigationMetadata, type ReleasesRequestBuilder } from './releases/index.js';
 // @ts-ignore
 import { SitesRequestBuilderNavigationMetadata, SitesRequestBuilderRequestsMetadata, type SitesRequestBuilder } from './sites/index.js';
@@ -113,6 +115,10 @@ export interface PrdbClient extends BaseRequestBuilder<PrdbClient> {
      */
     get rateLimit(): RateLimitRequestBuilder;
     /**
+     * The ratings property
+     */
+    get ratings(): RatingsRequestBuilder;
+    /**
      * The releases property
      */
     get releases(): ReleasesRequestBuilder;
@@ -177,6 +183,9 @@ export const PrdbClientNavigationMetadata: Record<Exclude<keyof PrdbClient, Keys
     },
     rateLimit: {
         requestsMetadata: RateLimitRequestBuilderRequestsMetadata,
+    },
+    ratings: {
+        navigationMetadata: RatingsRequestBuilderNavigationMetadata,
     },
     releases: {
         navigationMetadata: ReleasesRequestBuilderNavigationMetadata,

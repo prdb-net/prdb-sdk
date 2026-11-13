@@ -6,16 +6,28 @@ import { createActorDetailDtoFromDiscriminatorValue, createProblemDetailsFromDis
 // @ts-ignore
 import { AccountsRequestBuilderRequestsMetadata, type AccountsRequestBuilder } from './accounts/index.js';
 // @ts-ignore
+import { RatingRequestBuilderNavigationMetadata, RatingRequestBuilderRequestsMetadata, type RatingRequestBuilder } from './rating/index.js';
+// @ts-ignore
+import { RatingSummaryRequestBuilderRequestsMetadata, type RatingSummaryRequestBuilder } from './ratingSummary/index.js';
+// @ts-ignore
 import { type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
 
 /**
- * Builds and executes requests for operations under /actors/{id}
+ * Builds and executes requests for operations under /actors/{actor-id}
  */
-export interface ActorsItemRequestBuilder extends BaseRequestBuilder<ActorsItemRequestBuilder> {
+export interface ActorItemRequestBuilder extends BaseRequestBuilder<ActorItemRequestBuilder> {
     /**
      * The accounts property
      */
     get accounts(): AccountsRequestBuilder;
+    /**
+     * The rating property
+     */
+    get rating(): RatingRequestBuilder;
+    /**
+     * The ratingSummary property
+     */
+    get ratingSummary(): RatingSummaryRequestBuilder;
     /**
      * Returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
@@ -37,21 +49,28 @@ export interface ActorsItemRequestBuilder extends BaseRequestBuilder<ActorsItemR
 /**
  * Uri template for the request builder.
  */
-export const ActorsItemRequestBuilderUriTemplate = "{+baseurl}/actors/{id}";
+export const ActorItemRequestBuilderUriTemplate = "{+baseurl}/actors/{actor%2Did}";
 /**
  * Metadata for all the navigation properties in the request builder.
  */
-export const ActorsItemRequestBuilderNavigationMetadata: Record<Exclude<keyof ActorsItemRequestBuilder, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
+export const ActorItemRequestBuilderNavigationMetadata: Record<Exclude<keyof ActorItemRequestBuilder, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
     accounts: {
         requestsMetadata: AccountsRequestBuilderRequestsMetadata,
+    },
+    rating: {
+        requestsMetadata: RatingRequestBuilderRequestsMetadata,
+        navigationMetadata: RatingRequestBuilderNavigationMetadata,
+    },
+    ratingSummary: {
+        requestsMetadata: RatingSummaryRequestBuilderRequestsMetadata,
     },
 };
 /**
  * Metadata for all the requests in the request builder.
  */
-export const ActorsItemRequestBuilderRequestsMetadata: RequestsMetadata = {
+export const ActorItemRequestBuilderRequestsMetadata: RequestsMetadata = {
     get: {
-        uriTemplate: ActorsItemRequestBuilderUriTemplate,
+        uriTemplate: ActorItemRequestBuilderUriTemplate,
         responseBodyContentType: "application/json",
         errorMappings: {
             401: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,

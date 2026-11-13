@@ -17,6 +17,8 @@ if TYPE_CHECKING:
     from ...models.problem_details import ProblemDetails
     from ...models.video_detail_dto import VideoDetailDto
     from .filehashes.filehashes_request_builder import FilehashesRequestBuilder
+    from .rating.rating_request_builder import RatingRequestBuilder
+    from .rating_summary.rating_summary_request_builder import RatingSummaryRequestBuilder
     from .user_images.user_images_request_builder import UserImagesRequestBuilder
 
 class ItemRequestBuilder(BaseRequestBuilder):
@@ -85,6 +87,24 @@ class ItemRequestBuilder(BaseRequestBuilder):
         from .filehashes.filehashes_request_builder import FilehashesRequestBuilder
 
         return FilehashesRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
+    def rating(self) -> RatingRequestBuilder:
+        """
+        The rating property
+        """
+        from .rating.rating_request_builder import RatingRequestBuilder
+
+        return RatingRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
+    def rating_summary(self) -> RatingSummaryRequestBuilder:
+        """
+        The ratingSummary property
+        """
+        from .rating_summary.rating_summary_request_builder import RatingSummaryRequestBuilder
+
+        return RatingSummaryRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
     def user_images(self) -> UserImagesRequestBuilder:

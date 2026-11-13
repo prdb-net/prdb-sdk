@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from .batch.batch_request_builder import BatchRequestBuilder
     from .changes.changes_request_builder import ChangesRequestBuilder
     from .get_sort_direction_query_parameter_type import GetSortDirectionQueryParameterType
-    from .item.actors_item_request_builder import ActorsItemRequestBuilder
+    from .item.actor_item_request_builder import ActorItemRequestBuilder
 
 class ActorsRequestBuilder(BaseRequestBuilder):
     """
@@ -36,19 +36,19 @@ class ActorsRequestBuilder(BaseRequestBuilder):
         """
         super().__init__(request_adapter, "{+baseurl}/actors{?CreatedAfter*,CreatedBefore*,Page*,PageSize*,Search*,SortBy*,SortDirection*}", path_parameters)
     
-    def by_id(self,id: UUID) -> ActorsItemRequestBuilder:
+    def by_actor_id(self,actor_id: UUID) -> ActorItemRequestBuilder:
         """
         Gets an item from the prdb_sdk.generated.actors.item collection
-        param id: Unique identifier of the item
-        Returns: ActorsItemRequestBuilder
+        param actor_id: Unique identifier of the item
+        Returns: ActorItemRequestBuilder
         """
-        if id is None:
-            raise TypeError("id cannot be null.")
-        from .item.actors_item_request_builder import ActorsItemRequestBuilder
+        if actor_id is None:
+            raise TypeError("actor_id cannot be null.")
+        from .item.actor_item_request_builder import ActorItemRequestBuilder
 
         url_tpl_params = get_path_parameters(self.path_parameters)
-        url_tpl_params["id"] = id
-        return ActorsItemRequestBuilder(self.request_adapter, url_tpl_params)
+        url_tpl_params["actor%2Did"] = actor_id
+        return ActorItemRequestBuilder(self.request_adapter, url_tpl_params)
     
     async def get(self,request_configuration: Optional[RequestConfiguration[ActorsRequestBuilderGetQueryParameters]] = None) -> Optional[ListActorsResponse]:
         """

@@ -9,27 +9,27 @@ import (
     ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9 "github.com/prdb-net/prdb-sdk/go/generated/models"
 )
 
-// ActorsItemRequestBuilder builds and executes requests for operations under \actors\{id}
-type ActorsItemRequestBuilder struct {
+// ActorItemRequestBuilder builds and executes requests for operations under \actors\{actor-id}
+type ActorItemRequestBuilder struct {
     i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.BaseRequestBuilder
 }
 // Accounts the accounts property
 // returns a *ItemAccountsRequestBuilder when successful
-func (m *ActorsItemRequestBuilder) Accounts()(*ItemAccountsRequestBuilder) {
+func (m *ActorItemRequestBuilder) Accounts()(*ItemAccountsRequestBuilder) {
     return NewItemAccountsRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
-// NewActorsItemRequestBuilderInternal instantiates a new ActorsItemRequestBuilder and sets the default values.
-func NewActorsItemRequestBuilderInternal(pathParameters map[string]string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*ActorsItemRequestBuilder) {
-    m := &ActorsItemRequestBuilder{
-        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/actors/{id}", pathParameters),
+// NewActorItemRequestBuilderInternal instantiates a new ActorItemRequestBuilder and sets the default values.
+func NewActorItemRequestBuilderInternal(pathParameters map[string]string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*ActorItemRequestBuilder) {
+    m := &ActorItemRequestBuilder{
+        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/actors/{actor%2Did}", pathParameters),
     }
     return m
 }
-// NewActorsItemRequestBuilder instantiates a new ActorsItemRequestBuilder and sets the default values.
-func NewActorsItemRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*ActorsItemRequestBuilder) {
+// NewActorItemRequestBuilder instantiates a new ActorItemRequestBuilder and sets the default values.
+func NewActorItemRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*ActorItemRequestBuilder) {
     urlParams := make(map[string]string)
     urlParams["request-raw-url"] = rawUrl
-    return NewActorsItemRequestBuilderInternal(urlParams, requestAdapter)
+    return NewActorItemRequestBuilderInternal(urlParams, requestAdapter)
 }
 // Get returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
 // returns a ActorDetailDtoable when successful
@@ -38,7 +38,7 @@ func NewActorsItemRequestBuilder(rawUrl string, requestAdapter i2ae4187f7daee263
 // returns a ProblemDetails error when the service returns a 404 status code
 // returns a ProblemDetails error when the service returns a 429 status code
 // returns a ProblemDetails error when the service returns a 503 status code
-func (m *ActorsItemRequestBuilder) Get(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.ActorDetailDtoable, error) {
+func (m *ActorItemRequestBuilder) Get(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.ActorDetailDtoable, error) {
     requestInfo, err := m.ToGetRequestInformation(ctx, requestConfiguration);
     if err != nil {
         return nil, err
@@ -59,16 +59,26 @@ func (m *ActorsItemRequestBuilder) Get(ctx context.Context, requestConfiguration
     }
     return res.(ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9.ActorDetailDtoable), nil
 }
+// Rating the rating property
+// returns a *ItemRatingRequestBuilder when successful
+func (m *ActorItemRequestBuilder) Rating()(*ItemRatingRequestBuilder) {
+    return NewItemRatingRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
+// RatingSummary the ratingSummary property
+// returns a *ItemRatingSummaryRequestBuilder when successful
+func (m *ActorItemRequestBuilder) RatingSummary()(*ItemRatingSummaryRequestBuilder) {
+    return NewItemRatingSummaryRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
 // ToGetRequestInformation returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
 // returns a *RequestInformation when successful
-func (m *ActorsItemRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
+func (m *ActorItemRequestBuilder) ToGetRequestInformation(ctx context.Context, requestConfiguration *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestConfiguration[i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.DefaultQueryParameters])(*i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestInformation, error) {
     requestInfo := i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewRequestInformationWithMethodAndUrlTemplateAndPathParameters(i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.GET, m.BaseRequestBuilder.UrlTemplate, m.BaseRequestBuilder.PathParameters)
     i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.ConfigureRequestInformation(requestInfo, requestConfiguration)
     requestInfo.Headers.TryAdd("Accept", "application/json")
     return requestInfo, nil
 }
 // WithUrl returns a request builder with the provided arbitrary URL. Using this method means any other path or query parameters are ignored.
-// returns a *ActorsItemRequestBuilder when successful
-func (m *ActorsItemRequestBuilder) WithUrl(rawUrl string)(*ActorsItemRequestBuilder) {
-    return NewActorsItemRequestBuilder(rawUrl, m.BaseRequestBuilder.RequestAdapter);
+// returns a *ActorItemRequestBuilder when successful
+func (m *ActorItemRequestBuilder) WithUrl(rawUrl string)(*ActorItemRequestBuilder) {
+    return NewActorItemRequestBuilder(rawUrl, m.BaseRequestBuilder.RequestAdapter);
 }

@@ -37,15 +37,15 @@ type ActorsRequestBuilderGetQueryParameters struct {
 func (m *ActorsRequestBuilder) Batch()(*BatchRequestBuilder) {
     return NewBatchRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
-// ById gets an item from the github.com/prdb-net/prdb-sdk/go/generated.actors.item collection
-// returns a *ActorsItemRequestBuilder when successful
-func (m *ActorsRequestBuilder) ById(id i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)(*ActorsItemRequestBuilder) {
+// ByActorId gets an item from the github.com/prdb-net/prdb-sdk/go/generated.actors.item collection
+// returns a *ActorItemRequestBuilder when successful
+func (m *ActorsRequestBuilder) ByActorId(actorId i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)(*ActorItemRequestBuilder) {
     urlTplParams := make(map[string]string)
     for idx, item := range m.BaseRequestBuilder.PathParameters {
         urlTplParams[idx] = item
     }
-    urlTplParams["id"] = id.String()
-    return NewActorsItemRequestBuilderInternal(urlTplParams, m.BaseRequestBuilder.RequestAdapter)
+    urlTplParams["actor%2Did"] = actorId.String()
+    return NewActorItemRequestBuilderInternal(urlTplParams, m.BaseRequestBuilder.RequestAdapter)
 }
 // Changes the changes property
 // returns a *ChangesRequestBuilder when successful

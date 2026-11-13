@@ -6,6 +6,10 @@ import { createProblemDetailsFromDiscriminatorValue, createVideoDetailDtoFromDis
 // @ts-ignore
 import { FilehashesRequestBuilderRequestsMetadata, type FilehashesRequestBuilder } from './filehashes/index.js';
 // @ts-ignore
+import { RatingRequestBuilderNavigationMetadata, RatingRequestBuilderRequestsMetadata, type RatingRequestBuilder } from './rating/index.js';
+// @ts-ignore
+import { RatingSummaryRequestBuilderRequestsMetadata, type RatingSummaryRequestBuilder } from './ratingSummary/index.js';
+// @ts-ignore
 import { type UserImagesRequestBuilder, UserImagesRequestBuilderRequestsMetadata } from './userImages/index.js';
 // @ts-ignore
 import { type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
@@ -18,6 +22,14 @@ export interface ItemRequestBuilder extends BaseRequestBuilder<ItemRequestBuilde
      * The filehashes property
      */
     get filehashes(): FilehashesRequestBuilder;
+    /**
+     * The rating property
+     */
+    get rating(): RatingRequestBuilder;
+    /**
+     * The ratingSummary property
+     */
+    get ratingSummary(): RatingSummaryRequestBuilder;
     /**
      * The userImages property
      */
@@ -50,6 +62,13 @@ export const ItemRequestBuilderUriTemplate = "{+baseurl}/videos/{%2Did}";
 export const ItemRequestBuilderNavigationMetadata: Record<Exclude<keyof ItemRequestBuilder, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
     filehashes: {
         requestsMetadata: FilehashesRequestBuilderRequestsMetadata,
+    },
+    rating: {
+        requestsMetadata: RatingRequestBuilderRequestsMetadata,
+        navigationMetadata: RatingRequestBuilderNavigationMetadata,
+    },
+    ratingSummary: {
+        requestsMetadata: RatingSummaryRequestBuilderRequestsMetadata,
     },
     userImages: {
         requestsMetadata: UserImagesRequestBuilderRequestsMetadata,

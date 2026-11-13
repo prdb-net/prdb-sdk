@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 class AccountsRequestBuilder(BaseRequestBuilder):
     """
-    Builds and executes requests for operations under /actors/{id}/accounts
+    Builds and executes requests for operations under /actors/{actor-id}/accounts
     """
     def __init__(self,request_adapter: RequestAdapter, path_parameters: Union[str, dict[str, Any]]) -> None:
         """
@@ -28,7 +28,7 @@ class AccountsRequestBuilder(BaseRequestBuilder):
         param request_adapter: The request adapter to use to execute the requests.
         Returns: None
         """
-        super().__init__(request_adapter, "{+baseurl}/actors/{id}/accounts", path_parameters)
+        super().__init__(request_adapter, "{+baseurl}/actors/{actor%2Did}/accounts", path_parameters)
     
     async def get(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[CreatorAccountsResponse]:
         """

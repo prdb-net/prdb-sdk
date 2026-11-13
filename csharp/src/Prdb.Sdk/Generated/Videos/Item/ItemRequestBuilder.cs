@@ -5,6 +5,8 @@ using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Abstractions;
 using Prdb.Sdk.Generated.Models;
 using Prdb.Sdk.Generated.Videos.Item.Filehashes;
+using Prdb.Sdk.Generated.Videos.Item.Rating;
+using Prdb.Sdk.Generated.Videos.Item.RatingSummary;
 using Prdb.Sdk.Generated.Videos.Item.UserImages;
 using System.Collections.Generic;
 using System.IO;
@@ -23,6 +25,16 @@ namespace Prdb.Sdk.Generated.Videos.Item
         public global::Prdb.Sdk.Generated.Videos.Item.Filehashes.FilehashesRequestBuilder Filehashes
         {
             get => new global::Prdb.Sdk.Generated.Videos.Item.Filehashes.FilehashesRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The rating property</summary>
+        public global::Prdb.Sdk.Generated.Videos.Item.Rating.RatingRequestBuilder Rating
+        {
+            get => new global::Prdb.Sdk.Generated.Videos.Item.Rating.RatingRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The ratingSummary property</summary>
+        public global::Prdb.Sdk.Generated.Videos.Item.RatingSummary.RatingSummaryRequestBuilder RatingSummary
+        {
+            get => new global::Prdb.Sdk.Generated.Videos.Item.RatingSummary.RatingSummaryRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The userImages property</summary>
         public global::Prdb.Sdk.Generated.Videos.Item.UserImages.UserImagesRequestBuilder UserImages
