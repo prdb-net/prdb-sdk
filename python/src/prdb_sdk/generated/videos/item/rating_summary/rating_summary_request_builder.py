@@ -14,50 +14,52 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 from warnings import warn
 
 if TYPE_CHECKING:
-    from ...models.actor_detail_dto import ActorDetailDto
-    from ...models.problem_details import ProblemDetails
-    from .accounts.accounts_request_builder import AccountsRequestBuilder
+    from ....models.problem_details import ProblemDetails
+    from ....models.rating_summary import RatingSummary
 
-class ActorsItemRequestBuilder(BaseRequestBuilder):
+class RatingSummaryRequestBuilder(BaseRequestBuilder):
     """
-    Builds and executes requests for operations under /actors/{id}
+    Builds and executes requests for operations under /videos/{-id}/rating-summary
     """
     def __init__(self,request_adapter: RequestAdapter, path_parameters: Union[str, dict[str, Any]]) -> None:
         """
-        Instantiates a new ActorsItemRequestBuilder and sets the default values.
+        Instantiates a new RatingSummaryRequestBuilder and sets the default values.
         param path_parameters: The raw url or the url-template parameters for the request.
         param request_adapter: The request adapter to use to execute the requests.
         Returns: None
         """
-        super().__init__(request_adapter, "{+baseurl}/actors/{id}", path_parameters)
+        super().__init__(request_adapter, "{+baseurl}/videos/{%2Did}/rating-summary", path_parameters)
     
-    async def get(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[ActorDetailDto]:
+    async def get(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> Optional[RatingSummary]:
         """
-        Returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
+        Reads live aggregate counts and arithmetic average. Unrated targets return 0/0/null. Aggregates are separate from catalogue/change-feed payloads and are not cached.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
-        Returns: Optional[ActorDetailDto]
+        Returns: Optional[RatingSummary]
         """
         request_info = self.to_get_request_information(
             request_configuration
         )
-        from ...models.problem_details import ProblemDetails
+        from ....models.problem_details import ProblemDetails
 
         error_mapping: dict[str, type[ParsableFactory]] = {
+            "400": ProblemDetails,
             "401": ProblemDetails,
             "403": ProblemDetails,
             "404": ProblemDetails,
+            "409": ProblemDetails,
             "429": ProblemDetails,
+            "500": ProblemDetails,
             "503": ProblemDetails,
         }
         if not self.request_adapter:
             raise Exception("Http core is null") 
-        from ...models.actor_detail_dto import ActorDetailDto
+        from ....models.rating_summary import RatingSummary
 
-        return await self.request_adapter.send_async(request_info, ActorDetailDto, error_mapping)
+        return await self.request_adapter.send_async(request_info, RatingSummary, error_mapping)
     
     def to_get_request_information(self,request_configuration: Optional[RequestConfiguration[QueryParameters]] = None) -> RequestInformation:
         """
-        Returns full details for a single actor including all attributes, images, aliases, external links, and bios. A retained merge ID resolves with HTTP 200 and the active canonical actor ID, without an HTTP redirect. Ordinary deletions and deleted targets return 404. Requires API key authentication.
+        Reads live aggregate counts and arithmetic average. Unrated targets return 0/0/null. Aggregates are separate from catalogue/change-feed payloads and are not cached.
         param request_configuration: Configuration for the request such as headers, query parameters, and middleware options.
         Returns: RequestInformation
         """
@@ -66,27 +68,18 @@ class ActorsItemRequestBuilder(BaseRequestBuilder):
         request_info.headers.try_add("Accept", "application/json")
         return request_info
     
-    def with_url(self,raw_url: str) -> ActorsItemRequestBuilder:
+    def with_url(self,raw_url: str) -> RatingSummaryRequestBuilder:
         """
         Returns a request builder with the provided arbitrary URL. Using this method means any other path or query parameters are ignored.
         param raw_url: The raw URL to use for the request builder.
-        Returns: ActorsItemRequestBuilder
+        Returns: RatingSummaryRequestBuilder
         """
         if raw_url is None:
             raise TypeError("raw_url cannot be null.")
-        return ActorsItemRequestBuilder(self.request_adapter, raw_url)
-    
-    @property
-    def accounts(self) -> AccountsRequestBuilder:
-        """
-        The accounts property
-        """
-        from .accounts.accounts_request_builder import AccountsRequestBuilder
-
-        return AccountsRequestBuilder(self.request_adapter, self.path_parameters)
+        return RatingSummaryRequestBuilder(self.request_adapter, raw_url)
     
     @dataclass
-    class ActorsItemRequestBuilderGetRequestConfiguration(RequestConfiguration[QueryParameters]):
+    class RatingSummaryRequestBuilderGetRequestConfiguration(RequestConfiguration[QueryParameters]):
         """
         Configuration for the request such as headers, query parameters, and middleware options.
         """

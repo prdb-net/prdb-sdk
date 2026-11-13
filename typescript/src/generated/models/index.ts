@@ -255,7 +255,7 @@ export interface ActorChangeImageDto extends AdditionalDataHolder, Parsable {
 }
 export interface ActorChangeLinkDto extends AdditionalDataHolder, Parsable {
     /**
-     * Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5).
+     * Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5), Fansly (6).
      */
     externalSite?: number | null;
     /**
@@ -449,7 +449,7 @@ export interface ActorImageDetailDto extends AdditionalDataHolder, Parsable {
 }
 export interface ActorLinkDto extends AdditionalDataHolder, Parsable {
     /**
-     * Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5).
+     * Known values: Onlyfans (1), Twitter (2), Reddit (3), Pornhub (4), ManyVids (5), Fansly (6).
      */
     externalSite?: number | null;
     /**
@@ -1244,6 +1244,33 @@ export function createLookupVideoFilehashesResponseFromDiscriminatorValue(parseN
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {OwnRatingItem}
+ */
+// @ts-ignore
+export function createOwnRatingItemFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoOwnRatingItem;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {OwnRatingResponse}
+ */
+// @ts-ignore
+export function createOwnRatingResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoOwnRatingResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {OwnRatingReview}
+ */
+// @ts-ignore
+export function createOwnRatingReviewFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoOwnRatingReview;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {PlatformDto}
  */
 // @ts-ignore
@@ -1303,6 +1330,33 @@ export function createRateLimitProblemResponseFromDiscriminatorValue(parseNode: 
 // @ts-ignore
 export function createRateLimitWindowStatusFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoRateLimitWindowStatus;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {RatingPageOfOwnRatingItem}
+ */
+// @ts-ignore
+export function createRatingPageOfOwnRatingItemFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoRatingPageOfOwnRatingItem;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {RatingSummary}
+ */
+// @ts-ignore
+export function createRatingSummaryFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoRatingSummary;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {RatingWriteResponse}
+ */
+// @ts-ignore
+export function createRatingWriteResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoRatingWriteResponse;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -1397,6 +1451,15 @@ export function createSearchPreDbByVideoResponseFromDiscriminatorValue(parseNode
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SetRatingRequest}
+ */
+// @ts-ignore
+export function createSetRatingRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSetRatingRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {SiteChangeDto}
  */
 // @ts-ignore
@@ -1456,6 +1519,15 @@ export function createSiteLinkDtoFromDiscriminatorValue(parseNode: ParseNode | u
 // @ts-ignore
 export function createSiteSummaryDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoSiteSummaryDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SubmitRatingReviewRequest}
+ */
+// @ts-ignore
+export function createSubmitRatingReviewRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSubmitRatingReviewRequest;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -3154,6 +3226,49 @@ export function deserializeIntoLookupVideoFilehashesResponse(lookupVideoFilehash
 }
 /**
  * The deserialization information for the current model
+ * @param OwnRatingItem The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoOwnRatingItem(ownRatingItem: Partial<OwnRatingItem> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "createdAtUtc": n => { ownRatingItem.createdAtUtc = n.getDateValue(); },
+        "id": n => { ownRatingItem.id = n.getGuidValue(); },
+        "review": n => { ownRatingItem.review = n.getObjectValue<OwnRatingReview>(createOwnRatingReviewFromDiscriminatorValue); },
+        "stars": n => { ownRatingItem.stars = n.getNumberValue(); },
+        "targetId": n => { ownRatingItem.targetId = n.getGuidValue(); },
+        "targetTitle": n => { ownRatingItem.targetTitle = n.getStringValue(); },
+        "targetType": n => { ownRatingItem.targetType = n.getEnumValue<RatingTargetType>(RatingTargetTypeObject); },
+        "updatedAtUtc": n => { ownRatingItem.updatedAtUtc = n.getDateValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param OwnRatingResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoOwnRatingResponse(ownRatingResponse: Partial<OwnRatingResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "rating": n => { ownRatingResponse.rating = n.getObjectValue<OwnRatingItem>(createOwnRatingItemFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param OwnRatingReview The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoOwnRatingReview(ownRatingReview: Partial<OwnRatingReview> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { ownRatingReview.id = n.getGuidValue(); },
+        "publishedAtUtc": n => { ownRatingReview.publishedAtUtc = n.getDateValue(); },
+        "state": n => { ownRatingReview.state = n.getEnumValue<OwnReviewState>(OwnReviewStateObject); },
+        "text": n => { ownRatingReview.text = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param PlatformDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3248,6 +3363,46 @@ export function deserializeIntoRateLimitWindowStatus(rateLimitWindowStatus: Part
         "remaining": n => { rateLimitWindowStatus.remaining = n.getNumberValue(); },
         "resetsInSeconds": n => { rateLimitWindowStatus.resetsInSeconds = n.getNumberValue(); },
         "used": n => { rateLimitWindowStatus.used = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param RatingPageOfOwnRatingItem The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoRatingPageOfOwnRatingItem(ratingPageOfOwnRatingItem: Partial<RatingPageOfOwnRatingItem> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "hasMore": n => { ratingPageOfOwnRatingItem.hasMore = n.getBooleanValue(); },
+        "items": n => { ratingPageOfOwnRatingItem.items = n.getCollectionOfObjectValues<OwnRatingItem>(createOwnRatingItemFromDiscriminatorValue); },
+        "nextCursor": n => { ratingPageOfOwnRatingItem.nextCursor = n.getStringValue(); },
+        "pageSize": n => { ratingPageOfOwnRatingItem.pageSize = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param RatingSummary The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoRatingSummary(ratingSummary: Partial<RatingSummary> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "averageRating": n => { ratingSummary.averageRating = n.getNumberValue(); },
+        "ratingCount": n => { ratingSummary.ratingCount = n.getNumberValue(); },
+        "reviewCount": n => { ratingSummary.reviewCount = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param RatingWriteResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoRatingWriteResponse(ratingWriteResponse: Partial<RatingWriteResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "ratingId": n => { ratingWriteResponse.ratingId = n.getGuidValue(); },
+        "reviewId": n => { ratingWriteResponse.reviewId = n.getGuidValue(); },
+        "reviewState": n => { ratingWriteResponse.reviewState = n.getStringValue(); },
     }
 }
 /**
@@ -3395,6 +3550,18 @@ export function deserializeIntoSearchPreDbByVideoResponse(searchPreDbByVideoResp
 }
 /**
  * The deserialization information for the current model
+ * @param SetRatingRequest The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSetRatingRequest(setRatingRequest: Partial<SetRatingRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "reviewText": n => { setRatingRequest.reviewText = n.getStringValue(); },
+        "stars": n => { setRatingRequest.stars = n.getNumberValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param SiteChangeDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3506,6 +3673,17 @@ export function deserializeIntoSiteSummaryDto(siteSummaryDto: Partial<SiteSummar
         "title": n => { siteSummaryDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { siteSummaryDto.updatedAtUtc = n.getDateValue(); },
         "url": n => { siteSummaryDto.url = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param SubmitRatingReviewRequest The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSubmitRatingReviewRequest(submitRatingReviewRequest: Partial<SubmitRatingReviewRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "text": n => { submitRatingReviewRequest.text = n.getStringValue(); },
     }
 }
 /**
@@ -5703,6 +5881,65 @@ export interface LookupVideoFilehashesResponse extends AdditionalDataHolder, Par
      */
     items?: VideoFilehashDto[] | null;
 }
+export interface OwnRatingItem extends AdditionalDataHolder, Parsable {
+    /**
+     * The createdAtUtc property
+     */
+    createdAtUtc?: Date | null;
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The review property
+     */
+    review?: OwnRatingReview | null;
+    /**
+     * The stars property
+     */
+    stars?: number | null;
+    /**
+     * The targetId property
+     */
+    targetId?: Guid | null;
+    /**
+     * The targetTitle property
+     */
+    targetTitle?: string | null;
+    /**
+     * Known values: Video (1), Actor (2).
+     */
+    targetType?: RatingTargetType | null;
+    /**
+     * The updatedAtUtc property
+     */
+    updatedAtUtc?: Date | null;
+}
+export interface OwnRatingResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The rating property
+     */
+    rating?: OwnRatingItem | null;
+}
+export interface OwnRatingReview extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: Guid | null;
+    /**
+     * The publishedAtUtc property
+     */
+    publishedAtUtc?: Date | null;
+    /**
+     * Known values: None (1), Published (2), Pending (3), Rejected (4), Hidden (5).
+     */
+    state?: OwnReviewState | null;
+    /**
+     * The text property
+     */
+    text?: string | null;
+}
+export type OwnReviewState = (typeof OwnReviewStateObject)[keyof typeof OwnReviewStateObject];
 export interface PlatformDto extends AdditionalDataHolder, Parsable {
     /**
      * The id property
@@ -5837,6 +6074,54 @@ export interface RateLimitWindowStatus extends AdditionalDataHolder, Parsable {
      * Number of request-budget units used by all API keys and MCP connections in the current window. REST calls cost one unit; MCP batch work counts its targets.
      */
     used?: number | null;
+}
+export interface RatingPageOfOwnRatingItem extends AdditionalDataHolder, Parsable {
+    /**
+     * The hasMore property
+     */
+    hasMore?: boolean | null;
+    /**
+     * The items property
+     */
+    items?: OwnRatingItem[] | null;
+    /**
+     * The nextCursor property
+     */
+    nextCursor?: string | null;
+    /**
+     * The pageSize property
+     */
+    pageSize?: number | null;
+}
+export type RatingSortBy = (typeof RatingSortByObject)[keyof typeof RatingSortByObject];
+export interface RatingSummary extends AdditionalDataHolder, Parsable {
+    /**
+     * The averageRating property
+     */
+    averageRating?: number | null;
+    /**
+     * The ratingCount property
+     */
+    ratingCount?: number | null;
+    /**
+     * The reviewCount property
+     */
+    reviewCount?: number | null;
+}
+export type RatingTargetType = (typeof RatingTargetTypeObject)[keyof typeof RatingTargetTypeObject];
+export interface RatingWriteResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The ratingId property
+     */
+    ratingId?: Guid | null;
+    /**
+     * The reviewId property
+     */
+    reviewId?: Guid | null;
+    /**
+     * The reviewState property
+     */
+    reviewState?: string | null;
 }
 export type ReleaseContentKind = (typeof ReleaseContentKindObject)[keyof typeof ReleaseContentKindObject];
 export type ReleaseEvidenceKind = (typeof ReleaseEvidenceKindObject)[keyof typeof ReleaseEvidenceKindObject];
@@ -7285,6 +7570,52 @@ export function serializeLookupVideoFilehashesResponse(writer: SerializationWrit
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param OwnRatingItem The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeOwnRatingItem(writer: SerializationWriter, ownRatingItem: Partial<OwnRatingItem> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ownRatingItem || isSerializingDerivedType) { return; }
+    writer.writeDateValue("createdAtUtc", ownRatingItem.createdAtUtc);
+    writer.writeGuidValue("id", ownRatingItem.id);
+    writer.writeObjectValue<OwnRatingReview>("review", ownRatingItem.review, serializeOwnRatingReview);
+    writer.writeNumberValue("stars", ownRatingItem.stars);
+    writer.writeGuidValue("targetId", ownRatingItem.targetId);
+    writer.writeStringValue("targetTitle", ownRatingItem.targetTitle);
+    writer.writeEnumValue<RatingTargetType>("targetType", ownRatingItem.targetType);
+    writer.writeDateValue("updatedAtUtc", ownRatingItem.updatedAtUtc);
+    writer.writeAdditionalData(ownRatingItem.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param OwnRatingResponse The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeOwnRatingResponse(writer: SerializationWriter, ownRatingResponse: Partial<OwnRatingResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ownRatingResponse || isSerializingDerivedType) { return; }
+    writer.writeObjectValue<OwnRatingItem>("rating", ownRatingResponse.rating, serializeOwnRatingItem);
+    writer.writeAdditionalData(ownRatingResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param OwnRatingReview The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeOwnRatingReview(writer: SerializationWriter, ownRatingReview: Partial<OwnRatingReview> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ownRatingReview || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("id", ownRatingReview.id);
+    writer.writeDateValue("publishedAtUtc", ownRatingReview.publishedAtUtc);
+    writer.writeEnumValue<OwnReviewState>("state", ownRatingReview.state);
+    writer.writeStringValue("text", ownRatingReview.text);
+    writer.writeAdditionalData(ownRatingReview.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param PlatformDto The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -7386,6 +7717,49 @@ export function serializeRateLimitWindowStatus(writer: SerializationWriter, rate
     writer.writeNumberValue("resetsInSeconds", rateLimitWindowStatus.resetsInSeconds);
     writer.writeNumberValue("used", rateLimitWindowStatus.used);
     writer.writeAdditionalData(rateLimitWindowStatus.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param RatingPageOfOwnRatingItem The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeRatingPageOfOwnRatingItem(writer: SerializationWriter, ratingPageOfOwnRatingItem: Partial<RatingPageOfOwnRatingItem> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ratingPageOfOwnRatingItem || isSerializingDerivedType) { return; }
+    writer.writeBooleanValue("hasMore", ratingPageOfOwnRatingItem.hasMore);
+    writer.writeCollectionOfObjectValues<OwnRatingItem>("items", ratingPageOfOwnRatingItem.items, serializeOwnRatingItem);
+    writer.writeStringValue("nextCursor", ratingPageOfOwnRatingItem.nextCursor);
+    writer.writeNumberValue("pageSize", ratingPageOfOwnRatingItem.pageSize);
+    writer.writeAdditionalData(ratingPageOfOwnRatingItem.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param RatingSummary The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeRatingSummary(writer: SerializationWriter, ratingSummary: Partial<RatingSummary> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ratingSummary || isSerializingDerivedType) { return; }
+    writer.writeNumberValue("averageRating", ratingSummary.averageRating);
+    writer.writeNumberValue("ratingCount", ratingSummary.ratingCount);
+    writer.writeNumberValue("reviewCount", ratingSummary.reviewCount);
+    writer.writeAdditionalData(ratingSummary.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param RatingWriteResponse The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeRatingWriteResponse(writer: SerializationWriter, ratingWriteResponse: Partial<RatingWriteResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!ratingWriteResponse || isSerializingDerivedType) { return; }
+    writer.writeGuidValue("ratingId", ratingWriteResponse.ratingId);
+    writer.writeGuidValue("reviewId", ratingWriteResponse.reviewId);
+    writer.writeStringValue("reviewState", ratingWriteResponse.reviewState);
+    writer.writeAdditionalData(ratingWriteResponse.additionalData);
 }
 /**
  * Serializes information the current object
@@ -7543,6 +7917,19 @@ export function serializeSearchPreDbByVideoResponse(writer: SerializationWriter,
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SetRatingRequest The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSetRatingRequest(writer: SerializationWriter, setRatingRequest: Partial<SetRatingRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!setRatingRequest || isSerializingDerivedType) { return; }
+    writer.writeStringValue("reviewText", setRatingRequest.reviewText);
+    writer.writeNumberValue("stars", setRatingRequest.stars);
+    writer.writeAdditionalData(setRatingRequest.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param SiteChangeDto The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -7661,6 +8048,18 @@ export function serializeSiteSummaryDto(writer: SerializationWriter, siteSummary
     writer.writeDateValue("updatedAtUtc", siteSummaryDto.updatedAtUtc);
     writer.writeStringValue("url", siteSummaryDto.url);
     writer.writeAdditionalData(siteSummaryDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SubmitRatingReviewRequest The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSubmitRatingReviewRequest(writer: SerializationWriter, submitRatingReviewRequest: Partial<SubmitRatingReviewRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!submitRatingReviewRequest || isSerializingDerivedType) { return; }
+    writer.writeStringValue("text", submitRatingReviewRequest.text);
+    writer.writeAdditionalData(submitRatingReviewRequest.additionalData);
 }
 /**
  * Serializes information the current object
@@ -8586,6 +8985,16 @@ export function serializeWantedVideoSummaryDto(writer: SerializationWriter, want
     writer.writeStringValue("videoTitle", wantedVideoSummaryDto.videoTitle);
     writer.writeAdditionalData(wantedVideoSummaryDto.additionalData);
 }
+export interface SetRatingRequest extends AdditionalDataHolder, Parsable {
+    /**
+     * The reviewText property
+     */
+    reviewText?: string | null;
+    /**
+     * The stars property
+     */
+    stars?: number | null;
+}
 /**
  * Summary of a single site.
  */
@@ -8797,6 +9206,12 @@ export interface SiteSummaryDto extends AdditionalDataHolder, Parsable {
      * Site URL.
      */
     url?: string | null;
+}
+export interface SubmitRatingReviewRequest extends AdditionalDataHolder, Parsable {
+    /**
+     * The text property
+     */
+    text?: string | null;
 }
 /**
  * Request body for submitting confirmed hash-to-video assignments.
@@ -9307,7 +9722,7 @@ export interface VideoChangeVideoDto extends AdditionalDataHolder, Parsable {
      */
     preNames?: VideoChangePreNameDto[] | null;
     /**
-     * Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 2 says true only for an active OnlyFans video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
+     * Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 3 says true only for an active OnlyFans or Fansly video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
      */
     previewEnrichmentEligible?: boolean | null;
     /**
@@ -9435,7 +9850,7 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
      */
     preNames?: VideoDetailPreNameDto[] | null;
     /**
-     * Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 2 says true only for an active OnlyFans video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
+     * Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 3 says true only for an active OnlyFans or Fansly video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
      */
     previewEnrichmentEligible?: boolean | null;
     /**
@@ -10317,6 +10732,30 @@ export const IdentifyFreshnessResultDto_statusObject = {
     Unchanged: "unchanged",
     Identified: "identified",
     Reidentify: "reidentify",
+} as const;
+/**
+ * Known values: None (1), Published (2), Pending (3), Rejected (4), Hidden (5).
+ */
+export const OwnReviewStateObject = {
+    None: "None",
+    Published: "Published",
+    Pending: "Pending",
+    Rejected: "Rejected",
+    Hidden: "Hidden",
+} as const;
+/**
+ * Known values: Date (1), Stars (2).
+ */
+export const RatingSortByObject = {
+    Date: "Date",
+    Stars: "Stars",
+} as const;
+/**
+ * Known values: Video (1), Actor (2).
+ */
+export const RatingTargetTypeObject = {
+    Video: "Video",
+    Actor: "Actor",
 } as const;
 /**
  * Known values: Single (0), Unknown (2).

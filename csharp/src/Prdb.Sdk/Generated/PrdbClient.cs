@@ -14,6 +14,7 @@ using Prdb.Sdk.Generated.IgnoredSites;
 using Prdb.Sdk.Generated.Platforms;
 using Prdb.Sdk.Generated.Predb;
 using Prdb.Sdk.Generated.RateLimit;
+using Prdb.Sdk.Generated.Ratings;
 using Prdb.Sdk.Generated.Releases;
 using Prdb.Sdk.Generated.Sites;
 using Prdb.Sdk.Generated.UserIdentity;
@@ -72,6 +73,11 @@ namespace Prdb.Sdk.Generated
         public global::Prdb.Sdk.Generated.RateLimit.RateLimitRequestBuilder RateLimit
         {
             get => new global::Prdb.Sdk.Generated.RateLimit.RateLimitRequestBuilder(PathParameters, RequestAdapter);
+        }
+        /// <summary>The ratings property</summary>
+        public global::Prdb.Sdk.Generated.Ratings.RatingsRequestBuilder Ratings
+        {
+            get => new global::Prdb.Sdk.Generated.Ratings.RatingsRequestBuilder(PathParameters, RequestAdapter);
         }
         /// <summary>The releases property</summary>
         public global::Prdb.Sdk.Generated.Releases.ReleasesRequestBuilder Releases

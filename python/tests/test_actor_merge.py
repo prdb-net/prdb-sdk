@@ -41,7 +41,7 @@ async def test_retained_actor_detail_and_batch_mapping(omit_mapping):
     async with httpx.AsyncClient(transport=httpx.MockTransport(respond)) as transport:
         client = create_client("test-key", base_url=ORIGIN, http_client=transport)
         status = ResponseStatusOption()
-        detail = await client.actors.by_id(source).get(
+        detail = await client.actors.by_actor_id(source).get(
             RequestConfiguration(options=[status])
         )
         assert status.status_code == 200

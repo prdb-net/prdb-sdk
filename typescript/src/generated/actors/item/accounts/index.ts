@@ -7,7 +7,7 @@ import { createCreatorAccountsResponseFromDiscriminatorValue, createProblemDetai
 import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
 
 /**
- * Builds and executes requests for operations under /actors/{id}/accounts
+ * Builds and executes requests for operations under /actors/{actor-id}/accounts
  */
 export interface AccountsRequestBuilder extends BaseRequestBuilder<AccountsRequestBuilder> {
     /**
@@ -31,7 +31,7 @@ export interface AccountsRequestBuilder extends BaseRequestBuilder<AccountsReque
 /**
  * Uri template for the request builder.
  */
-export const AccountsRequestBuilderUriTemplate = "{+baseurl}/actors/{id}/accounts";
+export const AccountsRequestBuilderUriTemplate = "{+baseurl}/actors/{actor%2Did}/accounts";
 /**
  * Metadata for all the requests in the request builder.
  */

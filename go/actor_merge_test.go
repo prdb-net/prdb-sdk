@@ -74,7 +74,7 @@ func TestRetainedActorDetailAndBatch(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			detail, err := client.Actors().ById(fixture.SourceID).Get(context.Background(), nil)
+			detail, err := client.Actors().ByActorId(fixture.SourceID).Get(context.Background(), nil)
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -32,14 +32,14 @@ namespace Prdb.Sdk.Generated.Actors
         }
         /// <summary>Gets an item from the Prdb.Sdk.Generated.actors.item collection</summary>
         /// <param name="position">Unique identifier of the item</param>
-        /// <returns>A <see cref="global::Prdb.Sdk.Generated.Actors.Item.ActorsItemRequestBuilder"/></returns>
-        public global::Prdb.Sdk.Generated.Actors.Item.ActorsItemRequestBuilder this[Guid position]
+        /// <returns>A <see cref="global::Prdb.Sdk.Generated.Actors.Item.ActorItemRequestBuilder"/></returns>
+        public global::Prdb.Sdk.Generated.Actors.Item.ActorItemRequestBuilder this[Guid position]
         {
             get
             {
                 var urlTplParams = new Dictionary<string, object>(PathParameters);
-                urlTplParams.Add("id", position);
-                return new global::Prdb.Sdk.Generated.Actors.Item.ActorsItemRequestBuilder(urlTplParams, RequestAdapter);
+                urlTplParams.Add("actor%2Did", position);
+                return new global::Prdb.Sdk.Generated.Actors.Item.ActorItemRequestBuilder(urlTplParams, RequestAdapter);
             }
         }
         /// <summary>

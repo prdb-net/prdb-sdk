@@ -29,7 +29,7 @@ for (const omitMapping of [false, true]) {
 			},
 		});
 		const status = new ResponseStatusOption();
-		const detail = await client.actors.byId(fixture.sourceId).get({ options: [status] });
+		const detail = await client.actors.byActorId(fixture.sourceId).get({ options: [status] });
 		assert.equal(status.statusCode, 200);
 		assert.equal(detail?.id, fixture.targetId);
 		assert.ok(detail?.requestedIds == null);

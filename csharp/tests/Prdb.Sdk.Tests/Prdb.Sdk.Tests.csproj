@@ -23,6 +23,7 @@
     <None Include="../../../tests/fixtures/release-resolution.json" Link="release-resolution.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../../../tests/fixtures/release-associations.json" Link="release-associations.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../../../tests/fixtures/preview-enrichment.json" Link="preview-enrichment.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../../tests/fixtures/ratings.json" Link="ratings.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

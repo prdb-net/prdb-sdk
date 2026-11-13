@@ -16,6 +16,7 @@ import (
     i3e114e7c134ceb685be92298fc8eda2d4b30b417a043cca0f4551397539030b9 "github.com/prdb-net/prdb-sdk/go/generated/actors"
     i430eee13c7b27847bc54f24a2cdb282c92bc999a01e83f02595b06eac67ef6f0 "github.com/prdb-net/prdb-sdk/go/generated/videos"
     i43cdd21d7774d170bd3df3b5df04e0c58154e3b02ff0d58006ec64d2cec86cf1 "github.com/prdb-net/prdb-sdk/go/generated/useridentity"
+    i51f6b98349f4a43d81b4cdc1e5f46f3f394a3ef2aca38868e070c1c6d8060755 "github.com/prdb-net/prdb-sdk/go/generated/ratings"
     i537320b434a4af28e291891946f3da7ffd8423775347e57d6efe1289158a2669 "github.com/prdb-net/prdb-sdk/go/generated/videouserimages"
     i5a95aa2dd443c596b67eb6c935fdb7f19de9e95e212751ae2fa3fd39d8d15bb4 "github.com/prdb-net/prdb-sdk/go/generated/favoritesites"
     i5b1119c4dd8bd41e0de622c16680465b305b2206d3d142461e25bde5c3eda914 "github.com/prdb-net/prdb-sdk/go/generated/predb"
@@ -88,6 +89,11 @@ func (m *PrdbClient) Predb()(*i5b1119c4dd8bd41e0de622c16680465b305b2206d3d142461
 // returns a *RateLimitRequestBuilder when successful
 func (m *PrdbClient) RateLimit()(*if74dbd27953d29efb807ca48dd3c81a558dddda8573335a7c84e57f024f32144.RateLimitRequestBuilder) {
     return if74dbd27953d29efb807ca48dd3c81a558dddda8573335a7c84e57f024f32144.NewRateLimitRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
+// Ratings the ratings property
+// returns a *RatingsRequestBuilder when successful
+func (m *PrdbClient) Ratings()(*i51f6b98349f4a43d81b4cdc1e5f46f3f394a3ef2aca38868e070c1c6d8060755.RatingsRequestBuilder) {
+    return i51f6b98349f4a43d81b4cdc1e5f46f3f394a3ef2aca38868e070c1c6d8060755.NewRatingsRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
 // Releases the releases property
 // returns a *ReleasesRequestBuilder when successful

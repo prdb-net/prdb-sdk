@@ -12,7 +12,7 @@ using System;
 namespace Prdb.Sdk.Generated.Actors.Item.Accounts
 {
     /// <summary>
-    /// Builds and executes requests for operations under \actors\{id}\accounts
+    /// Builds and executes requests for operations under \actors\{actor-id}\accounts
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class AccountsRequestBuilder : BaseRequestBuilder
@@ -22,7 +22,7 @@ namespace Prdb.Sdk.Generated.Actors.Item.Accounts
         /// </summary>
         /// <param name="pathParameters">Path parameters for the request</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public AccountsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/actors/{id}/accounts", pathParameters)
+        public AccountsRequestBuilder(Dictionary<string, object> pathParameters, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/actors/{actor%2Did}/accounts", pathParameters)
         {
         }
         /// <summary>
@@ -30,7 +30,7 @@ namespace Prdb.Sdk.Generated.Actors.Item.Accounts
         /// </summary>
         /// <param name="rawUrl">The raw URL to use for the request builder.</param>
         /// <param name="requestAdapter">The request adapter to use to execute the requests.</param>
-        public AccountsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/actors/{id}/accounts", rawUrl)
+        public AccountsRequestBuilder(string rawUrl, IRequestAdapter requestAdapter) : base(requestAdapter, "{+baseurl}/actors/{actor%2Did}/accounts", rawUrl)
         {
         }
         /// <summary>

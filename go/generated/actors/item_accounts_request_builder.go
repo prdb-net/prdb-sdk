@@ -9,14 +9,14 @@ import (
     ibd6e645a776717494d1d5787141076f1557418587bd7a4afc54fef213b93abb9 "github.com/prdb-net/prdb-sdk/go/generated/models"
 )
 
-// ItemAccountsRequestBuilder builds and executes requests for operations under \actors\{id}\accounts
+// ItemAccountsRequestBuilder builds and executes requests for operations under \actors\{actor-id}\accounts
 type ItemAccountsRequestBuilder struct {
     i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.BaseRequestBuilder
 }
 // NewItemAccountsRequestBuilderInternal instantiates a new ItemAccountsRequestBuilder and sets the default values.
 func NewItemAccountsRequestBuilderInternal(pathParameters map[string]string, requestAdapter i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.RequestAdapter)(*ItemAccountsRequestBuilder) {
     m := &ItemAccountsRequestBuilder{
-        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/actors/{id}/accounts", pathParameters),
+        BaseRequestBuilder: *i2ae4187f7daee263371cb1c977df639813ab50ffa529013b7437480d1ec0158f.NewBaseRequestBuilder(requestAdapter, "{+baseurl}/actors/{actor%2Did}/accounts", pathParameters),
     }
     return m
 }
