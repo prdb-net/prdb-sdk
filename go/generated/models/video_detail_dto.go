@@ -14,14 +14,18 @@ type VideoDetailDto struct {
     actors []VideoDetailActorDtoable
     // Stores additional data not described in the OpenAPI description found when deserializing. Can be used for serialization as well.
     additionalData map[string]any
+    // Another title for the same video, as a different source names it, or null when none is known. Atitle in its own right rather than a subtitle, at most 500 characters, and not matched by the titlesearch.
+    alternativeTitle *string
     // The createdAtUtc property
     createdAtUtc *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time
-    // Catalogue description of the video, if known.
+    // Catalogue description of the video, if known. At most 10,000 characters.
     description *string
     // How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.
     durationFileCount *int32
     // Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
     durationMs *int64
+    // Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or nullwhen none is recorded. Not derived from the files: `durationMs` is the duration measured overthe files prdb holds, and the two can legitimately differ.
+    durationSeconds *int32
     // How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
     durationSpreadMs *int64
     // The id property
@@ -40,6 +44,8 @@ type VideoDetailDto struct {
     site VideoDetailSiteDtoable
     // StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does notexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.
     stashdbSceneId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Keys of the video's active tags, sorted ordinally; empty when it carries none. `GET /tags` namesthem. A deactivated tag is not listed, and its removal reaches `GET /videos/changes`.
+    tags []string
     // The title property
     title *string
     // The updatedAtUtc property
@@ -67,12 +73,17 @@ func (m *VideoDetailDto) GetActors()([]VideoDetailActorDtoable) {
 func (m *VideoDetailDto) GetAdditionalData()(map[string]any) {
     return m.additionalData
 }
+// GetAlternativeTitle gets the alternativeTitle property value. Another title for the same video, as a different source names it, or null when none is known. Atitle in its own right rather than a subtitle, at most 500 characters, and not matched by the titlesearch.
+// returns a *string when successful
+func (m *VideoDetailDto) GetAlternativeTitle()(*string) {
+    return m.alternativeTitle
+}
 // GetCreatedAtUtc gets the createdAtUtc property value. The createdAtUtc property
 // returns a *Time when successful
 func (m *VideoDetailDto) GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time) {
     return m.createdAtUtc
 }
-// GetDescription gets the description property value. Catalogue description of the video, if known.
+// GetDescription gets the description property value. Catalogue description of the video, if known. At most 10,000 characters.
 // returns a *string when successful
 func (m *VideoDetailDto) GetDescription()(*string) {
     return m.description
@@ -86,6 +97,11 @@ func (m *VideoDetailDto) GetDurationFileCount()(*int32) {
 // returns a *int64 when successful
 func (m *VideoDetailDto) GetDurationMs()(*int64) {
     return m.durationMs
+}
+// GetDurationSeconds gets the durationSeconds property value. Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or nullwhen none is recorded. Not derived from the files: `durationMs` is the duration measured overthe files prdb holds, and the two can legitimately differ.
+// returns a *int32 when successful
+func (m *VideoDetailDto) GetDurationSeconds()(*int32) {
+    return m.durationSeconds
 }
 // GetDurationSpreadMs gets the durationSpreadMs property value. How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
 // returns a *int64 when successful
@@ -109,6 +125,16 @@ func (m *VideoDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
                 }
             }
             m.SetActors(res)
+        }
+        return nil
+    }
+    res["alternativeTitle"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetStringValue()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetAlternativeTitle(val)
         }
         return nil
     }
@@ -149,6 +175,16 @@ func (m *VideoDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         if val != nil {
             m.SetDurationMs(val)
+        }
+        return nil
+    }
+    res["durationSeconds"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetInt32Value()
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetDurationSeconds(val)
         }
         return nil
     }
@@ -254,6 +290,22 @@ func (m *VideoDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         return nil
     }
+    res["tags"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetCollectionOfPrimitiveValues("string")
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            res := make([]string, len(val))
+            for i, v := range val {
+                if v != nil {
+                    res[i] = *(v.(*string))
+                }
+            }
+            m.SetTags(res)
+        }
+        return nil
+    }
     res["title"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetStringValue()
         if err != nil {
@@ -316,6 +368,11 @@ func (m *VideoDetailDto) GetSite()(VideoDetailSiteDtoable) {
 func (m *VideoDetailDto) GetStashdbSceneId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.stashdbSceneId
 }
+// GetTags gets the tags property value. Keys of the video's active tags, sorted ordinally; empty when it carries none. `GET /tags` namesthem. A deactivated tag is not listed, and its removal reaches `GET /videos/changes`.
+// returns a []string when successful
+func (m *VideoDetailDto) GetTags()([]string) {
+    return m.tags
+}
 // GetTitle gets the title property value. The title property
 // returns a *string when successful
 func (m *VideoDetailDto) GetTitle()(*string) {
@@ -341,6 +398,12 @@ func (m *VideoDetailDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
         }
     }
     {
+        err := writer.WriteStringValue("alternativeTitle", m.GetAlternativeTitle())
+        if err != nil {
+            return err
+        }
+    }
+    {
         err := writer.WriteTimeValue("createdAtUtc", m.GetCreatedAtUtc())
         if err != nil {
             return err
@@ -360,6 +423,12 @@ func (m *VideoDetailDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
     }
     {
         err := writer.WriteInt64Value("durationMs", m.GetDurationMs())
+        if err != nil {
+            return err
+        }
+    }
+    {
+        err := writer.WriteInt32Value("durationSeconds", m.GetDurationSeconds())
         if err != nil {
             return err
         }
@@ -430,6 +499,12 @@ func (m *VideoDetailDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
             return err
         }
     }
+    if m.GetTags() != nil {
+        err := writer.WriteCollectionOfStringValues("tags", m.GetTags())
+        if err != nil {
+            return err
+        }
+    }
     {
         err := writer.WriteStringValue("title", m.GetTitle())
         if err != nil {
@@ -458,11 +533,15 @@ func (m *VideoDetailDto) SetActors(value []VideoDetailActorDtoable)() {
 func (m *VideoDetailDto) SetAdditionalData(value map[string]any)() {
     m.additionalData = value
 }
+// SetAlternativeTitle sets the alternativeTitle property value. Another title for the same video, as a different source names it, or null when none is known. Atitle in its own right rather than a subtitle, at most 500 characters, and not matched by the titlesearch.
+func (m *VideoDetailDto) SetAlternativeTitle(value *string)() {
+    m.alternativeTitle = value
+}
 // SetCreatedAtUtc sets the createdAtUtc property value. The createdAtUtc property
 func (m *VideoDetailDto) SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)() {
     m.createdAtUtc = value
 }
-// SetDescription sets the description property value. Catalogue description of the video, if known.
+// SetDescription sets the description property value. Catalogue description of the video, if known. At most 10,000 characters.
 func (m *VideoDetailDto) SetDescription(value *string)() {
     m.description = value
 }
@@ -473,6 +552,10 @@ func (m *VideoDetailDto) SetDurationFileCount(value *int32)() {
 // SetDurationMs sets the durationMs property value. Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
 func (m *VideoDetailDto) SetDurationMs(value *int64)() {
     m.durationMs = value
+}
+// SetDurationSeconds sets the durationSeconds property value. Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or nullwhen none is recorded. Not derived from the files: `durationMs` is the duration measured overthe files prdb holds, and the two can legitimately differ.
+func (m *VideoDetailDto) SetDurationSeconds(value *int32)() {
+    m.durationSeconds = value
 }
 // SetDurationSpreadMs sets the durationSpreadMs property value. How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
 func (m *VideoDetailDto) SetDurationSpreadMs(value *int64)() {
@@ -510,6 +593,10 @@ func (m *VideoDetailDto) SetSite(value VideoDetailSiteDtoable)() {
 func (m *VideoDetailDto) SetStashdbSceneId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.stashdbSceneId = value
 }
+// SetTags sets the tags property value. Keys of the video's active tags, sorted ordinally; empty when it carries none. `GET /tags` namesthem. A deactivated tag is not listed, and its removal reaches `GET /videos/changes`.
+func (m *VideoDetailDto) SetTags(value []string)() {
+    m.tags = value
+}
 // SetTitle sets the title property value. The title property
 func (m *VideoDetailDto) SetTitle(value *string)() {
     m.title = value
@@ -522,10 +609,12 @@ type VideoDetailDtoable interface {
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.AdditionalDataHolder
     i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable
     GetActors()([]VideoDetailActorDtoable)
+    GetAlternativeTitle()(*string)
     GetCreatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     GetDescription()(*string)
     GetDurationFileCount()(*int32)
     GetDurationMs()(*int64)
+    GetDurationSeconds()(*int32)
     GetDurationSpreadMs()(*int64)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetImages()([]VideoDetailImageDtoable)
@@ -535,13 +624,16 @@ type VideoDetailDtoable interface {
     GetReleaseDate()(*i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)
     GetSite()(VideoDetailSiteDtoable)
     GetStashdbSceneId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
+    GetTags()([]string)
     GetTitle()(*string)
     GetUpdatedAtUtc()(*i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)
     SetActors(value []VideoDetailActorDtoable)()
+    SetAlternativeTitle(value *string)()
     SetCreatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
     SetDescription(value *string)()
     SetDurationFileCount(value *int32)()
     SetDurationMs(value *int64)()
+    SetDurationSeconds(value *int32)()
     SetDurationSpreadMs(value *int64)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetImages(value []VideoDetailImageDtoable)()
@@ -551,6 +643,7 @@ type VideoDetailDtoable interface {
     SetReleaseDate(value *i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.DateOnly)()
     SetSite(value VideoDetailSiteDtoable)()
     SetStashdbSceneId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
+    SetTags(value []string)()
     SetTitle(value *string)()
     SetUpdatedAtUtc(value *i336074805fc853987abe6f7fe3ad97a6a6f3077a16391fec744f671a015fbd7e.Time)()
 }

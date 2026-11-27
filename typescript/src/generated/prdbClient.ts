@@ -24,6 +24,8 @@ import { ReleasesRequestBuilderNavigationMetadata, type ReleasesRequestBuilder }
 // @ts-ignore
 import { SitesRequestBuilderNavigationMetadata, SitesRequestBuilderRequestsMetadata, type SitesRequestBuilder } from './sites/index.js';
 // @ts-ignore
+import { TagsRequestBuilderRequestsMetadata, type TagsRequestBuilder } from './tags/index.js';
+// @ts-ignore
 import { type UserIdentityRequestBuilder, UserIdentityRequestBuilderRequestsMetadata } from './userIdentity/index.js';
 // @ts-ignore
 import { type VideoReleaseAssociationsRequestBuilder, VideoReleaseAssociationsRequestBuilderNavigationMetadata } from './videoReleaseAssociations/index.js';
@@ -127,6 +129,10 @@ export interface PrdbClient extends BaseRequestBuilder<PrdbClient> {
      */
     get sites(): SitesRequestBuilder;
     /**
+     * The tags property
+     */
+    get tags(): TagsRequestBuilder;
+    /**
      * The userIdentity property
      */
     get userIdentity(): UserIdentityRequestBuilder;
@@ -193,6 +199,9 @@ export const PrdbClientNavigationMetadata: Record<Exclude<keyof PrdbClient, Keys
     sites: {
         requestsMetadata: SitesRequestBuilderRequestsMetadata,
         navigationMetadata: SitesRequestBuilderNavigationMetadata,
+    },
+    tags: {
+        requestsMetadata: TagsRequestBuilderRequestsMetadata,
     },
     userIdentity: {
         requestsMetadata: UserIdentityRequestBuilderRequestsMetadata,

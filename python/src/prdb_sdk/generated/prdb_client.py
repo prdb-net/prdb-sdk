@@ -26,6 +26,7 @@ if TYPE_CHECKING:
     from .ratings.ratings_request_builder import RatingsRequestBuilder
     from .releases.releases_request_builder import ReleasesRequestBuilder
     from .sites.sites_request_builder import SitesRequestBuilder
+    from .tags.tags_request_builder import TagsRequestBuilder
     from .user_identity.user_identity_request_builder import UserIdentityRequestBuilder
     from .videos.videos_request_builder import VideosRequestBuilder
     from .video_release_associations.video_release_associations_request_builder import VideoReleaseAssociationsRequestBuilder
@@ -154,6 +155,15 @@ class PrdbClient(BaseRequestBuilder):
         from .sites.sites_request_builder import SitesRequestBuilder
 
         return SitesRequestBuilder(self.request_adapter, self.path_parameters)
+    
+    @property
+    def tags(self) -> TagsRequestBuilder:
+        """
+        The tags property
+        """
+        from .tags.tags_request_builder import TagsRequestBuilder
+
+        return TagsRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
     def user_identity(self) -> UserIdentityRequestBuilder:
