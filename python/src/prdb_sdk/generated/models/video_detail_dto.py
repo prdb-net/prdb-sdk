@@ -20,14 +20,18 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
 
     # The actors property
     actors: Optional[list[VideoDetailActorDto]] = None
+    # Another title for the same video, as a different source names it, or null when none is known. Atitle in its own right rather than a subtitle, at most 500 characters, and not matched by the titlesearch.
+    alternative_title: Optional[str] = None
     # The createdAtUtc property
     created_at_utc: Optional[datetime.datetime] = None
-    # Catalogue description of the video, if known.
+    # Catalogue description of the video, if known. At most 10,000 characters.
     description: Optional[str] = None
     # How many files the duration was taken over. The spread cannot be read without it — one overtwo files says far less than one over twenty. Null exactly when `durationMs` is null.
     duration_file_count: Optional[int] = None
     # Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
     duration_ms: Optional[int] = None
+    # Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or nullwhen none is recorded. Not derived from the files: `durationMs` is the duration measured overthe files prdb holds, and the two can legitimately differ.
+    duration_seconds: Optional[int] = None
     # How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
     duration_spread_ms: Optional[int] = None
     # The id property
@@ -46,6 +50,8 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
     site: Optional[VideoDetailSiteDto] = None
     # StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does notexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.
     stashdb_scene_id: Optional[UUID] = None
+    # Keys of the video's active tags, sorted ordinally; empty when it carries none. `GET /tags` namesthem. A deactivated tag is not listed, and its removal reaches `GET /videos/changes`.
+    tags: Optional[list[str]] = None
     # The title property
     title: Optional[str] = None
     # The updatedAtUtc property
@@ -81,10 +87,12 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
 
         fields: dict[str, Callable[[Any], None]] = {
             "actors": lambda n : setattr(self, 'actors', n.get_collection_of_object_values(VideoDetailActorDto)),
+            "alternativeTitle": lambda n : setattr(self, 'alternative_title', n.get_str_value()),
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
             "description": lambda n : setattr(self, 'description', n.get_str_value()),
             "durationFileCount": lambda n : setattr(self, 'duration_file_count', n.get_int_value()),
             "durationMs": lambda n : setattr(self, 'duration_ms', n.get_int_value()),
+            "durationSeconds": lambda n : setattr(self, 'duration_seconds', n.get_int_value()),
             "durationSpreadMs": lambda n : setattr(self, 'duration_spread_ms', n.get_int_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "images": lambda n : setattr(self, 'images', n.get_collection_of_object_values(VideoDetailImageDto)),
@@ -94,6 +102,7 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
             "releaseDate": lambda n : setattr(self, 'release_date', n.get_date_value()),
             "site": lambda n : setattr(self, 'site', n.get_object_value(VideoDetailSiteDto)),
             "stashdbSceneId": lambda n : setattr(self, 'stashdb_scene_id', n.get_uuid_value()),
+            "tags": lambda n : setattr(self, 'tags', n.get_collection_of_primitive_values(str)),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
             "updatedAtUtc": lambda n : setattr(self, 'updated_at_utc', n.get_datetime_value()),
         }
@@ -108,10 +117,12 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
         if writer is None:
             raise TypeError("writer cannot be null.")
         writer.write_collection_of_object_values("actors", self.actors)
+        writer.write_str_value("alternativeTitle", self.alternative_title)
         writer.write_datetime_value("createdAtUtc", self.created_at_utc)
         writer.write_str_value("description", self.description)
         writer.write_int_value("durationFileCount", self.duration_file_count)
         writer.write_int_value("durationMs", self.duration_ms)
+        writer.write_int_value("durationSeconds", self.duration_seconds)
         writer.write_int_value("durationSpreadMs", self.duration_spread_ms)
         writer.write_uuid_value("id", self.id)
         writer.write_collection_of_object_values("images", self.images)
@@ -121,6 +132,7 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
         writer.write_date_value("releaseDate", self.release_date)
         writer.write_object_value("site", self.site)
         writer.write_uuid_value("stashdbSceneId", self.stashdb_scene_id)
+        writer.write_collection_of_primitive_values("tags", self.tags)
         writer.write_str_value("title", self.title)
         writer.write_datetime_value("updatedAtUtc", self.updated_at_utc)
         writer.write_additional_data_value(self.additional_data)

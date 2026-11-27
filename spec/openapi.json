@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "prdb Public API",
-    "description": "Read and write access to the prdb catalogue: videos, actors, sites, scene pre-database\nreleases, file hashes and the per-user lists built on top of them.\n\nAuthenticate every request except the health probe with an API key in the `X-Api-Key`\nheader. API access is part of the paid subscription tiers; requests are rate limited per\naccount and `GET /rate-limit` reports the remaining budget.\n\nEvery authenticated endpoint can answer `403` when the account has no subscription tier that\nincludes API access, `429` when the hourly or monthly budget is spent, and `503` while rate\nlimiting itself is unavailable. The API serves no content it cannot meter, so treat `503`\nas retryable rather than as a permission problem.\n\nEndpoints named `/{resource}/changes` are delta feeds: they return the current state of\nrows changed since a cursor, including deletion tombstones, rather than a full history of\nevery mutation. `/videos/changes` and `/sites/changes` support a full baseline with\n`since=0001-01-01T00:00:00Z` and include edits to nested catalog content. Their deletion\ntombstones are retained indefinitely (at least 90 days); a consumer older than any future\nfinite retention window must rebuild its baseline. Pass both fields of `nextCursor` back\nverbatim. When a page is empty, persist `serverTimeUtc` as `since` and clear `sinceId`.\n\nEvery feed reads two minutes behind the server clock: a row is returned once its\n`updatedAtUtc` is at least that old, and `serverTimeUtc` is the server clock minus that\ndelay. A writer stamps a row before it commits it, so a feed that read up to the present\ncould hand out a cursor beyond a row that is not visible yet; the delay keeps such a row\nahead of every cursor as long as it commits within two minutes of its timestamp. Changes\ntherefore reach a consumer up to two minutes later than they are made.\n\n### Media metadata\n\nA file's technical profile — duration, container, bit rate, video and audio codec,\nresolution, frame rate and channel count — is submitted by the clients that probed the\nfile, aggregated per file, and returned on every filehash payload. Each field is\nindependently optional: a client may report the duration and withhold the frame rate, and\na field nobody has reported is `null` rather than zero.\n\nTwo properties of it are easy to get wrong when consuming or re-deriving them:\n\n- **`frameRate` is a rational as measured, never a decimal.** `24000/1001`, not `23.976`.\n  Rounding merges rates that are not the same one, and for a variable-rate file the value\n  is a per-file average whose large denominator is the only sign it is not a constant\n  rate. Treat a large denominator as \"variable\" rather than as a rate.\n- **`width` and `height` are as stored and are not ordered.** Portrait video is ordinary,\n  so the larger of the two is not \"the resolution\" and a quality label derived from it is\n  wrong for a substantial share of real files.\n\nOn a video, `durationMs` is the **consensus** across the files known for it: a median, not\nan average, because durations differ legitimately between cuts, re-encodes and trailers,\nand one short outlier would move an average off the value the real files agree on. It\ncomes with `durationSpreadMs` — the median absolute deviation, where a large value means\nseveral versions are in circulation — and `durationFileCount`, without which the spread\ncannot be read. All three are `null` until enough independent submitters have reported a\nduration.\n\nResolution, codec and bit rate deliberately have no video-level value. Their aggregate is\nthe distribution in `qualityOverview`, which counts a video's files per resolution and per\ncodec — \"known in 1080p and 2160p\" is a true statement where a single resolution on the\nvideo would be a guess.\n\n### Perceptual hashes\n\nEvery endpoint that accepts a `pHash` expects a 64-bit perceptual hash as 16 hexadecimal\ncharacters, in either case; values are stored and returned uppercase. There is one\nprocedure for computing it — the one Stash uses — and a value produced any other way is\nnot comparable with the rest of the column, which nothing in the value itself reveals.\n\nSample 25 frames across the middle 90% of the runtime, one per timestamp, with the seek\nplaced **before** the input:\n`ffmpeg -loglevel error -y -ss <t> -i <file> -frames:v 1 -vf scale=160:-2 -c:v bmp -f rawvideo -`.\nAssemble them left to right and top to bottom into a 5x5 montage, scale that to 64x64 with\n`github.com/nfnt/resize`'s bilinear filter — whose support scales with the downscale\nfactor, so it is not four-neighbour interpolation and no other library substitutes for it\n— convert to luminance with 0.299/0.587/0.114, apply an unscaled DCT-II, and keep the\ntop-left 8x8 block row-major. Set the bit for every coefficient strictly above\n`goimagehash`'s `MedianOfPixels` threshold, most significant bit first, keeping the DC\ncoefficient. `0000000000000000` is a valid hash, not an error code.\n\n`pHash` values are matched for **equality**. Hamming-distance matching is not implemented.\n\nThe summary above is not enough to implement from, and it is not meant to be. The\nnormative specification — the exact resampler arithmetic, the threshold's quickselect\n(which is not a median), the DCT divisor tables, and test vectors at three levels — is\npublished at <https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing.md>, with\nthe vectors as data at\n<https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing-vectors.json>.\n\nFor .NET there is an implementation of it, the `Prdb.Hashing` package, which also computes\nthe `osHash`.",
+    "description": "Read and write access to the prdb catalogue: videos, actors, sites, scene pre-database\nreleases, file hashes and the per-user lists built on top of them.\n\nAuthenticate every request except the health probe with an API key in the `X-Api-Key`\nheader. API access is part of the paid subscription tiers; requests are rate limited per\naccount and `GET /rate-limit` reports the remaining budget.\n\nEvery authenticated endpoint can answer `403` when the account has no subscription tier that\nincludes API access, `429` when the hourly or monthly budget is spent, and `503` while rate\nlimiting itself is unavailable. The API serves no content it cannot meter, so treat `503`\nas retryable rather than as a permission problem.\n\nEndpoints named `/{resource}/changes` are delta feeds: they return the current state of\nrows changed since a cursor, including deletion tombstones, rather than a full history of\nevery mutation. `/videos/changes` and `/sites/changes` support a full baseline with\n`since=0001-01-01T00:00:00Z` and include edits to nested catalog content. Their deletion\ntombstones are retained indefinitely (at least 90 days); a consumer older than any future\nfinite retention window must rebuild its baseline. Pass both fields of `nextCursor` back\nverbatim. When a page is empty, persist `serverTimeUtc` as `since` and clear `sinceId`.\n\nEvery feed reads two minutes behind the server clock: a row is returned once its\n`updatedAtUtc` is at least that old, and `serverTimeUtc` is the server clock minus that\ndelay. A writer stamps a row before it commits it, so a feed that read up to the present\ncould hand out a cursor beyond a row that is not visible yet; the delay keeps such a row\nahead of every cursor as long as it commits within two minutes of its timestamp. Changes\ntherefore reach a consumer up to two minutes later than they are made.\n\n### Media metadata\n\nA file's technical profile — duration, container, bit rate, video and audio codec,\nresolution, frame rate and channel count — is submitted by the clients that probed the\nfile, aggregated per file, and returned on every filehash payload. Each field is\nindependently optional: a client may report the duration and withhold the frame rate, and\na field nobody has reported is `null` rather than zero.\n\nTwo properties of it are easy to get wrong when consuming or re-deriving them:\n\n- **`frameRate` is a rational as measured, never a decimal.** `24000/1001`, not `23.976`.\n  Rounding merges rates that are not the same one, and for a variable-rate file the value\n  is a per-file average whose large denominator is the only sign it is not a constant\n  rate. Treat a large denominator as \"variable\" rather than as a rate.\n- **`width` and `height` are as stored and are not ordered.** Portrait video is ordinary,\n  so the larger of the two is not \"the resolution\" and a quality label derived from it is\n  wrong for a substantial share of real files.\n\nOn a video, `durationMs` is the **consensus** across the files known for it: a median, not\nan average, because durations differ legitimately between cuts, re-encodes and trailers,\nand one short outlier would move an average off the value the real files agree on. It\ncomes with `durationSpreadMs` — the median absolute deviation, where a large value means\nseveral versions are in circulation — and `durationFileCount`, without which the spread\ncannot be read. All three are `null` until enough independent submitters have reported a\nduration. `durationSeconds` is a different statement: the catalogue duration a source or an\nadministrator gives for the video, which the files need not match. Neither is derived from\nthe other.\n\nResolution, codec and bit rate deliberately have no video-level value. Their aggregate is\nthe distribution in `qualityOverview`, which counts a video's files per resolution and per\ncodec — \"known in 1080p and 2160p\" is a true statement where a single resolution on the\nvideo would be a guess.\n\n### Perceptual hashes\n\nEvery endpoint that accepts a `pHash` expects a 64-bit perceptual hash as 16 hexadecimal\ncharacters, in either case; values are stored and returned uppercase. There is one\nprocedure for computing it — the one Stash uses — and a value produced any other way is\nnot comparable with the rest of the column, which nothing in the value itself reveals.\n\nSample 25 frames across the middle 90% of the runtime, one per timestamp, with the seek\nplaced **before** the input:\n`ffmpeg -loglevel error -y -ss <t> -i <file> -frames:v 1 -vf scale=160:-2 -c:v bmp -f rawvideo -`.\nAssemble them left to right and top to bottom into a 5x5 montage, scale that to 64x64 with\n`github.com/nfnt/resize`'s bilinear filter — whose support scales with the downscale\nfactor, so it is not four-neighbour interpolation and no other library substitutes for it\n— convert to luminance with 0.299/0.587/0.114, apply an unscaled DCT-II, and keep the\ntop-left 8x8 block row-major. Set the bit for every coefficient strictly above\n`goimagehash`'s `MedianOfPixels` threshold, most significant bit first, keeping the DC\ncoefficient. `0000000000000000` is a valid hash, not an error code.\n\n`pHash` values are matched for **equality**. Hamming-distance matching is not implemented.\n\nThe summary above is not enough to implement from, and it is not meant to be. The\nnormative specification — the exact resampler arithmetic, the threshold's quickselect\n(which is not a median), the DCT divisor tables, and test vectors at three levels — is\npublished at <https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing.md>, with\nthe vectors as data at\n<https://github.com/prdb-net/prdb-sdk/blob/main/docs/video-hashing-vectors.json>.\n\nFor .NET there is an implementation of it, the `Prdb.Hashing` package, which also computes\nthe `osHash`.",
     "license": {
       "name": "Proprietary",
       "url": "https://prdb.net"
@@ -1557,7 +1557,7 @@
           "Videos"
         ],
         "summary": "List videos",
-        "description": "Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Requires API key authentication.",
+        "description": "Returns a paged list of videos. Supports filtering by site ID, actor ID, creation timestamp, and searching by video title or site title. Each entry carries the consensus duration across the files known for the video — durationMs with durationSpreadMs and durationFileCount — or null where too few independent submitters have reported one. The per-file profile and the quality overview are not in the summary; fetch the video or its filehashes for those. Each entry also carries the catalogue duration in seconds (durationSeconds), an alternativeTitle and the keys of its active tags. Requires API key authentication.",
         "operationId": "ListVideos",
         "parameters": [
           {
@@ -2106,7 +2106,7 @@
           "Videos"
         ],
         "summary": "Get videos by IDs",
-        "description": "Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Each video carries its consensus duration and its qualityOverview on the same terms as the single-video endpoint; see Media metadata in the API description. Requires API key authentication.",
+        "description": "Returns full details for up to 50 videos by their IDs. IDs that do not exist are silently omitted from the response. Each video carries its consensus duration and its qualityOverview on the same terms as the single-video endpoint; see Media metadata in the API description. Each also carries durationSeconds, alternativeTitle and its tag keys, as the single-video endpoint does. Requires API key authentication.",
         "operationId": "GetVideosByIds",
         "requestBody": {
           "content": {
@@ -2215,7 +2215,7 @@
           "Videos"
         ],
         "summary": "Get video by ID",
-        "description": "Returns full details for a single video, including site, network, images, alternative titles, and actors with their images. Carries the consensus duration across the files known for the video (durationMs, with durationSpreadMs and durationFileCount saying how far those files disagree and how many there were), and qualityOverview, which counts the video's files per resolution and per codec. The duration fields are null until enough independent submitters have reported one, and the overview is empty while no file has been probed. See Media metadata in the API description. Requires API key authentication.",
+        "description": "Returns full details for a single video, including site, network, images, scene release names (preNames), and actors with their images. Carries the consensus duration across the files known for the video (durationMs, with durationSpreadMs and durationFileCount saying how far those files disagree and how many there were), and qualityOverview, which counts the video's files per resolution and per codec. The duration fields are null until enough independent submitters have reported one, and the overview is empty while no file has been probed. See Media metadata in the API description. Also carries the catalogue duration in seconds (durationSeconds, as a source or an administrator states it, independent of the measured durationMs), an alternativeTitle, and tags, the keys of the video's active tags (GET /tags names them). Requires API key authentication.",
         "operationId": "GetVideoById",
         "parameters": [
           {
@@ -3091,7 +3091,7 @@
           "Videos"
         ],
         "summary": "Get incremental video changes",
-        "description": "Returns a seek-paged delta feed of video rows ordered by updatedAtUtc ascending, then video ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Requires API key authentication.",
+        "description": "Returns a seek-paged delta feed of video rows ordered by updatedAtUtc ascending, then video ID ascending. Includes full current payloads and minimal deletion tombstones. Use since=0001-01-01T00:00:00Z for a baseline. Tombstones are retained indefinitely (at least 90 days); a consumer offline longer than the retention period must take a new baseline. Use since and the returned nextCursor to continue incrementally. Page size defaults to 100 and is limited to 1000. A row appears once its updatedAtUtc is two minutes old, so one that commits shortly after its timestamp is not skipped. Every page carries serverTimeUtc, the server clock minus that delay and never older than a row on the page; persist it as the next since when items is empty. Tagging or untagging a video, deactivating one of its tags, and a change of its alternative title or catalogue duration move the video in this feed. Requires API key authentication.",
         "operationId": "GetVideoChanges",
         "parameters": [
           {
@@ -3603,6 +3603,88 @@
                   "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The account has no subscription tier that includes API access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The hourly or monthly quota is spent; carries a `Retry-After` header with the number of seconds to wait.",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds to wait before retrying.",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Rate limit enforcement is unavailable, so the request was refused rather than served unmetered. Temporary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
+    "/tags": {
+      "get": {
+        "tags": [
+          "Tags"
+        ],
+        "summary": "List video tags.",
+        "description": "Returns the active video tag vocabulary in one response, sorted by name: each tag's stable key and its display name. Video payloads carry only the keys of their active tags in tags; resolve the names here. A key never changes, while a name may. A deactivated tag disappears from this list and from every video carrying it, and those videos reach GET /videos/changes.",
+        "operationId": "ListTags",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListTagsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": { }
             }
           },
           "403": {
@@ -11363,6 +11445,22 @@
         },
         "description": "Paged list of sites."
       },
+      "ListTagsResponse": {
+        "required": [
+          "items"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagDto"
+            },
+            "description": "Every active tag, sorted by name. The vocabulary is curated and small, so it is not paged."
+          }
+        },
+        "description": "The active video tag vocabulary."
+      },
       "ListVideosResponse": {
         "required": [
           "items",
@@ -13092,6 +13190,24 @@
           }
         }
       },
+      "TagDto": {
+        "required": [
+          "key",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Stable public identity of the tag: a lower-case slug of `a-z`, `0-9` and `-`, at most 64\ncharacters, never changed once the tag exists. Video payloads carry this value in `tags`."
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the tag, at most 100 characters. Unlike the key, it may change."
+          }
+        },
+        "description": "A term of the curated video tag vocabulary."
+      },
       "UnlinkedVideoFilehashesResponse": {
         "required": [
           "items",
@@ -13567,14 +13683,17 @@
           "mergedIntoId",
           "id",
           "title",
+          "alternativeTitle",
           "previewEnrichmentEligible",
           "createdAtUtc",
           "updatedAtUtc",
           "site",
+          "durationSeconds",
           "qualityOverview",
           "images",
           "preNames",
-          "actors"
+          "actors",
+          "tags"
         ],
         "type": "object",
         "properties": {
@@ -13600,9 +13719,14 @@
             "type": "string",
             "nullable": true
           },
+          "alternativeTitle": {
+            "type": "string",
+            "description": "Another title for the same video, as a different source names it, or null when none is known. A\ntitle in its own right rather than a subtitle, at most 500 characters, and not matched by the title\nsearch. Tombstones carry null.",
+            "nullable": true
+          },
           "description": {
             "type": "string",
-            "description": "Catalogue description of the video, if known.",
+            "description": "Catalogue description of the video, if known. At most 10,000 characters.",
             "nullable": true
           },
           "stashdbSceneId": {
@@ -13634,6 +13758,12 @@
                 "$ref": "#/components/schemas/VideoChangeSiteDto"
               }
             ],
+            "nullable": true
+          },
+          "durationSeconds": {
+            "type": "integer",
+            "description": "Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or null\nwhen none is recorded. Not derived from the files: `durationMs` is the duration measured over\nthe files prdb holds, and the two can legitimately differ. Tombstones carry null.",
+            "format": "int32",
             "nullable": true
           },
           "durationMs": {
@@ -13675,6 +13805,13 @@
             "items": {
               "$ref": "#/components/schemas/VideoChangeActorDto"
             }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Keys of the video's active tags, sorted ordinally; empty when it carries none, and on tombstones.\n`GET /tags` names them. Tagging or untagging a video, and deactivating one of its tags, moves the\nvideo in this feed."
           }
         }
       },
@@ -13770,14 +13907,17 @@
         "required": [
           "id",
           "title",
+          "alternativeTitle",
           "previewEnrichmentEligible",
           "createdAtUtc",
           "updatedAtUtc",
           "site",
+          "durationSeconds",
           "qualityOverview",
           "images",
           "preNames",
-          "actors"
+          "actors",
+          "tags"
         ],
         "type": "object",
         "properties": {
@@ -13788,9 +13928,14 @@
           "title": {
             "type": "string"
           },
+          "alternativeTitle": {
+            "type": "string",
+            "description": "Another title for the same video, as a different source names it, or null when none is known. A\ntitle in its own right rather than a subtitle, at most 500 characters, and not matched by the title\nsearch.",
+            "nullable": true
+          },
           "description": {
             "type": "string",
-            "description": "Catalogue description of the video, if known.",
+            "description": "Catalogue description of the video, if known. At most 10,000 characters.",
             "nullable": true
           },
           "stashdbSceneId": {
@@ -13818,6 +13963,12 @@
           },
           "site": {
             "$ref": "#/components/schemas/VideoDetailSiteDto"
+          },
+          "durationSeconds": {
+            "type": "integer",
+            "description": "Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or null\nwhen none is recorded. Not derived from the files: `durationMs` is the duration measured over\nthe files prdb holds, and the two can legitimately differ.",
+            "format": "int32",
+            "nullable": true
           },
           "durationMs": {
             "type": "integer",
@@ -13858,6 +14009,13 @@
             "items": {
               "$ref": "#/components/schemas/VideoDetailActorDto"
             }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Keys of the video's active tags, sorted ordinally; empty when it carries none. `GET /tags` names\nthem. A deactivated tag is not listed, and its removal reaches `GET /videos/changes`."
           }
         }
       },
@@ -14543,11 +14701,14 @@
           "accountHandle",
           "id",
           "title",
+          "alternativeTitle",
           "siteId",
           "sitePublicId",
           "siteTitle",
           "createdAtUtc",
-          "actors"
+          "durationSeconds",
+          "actors",
+          "tags"
         ],
         "type": "object",
         "properties": {
@@ -14581,9 +14742,14 @@
             "type": "string",
             "description": "Video title."
           },
+          "alternativeTitle": {
+            "type": "string",
+            "description": "Another title for the same video, as a different source names it, or null when none is known. A\ntitle in its own right rather than a subtitle, at most 500 characters, and not matched by the title\nsearch.",
+            "nullable": true
+          },
           "description": {
             "type": "string",
-            "description": "Catalogue description of the video, if known.",
+            "description": "Catalogue description of the video, if known. At most 10,000 characters.",
             "nullable": true
           },
           "siteId": {
@@ -14616,6 +14782,12 @@
             "description": "Timestamp when the video was created in PRDB.",
             "format": "date-time"
           },
+          "durationSeconds": {
+            "type": "integer",
+            "description": "Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or null\nwhen none is recorded. Not derived from the files: `durationMs` is the duration measured over\nthe files prdb holds, and the two can legitimately differ.",
+            "format": "int32",
+            "nullable": true
+          },
           "durationMs": {
             "type": "integer",
             "description": "Consensus duration in milliseconds across the files prdb holds for this video, or null while\ntoo few independent submitters have reported one. A median over the video's files, so a\ntrailer submitted under the same video does not move it.",
@@ -14640,6 +14812,13 @@
               "$ref": "#/components/schemas/VideoSummaryActorDto"
             },
             "description": "Actors appearing in this video."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Keys of the video's active tags, sorted ordinally; empty when it carries none. `GET /tags` names\nthem."
           }
         },
         "description": "Summary of a single video."
@@ -15120,6 +15299,10 @@
     {
       "name": "Platforms",
       "description": "Publishing platforms with stable catalogue UUIDs, distinct from studio-group Networks."
+    },
+    {
+      "name": "Tags",
+      "description": "The curated video tag vocabulary: stable keys with display names. Video payloads carry the keys of their active tags."
     },
     {
       "name": "Sites",

@@ -1208,6 +1208,15 @@ export function createListSitesResponseFromDiscriminatorValue(parseNode: ParseNo
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ListTagsResponse}
+ */
+// @ts-ignore
+export function createListTagsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoListTagsResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {ListVideosResponse}
  */
 // @ts-ignore
@@ -1582,6 +1591,15 @@ export function createSubmitVideoUserImageConflictProblemDetailsFromDiscriminato
 // @ts-ignore
 export function createSubmitVideoUserImageResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoSubmitVideoUserImageResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {TagDto}
+ */
+// @ts-ignore
+export function createTagDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoTagDto;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -3166,6 +3184,17 @@ export function deserializeIntoListSitesResponse(listSitesResponse: Partial<List
 }
 /**
  * The deserialization information for the current model
+ * @param ListTagsResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoListTagsResponse(listTagsResponse: Partial<ListTagsResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "items": n => { listTagsResponse.items = n.getCollectionOfObjectValues<TagDto>(createTagDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param ListVideosResponse The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3779,6 +3808,18 @@ export function deserializeIntoSubmitVideoUserImageResponse(submitVideoUserImage
 }
 /**
  * The deserialization information for the current model
+ * @param TagDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoTagDto(tagDto: Partial<TagDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "key": n => { tagDto.key = n.getStringValue(); },
+        "name": n => { tagDto.name = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param UnlinkedVideoFilehashesResponse The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -4012,11 +4053,13 @@ export function deserializeIntoVideoChangeSiteDto(videoChangeSiteDto: Partial<Vi
 export function deserializeIntoVideoChangeVideoDto(videoChangeVideoDto: Partial<VideoChangeVideoDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "actors": n => { videoChangeVideoDto.actors = n.getCollectionOfObjectValues<VideoChangeActorDto>(createVideoChangeActorDtoFromDiscriminatorValue); },
+        "alternativeTitle": n => { videoChangeVideoDto.alternativeTitle = n.getStringValue(); },
         "createdAtUtc": n => { videoChangeVideoDto.createdAtUtc = n.getDateValue(); },
         "deletedAtUtc": n => { videoChangeVideoDto.deletedAtUtc = n.getDateValue(); },
         "description": n => { videoChangeVideoDto.description = n.getStringValue(); },
         "durationFileCount": n => { videoChangeVideoDto.durationFileCount = n.getNumberValue(); },
         "durationMs": n => { videoChangeVideoDto.durationMs = n.getNumberValue(); },
+        "durationSeconds": n => { videoChangeVideoDto.durationSeconds = n.getNumberValue(); },
         "durationSpreadMs": n => { videoChangeVideoDto.durationSpreadMs = n.getNumberValue(); },
         "id": n => { videoChangeVideoDto.id = n.getGuidValue(); },
         "images": n => { videoChangeVideoDto.images = n.getCollectionOfObjectValues<VideoChangeImageDto>(createVideoChangeImageDtoFromDiscriminatorValue); },
@@ -4028,6 +4071,7 @@ export function deserializeIntoVideoChangeVideoDto(videoChangeVideoDto: Partial<
         "releaseDate": n => { videoChangeVideoDto.releaseDate = n.getDateOnlyValue(); },
         "site": n => { videoChangeVideoDto.site = n.getObjectValue<VideoChangeSiteDto>(createVideoChangeSiteDtoFromDiscriminatorValue); },
         "stashdbSceneId": n => { videoChangeVideoDto.stashdbSceneId = n.getGuidValue(); },
+        "tags": n => { videoChangeVideoDto.tags = n.getCollectionOfPrimitiveValues<string>("string"); },
         "title": n => { videoChangeVideoDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { videoChangeVideoDto.updatedAtUtc = n.getDateValue(); },
     }
@@ -4084,10 +4128,12 @@ export function deserializeIntoVideoDetailActorImageDto(videoDetailActorImageDto
 export function deserializeIntoVideoDetailDto(videoDetailDto: Partial<VideoDetailDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
     return {
         "actors": n => { videoDetailDto.actors = n.getCollectionOfObjectValues<VideoDetailActorDto>(createVideoDetailActorDtoFromDiscriminatorValue); },
+        "alternativeTitle": n => { videoDetailDto.alternativeTitle = n.getStringValue(); },
         "createdAtUtc": n => { videoDetailDto.createdAtUtc = n.getDateValue(); },
         "description": n => { videoDetailDto.description = n.getStringValue(); },
         "durationFileCount": n => { videoDetailDto.durationFileCount = n.getNumberValue(); },
         "durationMs": n => { videoDetailDto.durationMs = n.getNumberValue(); },
+        "durationSeconds": n => { videoDetailDto.durationSeconds = n.getNumberValue(); },
         "durationSpreadMs": n => { videoDetailDto.durationSpreadMs = n.getNumberValue(); },
         "id": n => { videoDetailDto.id = n.getGuidValue(); },
         "images": n => { videoDetailDto.images = n.getCollectionOfObjectValues<VideoDetailImageDto>(createVideoDetailImageDtoFromDiscriminatorValue); },
@@ -4097,6 +4143,7 @@ export function deserializeIntoVideoDetailDto(videoDetailDto: Partial<VideoDetai
         "releaseDate": n => { videoDetailDto.releaseDate = n.getDateOnlyValue(); },
         "site": n => { videoDetailDto.site = n.getObjectValue<VideoDetailSiteDto>(createVideoDetailSiteDtoFromDiscriminatorValue); },
         "stashdbSceneId": n => { videoDetailDto.stashdbSceneId = n.getGuidValue(); },
+        "tags": n => { videoDetailDto.tags = n.getCollectionOfPrimitiveValues<string>("string"); },
         "title": n => { videoDetailDto.title = n.getStringValue(); },
         "updatedAtUtc": n => { videoDetailDto.updatedAtUtc = n.getDateValue(); },
     }
@@ -4389,10 +4436,12 @@ export function deserializeIntoVideoSummaryDto(videoSummaryDto: Partial<VideoSum
     return {
         "accountHandle": n => { videoSummaryDto.accountHandle = n.getStringValue(); },
         "actors": n => { videoSummaryDto.actors = n.getCollectionOfObjectValues<VideoSummaryActorDto>(createVideoSummaryActorDtoFromDiscriminatorValue); },
+        "alternativeTitle": n => { videoSummaryDto.alternativeTitle = n.getStringValue(); },
         "createdAtUtc": n => { videoSummaryDto.createdAtUtc = n.getDateValue(); },
         "description": n => { videoSummaryDto.description = n.getStringValue(); },
         "durationFileCount": n => { videoSummaryDto.durationFileCount = n.getNumberValue(); },
         "durationMs": n => { videoSummaryDto.durationMs = n.getNumberValue(); },
+        "durationSeconds": n => { videoSummaryDto.durationSeconds = n.getNumberValue(); },
         "durationSpreadMs": n => { videoSummaryDto.durationSpreadMs = n.getNumberValue(); },
         "id": n => { videoSummaryDto.id = n.getGuidValue(); },
         "platformId": n => { videoSummaryDto.platformId = n.getGuidValue(); },
@@ -4403,6 +4452,7 @@ export function deserializeIntoVideoSummaryDto(videoSummaryDto: Partial<VideoSum
         "sitePublicId": n => { videoSummaryDto.sitePublicId = n.getStringValue(); },
         "siteTitle": n => { videoSummaryDto.siteTitle = n.getStringValue(); },
         "stashdbSceneId": n => { videoSummaryDto.stashdbSceneId = n.getGuidValue(); },
+        "tags": n => { videoSummaryDto.tags = n.getCollectionOfPrimitiveValues<string>("string"); },
         "title": n => { videoSummaryDto.title = n.getStringValue(); },
     }
 }
@@ -5783,6 +5833,15 @@ export interface ListSitesResponse extends AdditionalDataHolder, Parsable {
      * Total number of sites matching the current query filters.
      */
     totalCount?: number | null;
+}
+/**
+ * The active video tag vocabulary.
+ */
+export interface ListTagsResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * Every active tag, sorted by name. The vocabulary is curated and small, so it is not paged.
+     */
+    items?: TagDto[] | null;
 }
 /**
  * Paged list of videos.
@@ -7506,6 +7565,18 @@ export function serializeListSitesResponse(writer: SerializationWriter, listSite
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ListTagsResponse The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeListTagsResponse(writer: SerializationWriter, listTagsResponse: Partial<ListTagsResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!listTagsResponse || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<TagDto>("items", listTagsResponse.items, serializeTagDto);
+    writer.writeAdditionalData(listTagsResponse.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param ListVideosResponse The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -8161,6 +8232,19 @@ export function serializeSubmitVideoUserImageResponse(writer: SerializationWrite
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param TagDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeTagDto(writer: SerializationWriter, tagDto: Partial<TagDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!tagDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("key", tagDto.key);
+    writer.writeStringValue("name", tagDto.name);
+    writer.writeAdditionalData(tagDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param UnlinkedVideoFilehashesResponse The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -8410,11 +8494,13 @@ export function serializeVideoChangeSiteDto(writer: SerializationWriter, videoCh
 export function serializeVideoChangeVideoDto(writer: SerializationWriter, videoChangeVideoDto: Partial<VideoChangeVideoDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!videoChangeVideoDto || isSerializingDerivedType) { return; }
     writer.writeCollectionOfObjectValues<VideoChangeActorDto>("actors", videoChangeVideoDto.actors, serializeVideoChangeActorDto);
+    writer.writeStringValue("alternativeTitle", videoChangeVideoDto.alternativeTitle);
     writer.writeDateValue("createdAtUtc", videoChangeVideoDto.createdAtUtc);
     writer.writeDateValue("deletedAtUtc", videoChangeVideoDto.deletedAtUtc);
     writer.writeStringValue("description", videoChangeVideoDto.description);
     writer.writeNumberValue("durationFileCount", videoChangeVideoDto.durationFileCount);
     writer.writeNumberValue("durationMs", videoChangeVideoDto.durationMs);
+    writer.writeNumberValue("durationSeconds", videoChangeVideoDto.durationSeconds);
     writer.writeNumberValue("durationSpreadMs", videoChangeVideoDto.durationSpreadMs);
     writer.writeGuidValue("id", videoChangeVideoDto.id);
     writer.writeCollectionOfObjectValues<VideoChangeImageDto>("images", videoChangeVideoDto.images, serializeVideoChangeImageDto);
@@ -8426,6 +8512,7 @@ export function serializeVideoChangeVideoDto(writer: SerializationWriter, videoC
     writer.writeDateOnlyValue("releaseDate", videoChangeVideoDto.releaseDate);
     writer.writeObjectValue<VideoChangeSiteDto>("site", videoChangeVideoDto.site, serializeVideoChangeSiteDto);
     writer.writeGuidValue("stashdbSceneId", videoChangeVideoDto.stashdbSceneId);
+    writer.writeCollectionOfPrimitiveValues<string>("tags", videoChangeVideoDto.tags);
     writer.writeStringValue("title", videoChangeVideoDto.title);
     writer.writeDateValue("updatedAtUtc", videoChangeVideoDto.updatedAtUtc);
     writer.writeAdditionalData(videoChangeVideoDto.additionalData);
@@ -8486,10 +8573,12 @@ export function serializeVideoDetailActorImageDto(writer: SerializationWriter, v
 export function serializeVideoDetailDto(writer: SerializationWriter, videoDetailDto: Partial<VideoDetailDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
     if (!videoDetailDto || isSerializingDerivedType) { return; }
     writer.writeCollectionOfObjectValues<VideoDetailActorDto>("actors", videoDetailDto.actors, serializeVideoDetailActorDto);
+    writer.writeStringValue("alternativeTitle", videoDetailDto.alternativeTitle);
     writer.writeDateValue("createdAtUtc", videoDetailDto.createdAtUtc);
     writer.writeStringValue("description", videoDetailDto.description);
     writer.writeNumberValue("durationFileCount", videoDetailDto.durationFileCount);
     writer.writeNumberValue("durationMs", videoDetailDto.durationMs);
+    writer.writeNumberValue("durationSeconds", videoDetailDto.durationSeconds);
     writer.writeNumberValue("durationSpreadMs", videoDetailDto.durationSpreadMs);
     writer.writeGuidValue("id", videoDetailDto.id);
     writer.writeCollectionOfObjectValues<VideoDetailImageDto>("images", videoDetailDto.images, serializeVideoDetailImageDto);
@@ -8499,6 +8588,7 @@ export function serializeVideoDetailDto(writer: SerializationWriter, videoDetail
     writer.writeDateOnlyValue("releaseDate", videoDetailDto.releaseDate);
     writer.writeObjectValue<VideoDetailSiteDto>("site", videoDetailDto.site, serializeVideoDetailSiteDto);
     writer.writeGuidValue("stashdbSceneId", videoDetailDto.stashdbSceneId);
+    writer.writeCollectionOfPrimitiveValues<string>("tags", videoDetailDto.tags);
     writer.writeStringValue("title", videoDetailDto.title);
     writer.writeDateValue("updatedAtUtc", videoDetailDto.updatedAtUtc);
     writer.writeAdditionalData(videoDetailDto.additionalData);
@@ -8810,10 +8900,12 @@ export function serializeVideoSummaryDto(writer: SerializationWriter, videoSumma
     if (!videoSummaryDto || isSerializingDerivedType) { return; }
     writer.writeStringValue("accountHandle", videoSummaryDto.accountHandle);
     writer.writeCollectionOfObjectValues<VideoSummaryActorDto>("actors", videoSummaryDto.actors, serializeVideoSummaryActorDto);
+    writer.writeStringValue("alternativeTitle", videoSummaryDto.alternativeTitle);
     writer.writeDateValue("createdAtUtc", videoSummaryDto.createdAtUtc);
     writer.writeStringValue("description", videoSummaryDto.description);
     writer.writeNumberValue("durationFileCount", videoSummaryDto.durationFileCount);
     writer.writeNumberValue("durationMs", videoSummaryDto.durationMs);
+    writer.writeNumberValue("durationSeconds", videoSummaryDto.durationSeconds);
     writer.writeNumberValue("durationSpreadMs", videoSummaryDto.durationSpreadMs);
     writer.writeGuidValue("id", videoSummaryDto.id);
     writer.writeGuidValue("platformId", videoSummaryDto.platformId);
@@ -8824,6 +8916,7 @@ export function serializeVideoSummaryDto(writer: SerializationWriter, videoSumma
     writer.writeStringValue("sitePublicId", videoSummaryDto.sitePublicId);
     writer.writeStringValue("siteTitle", videoSummaryDto.siteTitle);
     writer.writeGuidValue("stashdbSceneId", videoSummaryDto.stashdbSceneId);
+    writer.writeCollectionOfPrimitiveValues<string>("tags", videoSummaryDto.tags);
     writer.writeStringValue("title", videoSummaryDto.title);
     writer.writeAdditionalData(videoSummaryDto.additionalData);
 }
@@ -9365,6 +9458,19 @@ export interface SubmitVideoUserImageResponse extends AdditionalDataHolder, Pars
     videoUserImageId?: Guid | null;
 }
 /**
+ * A term of the curated video tag vocabulary.
+ */
+export interface TagDto extends AdditionalDataHolder, Parsable {
+    /**
+     * Stable public identity of the tag: a lower-case slug of `a-z`, `0-9` and `-`, at most 64characters, never changed once the tag exists. Video payloads carry this value in `tags`.
+     */
+    key?: string | null;
+    /**
+     * Display name of the tag, at most 100 characters. Unlike the key, it may change.
+     */
+    name?: string | null;
+}
+/**
  * Paged list of active filehash entries that are not linked to a video.
  */
 export interface UnlinkedVideoFilehashesResponse extends AdditionalDataHolder, Parsable {
@@ -9678,6 +9784,10 @@ export interface VideoChangeVideoDto extends AdditionalDataHolder, Parsable {
      */
     actors?: VideoChangeActorDto[] | null;
     /**
+     * Another title for the same video, as a different source names it, or null when none is known. Atitle in its own right rather than a subtitle, at most 500 characters, and not matched by the titlesearch. Tombstones carry null.
+     */
+    alternativeTitle?: string | null;
+    /**
      * The createdAtUtc property
      */
     createdAtUtc?: Date | null;
@@ -9686,7 +9796,7 @@ export interface VideoChangeVideoDto extends AdditionalDataHolder, Parsable {
      */
     deletedAtUtc?: Date | null;
     /**
-     * Catalogue description of the video, if known.
+     * Catalogue description of the video, if known. At most 10,000 characters.
      */
     description?: string | null;
     /**
@@ -9697,6 +9807,10 @@ export interface VideoChangeVideoDto extends AdditionalDataHolder, Parsable {
      * Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
      */
     durationMs?: number | null;
+    /**
+     * Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or nullwhen none is recorded. Not derived from the files: `durationMs` is the duration measured overthe files prdb holds, and the two can legitimately differ. Tombstones carry null.
+     */
+    durationSeconds?: number | null;
     /**
      * How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
      */
@@ -9741,6 +9855,10 @@ export interface VideoChangeVideoDto extends AdditionalDataHolder, Parsable {
      * StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does notexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.
      */
     stashdbSceneId?: Guid | null;
+    /**
+     * Keys of the video's active tags, sorted ordinally; empty when it carries none, and on tombstones.`GET /tags` names them. Tagging or untagging a video, and deactivating one of its tags, moves thevideo in this feed.
+     */
+    tags?: string[] | null;
     /**
      * The title property
      */
@@ -9818,11 +9936,15 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
      */
     actors?: VideoDetailActorDto[] | null;
     /**
+     * Another title for the same video, as a different source names it, or null when none is known. Atitle in its own right rather than a subtitle, at most 500 characters, and not matched by the titlesearch.
+     */
+    alternativeTitle?: string | null;
+    /**
      * The createdAtUtc property
      */
     createdAtUtc?: Date | null;
     /**
-     * Catalogue description of the video, if known.
+     * Catalogue description of the video, if known. At most 10,000 characters.
      */
     description?: string | null;
     /**
@@ -9833,6 +9955,10 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
      * Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median, not an average: durations differlegitimately — cuts, with and without an intro, re-encodes with padding — and one shortoutlier would drag an average off the value the real files agree on.
      */
     durationMs?: number | null;
+    /**
+     * Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or nullwhen none is recorded. Not derived from the files: `durationMs` is the duration measured overthe files prdb holds, and the two can legitimately differ.
+     */
+    durationSeconds?: number | null;
     /**
      * How far the files disagree about the duration, in milliseconds (median absolute deviation).Zero means every file agrees; a large value means several versions are in circulation, whichis the more useful of the two statements. Null exactly when `durationMs` is null.
      */
@@ -9869,6 +9995,10 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
      * StashDB Scene UUID for a confirmed match. This is only an external identity: prdb does notexpose match evidence or proxy StashDB, and clients use their own credentials to resolve it.
      */
     stashdbSceneId?: Guid | null;
+    /**
+     * Keys of the video's active tags, sorted ordinally; empty when it carries none. `GET /tags` namesthem. A deactivated tag is not listed, and its removal reaches `GET /videos/changes`.
+     */
+    tags?: string[] | null;
     /**
      * The title property
      */
@@ -10352,11 +10482,15 @@ export interface VideoSummaryDto extends AdditionalDataHolder, Parsable {
      */
     actors?: VideoSummaryActorDto[] | null;
     /**
+     * Another title for the same video, as a different source names it, or null when none is known. Atitle in its own right rather than a subtitle, at most 500 characters, and not matched by the titlesearch.
+     */
+    alternativeTitle?: string | null;
+    /**
      * Timestamp when the video was created in PRDB.
      */
     createdAtUtc?: Date | null;
     /**
-     * Catalogue description of the video, if known.
+     * Catalogue description of the video, if known. At most 10,000 characters.
      */
     description?: string | null;
     /**
@@ -10367,6 +10501,10 @@ export interface VideoSummaryDto extends AdditionalDataHolder, Parsable {
      * Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median over the video's files, so atrailer submitted under the same video does not move it.
      */
     durationMs?: number | null;
+    /**
+     * Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or nullwhen none is recorded. Not derived from the files: `durationMs` is the duration measured overthe files prdb holds, and the two can legitimately differ.
+     */
+    durationSeconds?: number | null;
     /**
      * How far those files disagree about the duration, in milliseconds (median absolutedeviation). Zero means they agree; a large value means several versions are in circulation.
      */
@@ -10407,6 +10545,10 @@ export interface VideoSummaryDto extends AdditionalDataHolder, Parsable {
      * StashDB Scene UUID for a confirmed match. Clients resolve it directly with their ownStashDB credentials; no match evidence or integration state is included.
      */
     stashdbSceneId?: Guid | null;
+    /**
+     * Keys of the video's active tags, sorted ordinally; empty when it carries none. `GET /tags` namesthem.
+     */
+    tags?: string[] | null;
     /**
      * Video title.
      */

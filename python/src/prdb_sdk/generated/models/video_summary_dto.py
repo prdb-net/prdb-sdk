@@ -21,14 +21,18 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
     account_handle: Optional[str] = None
     # Actors appearing in this video.
     actors: Optional[list[VideoSummaryActorDto]] = None
+    # Another title for the same video, as a different source names it, or null when none is known. Atitle in its own right rather than a subtitle, at most 500 characters, and not matched by the titlesearch.
+    alternative_title: Optional[str] = None
     # Timestamp when the video was created in PRDB.
     created_at_utc: Optional[datetime.datetime] = None
-    # Catalogue description of the video, if known.
+    # Catalogue description of the video, if known. At most 10,000 characters.
     description: Optional[str] = None
     # How many files the duration was taken over, without which the spread cannot be read.
     duration_file_count: Optional[int] = None
     # Consensus duration in milliseconds across the files prdb holds for this video, or null whiletoo few independent submitters have reported one. A median over the video's files, so atrailer submitted under the same video does not move it.
     duration_ms: Optional[int] = None
+    # Catalogue duration in whole seconds, as a catalogue source or an administrator states it, or nullwhen none is recorded. Not derived from the files: `durationMs` is the duration measured overthe files prdb holds, and the two can legitimately differ.
+    duration_seconds: Optional[int] = None
     # How far those files disagree about the duration, in milliseconds (median absolutedeviation). Zero means they agree; a large value means several versions are in circulation.
     duration_spread_ms: Optional[int] = None
     # Unique identifier of the video.
@@ -49,6 +53,8 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
     site_title: Optional[str] = None
     # StashDB Scene UUID for a confirmed match. Clients resolve it directly with their ownStashDB credentials; no match evidence or integration state is included.
     stashdb_scene_id: Optional[UUID] = None
+    # Keys of the video's active tags, sorted ordinally; empty when it carries none. `GET /tags` namesthem.
+    tags: Optional[list[str]] = None
     # Video title.
     title: Optional[str] = None
     
@@ -75,10 +81,12 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         fields: dict[str, Callable[[Any], None]] = {
             "accountHandle": lambda n : setattr(self, 'account_handle', n.get_str_value()),
             "actors": lambda n : setattr(self, 'actors', n.get_collection_of_object_values(VideoSummaryActorDto)),
+            "alternativeTitle": lambda n : setattr(self, 'alternative_title', n.get_str_value()),
             "createdAtUtc": lambda n : setattr(self, 'created_at_utc', n.get_datetime_value()),
             "description": lambda n : setattr(self, 'description', n.get_str_value()),
             "durationFileCount": lambda n : setattr(self, 'duration_file_count', n.get_int_value()),
             "durationMs": lambda n : setattr(self, 'duration_ms', n.get_int_value()),
+            "durationSeconds": lambda n : setattr(self, 'duration_seconds', n.get_int_value()),
             "durationSpreadMs": lambda n : setattr(self, 'duration_spread_ms', n.get_int_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "platformId": lambda n : setattr(self, 'platform_id', n.get_uuid_value()),
@@ -89,6 +97,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
             "sitePublicId": lambda n : setattr(self, 'site_public_id', n.get_str_value()),
             "siteTitle": lambda n : setattr(self, 'site_title', n.get_str_value()),
             "stashdbSceneId": lambda n : setattr(self, 'stashdb_scene_id', n.get_uuid_value()),
+            "tags": lambda n : setattr(self, 'tags', n.get_collection_of_primitive_values(str)),
             "title": lambda n : setattr(self, 'title', n.get_str_value()),
         }
         return fields
@@ -103,10 +112,12 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
             raise TypeError("writer cannot be null.")
         writer.write_str_value("accountHandle", self.account_handle)
         writer.write_collection_of_object_values("actors", self.actors)
+        writer.write_str_value("alternativeTitle", self.alternative_title)
         writer.write_datetime_value("createdAtUtc", self.created_at_utc)
         writer.write_str_value("description", self.description)
         writer.write_int_value("durationFileCount", self.duration_file_count)
         writer.write_int_value("durationMs", self.duration_ms)
+        writer.write_int_value("durationSeconds", self.duration_seconds)
         writer.write_int_value("durationSpreadMs", self.duration_spread_ms)
         writer.write_uuid_value("id", self.id)
         writer.write_uuid_value("platformId", self.platform_id)
@@ -117,6 +128,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         writer.write_str_value("sitePublicId", self.site_public_id)
         writer.write_str_value("siteTitle", self.site_title)
         writer.write_uuid_value("stashdbSceneId", self.stashdb_scene_id)
+        writer.write_collection_of_primitive_values("tags", self.tags)
         writer.write_str_value("title", self.title)
         writer.write_additional_data_value(self.additional_data)
     

@@ -18,6 +18,7 @@ import (
     i43cdd21d7774d170bd3df3b5df04e0c58154e3b02ff0d58006ec64d2cec86cf1 "github.com/prdb-net/prdb-sdk/go/generated/useridentity"
     i51f6b98349f4a43d81b4cdc1e5f46f3f394a3ef2aca38868e070c1c6d8060755 "github.com/prdb-net/prdb-sdk/go/generated/ratings"
     i537320b434a4af28e291891946f3da7ffd8423775347e57d6efe1289158a2669 "github.com/prdb-net/prdb-sdk/go/generated/videouserimages"
+    i5730c2382941959430b2c2ede5ad6bc3ffc0465a120c36aac756bca5bca8e02f "github.com/prdb-net/prdb-sdk/go/generated/tags"
     i5a95aa2dd443c596b67eb6c935fdb7f19de9e95e212751ae2fa3fd39d8d15bb4 "github.com/prdb-net/prdb-sdk/go/generated/favoritesites"
     i5b1119c4dd8bd41e0de622c16680465b305b2206d3d142461e25bde5c3eda914 "github.com/prdb-net/prdb-sdk/go/generated/predb"
     ib501bb59d891d348a1fb3d04a5513f77c38964c34d017e5b23aeda26bfd9a7f2 "github.com/prdb-net/prdb-sdk/go/generated/sites"
@@ -104,6 +105,11 @@ func (m *PrdbClient) Releases()(*if62d42b4893041e05604f3b6f4de8603dd3b440b69d504
 // returns a *SitesRequestBuilder when successful
 func (m *PrdbClient) Sites()(*ib501bb59d891d348a1fb3d04a5513f77c38964c34d017e5b23aeda26bfd9a7f2.SitesRequestBuilder) {
     return ib501bb59d891d348a1fb3d04a5513f77c38964c34d017e5b23aeda26bfd9a7f2.NewSitesRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
+}
+// Tags the tags property
+// returns a *TagsRequestBuilder when successful
+func (m *PrdbClient) Tags()(*i5730c2382941959430b2c2ede5ad6bc3ffc0465a120c36aac756bca5bca8e02f.TagsRequestBuilder) {
+    return i5730c2382941959430b2c2ede5ad6bc3ffc0465a120c36aac756bca5bca8e02f.NewTagsRequestBuilderInternal(m.BaseRequestBuilder.PathParameters, m.BaseRequestBuilder.RequestAdapter)
 }
 // UserIdentity the userIdentity property
 // returns a *UserIdentityRequestBuilder when successful
