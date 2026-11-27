@@ -15,6 +15,24 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.27.0] - 2026-11-27
+
+### Added
+
+- `GET /tags` returns the active video tag vocabulary in one response, with a
+  stable key and a display name for each tag.
+- Video detail, summary and change-feed models expose `alternativeTitle`,
+  `durationSeconds` and `tags`. `durationSeconds` is the catalogue duration in
+  whole seconds. `durationMs` still reports the consensus measured from files.
+  Videos without active tags return an empty list. Change-feed tombstones
+  return null for the alternative title and catalogue duration, and an empty
+  list for tags.
+
+### Documentation
+
+- Explain the shared per-account API and MCP request budget, Fansly preview
+  eligibility and the `logoUrl` field for classic studio Sites.
+
 ## [0.26.0] - 2026-11-13
 
 ### Added
