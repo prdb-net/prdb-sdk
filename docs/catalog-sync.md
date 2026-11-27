@@ -87,9 +87,9 @@ Tombstones are currently retained indefinitely, with a guaranteed minimum of
 90 days. If a future retention window is introduced and your cursor is older
 than that window, rebuild the baseline to avoid missing deletions.
 
-These feeds do not add canonical Site artwork. Sites still expose no logo or
-profile image; [issue #35](https://github.com/prdb-net/prdb-sdk/issues/35)
-tracks the API extension needed for that capability.
+`GET /sites` and `GET /sites/changes` include a nullable `logoUrl` with the
+absolute CDN URL of a classic studio's logo when available. It is null for
+creator accounts, studios without a logo, and deleted Sites in the feed.
 
 ## Actor merges
 

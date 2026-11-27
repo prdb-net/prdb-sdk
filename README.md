@@ -29,8 +29,11 @@ Neither the HTTP stacks nor Kiota do this for us — they strip only
 `Authorization` across origins, and `X-Api-Key` is a custom header. It is the
 wrappers' own rule, and each SDK has a test for it.
 
-Requests are rate limited per key. `GET /rate-limit` reports the remaining
-budget, and a `429` response carries a `Retry-After` header.
+All API keys and MCP connections for an account share hourly and rolling
+31-day request budgets. Each REST call costs one unit, and MCP batch work
+counts one unit per target. Interrupted MCP plans reuse their reserved units.
+`GET /rate-limit` reports the remaining units in both windows, and a `429`
+response carries a `Retry-After` header.
 
 ## Quickstart
 
@@ -119,10 +122,12 @@ for cursor handling and the request builders in each language.
 
 `previewEnrichmentEligible` on video detail, `POST /videos/batch` and
 `GET /videos/changes` says whether prdb would welcome a preview image for the
-video from a client that already holds one of its files. It is a server-side
-selection hint only — not a download order and not evidence that a file belongs
-to the video. The value changes without the video being edited, and every change
-reaches the feed; tombstones carry `false`. Generated types make it nullable in
+video from a client that already holds one of its files. Version 3 covers
+confirmed active videos on OnlyFans or Fansly that pass the preview checks.
+Use the flag to select preview candidates from files you already hold, and
+verify file identity and posting freshness independently. The value can
+change without the video being edited, and every change reaches the feed.
+Tombstones carry `false`. Generated types make it nullable in
 every language, so a response from an older server that omits it reads as
 `null`/`None`/`nil`/`undefined`: treat that as unknown, never as eligible or as
 `false`.
