@@ -65,6 +65,8 @@ namespace Prdb.Sdk.Generated.Models
         public bool? IsDeleted { get; set; }
         /// <summary>Surviving video UUID when deleted by a merge; otherwise null.</summary>
         public Guid? MergedIntoId { get; set; }
+        /// <summary>Catalogue category of the video. Known values: unknown, straight, trans, gay.</summary>
+        public global::Prdb.Sdk.Generated.Models.VideoOrientation? Orientation { get; set; }
         /// <summary>The preNames property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -151,6 +153,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "images", n => { Images = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoChangeImageDto>(global::Prdb.Sdk.Generated.Models.VideoChangeImageDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "isDeleted", n => { IsDeleted = n.GetBoolValue(); } },
                 { "mergedIntoId", n => { MergedIntoId = n.GetGuidValue(); } },
+                { "orientation", n => { Orientation = n.GetEnumValue<global::Prdb.Sdk.Generated.Models.VideoOrientation>(); } },
                 { "preNames", n => { PreNames = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoChangePreNameDto>(global::Prdb.Sdk.Generated.Models.VideoChangePreNameDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "previewEnrichmentEligible", n => { PreviewEnrichmentEligible = n.GetBoolValue(); } },
                 { "qualityOverview", n => { QualityOverview = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto>(global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto.CreateFromDiscriminatorValue); } },
@@ -182,6 +185,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoChangeImageDto>("images", Images);
             writer.WriteBoolValue("isDeleted", IsDeleted);
             writer.WriteGuidValue("mergedIntoId", MergedIntoId);
+            writer.WriteEnumValue<global::Prdb.Sdk.Generated.Models.VideoOrientation>("orientation", Orientation);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoChangePreNameDto>("preNames", PreNames);
             writer.WriteBoolValue("previewEnrichmentEligible", PreviewEnrichmentEligible);
             writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto>("qualityOverview", QualityOverview);

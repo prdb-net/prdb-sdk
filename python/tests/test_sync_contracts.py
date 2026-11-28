@@ -9,9 +9,11 @@ from kiota_abstractions.base_request_configuration import RequestConfiguration
 from prdb_sdk import create_client, RetryOptions
 from prdb_sdk.generated.videos.baseline.baseline_request_builder import BaselineRequestBuilder
 from prdb_sdk.generated.models.baseline_document_too_large_response import BaselineDocumentTooLargeResponse
+from prdb_sdk.generated.models.get_videos_by_ids_request import GetVideosByIdsRequest
 from prdb_sdk.generated.models.identify_video_file_dto import IdentifyVideoFileDto
 from prdb_sdk.generated.models.identify_videos_request import IdentifyVideosRequest
 from prdb_sdk.generated.models.validate_identification_request import ValidateIdentificationRequest
+from prdb_sdk.generated.models.video_orientation import VideoOrientation
 
 FIXTURE = json.loads((Path(__file__).resolve().parents[2] / "tests/fixtures/sync-contracts.json").read_text())
 
@@ -29,6 +31,7 @@ async def test_baseline_query_full_document_and_typed_oversized_continuation():
         config = RequestConfiguration(query_parameters=query)
         page = await client.videos.baseline.get(config)
         assert page.items[0].description == "Full document"
+        assert page.items[0].orientation is VideoOrientation.Unknown
         assert page.next_cursor == "opaque+/=" and page.has_more
         assert page.changes_since == datetime.datetime(2026,10,22,10,tzinfo=datetime.timezone.utc)
         status = 413
@@ -37,6 +40,25 @@ async def test_baseline_query_full_document_and_typed_oversized_continuation():
         assert caught.value.next_cursor == "after-large"
         assert caught.value.video_id == UUID(FIXTURE["oversized"]["videoId"])
         assert caught.value.changes_since == page.changes_since
+
+async def test_video_orientation_decodes_on_live_videos_and_tombstones():
+    def respond(request):
+        return httpx.Response(200, json=FIXTURE["videoOrientation"][request.url.path])
+
+    video_id = UUID("00000000-0000-0000-0000-000000000001")
+    async with httpx.AsyncClient(transport=httpx.MockTransport(respond)) as transport:
+        client = create_client("test-key", base_url="https://api.example.test", http_client=transport)
+        page = await client.videos.get()
+        assert page.items[0].orientation is VideoOrientation.Straight
+        detail = await client.videos.by_id(video_id).get()
+        assert detail.orientation is VideoOrientation.Trans
+        batch = await client.videos.batch.post(GetVideosByIdsRequest(ids=[video_id]))
+        assert batch[0].orientation is VideoOrientation.Gay
+        changes = await client.videos.changes.get()
+        assert [(item.event_type, item.video.orientation) for item in changes.items] == [
+            ("updated", VideoOrientation.Unknown),
+            ("deleted", VideoOrientation.Unknown),
+        ]
 
 async def test_freshness_opt_in_original_tuple_mixed_results_and_legacy_omission():
     legacy = False

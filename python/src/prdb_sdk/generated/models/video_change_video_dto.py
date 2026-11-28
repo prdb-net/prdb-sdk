@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from .video_change_image_dto import VideoChangeImageDto
     from .video_change_pre_name_dto import VideoChangePreNameDto
     from .video_change_site_dto import VideoChangeSiteDto
+    from .video_orientation import VideoOrientation
     from .video_quality_overview_dto import VideoQualityOverviewDto
 
 @dataclass
@@ -44,6 +45,8 @@ class VideoChangeVideoDto(AdditionalDataHolder, Parsable):
     is_deleted: Optional[bool] = None
     # Surviving video UUID when deleted by a merge; otherwise null.
     merged_into_id: Optional[UUID] = None
+    # Catalogue category of the video. Known values: unknown, straight, trans, gay.
+    orientation: Optional[VideoOrientation] = None
     # The preNames property
     pre_names: Optional[list[VideoChangePreNameDto]] = None
     # Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 3 says true only for an active OnlyFans or Fansly video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
@@ -83,12 +86,14 @@ class VideoChangeVideoDto(AdditionalDataHolder, Parsable):
         from .video_change_image_dto import VideoChangeImageDto
         from .video_change_pre_name_dto import VideoChangePreNameDto
         from .video_change_site_dto import VideoChangeSiteDto
+        from .video_orientation import VideoOrientation
         from .video_quality_overview_dto import VideoQualityOverviewDto
 
         from .video_change_actor_dto import VideoChangeActorDto
         from .video_change_image_dto import VideoChangeImageDto
         from .video_change_pre_name_dto import VideoChangePreNameDto
         from .video_change_site_dto import VideoChangeSiteDto
+        from .video_orientation import VideoOrientation
         from .video_quality_overview_dto import VideoQualityOverviewDto
 
         fields: dict[str, Callable[[Any], None]] = {
@@ -105,6 +110,7 @@ class VideoChangeVideoDto(AdditionalDataHolder, Parsable):
             "images": lambda n : setattr(self, 'images', n.get_collection_of_object_values(VideoChangeImageDto)),
             "isDeleted": lambda n : setattr(self, 'is_deleted', n.get_bool_value()),
             "mergedIntoId": lambda n : setattr(self, 'merged_into_id', n.get_uuid_value()),
+            "orientation": lambda n : setattr(self, 'orientation', n.get_enum_value(VideoOrientation)),
             "preNames": lambda n : setattr(self, 'pre_names', n.get_collection_of_object_values(VideoChangePreNameDto)),
             "previewEnrichmentEligible": lambda n : setattr(self, 'preview_enrichment_eligible', n.get_bool_value()),
             "qualityOverview": lambda n : setattr(self, 'quality_overview', n.get_object_value(VideoQualityOverviewDto)),
@@ -138,6 +144,7 @@ class VideoChangeVideoDto(AdditionalDataHolder, Parsable):
         writer.write_collection_of_object_values("images", self.images)
         writer.write_bool_value("isDeleted", self.is_deleted)
         writer.write_uuid_value("mergedIntoId", self.merged_into_id)
+        writer.write_enum_value("orientation", self.orientation)
         writer.write_collection_of_object_values("preNames", self.pre_names)
         writer.write_bool_value("previewEnrichmentEligible", self.preview_enrichment_eligible)
         writer.write_object_value("qualityOverview", self.quality_overview)

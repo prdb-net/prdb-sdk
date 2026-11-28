@@ -7,6 +7,7 @@ from typing import Any, Optional, TYPE_CHECKING, Union
 from uuid import UUID
 
 if TYPE_CHECKING:
+    from .video_orientation import VideoOrientation
     from .video_summary_actor_dto import VideoSummaryActorDto
 
 @dataclass
@@ -37,6 +38,8 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
     duration_spread_ms: Optional[int] = None
     # Unique identifier of the video.
     id: Optional[UUID] = None
+    # Catalogue category of the video. Known values: unknown, straight, trans, gay.
+    orientation: Optional[VideoOrientation] = None
     # Publishing platform UUID; null for classic studio sites.
     platform_id: Optional[UUID] = None
     # Stable publishing platform key; null for classic sites.
@@ -74,8 +77,10 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         The deserialization information for the current model
         Returns: dict[str, Callable[[ParseNode], None]]
         """
+        from .video_orientation import VideoOrientation
         from .video_summary_actor_dto import VideoSummaryActorDto
 
+        from .video_orientation import VideoOrientation
         from .video_summary_actor_dto import VideoSummaryActorDto
 
         fields: dict[str, Callable[[Any], None]] = {
@@ -89,6 +94,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
             "durationSeconds": lambda n : setattr(self, 'duration_seconds', n.get_int_value()),
             "durationSpreadMs": lambda n : setattr(self, 'duration_spread_ms', n.get_int_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
+            "orientation": lambda n : setattr(self, 'orientation', n.get_enum_value(VideoOrientation)),
             "platformId": lambda n : setattr(self, 'platform_id', n.get_uuid_value()),
             "platformKey": lambda n : setattr(self, 'platform_key', n.get_str_value()),
             "platformTitle": lambda n : setattr(self, 'platform_title', n.get_str_value()),
@@ -120,6 +126,7 @@ class VideoSummaryDto(AdditionalDataHolder, Parsable):
         writer.write_int_value("durationSeconds", self.duration_seconds)
         writer.write_int_value("durationSpreadMs", self.duration_spread_ms)
         writer.write_uuid_value("id", self.id)
+        writer.write_enum_value("orientation", self.orientation)
         writer.write_uuid_value("platformId", self.platform_id)
         writer.write_str_value("platformKey", self.platform_key)
         writer.write_str_value("platformTitle", self.platform_title)

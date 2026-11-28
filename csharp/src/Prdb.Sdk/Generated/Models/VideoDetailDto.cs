@@ -59,6 +59,8 @@ namespace Prdb.Sdk.Generated.Models
 #else
         public List<global::Prdb.Sdk.Generated.Models.VideoDetailImageDto> Images { get; set; }
 #endif
+        /// <summary>Catalogue category of the video. Known values: unknown, straight, trans, gay.</summary>
+        public global::Prdb.Sdk.Generated.Models.VideoOrientation? Orientation { get; set; }
         /// <summary>The preNames property</summary>
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
 #nullable enable
@@ -142,6 +144,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "durationSpreadMs", n => { DurationSpreadMs = n.GetLongValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
                 { "images", n => { Images = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailImageDto>(global::Prdb.Sdk.Generated.Models.VideoDetailImageDto.CreateFromDiscriminatorValue)?.AsList(); } },
+                { "orientation", n => { Orientation = n.GetEnumValue<global::Prdb.Sdk.Generated.Models.VideoOrientation>(); } },
                 { "preNames", n => { PreNames = n.GetCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailPreNameDto>(global::Prdb.Sdk.Generated.Models.VideoDetailPreNameDto.CreateFromDiscriminatorValue)?.AsList(); } },
                 { "previewEnrichmentEligible", n => { PreviewEnrichmentEligible = n.GetBoolValue(); } },
                 { "qualityOverview", n => { QualityOverview = n.GetObjectValue<global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto>(global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto.CreateFromDiscriminatorValue); } },
@@ -170,6 +173,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteLongValue("durationSpreadMs", DurationSpreadMs);
             writer.WriteGuidValue("id", Id);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailImageDto>("images", Images);
+            writer.WriteEnumValue<global::Prdb.Sdk.Generated.Models.VideoOrientation>("orientation", Orientation);
             writer.WriteCollectionOfObjectValues<global::Prdb.Sdk.Generated.Models.VideoDetailPreNameDto>("preNames", PreNames);
             writer.WriteBoolValue("previewEnrichmentEligible", PreviewEnrichmentEligible);
             writer.WriteObjectValue<global::Prdb.Sdk.Generated.Models.VideoQualityOverviewDto>("qualityOverview", QualityOverview);

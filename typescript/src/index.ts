@@ -540,3 +540,4 @@ function isLoopback(url: URL): boolean {
 }
 
 export type { PrdbClient };
+export { type VideoOrientation, VideoOrientationObject } from "./generated/models/index.js";

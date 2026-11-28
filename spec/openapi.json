@@ -13684,6 +13684,7 @@
           "id",
           "title",
           "alternativeTitle",
+          "orientation",
           "previewEnrichmentEligible",
           "createdAtUtc",
           "updatedAtUtc",
@@ -13723,6 +13724,9 @@
             "type": "string",
             "description": "Another title for the same video, as a different source names it, or null when none is known. A\ntitle in its own right rather than a subtitle, at most 500 characters, and not matched by the title\nsearch. Tombstones carry null.",
             "nullable": true
+          },
+          "orientation": {
+            "$ref": "#/components/schemas/VideoOrientation"
           },
           "description": {
             "type": "string",
@@ -13908,6 +13912,7 @@
           "id",
           "title",
           "alternativeTitle",
+          "orientation",
           "previewEnrichmentEligible",
           "createdAtUtc",
           "updatedAtUtc",
@@ -13932,6 +13937,9 @@
             "type": "string",
             "description": "Another title for the same video, as a different source names it, or null when none is known. A\ntitle in its own right rather than a subtitle, at most 500 characters, and not matched by the title\nsearch.",
             "nullable": true
+          },
+          "orientation": {
+            "$ref": "#/components/schemas/VideoOrientation"
           },
           "description": {
             "type": "string",
@@ -14491,6 +14499,16 @@
         },
         "description": "Seek cursor for continuing a video image change feed."
       },
+      "VideoOrientation": {
+        "enum": [
+          "unknown",
+          "straight",
+          "trans",
+          "gay"
+        ],
+        "type": "string",
+        "description": "Catalogue category of the video. Known values: unknown, straight, trans, gay."
+      },
       "VideoQuality": {
         "enum": [
           0,
@@ -14702,6 +14720,7 @@
           "id",
           "title",
           "alternativeTitle",
+          "orientation",
           "siteId",
           "sitePublicId",
           "siteTitle",
@@ -14746,6 +14765,9 @@
             "type": "string",
             "description": "Another title for the same video, as a different source names it, or null when none is known. A\ntitle in its own right rather than a subtitle, at most 500 characters, and not matched by the title\nsearch.",
             "nullable": true
+          },
+          "orientation": {
+            "$ref": "#/components/schemas/VideoOrientation"
           },
           "description": {
             "type": "string",

@@ -60,6 +60,8 @@ namespace Prdb.Sdk.Generated.Models
         public long? DurationSpreadMs { get; set; }
         /// <summary>Unique identifier of the video.</summary>
         public Guid? Id { get; set; }
+        /// <summary>Catalogue category of the video. Known values: unknown, straight, trans, gay.</summary>
+        public global::Prdb.Sdk.Generated.Models.VideoOrientation? Orientation { get; set; }
         /// <summary>Publishing platform UUID; null for classic studio sites.</summary>
         public Guid? PlatformId { get; set; }
         /// <summary>Stable publishing platform key; null for classic sites.</summary>
@@ -151,6 +153,7 @@ namespace Prdb.Sdk.Generated.Models
                 { "durationSeconds", n => { DurationSeconds = n.GetIntValue(); } },
                 { "durationSpreadMs", n => { DurationSpreadMs = n.GetLongValue(); } },
                 { "id", n => { Id = n.GetGuidValue(); } },
+                { "orientation", n => { Orientation = n.GetEnumValue<global::Prdb.Sdk.Generated.Models.VideoOrientation>(); } },
                 { "platformId", n => { PlatformId = n.GetGuidValue(); } },
                 { "platformKey", n => { PlatformKey = n.GetStringValue(); } },
                 { "platformTitle", n => { PlatformTitle = n.GetStringValue(); } },
@@ -180,6 +183,7 @@ namespace Prdb.Sdk.Generated.Models
             writer.WriteIntValue("durationSeconds", DurationSeconds);
             writer.WriteLongValue("durationSpreadMs", DurationSpreadMs);
             writer.WriteGuidValue("id", Id);
+            writer.WriteEnumValue<global::Prdb.Sdk.Generated.Models.VideoOrientation>("orientation", Orientation);
             writer.WriteGuidValue("platformId", PlatformId);
             writer.WriteStringValue("platformKey", PlatformKey);
             writer.WriteStringValue("platformTitle", PlatformTitle);

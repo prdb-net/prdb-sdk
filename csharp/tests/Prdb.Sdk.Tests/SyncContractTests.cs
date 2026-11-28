@@ -30,13 +30,44 @@ public sealed class SyncContractTests
             c.QueryParameters.PageSize = 1000; c.QueryParameters.Cursor = "opaque+/=";
         });
         var page = (await Read())!;
-        Assert.Equal("Full document", Assert.Single(page.Items!).Description);
+        var video = Assert.Single(page.Items!);
+        Assert.Equal("Full document", video.Description);
+        Assert.Equal(VideoOrientation.Unknown, video.Orientation);
         Assert.True(page.HasMore); Assert.Equal("opaque+/=", page.NextCursor);
         Assert.Equal(DateTimeOffset.Parse("2026-10-22T10:00:00Z"), page.ChangesSince);
         status = 413;
         var error = await Assert.ThrowsAsync<BaselineDocumentTooLargeResponse>(() => Read());
         Assert.Equal(Guid.Parse(fixture["oversized"]!["videoId"]!.GetValue<string>()), error.VideoId);
         Assert.Equal("after-large", error.NextCursor); Assert.Equal(page.ChangesSince, error.ChangesSince);
+    }
+
+    [Fact]
+    public async Task VideoOrientationDecodesOnLiveVideosAndTombstones()
+    {
+        var fixture = Fixture()["videoOrientation"]!;
+        using var handler = new Handler(request =>
+            Task.FromResult((200, fixture[request.RequestUri!.AbsolutePath]!)));
+        var client = PrdbClientFactory.Create("test-key", "https://api.example.test", handler);
+        var videoId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+
+        var page = await client.Videos.GetAsync();
+        Assert.Equal(VideoOrientation.Straight, Assert.Single(page!.Items!).Orientation);
+        var detail = await client.Videos[videoId].GetAsync();
+        Assert.Equal(VideoOrientation.Trans, detail!.Orientation);
+        var batch = await client.Videos.Batch.PostAsync(new() { Ids = [videoId] });
+        Assert.Equal(VideoOrientation.Gay, Assert.Single(batch!).Orientation);
+        var changes = await client.Videos.Changes.GetAsync();
+        Assert.Collection(changes!.Items!,
+            updated =>
+            {
+                Assert.Equal("updated", updated.EventType);
+                Assert.Equal(VideoOrientation.Unknown, updated.Video!.Orientation);
+            },
+            deleted =>
+            {
+                Assert.Equal("deleted", deleted.EventType);
+                Assert.Equal(VideoOrientation.Unknown, deleted.Video!.Orientation);
+            });
     }
 
     [Fact]
