@@ -4,6 +4,7 @@ using Microsoft.Kiota.Abstractions.Extensions;
 using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Kiota.Abstractions;
 using Prdb.Sdk.Generated.Models;
+using Prdb.Sdk.Generated.Videos.Identify.Suggestions;
 using Prdb.Sdk.Generated.Videos.Identify.Validate;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,11 @@ namespace Prdb.Sdk.Generated.Videos.Identify
     [global::System.CodeDom.Compiler.GeneratedCode("Kiota", "1.0.0")]
     public partial class IdentifyRequestBuilder : BaseRequestBuilder
     {
+        /// <summary>The suggestions property</summary>
+        public global::Prdb.Sdk.Generated.Videos.Identify.Suggestions.SuggestionsRequestBuilder Suggestions
+        {
+            get => new global::Prdb.Sdk.Generated.Videos.Identify.Suggestions.SuggestionsRequestBuilder(PathParameters, RequestAdapter);
+        }
         /// <summary>The validate property</summary>
         public global::Prdb.Sdk.Generated.Videos.Identify.Validate.ValidateRequestBuilder Validate
         {

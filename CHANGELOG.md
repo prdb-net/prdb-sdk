@@ -15,6 +15,15 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.29.0] - 2026-11-28
+
+### Added
+
+- All four SDKs expose `POST /videos/identify/suggestions` for manual review.
+  Send up to 16 perceptual hashes with unique file references. Each result
+  lists the nearest candidate videos within two bits, including ties, or an
+  empty list when there is no candidate.
+
 ## [0.28.0] - 2026-11-28
 
 ### Added

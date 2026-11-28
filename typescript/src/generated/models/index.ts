@@ -1019,6 +1019,24 @@ export function createIdentifySiteDtoFromDiscriminatorValue(parseNode: ParseNode
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IdentifySuggestionsRequest}
+ */
+// @ts-ignore
+export function createIdentifySuggestionsRequestFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIdentifySuggestionsRequest;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {IdentifySuggestionsResponse}
+ */
+// @ts-ignore
+export function createIdentifySuggestionsResponseFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoIdentifySuggestionsResponse;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {IdentifyVideoFileDto}
  */
 // @ts-ignore
@@ -1595,6 +1613,24 @@ export function createSubmitVideoUserImageResponseFromDiscriminatorValue(parseNo
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SuggestionFileDto}
+ */
+// @ts-ignore
+export function createSuggestionFileDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSuggestionFileDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {SuggestionFileResultDto}
+ */
+// @ts-ignore
+export function createSuggestionFileResultDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoSuggestionFileResultDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {TagDto}
  */
 // @ts-ignore
@@ -1870,6 +1906,15 @@ export function createVideoFilehashDtoFromDiscriminatorValue(parseNode: ParseNod
 // @ts-ignore
 export function createVideoFilehashesByVideoIdDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoVideoFilehashesByVideoIdDto;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {VideoHashSuggestionDto}
+ */
+// @ts-ignore
+export function createVideoHashSuggestionDtoFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoVideoHashSuggestionDto;
 }
 /**
  * Creates a new instance of the appropriate class based on discriminator value
@@ -2862,6 +2907,28 @@ export function deserializeIntoIdentifySiteDto(identifySiteDto: Partial<Identify
 }
 /**
  * The deserialization information for the current model
+ * @param IdentifySuggestionsRequest The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIdentifySuggestionsRequest(identifySuggestionsRequest: Partial<IdentifySuggestionsRequest> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "files": n => { identifySuggestionsRequest.files = n.getCollectionOfObjectValues<SuggestionFileDto>(createSuggestionFileDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param IdentifySuggestionsResponse The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoIdentifySuggestionsResponse(identifySuggestionsResponse: Partial<IdentifySuggestionsResponse> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "results": n => { identifySuggestionsResponse.results = n.getCollectionOfObjectValues<SuggestionFileResultDto>(createSuggestionFileResultDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param IdentifyVideoFileDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -3808,6 +3875,30 @@ export function deserializeIntoSubmitVideoUserImageResponse(submitVideoUserImage
 }
 /**
  * The deserialization information for the current model
+ * @param SuggestionFileDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSuggestionFileDto(suggestionFileDto: Partial<SuggestionFileDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "pHash": n => { suggestionFileDto.pHash = n.getStringValue(); },
+        "ref": n => { suggestionFileDto.ref = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param SuggestionFileResultDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoSuggestionFileResultDto(suggestionFileResultDto: Partial<SuggestionFileResultDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "ref": n => { suggestionFileResultDto.ref = n.getStringValue(); },
+        "suggestions": n => { suggestionFileResultDto.suggestions = n.getCollectionOfObjectValues<VideoHashSuggestionDto>(createVideoHashSuggestionDtoFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
  * @param TagDto The instance to deserialize into.
  * @returns {Record<string, (node: ParseNode) => void>}
  */
@@ -4301,6 +4392,18 @@ export function deserializeIntoVideoFilehashesByVideoIdDto(videoFilehashesByVide
     return {
         "filehashes": n => { videoFilehashesByVideoIdDto.filehashes = n.getCollectionOfObjectValues<VideoFilehashDto>(createVideoFilehashDtoFromDiscriminatorValue); },
         "videoId": n => { videoFilehashesByVideoIdDto.videoId = n.getGuidValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param VideoHashSuggestionDto The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoVideoHashSuggestionDto(videoHashSuggestionDto: Partial<VideoHashSuggestionDto> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "distanceBits": n => { videoHashSuggestionDto.distanceBits = n.getNumberValue(); },
+        "videoId": n => { videoHashSuggestionDto.videoId = n.getGuidValue(); },
     }
 }
 /**
@@ -5295,6 +5398,18 @@ export interface IdentifySiteDto extends AdditionalDataHolder, Parsable {
      * Site URL.
      */
     url?: string | null;
+}
+export interface IdentifySuggestionsRequest extends AdditionalDataHolder, Parsable {
+    /**
+     * The files property
+     */
+    files?: SuggestionFileDto[] | null;
+}
+export interface IdentifySuggestionsResponse extends AdditionalDataHolder, Parsable {
+    /**
+     * The results property
+     */
+    results?: SuggestionFileResultDto[] | null;
 }
 /**
  * One file to identify.
@@ -7224,6 +7339,30 @@ export function serializeIdentifySiteDto(writer: SerializationWriter, identifySi
 }
 /**
  * Serializes information the current object
+ * @param IdentifySuggestionsRequest The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIdentifySuggestionsRequest(writer: SerializationWriter, identifySuggestionsRequest: Partial<IdentifySuggestionsRequest> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!identifySuggestionsRequest || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<SuggestionFileDto>("files", identifySuggestionsRequest.files, serializeSuggestionFileDto);
+    writer.writeAdditionalData(identifySuggestionsRequest.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param IdentifySuggestionsResponse The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeIdentifySuggestionsResponse(writer: SerializationWriter, identifySuggestionsResponse: Partial<IdentifySuggestionsResponse> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!identifySuggestionsResponse || isSerializingDerivedType) { return; }
+    writer.writeCollectionOfObjectValues<SuggestionFileResultDto>("results", identifySuggestionsResponse.results, serializeSuggestionFileResultDto);
+    writer.writeAdditionalData(identifySuggestionsResponse.additionalData);
+}
+/**
+ * Serializes information the current object
  * @param IdentifyVideoFileDto The instance to serialize from.
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param writer Serialization writer to use to serialize this model
@@ -8235,6 +8374,32 @@ export function serializeSubmitVideoUserImageResponse(writer: SerializationWrite
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SuggestionFileDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSuggestionFileDto(writer: SerializationWriter, suggestionFileDto: Partial<SuggestionFileDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!suggestionFileDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("pHash", suggestionFileDto.pHash);
+    writer.writeStringValue("ref", suggestionFileDto.ref);
+    writer.writeAdditionalData(suggestionFileDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param SuggestionFileResultDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeSuggestionFileResultDto(writer: SerializationWriter, suggestionFileResultDto: Partial<SuggestionFileResultDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!suggestionFileResultDto || isSerializingDerivedType) { return; }
+    writer.writeStringValue("ref", suggestionFileResultDto.ref);
+    writer.writeCollectionOfObjectValues<VideoHashSuggestionDto>("suggestions", suggestionFileResultDto.suggestions, serializeVideoHashSuggestionDto);
+    writer.writeAdditionalData(suggestionFileResultDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
  * @param TagDto The instance to serialize from.
  * @param writer Serialization writer to use to serialize this model
  */
@@ -8759,6 +8924,19 @@ export function serializeVideoFilehashesByVideoIdDto(writer: SerializationWriter
     writer.writeCollectionOfObjectValues<VideoFilehashDto>("filehashes", videoFilehashesByVideoIdDto.filehashes, serializeVideoFilehashDto);
     writer.writeGuidValue("videoId", videoFilehashesByVideoIdDto.videoId);
     writer.writeAdditionalData(videoFilehashesByVideoIdDto.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param VideoHashSuggestionDto The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeVideoHashSuggestionDto(writer: SerializationWriter, videoHashSuggestionDto: Partial<VideoHashSuggestionDto> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!videoHashSuggestionDto || isSerializingDerivedType) { return; }
+    writer.writeNumberValue("distanceBits", videoHashSuggestionDto.distanceBits);
+    writer.writeGuidValue("videoId", videoHashSuggestionDto.videoId);
+    writer.writeAdditionalData(videoHashSuggestionDto.additionalData);
 }
 /**
  * Serializes information the current object
@@ -9462,6 +9640,26 @@ export interface SubmitVideoUserImageResponse extends AdditionalDataHolder, Pars
      * The videoUserImageId property
      */
     videoUserImageId?: Guid | null;
+}
+export interface SuggestionFileDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The pHash property
+     */
+    pHash?: string | null;
+    /**
+     * The ref property
+     */
+    ref?: string | null;
+}
+export interface SuggestionFileResultDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The ref property
+     */
+    ref?: string | null;
+    /**
+     * The suggestions property
+     */
+    suggestions?: VideoHashSuggestionDto[] | null;
 }
 /**
  * A term of the curated video tag vocabulary.
@@ -10297,6 +10495,16 @@ export interface VideoFilehashesByVideoIdDto extends AdditionalDataHolder, Parsa
      * The filehashes property
      */
     filehashes?: VideoFilehashDto[] | null;
+    /**
+     * The videoId property
+     */
+    videoId?: Guid | null;
+}
+export interface VideoHashSuggestionDto extends AdditionalDataHolder, Parsable {
+    /**
+     * The distanceBits property
+     */
+    distanceBits?: number | null;
     /**
      * The videoId property
      */
