@@ -105,6 +105,49 @@ public sealed class SyncContractTests
         Assert.Null(old.Results![0].FreshnessToken); Assert.Null(old.Results[0].FreshnessExpiresAtUtc);
     }
 
+    [Fact]
+    public async Task IdentifySuggestionsPostsHashesAndPreservesTiesAndMisses()
+    {
+        const string firstId = "00000000-0000-0000-0000-000000000001";
+        const string secondId = "00000000-0000-0000-0000-000000000002";
+        using var handler = new Handler(async request =>
+        {
+            Assert.Equal(HttpMethod.Post, request.Method);
+            Assert.Equal("/videos/identify/suggestions", request.RequestUri!.AbsolutePath);
+            var body = JsonNode.Parse(await request.Content!.ReadAsStringAsync());
+            Assert.True(JsonNode.DeepEquals(JsonNode.Parse("""
+                {"files":[{"ref":"tie","pHash":"ABCDEF0123456789"},{"ref":"miss","pHash":"0000000000000000"}]}
+                """), body));
+            return (200, JsonNode.Parse($$"""
+                {"results":[
+                    {"ref":"tie","suggestions":[
+                        {"videoId":"{{firstId}}","distanceBits":2},
+                        {"videoId":"{{secondId}}","distanceBits":2}]},
+                    {"ref":"miss","suggestions":[]}]}
+                """)!);
+        });
+        var client = PrdbClientFactory.Create("test-key", "https://api.example.test", handler);
+        var response = await client.Videos.Identify.Suggestions.PostAsync(new()
+        {
+            Files = [
+                new() { Ref = "tie", PHash = "ABCDEF0123456789" },
+                new() { Ref = "miss", PHash = "0000000000000000" }
+            ]
+        });
+
+        Assert.Collection(response!.Results!, tie =>
+        {
+            Assert.Equal("tie", tie.Ref);
+            Assert.Equal(new Guid?[] { Guid.Parse(firstId), Guid.Parse(secondId) },
+                tie.Suggestions!.Select(candidate => candidate.VideoId));
+            Assert.All(tie.Suggestions!, candidate => Assert.Equal(2, candidate.DistanceBits));
+        }, miss =>
+        {
+            Assert.Equal("miss", miss.Ref);
+            Assert.Empty(miss.Suggestions!);
+        });
+    }
+
     private sealed class Handler(Func<HttpRequestMessage,Task<(int Status,JsonNode Body)>> respond) : HttpMessageHandler
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken token)

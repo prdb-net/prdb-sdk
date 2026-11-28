@@ -4,6 +4,8 @@
 // @ts-ignore
 import { createIdentifyVideosResponseFromDiscriminatorValue, createProblemDetailsFromDiscriminatorValue, serializeIdentifyVideosRequest, serializeIdentifyVideosResponse, type IdentifyVideosRequest, type IdentifyVideosResponse, type ProblemDetails } from '../../models/index.js';
 // @ts-ignore
+import { SuggestionsRequestBuilderRequestsMetadata, type SuggestionsRequestBuilder } from './suggestions/index.js';
+// @ts-ignore
 import { type ValidateRequestBuilder, ValidateRequestBuilderRequestsMetadata } from './validate/index.js';
 // @ts-ignore
 import { type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type NavigationMetadata, type Parsable, type ParsableFactory, type RequestConfiguration, type RequestInformation, type RequestsMetadata } from '@microsoft/kiota-abstractions';
@@ -12,6 +14,10 @@ import { type BaseRequestBuilder, type KeysToExcludeForNavigationMetadata, type 
  * Builds and executes requests for operations under /videos/identify
  */
 export interface IdentifyRequestBuilder extends BaseRequestBuilder<IdentifyRequestBuilder> {
+    /**
+     * The suggestions property
+     */
+    get suggestions(): SuggestionsRequestBuilder;
     /**
      * The validate property
      */
@@ -44,6 +50,9 @@ export const IdentifyRequestBuilderUriTemplate = "{+baseurl}/videos/identify";
  * Metadata for all the navigation properties in the request builder.
  */
 export const IdentifyRequestBuilderNavigationMetadata: Record<Exclude<keyof IdentifyRequestBuilder, KeysToExcludeForNavigationMetadata>, NavigationMetadata> = {
+    suggestions: {
+        requestsMetadata: SuggestionsRequestBuilderRequestsMetadata,
+    },
     validate: {
         requestsMetadata: ValidateRequestBuilderRequestsMetadata,
     },

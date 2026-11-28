@@ -8,6 +8,7 @@ Endpoints that take these values:
 
 - `POST /videos/filehashes/lookup`
 - `POST /videos/identify`
+- `POST /videos/identify/suggestions` (pHash only)
 - `POST /videos/filehash-submissions`
 
 Clients contribute hash-to-video assignments through
@@ -483,9 +484,13 @@ that is the value to stay with unless a measurement says otherwise. Precision
 falls away quickly above it: unrelated videos start colliding not far past that
 point.
 
-**The prdb API currently compares `pHash` for equality**, like any other field.
-Distance matching is tracked as a separate change and is not in effect yet, so
-today a pHash only contributes where an `osHash` would already have matched.
+For manual review, `POST /videos/identify/suggestions` accepts 1–16 files,
+each with a unique `ref` and a 16-digit hexadecimal `pHash`. The API returns
+one result per file in input order. Each result lists all distinct video IDs
+tied at the nearest Hamming distance of 0, 1 or 2 bits, in stable order.
+A miss yields an empty `suggestions` array. Even an exact pHash match from
+this endpoint requires human confirmation. Ordinary `POST /videos/identify`
+keeps its existing matching rules.
 
 ## Test vectors
 

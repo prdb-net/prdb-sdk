@@ -17,6 +17,7 @@ if TYPE_CHECKING:
     from ...models.identify_videos_request import IdentifyVideosRequest
     from ...models.identify_videos_response import IdentifyVideosResponse
     from ...models.problem_details import ProblemDetails
+    from .suggestions.suggestions_request_builder import SuggestionsRequestBuilder
     from .validate.validate_request_builder import ValidateRequestBuilder
 
 class IdentifyRequestBuilder(BaseRequestBuilder):
@@ -83,6 +84,15 @@ class IdentifyRequestBuilder(BaseRequestBuilder):
         if raw_url is None:
             raise TypeError("raw_url cannot be null.")
         return IdentifyRequestBuilder(self.request_adapter, raw_url)
+    
+    @property
+    def suggestions(self) -> SuggestionsRequestBuilder:
+        """
+        The suggestions property
+        """
+        from .suggestions.suggestions_request_builder import SuggestionsRequestBuilder
+
+        return SuggestionsRequestBuilder(self.request_adapter, self.path_parameters)
     
     @property
     def validate(self) -> ValidateRequestBuilder:
