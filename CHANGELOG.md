@@ -15,6 +15,16 @@ changed type is, whichever language it landed in.
 
 ## [Unreleased]
 
+## [0.28.0] - 2026-11-28
+
+### Added
+
+- Video list, detail, batch, baseline and change-feed responses expose the
+  catalogue `orientation` enum with wire values `straight`, `trans`, `gay`
+  and `unknown`. Videos without an assigned orientation and change-feed
+  tombstones carry `unknown`. A site-wide orientation assignment advances the
+  change timestamp of each affected video.
+
 ## [0.27.0] - 2026-11-27
 
 ### Added

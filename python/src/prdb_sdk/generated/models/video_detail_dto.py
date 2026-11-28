@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from .video_detail_image_dto import VideoDetailImageDto
     from .video_detail_pre_name_dto import VideoDetailPreNameDto
     from .video_detail_site_dto import VideoDetailSiteDto
+    from .video_orientation import VideoOrientation
     from .video_quality_overview_dto import VideoQualityOverviewDto
 
 @dataclass
@@ -38,6 +39,8 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
     id: Optional[UUID] = None
     # Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.
     images: Optional[list[VideoDetailImageDto]] = None
+    # Catalogue category of the video. Known values: unknown, straight, trans, gay.
+    orientation: Optional[VideoOrientation] = None
     # The preNames property
     pre_names: Optional[list[VideoDetailPreNameDto]] = None
     # Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 3 says true only for an active OnlyFans or Fansly video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
@@ -77,12 +80,14 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
         from .video_detail_image_dto import VideoDetailImageDto
         from .video_detail_pre_name_dto import VideoDetailPreNameDto
         from .video_detail_site_dto import VideoDetailSiteDto
+        from .video_orientation import VideoOrientation
         from .video_quality_overview_dto import VideoQualityOverviewDto
 
         from .video_detail_actor_dto import VideoDetailActorDto
         from .video_detail_image_dto import VideoDetailImageDto
         from .video_detail_pre_name_dto import VideoDetailPreNameDto
         from .video_detail_site_dto import VideoDetailSiteDto
+        from .video_orientation import VideoOrientation
         from .video_quality_overview_dto import VideoQualityOverviewDto
 
         fields: dict[str, Callable[[Any], None]] = {
@@ -96,6 +101,7 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
             "durationSpreadMs": lambda n : setattr(self, 'duration_spread_ms', n.get_int_value()),
             "id": lambda n : setattr(self, 'id', n.get_uuid_value()),
             "images": lambda n : setattr(self, 'images', n.get_collection_of_object_values(VideoDetailImageDto)),
+            "orientation": lambda n : setattr(self, 'orientation', n.get_enum_value(VideoOrientation)),
             "preNames": lambda n : setattr(self, 'pre_names', n.get_collection_of_object_values(VideoDetailPreNameDto)),
             "previewEnrichmentEligible": lambda n : setattr(self, 'preview_enrichment_eligible', n.get_bool_value()),
             "qualityOverview": lambda n : setattr(self, 'quality_overview', n.get_object_value(VideoQualityOverviewDto)),
@@ -126,6 +132,7 @@ class VideoDetailDto(AdditionalDataHolder, Parsable):
         writer.write_int_value("durationSpreadMs", self.duration_spread_ms)
         writer.write_uuid_value("id", self.id)
         writer.write_collection_of_object_values("images", self.images)
+        writer.write_enum_value("orientation", self.orientation)
         writer.write_collection_of_object_values("preNames", self.pre_names)
         writer.write_bool_value("previewEnrichmentEligible", self.preview_enrichment_eligible)
         writer.write_object_value("qualityOverview", self.quality_overview)

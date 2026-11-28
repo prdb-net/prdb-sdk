@@ -4,6 +4,7 @@
       {
         "id": "00000000-0000-0000-0000-000000000001",
         "title": "Synthetic video",
+        "orientation": "unknown",
         "description": "Full document",
         "images": [],
         "actors": []
@@ -13,6 +14,32 @@
     "hasMore": true,
     "nextCursor": "opaque+/=",
     "changesSince": "2026-10-22T10:00:00Z"
+  },
+  "videoOrientation": {
+    "/videos": {
+      "items": [
+        { "id": "00000000-0000-0000-0000-000000000001", "orientation": "straight" }
+      ]
+    },
+    "/videos/00000000-0000-0000-0000-000000000001": {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "orientation": "trans"
+    },
+    "/videos/batch": [
+      { "id": "00000000-0000-0000-0000-000000000001", "orientation": "gay" }
+    ],
+    "/videos/changes": {
+      "items": [
+        {
+          "eventType": "updated",
+          "video": { "id": "00000000-0000-0000-0000-000000000001", "orientation": "unknown" }
+        },
+        {
+          "eventType": "deleted",
+          "video": { "id": "00000000-0000-0000-0000-000000000002", "orientation": "unknown" }
+        }
+      ]
+    }
   },
   "oversized": {
     "videoId": "00000000-0000-0000-0000-000000000001",

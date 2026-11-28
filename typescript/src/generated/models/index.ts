@@ -4065,6 +4065,7 @@ export function deserializeIntoVideoChangeVideoDto(videoChangeVideoDto: Partial<
         "images": n => { videoChangeVideoDto.images = n.getCollectionOfObjectValues<VideoChangeImageDto>(createVideoChangeImageDtoFromDiscriminatorValue); },
         "isDeleted": n => { videoChangeVideoDto.isDeleted = n.getBooleanValue(); },
         "mergedIntoId": n => { videoChangeVideoDto.mergedIntoId = n.getGuidValue(); },
+        "orientation": n => { videoChangeVideoDto.orientation = n.getEnumValue<VideoOrientation>(VideoOrientationObject); },
         "preNames": n => { videoChangeVideoDto.preNames = n.getCollectionOfObjectValues<VideoChangePreNameDto>(createVideoChangePreNameDtoFromDiscriminatorValue); },
         "previewEnrichmentEligible": n => { videoChangeVideoDto.previewEnrichmentEligible = n.getBooleanValue(); },
         "qualityOverview": n => { videoChangeVideoDto.qualityOverview = n.getObjectValue<VideoQualityOverviewDto>(createVideoQualityOverviewDtoFromDiscriminatorValue); },
@@ -4137,6 +4138,7 @@ export function deserializeIntoVideoDetailDto(videoDetailDto: Partial<VideoDetai
         "durationSpreadMs": n => { videoDetailDto.durationSpreadMs = n.getNumberValue(); },
         "id": n => { videoDetailDto.id = n.getGuidValue(); },
         "images": n => { videoDetailDto.images = n.getCollectionOfObjectValues<VideoDetailImageDto>(createVideoDetailImageDtoFromDiscriminatorValue); },
+        "orientation": n => { videoDetailDto.orientation = n.getEnumValue<VideoOrientation>(VideoOrientationObject); },
         "preNames": n => { videoDetailDto.preNames = n.getCollectionOfObjectValues<VideoDetailPreNameDto>(createVideoDetailPreNameDtoFromDiscriminatorValue); },
         "previewEnrichmentEligible": n => { videoDetailDto.previewEnrichmentEligible = n.getBooleanValue(); },
         "qualityOverview": n => { videoDetailDto.qualityOverview = n.getObjectValue<VideoQualityOverviewDto>(createVideoQualityOverviewDtoFromDiscriminatorValue); },
@@ -4444,6 +4446,7 @@ export function deserializeIntoVideoSummaryDto(videoSummaryDto: Partial<VideoSum
         "durationSeconds": n => { videoSummaryDto.durationSeconds = n.getNumberValue(); },
         "durationSpreadMs": n => { videoSummaryDto.durationSpreadMs = n.getNumberValue(); },
         "id": n => { videoSummaryDto.id = n.getGuidValue(); },
+        "orientation": n => { videoSummaryDto.orientation = n.getEnumValue<VideoOrientation>(VideoOrientationObject); },
         "platformId": n => { videoSummaryDto.platformId = n.getGuidValue(); },
         "platformKey": n => { videoSummaryDto.platformKey = n.getStringValue(); },
         "platformTitle": n => { videoSummaryDto.platformTitle = n.getStringValue(); },
@@ -8506,6 +8509,7 @@ export function serializeVideoChangeVideoDto(writer: SerializationWriter, videoC
     writer.writeCollectionOfObjectValues<VideoChangeImageDto>("images", videoChangeVideoDto.images, serializeVideoChangeImageDto);
     writer.writeBooleanValue("isDeleted", videoChangeVideoDto.isDeleted);
     writer.writeGuidValue("mergedIntoId", videoChangeVideoDto.mergedIntoId);
+    writer.writeEnumValue<VideoOrientation>("orientation", videoChangeVideoDto.orientation);
     writer.writeCollectionOfObjectValues<VideoChangePreNameDto>("preNames", videoChangeVideoDto.preNames, serializeVideoChangePreNameDto);
     writer.writeBooleanValue("previewEnrichmentEligible", videoChangeVideoDto.previewEnrichmentEligible);
     writer.writeObjectValue<VideoQualityOverviewDto>("qualityOverview", videoChangeVideoDto.qualityOverview, serializeVideoQualityOverviewDto);
@@ -8582,6 +8586,7 @@ export function serializeVideoDetailDto(writer: SerializationWriter, videoDetail
     writer.writeNumberValue("durationSpreadMs", videoDetailDto.durationSpreadMs);
     writer.writeGuidValue("id", videoDetailDto.id);
     writer.writeCollectionOfObjectValues<VideoDetailImageDto>("images", videoDetailDto.images, serializeVideoDetailImageDto);
+    writer.writeEnumValue<VideoOrientation>("orientation", videoDetailDto.orientation);
     writer.writeCollectionOfObjectValues<VideoDetailPreNameDto>("preNames", videoDetailDto.preNames, serializeVideoDetailPreNameDto);
     writer.writeBooleanValue("previewEnrichmentEligible", videoDetailDto.previewEnrichmentEligible);
     writer.writeObjectValue<VideoQualityOverviewDto>("qualityOverview", videoDetailDto.qualityOverview, serializeVideoQualityOverviewDto);
@@ -8908,6 +8913,7 @@ export function serializeVideoSummaryDto(writer: SerializationWriter, videoSumma
     writer.writeNumberValue("durationSeconds", videoSummaryDto.durationSeconds);
     writer.writeNumberValue("durationSpreadMs", videoSummaryDto.durationSpreadMs);
     writer.writeGuidValue("id", videoSummaryDto.id);
+    writer.writeEnumValue<VideoOrientation>("orientation", videoSummaryDto.orientation);
     writer.writeGuidValue("platformId", videoSummaryDto.platformId);
     writer.writeStringValue("platformKey", videoSummaryDto.platformKey);
     writer.writeStringValue("platformTitle", videoSummaryDto.platformTitle);
@@ -9832,6 +9838,10 @@ export interface VideoChangeVideoDto extends AdditionalDataHolder, Parsable {
      */
     mergedIntoId?: Guid | null;
     /**
+     * Catalogue category of the video. Known values: unknown, straight, trans, gay.
+     */
+    orientation?: VideoOrientation | null;
+    /**
      * The preNames property
      */
     preNames?: VideoChangePreNameDto[] | null;
@@ -9971,6 +9981,10 @@ export interface VideoDetailDto extends AdditionalDataHolder, Parsable {
      * Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.
      */
     images?: VideoDetailImageDto[] | null;
+    /**
+     * Catalogue category of the video. Known values: unknown, straight, trans, gay.
+     */
+    orientation?: VideoOrientation | null;
     /**
      * The preNames property
      */
@@ -10339,6 +10353,7 @@ export interface VideoImageChangesCursorDto extends AdditionalDataHolder, Parsab
      */
     updatedAtUtc?: Date | null;
 }
+export type VideoOrientation = (typeof VideoOrientationObject)[keyof typeof VideoOrientationObject];
 /**
  * What technical shapes a video is known to exist in, counted over the files prdb holds for it.
  */
@@ -10513,6 +10528,10 @@ export interface VideoSummaryDto extends AdditionalDataHolder, Parsable {
      * Unique identifier of the video.
      */
     id?: Guid | null;
+    /**
+     * Catalogue category of the video. Known values: unknown, straight, trans, gay.
+     */
+    orientation?: VideoOrientation | null;
     /**
      * Publishing platform UUID; null for classic studio sites.
      */
@@ -10984,6 +11003,15 @@ export const ReportVideoUserImageRequest_reasonObject = {
     MisleadingOrWrongPreview: "MisleadingOrWrongPreview",
     CopyrightConcern: "CopyrightConcern",
     Other: "Other",
+} as const;
+/**
+ * Catalogue category of the video. Known values: unknown, straight, trans, gay.
+ */
+export const VideoOrientationObject = {
+    Unknown: "unknown",
+    Straight: "straight",
+    Trans: "trans",
+    Gay: "gay",
 } as const;
 /**
  * Allowed values: created, updated, deleted.

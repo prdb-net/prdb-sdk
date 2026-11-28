@@ -33,6 +33,8 @@ type VideoSummaryDto struct {
     durationSpreadMs *int64
     // Unique identifier of the video.
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
+    // Catalogue category of the video. Known values: unknown, straight, trans, gay.
+    orientation *VideoOrientation
     // Publishing platform UUID; null for classic studio sites.
     platformId *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Stable publishing platform key; null for classic sites.
@@ -226,6 +228,16 @@ func (m *VideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
         }
         return nil
     }
+    res["orientation"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetEnumValue(ParseVideoOrientation)
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetOrientation(val.(*VideoOrientation))
+        }
+        return nil
+    }
     res["platformId"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetUUIDValue()
         if err != nil {
@@ -338,6 +350,11 @@ func (m *VideoSummaryDto) GetFieldDeserializers()(map[string]func(i878a80d2330e8
 // returns a *UUID when successful
 func (m *VideoSummaryDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID) {
     return m.id
+}
+// GetOrientation gets the orientation property value. Catalogue category of the video. Known values: unknown, straight, trans, gay.
+// returns a *VideoOrientation when successful
+func (m *VideoSummaryDto) GetOrientation()(*VideoOrientation) {
+    return m.orientation
 }
 // GetPlatformId gets the platformId property value. Publishing platform UUID; null for classic studio sites.
 // returns a *UUID when successful
@@ -457,6 +474,13 @@ func (m *VideoSummaryDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0
             return err
         }
     }
+    if m.GetOrientation() != nil {
+        cast := (*m.GetOrientation()).String()
+        err := writer.WriteStringValue("orientation", &cast)
+        if err != nil {
+            return err
+        }
+    }
     {
         err := writer.WriteUUIDValue("platformId", m.GetPlatformId())
         if err != nil {
@@ -569,6 +593,10 @@ func (m *VideoSummaryDto) SetDurationSpreadMs(value *int64)() {
 func (m *VideoSummaryDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.id = value
 }
+// SetOrientation sets the orientation property value. Catalogue category of the video. Known values: unknown, straight, trans, gay.
+func (m *VideoSummaryDto) SetOrientation(value *VideoOrientation)() {
+    m.orientation = value
+}
 // SetPlatformId sets the platformId property value. Publishing platform UUID; null for classic studio sites.
 func (m *VideoSummaryDto) SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)() {
     m.platformId = value
@@ -622,6 +650,7 @@ type VideoSummaryDtoable interface {
     GetDurationSeconds()(*int32)
     GetDurationSpreadMs()(*int64)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
+    GetOrientation()(*VideoOrientation)
     GetPlatformId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetPlatformKey()(*string)
     GetPlatformTitle()(*string)
@@ -642,6 +671,7 @@ type VideoSummaryDtoable interface {
     SetDurationSeconds(value *int32)()
     SetDurationSpreadMs(value *int64)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
+    SetOrientation(value *VideoOrientation)()
     SetPlatformId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetPlatformKey(value *string)()
     SetPlatformTitle(value *string)()

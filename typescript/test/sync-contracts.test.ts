@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { it } from "node:test";
-import { createClient, RETRY_DISABLED } from "../src/index.js";
+import { createClient, RETRY_DISABLED, type VideoOrientation, VideoOrientationObject } from "../src/index.js";
 
 const fixture = JSON.parse(readFileSync(new URL("../../../tests/fixtures/sync-contracts.json", import.meta.url), "utf8"));
 const response = (body: unknown, status = 200) => new Response(JSON.stringify(body), {status, headers: {"content-type":"application/json"}});
@@ -18,11 +18,35 @@ it("preserves baseline query, full documents and typed 413 continuation", async 
     const config = {queryParameters:{createdFrom:new Date("2026-10-01T00:00:00Z"),createdBefore:new Date("2026-10-22T00:00:00Z"),pageSize:1000,cursor:"opaque+/="}};
     const page = (await client.videos.baseline.get(config))!;
     assert.equal(page.items![0].description,"Full document");
+    assert.equal(page.items![0].orientation, VideoOrientationObject.Unknown);
     assert.equal(page.nextCursor,"opaque+/="); assert.equal(page.hasMore,true);
     assert.equal(page.changesSince!.toISOString(),"2026-10-22T10:00:00.000Z");
     status = 413;
     await assert.rejects(() => client.videos.baseline.get(config),(error:any) => error.videoId === fixture.oversized.videoId && error.nextCursor === "after-large" && error.changesSince instanceof Date);
 });
+
+it("decodes video orientation on live videos and tombstones", async () => {
+    const videoId = "00000000-0000-0000-0000-000000000001";
+    const client = createClient({
+        apiKey: "test-key",
+        baseUrl: "https://api.example.test",
+        customFetch: async url => response(fixture.videoOrientation[new URL(url).pathname]),
+    });
+
+    const page = await client.videos.get();
+    assert.equal(page?.items?.[0].orientation, VideoOrientationObject.Straight);
+    const detail = await client.videos.byId(videoId).get();
+    assert.equal(detail?.orientation, VideoOrientationObject.Trans);
+    const batch = await client.videos.batch.post({ ids: [videoId] });
+    assert.equal(batch?.[0].orientation, VideoOrientationObject.Gay);
+    const changes = await client.videos.changes.get();
+    const unknown: VideoOrientation = VideoOrientationObject.Unknown;
+    assert.deepEqual(changes?.items?.map(item => [item.eventType, item.video?.orientation]), [
+        ["updated", unknown],
+        ["deleted", unknown],
+    ]);
+});
+
 it("preserves freshness opt-in, original tuple, mixed nullable results and legacy omissions", async () => {
     let legacy = false;
     const client = createClient({apiKey:"test-key",baseUrl:"https://api.example.test",customFetch:async (url,init) => {

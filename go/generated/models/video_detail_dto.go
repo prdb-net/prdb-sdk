@@ -32,6 +32,8 @@ type VideoDetailDto struct {
     id *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID
     // Images for this video, ordered oldest first by the time they were added, with the image IDas the tie-breaker. The order is stable across requests.
     images []VideoDetailImageDtoable
+    // Catalogue category of the video. Known values: unknown, straight, trans, gay.
+    orientation *VideoOrientation
     // The preNames property
     preNames []VideoDetailPreNameDtoable
     // Whether prdb would welcome a preview image for this video from a client that already holdsone of its files. Version 3 says true only for an active OnlyFans or Fansly video whose identity isconfirmed — by a single FansDB scene, or by the release it was published from under thecreator's handle while that release is still confirmed and available — and that has nopreview a client can show yet: no regular video image, and no publicly visible single-frameuser image (a sprite sheet alone does not count). It is aserver-side selection and nothing more — not a download order, not evidence that any filebelongs to the video, and it exposes none of the matching behind it. Moderation of an imagealready submitted is a state of its own, not a reason to submit again. Every change of thevalue reaches `GET /videos/changes`; tombstones carry false. A client talking to anolder server that omits the field must read that as unknown, not as false.
@@ -224,6 +226,16 @@ func (m *VideoDetailDto) GetFieldDeserializers()(map[string]func(i878a80d2330e89
         }
         return nil
     }
+    res["orientation"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
+        val, err := n.GetEnumValue(ParseVideoOrientation)
+        if err != nil {
+            return err
+        }
+        if val != nil {
+            m.SetOrientation(val.(*VideoOrientation))
+        }
+        return nil
+    }
     res["preNames"] = func (n i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.ParseNode) error {
         val, err := n.GetCollectionOfObjectValues(CreateVideoDetailPreNameDtoFromDiscriminatorValue)
         if err != nil {
@@ -337,6 +349,11 @@ func (m *VideoDetailDto) GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770
 // returns a []VideoDetailImageDtoable when successful
 func (m *VideoDetailDto) GetImages()([]VideoDetailImageDtoable) {
     return m.images
+}
+// GetOrientation gets the orientation property value. Catalogue category of the video. Known values: unknown, straight, trans, gay.
+// returns a *VideoOrientation when successful
+func (m *VideoDetailDto) GetOrientation()(*VideoOrientation) {
+    return m.orientation
 }
 // GetPreNames gets the preNames property value. The preNames property
 // returns a []VideoDetailPreNameDtoable when successful
@@ -457,6 +474,13 @@ func (m *VideoDetailDto) Serialize(writer i878a80d2330e89d26896388a3f487eef27b0a
             return err
         }
     }
+    if m.GetOrientation() != nil {
+        cast := (*m.GetOrientation()).String()
+        err := writer.WriteStringValue("orientation", &cast)
+        if err != nil {
+            return err
+        }
+    }
     if m.GetPreNames() != nil {
         cast := make([]i878a80d2330e89d26896388a3f487eef27b0a0e6c010c493bf80be1452208f91.Parsable, len(m.GetPreNames()))
         for i, v := range m.GetPreNames() {
@@ -569,6 +593,10 @@ func (m *VideoDetailDto) SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf
 func (m *VideoDetailDto) SetImages(value []VideoDetailImageDtoable)() {
     m.images = value
 }
+// SetOrientation sets the orientation property value. Catalogue category of the video. Known values: unknown, straight, trans, gay.
+func (m *VideoDetailDto) SetOrientation(value *VideoOrientation)() {
+    m.orientation = value
+}
 // SetPreNames sets the preNames property value. The preNames property
 func (m *VideoDetailDto) SetPreNames(value []VideoDetailPreNameDtoable)() {
     m.preNames = value
@@ -618,6 +646,7 @@ type VideoDetailDtoable interface {
     GetDurationSpreadMs()(*int64)
     GetId()(*i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)
     GetImages()([]VideoDetailImageDtoable)
+    GetOrientation()(*VideoOrientation)
     GetPreNames()([]VideoDetailPreNameDtoable)
     GetPreviewEnrichmentEligible()(*bool)
     GetQualityOverview()(VideoQualityOverviewDtoable)
@@ -637,6 +666,7 @@ type VideoDetailDtoable interface {
     SetDurationSpreadMs(value *int64)()
     SetId(value *i561e97a8befe7661a44c8f54600992b4207a3a0cf6770e5559949bc276de2e22.UUID)()
     SetImages(value []VideoDetailImageDtoable)()
+    SetOrientation(value *VideoOrientation)()
     SetPreNames(value []VideoDetailPreNameDtoable)()
     SetPreviewEnrichmentEligible(value *bool)()
     SetQualityOverview(value VideoQualityOverviewDtoable)()

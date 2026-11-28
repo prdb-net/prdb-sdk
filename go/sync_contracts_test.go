@@ -3,7 +3,6 @@ package prdb
 import (
 	"context"
 	"encoding/json"
-	"github.com/prdb-net/prdb-sdk/go/generated/models"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -11,6 +10,9 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/google/uuid"
+	"github.com/prdb-net/prdb-sdk/go/generated/models"
 )
 
 func TestSyncContracts(t *testing.T) {
@@ -87,6 +89,9 @@ func TestSyncContracts(t *testing.T) {
 	if len(page.GetItems()) != 1 || *page.GetItems()[0].GetDescription() != "Full document" || *page.GetNextCursor() != cursor || !*page.GetHasMore() || page.GetChangesSince() == nil {
 		t.Fatal("baseline fields lost")
 	}
+	if orientation := page.GetItems()[0].GetOrientation(); orientation == nil || *orientation != models.UNKNOWN_VIDEOORIENTATION {
+		t.Fatalf("baseline orientation = %v, want unknown", orientation)
+	}
 	status = 413
 	_, err = client.Videos().Baseline().WithUrl(baselineURL).Get(context.Background(), nil)
 	large, ok := err.(*models.BaselineDocumentTooLargeResponse)
@@ -142,5 +147,72 @@ func TestSyncContracts(t *testing.T) {
 	}
 	if old.GetResults()[0].GetFreshnessToken() != nil || old.GetResults()[0].GetFreshnessExpiresAtUtc() != nil {
 		t.Fatal("legacy omission lost")
+	}
+}
+
+func TestVideoOrientationDecodesOnLiveVideosAndTombstones(t *testing.T) {
+	data, err := os.ReadFile("../tests/fixtures/sync-contracts.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var fixture struct {
+		VideoOrientation map[string]json.RawMessage `json:"videoOrientation"`
+	}
+	if err := json.Unmarshal(data, &fixture); err != nil {
+		t.Fatal(err)
+	}
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		body, ok := fixture.VideoOrientation[r.URL.Path]
+		if !ok {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(body)
+	}))
+	defer server.Close()
+	client, err := NewClient("test-key", Options{BaseURL: server.URL})
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertOrientation := func(route string, got *models.VideoOrientation, want models.VideoOrientation) {
+		t.Helper()
+		if got == nil || *got != want {
+			t.Errorf("%s orientation = %v, want %s", route, got, want)
+		}
+	}
+	ctx := context.Background()
+	videoID := uuid.MustParse("00000000-0000-0000-0000-000000000001")
+	page, err := client.Videos().Get(ctx, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertOrientation("list", page.GetItems()[0].GetOrientation(), models.STRAIGHT_VIDEOORIENTATION)
+	detail, err := client.Videos().ById(videoID).Get(ctx, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertOrientation("detail", detail.GetOrientation(), models.TRANS_VIDEOORIENTATION)
+	body := models.NewGetVideosByIdsRequest()
+	body.SetIds([]uuid.UUID{videoID})
+	batch, err := client.Videos().Batch().Post(ctx, body, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertOrientation("batch", batch[0].GetOrientation(), models.GAY_VIDEOORIENTATION)
+	changes, err := client.Videos().Changes().Get(ctx, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	items := changes.GetItems()
+	if len(items) != 2 {
+		t.Fatalf("changes count = %d, want 2", len(items))
+	}
+	for i, eventType := range []string{"updated", "deleted"} {
+		item := items[i]
+		if item.GetEventType() == nil || *item.GetEventType() != eventType || item.GetVideo() == nil {
+			t.Fatalf("change %d: missing %s video", i, eventType)
+		}
+		assertOrientation(eventType, item.GetVideo().GetOrientation(), models.UNKNOWN_VIDEOORIENTATION)
 	}
 }
